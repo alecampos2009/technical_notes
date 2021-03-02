@@ -1,0 +1,114 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{fullpage}
+\usepackage{cleveref}
+
+\title{The Lodestro Method}
+\author{Alejandro Campos}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Turbulent decomposition}
+Consider a generic nonlinear problem
+\begin{equation}
+\label{eq:gov_eq}
+\frac{\partial u}{\partial t} + \frac{\partial \Gamma (u)}{\partial x} = S
+\end{equation}
+
+It's decomposition into mean (transport) and fluctuating (turbulent) variables is
+\begin{equation}
+\label{eq:tran_mean_orig}
+\frac{\partial \bar{u}}{\partial t} + \frac{\partial \overline{\Gamma (u)} }{\partial x} = \bar{S}
+\end{equation}
+\begin{equation}
+\label{eq:tran_fluc_orig}
+\frac{\partial u'}{\partial t} + \frac{ \partial }{\partial x} \left( \Gamma(u) - \overline{\Gamma(u)} \right) = S - \bar{S}
+\end{equation}
+One example for this decomposition can be the inviscid burger's equation, for which $\Gamma (u) = \frac{1}{2} u^2$. Thus, the mean and fluctuating variables evolve according to
+\begin{equation}
+\frac{\partial \bar{u}}{\partial t} + \frac{1}{2} \frac{\partial}{\partial x} \left ( \bar{u}\bar{u} + \overline{u'u'} \right) = \bar{S}
+\end{equation}
+\begin{equation}
+\frac{\partial u'}{\partial t} + \frac{1}{2}\frac{ \partial }{\partial x} \left( 2\bar{u} u' + u'u' - \overline{u'u'} \right) = S - \bar{S}
+\end{equation}
+
+To simplify our notation, \cref{eq:tran_mean_orig,eq:tran_fluc_orig} are expressed as 
+\begin{equation}
+\label{eq:tran_mean_generic}
+\frac{\partial \bar{u}}{\partial t} + \frac{\partial g(\bar{u})}{\partial x} + \frac{\partial f_t(\bar{u}, \mathcal{S}[u'])}{\partial x} = \bar{S}.
+\end{equation}
+\begin{equation}
+\label{eq:tran_fluc_generic}
+\frac{\partial u'}{\partial t} + \frac{ \partial h(\bar{u},u') }{\partial x} = S - \bar{S}.
+\end{equation}
+In the above it has been emphasized that the evolution equation for the mean variable can contain fluxes $g$ determined solely by the mean variable, and fluxes $f_t$ determined by the mean variable and statistics $\mathcal{S}[u']$ of the turbulence variable. We assume that these statistics are functions of the mean variable, that is $\mathcal{S}[u'] = F(\bar{u})$. This is equivalent to saying that $\bar{u}$ determines statistics of the solutions of \cref{eq:tran_fluc_generic}. For example, for the Burger's equation above, we would assume $\overline{u'u'} = F(\bar{u})$. Thus, the turbulent flux is now expressed as $f_t(\bar{u}, \mathcal{S}[u']) = f_t(\bar{u}, F(\bar{u})) = f(\bar{u})$.
+
+The function $f(\bar{u})$ is presumably fairly complex and does not have an explicit definition (otherwise we would have found the ideal turbulence model!). Thus, we assume the turbulent flux is diffusive, and express it as
+\begin{equation}
+\label{eq:diffusive_flux}
+    f(\bar{u}) = -D(\bar{u}) \frac{\partial \bar{u}}{\partial x}.
+\end{equation}
+Our goal, then, is to solve the following PDE
+\begin{equation}
+\label{eq:tran}
+    \frac{\partial \bar{u}}{\partial t} + \frac{\partial g(\bar{u})}{\partial x} - \frac{\partial}{\partial x} \left [D(\bar{u}) \frac{\partial \bar{u}}{\partial x} \right] = \bar{S}.
+\end{equation}
+
+\section{The numerical algorithm}
+A numerical solution of $\cref{eq:tran}$ can be obtained by using a backward Euler scheme
+\begin{equation}
+    \frac{\bar{u}_n - \bar{u}_{n-1}}{\Delta t} + \frac{\partial g(\bar{u}_n)}{\partial x} - \frac{\partial}{\partial x} \left [ D(\bar{u}_n) \frac{\partial \bar{u}_n}{\partial x} \right ] = S.
+\end{equation}
+
+To solve this non-linear equation we use a fixed-point-iteration method. We iterate the following equation over the index $m$ until a converged solution is obtained
+\begin{equation}
+\label{eq:lodestro}
+    \frac{\bar{u}_{n,m} - \bar{u}_{n-1}}{\Delta t} + \frac{\partial g(\bar{u}_{n,m})}{\partial x} - \frac{\partial}{\partial x} \left [ D(\bar{u}_{n,m-1}) \frac{\partial \bar{u}_{n,m}}{\partial x} \right ]= S.
+\end{equation}
+
+The algorithm thus proceeds as follows
+\begin{enumerate}
+\item Start with initial guess $\bar{u}_{0}$ and assign $\bar{u}_{0} \to \bar{u}_{n-1}$.
+\item Assign $\bar{u}_{n-1} \to \bar{u}_{n,m-1}$
+\item Use \cref{eq:diffusive_flux} to compute the the diffusivity, where $f(\bar{u})$ is given by $f_t(\bar{u},\mathcal{S}[u'])$.
+\item Use \cref{eq:lodestro} to compute $\bar{u}_{n,m}$.
+\item Assign $\bar{u}_{n,m} \to \bar{u}_{n,m-1}$.
+\item Go to 3 and repeat until $\bar{u}_{n,m}$ stops changing.
+\item Assign $\bar{u}_{n,m} \to \bar{u}_{n-1}$
+\item Go to 2 and repeat.
+\end{enumerate}
+
+\subsection{Cost comparison}
+Solving \cref{eq:gov_eq} directly would require $T / \Delta t'$ iterations, where $T$ is the time required to reach steady state and $\Delta t'$ is the maximum allowable time step for the turbulence.
+
+On the other hand, using the method based on \cref{eq:lodestro} and using a sufficiently large $\Delta t$ so that only one time step is taken, would require $M$ iterations corresponding to the $m$ index, and each would require $T' / \Delta t'$ iterations of the turbulence, where $T'$ is a sufficient time for each turbulence simulation. Thus, a speed up would be observed if
+\begin{equation}
+    M \frac{T'}{\Delta t'} < \frac{T}{\Delta t'}.
+\end{equation}
+
+\section{Modifications}
+\subsection{Blending}
+For some cases the expression \cref{eq:diffusive_flux} might not be optimal (e.g.\@ no gradient of $\bar{u}$), and thus an alternate form that represents the flux as being diffusive and convective can be used. This is shown below
+\begin{equation}
+\label{eq:diffusive_convective_flux}
+    f(\bar{u}_{n,m}) = -D_{n,m-1} \frac{\partial \bar{u}_{n,m}}{\partial x} + c_{n,m-1} \bar{u}_{n,m}
+\end{equation}
+In this case, $D$ and $c$ are now given by
+\begin{align}
+    D_{n,m-1} &= - \theta f(\bar{u}_{n,m-1}) \bigg/ \frac{ \partial \bar{u}_{n,m-1}}{\partial x} \\
+    c_{n,m-1} &= (1 - \theta) f(\bar{u}_{n,m-1}) / \bar{u}_{n,m-1}.
+\end{align}
+
+
+\subsection{Temporal relaxation}
+$\alpha$ parameter
+
+\subsection{Flux averaging}
+Time, flux-surface, spatial averaging.
+
+\subsection{Boundary Conditions}
+\end{document}

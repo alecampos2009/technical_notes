@@ -1,0 +1,227 @@
+\documentclass[oneside,a4paper,11pt]{article}
+
+\usepackage{../../info/packages}
+\usepackage{../../info/nomenclature}
+
+\newcommand{\mi}{\mathrm{i}}
+\newcommand{\mj}{\mathrm{j}}
+\newcommand{\mk}{\mathrm{k}}
+
+\newcommand{\knvec}{\boldsymbol{\kappa_n}}
+\newcommand{\fhnvec}{\mathbf{\hat{f}_n}}
+\newcommand{\fhvec}{\mathbf{\hat{f}}}
+
+\renewcommand{\arraystretch}{1.5}
+\begin{document}
+
+A continuous function is denoted as $f(x)$ whereas a discrete function is denoted as $f_m$. Vectors are denoted in bold.
+
+\section{Fourier Analysis}
+\subsection{Fourier Series}
+\begin{itemize}
+\item Definition:
+\begin{align*}
+\fvec(\xvec) &= \sum_{\nvec=-\infty}^\infty \fhnvec e^{ i \knvec \cdot \xvec} \\
+\hat{\fvec}_\nvec &= \frac{1}{L^3}\int_{\mathbb{L}^3} \fvec(\xvec)e^{-i\knvec \cdot \xvec}d\xvec
+\end{align*}
+where
+\[ \kvec_\nvec = \frac{2 \pi}{L} \nvec \qquad \nvec = \begin{pmatrix} n_1 \\ n_2 \\ n_3 \end{pmatrix}  \]
+Note: $ \sum_{\nvec = -\infty}^{\infty} = \sum_{n_1 = -\infty}^{\infty} \sum_{n_2 = -\infty}^{\infty} \sum_{n_3 = -\infty}^{\infty} $
+
+\item Parseval's identity:
+\[ \frac{1}{L^3} \int_{\mathbb{L}^3} \fvec(\xvec) \cdot \gvec^*(\xvec) \, d\xvec = \sum_{\nvec = -\infty}^{\infty} \hat{ \fvec }_\nvec \cdot \hat{ \gvec }^*_\nvec \]
+
+\end{itemize}
+
+\subsection{Discrete Fourier Series}
+\begin{itemize}
+\item Definition:
+\[\fvec_\mvec = \sum_{\nvec=-N/2}^{N/2-1} \hat{\fvec}_\nvec e^{i \kvec_\nvec \cdot \xvec_\mvec}\]
+\[\fhnvec=\frac{1}{N^3}\sum_{\mvec=0}^{N-1} \fvec_\mvec e^{-i \kvec_\nvec \cdot \xvec_\mvec}\]
+ where 
+ \[ \kvec_\nvec = \frac{2 \pi}{L} \nvec \qquad \xvec_\mvec = \frac{L}{N}\mvec \qquad \nvec = \begin{pmatrix} n_1 \\ n_2 \\ n_3 \end{pmatrix} \qquad \mvec = \begin{pmatrix} m_1 \\ m_2 \\m_3 \end{pmatrix} \]
+ 
+ \item Parseval's identity:
+ \[ \frac{1}{N^3} \sum_{\mvec=0}^{N-1} \fvec_\mvec \cdot \gvec^*_\mvec = \sum_{\nvec=-N/2}^{N/2-1} \hat{ \fvec }_\nvec \cdot \hat{ \gvec }^*_\nvec \]
+ \end{itemize}
+ 
+\subsection{Fourier Transform}
+\begin{itemize}
+\item Definition:
+\[\fvec(\xvec) = \int_{\Rn} \fhvec(\kvec)e^{i\kvec \cdot \xvec} \,d\kvec \]
+\[\fhvec(\kvec) = \frac{1}{(2\pi)^n}\int_{\Rn} \fvec(\xvec)e^{-i\kvec \cdot \xvec} \,d\xvec\]
+
+\item Common functions
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+$f(\xvec)$ & $\hat{f}(\kvec)$ \\
+\hline
+$e^ {i \boldsymbol{\lambda} \cdot \xvec}$ & $\delta(\kvec - \boldsymbol{\lambda})$ \\
+\hline
+$\delta(\xvec - \bold{y})$ & $\frac{1}{(2\pi)^n}e^{- i \kvec \cdot \bold{y}} $ \\
+\hline
+\end{tabular}	
+\end{center}
+
+\item Parseval's Identity:
+\[ \frac{1}{ ( 2 \pi )^3 } \int_\Rthree \fvec(\xvec) \cdot \gvec^*(\xvec) \,d\xvec =  \int_\Rthree \hat \fvec(\kvec) \hat \gvec^*(\kvec) \,d\kvec \]
+
+\item Convolution: \\
+Given
+\[ h( \xvec ) = \int_{\Rthree} f( \xvec - \svec )g( \svec ) \, dx \]
+then
+\[\hat{h}(\kvec) = (2\pi)^3 \hat{f}(\kvec) \hat{g}(\kvec) \]
+
+\item Derivatives and Integrals:
+\[ \widehat{\frac{\partial f_i(\xvec)}{\partial x_j}} = i \kappa_j \hat f_i(\kvec) \]
+\[ \frac{\partial \hat{f}_i(\kvec)}{\partial \kappa_j} = -i \widehat{x_jf_i(\xvec)}\]
+\[ \widehat{\nabla \cdot \bold{f}(\xvec)} = i \kvec \cdot \fhvec(\kvec) \]
+\[ \widehat{\nabla \times \bold{f}(\xvec)} = i \kvec \times \fhvec(\kvec) \]
+\[ \widehat{\frac{\partial^2 f_i(\xvec)}{\partial x_j \partial x_j}} = - \kappa_j\kappa_j \hat{f}_i(\kvec) \]
+\end{itemize}
+
+\section{Chebyshev Analysis}
+\subsection{Chebyshev Series}
+\begin{itemize}
+\item Definition:
+\[f(x)=\sum_{n=0}^{\infty}a_nT_n(x)\]
+\[a_n=\frac{2}{\pi C_n}\int_{-1}^{1}f(x)T_n(x)\frac{dx}{\sqrt{1-x^2}}\]
+where
+\[ C_n = \left\{ \begin{array}{cc}  2 & n=0\\ 1 & O.W. \end{array}\right. \]
+\end{itemize}
+
+\subsection{Discrete Chebyshev Series}
+\begin{itemize}
+\item Definition:
+\[f_j=\sum_{n=0}^{\infty}a_nT_n(x_j)\]
+\[a_n=\frac{2}{NC_n}\sum_{j=0}^{N}\frac{1}{C_j}f_jT_n(x_j)\]
+where
+\[ C_n = \left\{ \begin{array}{cc}  2 & n=0,N\\ 1 & O.W. \end{array}\right.\]
+\end{itemize}
+
+\section{Classical Orthogonal Polynimials}
+Orthogonal polynomials are the members of the set $\{P_n(x)\}_{n=1}^{\infty}$, where $P_n(x)$ is a polynomial of degree n.
+
+They satisfy the orthogonality relation:
+\[\langle P_n,P_m \rangle = \int_a^b P_n(x)P_m(x)w(x)dx  = \langle P_n,P_n \rangle \delta_{nm}\]
+These orthogonal polynomials satisfy the following ODE,
+\[g_2(x) P''_n + g_1(x)P'_n + a_nP_n = 0\]
+and are generated from the Rodrigues' formula:
+\[P_n(x) = \frac{1}{e_nw(x)}\frac{d^n}{dx^n}\{w(x)[g(x)]^n\}\]
+The polynomials considered in this file are also solutions of the Sturm-Liouville BVP, that is, they satisfy the following ODE and appropriate boundary conditions.
+\[ \frac{1}{r(x)}\left[\frac{d}{dx}\left(p(x)\frac{d}{dx}\right)+q(x)\right]P_n = - \lambda_n^2P_n\]
+The polynomials are also orthogonal with respect to $r(x)$.
+
+%-----------------------------------------------------------------------------------------------------------------------------------
+\subsection{Jacobi Polynomials}
+This is the family of polynomials for which:
+\begin{eqnarray*}
+p(x) &=& (1 - x)^{\alpha + 1}(1+x)^{\beta + 1}\\
+q(x) &=& 0\\
+r(x) &=& (1 - x)^\alpha(1+x)^\beta \\
+\lambda_n^2 &=& n(n + \alpha + \beta + 1)
+\end{eqnarray*}
+
+\subsubsection{Chebyshev}
+Orthogonal basis of $L^2_w[-1,1]$, with
+\[w(x) = \frac{1}{\sqrt{1 - x^2}}\] 
+
+\[\langle P_n,P_n\rangle = \left\{ 
+  \begin{array}{l l}
+    \pi/2 & \quad \text{if $n = m \neq 0$ }\\
+    \pi & \quad \text{if $n=m=0$ }
+  \end{array} \right.\]
+  
+Coefficients of common form ODE
+\begin{eqnarray*}
+g_1(x) &=& -x\\
+g_2(x) &=& 1 - x^2\\
+a_n &=& n^2
+\end{eqnarray*}
+Coefficients of Rodrigues' formula
+ \begin{eqnarray*}
+g(x) &=& 1 - x^2\\
+e_n &=& (-1)^n(2n-1)(2n-3)...1
+\end{eqnarray*}
+Coefficients of Sturm-Liouville ODE
+\begin{eqnarray*}
+p(x) &=& \sqrt{1 - x^2}\\
+q(x) &=& 0\\
+r(x) &=& \frac{1}{\sqrt{1 - x^2}}\\
+\lambda^2_n &=& n^2
+\end{eqnarray*}
+That is, $\alpha = \beta = -1/2$.
+
+\subsubsection{Legendre}
+Orthogonal basis of $L^2_w[-1,1]$, with
+\[w(x) = \frac{1}{2}\] 
+\[\langle P_n,P_n\rangle = \frac{1}{2n+1}\]
+Coefficients of common form ODE
+\begin{eqnarray*}
+g_1(x) &=& -2x\\
+g_2(x) &=& 1 - x^2\\
+a_n &=& n(n+1)
+\end{eqnarray*}
+Coefficients of Rodrigues' formula
+ \begin{eqnarray*}
+g(x) &=& 1 - x^2\\
+e_n &=& (-1)^n2^nn!
+\end{eqnarray*}
+Coefficients of Sturm-Liouville ODE
+\begin{eqnarray*}
+p(x) &=& 1 - x^2\\
+q(x) &=& 0\\
+r(x) &=& 1\\
+\lambda^2_n &=& n(n+1)
+\end{eqnarray*}
+That is, $\alpha = \beta = 0$.
+%-----------------------------------------------------------------------------------------------------------------------------------	
+\subsection{Hermite}
+Orthogonal basis of $L^2_w[-\infty,\infty]$, with
+\[w(x) = \frac{1}{\sqrt{2\pi}}e^{-x^2/2}\] 
+\[\langle P_n,P_n\rangle = n!\]
+Coefficients of common form ODE
+\begin{eqnarray*}
+g_1(x) &=& -x\\
+g_2(x) &=& 1\\
+a_n &=& n
+\end{eqnarray*}
+Coefficients of Rodrigues' formula
+ \begin{eqnarray*}
+g(x) &=& 1 \\
+e_n &=& (-1)^n
+\end{eqnarray*}
+Coefficients of Sturm-Liouville ODE
+\begin{eqnarray*}
+p(x) &=& e^{-x^2/2}\\
+q(x) &=& 0\\
+r(x) &=& e^{-x^2/2}\\
+\lambda^2_n &=& n
+\end{eqnarray*}
+
+%-----------------------------------------------------------------------------------------------------------------------------------
+\subsection{Laguerre}
+Orthogonal basis of $L^2_w[0,\infty]$, with
+\[w(x) = \frac{1}{\sqrt{2\pi}}e^{-x}\] 
+\[\langle P_n,P_n\rangle = 1\]
+Coefficients of common form ODE
+\begin{eqnarray*}
+g_1(x) &=& 1 - x\\
+g_2(x) &=& x\\
+a_n &=& n
+\end{eqnarray*}
+Coefficients of Rodrigues' formula
+ \begin{eqnarray*}
+g(x) &=& x \\
+e_n &=& n!
+\end{eqnarray*}
+Coefficients of Sturm-Liouville ODE
+\begin{eqnarray*}
+p(x) &=& xe^{-x}\\
+q(x) &=& 0\\
+r(x) &=& e^{-x}\\
+\lambda^2_n &=& n
+\end{eqnarray*}
+
+\end{document}
