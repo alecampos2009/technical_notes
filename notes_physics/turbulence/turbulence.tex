@@ -2697,9 +2697,17 @@ Q_{ij} = \hat{a}^{(j)} \cdot \hat{b}^{(i)}.
 
 One can also multiply both sides of \cref{rot_vel_angular_vector} by $\hat{a}^{(k)}$ and use \cref{eq:unit_trans} to obtain
 \begin{equation}
+    \label{eq:uine_urot_temp}
 u^+_k \hat{a}^{(k)} = \tilde{u}^+_i \hat{b}^{(i)} + \epsilon_{jki}\Omega_ix^+_j \hat{a}^{(k)}.
 \end{equation}
-If we denote $ \vec{u}^+_{ine} $ as the vector $u^+_k \hat{a}^{(k)}$ and $ \vec{u}^+_{rot} $ as the vector $\tilde{u}^+_i \hat{b}^{(i)}$, then the above is re-expressed as follows
+If we introduce the following notation
+\begin{align}
+    \vec{u}^+_{ine} &= u^+_k \hat{a}^{(k)}, \\
+    \vec{u}^+_{rot} &= \tilde{u}^+_i \hat{b}^{(i)}, \\
+    \vec{\Omega} &= \Omega_i \hat{a}^{(i)}, \\
+    \vec{x}^+ &= x_i^+ \hat{a}^{(i)}.
+\end{align}
+then the \cref{eq:uine_urot_temp} is writen as 
 \begin{equation}
 \label{uine_urot}
 \vec{u}^+_{ine}  = \vec{u}^+_{rot}  + \vec{\Omega} \times \vec{x}^+.
@@ -2720,7 +2728,7 @@ Therefore, in vector notation \cref{eq:aine_arot_inter} becomes
     \label{eq:aine_arot}
     \vec{a}^+_{ine} = \vec{a}^+_{rot} + 2 \vec{\Omega} \times \vec{u}^+_{rot} + \dot{\vec{\Omega}} \times \vec{x}^+ + \vec{\Omega} \times (\vec{\Omega} \times \vec{x}^+),
 \end{equation}
-where $\vec{a}^+_{ine} = \frac{du^+_k}{dt} \hat{a}^{(k)}$ and $\vec{a}^+_{rot} = \frac{d\tilde{u}^+_i}{dt}\hat{b}^{(i)}$.
+where $\vec{a}^+_{ine} = \frac{du^+_k}{dt} \hat{a}^{(k)}$, $\vec{a}^+_{rot} = \frac{d\tilde{u}^+_i}{dt}\hat{b}^{(i)}$, and $\dot{\vec{\Omega}} = \frac{d\Omega_i}{dt} \hat{a}^{(i)}$.
 
 %-------------------------------------------------------------------------------
 \section{Eulerian variables}
@@ -2778,40 +2786,54 @@ If we evaluate the above at $\xvec = \xvec^+$, we get
 \end{equation}
 Multiplying both sides by $\hat{a}^{(i)}$ gives
 \begin{equation}
-\label{eq:ns_pressure}
+\label{eq:ns_pressure_rot_transform}
     \left [ \frac{\partial p(t,\xvec)}{\partial x_i} \right]_{\xvec = \xvec^+} \hat{a}^{(i)} = \left [ \frac{\partial \tilde{p}(t,\tilde{\xvec})}{\partial \tilde{x}_j} \right]_{\tilde{\xvec} = \tilde{\xvec}^+} \hat{b}^{(j)}.
 \end{equation}
-We also use \cref{eq:aine_arot} to write
+For the shear-stress tensor, we have
 \begin{equation}
-    \vec{a}_{ine}^+ = ...
+    \label{eq:ns_shear_stress_rot_transform}
+    \left [ \frac{\partial \tau_{ij}(t,\xvec)}{\partial x_j} \right]_{\xvec = \xvec^+} \hat{a}^{(i)} = \left [ \frac{\partial \tilde{\tau}_{ij}(t,\tilde{\xvec})}{\partial \tilde{x}_j} \right]_{\tilde{\xvec} = \tilde{\xvec}^+} \hat{b}^{(i)}.
 \end{equation}
+We also use \cref{eq:aine_arot} to write
+\begin{align}
+    \frac{du_i^+}{dt} \hat{a}^{(i)} &= \frac{d\tilde{u}_i^+}{dt} \hat{b}^{(i)} + 2 \vec{\Omega} \times \left ( \tilde{u}_i^+ \hat{b}^{(i)} \right ) + \dot{\vec{\Omega}} \times \vec{x}^+ + \vec{\Omega} \times \left ( \vec{\Omega} \times \vec{x}^+ \right ) \nonumber \\
+    &= \frac{d\tilde{u}_i^+}{dt} \hat{b}^{(i)} + 2 \vec{\Omega} \times \left ( \tilde{u}_i^+ \hat{b}^{(i)} \right ) + \dot{\vec{\Omega}} \times \left ( \tilde{x}_i^+ \hat{b}^{(i)}\right ) + \vec{\Omega} \times \left [ \vec{\Omega} \times \left ( \tilde{x}_i^+ \hat{b}^{(i)}\right ) \right ]
+\end{align}
+Expressing the above in terms of Eulerian quantities gives
+\begin{multline}
+    \label{eq:aine_arot_eulerian}
+    \left [ \frac{\partial u_i(t,\xvec)}{\partial t} + u_j(t,\xvec) \frac{\partial u_i(t,\xvec)}{\partial x_j} \right ]_{\xvec = \xvec^+} \hat{a}^{(i)} = \left [ \frac{\partial \tilde{u}_i(t,\tilde{\xvec})}{\partial t} + \tilde{u}_j(t,\tilde{\xvec}) \frac{\partial \tilde{u}_i(t,\tilde{\xvec})}{\partial \tilde{x}_j} \right ]_{\tilde{\xvec} = \tilde{\xvec}^+} \hat{b}^{(i)} \\
+    + 2 \vec{\Omega} \times \left \{ \left [\tilde{u}_i(t,\tilde{\xvec}) \right ]_{\tilde{\xvec} = \tilde{\xvec}^+} \hat{b}^{(i)} \right \} + \dot{\vec{\Omega}} \times \left [ \left ( \tilde{x}_i \right)_{\tilde{\xvec} = \tilde{\xvec}^+} \hat{b}^{(i)}\right ] + \vec{\Omega} \times \left \{ \vec{\Omega} \times \left [ \left ( \tilde{x}_i \right )_{\tilde{\xvec} = \tilde{\xvec}^+} \hat{b}^{(i)}\right ] \right \}
+\end{multline}
 
-The conservation of momentum equation can be written as
+The conservation of momentum equation is given by
 \begin{equation}
     \rho(t,\xvec) \left [\frac{\partial u_i(t,\xvec)}{\partial t} + u_j(t,\xvec) \frac{\partial u_i(t,\xvec)}{\partial x_j} \right ] = -\frac{\partial p(t,\xvec)}{\partial x_i} + \frac{\partial \tau_{ij}(t,\xvec)}{\partial x_j}.
 \end{equation}
-Evaluating the above at $\xvec = \xvec^+$ leads to
+Evaluating the above at $\xvec = \xvec^+$ can be written as
 \begin{equation}
-    \rho(t,\xvec^+) \frac{d u_i^+}{dt} = -\left [ \frac{\partial p(t,\xvec)}{\partial x_i} \right]_{\xvec = \xvec^+} + \left [ \frac{\partial \tau_{ij}(t,\xvec)}{\partial x_j} \right ]_{\xvec = \xvec^+}.
+    \rho(t,\xvec^+) \left [\frac{\partial u_i(t,\xvec)}{\partial t} + u_j(t,\xvec) \frac{\partial u_i(t,\xvec)}{\partial x_j} \right ]_{\xvec = \xvec^+} = -\left [ \frac{\partial p(t,\xvec)}{\partial x_i} \right]_{\xvec = \xvec^+} + \left [ \frac{\partial \tau_{ij}(t,\xvec)}{\partial x_j} \right ]_{\xvec = \xvec^+}.
 \end{equation}
 Multiplying both sides by $\hat{a}^{(i)}$ gives
-\begin{equation}
-    \rho(t,\xvec^+) \vec{a}_{ine}^+ = -\left [ \frac{\partial p(t,\xvec)}{\partial x_i} \right]_{\xvec = \xvec^+} \hat{a}^{(i)} + \left [ \frac{\partial \tau_{ij}(t,\xvec)}{\partial x_j} \right ]_{\xvec = \xvec^+} \hat{a}^{(i)}.
-\end{equation}
-Using \cref{eq:ns_pressure} and blah blah gives
-\begin{equation}
-    \rho(t,\xvec^+) \vec{a}_{ine}^+ = -\left [ \frac{\partial \tilde{p}(t,\tilde{\xvec})}{\partial \tilde{x}_i} \right]_{\tilde{\xvec} = \tilde{\xvec}^+} \hat{b}^{(i)} + \left [ \frac{\partial \tilde{\tau}_{ij}(t,\tilde{\xvec})}{\partial \tilde{x}_j} \right ]_{\tilde{\xvec} = \tilde{\xvec}^+} \hat{b}^{(i)}.
-\end{equation}
-Using \cref{eq:eul_rho_temp} we write the above as
-\begin{equation}
-    \left [ \tilde{\rho}(t,\tilde{\xvec}) \right]_{\tilde{\xvec} = \tilde{\xvec}^+} \vec{a}_{ine}^+ = -\left [ \frac{\partial \tilde{p}(t,\tilde{\xvec})}{\partial \tilde{x}_i} \right]_{\tilde{\xvec} = \tilde{\xvec}^+} \hat{b}^{(i)} + \left [ \frac{\partial \tilde{\tau}_{ij}(t,\tilde{\xvec})}{\partial \tilde{x}_j} \right ]_{\tilde{\xvec} = \tilde{\xvec}^+} \hat{b}^{(i)}.
-\end{equation}
-Finally, using \cref{eq:aine_arot}, we obtain
 \begin{multline}
-    \left [ \tilde{\rho}(t,\tilde{\xvec}) \right]_{\tilde{\xvec} = \tilde{\xvec}^+} \left [ \vec{a}_{rot}^+ + 2 \vec{\Omega} \times \vec{u}_{rot}^+ + \dot{\vec{\Omega}} \times \vec{x}^+ + \vec{\Omega} \times \left ( \vec{\Omega} \times \vec{x}^+ \right ) \right] \\
+    \rho(t,\xvec^+) \left [\frac{\partial u_i(t,\xvec)}{\partial t} + u_j(t,\xvec) \frac{\partial u_i(t,\xvec)}{\partial x_j} \right ]_{\xvec = \xvec^+} \hat{a}^{(i)} \\
+    = -\left [ \frac{\partial p(t,\xvec)}{\partial x_i} \right]_{\xvec = \xvec^+} \hat{a}^{(i)} + \left [ \frac{\partial \tau_{ij}(t,\xvec)}{\partial x_j} \right ]_{\xvec = \xvec^+} \hat{a}^{(i)}.
+\end{multline}
+Using \cref{eq:eul_rho_temp,eq:ns_pressure_rot_transform,eq:ns_shear_stress_rot_transform} gives
+\begin{multline}
+    \left [ \tilde{\rho}(t,\tilde{\xvec}) \right]_{\tilde{\xvec} = \tilde{\xvec}^+} \left [\frac{\partial u_i(t,\xvec)}{\partial t} + u_j(t,\xvec) \frac{\partial u_i(t,\xvec)}{\partial x_j} \right ]_{\xvec = \xvec^+} \hat{a}^{(i)} \\
     = -\left [ \frac{\partial \tilde{p}(t,\tilde{\xvec})}{\partial \tilde{x}_i} \right]_{\tilde{\xvec} = \tilde{\xvec}^+} \hat{b}^{(i)} + \left [ \frac{\partial \tilde{\tau}_{ij}(t,\tilde{\xvec})}{\partial \tilde{x}_j} \right ]_{\tilde{\xvec} = \tilde{\xvec}^+} \hat{b}^{(i)}.
 \end{multline}
-
+Using \cref{eq:aine_arot_eulerian} we obtain
+\begin{multline}
+    \left [ \tilde{\rho}(t,\tilde{\xvec}) \right]_{\tilde{\xvec} = \tilde{\xvec}^+} \left ( \left [ \frac{\partial \tilde{u}_i(t,\tilde{\xvec})}{\partial t} + \tilde{u}_j(t,\tilde{\xvec}) \frac{\partial \tilde{u}_i(t,\tilde{\xvec})}{\partial \tilde{x}_j} \right ]_{\tilde{\xvec} = \tilde{\xvec}^+} \hat{b}^{(i)} + 2 \vec{\Omega} \times \left \{ \left [\tilde{u}_i(t,\tilde{\xvec}) \right ]_{\tilde{\xvec} = \tilde{\xvec}^+} \hat{b}^{(i)} \right \} \right . \\
+    \left . + \dot{\vec{\Omega}} \times \left [ \left ( \tilde{x}_i \right)_{\tilde{\xvec} = \tilde{\xvec}^+} \hat{b}^{(i)}\right ] + \vec{\Omega} \times \left \{ \vec{\Omega} \times \left [ \left ( \tilde{x}_i \right )_{\tilde{\xvec} = \tilde{\xvec}^+} \hat{b}^{(i)}\right ] \right \} \right ) = -\left [ \frac{\partial \tilde{p}(t,\tilde{\xvec})}{\partial \tilde{x}_i} \right]_{\tilde{\xvec} = \tilde{\xvec}^+} \hat{b}^{(i)} + \left [ \frac{\partial \tilde{\tau}_{ij}(t,\tilde{\xvec})}{\partial \tilde{x}_j} \right ]_{\tilde{\xvec} = \tilde{\xvec}^+} \hat{b}^{(i)}.
+\end{multline}
+Finally, since this holds for any $\tilde{\xvec}^+$, we get
+\begin{multline}
+    \tilde{\rho}(t,\tilde{\xvec}) \left \{ \left [ \frac{\partial \tilde{u}_i(t,\tilde{\xvec})}{\partial t} + \tilde{u}_j(t,\tilde{\xvec}) \frac{\partial \tilde{u}_i(t,\tilde{\xvec})}{\partial \tilde{x}_j} \right ] \hat{b}^{(i)} + 2 \vec{\Omega} \times \left [ \tilde{u}_i(t,\tilde{\xvec}) \hat{b}^{(i)} \right ] \right . \\
+    \left . + \dot{\vec{\Omega}} \times \left ( \tilde{x}_i \hat{b}^{(i)}\right ) + \vec{\Omega} \times \left [ \vec{\Omega} \times \left ( \tilde{x}_i \hat{b}^{(i)} \right ) \right ] \right \} = -\frac{\partial \tilde{p}(t,\tilde{\xvec})}{\partial \tilde{x}_i} \hat{b}^{(i)} + \frac{\partial \tilde{\tau}_{ij}(t,\tilde{\xvec})}{\partial \tilde{x}_j} \hat{b}^{(i)}.
+\end{multline}
 
 %-------------------------------------------------------------------------------
 \section{Eulerian variables (OLD!!!!!)}
