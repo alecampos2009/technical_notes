@@ -745,7 +745,7 @@ A summary of fundamental time and length scales of plasmas in given in \cref{tb:
 \begin{itemize}
 \item Thermal velocity:
 \begin{equation}
-v_{T\alpha} = \sqrt{\frac{2 k_B T_\alpha}{m_\alpha}}
+v_{T_\alpha} = \sqrt{\frac{2 k_B T_\alpha}{m_\alpha}}
 \end{equation}
 
 \item Total Debye length:
@@ -777,8 +777,28 @@ v_{T\alpha} = \sqrt{\frac{2 k_B T_\alpha}{m_\alpha}}
 \begin{equation}
     E_{fe} = \frac{\hbar^2}{2m_e} \left ( 3 \pi^2 n_e \right)^{2/3}
 \end{equation}
-
 \end{itemize}
+
+\paragraph{Some notes on the coupling parameter}
+We can define two types of Coulomb interactions: strong and weak. Strong Coulomb interactions are those for which the particle's Coulomb potential energy is larger than its kinetic energy, and viceversa for weak Coulomb interactions. Plasmas for which the Coulomb interactions are mostly strong are dominated by those Coulomb interactions and are referred to as strongly coupled plasmas. On the other hand, plasmas for which the Coulomb interactions are mostly weak are dominated by long-range collective effects instead, and are referred to as weakly coupled plasmas. 
+
+We describe an approximate Coulomb potential energy for particles in a plasma as
+\begin{equation}
+    \text{U} =  \frac{q_\alpha^2}{4 \pi \epsilon_0 a_\alpha}.
+\end{equation}
+The impact parameter that has been used above is $a_\alpha$, the sphere radius. This provides a decent measure on the average spacing between particles in a plasma. Since the volume of a single particle is $1/n_\alpha$, and if we assume that this volume is given by $4/3 \pi a_\alpha^3$, then equating these two gives the expression for the sphere radius
+\begin{equation}
+    a_\alpha = \left ( \frac{3}{4 \pi n_\alpha} \right )^{1/3}.
+\end{equation}
+The kinetic energy of a particle in a plasma can be approximated by the thermal energy, thus
+\begin{equation}
+    \text{K} = \frac{1}{2} m_\alpha v_{T_\alpha}^2 = k_b T_\alpha.
+\end{equation}
+The ratio of the particle's Coulomb potential energy and its kinetic energy is referred to as the coupling parameter $\Gamma_\alpha$. That is 
+\begin{equation}
+    \Gamma_\alpha = \frac{q_\alpha^2}{4 \pi \epsilon_0 a_\alpha k_b T_\alpha}.
+\end{equation}
+$\Gamma_\alpha > 1$ denotes a strongly coupled plasma, and $\Gamma_\alpha < 1$ denotes a weakly coupled plasma. 
 
 %--------------------------------------------------------------------------------------------------------------------------------------------
 \chapter{Single-particle motion---Collisions}
