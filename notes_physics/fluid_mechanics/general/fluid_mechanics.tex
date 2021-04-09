@@ -2,8 +2,8 @@
 \usepackage{fullpage}
 \usepackage{hhline}
 
-\usepackage{../../info/packages}
-\usepackage{../../info/nomenclature}
+\usepackage{../../../info/packages}
+\usepackage{../../../info/nomenclature}
 \usepackage{scalerel}
 
 \title{Fluid Mechanics}
@@ -1584,7 +1584,7 @@ Given an equation of state, we can write $h_2 = \xi(P_2,\vartheta_2)$ and $h_1 =
 In \cref{fig:shock_adiabat} an arbitrary shock adiabat $P_2 = f(\vartheta_2)$ is shown. One thing to note is that for $\vartheta_2 = \vartheta_1$ (no real shock), the shock adiabat naturally gives $P_2 = P_1$. Thus, the state corresponding to the flow upstream of the shock, i.e.\@ ($P_1$, $\vartheta_1$), is a point in the shock adiabat line. One can then draw a straight line to various possible states after the shock, as shown in \cref{fig:shock_adiabat}. The slope of any of these lines is $(P_2 - P_1)/(\vartheta_2 - \vartheta_1)$, which as shown in \cite{thompson1988} is equal to $-J^2$, where $J = \rho_1 w_1 = \rho_2 w_2$.
 \begin{figure}[ht]
    \centering
-   \includegraphics[width=0.7\textwidth]{../../images/shock_adiabat.pdf}
+   \includegraphics[width=0.7\textwidth]{../../../images/shock_adiabat.pdf}
    \caption{Shock adiabat for an arbitrary equation of state.}
    \label{fig:shock_adiabat}
 \end{figure}
@@ -1664,7 +1664,7 @@ as shown in \cite{thompson1988}.
 %---------------------------------
 \begin{figure}[ht]
 \centering
-\includegraphics[width=10cm]{../../images/oblique_shock.pdf}
+\includegraphics[width=10cm]{../../../images/oblique_shock.pdf}
 \caption{Oblique-shock geometry, $\beta$ is the shock angle and $\theta$ the turning angle.}
 \label{fig:oblique_shock}
 \end{figure}
@@ -1687,14 +1687,14 @@ Using the shock jump condition for velocity (\cref{eq:normal_shock_velocity}), a
 The information contained in the above relationship is quite vast, and can best be understood by looking at $\theta$ profiles as a function of $\beta$---for different Mach numbers---obtained from the equation above. A plot of these profiles is given in \cref{fig:theta_beta_1}. Starting from the right-most point on the $x$-axis, labelled as ``a'', is a normal shock with a shock angle of $90^\circ$. Moving along the blue line as the shock angle decreases, we see that the turning angle increases until a maximum, labeled as ``b'', is reached. A further decrease in shock angle leads to point ``c'', which corresponds to turning angles for which the flow behind the shock becomes subsonic. Smaller shock angles lead to even smaller turning angles, until point ``d'' is reached, which corresponds to a Mach wave, to be described in a subsequent section. It is important to note that there are two shock angles that can give the same turning angle. The turning angle corresponding to the smaller shock angle is referred to as the weak solution, whereas the turning angle corresponding to the larger shock angle is the strong solution. This nomenclature has no direct connection to that defined in \cref{eq:strong_weak_shocks}. The black dashed line in \cref{fig:theta_beta_1} corresponds to the peak value for each Mach number, and thus demarcates the weak and strong solutions. A more pictorial representation of this behavior, for the specific case of a shock in front of a cylinder, is given in \cref{fig:theta_beta_2}. 
 \begin{figure}[ht]
    \centering
-   \includegraphics[width=0.5\textwidth]{../../images/theta_beta_1.pdf}
+   \includegraphics[width=0.5\textwidth]{../../../images/theta_beta_1.pdf}
    \caption{$\theta$--$\beta$ curve for a perfect gas with $\gamma = 1.4$.}
    \label{fig:theta_beta_1}
 \end{figure}
 
 \begin{figure}[ht]
    \centering
-   \includegraphics[width=0.7\textwidth]{../../images/theta_beta_2.pdf}
+   \includegraphics[width=0.7\textwidth]{../../../images/theta_beta_2.pdf}
    \caption{Representation of different shock waves for different shock angles $\beta$.}
    \label{fig:theta_beta_2}
 \end{figure}
@@ -1790,7 +1790,7 @@ and
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=8cm]{../../images/mach_wave.pdf}
+\includegraphics[width=8cm]{../../../images/mach_wave.pdf}
 \caption{Mach wave}
 \label{fig:mach_wave}
 \end{figure}
@@ -2392,7 +2392,7 @@ where $\rvec_{ap}$ is the vector pointing from the leading edge to the arbitrary
 
 \begin{figure}[ht]
    \centering
-   \includegraphics[width=0.8\textwidth]{../../images/airfoil.pdf}
+   \includegraphics[width=0.8\textwidth]{../../../images/airfoil.pdf}
    \caption{Coordinate system and representative forces on an airfoil.}
    \label{fig:airfoil}
 \end{figure}

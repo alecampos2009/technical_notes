@@ -163,7 +163,45 @@ The motion of single particles is obtained by solving \cref{eq:single_particle_c
 \label{eq:single_particle_motion}
     m \frac{d \vvec}{dt} = e \left ( \Evec + \vvec \times \Bvec \right )_{\qvec = \xvec}.
 \end{equation}
-In the above, $\vvec = \vvec(t)$ and $\xvec = \xvec(t)$ are the velocity and the position of the particle, and $\Evec = \Evec(\qvec,t)$ and $\Bvec = \Bvec(\qvec,t)$ the electric and magnetic fields. For any vector (such as $\vvec$, $\Evec$, $\Bvec$, $\qvec$, etc.), and except for the particle's position, we will refer to its components as follows $[\alpha_1,\alpha_2,\alpha_3] = [\alpha_x,\alpha_y,\alpha_z]$. In the subsections that follow, we will solve the equation of motion above for simplified forms of $\Evec$ and $\Bvec$. 
+In the above, $\vvec = \vvec(t)$ is the particle velocity, $\xvec = \xvec(t)$ the particle position, $\Evec = \Evec(\qvec,t)$ the electric field, and $\Bvec = \Bvec(\qvec,t)$ the magnetic field. In the subsections that follow, we will solve this equation of motion for simplified forms of $\Evec$ and $\Bvec$. The solutions for the velocity vector will typically be of the form
+\begin{equation}
+    \label{eq:single_particle_motion_vel_general}
+    \vvec = \vvec^{(c)} + \vvec^{(g)} + v^{||} \bvec,
+\end{equation}
+where $\vvec^{(c)} = \vvec^{(c)}(t)$ is the gyromotion (cyclotron) velocity, $\vvec^{(g)} = \vvec^{(g)}(t)$ is the gyrocenter velocity, $v^{||} = v^{||}(t)$ is the parallel velocity. Not all of the velocities will alwasy be present. $\bvec = \Bvec / B$ is the unit magnetic field vector. The position of the particle is governed by 
+\begin{equation}
+    \frac{d\xvec}{dt} = \vvec.
+\end{equation}
+Using \cref{eq:single_particle_motion_vel_general}, we integrate the above to obtain
+\begin{equation}
+    \label{eq:single_particle_motion_pos_eq_mod}
+    \int_0^t \, d\xvec(t') = \int_0^t \vvec^{(c)}(t') \, dt' + \int_0^t \vvec^{(g)}(t') \, dt' + \int_0^t v^{||}(t) \bvec \, dt'.
+\end{equation}
+We introduce the positions $\xvec^{(c)} = \xvec^{(c)}(t)$, $\xvec^{(g)} = \xvec^{(g)}(t)$, and $\xvec^{||} = \xvec^{||}(t)$, which are defined as follows
+\begin{equation}
+    \xvec^{(c)} = \int \vvec^{(c)} dt,
+\end{equation}
+\begin{equation}
+    \xvec^{(g)} = \int \vvec^{(g)} dt,
+\end{equation}
+\begin{equation}
+    \xvec^{||} = \int \vvec^{||} dt.
+\end{equation}
+Thus, \cref{eq:single_particle_motion_pos_eq_mod} is now re-written as
+\begin{equation}
+    \xvec(t) - \xvec(0) = \xvec^{(c)}(t) - \xvec^{(c)}(0) + \xvec^{(g)}(t) - \xvec^{(g)}(0) - \xvec^{||}(t) - \xvec^{||}(0).
+\end{equation}
+Without loss of generality, we will assume that the initial condition is as follows
+\begin{equation}
+    \xvec(0) = \xvec^{(c)}(0) + \xvec^{(g)}(0) + \xvec^{||}(0).
+\end{equation}
+Thus, the particle position is finally expressed as
+\begin{equation}
+    \label{eq:single_particle_motion_pos_general}
+    \xvec = \xvec^{(c)} + \xvec^{(g)} + \xvec^{||}.
+\end{equation}
+
+
  
 %-------------------------------------------------------------------------------
 \section{Uniform $\Evec$ and $\Bvec$ fields}
@@ -222,22 +260,16 @@ Integrating \cref{eq:only_B_1} then gives
 The final solution, for either positive or negative charges, can be written as
 \begin{align}
 \label{eq:vel_gyro}
-    v_x &= v_\perp \cos(w_c t \pm \phi) \nonumber \\
-    v_y &= \pm v_\perp \sin(w_c t \pm \phi) \nonumber \\
-    v_z &= v_{||},
+    v^{(c)}_x &= v_\perp \cos(w_c t \pm \phi) \nonumber \\
+    v^{(c)}_y &= \pm v_\perp \sin(w_c t \pm \phi),
 \end{align}
 where upper signs correspond to a negative charge. Integrating the equations above leads to
 \begin{align}
 \label{eq:pos_gyro}
-    x &= x_g + r_L \sin(w_c t \pm \phi) \nonumber \\
-    y &= y_g \mp r_L \cos(w_c t \pm \phi) \nonumber \\
-    z &= z_0 + v_{||}t,
+    x^{(c)} &= r_L \sin(w_c t \pm \phi) \nonumber \\
+    y^{(c)} &= \mp r_L \cos(w_c t \pm \phi).
 \end{align}
-where $r_L = v_\perp/w_c$ is the gyro radius, and $x_g$ and $y_g$ are the guiding center positions defined by
-\begin{align}
-    x_g &= x_0 \mp r_L \sin(\phi) \nonumber \\
-    y_g &= y_0 \pm r_L \cos(\phi).
-\end{align}
+where $r_L = v_\perp/w_c$ is the gyro radius.
 
 %--------------------------------------------
 \subsection{Both $\Evec$ and $\Bvec$ fields}
@@ -245,26 +277,27 @@ where $r_L = v_\perp/w_c$ is the gyro radius, and $x_g$ and $y_g$ are the guidin
 \label{sec:E_and_B_field}
 Let's orient our coordinate system such that $\Bvec$ still points along $\evec_z$. The equations of motion are
 \begin{subequations}
-\label{eq:EcrossB_temp1}
+\label{eq:single_particle_motion_EcrossB_temp1}
 \begin{alignat}{2}
     &\frac{d v_x}{dt} = \frac{eE_x}{m} + \frac{eB}{m} v_y  \qquad && v_x(0) = v_\perp \cos(\phi) + \frac{E_y}{B}, \label{eq:E_and_B_1} \\
     &\frac{d v_y}{dt} = \frac{eE_y}{m} - \frac{eB}{m} v_x  \qquad && v_y(0) = v_\perp \sin(\phi) - \frac{E_x}{B}, \label{eq:E_and_B_2} \\
     &\frac{d v_z}{dt} = \frac{e E_{||}}{m}  \qquad && v_z(0) = v_{||}, \label{eq:E_and_B_3}
 \end{alignat}
 \end{subequations}
-where we have chosen the given initial conditions simply to facilitate the math. Again, the z component is decoupled from the rest and has the trivial solution $v_z = v_{||} +  (eE_{||}/m) t$. To solve for the other two components we will assume the velocities are of the form
+where we have chosen the given initial conditions simply to facilitate the math. Again, the z component is decoupled from the rest and has the trivial solution $v_z = v_{||} +  (eE_{||}/m) t$. Thus, \cref{eq:single_particle_motion_vel_general} for the $x$ and $y$ components are
 \begin{align}
-    v_x &= v_x^{(gm)} + V_x \nonumber \\
-    v_y &= v_y^{(gm)} + V_y,
+    \label{eq:single_particle_motion_EcrossB_temp2}
+    v_x &= v_x^{(c)} + v^{(g)}_x, \nonumber \\
+    v_y &= v_y^{(c)} + v^{(g)}_y.
 \end{align}
-where $v_x^{(gm)}$ and $v_y^{(gm)}$ are the gyromotion velocities given by \cref{eq:vel_gyro}, and $V_x$, $V_y$ are corrections. We assume $V_x$ and $V_y$ are time independent, and plug in the above in \cref{eq:EcrossB_temp1} to obtain
+We assume $v^{(g)}_x$ and $v^{(g)}_y$ are time independent. Using \cref{eq:single_particle_motion_EcrossB_temp2} in \cref{eq:single_particle_motion_EcrossB_temp1} we obtain
 \begin{align}
-    0 &= \frac{eE_x}{m} + \frac{eB}{m}V_y \nonumber \\
-    0 &= \frac{eE_y}{m} - \frac{eB}{m}V_x.
+    0 &= \frac{eE_x}{m} + \frac{eB}{m}v^{(g)}_y \nonumber \\
+    0 &= \frac{eE_y}{m} - \frac{eB}{m}v^{(g)}_x.
 \end{align}
-Thus, $V_x = E_y/B$ and $V_y = -E_x/B$, which in vector notation can be expressed as
+Thus, $v^{(g)}_x = E_y/B$ and $v^{(g)}_y = -E_x/B$, which in vector notation can be expressed as
 \begin{equation}
-    \Vvec_E = \frac{\Evec \times \Bvec}{B^2}.
+    \vvec^{(g)}_E = \frac{\Evec \times \Bvec}{B^2}.
 \end{equation}
 
 %-------------------------------------------------------------------------------
@@ -281,74 +314,81 @@ The magnetic field still points in the $\evec_z$ direction, but its magnitude ch
     &\frac{d v_z}{dt} = 0  \qquad && v_z(0) = v_{||}. \label{eq:nonuniB_3}
 \end{alignat}
 \end{subequations}
-In the above, the $x$ and $y$ in $B(x,y)$ are the perpendicular components of the particle's position. The $v_z$ component is decoupled from the rest and has a trivial solution. For the other two velocities, we use the Taylor-series expansion
+In the above, the $x$ and $y$ in $B(x,y)$ are the perpendicular components of the particle's position. The $v_z$ component is decoupled from the rest and has a trivial solution. Thus, \cref{eq:single_particle_motion_vel_general,eq:single_particle_motion_pos_general} for the $x$ and $y$ components are
 \begin{equation}
-    B(x,y) = B(x_g, y_g) + \left . \frac{\partial B}{\partial q_x} \right |_{x_g,y_g} r_x + \left . \frac{\partial B}{\partial q_y} \right |_{x_g,y_g} r_y + ...
-\end{equation}
-where $r_x = x - x_g$ and $r_y = y - y_g$. Thus, \cref{eq:nonuniB_1,eq:nonuniB_2} are now
-\begin{equation}
-    \frac{ d v_x}{dt} = \frac{e B(x_g,y_g)}{m} v_y + \frac{e}{m} \left ( \left . \frac{\partial B}{\partial q_x} \right|_{x_g,y_g} r_x + \left . \frac{\partial B}{\partial q_y} \right |_{x_g,y_g} r_y \right) v_y
+    \label{eq:single_particle_motion_vel_Bmag_change_perp_1}
+    v_x = v_x^{(c)} + v_x^{(g)},
 \end{equation}
 \begin{equation}
-    \frac{ d v_y}{dt} = -\frac{e B(x_g,y_g)}{m} v_x + \frac{e}{m} \left ( \left . \frac{\partial B}{\partial q_x} \right|_{x_g,y_g} r_x + \left . \frac{\partial B}{\partial q_y} \right |_{x_g,y_g} r_y \right ) v_x.
+    \label{eq:single_particle_motion_vel_Bmag_change_perp_2}
+    v_y = v_y^{(c)} + v_y^{(g)},
 \end{equation}
-Similarly as before, we assume solutions of the form 
+\begin{equation}
+    \label{eq:single_particle_motion_pos_Bmag_change_perp_1}
+    x = x^{(c)} + x^{(g)},
+\end{equation}
+\begin{equation}
+    \label{eq:single_particle_motion_pos_Bmag_change_perp_2}
+    y = y^{(c)} + y^{(g)}.
+\end{equation}
+
+We begin by employing a Taylor-series expansion for the magnetic field
+\begin{equation}
+    B(x,y) = B(x_g, y_g) + \left . \frac{\partial B}{\partial q_x} \right |_{x_g,y_g} x^{(c)} + \left . \frac{\partial B}{\partial q_y} \right |_{x_g,y_g} y^{(c)} + ...
+\end{equation}
+Thus, \cref{eq:nonuniB_1,eq:nonuniB_2} are now
+\begin{equation}
+    \frac{ d v_x}{dt} = \frac{e B(x_g,y_g)}{m} v_y + \frac{e}{m} \left ( \left . \frac{\partial B}{\partial q_x} \right|_{x_g,y_g} x^{(c)} + \left . \frac{\partial B}{\partial q_y} \right |_{x_g,y_g} y^{(c)} \right) v_y
+\end{equation}
+\begin{equation}
+    \frac{ d v_y}{dt} = -\frac{e B(x_g,y_g)}{m} v_x + \frac{e}{m} \left ( \left . \frac{\partial B}{\partial q_x} \right|_{x_g,y_g} x^{(c)} + \left . \frac{\partial B}{\partial q_y} \right |_{x_g,y_g} y^{(c)} \right ) v_x.
+\end{equation}
+As before, we assume $v_x^{(g)}$, $v_y^{(g)}$ are time independent. Also, for simplicity we assume ions only. Plugging in \cref{eq:single_particle_motion_vel_Bmag_change_perp_1,eq:single_particle_motion_vel_Bmag_change_perp_2} into the above, we get
+\begin{equation}
+    0 = B(x_g,y_g) v_y^{(g)} + \left ( \left . \frac{\partial B}{\partial q_x} \right|_{x_g,y_g} x^{(c)} + \left . \frac{\partial B}{\partial q_y} \right |_{x_g,y_g} y^{(c)} \right) \left ( v_y^{(c)} + v_y^{(g)} \right),
+\end{equation}
+\begin{equation}
+    0 = -B(x_g,y_g) v_x^{(g)} + \left ( \left . \frac{\partial B}{\partial q_x} \right|_{x_g,y_g} x^{(c)} + \left . \frac{\partial B}{\partial q_y} \right |_{x_g,y_g} y^{(c)} \right ) \left ( v_x^{(c)} + v_x^{(g)} \right ).
+\end{equation}
+We assume $v_x^{(g)} \ll v_x^{(c)}$ and $v_y^{(g)} \ll v_y^{(c)}$. Thus, the above becomes
+\begin{equation}
+    \label{eq:single_particle_motion_Bmag_change_perp_temp1}
+    0 = B(x_g,y_g) v_y^{(g)} + \left ( \left . \frac{\partial B}{\partial q_x} \right|_{x_g,y_g} x^{(c)} + \left . \frac{\partial B}{\partial q_y} \right |_{x_g,y_g} y^{(c)} \right) v_y^{(c)},
+\end{equation}
+\begin{equation}
+    \label{eq:single_particle_motion_Bmag_change_perp_temp2}
+    0 = -B(x_g,y_g) v_x^{(g)} + \left ( \left . \frac{\partial B}{\partial q_x} \right|_{x_g,y_g} x^{(c)} + \left . \frac{\partial B}{\partial q_y} \right |_{x_g,y_g} y^{(c)} \right ) v_x^{(c)}.
+\end{equation}
+We now use the definitions in \cref{eq:vel_gyro} and \cref{eq:pos_gyro}. For example, with those definitions we can show that 
 \begin{align}
-v_x &= v_x^{(gm)} + V_x \nonumber \\
-v_y &= v_y^{(gm)} + V_y \nonumber \\
-r_x &= r_x^{(gm)} + R_x \nonumber \\
-r_y &= r_y^{(gm)} + R_y.
+     x^{(c)} v_y^{(c)} &= \left[ r_L \sin (w_c t - \phi) \right] \left[ -v_\perp \sin (w_ct - \phi) \right] \nonumber \\
+    & = -\frac{ v^2_\perp}{w_c} \sin^2(w_c t - \phi) \nonumber \\
+    & = -\frac{ v^2_\perp}{2 w_c} \{1 - \cos [ 2 (w_c t - \phi)] \}
 \end{align}
-In the above, $v_x^{(gm)}$ and $v_y^{(gm)}$ are the gyro motion velocities given by \cref{eq:vel_gyro_y,eq:vel_gyro_x}, $r_x^{(gm)} = x^{(gm)} - x_g$ and $r_y^{(gm)} = y^{(gm)} - y_g$, and $x^{(gm)}$ and $y^{(gm)}$ are the gyro positions given by \cref{eq:pos_gyro}. As before, we assume $V_x$, $V_y$ are time independent. Also, for simplicity we assume ions only. Plugging the assumed solutions into the governing ODEs leads to
-\begin{equation}
-    0 = B(x_g,y_g) V_y + \left [ \left . \frac{\partial B}{\partial q_x} \right|_{x_g,y_g} \left ( r^{(gm)}_x + R_x \right ) + \left . \frac{\partial B}{\partial q_y} \right |_{x_g,y_g} \left ( r^{(gm)}_y + R_y \right ) \right] \left ( v_y^{(gm)} + V_y \right)
-\end{equation}
-\begin{equation}
-    0 = -B(x_g,y_g) V_x + \left [ \left . \frac{\partial B}{\partial q_x} \right|_{x_g,y_g} \left ( r^{(gm)}_x + R_x \right ) + \left . \frac{\partial B}{\partial q_y} \right |_{x_g,y_g} \left ( r^{(gm)}_y + R_y \right ) \right ] \left ( v_x^{(gm)} + V_x \right ).
-\end{equation}
-We now introduce the following scalings
-\begin{equation}
-    \left . \frac{\partial B}{\partial q_x} \right|_{x_g,y_g} r_x^{(gm)} \sim \left . \frac{\partial B}{\partial q_y} \right |_{x_g,y_g} r_y^{(gm)} \sim \epsilon B(x_g, y_g),
-\end{equation}
-as well as $V_x \sim \epsilon v_x^{(gm)}$, $V_y \sim \epsilon v_y^{(gm)}$, $R_x \sim \epsilon r_x^{(gm)}$, and $R_y \sim \epsilon r_y^{(gm)}$. Thus, retaining all terms up to $\epsilon B(x_g,y_g) v_x^{(gm)}$
-\begin{equation}
-\label{eq:gradB_temp1}
-    0 = B(x_g,y_g) V_y + \left ( \left . \frac{\partial B}{\partial q_x} \right|_{x_g,y_g} r^{(gm)}_x + \left . \frac{\partial B}{\partial q_y} \right |_{x_g,y_g} r^{(gm)}_y \right ) v_y^{(gm)} 
-\end{equation}
-\begin{equation}
-\label{eq:gradB_temp2}
-    0 = -B(x_g,y_g) V_x + \left ( \left . \frac{\partial B}{\partial q_x} \right|_{x_g,y_g} r^{(gm)}_x + \left . \frac{\partial B}{\partial q_y} \right |_{x_g,y_g} r^{(gm)}_y \right ) v_x^{(gm)}.
-\end{equation}
-We now show that
-\begin{align}
-    \left . \frac{\partial B}{\partial q_x} \right|_{x_g,y_g} r_x^{(gm)} v_y^{(gm)} &= -r_L v_\perp \left . \frac{\partial B}{\partial q_x} \right |_{x_g,y_g} \sin (w_c t - \phi) \sin (w_ct - \phi)  \nonumber \\
-    & = -\frac{ v^2_\perp}{w_c} \left . \frac{\partial B}{\partial q_x} \right |_{x_g,y_g} \sin^2(w_c t - \phi) \nonumber \\
-    & = -\frac{ v^2_\perp}{2 w_c} \left . \frac{\partial B}{\partial q_x} \right |_{x_g,y_g} \{1 - \cos [ 2 (w_c t - \phi)] \}
-\end{align}
-Similar derivations can be carried out for all the other terms with gradients of $B$ in \cref{eq:gradB_temp1,eq:gradB_temp2}. Thus, \cref{eq:gradB_temp1,eq:gradB_temp2} becomes 
+Similar derivations can be carried out for $y^{(c)} v_y^{(c)}$, $x^{(c)} v_x^{(c)}$, and $y^{(c)} v_x^{(c)}$. Thus, \cref{eq:single_particle_motion_Bmag_change_perp_temp1,eq:single_particle_motion_Bmag_change_perp_temp2} become 
 \begin{multline}
-    0 = B(x_g,y_g) V_y -\frac{ v^2_\perp}{2 w_c} \left . \frac{\partial B}{\partial q_x} \right |_{x_g,y_g} \{1 - \cos [ 2 (w_c t - \phi)] \} \\
+    0 = B(x_g,y_g) v_y^{(g)} -\frac{ v^2_\perp}{2 w_c} \left . \frac{\partial B}{\partial q_x} \right |_{x_g,y_g} \{1 - \cos [ 2 (w_c t - \phi)] \} \\
     - \frac{ v^2_\perp}{2 w_c} \left .\frac{\partial B}{\partial q_y} \right |_{x_g,y_g} \sin [ 2(w_ct - \phi)],
 \end{multline}
 \begin{multline}
-    0 = -B(x_g,y_g) V_x -\frac{ v^2_\perp}{2 w_c} \left . \frac{\partial B}{\partial q_x} \right |_{x_g,y_g} \sin [ 2 (w_c t - \phi)] \\
+    0 = -B(x_g,y_g) v_x^{(g)} -\frac{ v^2_\perp}{2 w_c} \left . \frac{\partial B}{\partial q_x} \right |_{x_g,y_g} \sin [ 2 (w_c t - \phi)] \\
     - \frac{ v^2_\perp}{2 w_c} \left .\frac{\partial B}{\partial q_y} \right |_{x_g,y_g} \{ 1 + \cos [ 2(w_ct - \phi)] \}.
 \end{multline}
 It can be shown that the oscillatory terms containing the sines and cosines can be neglected. If it was not possible to neglect those terms, then the assumption that $f_x$, $f_y$ are time independent would not hold. Thus,
 \begin{subequations}
 \begin{alignat}{2}
-    0 &= B(x_g,y_g) V_y - \frac{ v^2_\perp}{2 w_c} \left . \frac{\partial B}{\partial q_x} \right |_{x_g,y_g} \nonumber \\
-    0 &= -B(x_g,y_g) V_x -\frac{ v^2_\perp}{2 w_c} \left . \frac{\partial B}{\partial q_y} \right |_{x_g,y_g} . 
+    0 &= B(x_g,y_g) v_y^{(g)} - \frac{ v^2_\perp}{2 w_c} \left . \frac{\partial B}{\partial q_x} \right |_{x_g,y_g} \nonumber \\
+    0 &= -B(x_g,y_g) v_x^{(g)} -\frac{ v^2_\perp}{2 w_c} \left . \frac{\partial B}{\partial q_y} \right |_{x_g,y_g} . 
 \end{alignat}
 \end{subequations}
-Thus,
+Solving for the guiding center velocities, we finally have
 \begin{align}
-    V_x &= -\frac{v^2_\perp}{2 w_c} \left . \frac{\partial B}{\partial q_y} \right |_{x_g,y_g} \frac{1}{B(x_g,y_g)} \nonumber \\
-    V_y &= \frac{v^2_\perp}{2 w_c} \left . \frac{\partial B}{\partial q_x} \right |_{x_g,y_g} \frac{1}{B(x_g,y_g)} . 
+    v_x^{(g)} &= -\frac{v^2_\perp}{2 w_c} \left . \frac{\partial B}{\partial q_y} \right |_{x_g,y_g} \frac{1}{B(x_g,y_g)} \nonumber \\
+    v_y^{(g)} &= \frac{v^2_\perp}{2 w_c} \left . \frac{\partial B}{\partial q_x} \right |_{x_g,y_g} \frac{1}{B(x_g,y_g)} . 
 \end{align}
 In vector notation, this is written as
 \begin{equation}
-    \Vvec_{\nabla B} = \frac{v^2_\perp}{2 w_c} \frac{ \Bvec \times \nabla \Bvec }{B^2}.
+    \vvec^{(g)}_{\nabla B} = \frac{v^2_\perp}{2 w_c} \frac{ \Bvec \times \nabla \Bvec }{B^2}.
 \end{equation}
 In the above, the fields and $w_c$ are evaluated at $(x_g,y_g)$.
 
