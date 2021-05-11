@@ -179,13 +179,13 @@ Using \cref{eq:single_particle_motion_vel_general}, we integrate the above to ob
 \end{equation}
 We introduce the positions $\xvec^{(c)} = \xvec^{(c)}(t)$, $\xvec^{(g)} = \xvec^{(g)}(t)$, and $\xvec^{||} = \xvec^{||}(t)$, which are defined as follows
 \begin{equation}
-    \xvec^{(c)} = \int \vvec^{(c)} dt,
+    \xvec^{(c)} = \int \vvec^{(c)} \, dt,
 \end{equation}
 \begin{equation}
-    \xvec^{(g)} = \int \vvec^{(g)} dt,
+    \xvec^{(g)} = \int \vvec^{(g)} \, dt,
 \end{equation}
 \begin{equation}
-    \xvec^{||} = \int \vvec^{||} dt.
+    \xvec^{||} = \int v^{||} \bvec \, dt.
 \end{equation}
 Thus, \cref{eq:single_particle_motion_pos_eq_mod} is now re-written as
 \begin{equation}
@@ -374,7 +374,7 @@ Similar derivations can be carried out for $y^{(c)} v_y^{(c)}$, $x^{(c)} v_x^{(c
     0 = -B(x_g,y_g) v_x^{(g)} -\frac{ v^2_\perp}{2 w_c} \left . \frac{\partial B}{\partial q_x} \right |_{x_g,y_g} \sin [ 2 (w_c t - \phi)] \\
     - \frac{ v^2_\perp}{2 w_c} \left .\frac{\partial B}{\partial q_y} \right |_{x_g,y_g} \{ 1 + \cos [ 2(w_ct - \phi)] \}.
 \end{multline}
-It can be shown that the oscillatory terms containing the sines and cosines can be neglected. If it was not possible to neglect those terms, then the assumption that $f_x$, $f_y$ are time independent would not hold. Thus,
+It can be shown that the oscillatory terms containing the sines and cosines can be neglected. If it was not possible to neglect those terms, then the assumption that $v^{(g)}_x$, $v^{(g)}_y$ are time independent would not hold. Thus,
 \begin{subequations}
 \begin{alignat}{2}
     0 &= B(x_g,y_g) v_y^{(g)} - \frac{ v^2_\perp}{2 w_c} \left . \frac{\partial B}{\partial q_x} \right |_{x_g,y_g} \nonumber \\
