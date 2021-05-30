@@ -1,4 +1,4 @@
-% I finished updating page 8.
+% FINISHED UPDATING NOTATION UP TO PAGE 10
 
 \documentclass[oneside,a4paper,11pt]{report}
 
@@ -13,21 +13,37 @@
 
 % RANS variables
 \newcommand{\rhoavg}{\overline{\rho}}
+
 \newcommand{\aavg}{\overline{a}}
 \newcommand{\eavg}{\langle e \rangle}
 \newcommand{\havg}{\langle h \rangle}
 \newcommand{\pavg}{\overline{p}}
+\newcommand{\qavg}{\overline{q}}
 \newcommand{\tavg}{\overline{t}}
 \newcommand{\uavg}{\overline{u}}
 \newcommand{\vavg}{\overline{v}}
 \newcommand{\yavg}{\overline{Y}}
 
+\newcommand{\Javg}{\overline{J}}
 \newcommand{\Kavg}{\overline{K}}
+\newcommand{\Wavg}{\overline{W}}
 
+\newcommand{\afluc}{a'}
 \newcommand{\pfluc}{p'}
 \newcommand{\ufluc}{u'}
 \newcommand{\vfluc}{v'}
 \newcommand{\yfluc}{y'}
+
+\newcommand{\rs}{\tau}          % Reynolds stresses
+\newcommand{\ars}{a}            % Anisotropic Reynolds stresses
+\newcommand{\nars}{b}           % Non-dimensional anisotropic Reynolds stress
+\newcommand{\tpvc}{\mathcal{R}} % Two-point velocity correlation
+\newcommand{\redi}{\phi}        % Redistribution
+\newcommand{\est}{E}            % Energy spectrum tensor
+
+\newcommand{\Stau}{S^*}
+\newcommand{\Wtau}{W^*}
+\newcommand{\Sdev}{\hat{S}}
 
 %--------old variables-------------
 \newcommand{\uiavg}{\langle U_i \rangle}
@@ -68,17 +84,6 @@
 \newcommand{\phiavg}{\overline{\Phi}}
 \newcommand{\phifluc}{\phi'}
 
-\newcommand{\rs}{\tau}             % Reynolds stresses
-\newcommand{\ars}{a}               % Anisotropic Reynolds stresses
-\newcommand{\nars}{b}              % Non-dimensional anisotropic Reynolts stress
-\newcommand{\tpvc}{\mathcal{R}}    % Two-point velocity correlation
-\newcommand{\redi}{\phi}           % Redistribution
-\newcommand{\est}{E}               % Energy spectrum tensor
-
-\newcommand{\Stau}{S^*}
-\newcommand{\Wtau}{W^*}
-\newcommand{\Sdev}{\hat{S}}
-
 % Favre-averaged variables
 \newcommand{\aavgf}{\widetilde{a}}
 \newcommand{\bavgf}{\widetilde{b}}
@@ -87,25 +92,27 @@
 \newcommand{\favgf}{\widetilde{f}}
 \newcommand{\uavgf}{\widetilde{u}}
 
+\newcommand{\Eavgf}{\widetilde{E}}
+\newcommand{\Tavgf}{\widetilde{T}}
+\newcommand{\Yavgf}{\widetilde{Y}}
+\newcommand{\Savgf}{\widetilde{S}}
+
 \newcommand{\aflucf}{a''}
 \newcommand{\bflucf}{b''}
 \newcommand{\eflucf}{e''}
+\newcommand{\fflucf}{f''}
 \newcommand{\cflucf}{c''}
+\newcommand{\Yflucf}{Y''}
 
+\newcommand{\Tflucf}{T''}
 %--------old variables-------------
 \newcommand{\ukavgf}{\widetilde{U}_k}
 
-\newcommand{\Eavgf}{\widetilde{E}}
 \newcommand{\Uavgf}{\widetilde{U}}
-\newcommand{\Tavgf}{\widetilde{T}}
 \newcommand{\Favgf}{\widetilde{F}}
-\newcommand{\yavgf}{\widetilde{Y}}
 
 \newcommand{\ukflucf}{u_k''}
 \newcommand{\uflucf}{u''}
-\newcommand{\yflucf}{y''}
-
-\newcommand{\Tflucf}{t''}
 
 % Filtered variables
 \newcommand{\ures}{\overline{U}}
@@ -224,7 +231,7 @@ From the governing equations, additional transport PDEs can be derived.
 
 %###############################################################################
 %
-\chapter{Governing Equations for Turbulent Flows}
+\chapter{Governing Statistical Equations for Turbulent Flows}
 %
 %###############################################################################
 
@@ -232,46 +239,33 @@ From the governing equations, additional transport PDEs can be derived.
 \section{Decompositions}
 %-------------------------------------------------------------------------------
 
-There are multiple ways to decompose the instantaneous velocity field $U_i$, depending on what properties of flow variables one wants to focus on. Here we mentioned the most common ones.
+We introduce two main decompositions for any instantaneous flow variable  $a_i$:
 \begin{align}
-\text{Reynolds decomposition: } & u_i = \uiavg + \uifluc \\
-\text{Favre decomposition: } & u_i = \uavgf_i + \uflucf_i \\
-\text{LES decomposition: } & u_i = \ures_i + \usgs_i
+\text{Reynolds decomposition: } & a_i = \aavg_i + \afluc_i \\
+\text{Favre decomposition: } & a_i = \aavgf_i + \aflucf_i
 \end{align}
 For the above, we have
 \begin{equation} 
-\uiavg = \int V_i f(\bold{V}) d\bold{V} \qquad \uavgf_i = \frac{\langle \rho U_i \rangle}{\rhoavg} \qquad \ures_i = \int G(\bold{r},\bold{x}) U_i(\bold{x} - \bold{r}) d\bold{r},
+\aavg_i = \int A_i f(\Avec) d\Avec \qquad \text{and} \qquad \aavgf_i = \frac{\overline{ \rho a_i }}{\rhoavg},
 \end{equation}
-where $V_i$ is the sample space variable corresponding to $U_i$, and $G(\rvec, \xvec)$ is the LES filter.
+where $A_i$ is the sample space variable corresponding to $a_i$.
 
 %-------------------------------------------------------------------------------
 \section{Favre-averaged Navier-Stokes equations}
 %-------------------------------------------------------------------------------
-We introduce the Favre decomposition for a flow variable $u_i$ as follows
-\begin{equation}
-    a = \aavgf + \aflucf,
-\end{equation}
-where
-\begin{equation}
-    \aavgf = \frac{\overline{\rho a}}{\rhoavg},
-\end{equation}
-and 
-\begin{equation}
-    \aavg = \int a f(a) \, da.
-\end{equation}
-We note that with this averaging, we can write the following expressions involving density 
+Using the definition of Favre-averaging, we note the following expressions involving density 
 \begin{align}
-    \overline{\rho a} & = \rhoavg \widetilde{a} \label{eq:favre_rho_a} \\
-    \overline{\rho ab} & = \rhoavg \widetilde{ab} \label{eq:favre_rho_ab} \\
-    \overline{\rho abc} & = \rhoavg \widetilde{abc} \label{eq:favre_rho_abc} 
+    \overline{\rho a} & = \rhoavg \widetilde{a} \label{eq:favre_rho_a} , \\
+    \overline{\rho ab} & = \rhoavg \widetilde{ab} \label{eq:favre_rho_ab} , \\
+    \overline{\rho abc} & = \rhoavg \widetilde{abc} \label{eq:favre_rho_abc} .
 \end{align}
 We also note that, for the decomposition $a = \aavgf + \aflucf$, we have
 \begin{equation}
-    \widetilde{\aflucf} = \widetilde{a - \aavgf} = 0
+    \widetilde{\aflucf} = \widetilde{a - \aavgf} = 0.
 \end{equation}
-Thus, the expressions that would hold for the Reynolds average also hold for the Favre average, that is
+Thus, expressions that hold for Reynolds averaging also hold for the Favre averaging, that is
 \begin{align}
-    \widetilde{ab} &= \aavgf \bavgf + \widetilde{a''b''} \label{eq:favre_ab} \\
+    \widetilde{ab} &= \aavgf \bavgf + \widetilde{a''b''} \label{eq:favre_ab}, \\
     \widetilde{abc} & = \aavgf \bavgf \cavgf + \aavgf \widetilde{\bflucf \cflucf} + \bavgf \widetilde{\aflucf \cflucf} + \cavgf \widetilde{\aflucf \bflucf} + \widetilde{\aflucf \bflucf \cflucf}. \label{eq:favre_abc}
 \end{align}
 
@@ -305,43 +299,43 @@ Before taking the average of the conservation of energy equations, we use \cref{
 \end{equation}
 We simplify the notation above by introducing
 \begin{equation}
-    \Kavg = \frac{1}{2} \uavgf_i \uavgf_i \qquad k = \frac{1}{2} \widetilde{\uflucf_i \uflucf_i}
+    \mathcal{K} = \frac{1}{2} \uavgf_i \uavgf_i \qquad k = \frac{1}{2} \widetilde{\uflucf_i \uflucf_i}
 \end{equation}
 Thus, we have for the energy density
 \begin{equation}
-    \overline{ \rho E } = \overline{ \rho e } + \overline{ \rho \frac{1}{2} u_i u_i } = \rhoavg \left ( \eavgf +  \overline{K} + k \right ),
+    \overline{ \rho E } = \overline{ \rho e } + \overline{ \rho \frac{1}{2} u_i u_i } = \rhoavg \left ( \eavgf +  \mathcal{K} + k \right ),
 \end{equation}
 and for the energy flux
 \begin{equation}
-    \overline{ \rho E u_j } = \overline{ \rho e u_j } + \overline{ \rho \frac{1}{2} u_i u_i u_j } = \rhoavg \left(\eavgf + \overline{K} + k \right) \uavgf_j + \rhoavg \widetilde{\eflucf \uflucf_j} + \rhoavg \uavgf_i \rs_{ij} + \rhoavg \frac{1}{2} \widetilde{\uflucf_i \uflucf_i \uflucf_j} 
+    \overline{ \rho E u_j } = \overline{ \rho e u_j } + \overline{ \rho \frac{1}{2} u_i u_i u_j } = \rhoavg \left(\eavgf + \mathcal{K} + k \right) \uavgf_j + \rhoavg \widetilde{\eflucf \uflucf_j} + \rhoavg \uavgf_i \rs_{ij} + \rhoavg \frac{1}{2} \widetilde{\uflucf_i \uflucf_i \uflucf_j} .
 \end{equation}
-We also note that $\Eavgf = \Uavgf + \bar{K} + k$. The average of the conservation of energy equation can now be expressed as
+The average of the conservation of energy \cref{eq:cons_energy} can now be expressed as
 \begin{multline}
 \label{eq:favre_energy_intermediate}
-\frac{\partial \rhoavg \Eavgf}{\partial t} + \frac{\partial \rhoavg \Eavgf \uavgf_j }{\partial x_j} = -\frac{\partial \rhoavg \widetilde{ u'' u''_j } }{\partial x_j} - \frac{\partial \rhoavg \uavgf_i \rs_{ij} }{\partial x_j} - \frac{ \partial }{ \partial x_j } \left ( \rhoavg \frac{1}{2} \widetilde{ \uflucf_i \uflucf_i \uflucf_j } \right ) \\
-- \frac{ \partial \langle U_j P \rangle }{\partial x_j} + \frac{ \partial \langle U_i T_{ij} \rangle }{\partial x_j} - \frac{\partial \langle q_j \rangle}{\partial x_j} + \rhoavg \tilde{F}_i \tilde{U}_i + \langle \rho f_i'' u_i'' \rangle
+\frac{\partial \rhoavg \Eavgf}{\partial t} + \frac{\partial \rhoavg \Eavgf \uavgf_j }{\partial x_j} = -\frac{\partial \rhoavg \widetilde{ \eflucf u''_j } }{\partial x_j} - \frac{\partial \rhoavg \uavgf_i \rs_{ij} }{\partial x_j} - \frac{ \partial }{ \partial x_j } \left ( \rhoavg \frac{1}{2} \widetilde{ \uflucf_i \uflucf_i \uflucf_j } \right ) \\
+- \frac{ \partial \overline{ u_j p } }{\partial x_j} + \frac{ \partial \overline{ u_i t_{ij} } }{\partial x_j} - \frac{\partial \qavg_j }{\partial x_j} + \rhoavg \favgf_i \uavgf_i + \rhoavg \widetilde{ \fflucf_i \uflucf_i }
 \end{multline}
-The term $ \langle U_j P \rangle $ is treated as follows
+The term $\overline{u_j p}$ is treated as follows
 \begin{align}
-\langle U_j P \rangle &= \tilde{U}_j \pavg  + \langle u''_j P \rangle \nonumber \\ 
-&= \rhoavg \frac { \tilde{U}_j \pavg}{\rhoavg} + R \rhoavg \widetilde{ u''_j T } \nonumber \\
-&= \rhoavg \frac{ \tilde{U}_j \pavg }{\rhoavg} + C_p \rhoavg \widetilde{ u''_j \Tflucf } - \rhoavg \widetilde{ u''_j u'' } \label{eq:puj_expansion} ,
+\overline{ u_j p } &= \uavgf_j \pavg  + \overline{ \uflucf_j p } \nonumber \\ 
+&= \rhoavg \frac { \uavgf_j \pavg}{\rhoavg} + R \rhoavg \widetilde{ \uflucf_j T } \nonumber \\
+&= \rhoavg \frac{ \uavgf_j \pavg }{\rhoavg} + C_p \rhoavg \widetilde{ \uflucf_j \Tflucf } - \rhoavg \widetilde{ \uflucf_j \eflucf } \label{eq:puj_expansion} ,
 \end{align}
-where we have used $P = \rho R T$, $R = C_p - C_v$ and $U = C_v T$. For $\langle U_j T_{ij} \rangle $ we have
+where we have used $p = \rho R T$, $R = C_p - C_v$ and $e = C_v T$. For $\overline{ u_i t_{ij} }$ we have
 \begin{equation}
 \label{eq:tuj_expansion}
-\langle U_i T_{ij} \rangle = \uavgf_i \langle T_{ij} \rangle + \langle \uflucf_i T_{ij} \rangle. 
+\overline{ u_i t_{ij} } = \uavgf_i \tavg_{ij} + \overline{ \uflucf_i t_{ij} }. 
 \end{equation}
 These expansions are then plugged into \cref{eq:favre_energy_intermediate}. 
 
 Before taking the average of the conservation equation for a scalar, we make use of \cref{eq:favre_rho_ab,eq:favre_ab} to show
 \begin{equation}
 \label{eq:scalar_flux_expansion}
-    \lbra \rho Y U_j \rbra = \rhoavg \widetilde{Y U_j} = \rhoavg \left ( \yavgf \uavgf_j + \widetilde{\yflucf \uflucf_j} \right).
+    \overline{ \rho Y u_j } = \rhoavg \widetilde{Y u_j} = \rhoavg \left ( \Yavgf \uavgf_j + \widetilde{\Yflucf \uflucf_j} \right).
 \end{equation}
 The second term on the right-hand side above is the turbulent scalar flux. The average of the conservation equation for a scalar can now be expressed as
 \begin{equation}
-    \frac{\partial \rho \yavgf}{\partial t} + \frac{\partial \rhoavg \yavgf \uavgf_j}{\partial x_j} = -\frac{\partial \langle J_j \rangle}{\partial x_j} - \frac{\partial \rhoavg \widetilde{\yflucf \uflucf_j}}{\partial x_j} + \langle W \rangle.
+    \frac{\partial \rho \Yavgf}{\partial t} + \frac{\partial \rhoavg \Yavgf \uavgf_j}{\partial x_j} = -\frac{ \partial \Javg_j }{ \partial x_j } - \frac{ \partial \rhoavg \widetilde{\Yflucf \uflucf_j} }{ \partial x_j } + \Wavg.
 \end{equation}
 
 To summarize, the Favre-averaged governing equations are
@@ -351,27 +345,27 @@ To summarize, the Favre-averaged governing equations are
 \end{equation}
 \begin{equation}
 \label{eq:favre_vel}
-\frac{\partial \rhoavg \uavgf_i}{\partial t} + \frac{\partial \rhoavg \uavgf_i \uavgf_j}{\partial x_j} = -\frac{\partial \pavg}{\partial x_i} + \frac{\partial \langle T_{ij} \rangle }{\partial x_j} - \frac{\partial \rhoavg \rs_{ij} }{\partial x_j} + \rhoavg \tilde{F}_i,
+\frac{\partial \rhoavg \uavgf_i}{\partial t} + \frac{\partial \rhoavg \uavgf_i \uavgf_j}{\partial x_j} = -\frac{\partial \pavg}{\partial x_i} + \frac{\partial \tavg_{ij}}{\partial x_j} - \frac{\partial \rhoavg \rs_{ij} }{\partial x_j} + \rhoavg \favgf_i,
 \end{equation}
 \begin{multline}
 \label{eq:favre_energy}
-\frac{\partial \rhoavg \Eavgf}{\partial t} + \frac{\partial}{\partial x_j} \left [ \rhoavg \left ( \tilde{E} + \frac{ \pavg}{ \rhoavg} \right ) \tilde{U}_j \right ] = - \frac{\partial}{\partial x_j} \left [ \uavgf_i \left ( \rhoavg \rs_{ij} - \langle T_{ij} \rangle \right ) \right ] \\
-- \frac{ \partial }{\partial x_j} \left ( \rhoavg \frac{1}{2} \widetilde{ \uflucf_i \uflucf_i \uflucf_j } - \langle \uflucf_i T_{ij} \rangle \right ) - \frac{\partial \langle q_j \rangle}{\partial x_j} - \frac{\partial}{\partial x_j} \left ( C_p \rhoavg \widetilde{ \uflucf_j \Tflucf } \right ) + \rhoavg \tilde{F}_i \tilde{U}_i + \langle \rho f_i'' \uflucf_i \rangle.
+\frac{\partial \rhoavg \Eavgf}{\partial t} + \frac{\partial}{\partial x_j} \left [ \rhoavg \left ( \Eavgf + \frac{ \pavg}{ \rhoavg} \right ) \uavgf_j \right ] = - \frac{\partial}{\partial x_j} \left [ \uavgf_i \left ( \rhoavg \rs_{ij} - \tavg_{ij} \right ) \right ] \\
+- \frac{ \partial }{\partial x_j} \left ( \rhoavg \frac{1}{2} \widetilde{ \uflucf_i \uflucf_i \uflucf_j } - \overline{ \uflucf_i t_{ij} } \right ) - \frac{\partial \qavg_j}{\partial x_j} - \frac{\partial}{\partial x_j} \left ( C_p \rhoavg \widetilde{ \uflucf_j \Tflucf } \right ) + \rhoavg \favgf_i \uavgf_i + \rhoavg \widetilde{ \fflucf_i \uflucf_i }.
 \end{multline}
 \begin{equation}
     \label{eq:favre_scalar}
-    \frac{\partial \rhoavg \yavgf}{\partial t} + \frac{\partial \rhoavg \yavgf \uavgf_j}{\partial x_j} = -\frac{\partial \langle J_j \rangle}{\partial x_j} - \frac{\partial \rhoavg \widetilde{\yflucf \uflucf_j}}{\partial x_j} + \langle W \rangle.    
+    \frac{\partial \rhoavg \Yavgf}{\partial t} + \frac{\partial \rhoavg \Yavgf \uavgf_j}{\partial x_j} = -\frac{\partial \Javg_j}{\partial x_j} - \frac{\partial \rhoavg \widetilde{\Yflucf \uflucf_j}}{\partial x_j} + \Wavg.    
 \end{equation}
 The averages of the diffusive scalar flux, the shear-stress tensor, and the heat-conduction flux are approximated as
 \begin{equation}
     \label{eq:shear_stress_model}
-    \langle T_{ij} \rangle \approx 2 \mu \tilde{S}^*_{ij},
+    \tavg_{ij} \approx 2 \mu \Savgf^*_{ij},
 \end{equation}
 \begin{equation}
-    \lbra q_i \rbra \approx \kappa \frac{ \partial \tilde{T} }{ \partial x_i }.
+    \qavg_i \approx -\kappa \frac{ \partial \Tavgf }{ \partial x_i }.
 \end{equation}
 \begin{equation}
-    \langle J_i \rangle \approx - \rhoavg D \frac{\partial \yavgf}{\partial x_i},
+    \Javg_i \approx - \rhoavg D \frac{\partial \Yavgf}{\partial x_i},
 \end{equation}
 The transport coefficients are computed using
 \begin{equation}
@@ -388,33 +382,33 @@ The averaged equations for a perfect gas are
     \pavg = \rhoavg R \Tavgf
 \end{equation}
 \begin{equation}
-    \Uavgf = C_v \Tavgf
+    \eavgf = C_v \Tavgf
 \end{equation}
 \begin{equation}    
     R = \frac{R_u}{M}
 \end{equation}
 Additional exact relations are below
 \begin{equation} 
-    \Eavgf = \Uavgf + \bar{K} + k 
+    \Eavgf = \eavgf + \mathcal{K} + k 
 \end{equation}
 \begin{equation}    
-    \bar{K} = \frac{1}{2} \uavgf_i \uavgf_i
+    \mathcal{K} = \frac{1}{2} \uavgf_i \uavgf_i
 \end{equation}
 \begin{equation}    
     k = \frac{1}{2} \widetilde{\uflucf_i \uflucf_i}
 \end{equation}
 \begin{equation}
-    \widetilde{S}^*_{ij} = \frac{1}{2} \left ( \frac{\partial \uavgf_i}{\partial x_j} + \frac{\partial \uavgf_j}{\partial x_i} \right ) - \frac{1}{3} \frac{\partial \ukavgf}{\partial x_k} \delta_{ij}
+    \Savgf^*_{ij} = \frac{1}{2} \left ( \frac{\partial \uavgf_i}{\partial x_j} + \frac{\partial \uavgf_j}{\partial x_i} \right ) - \frac{1}{3} \frac{\partial \uavgf_k}{\partial x_k} \delta_{ij}
 \end{equation}
 Finally, the following models can be used to provide closure
 \begin{equation}
     \rs_{ij} = ...
 \end{equation}
 \begin{equation}
-- \rhoavg \frac{1}{2} \widetilde{ \uflucf_i \uflucf_i \uflucf_j} +  \langle \uflucf_i T_{ij} \rangle \approx \left(\mu + \frac{\mu_t}{\sigma_k}\right)\frac{\partial k}{\partial x_j},
+- \rhoavg \frac{1}{2} \widetilde{ \uflucf_i \uflucf_i \uflucf_j} +  \overline{ \uflucf_i t_{ij} } \approx \left(\mu + \frac{\mu_t}{\sigma_k}\right)\frac{\partial k}{\partial x_j},
 \end{equation}
 \begin{equation}
-C_p \rhoavg \widetilde{ \uflucf_j \Tflucf } \approx -\kappa_t\frac{\partial \Tavgf}{\partial x_j} \qquad \text{where} \qquad \kappa_T = \frac{\mu_T C_p}{Pr_T}.
+C_p \rhoavg \widetilde{ \uflucf_j \Tflucf } \approx -\kappa_t \frac{\partial \Tavgf}{\partial x_j} \qquad \text{where} \qquad \kappa_T = \frac{\mu_T C_p}{Pr_T}.
 \end{equation}
 
 %-------------------------------------------------------------------------------
@@ -429,25 +423,25 @@ C_p \rhoavg \widetilde{ \uflucf_j \Tflucf } \approx -\kappa_t\frac{\partial \Tav
 \subsection{Fluctuating velocity}
 %--------------------------------------------
 
-To derive an equation for the favre-fluctuating velocity, we will first focus on the left-hand side of \cref{eq:cons_momentum} only. Plugging in the decomposition $U_i = \uavgf_i + \uflucf_i$ in the left-hand side of \cref{eq:cons_momentum}, one obtains
+To derive an equation for the favre-fluctuating velocity, we will first focus on the left-hand side of \cref{eq:cons_momentum} only. Plugging in the decomposition $u_i = \uavgf_i + \uflucf_i$ in the left-hand side of \cref{eq:cons_momentum}, one obtains
 \begin{equation}
 \label{eq:deriv_uflucf}
-    \frac{\partial \rho \uavgf_i}{\partial t}  + \frac{\partial \rho \uflucf_i}{\partial t} + \frac{ \partial \rho \uavgf_i U_j}{\partial x_j} + \frac{\partial \rho \uflucf_i U_j}{\partial x_j}.
+    \frac{\partial \rho \uavgf_i}{\partial t}  + \frac{\partial \rho \uflucf_i}{\partial t} + \frac{ \partial \rho \uavgf_i u_j}{\partial x_j} + \frac{\partial \rho \uflucf_i u_j}{\partial x_j}.
 \end{equation}
 We will now look at the first and third terms above. Thus,
 \begin{align}
-    \frac{\partial \rho \uavgf_i}{\partial t} + \frac{ \partial \rho \uavgf_i U_j}{\partial x_j} &= \frac{\partial \rho}{\partial t} \uavgf_i + \rho \frac{\partial \uavgf_i}{\partial t} + \frac{\partial \rho U_j}{\partial x_j} \uavgf_i + \rho U_j \frac{\partial \uavgf_i}{\partial x_j} \nonumber \\
+    \frac{\partial \rho \uavgf_i}{\partial t} + \frac{ \partial \rho \uavgf_i u_j}{\partial x_j} &= \frac{\partial \rho}{\partial t} \uavgf_i + \rho \frac{\partial \uavgf_i}{\partial t} + \frac{\partial \rho u_j}{\partial x_j} \uavgf_i + \rho u_j \frac{\partial \uavgf_i}{\partial x_j} \nonumber \\
     &= \rho \frac{\partial \uavgf_i}{\partial t} + \rho \uavgf_j \frac{\partial \uavgf_i}{\partial x_j} + \rho \uflucf_j \frac{\partial \uavgf_i}{\partial x_j}.
 \end{align}
 The fourth term of \cref{eq:deriv_uflucf} is decomposed as
 \begin{align}
-    \frac{\partial \rho \uflucf_i U_j}{\partial x_j} &= \frac{\partial \rho \uflucf_i \uavgf_j}{\partial x_j} + \frac{\partial \rho \uflucf_i \uflucf_j}{\partial x_j} \nonumber \\
+    \frac{\partial \rho \uflucf_i u_j}{\partial x_j} &= \frac{\partial \rho \uflucf_i \uavgf_j}{\partial x_j} + \frac{\partial \rho \uflucf_i \uflucf_j}{\partial x_j} \nonumber \\
     &= \frac{\partial \rho \uflucf_i}{\partial x_j} \uavgf_j + \rho \uflucf_i \frac{\partial \uavgf_j}{\partial x_j} + \frac{\partial \rho \uflucf_i \uflucf_j}{\partial x_j}.
 \end{align}
 Combining all of the results above, one obtains
 \begin{equation}
 \label{eq:vel_fluc_favre}
-    \frac{\partial \rho \uflucf_i}{\partial t} + \rho \frac{\partial \uavgf_i}{\partial t} + \rho \uavgf_j \frac{\partial \uavgf_i}{\partial x_j} + \rho \uflucf_j \frac{\partial \uavgf_i}{\partial x_j} + \frac{\partial \rho \uflucf_i}{\partial x_j} \uavgf_j + \rho \uflucf_i \frac{\partial \uavgf_j}{\partial x_j} + \frac{\partial \rho \uflucf_i \uflucf_j}{\partial x_j} = -\frac{\partial P}{\partial x_i} + \frac{\partial T_{ij}}{\partial x_j} + \rho F_i.
+    \frac{\partial \rho \uflucf_i}{\partial t} + \rho \frac{\partial \uavgf_i}{\partial t} + \rho \uavgf_j \frac{\partial \uavgf_i}{\partial x_j} + \rho \uflucf_j \frac{\partial \uavgf_i}{\partial x_j} + \frac{\partial \rho \uflucf_i}{\partial x_j} \uavgf_j + \rho \uflucf_i \frac{\partial \uavgf_j}{\partial x_j} + \frac{\partial \rho \uflucf_i \uflucf_j}{\partial x_j} = -\frac{\partial p}{\partial x_i} + \frac{\partial t_{ij}}{\partial x_j} + \rho f_i.
 \end{equation}
 
 %--------------------------------------------
@@ -456,7 +450,7 @@ Combining all of the results above, one obtains
 The equation for the kinetic energy of the mean flow is obtained by multiplying \cref{eq:favre_vel}---the Favre-averaged equation for velocity---by $\uavgf_i$, which leads to
 \begin{equation}
 \label{eq:ke_favreflow}
-\frac{ \partial \rhoavg \bar{K} }{ \partial t} + \frac{ \partial \rhoavg \bar{K} \uavgf_j }{ \partial x_j} = \rhoavg \rs_{ij} \frac{ \partial \uavgf_i }{ \partial x_j } + \pavg \frac{ \partial \uavgf_i }{ \partial x_i } - \langle T_{ij} \rangle \frac{ \partial \uavgf_i }{ \partial x_j } - \frac{\partial}{\partial x_j} \left ( \uavgf_i \rhoavg \rs_{ij} + \uavgf_j \pavg - \uavgf_i \langle T_{ij} \rangle \right ) + \rhoavg \tilde{F}_i \uavgf_i
+\frac{ \partial \rhoavg \mathcal{K} }{ \partial t} + \frac{ \partial \rhoavg \mathcal{K} \uavgf_j }{ \partial x_j} = \rhoavg \rs_{ij} \frac{ \partial \uavgf_i }{ \partial x_j } + \pavg \frac{ \partial \uavgf_i }{ \partial x_i } - \langle T_{ij} \rangle \frac{ \partial \uavgf_i }{ \partial x_j } - \frac{\partial}{\partial x_j} \left ( \uavgf_i \rhoavg \rs_{ij} + \uavgf_j \pavg - \uavgf_i \langle T_{ij} \rangle \right ) + \rhoavg \tilde{F}_i \uavgf_i
 \end{equation}
 
 %--------------------------------------------
@@ -564,10 +558,10 @@ Note that we can write
 so as to be in agreement with the equations in Lele 1994.
 
 %--------------------------------------------
-\subsection{Summary of conservation equations for $\bar{K}$, $k$, $\Uavgf$}
+\subsection{Summary of conservation equations for $\mathcal{K}$, $k$, $\Uavgf$}
 %--------------------------------------------
 \begin{equation}
-\frac{ \partial \rhoavg \bar{K} }{ \partial t} + \frac{ \partial \rhoavg \bar{K} \uavgf_j }{ \partial x_j} = \rhoavg \rs_{ij} \frac{ \partial \uavgf_i }{ \partial x_j } + \pavg \frac{ \partial \uavgf_i }{ \partial x_i } - \langle T_{ij} \rangle \frac{ \partial \uavgf_i }{ \partial x_j } - \frac{\partial}{\partial x_j} \left ( \uavgf_i \rhoavg \rs_{ij} + \uavgf_j \pavg - \uavgf_i \langle T_{ij} \rangle \right ) + \rhoavg \tilde{F}_i \uavgf_i
+\frac{ \partial \rhoavg \mathcal{K} }{ \partial t} + \frac{ \partial \rhoavg \mathcal{K} \uavgf_j }{ \partial x_j} = \rhoavg \rs_{ij} \frac{ \partial \uavgf_i }{ \partial x_j } + \pavg \frac{ \partial \uavgf_i }{ \partial x_i } - \langle T_{ij} \rangle \frac{ \partial \uavgf_i }{ \partial x_j } - \frac{\partial}{\partial x_j} \left ( \uavgf_i \rhoavg \rs_{ij} + \uavgf_j \pavg - \uavgf_i \langle T_{ij} \rangle \right ) + \rhoavg \tilde{F}_i \uavgf_i
 \end{equation}
 \begin{multline}
 \frac{ \partial \rhoavg k }{ \partial t}  + \frac{ \partial \rhoavg k \uavgf_j }{ \partial x_j } = - \langle \uflucf_i \rangle \frac{ \partial \pavg }{ \partial x_i } + \langle \uflucf_i \rangle \frac{ \partial \langle T_{ij} \rangle }{ \partial x_j } \\
@@ -589,10 +583,10 @@ Note that if you add up all three equations, one obtains a conservation equation
 %--------------------------------------------
 \subsection{Squared averaged scalar}
 %--------------------------------------------
-The equation for the squared averaged scalar is obtained by multiplying \cref{eq:favre_scalar}---the Favre-averaged equation for the scalar---by $\yavgf$, which leads to
+The equation for the squared averaged scalar is obtained by multiplying \cref{eq:favre_scalar}---the Favre-averaged equation for the scalar---by $\Yavgf$, which leads to
 \begin{equation}
     \label{eq:squared_averaged_scalar_favre}
-    \frac{\partial \rhoavg \yavgf^2}{\partial t} + \frac{\partial \rhoavg \yavgf^2 \uavgf_j}{\partial x_j} = 2 \langle J_j \rangle \frac{\partial \yavgf}{\partial x_j} + 2 \rhoavg \widetilde{\yflucf \uflucf_j} \frac{\partial \yavgf}{\partial x_j} - 2\frac{\partial}{\partial x_j} \left ( \yavgf \langle J_j \rangle + \yavgf \rhoavg \widetilde{\yflucf \uflucf_j} \right ) + 2 \yavgf \langle W \rangle.
+    \frac{\partial \rhoavg \Yavgf^2}{\partial t} + \frac{\partial \rhoavg \Yavgf^2 \uavgf_j}{\partial x_j} = 2 \langle J_j \rangle \frac{\partial \Yavgf}{\partial x_j} + 2 \rhoavg \widetilde{\Yflucf \uflucf_j} \frac{\partial \Yavgf}{\partial x_j} - 2\frac{\partial}{\partial x_j} \left ( \Yavgf \langle J_j \rangle + \Yavgf \rhoavg \widetilde{\Yflucf \uflucf_j} \right ) + 2 \Yavgf \langle W \rangle.
 \end{equation}
 
 %--------------------------------------------
@@ -605,19 +599,19 @@ To obtain the governing equation for the scalar variance, one subtracts \cref{eq
 \end{equation}
 and \cref{eq:squared_averaged_scalar_favre}
 \begin{equation}
-    \langle J_j \rangle \frac{\partial \yavgf}{\partial x_j} - \frac{\partial \yavgf \langle J_j \rangle}{\partial x_j} = -\yavgf \frac{\partial \langle J_j \rangle}{\partial x_j}.
+    \langle J_j \rangle \frac{\partial \Yavgf}{\partial x_j} - \frac{\partial \Yavgf \langle J_j \rangle}{\partial x_j} = -\Yavgf \frac{\partial \langle J_j \rangle}{\partial x_j}.
 \end{equation}
 For the average of the right-hand side of \cref{eq:diffusive_scalar_var_inter}, we will use the decomposition $Y = \yavg + \yfluc$ and $J_i = \langle J_i \rangle + j_i$, instead of the traditional Favre decompositions. This thus allows us to write
 \begin{align}
-    -\left < Y \frac{\partial J_j}{\partial x_j} \right > + \yavgf \frac{\partial \langle J_j \rangle}{\partial x_j} &= -\yavg \frac{\partial \langle J_j \rangle}{\partial x_j} - \left < \yfluc \frac{\partial j_j}{\partial x_j} \right > + \yavgf \frac{\partial \langle J_j \rangle}{\partial x_j} \nonumber \\
-    &= -\langle \yflucf \rangle \frac{\partial \langle J_j \rangle}{\partial x_j} - \left < \yfluc \frac{\partial j_j}{\partial x_j} \right > \nonumber \\
-    &= -\langle \yflucf \rangle \frac{\partial \langle J_j \rangle}{\partial x_j} - \frac{\partial \langle \yfluc j_j \rangle}{\partial x_j} + \left < j_j \frac{\partial \yfluc}{\partial x_j} \right >.
+    -\left < Y \frac{\partial J_j}{\partial x_j} \right > + \Yavgf \frac{\partial \langle J_j \rangle}{\partial x_j} &= -\yavg \frac{\partial \langle J_j \rangle}{\partial x_j} - \left < \yfluc \frac{\partial j_j}{\partial x_j} \right > + \Yavgf \frac{\partial \langle J_j \rangle}{\partial x_j} \nonumber \\
+    &= -\langle \Yflucf \rangle \frac{\partial \langle J_j \rangle}{\partial x_j} - \left < \yfluc \frac{\partial j_j}{\partial x_j} \right > \nonumber \\
+    &= -\langle \Yflucf \rangle \frac{\partial \langle J_j \rangle}{\partial x_j} - \frac{\partial \langle \yfluc j_j \rangle}{\partial x_j} + \left < j_j \frac{\partial \yfluc}{\partial x_j} \right >.
 \end{align}
 Using the above, the overall equation for the scalar variance is written as
 \begin{multline}
     \label{eq:scalar_variance_favre}
-    \frac{\partial \rhoavg \widetilde{\yflucf \yflucf}}{\partial t} + \frac{\partial \rhoavg \widetilde{\yflucf \yflucf} \uavgf_j }{\partial x_j} = -2 \langle \yflucf \rangle \frac{\partial \langle J_j \rangle }{\partial x_j} \\
-    -2 \rhoavg \widetilde{\yflucf \uflucf_j} \frac{\partial \yavgf}{\partial x_j} + 2 \left < j_j \frac{\partial y}{\partial x_j} \right > - 2 \frac{\partial}{\partial x_j} \left ( \frac{1}{2} \rhoavg \widetilde{\yflucf \yflucf \uflucf_j} +  \langle \yfluc j_j \rangle \right) + 2 \langle \yflucf \rangle \langle W \rangle + 2 \langle \yflucf w \rangle.
+    \frac{\partial \rhoavg \widetilde{\Yflucf \Yflucf}}{\partial t} + \frac{\partial \rhoavg \widetilde{\Yflucf \Yflucf} \uavgf_j }{\partial x_j} = -2 \langle \Yflucf \rangle \frac{\partial \langle J_j \rangle }{\partial x_j} \\
+    -2 \rhoavg \widetilde{\Yflucf \uflucf_j} \frac{\partial \Yavgf}{\partial x_j} + 2 \left < j_j \frac{\partial y}{\partial x_j} \right > - 2 \frac{\partial}{\partial x_j} \left ( \frac{1}{2} \rhoavg \widetilde{\Yflucf \Yflucf \uflucf_j} +  \langle \yfluc j_j \rangle \right) + 2 \langle \Yflucf \rangle \langle W \rangle + 2 \langle \Yflucf w \rangle.
 \end{multline}
 
 As was done for the TKE, one can define a scalar dissipation $\epsilon_Y$ as 
@@ -1043,7 +1037,7 @@ The rapid pressure-rate-of-strain term can now be written in the succinct notati
 %-------------------------------------------------------------------------------
 \section{Definitions}
 %-------------------------------------------------------------------------------
-One can use spectral tools such as the Fourier transform to analyze the fluid equations from a different perspective. In this section we provide definitions for various spectral quantities required for this spectral approach.
+One can use spectral tools such as the Fourier transform to analyze the fluid equations from a different perspective. In this section we provide definitions for various spectral quantities required for this spectral approach. For sake of notational simplicity, we refer to either the Reynolds-fluctuating or the Favre-fluctuating velocity simply as $u_i$ (no apostrophe or double apostrophe).
 
 %--------------------------------------------
 \subsection{Three-dimensional spectral analysis}
@@ -1167,13 +1161,27 @@ The relationship between one- and three-dimensional spectra are given by
 
 The energy spectrum is defined as 
 \begin{equation}
-\est( \kappa ) = \oint \frac{1}{2} \est_{ii}( \kvec ) \, dS(\kappa) = \int_0^{2\pi} \int_0^\pi \frac{1}{2} \est_{ii}(\kvec) \kappa^2 \sin(\theta) \, d\theta d\phi
+\est( \kappa, t ) = \oint \frac{1}{2} \est_{ii}( \kvec, t ) \, dS(\kappa) = \int_0^{2\pi} \int_0^\pi \frac{1}{2} \est_{ii}(\kvec, t) \kappa^2 \sin(\theta) \, d\theta d\phi
 \end{equation}
 
 A relationship can be obtained between the discrete and continuous approaches. If we denote $\kvec_D$ and $\kvec_C$ as the wave vectors of the discrete and continuous approach, this relationship is as follows
 \begin{equation}
 \label{eq:vst_discrete_continuous}
 \est_{ij}(\kvec_C,t) = \sum_{\kvec_D} \delta(\kvec_C - \kvec_D) \hat{\tpvc}_{ij}(\kvec_D,t).
+\end{equation}
+
+An alternative relationship between the discrete and continuous approaches can be established which is more amenable for numerical computations of spectra. We note that the TKE can be computed from either the discrete or continuous approach as follows
+\begin{equation}
+    k = \sum_{\kvec} \frac{1}{2} \hat{\tpvc}_{ii}(\kvec,t) = \int_0^\infty \est(\kappa,t) \, d\kappa.
+\end{equation}
+We rewrite the equality above using a discretization of the magnitude of the wavevector
+\begin{equation}
+    \sum_{\kappa} \left ( \sum_{\substack{\kvec \\ |\kvec|=\kappa}} \frac{1}{2} \hat{\tpvc}_{ii}(\kvec,t) \right) = \sum_{\kappa} \est(\kappa,t) \Delta \kappa.
+\end{equation}
+Thus, we approximate the energy spectrum as
+\begin{equation}
+    \label{eq:num_comp_spectra}
+    E(\kappa,t) = \frac{1}{\Delta \kappa} \sum_{\substack{\kvec \\ |\kvec|=\kappa}} \frac{1}{2} \hat{\tpvc}_{ii}(\kvec,t) .
 \end{equation}
 
 
@@ -1184,30 +1192,33 @@ Using expressions from the previous section we obtain
 \begin{itemize}
 \item Discrete
 \begin{equation}
-\langle \uifluc \ujfluc \rangle = \sum_{\kvec} \hat{\tpvc}_{ij}(\kvec,t)
+    \langle \uifluc \ujfluc \rangle = \sum_{\kvec} \hat{\tpvc}_{ij}(\kvec,t)
 \end{equation} 
 \begin{equation}
-k = \sum_{\kvec} \frac{1}{2} \hat{\tpvc}_{ii}(\kvec,t) 
+    \label{eq:discrete_k_spectral}
+    k = \sum_{\kvec} \frac{1}{2} \hat{\tpvc}_{ii}(\kvec,t) 
 \end{equation}
 \begin{equation}
-\left < \frac{ \partial \uifluc }{ \partial x_k} \frac{ \partial \ujfluc }{ \partial x_l } \right > = \sum_{\kvec} \kappa_k \kappa_l \hat{\tpvc}_{ij}(\kvec,t)
+    \left < \frac{ \partial \uifluc }{ \partial x_k} \frac{ \partial \ujfluc }{ \partial x_l } \right > = \sum_{\kvec} \kappa_k \kappa_l \hat{\tpvc}_{ij}(\kvec,t)
 \end{equation}
 \begin{equation}
-\langle s^2 \rangle = \langle 2 s_{ij} s_{ij} \rangle = \sum_{\kvec} \kappa_i \kappa_i \hat{\tpvc}_{jj}(\kvec,t)
+    \langle s^2 \rangle = \langle 2 s_{ij} s_{ij} \rangle = \sum_{\kvec} \kappa_i \kappa_i \hat{\tpvc}_{jj}(\kvec,t)
 \end{equation}
+
 \item Continuous
 \begin{equation}
-\langle \uifluc \ujfluc \rangle = \int_\Rthree E_{ij}(\kvec,t) d\kvec
+    \label{eq:continuous_uiuj_spectral}
+    \langle \uifluc \ujfluc \rangle = \int_\Rthree E_{ij}(\kvec,t) d\kvec
 \end{equation} 
 \begin{equation}
-k =\int_0^\infty \est(\kappa,t) \, d\kappa
+    k =\int_0^\infty \est(\kappa,t) \, d\kappa
 \end{equation}
 \begin{equation}
-\left < \frac{ \partial \uifluc }{ \partial x_k} \frac{ \partial \ujfluc }{ \partial x_l } \right > = \int_{\Rthree} \kappa_k \kappa_l \est_{ij}(\kvec,t) \, d\kvec
+    \left < \frac{ \partial \uifluc }{ \partial x_k} \frac{ \partial \ujfluc }{ \partial x_l } \right > = \int_{\Rthree} \kappa_k \kappa_l \est_{ij}(\kvec,t) \, d\kvec
 \end{equation}
 \begin{equation}
-\label{eq:strain_mag_spectral}
-\langle s^2 \rangle = \langle 2 s_{ij} s_{ij} \rangle = 2 \int_{0}^\infty \kappa^2 \est(\kappa,t) \, d\kappa
+    \label{eq:strain_mag_spectral}
+    \langle s^2 \rangle = \langle 2 s_{ij} s_{ij} \rangle = 2 \int_{0}^\infty \kappa^2 \est(\kappa,t) \, d\kappa
 \end{equation}
 \end{itemize}
 
@@ -3140,7 +3151,47 @@ The momentum equations follow
 &-\frac{1}{\rho} \frac{\partial \pavg}{\partial z} + \nu \left ( \frac{\partial^2 \langle u_z \rangle}{\partial r^2} + \frac{1}{r^2} \frac{\partial^2 \langle u_z \rangle}{\partial \theta^2} + \frac{\partial^2 \langle u_z \rangle}{\partial z^2} + \frac{1}{r} \frac{\partial \langle u_z \rangle}{\partial r} \right ) \nonumber \\
 &- \frac{\partial \langle u_z u_r \rangle}{\partial r} - \frac{1}{r} \frac{\partial \langle u_z u_\theta \rangle}{\partial \theta} - \frac{\partial \langle u_z u_z \rangle}{\partial z} - \frac{\langle u_z u_r \rangle}{r}.
 \end{align}
- 
+
+%###############################################################################
+%
+\chapter{Rogallo's initial condition}
+%
+%###############################################################################
+The Rogallo method \cite{rogallo1981} can be used to initialize an isotropic turbulent field. It consists on specifying the fourier coefficients (both the magnitude and direction) of the velocity field.
+
+%-------------------------------------------------------------------------------
+\section{The magnitude}
+%-------------------------------------------------------------------------------
+For isotropic turbulence, the energy spectrum tensor takes the form
+\begin{equation}
+    \est_{ij}(\kvec,t) = \frac{\est(\kappa,t)}{4 \pi \kappa^2} \left ( \delta_{ij} - \frac{\kappa_i \kappa_j}{\kappa^2} \right ).
+\end{equation}
+Thus, given \cref{eq:continuous_uiuj_spectral}, the kinetic energy can be obtained using
+\begin{equation}
+    k = \frac{1}{2} \int_\Rthree \est_{ii}(\kvec,t) \, d\kvec = \int_\Rthree \frac{\est(\kappa,t)}{4 \pi \kappa^2} \, d\kvec.
+\end{equation}
+We now want to approximate this integral discretely. If one discretizes the continuous wave-vector space by the discrete wave vector space (i.e. $\kvec_C \to \kvec_D$), and uses a cubic domain of length $2 \pi$, then 
+\begin{equation}
+    \Delta^3_{\kvec} = \left ( \kappa_x^{(i+1)} - \kappa_x^{i} \right ) \left ( \kappa_y^{(j+1)} - \kappa_y^{j} \right ) \left ( \kappa_z^{(k+1)} - \kappa_z^{k} \right ) = 1,
+\end{equation}
+for all $i,j,k$. Thus, the integral of the energy spectrum tensor above can be approximated as
+\begin{equation}
+    k = \sum_{\kvec} \frac{\est(\kappa,t)}{4 \pi \kappa^2}.
+\end{equation}
+On the other hand, from the discrete point of view, the kinetic energy is given by \cref{eq:discrete_k_spectral}, that is
+\begin{equation}
+    k = \sum_{\kvec} \frac{1}{2} \hat{\tpvc}_{ii}(\kvec,t).
+\end{equation}
+Thus, comparing the last two equations, we can make the following approximation
+\begin{equation}
+    \overline{ \hat{u}_i^*(\kvec,t) \hat{u}_i(\kvec,t)} = \frac{\est(\kappa,t)}{2 \pi \kappa^2}.
+\end{equation}
+Given a target energy spectrum $E(\kappa,t)$, the above can be used to initialize the magnitude of the Fourier coefficients. The energy spectrum for this flow---computed using \cref{eq:num_comp_spectra}---would match the target spectrum. 
+
+%-------------------------------------------------------------------------------
+\section{The direction}
+%-------------------------------------------------------------------------------
+
 \bibliography{library}
 \bibliographystyle{plain}
 
