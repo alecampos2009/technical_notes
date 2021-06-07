@@ -1,4 +1,5 @@
-% FINISHED UPDATING NOTATION UP TO PAGE 10
+% FINISHED UPDATING NOTATION UP TO SECTION 2.3.4 
+% (Turbulent kinetic energy for FAVRE averaging)
 
 \documentclass[oneside,a4paper,11pt]{report}
 
@@ -26,12 +27,16 @@
 
 \newcommand{\Javg}{\overline{J}}
 \newcommand{\Kavg}{\overline{K}}
+\newcommand{\Savg}{\overline{S}}
 \newcommand{\Wavg}{\overline{W}}
 
 \newcommand{\afluc}{a'}
 \newcommand{\pfluc}{p'}
+\newcommand{\sfluc}{s'}
+\newcommand{\tfluc}{t'}
 \newcommand{\ufluc}{u'}
 \newcommand{\vfluc}{v'}
+\newcommand{\wfluc}{w'}
 \newcommand{\yfluc}{y'}
 
 \newcommand{\rs}{\tau}          % Reynolds stresses
@@ -450,7 +455,7 @@ Combining all of the results above, one obtains
 The equation for the kinetic energy of the mean flow is obtained by multiplying \cref{eq:favre_vel}---the Favre-averaged equation for velocity---by $\uavgf_i$, which leads to
 \begin{equation}
 \label{eq:ke_favreflow}
-\frac{ \partial \rhoavg \mathcal{K} }{ \partial t} + \frac{ \partial \rhoavg \mathcal{K} \uavgf_j }{ \partial x_j} = \rhoavg \rs_{ij} \frac{ \partial \uavgf_i }{ \partial x_j } + \pavg \frac{ \partial \uavgf_i }{ \partial x_i } - \langle T_{ij} \rangle \frac{ \partial \uavgf_i }{ \partial x_j } - \frac{\partial}{\partial x_j} \left ( \uavgf_i \rhoavg \rs_{ij} + \uavgf_j \pavg - \uavgf_i \langle T_{ij} \rangle \right ) + \rhoavg \tilde{F}_i \uavgf_i
+\frac{ \partial \rhoavg \mathcal{K} }{ \partial t} + \frac{ \partial \rhoavg \mathcal{K} \uavgf_j }{ \partial x_j} = \rhoavg \rs_{ij} \frac{ \partial \uavgf_i }{ \partial x_j } + \pavg \frac{ \partial \uavgf_i }{ \partial x_i } - \tavg_{ij]} \frac{ \partial \uavgf_i }{ \partial x_j } - \frac{\partial}{\partial x_j} \left ( \uavgf_i \rhoavg \rs_{ij} + \uavgf_j \pavg - \uavgf_i \tavg_{ij} \right ) + \rhoavg \favgf_i \uavgf_i
 \end{equation}
 
 %--------------------------------------------
@@ -459,69 +464,69 @@ The equation for the kinetic energy of the mean flow is obtained by multiplying 
 To obtain the governing equation for the turbulent kinetic energy one subtracts \cref{eq:ke_favreflow} from the Reynolds average of \cref{eq:cons_kinetic_energy}, which is the equation for conservation of kinetic energy. We first regroup the shear stress terms of \cref{eq:cons_kinetic_energy}  
 \begin{equation}
 \label{eq:stress_tke_inter_T}
-     \frac{\partial U_i T_{ij} }{\partial x_j} - T_{ij} \frac{\partial U_i}{\partial x_j} =  U_i \frac{\partial T_{ij} }{\partial x_j}
+     \frac{\partial u_i t_{ij} }{\partial x_j} - t_{ij} \frac{\partial u_i}{\partial x_j} =  u_i \frac{\partial t_{ij} }{\partial x_j}
 \end{equation}
 and \cref{eq:ke_favreflow}
 \begin{equation}
-     -\langle T_{ij} \rangle \frac{ \partial \uavgf_i}{\partial x_j} + \frac{ \partial \uavgf_i \langle T_{ij} \rangle }{\partial x_j} = \uavgf_i \frac{ \partial \langle T_{ij} \rangle}{\partial x_j}.
+     -\tavg_{ij} \frac{ \partial \uavgf_i}{\partial x_j} + \frac{ \partial \uavgf_i \tavg_{ij} }{\partial x_j} = \uavgf_i \frac{ \partial \tavg_{ij} }{\partial x_j}.
 \end{equation}
-For the average of the right-hand side of \cref{eq:stress_tke_inter_T}, we will use the decompositions $U_i = \uiavg + \uifluc$ and $T_{ij} = \langle T_{ij} \rangle + t_{ij}$, instead of the Favre decomposition and \cref{eq:tuj_expansion}. This thus allows us to write 
+For the average of the right-hand side of \cref{eq:stress_tke_inter_T}, we will use the decompositions $u_i = \uavg_i + \ufluc_i$ and $t_{ij} = \tavg_{ij} + \tfluc_{ij}$, instead of the Favre decomposition and \cref{eq:tuj_expansion}. This thus allows us to write 
 \begin{align}
-\left < U_i \frac{\partial T_{ij} }{\partial x_j} \right > - \uavgf_i \frac{ \partial \langle T_{ij} \rangle}{\partial x_j} & = \uiavg \frac{\partial \langle T_{ij} \rangle}{\partial x_j} + \left < \uifluc \frac{\partial t_{ij}}{\partial x_j} \right > - \uavgf_i \frac{\partial \langle T_{ij} \rangle}{\partial x_j} \nonumber \\
-& = \langle \uflucf_i \rangle \frac{\partial \langle T_{ij} \rangle}{\partial x_j} + \left < \uifluc \frac{\partial t_{ij}}{\partial x_j} \right > \nonumber \\
-& = \langle \uflucf_i \rangle \frac{\partial \langle T_{ij} \rangle}{\partial x_j} + \frac{\partial \langle u_i t_{ij} \rangle}{\partial x_j} - \left <t_{ij} \frac{\partial u_i}{\partial x_j} \right >.
+\overline{ u_i \frac{\partial t_{ij} }{\partial x_j} } - \uavgf_i \frac{ \partial \tavg_{ij} }{\partial x_j} & = \uavg_i \frac{\partial \tavg_{ij} }{\partial x_j} + \overline{ \ufluc_i \frac{\partial \tfluc_{ij}}{\partial x_j} } - \uavgf_i \frac{\partial \tavg_{ij} }{\partial x_j} \nonumber \\
+& = \overline{ \uflucf_i } \frac{\partial \tavg_{ij} }{\partial x_j} + \overline{ \ufluc_i \frac{\partial \tfluc_{ij} }{\partial x_j} } \nonumber \\
+& = \overline{ \uflucf_i } \frac{\partial \tavg_{ij} }{\partial x_j} + \frac{\partial \overline{ \ufluc_i \tfluc_{ij} }}{\partial x_j} - \overline{ \tfluc_{ij} \frac{\partial \ufluc_i}{\partial x_j} }.
 \end{align} 
 
 The same procedure is followed for the pressure terms. We first regroup the pressure terms of \cref{eq:cons_kinetic_energy}
 \begin{equation}
 \label{eq:stress_tke_inter_p}
-      -\frac{\partial U_i P }{\partial x_i} + P \frac{\partial U_i}{\partial x_i} =  -U_i \frac{\partial P }{\partial x_i}   
+      -\frac{\partial u_i p }{\partial x_i} + p \frac{\partial u_i}{\partial x_i} =  -u_i \frac{\partial p }{\partial x_i}   
 \end{equation}
 and \cref{eq:ke_ransflow}
 \begin{equation}
-     \langle P \rangle \frac{ \partial \uavgf_i}{\partial x_i} - \frac{ \partial \uavgf_i \langle P \rangle }{\partial x_i} = -\uavgf_i \frac{ \partial \langle P \rangle}{\partial x_i}.    
+     \pavg \frac{ \partial \uavgf_i}{\partial x_i} - \frac{ \partial \uavgf_i \pavg }{\partial x_i} = -\uavgf_i \frac{ \partial \pavg}{\partial x_i}.    
 \end{equation}
 Again, the Reynolds decomposition of velocity is used for the average of the right-hand side of \cref{eq:stress_tke_inter_p}. This allows us to write
 \begin{align}
--\left < U_i \frac{\partial P }{\partial x_i} \right > + \uavgf_i \frac{ \partial \langle P \rangle}{\partial x_i} & = -\uiavg \frac{\partial \langle P \rangle}{\partial x_i} - \left < \uifluc \frac{\partial p}{\partial x_i} \right > + \uavgf_i \frac{\partial \langle P \rangle}{\partial x_i} \nonumber \\
-& = -\langle \uflucf_i \rangle \frac{\partial \langle P \rangle}{\partial x_i} - \left < \uifluc \frac{\partial p}{\partial x_i} \right > \nonumber \\
-& = -\langle \uflucf_i \rangle \frac{\partial \langle P \rangle}{\partial x_i} - \frac{\partial \langle u_i p \rangle}{\partial x_i} + \left < p \frac{\partial u_i}{\partial x_i} \right >.
+-\overline{ u_i \frac{\partial p }{\partial x_i} } + \uavgf_i \frac{ \partial \pavg }{\partial x_i} & = -\uavg_i \frac{\partial \pavg}{\partial x_i} - \overline{ \ufluc_i \frac{\partial \pfluc}{\partial x_i} } + \uavgf_i \frac{\partial \pavg}{\partial x_i} \nonumber \\
+& = - \overline{ \uflucf_i } \frac{\partial \pavg }{\partial x_i} - \overline{ \ufluc_i \frac{\partial \pfluc}{\partial x_i} } \nonumber \\
+& = -\overline{ \uflucf_i } \frac{\partial \pavg }{\partial x_i} - \frac{\partial \overline{ \ufluc_i \pfluc } }{\partial x_i} + \overline{ \pfluc \frac{\partial \ufluc_i}{\partial x_i} }.
 \end{align} 
 
 The overall equation for the turbulent kinetic energy is shown below
 \begin{multline}
 \label{eq:ke_favre_conservation}
-\frac{ \partial \rhoavg k }{ \partial t}  + \frac{ \partial \rhoavg k \uavgf_j }{ \partial x_j } = - \langle \uflucf_i \rangle \frac{ \partial \pavg }{ \partial x_i } + \langle \uflucf_i \rangle \frac{ \partial \langle T_{ij} \rangle }{ \partial x_j } \\
-- \rhoavg \rs_{ij} \frac{ \partial \uavgf_i }{ \partial x_j}  + \left < p \frac{ \partial \uifluc } { \partial x_i } \right > - \left <  t_{ij} \frac{ \partial u_i }{ \partial x_j } \right > - \frac{\partial}{ \partial x_j} \left ( \frac{1}{2} \langle \rho \uflucf_j \uflucf_i \uflucf_i \rangle + \langle \ujfluc p \rangle  - \langle \uifluc t_{ij} \rangle \right ) + \langle \rho f_i'' \uflucf_i \rangle
+\frac{ \partial \rhoavg k }{ \partial t}  + \frac{ \partial \rhoavg k \uavgf_j }{ \partial x_j } = - \overline{ \uflucf_i } \frac{ \partial \pavg }{ \partial x_i } + \overline{ \uflucf_i } \frac{ \partial \tavg_{ij} }{ \partial x_j } \\
+- \rhoavg \rs_{ij} \frac{ \partial \uavgf_i }{ \partial x_j}  + \overline{ \pfluc \frac{ \partial \ufluc_i } { \partial x_i } } - \overline{ \tfluc_{ij} \frac{ \partial \ufluc_i }{ \partial x_j } } - \frac{\partial}{ \partial x_j} \left ( \frac{1}{2} \rhoavg \widetilde{ \uflucf_j \uflucf_i \uflucf_i } + \overline{ \ufluc_j \pfluc }  - \overline{ \ufluc_i \tfluc_{ij} } \right ) + \rhoavg \widetilde{ \fflucf_i \uflucf_i }.
 \end{multline}
 
 We define the dissipation $\epsilon$ as
 \begin{equation}
-\rhoavg \epsilon = \left <  t_{ij} \frac{ \partial \uifluc }{\partial x_j } \right > ,
+\rhoavg \epsilon = \overline{ \tfluc_{ij} \frac{ \partial \ufluc_i }{\partial x_j } } ,
 \end{equation}
-Since $t_{ij} = T_{ij} - \langle T_{ij} \rangle$, the above becomes
+Since $\tfluc_{ij} = t_{ij} - \tavg_{ij}$, the above becomes
 \begin{equation}
-    \rhoavg \epsilon = \left < T_{ij} \frac{\partial \uifluc}{\partial x_j} \right > = \left < 2 \mu \frac{\partial u_i}{\partial x_j} \right > \langle S^*_{ij} \rangle + \left < 2 \mu s^*_{ij} \frac{\partial u_i}{\partial x_j} \right >
+    \rhoavg \epsilon = \overline{ t_{ij} \frac{\partial \ufluc_i}{\partial x_j} } = \overline{ 2 \mu \frac{\partial \ufluc_i}{\partial x_j} } \Savg^*_{ij} + \overline{ 2 \mu \sfluc^*_{ij} \frac{\partial \ufluc_i}{\partial x_j} }.
 \end{equation}
 Neglecting the molecular viscosity fluctuations, as stated in Sagaut \& Cambon (Homogeneous compressible dynamics) gives
 \begin{equation}
-    \rhoavg \epsilon = 2 \langle \mu \rangle \left < s^*_{ij} \frac{\partial u_i}{\partial x_j} \right >.
+    \rhoavg \epsilon = 2 \overline{ \mu } \; \overline{ \sfluc^*_{ij} \frac{\partial \ufluc_i}{\partial x_j} }.
 \end{equation}
-Expanding $s^*_{ij}$,
+Expanding $\sfluc^*_{ij}$,
 \begin{equation}
-    \rhoavg \epsilon = 2 \langle \mu \rangle \left < s_{ij} s_{ij} - \frac{1}{3} \left ( \frac{ \partial \ukfluc }{ \partial x_k } \right )^2 \right >.
+    \rhoavg \epsilon = 2 \overline{ \mu } \; \overline{ \sfluc_{ij} \sfluc_{ij} - \frac{1}{3} \left ( \frac{ \partial \ufluc_k }{ \partial x_k } \right )^2 }.
 \end{equation}
 The above agrees with Sarkar et al, JFM, 1991. \cite{Sarkar1991}. Using the identities 
 \begin{equation}
-s_{ij} s_{ij} = \frac{1}{2} w_i w_i + \frac{ \partial u_i }{ \partial x_j } \frac{ \partial u_j }{ \partial x_i}, 
+\sfluc_{ij} \sfluc_{ij} = \frac{1}{2} \wfluc_i \wfluc_i + \frac{ \partial \ufluc_i }{ \partial x_j } \frac{ \partial \ufluc_j }{ \partial x_i}, 
 \end{equation}
 and
 \begin{equation}
-\frac{ \partial \uifluc }{ \partial x_j } \frac{ \partial \ujfluc }{ \partial x_i } = \frac{ \partial^2 \uifluc \ujfluc }{ \partial x_i \partial x_j}  -2 \frac{ \partial }{ \partial x_j } \left ( \frac{ \partial \uifluc }{ \partial x_i } \ujfluc \right ) + \left ( \frac{ \partial \ukfluc }{ \partial x_k } \right )^2 ,
+\frac{ \partial \ufluc_i }{ \partial x_j } \frac{ \partial \ufluc_j }{ \partial x_i } = \frac{ \partial^2 \ufluc_i \ufluc_i }{ \partial x_i \partial x_j}  -2 \frac{ \partial }{ \partial x_j } \left ( \frac{ \partial \ufluc_i }{ \partial x_i } \ufluc_j \right ) + \left ( \frac{ \partial \ufluc_k }{ \partial x_k } \right )^2 ,
 \end{equation}
 and neglecting the first two terms in the equation above due to an order of magnitude estimate for high turbulence Reynolds number as suggested by Sarkar et al, we express the dissipation as
 \begin{equation}
-\rhoavg \epsilon = \langle \mu \rangle \langle w_i w_i \rangle + \frac{4}{3} \langle \mu \rangle \left < \left ( \frac{ \partial \ukfluc }{ \partial x_k } \right )^2 \right >.
+\rhoavg \epsilon = \overline{ \mu } \overline{ \wfluc_i \wfluc_i } + \frac{4}{3} \overline{ \mu } \overline{ \left ( \frac{ \partial \ufluc_k }{ \partial x_k } \right )^2 }.
 \end{equation}
 The first component above is referred to as the solenoidal dissipation, while the second component is the compressible dissipation.
 

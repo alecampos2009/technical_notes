@@ -2,27 +2,28 @@
 
 \usepackage{../../info/packages}
 \usepackage{../../info/nomenclature}
+\usepackage{tabu}
 
 \newcommand{\mi}{\mathrm{i}}
 \newcommand{\mj}{\mathrm{j}}
 \newcommand{\mk}{\mathrm{k}}
-
-\newcommand{\knvec}{\boldsymbol{\kappa_n}}
-\newcommand{\fhnvec}{\mathbf{\hat{f}_n}}
-\newcommand{\fhvec}{\mathbf{\hat{f}}}
 
 \renewcommand{\arraystretch}{1.5}
 \begin{document}
 
 A continuous function is denoted as $f(x)$ whereas a discrete function is denoted as $f_m$. Vectors are denoted in bold.
 
+%----------------------------------------------------------------------------------------------------------
 \section{Fourier Analysis}
+%----------------------------------------------------------------------------------------------------------
+%---------------------------------------
 \subsection{Fourier Series}
+%---------------------------------------
 \begin{itemize}
 \item Definition:
 \begin{align*}
-\fvec(\xvec) &= \sum_{\nvec=-\infty}^\infty \fhnvec e^{ i \knvec \cdot \xvec} \\
-\hat{\fvec}_\nvec &= \frac{1}{L^3}\int_{\mathbb{L}^3} \fvec(\xvec)e^{-i\knvec \cdot \xvec}d\xvec
+\fvec(\xvec) &= \sum_{\nvec=-\infty}^\infty \hat{\fvec}_\nvec e^{ i \kvec_\nvec \cdot \xvec} \\
+\hat{\fvec}_\nvec &= \frac{1}{L^3}\int_{\mathbb{L}^3} \fvec(\xvec)e^{-i\kvec_\nvec \cdot \xvec}d\xvec
 \end{align*}
 where
 \[ \kvec_\nvec = \frac{2 \pi}{L} \nvec \qquad \nvec = \begin{pmatrix} n_1 \\ n_2 \\ n_3 \end{pmatrix}  \]
@@ -33,11 +34,13 @@ Note: $ \sum_{\nvec = -\infty}^{\infty} = \sum_{n_1 = -\infty}^{\infty} \sum_{n_
 
 \end{itemize}
 
+%---------------------------------------
 \subsection{Discrete Fourier Series}
+%---------------------------------------
 \begin{itemize}
 \item Definition:
 \[\fvec_\mvec = \sum_{\nvec=-N/2}^{N/2-1} \hat{\fvec}_\nvec e^{i \kvec_\nvec \cdot \xvec_\mvec}\]
-\[\fhnvec=\frac{1}{N^3}\sum_{\mvec=0}^{N-1} \fvec_\mvec e^{-i \kvec_\nvec \cdot \xvec_\mvec}\]
+\[\hat{\fvec}_\nvec =\frac{1}{N^3}\sum_{\mvec=0}^{N-1} \fvec_\mvec e^{-i \kvec_\nvec \cdot \xvec_\mvec}\]
  where 
  \[ \kvec_\nvec = \frac{2 \pi}{L} \nvec \qquad \xvec_\mvec = \frac{L}{N}\mvec \qquad \nvec = \begin{pmatrix} n_1 \\ n_2 \\ n_3 \end{pmatrix} \qquad \mvec = \begin{pmatrix} m_1 \\ m_2 \\m_3 \end{pmatrix} \]
  
@@ -45,11 +48,13 @@ Note: $ \sum_{\nvec = -\infty}^{\infty} = \sum_{n_1 = -\infty}^{\infty} \sum_{n_
  \[ \frac{1}{N^3} \sum_{\mvec=0}^{N-1} \fvec_\mvec \cdot \gvec^*_\mvec = \sum_{\nvec=-N/2}^{N/2-1} \hat{ \fvec }_\nvec \cdot \hat{ \gvec }^*_\nvec \]
  \end{itemize}
  
+%---------------------------------------
 \subsection{Fourier Transform}
+%---------------------------------------
 \begin{itemize}
 \item Definition:
-\[\fvec(\xvec) = \int_{\Rn} \fhvec(\kvec)e^{i\kvec \cdot \xvec} \,d\kvec \]
-\[\fhvec(\kvec) = \frac{1}{(2\pi)^n}\int_{\Rn} \fvec(\xvec)e^{-i\kvec \cdot \xvec} \,d\xvec\]
+\[\fvec(\xvec) = \int_{\Rn} \hat{\fvec}(\kvec)e^{i\kvec \cdot \xvec} \,d\kvec \]
+\[\hat{\fvec}(\kvec) = \frac{1}{(2\pi)^n}\int_{\Rn} \fvec(\xvec)e^{-i\kvec \cdot \xvec} \,d\xvec\]
 
 \item Common functions
 \begin{center}
@@ -59,7 +64,7 @@ $f(\xvec)$ & $\hat{f}(\kvec)$ \\
 \hline
 $e^ {i \boldsymbol{\lambda} \cdot \xvec}$ & $\delta(\kvec - \boldsymbol{\lambda})$ \\
 \hline
-$\delta(\xvec - \yvec)$ & $\frac{1}{(2\pi)^n}e^{- i \kvec \cdot yvec} $ \\
+$\delta(\xvec - \yvec)$ & $\frac{1}{(2\pi)^n}e^{- i \kvec \cdot \yvec} $ \\
 \hline
 \end{tabular}	
 \end{center}
@@ -73,16 +78,68 @@ Given
 then
 \[\hat{h}(\kvec) = (2\pi)^3 \hat{f}(\kvec) \hat{g}(\kvec) \]
 
-\item Derivatives and Integrals:
-\[ \widehat{\frac{\partial f_i(\xvec)}{\partial x_j}} = i \kappa_j \hat f_i(\kvec) \]
-\[ \frac{\partial \hat{f}_i(\kvec)}{\partial \kappa_j} = -i \widehat{x_jf_i(\xvec)}\]
-\[ \widehat{\nabla \cdot \fvec(\xvec)} = i \kvec \cdot \fhvec(\kvec) \]
-\[ \widehat{\nabla \times \fvec(\xvec)} = i \kvec \times \fhvec(\kvec) \]
-\[ \widehat{\frac{\partial^2 f_i(\xvec)}{\partial x_j \partial x_j}} = - \kappa_j\kappa_j \hat{f}_i(\kvec) \]
 \end{itemize}
 
+%---------------------------------------
+\subsection{Spectral forms of common terms}
+%---------------------------------------
+We will use in this section both the hat notation and the $\mathcal{F}$ notation. That is, for the Fourier coefficient of a Fourier series, we use
+\begin{equation*}
+\hat{\fvec}_\nvec = \mathcal{F}^{(s)}\{ \fvec(\xvec) \}_\nvec,
+\end{equation*}
+and for the Fourier coefficient of a Fourier transform, we use
+\begin{equation*}
+ \hat{\fvec}(\kvec) = \mathcal{F}^{(t)}\{ \fvec(\xvec) \}(\kvec).
+\end{equation*}
+
+\begin{itemize}
+
+\item General derivative:
+\begin{equation*} 
+  \mathcal{F}^{(s)} \left \{ \dfrac{\partial \fvec (\xvec)}{\partial x_j} \right \}_{\nvec}  = i \kappa_{\nvec,j} \hat{\fvec}_\nvec
+\end{equation*} 
+\begin{equation*} 
+  \mathcal{F}^{(t)}\left \{ \dfrac{\partial \fvec (\xvec)}{\partial x_j} \right \}(\kvec) = i \kappa_j \hat{\fvec}(\kvec)
+\end{equation*}
+
+\item Derivative in spectral space:
+\begin{equation*}
+  \frac{\partial \hat{\fvec}(\kvec)}{\partial \kappa_j} = -i \mathcal{F}^{(t)} \left \{ x_j \fvec(\xvec) \right \} (\kvec)
+\end{equation*}
+
+\item Divergence:
+\begin{equation*}
+  \mathcal{F}^{(s)} \left \{ \nabla \cdot \fvec(\xvec) \right \}_\nvec = i \kvec_\nvec \cdot \hat{\fvec}_\nvec
+\end{equation*}
+\begin{equation*}
+  \mathcal{F}^{(t)} \left \{ \nabla \cdot \fvec(\xvec) \right \} (\kvec) = i \kvec \cdot \hat{\fvec}(\kvec)
+\end{equation*}
+
+\item Curl:
+\begin{equation*}
+  \mathcal{F}^{(s)} \left \{ \nabla \times \fvec(\xvec) \right \}_\nvec = i \kvec_\nvec \times \hat{\fvec}_\nvec
+\end{equation*}
+\begin{equation*}
+  \mathcal{F}^{(t)} \left \{ \nabla \times \fvec(\xvec) \right \} (\kvec) = i \kvec \times \hat{\fvec}(\kvec)
+\end{equation*}
+
+\item Laplacian:
+\begin{equation*}
+  \mathcal{F}^{(s)} \left \{ \nabla^2 \fvec(\xvec) \right \}_\nvec = - \kappa_\nvec^2 \hat{\fvec}(\kvec)
+\end{equation*}
+\begin{equation*}
+  \mathcal{F}^{(t)} \left \{ \nabla^2 \fvec(\xvec) \right \} (\kvec) = - \kappa^2 \hat{\fvec}(\kvec)
+\end{equation*}
+
+\end{itemize}
+
+
+%----------------------------------------------------------------------------------------------------------
 \section{Chebyshev Analysis}
+%----------------------------------------------------------------------------------------------------------
+%---------------------------------------
 \subsection{Chebyshev Series}
+%---------------------------------------
 \begin{itemize}
 \item Definition:
 \[f(x)=\sum_{n=0}^{\infty}a_nT_n(x)\]
@@ -113,8 +170,9 @@ The polynomials considered in this file are also solutions of the Sturm-Liouvill
 \[ \frac{1}{r(x)}\left[\frac{d}{dx}\left(p(x)\frac{d}{dx}\right)+q(x)\right]P_n = - \lambda_n^2P_n\]
 The polynomials are also orthogonal with respect to $r(x)$.
 
-%-----------------------------------------------------------------------------------------------------------------------------------
+%---------------------------------------
 \subsection{Jacobi Polynomials}
+%---------------------------------------
 This is the family of polynomials for which:
 \begin{eqnarray*}
 p(x) &=& (1 - x)^{\alpha + 1}(1+x)^{\beta + 1}\\
@@ -176,8 +234,9 @@ r(x) &=& 1\\
 \lambda^2_n &=& n(n+1)
 \end{eqnarray*}
 That is, $\alpha = \beta = 0$.
-%-----------------------------------------------------------------------------------------------------------------------------------	
+%---------------------------------------
 \subsection{Hermite}
+%---------------------------------------
 Orthogonal basis of $L^2_w[-\infty,\infty]$, with
 \[w(x) = \frac{1}{\sqrt{2\pi}}e^{-x^2/2}\] 
 \[\langle P_n,P_n\rangle = n!\]
@@ -200,8 +259,9 @@ r(x) &=& e^{-x^2/2}\\
 \lambda^2_n &=& n
 \end{eqnarray*}
 
-%-----------------------------------------------------------------------------------------------------------------------------------
+%---------------------------------------
 \subsection{Laguerre}
+%---------------------------------------
 Orthogonal basis of $L^2_w[0,\infty]$, with
 \[w(x) = \frac{1}{\sqrt{2\pi}}e^{-x}\] 
 \[\langle P_n,P_n\rangle = 1\]
