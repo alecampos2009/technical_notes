@@ -1,5 +1,5 @@
-% FINISHED UPDATING NOTATION UP TO SECTION 2.3.4 
-% (Turbulent kinetic energy for FAVRE averaging)
+% FINISHED UPDATING NOTATION UP TO SECTION 2.3.5 
+% (Internal energy for FAVRE averaging)
 
 \documentclass[oneside,a4paper,11pt]{report}
 
@@ -533,33 +533,38 @@ The first component above is referred to as the solenoidal dissipation, while th
 %--------------------------------------------
 \subsection{Internal Energy}
 %--------------------------------------------
-We take the Reynolds average of the conservation form of the internal energy equation. For this, we will use
+We take the Reynolds average of \cref{eq:cons_internal_energy}, the conservation form of the internal energy equation. For this, we will use
 \begin{equation}
-    \left < T_{ij} \frac{\partial U_i}{\partial x_j} \right > = \langle T_{ij} \rangle \frac{\partial \uiavg}{\partial x_j} + \left < t_{ij} \frac{\partial \uifluc}{\partial x_j} \right >
+    \overline{ t_{ij} \frac{\partial u_i}{\partial x_j} } = \tavg_{ij} \frac{\partial \uavg_i}{\partial x_j} + \overline{ \tfluc_{ij} \frac{\partial \ufluc_i}{\partial x_j} },
 \end{equation}
 and
 \begin{equation}
-    \left < -P \frac{\partial U_i}{\partial x_i} \right > = -\pavg \frac{\partial \uiavg}{\partial x_i} - \left < \pfluc \frac{\partial \uifluc}{\partial x_i} \right >.
+    \overline{ -p \frac{\partial u_i}{\partial x_i} } = -\pavg \frac{\partial \uavg_i}{\partial x_i} - \overline{ \pfluc \frac{\partial \ufluc_i}{\partial x_i} }.
 \end{equation}
-For the above, we expand $\uiavg$ as $\uiavg = \uavgf_i + \langle \uflucf_i \rangle$ to obtain 
+For the first term on the right-hand side of each of the two equations above, we expand $\uavg_i$ as $\uavg_i = \uavgf_i + \overline{ \uflucf_i }$. Thus, we now have 
 \begin{align}
-    \left < T_{ij} \frac{\partial U_i}{\partial x_j} \right > &= \langle T_{ij} \rangle \frac{\partial \uavgf_i}{\partial x_j} + \langle T_{ij} \rangle \frac{\partial \langle \uflucf_i \rangle}{\partial x_j} + \left < t_{ij} \frac{\partial \uifluc}{\partial x_j} \right > \nonumber \\
-    &= \langle T_{ij} \rangle \frac{\partial \uavgf_i}{\partial x_j} - \langle \uflucf_i \rangle \frac{\partial \langle T_{ij} \rangle}{\partial x_j} + \left < t_{ij} \frac{\partial \uifluc}{\partial x_j} \right > + \frac{\partial \langle \uflucf_i \rangle \langle T_{ij} \rangle}{\partial x_j}
+    \overline{ t_{ij} \frac{\partial u_i}{\partial x_j} } &=  \tavg_{ij}  \frac{\partial \uavgf_i}{\partial x_j} + \tavg_{ij}  \frac{\partial \overline{ \uflucf_i } }{\partial x_j} + \overline{ \tfluc_{ij} \frac{\partial \ufluc_i}{\partial x_j} } \nonumber \\
+    &= \tavg_{ij} \frac{\partial \uavgf_i}{\partial x_j} - \overline{ \uflucf_i } \frac{\partial \tavg_{ij} }{\partial x_j} + \overline{ \tfluc_{ij} \frac{\partial \ufluc_i}{\partial x_j} } + \frac{\partial \overline{ \uflucf_i } \tavg_{ij} }{\partial x_j},
 \end{align}
 and
 \begin{align}
-    \left < -P \frac{\partial U_i}{\partial x_i} \right > &= -\pavg \frac{\partial \uavgf_i}{\partial x_i} - \pavg \frac{\partial \langle \uflucf_i \rangle}{\partial x_i} - \left < \pfluc \frac{\partial \uifluc}{\partial x_i} \right > \nonumber \\
-    &= -\pavg \frac{\partial \uavgf_i}{\partial x_i} + \langle \uflucf_i \rangle \frac{\partial \pavg}{\partial x_i} - \left < \pfluc \frac{\partial \uifluc}{\partial x_i} \right > - \frac{\partial \langle \uflucf_i \rangle \pavg}{\partial x_i}.
+    \overline{ -p \frac{\partial u_i}{\partial x_i} } &= -\pavg \frac{\partial \uavgf_i}{\partial x_i} - \pavg \frac{\partial \overline{ \uflucf_i } }{\partial x_i} - \overline{ \pfluc \frac{\partial \ufluc_i}{\partial x_i} } \nonumber \\
+    &= -\pavg \frac{\partial \uavgf_i}{\partial x_i} + \overline{ \uflucf_i } \frac{\partial \pavg}{\partial x_i} - \overline{ \pfluc \frac{\partial \ufluc_i}{\partial x_i} } - \frac{\partial \overline{ \uflucf_i } \pavg}{\partial x_i}.
 \end{align}
 Thus, using the above, the average of the internal energy equation becomes
 \begin{multline}
-    \frac{\partial \rhoavg \Uavgf}{\partial t} + \frac{\partial \rhoavg \Uavgf \uavgf_j}{\partial x_j} = -\pavg \frac{\partial \uavgf_i}{\partial x_i} + \langle T_{ij} \rangle \frac{\partial \uavgf_i}{\partial x_j} +\langle \uflucf_i \rangle \frac{\partial \pavg}{\partial x_i} - \langle \uflucf_i \rangle \frac{\partial \langle T_{ij} \rangle}{\partial x_j} \\
-    - \left < \pfluc \frac{\partial \uifluc}{\partial x_i} \right > + \left < t_{ij} \frac{\partial \uifluc}{\partial x_j} \right > - \frac{\partial}{\partial x_j} \left ( \langle \rho u'' \uflucf_j \rangle +  \langle \uflucf_j \rangle \pavg - \langle \uflucf_i \rangle \langle T_{ij} \rangle + \lbra q_j \rbra \right)
+    \frac{\partial \rhoavg \eavgf}{\partial t} + \frac{\partial \rhoavg \eavgf \uavgf_j}{\partial x_j} = -\pavg \frac{\partial \uavgf_i}{\partial x_i} + \tavg_{ij} \frac{\partial \uavgf_i}{\partial x_j} + \overline{ \uflucf_i } \frac{\partial \pavg}{\partial x_i} - \overline{ \uflucf_i } \frac{\partial \tavg_{ij} }{\partial x_j} \\
+    - \overline{ \pfluc \frac{\partial \ufluc_i}{\partial x_i} } + \overline{ \tfluc_{ij} \frac{\partial \ufluc_i}{\partial x_j} } - \frac{\partial}{\partial x_j} \left ( \rhoavg \widetilde{ \eflucf \uflucf_j }  +  \overline{ \uflucf_j } \pavg - \overline{ \uflucf_i } \tavg_{ij} + \qavg_j \right)
 \end{multline}
 Note that we can write
-\begin{equation}
-    \langle \rho u'' \uflucf_j \rangle + \langle \uflucf_j \rangle \langle P \rangle = \langle \rho u'' \uflucf_j \rangle + \langle \pfluc \uflucf_j \rangle + \langle \uflucf_j \rangle \pavg - \langle \pfluc \uflucf_j \rangle = \langle \rho h'' \uflucf_j \rangle - \langle \pfluc \uflucf_j \rangle,
-\end{equation}
+\begin{align}
+    \rhoavg \widetilde{ \eflucf \uflucf_j } + \overline{ \uflucf_j } \pavg &= \rhoavg \widetilde{ \eflucf \uflucf_j } + \overline{ \pfluc \uflucf_j } + \overline{ \uflucf_j } \pavg - \overline{ \pfluc \uflucf_j } \nonumber \\ 
+    &= \rhoavg \widetilde{ \eflucf \uflucf_j } + \overline{ p \uflucf_j } - \overline{ \pfluc \uflucf_j } \nonumber \\
+    &=  \rhoavg \widetilde{ e \uflucf_j} + \overline{ p \uflucf_j } - \overline{ \pfluc \uflucf_j } \nonumber \\
+    &=\overline{ \rho e\uflucf_j + p\uflucf_j} - \overline{ \pfluc \uflucf_j } \nonumber \\
+    &= \rhoavg \widetilde{ h \uflucf_j} - \overline{ \pfluc \uflucf_j } \nonumber \\
+    &= \rhoavg \widetilde{ h'' \uflucf_j } - \overline{ \pfluc \uflucf_j } ,
+\end{align}
 so as to be in agreement with the equations in Lele 1994.
 
 %--------------------------------------------
@@ -1175,18 +1180,19 @@ A relationship can be obtained between the discrete and continuous approaches. I
 \est_{ij}(\kvec_C,t) = \sum_{\kvec_D} \delta(\kvec_C - \kvec_D) \hat{\tpvc}_{ij}(\kvec_D,t).
 \end{equation}
 
-An alternative relationship between the discrete and continuous approaches can be established which is more amenable for numerical computations of spectra. We note that the TKE can be computed from either the discrete or continuous approach as follows
+An alternative relationship between the discrete and continuous approaches that is more amenable for numerical computations can be established. We note that the TKE can be computed from either the discrete or continuous approach as follows
 \begin{equation}
+    \label{eq:vst_discrete_continuous_temp1}
     k = \sum_{\kvec} \frac{1}{2} \hat{\tpvc}_{ii}(\kvec,t) = \int_0^\infty \est(\kappa,t) \, d\kappa.
 \end{equation}
-We rewrite the equality above using a discretization of the magnitude of the wavevector
+We now discretize the magnitude of the wave vector, that is, $\kappa = n \Delta \kappa$, where $n$ is an integer and $\Delta \kappa$ is the width of the discrete chunks of $\kappa$. We introduce the set $S(\kappa)$ as all the wavevectors $\kvec$ whose magnitude falls within $[\kappa, \kappa + \Delta \kappa]$. Using the above, we re-write \cref{eq:vst_discrete_continuous_temp1} as
 \begin{equation}
-    \sum_{\kappa} \left ( \sum_{\substack{\kvec \\ |\kvec|=\kappa}} \frac{1}{2} \hat{\tpvc}_{ii}(\kvec,t) \right) = \sum_{\kappa} \est(\kappa,t) \Delta \kappa.
+    \sum_{\kappa} \left ( \sum_{\kvec \in S(\kappa)} \frac{1}{2} \hat{\tpvc}_{ii}(\kvec,t) \right) = \sum_{\kappa} \est(\kappa,t) \Delta \kappa.
 \end{equation}
 Thus, we approximate the energy spectrum as
 \begin{equation}
     \label{eq:num_comp_spectra}
-    E(\kappa,t) = \frac{1}{\Delta \kappa} \sum_{\substack{\kvec \\ |\kvec|=\kappa}} \frac{1}{2} \hat{\tpvc}_{ii}(\kvec,t) .
+    E(\kappa,t) = \frac{1}{\Delta \kappa} \sum_{\kvec \in S(\kappa)} \frac{1}{2} \hat{\tpvc}_{ii}(\kvec,t) .
 \end{equation}
 
 
@@ -3162,7 +3168,7 @@ The momentum equations follow
 \chapter{Rogallo's initial condition}
 %
 %###############################################################################
-The Rogallo method \cite{rogallo1981} can be used to initialize an isotropic turbulent field. It consists on specifying the fourier coefficients (both the magnitude and direction) of the velocity field.
+The Rogallo method \cite{rogallo1981} can be used to initialize an isotropic turbulent field---it specifies the fourier coefficients (both the magnitude and direction) of the velocity field.
 
 %-------------------------------------------------------------------------------
 \section{The magnitude}
@@ -3192,6 +3198,19 @@ Thus, comparing the last two equations, we can make the following approximation
     \overline{ \hat{u}_i^*(\kvec,t) \hat{u}_i(\kvec,t)} = \frac{\est(\kappa,t)}{2 \pi \kappa^2}.
 \end{equation}
 Given a target energy spectrum $E(\kappa,t)$, the above can be used to initialize the magnitude of the Fourier coefficients. The energy spectrum for this flow---computed using \cref{eq:num_comp_spectra}---would match the target spectrum. 
+
+Note that for 2D turbulence, the energy spectrum tensor for isotropic turbulence is of the form
+\begin{equation}
+    \est_{ij}(\kvec,t) = \frac{\est(\kappa,t)}{\pi \kappa} \left ( \delta_{ij} - \frac{\kappa_i \kappa_j}{\kappa^2} \right ),
+\end{equation}
+and thus, the kinetic energy can be obtained using
+\begin{equation}
+    k = \frac{1}{2} \int_\Rtwo \est_{ii}(\kvec,t) \, d\kvec = \int_\Rtwo \frac{\est(\kappa,t)}{2 \pi \kappa} \, d\kvec.
+\end{equation}
+Following the same arguments as for the 3D case, we obtain
+\begin{equation}
+    \overline{ \hat{u}_i^*(\kvec,t) \hat{u}_i(\kvec,t)} = \frac{\est(\kappa,t)}{\pi \kappa}.
+\end{equation}
 
 %-------------------------------------------------------------------------------
 \section{The direction}
