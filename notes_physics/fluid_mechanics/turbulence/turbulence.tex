@@ -1,5 +1,4 @@
-% FINISHED UPDATING NOTATION UP TO SECTION 2.3.5 
-% (Internal energy for FAVRE averaging)
+% NEED TO START WITH SECTION 2.5.5 
 
 \documentclass[oneside,a4paper,11pt]{report}
 
@@ -16,21 +15,23 @@
 \newcommand{\rhoavg}{\overline{\rho}}
 
 \newcommand{\aavg}{\overline{a}}
-\newcommand{\eavg}{\langle e \rangle}
-\newcommand{\havg}{\langle h \rangle}
+\newcommand{\favg}{\overline{f}}
 \newcommand{\pavg}{\overline{p}}
 \newcommand{\qavg}{\overline{q}}
 \newcommand{\tavg}{\overline{t}}
 \newcommand{\uavg}{\overline{u}}
 \newcommand{\vavg}{\overline{v}}
+\newcommand{\wavg}{\overline{w}}
 \newcommand{\yavg}{\overline{Y}}
 
 \newcommand{\Javg}{\overline{J}}
 \newcommand{\Kavg}{\overline{K}}
 \newcommand{\Savg}{\overline{S}}
 \newcommand{\Wavg}{\overline{W}}
+\newcommand{\Yavg}{\overline{Y}}
 
 \newcommand{\afluc}{a'}
+\newcommand{\ffluc}{f'}
 \newcommand{\pfluc}{p'}
 \newcommand{\sfluc}{s'}
 \newcommand{\tfluc}{t'}
@@ -38,6 +39,10 @@
 \newcommand{\vfluc}{v'}
 \newcommand{\wfluc}{w'}
 \newcommand{\yfluc}{y'}
+
+\newcommand{\Jfluc}{J'}
+\newcommand{\Sfluc}{S'}
+\newcommand{\Yfluc}{Y'}
 
 \newcommand{\rs}{\tau}          % Reynolds stresses
 \newcommand{\ars}{a}            % Anisotropic Reynolds stresses
@@ -304,6 +309,7 @@ Before taking the average of the conservation of energy equations, we use \cref{
 \end{equation}
 We simplify the notation above by introducing
 \begin{equation}
+    \label{eq:kinetic_energies}
     \mathcal{K} = \frac{1}{2} \uavgf_i \uavgf_i \qquad k = \frac{1}{2} \widetilde{\uflucf_i \uflucf_i}
 \end{equation}
 Thus, we have for the energy density
@@ -340,7 +346,7 @@ Before taking the average of the conservation equation for a scalar, we make use
 \end{equation}
 The second term on the right-hand side above is the turbulent scalar flux. The average of the conservation equation for a scalar can now be expressed as
 \begin{equation}
-    \frac{\partial \rho \Yavgf}{\partial t} + \frac{\partial \rhoavg \Yavgf \uavgf_j}{\partial x_j} = -\frac{ \partial \Javg_j }{ \partial x_j } - \frac{ \partial \rhoavg \widetilde{\Yflucf \uflucf_j} }{ \partial x_j } + \Wavg.
+    \frac{\partial \rho \Yavgf}{\partial t} + \frac{\partial \rhoavg \Yavgf \uavgf_j}{\partial x_j} = -\frac{ \partial \Javg_j }{ \partial x_j } - \frac{ \partial \rhoavg \widetilde{\Yflucf \uflucf_j} }{ \partial x_j } + \wavg.
 \end{equation}
 
 To summarize, the Favre-averaged governing equations are
@@ -359,7 +365,7 @@ To summarize, the Favre-averaged governing equations are
 \end{multline}
 \begin{equation}
     \label{eq:favre_scalar}
-    \frac{\partial \rhoavg \Yavgf}{\partial t} + \frac{\partial \rhoavg \Yavgf \uavgf_j}{\partial x_j} = -\frac{\partial \Javg_j}{\partial x_j} - \frac{\partial \rhoavg \widetilde{\Yflucf \uflucf_j}}{\partial x_j} + \Wavg.    
+    \frac{\partial \rhoavg \Yavgf}{\partial t} + \frac{\partial \rhoavg \Yavgf \uavgf_j}{\partial x_j} = -\frac{\partial \Javg_j}{\partial x_j} - \frac{\partial \rhoavg \widetilde{\Yflucf \uflucf_j}}{\partial x_j} + \wavg.    
 \end{equation}
 The averages of the diffusive scalar flux, the shear-stress tensor, and the heat-conduction flux are approximated as
 \begin{equation}
@@ -455,7 +461,7 @@ Combining all of the results above, one obtains
 The equation for the kinetic energy of the mean flow is obtained by multiplying \cref{eq:favre_vel}---the Favre-averaged equation for velocity---by $\uavgf_i$, which leads to
 \begin{equation}
 \label{eq:ke_favreflow}
-\frac{ \partial \rhoavg \mathcal{K} }{ \partial t} + \frac{ \partial \rhoavg \mathcal{K} \uavgf_j }{ \partial x_j} = \rhoavg \rs_{ij} \frac{ \partial \uavgf_i }{ \partial x_j } + \pavg \frac{ \partial \uavgf_i }{ \partial x_i } - \tavg_{ij]} \frac{ \partial \uavgf_i }{ \partial x_j } - \frac{\partial}{\partial x_j} \left ( \uavgf_i \rhoavg \rs_{ij} + \uavgf_j \pavg - \uavgf_i \tavg_{ij} \right ) + \rhoavg \favgf_i \uavgf_i
+\frac{ \partial \rhoavg \mathcal{K} }{ \partial t} + \frac{ \partial \rhoavg \mathcal{K} \uavgf_j }{ \partial x_j} = \rhoavg \rs_{ij} \frac{ \partial \uavgf_i }{ \partial x_j } + \pavg \frac{ \partial \uavgf_i }{ \partial x_i } - \tavg_{ij} \frac{ \partial \uavgf_i }{ \partial x_j } - \frac{\partial}{\partial x_j} \left ( \uavgf_i \rhoavg \rs_{ij} + \uavgf_j \pavg - \uavgf_i \tavg_{ij} \right ) + \rhoavg \favgf_i \uavgf_i
 \end{equation}
 
 %--------------------------------------------
@@ -571,16 +577,19 @@ so as to be in agreement with the equations in Lele 1994.
 \subsection{Summary of conservation equations for $\mathcal{K}$, $k$, $\Uavgf$}
 %--------------------------------------------
 \begin{equation}
-\frac{ \partial \rhoavg \mathcal{K} }{ \partial t} + \frac{ \partial \rhoavg \mathcal{K} \uavgf_j }{ \partial x_j} = \rhoavg \rs_{ij} \frac{ \partial \uavgf_i }{ \partial x_j } + \pavg \frac{ \partial \uavgf_i }{ \partial x_i } - \langle T_{ij} \rangle \frac{ \partial \uavgf_i }{ \partial x_j } - \frac{\partial}{\partial x_j} \left ( \uavgf_i \rhoavg \rs_{ij} + \uavgf_j \pavg - \uavgf_i \langle T_{ij} \rangle \right ) + \rhoavg \tilde{F}_i \uavgf_i
-\end{equation}
+    \frac{ \partial \rhoavg \mathcal{K} }{ \partial t} + \frac{ \partial \rhoavg \mathcal{K} \uavgf_j }{ \partial x_j} = \rhoavg \rs_{ij} \frac{ \partial \uavgf_i }{ \partial x_j } + \pavg \frac{ \partial \uavgf_i }{ \partial x_i } - \tavg_{ij} \frac{ \partial \uavgf_i }{ \partial x_j } - \frac{\partial}{\partial x_j} \left ( \uavgf_i \rhoavg \rs_{ij} + \uavgf_j \pavg - \uavgf_i \tavg_{ij} \right ) + \rhoavg \favgf_i \uavgf_i
+    \end{equation}
+
 \begin{multline}
-\frac{ \partial \rhoavg k }{ \partial t}  + \frac{ \partial \rhoavg k \uavgf_j }{ \partial x_j } = - \langle \uflucf_i \rangle \frac{ \partial \pavg }{ \partial x_i } + \langle \uflucf_i \rangle \frac{ \partial \langle T_{ij} \rangle }{ \partial x_j } \\
-- \rhoavg \rs_{ij} \frac{ \partial \uavgf_i }{ \partial x_j}  + \left < p \frac{ \partial \uifluc } { \partial x_i } \right > - \left <  t_{ij} \frac{ \partial u_i }{ \partial x_j } \right > - \frac{\partial}{ \partial x_j} \left ( \frac{1}{2} \langle \rho \uflucf_j \uflucf_i \uflucf_i \rangle + \langle \ujfluc p \rangle  - \langle \uifluc t_{ij} \rangle \right ) + \langle \rho f_i'' \uflucf_i \rangle
+    \frac{ \partial \rhoavg k }{ \partial t}  + \frac{ \partial \rhoavg k \uavgf_j }{ \partial x_j } = - \overline{ \uflucf_i } \frac{ \partial \pavg }{ \partial x_i } + \overline{ \uflucf_i } \frac{ \partial \tavg_{ij} }{ \partial x_j } \\
+    - \rhoavg \rs_{ij} \frac{ \partial \uavgf_i }{ \partial x_j}  + \overline{ \pfluc \frac{ \partial \ufluc_i } { \partial x_i } } - \overline{ \tfluc_{ij} \frac{ \partial \ufluc_i }{ \partial x_j } } - \frac{\partial}{ \partial x_j} \left ( \frac{1}{2} \rhoavg \widetilde{ \uflucf_j \uflucf_i \uflucf_i } + \overline{ \ufluc_j \pfluc }  - \overline{ \ufluc_i \tfluc_{ij} } \right ) + \rhoavg \widetilde{ \fflucf_i \uflucf_i }.
 \end{multline}
+
 \begin{multline}
-    \frac{\partial \rhoavg \Uavgf}{\partial t} + \frac{\partial \rhoavg \Uavgf \uavgf_j}{\partial x_j} = -\pavg \frac{\partial \uavgf_i}{\partial x_i} + \langle T_{ij} \rangle \frac{\partial \uavgf_i}{\partial x_j} +\langle \uflucf_i \rangle \frac{\partial \pavg}{\partial x_i} - \langle \uflucf_i \rangle \frac{\partial \langle T_{ij} \rangle}{\partial x_j} \\
-    - \left < \pfluc \frac{\partial \uifluc}{\partial x_i} \right > + \left < t_{ij} \frac{\partial \uifluc}{\partial x_j} \right > - \frac{\partial}{\partial x_j} \left ( \langle \rho u'' \uflucf_j \rangle +  \langle \uflucf_j \rangle \pavg - \langle \uflucf_i \rangle \langle T_{ij} \rangle + \lbra q_j \rbra \right)
+    \frac{\partial \rhoavg \eavgf}{\partial t} + \frac{\partial \rhoavg \eavgf \uavgf_j}{\partial x_j} = -\pavg \frac{\partial \uavgf_i}{\partial x_i} + \tavg_{ij} \frac{\partial \uavgf_i}{\partial x_j} + \overline{ \uflucf_i } \frac{\partial \pavg}{\partial x_i} - \overline{ \uflucf_i } \frac{\partial \tavg_{ij} }{\partial x_j} \\
+    - \overline{ \pfluc \frac{\partial \ufluc_i}{\partial x_i} } + \overline{ \tfluc_{ij} \frac{\partial \ufluc_i}{\partial x_j} } - \frac{\partial}{\partial x_j} \left ( \rhoavg \widetilde{ \eflucf \uflucf_j }  +  \overline{ \uflucf_j } \pavg - \overline{ \uflucf_i } \tavg_{ij} + \qavg_j \right)
 \end{multline}
+
 Note that if you add up all three equations, one obtains a conservation equation for $\Eavgf$. After this addition, the only terms on the right-hand side that remain are the transport and forcing terms.
 %--------------------------------------------
 \subsection{Reynolds stresses}
@@ -596,7 +605,7 @@ Note that if you add up all three equations, one obtains a conservation equation
 The equation for the squared averaged scalar is obtained by multiplying \cref{eq:favre_scalar}---the Favre-averaged equation for the scalar---by $\Yavgf$, which leads to
 \begin{equation}
     \label{eq:squared_averaged_scalar_favre}
-    \frac{\partial \rhoavg \Yavgf^2}{\partial t} + \frac{\partial \rhoavg \Yavgf^2 \uavgf_j}{\partial x_j} = 2 \langle J_j \rangle \frac{\partial \Yavgf}{\partial x_j} + 2 \rhoavg \widetilde{\Yflucf \uflucf_j} \frac{\partial \Yavgf}{\partial x_j} - 2\frac{\partial}{\partial x_j} \left ( \Yavgf \langle J_j \rangle + \Yavgf \rhoavg \widetilde{\Yflucf \uflucf_j} \right ) + 2 \Yavgf \langle W \rangle.
+    \frac{\partial \rhoavg \Yavgf^2}{\partial t} + \frac{\partial \rhoavg \Yavgf^2 \uavgf_j}{\partial x_j} = 2 \Javg_j \frac{\partial \Yavgf}{\partial x_j} + 2 \rhoavg \widetilde{\Yflucf \uflucf_j} \frac{\partial \Yavgf}{\partial x_j} - 2\frac{\partial}{\partial x_j} \left ( \Yavgf \Javg_j + \Yavgf \rhoavg \widetilde{\Yflucf \uflucf_j} \right ) + 2 \Yavgf \wavg.
 \end{equation}
 
 %--------------------------------------------
@@ -609,28 +618,28 @@ To obtain the governing equation for the scalar variance, one subtracts \cref{eq
 \end{equation}
 and \cref{eq:squared_averaged_scalar_favre}
 \begin{equation}
-    \langle J_j \rangle \frac{\partial \Yavgf}{\partial x_j} - \frac{\partial \Yavgf \langle J_j \rangle}{\partial x_j} = -\Yavgf \frac{\partial \langle J_j \rangle}{\partial x_j}.
+    \Javg_j \frac{\partial \Yavgf}{\partial x_j} - \frac{\partial \Yavgf \Javg_j}{\partial x_j} = -\Yavgf \frac{\partial \Javg_j}{\partial x_j}.
 \end{equation}
-For the average of the right-hand side of \cref{eq:diffusive_scalar_var_inter}, we will use the decomposition $Y = \yavg + \yfluc$ and $J_i = \langle J_i \rangle + j_i$, instead of the traditional Favre decompositions. This thus allows us to write
+For the average of the right-hand side of \cref{eq:diffusive_scalar_var_inter}, we will use the decomposition $Y = \Yavg + \Yfluc$ and $J_i = \Javg_i + \Jfluc$, instead of the traditional Favre decompositions. This thus allows us to write
 \begin{align}
-    -\left < Y \frac{\partial J_j}{\partial x_j} \right > + \Yavgf \frac{\partial \langle J_j \rangle}{\partial x_j} &= -\yavg \frac{\partial \langle J_j \rangle}{\partial x_j} - \left < \yfluc \frac{\partial j_j}{\partial x_j} \right > + \Yavgf \frac{\partial \langle J_j \rangle}{\partial x_j} \nonumber \\
-    &= -\langle \Yflucf \rangle \frac{\partial \langle J_j \rangle}{\partial x_j} - \left < \yfluc \frac{\partial j_j}{\partial x_j} \right > \nonumber \\
-    &= -\langle \Yflucf \rangle \frac{\partial \langle J_j \rangle}{\partial x_j} - \frac{\partial \langle \yfluc j_j \rangle}{\partial x_j} + \left < j_j \frac{\partial \yfluc}{\partial x_j} \right >.
+    -\overline{ Y \frac{\partial J_j}{\partial x_j} } + \Yavgf \frac{\partial \Javg_j }{\partial x_j} &= -\Yavg \frac{\partial \Javg_j }{\partial x_j} - \overline{ \Yfluc \frac{\partial \Jfluc_j}{\partial x_j} } + \Yavgf \frac{\partial \Javg_j}{\partial x_j} \nonumber \\
+    &= -\overline{ \Yflucf } \frac{\partial \Javg_j}{\partial x_j} - \overline{ \Yfluc \frac{\partial \Jfluc_j}{\partial x_j} } \nonumber \\
+    &= -\overline{ \Yflucf } \frac{\partial \Javg_j }{\partial x_j} - \frac{\partial \overline{ \Yfluc \Jfluc_j } }{\partial x_j} + \overline{ \Jfluc_j \frac{\partial \Yfluc}{\partial x_j} }.
 \end{align}
 Using the above, the overall equation for the scalar variance is written as
 \begin{multline}
     \label{eq:scalar_variance_favre}
-    \frac{\partial \rhoavg \widetilde{\Yflucf \Yflucf}}{\partial t} + \frac{\partial \rhoavg \widetilde{\Yflucf \Yflucf} \uavgf_j }{\partial x_j} = -2 \langle \Yflucf \rangle \frac{\partial \langle J_j \rangle }{\partial x_j} \\
-    -2 \rhoavg \widetilde{\Yflucf \uflucf_j} \frac{\partial \Yavgf}{\partial x_j} + 2 \left < j_j \frac{\partial y}{\partial x_j} \right > - 2 \frac{\partial}{\partial x_j} \left ( \frac{1}{2} \rhoavg \widetilde{\Yflucf \Yflucf \uflucf_j} +  \langle \yfluc j_j \rangle \right) + 2 \langle \Yflucf \rangle \langle W \rangle + 2 \langle \Yflucf w \rangle.
+    \frac{\partial \rhoavg \widetilde{\Yflucf \Yflucf}}{\partial t} + \frac{\partial \rhoavg \widetilde{\Yflucf \Yflucf} \uavgf_j }{\partial x_j} = -2 \overline{ \Yflucf } \frac{\partial \Javg_j }{\partial x_j} \\
+    -2 \rhoavg \widetilde{\Yflucf \uflucf_j} \frac{\partial \Yavgf}{\partial x_j} + 2 \overline{ \Jfluc_j \frac{\partial \Yfluc}{\partial x_j} } - 2 \frac{\partial}{\partial x_j} \left ( \frac{1}{2} \rhoavg \widetilde{\Yflucf \Yflucf \uflucf_j} +  \overline{ \Yfluc \Jfluc_j } \right) + 2 \overline{ \Yflucf } \wavg + 2 \overline{ \Yflucf \wfluc }.
 \end{multline}
 
 As was done for the TKE, one can define a scalar dissipation $\epsilon_Y$ as 
 \begin{equation}
-    \rhoavg \epsilon_Y = -2\lbra j_j \frac{\partial y}{\partial x_j} \rbra.
+    \rhoavg \epsilon_Y = -2 \overline{ \Jfluc_j \frac{\partial \Yfluc}{\partial x_j} }.
 \end{equation}
-Since $j_j = J_j - \lbra J_j \rbra$, the above becomes
+Since $\Jfluc_j = J_j - \Javg_j$, the above becomes
 \begin{equation}
-    \rhoavg \epsilon_Y = -2\lbra J_j \frac{\partial y}{\partial x_j} \rbra = 2 \lbra \rho D \frac{\partial y}{\partial x_j} \rbra \frac{\partial \lbra Y \rbra}{\partial x_j} + 2 \lbra \rho D \frac{\partial y}{\partial x_j} \frac{\partial y}{\partial x_j} \rbra.
+    \rhoavg \epsilon_Y = -2 \overline{ J_j \frac{\partial \Yfluc}{\partial x_j} } = 2 \overline{ \rho D \frac{\partial \Yfluc}{\partial x_j} } \frac{\partial \Yavg}{\partial x_j} + 2 \overline{ \rho D \frac{\partial \Yfluc}{\partial x_j} \frac{\partial \Yfluc}{\partial x_j} }.
 \end{equation}
 
 
@@ -640,23 +649,23 @@ Since $j_j = J_j - \lbra J_j \rbra$, the above becomes
 Assuming a constant density, the Favre average is equivalent to the Reynolds average. Thus, for incompressible flow the continuity \cref{eq:favre_rho} becomes
 \begin{equation}
 \label{eq:rans_rho}
-\frac{\partial \uiavg}{\partial x_i} = 0.
+\frac{\partial \uavg_i}{\partial x_i} = 0.
 \end{equation}
 The conservation of momentum \cref{eq:favre_vel}, along with the definition of the shear stress tensor in \cref{eq:shear_stress}, leads to 
 \begin{equation}
 \label{eq:rans_vel}
-\frac{\partial \uiavg}{\partial t} + \ujavg \frac{\partial \uiavg}{\partial x_j} = -\frac{1}{\rho} \frac{\partial \pavg}{\partial x_i} + \nu \frac{ \partial^2 \uavgf_i }{ \partial x_j \partial x_j} - \frac{\partial \rs_{ij}}{\partial x_j} + \langle F_i \rangle,
+\frac{\partial \uavg_i}{\partial t} + \uavg_j \frac{\partial \uavg_i}{\partial x_j} = -\frac{1}{\rho} \frac{\partial \pavg}{\partial x_i} + \nu \frac{ \partial^2 \uavg_i }{ \partial x_j \partial x_j} - \frac{\partial \rs_{ij}}{\partial x_j} + \favg_i,
 \end{equation}
-where $\rs_{ij} = \langle \uifluc \ujfluc \rangle$.
+where $\rs_{ij} = \overline{ \ufluc_i \ufluc_j }$.
 Taking the divergence of the momentum equation, we obtain the equation for the averaged pressure
 \begin{equation}
 \label{eq:rans_pressure}
-\frac{1}{\rho} \frac{\partial^2 \pavg}{\partial x_j \partial x_j} = - \frac{\partial \uiavg}{\partial x_j} \frac{\partial \ujavg}{\partial x_i} - \frac{\partial \rs_{ij}}{\partial x_i \partial x_j} + \frac{ \partial \langle F_i \rangle}{ \partial x_i}.
+\frac{1}{\rho} \frac{\partial^2 \pavg}{\partial x_j \partial x_j} = - \frac{\partial \uavg_i}{\partial x_j} \frac{\partial \uavg_j}{\partial x_i} - \frac{\partial \rs_{ij}}{\partial x_i \partial x_j} + \frac{ \partial \favg_i}{ \partial x_i}.
 \end{equation}
 Taking the Reynolds average of the scalar transport \cref{eq:cons_scalar} leads to
 \begin{equation}
 \label{eq:rans_scalar}
-    \frac{\partial \rho \phiavg}{\partial t} + \frac{\partial \rho \ujavg \phiavg}{\partial x_j} = -\frac{\partial \langle J_j \rangle}{\partial x_j} -\frac{\partial \rho \langle \ujfluc \phifluc \rangle }{\partial x_j}
+    \frac{\partial \rho \Yavg}{\partial t} + \frac{\partial \rho \uavg_j \Yavg}{\partial x_j} = -\frac{\partial \Javg_j}{\partial x_j} -\frac{\partial \rho \overline{ \ufluc_j \Yfluc } }{\partial x_j}
 \end{equation}
 
 %-------------------------------------------------------------------------------
@@ -668,7 +677,7 @@ Taking the Reynolds average of the scalar transport \cref{eq:cons_scalar} leads 
 %--------------------------------------------
 The equation for the mean vorticity $\wiavg$, also denoted by $\Omega_i$ is as follows
 \begin{equation}
-\frac{\partial \wiavg}{\partial t} + \ujavg \frac{\partial \wiavg}{\partial x_j} = \wjavg \frac{\partial \uiavg}{\partial x_j} + \nu \frac{\partial^2 \wiavg}{\partial x_j \partial x_j} + \frac{\partial}{\partial x_j} [ \langle \uifluc w_j \rangle - \langle \ujfluc w_i \rangle ].
+\frac{\partial \wavg_i}{\partial t} + \uavg_j \frac{\partial \wavg_i}{\partial x_j} = \wavg_j \frac{\partial \uavg_i}{\partial x_j} + \nu \frac{\partial^2 \wavg_i}{\partial x_j \partial x_j} + \frac{\partial}{\partial x_j} \left [ \overline{\ufluc_i \wfluc_j} - \overline{\ufluc_j \wfluc_i} \right ].
 \end{equation}
 
 %--------------------------------------------
@@ -676,30 +685,35 @@ The equation for the mean vorticity $\wiavg$, also denoted by $\Omega_i$ is as f
 %--------------------------------------------
 \Cref{eq:vel_fluc_favre} for incompressible flows becomes
 \begin{equation}
-    \frac{\partial \uifluc}{\partial t} + \frac{\partial \uiavg}{\partial t} + \ujavg \frac{\partial \uiavg}{\partial x_j} + \ujfluc \frac{\partial \uiavg}{\partial x_j} + \frac{\partial \uifluc}{\partial x_j} \ujavg + \frac{\partial \uifluc \ujfluc}{\partial x_j} = -\frac{1}{\rho}\frac{\partial P}{\partial x_i} + \nu \frac{\partial \uiavg}{\partial x_j \partial x_j} + F_i.
+    \frac{\partial \ufluc_i}{\partial t} + \frac{\partial \uavg_i}{\partial t} + \uavg_j \frac{\partial \uavg_i}{\partial x_j} + \ufluc_j \frac{\partial \uavg_i}{\partial x_j} + \frac{\partial \ufluc_i}{\partial x_j} \uavg_j + \frac{\partial \ufluc_i \ufluc_j}{\partial x_j} = -\frac{1}{\rho}\frac{\partial p}{\partial x_i} + \nu \frac{\partial u_i}{\partial x_j \partial x_j} + f_i.
 \end{equation}
 We now subtract \cref{eq:rans_vel} from the above, to obtain
 \begin{equation}
 \label{eq:vel_fluc}
-    \frac{\partial \uifluc}{\partial t} + \ujavg \frac{\partial \uifluc}{\partial x_j} = -\ujfluc \frac{\partial \uiavg}{\partial x_j} - \frac{\partial \uifluc \ujfluc}{\partial x_j} - \frac{1}{\rho}\frac{\partial p}{\partial x_i} + \nu \frac{\partial \uifluc}{\partial x_j \partial x_j} + \frac{\partial \tau_{ij}}{\partial x_j} + f_i.
+    \frac{\partial \ufluc_i}{\partial t} + \uavg_j \frac{\partial \ufluc_i}{\partial x_j} = -\ufluc_j \frac{\partial \uavg_i}{\partial x_j} - \frac{\partial \ufluc_i \ufluc_j}{\partial x_j} - \frac{1}{\rho}\frac{\partial \pfluc}{\partial x_i} + \nu \frac{\partial \ufluc_i}{\partial x_j \partial x_j} + \frac{\partial \tau_{ij}}{\partial x_j} + \ffluc_i.
 \end{equation}
-Assuming incompressible flow, and taking the divergence of \cref{eq:cons_momentum}, one obtains the equation for pressure,
+Assuming incompressible flow, and taking the divergence of \cref{eq:cons_momentum}, one obtains the instantaneous equation for pressure,
 \begin{equation}
-\frac{1}{\rho} \frac{\partial^2 P}{\partial x_j \partial x_j} = -\frac{\partial U_i}{\partial x_j}\frac{\partial U_j}{\partial x_i} + \frac{\partial F}{\partial x_i}.
+\frac{1}{\rho} \frac{\partial^2 p}{\partial x_j \partial x_j} = -\frac{\partial u_i}{\partial x_j}\frac{\partial u_j}{\partial x_i} + \frac{\partial f}{\partial x_i}.
 \end{equation}
 Subtracting \cref{eq:rans_pressure} from the above leads to
 \begin{equation}
 \label{press_fluc}
-\frac{1}{\rho} \frac{\partial^2 \pfluc}{\partial x_j \partial x_j} = -2 \frac{\partial \uiavg}{\partial x_j} \frac{\partial \ujfluc}{\partial x_i} - \frac{\partial^2 \uifluc \ujfluc}{\partial x_i \partial x_j} + \frac{\partial^2 \rs_{ij}}{\partial x_i \partial x_j} + \frac{\partial f_i}{\partial x_i}.
+\frac{1}{\rho} \frac{\partial^2 \pfluc}{\partial x_j \partial x_j} = -2 \frac{\partial \uavg_i}{\partial x_j} \frac{\partial \ufluc_j}{\partial x_i} - \frac{\partial^2 \ufluc_i \ufluc_j}{\partial x_i \partial x_j} + \frac{\partial^2 \rs_{ij}}{\partial x_i \partial x_j} + \frac{\partial \ffluc_i}{\partial x_i}.
 \end{equation}
 
 %--------------------------------------------
 \subsection{Kinetic energy of the mean flow}
 %--------------------------------------------
+For incompressible flow, \cref{eq:kinetic_energies} simplifies to 
+\begin{equation}
+    \mathcal{K} = \frac{1}{2} \uavg_i \uavg_i \qquad k = \frac{1}{2} \overline{\ufluc_i \ufluc_i}.
+\end{equation}
+
 Assuming incompressible flow, \cref{eq:ke_favreflow} becomes
 \begin{equation}
 \label{eq:ke_ransflow}
-\frac{\partial \bar{K} }{\partial t} + \ujavg \frac{ \partial \bar{K} }{\partial x_j} = \rs_{ij} \frac{\partial \uiavg}{\partial x_j} - \frac{ \langle T_{ij} \rangle }{ \rho } \frac{ \partial \uiavg }{\partial x_j} -  \frac{\partial}{\partial x_j} \left ( \uiavg \rs_{ij} + \frac{ \ujavg \pavg }{\rho} - \frac{ \uiavg \langle T_{ij} \rangle }{\rho} \right ) + \langle F_i \rangle \uiavg.
+\frac{\partial \mathcal{K} }{\partial t} + \uavg_j \frac{ \partial \mathcal{K} }{\partial x_j} = \rs_{ij} \frac{\partial \uavg_i}{\partial x_j} - \frac{ \tavg_{ij} }{ \rho } \frac{ \partial \uavg_i }{\partial x_j} -  \frac{\partial}{\partial x_j} \left ( \uavg_i \rs_{ij} + \frac{ \uavg_j \pavg }{\rho} - \frac{ \uavg_i \tavg_{ij} }{\rho} \right ) + \favg_i \uavg_i.
 \end{equation}
 
 %--------------------------------------------
@@ -708,11 +722,11 @@ Assuming incompressible flow, \cref{eq:ke_favreflow} becomes
 Assuming incompressible flow, \cref{eq:ke_favre_conservation} becomes  
 \begin{equation}
 \label{eq:tke_ransflow}
-\frac{\partial k}{\partial t} + \ujavg \frac{\partial k}{\partial x_j} = -\rs_{ij} \frac{ \partial \uiavg }{ \partial x_j} - \left < \frac{ t_{ij} }{\rho} \frac{ \partial u_i }{ \partial x_j} \right > - \frac{\partial}{\partial x_j} \left ( \frac{1}{2} \langle \ujfluc \uifluc \uifluc \rangle + \frac{ \langle \ujfluc p \rangle }{ \rho } - \frac{ \langle \uifluc t_{ij} \rangle }{ \rho } \right ) + \langle f_i \uifluc \rangle .
+\frac{\partial k}{\partial t} + \uavg_j \frac{\partial k}{\partial x_j} = -\rs_{ij} \frac{ \partial \uavg_i }{ \partial x_j} - \overline{ \frac{ \tfluc_{ij} }{\rho} \frac{ \partial \ufluc_i }{ \partial x_j} } - \frac{\partial}{\partial x_j} \left ( \frac{1}{2} \overline{ \ufluc_j \ufluc_i \ufluc_i } + \frac{ \overline{ \ufluc_j \pfluc } }{ \rho } - \frac{ \overline{ \ufluc_i \tfluc_{ij} } }{ \rho } \right ) + \overline{ \ffluc_i \ufluc_i } .
 \end{equation}
 The production term can be rewritten as $-\rs_{ij} S_{ij}$, that is, production of TKE is influenced by $S_{ij}$ only. The second term is referred to as the dissipation $\epsilon$, which can be rewritten as
 \begin{equation}
-\epsilon = \left < \frac{ t_{ij} }{ \rho } s_{ij} \right > = 2 \nu \langle s_{ij} s_{ij} \rangle.
+\epsilon = \overline{ \frac{ \tfluc_{ij} }{ \rho } \Sfluc_{ij} } = 2 \nu \overline{ \Sfluc_{ij} \Sfluc_{ij} }.
 \end{equation}
 
 %--------------------------------------------

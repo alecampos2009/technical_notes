@@ -168,7 +168,7 @@ In the above, $\vvec = \vvec(t)$ is the particle velocity, $\xvec = \xvec(t)$ th
     \label{eq:single_particle_motion_vel_general}
     \vvec = \vvec^{(c)} + \vvec^{(g)} + v^{||} \bvec,
 \end{equation}
-where $\vvec^{(c)} = \vvec^{(c)}(t)$ is the gyromotion (cyclotron) velocity, $\vvec^{(g)} = \vvec^{(g)}(t)$ is the gyrocenter velocity, $v^{||} = v^{||}(t)$ is the parallel velocity. Not all of the velocities will alwasy be present. $\bvec = \Bvec / B$ is the unit magnetic field vector. The position of the particle is governed by 
+where $\vvec^{(c)} = \vvec^{(c)}(t)$ is the gyromotion (cyclotron) velocity, $\vvec^{(g)} = \vvec^{(g)}(t)$ is the gyrocenter velocity, $v^{||} = v^{||}(t)$ is the parallel velocity. Not all of the velocities will always be present. $\bvec = \Bvec / B$ is the unit magnetic field vector. The position of the particle is governed by 
 \begin{equation}
     \frac{d\xvec}{dt} = \vvec.
 \end{equation}
@@ -1468,8 +1468,11 @@ The ideal MHD equations are obtained by neglecting the right-hand sides of \cref
 %--------------------------------------------
 \section{Hasegawa-Mima}
 %--------------------------------------------
-Assumptions:
+%--------------------------------------------
+\subsection{Assumptions}
+%--------------------------------------------
 \begin{enumerate}
+    \item Singly-charged ions. \label{it:single_charge_ions}
     \item No shear stresses, sources, or collisions. \label{it:no_shear_source_coll}
     \item Cold ion approximation, i.e. $T_e \gg T_i$ and thus $\nabla p_i \approx 0$ \cite{hasegawa1977}. \label{it:cold}.
     \item Electrostatic field, i.e. $\Evec = - \nabla \phi$. \label{it:electrostatic}
@@ -1479,7 +1482,10 @@ Assumptions:
     \item Quasi-neutrality, i.e. $n_i \approx n_e$. \label{it:quasineutrality}
 \end{enumerate}
 
-Using the assumption in \cref{it:no_shear_source_coll}, the momentum equation for ions becomes
+%--------------------------------------------
+\subsection{Derivation}
+%--------------------------------------------
+Using the assumptions in \cref{it:single_charge_ions,it:no_shear_source_coll}, the momentum \cref{eq:cons_mom} becomes
 \begin{equation}
     m_i n_i \left (\frac{\partial \uvec_i}{\partial t} + \uvec_i \cdot \nabla \uvec_i \right ) = e n_i (\Evec + \uvec_i \times \Bvec) - \nabla p_i.
 \end{equation}
@@ -1625,7 +1631,62 @@ We now introduce the normalizations
 \end{equation}
 where $\hat{t} = t w_{c,i}$ and $\hat{\xvec} = \xvec / r_s$. Neglecting the hat notation for the sake of simplicity, \cref{eq:intermediate_hm_2} finally becomes
 \begin{equation}
+    \label{eq:hasegawa_mima}
    \frac{\partial}{\partial t}\left ( \nabla_\perp^2 \phi - \phi \right ) - \left [ \left( \nabla_\perp \phi \times \bvec \right) \cdot \nabla_\perp \right] \left [ \nabla_\perp^2 \phi - \ln \left( \frac{n_0}{w_{c,i}} \right) \right ] = 0.
+\end{equation}
+
+%--------------------------------------------
+\subsection{Spectral space}
+%--------------------------------------------
+In this section we derive the equation for the Fourier coefficient $\hat{\phi}_\nvec = \hat{\phi}(t)_\nvec$, which relates to the potential through the following
+\begin{equation}
+    \phi(t,x) = \sum_{\nvec=-\infty}^\infty \hat{\phi}_\nvec(t) e^{i \kvec_\nvec \cdot \xvec},
+\end{equation}
+\begin{equation}
+    \hat{\phi}_\nvec(t)= \frac{1}{L^2} \int_{L^2} \phi(t, \xvec) e^{-i \kvec_\nvec \cdot \xvec} \, d\xvec .
+\end{equation}
+We introduce the operator $\mathcal{F} \{ \}_\nvec$, which is defined by
+\begin{equation}
+    \mathcal{F} \{ \phi(t,\xvec) \}_\nvec = \frac{1}{L^2} \int_{L^2} \phi(t, \xvec) e^{-i \kvec_\nvec \cdot \xvec} \, d\xvec .
+\end{equation}
+The equation for $\hat{\phi}_\nvec$ is obtained by applying this operator to \cref{eq:hasegawa_mima}. Thus, the time derivative term in that equation becomes 
+\begin{equation}
+    \mathcal{F} \left \{ \frac{\partial}{\partial t} \left ( \nabla_\perp^2 - \phi \right ) \right \}_\nvec = \frac{\partial}{\partial t} \mathcal{F} \left \{ \nabla_\perp^2 \phi - \phi \right \}_\nvec = \frac{\partial}{\partial t} \left ( -k_\nvec^2 \hat{\phi}_\nvec - \hat{\phi}_\nvec \right ) = - \left ( 1 + k^2_\nvec \right ) \frac{\partial \hat{\phi}_\nvec}{\partial t}.
+\end{equation}
+We assume $\nabla \ln (n_o / w_{ci})$ is constant in space. Thus, the term containing the inhomogeneity becomes 
+\begin{multline}
+    \mathcal{F} \left \{ \left ( \nabla_\perp \phi \times \bvec \right ) \cdot \nabla_\perp \ln \left ( \frac{n_o}{w_{ci}} \right ) \right \}_\nvec \\
+    = \left ( \mathcal{F} \left \{ \nabla_\perp \phi \right \}_\nvec \times \bvec \right ) \cdot \nabla_\perp \ln \left ( \frac{n_o}{w_{ci}} \right ) = i \left ( \kvec_\nvec \times \bvec \right ) \cdot \nabla_\perp \ln \left ( \frac{n_o}{w_{ci}} \right ) \hat{\phi}_\nvec.
+\end{multline}
+The remaining term is computed as follows
+\begin{align}
+    \mathcal{F} \left \{ - \left (\nabla_\perp \phi \times \bvec \right ) \right . & \left . \cdot \nabla^3_\perp \phi \right \}_\nvec \nonumber \\
+    &= \mathcal{F} \left \{ -\sum_{\nvec'=-\infty}^\infty \sum_{\nvec''=-\infty}^\infty \left [ \hat{\phi}_{\nvec'} i \left ( \kvec_{\nvec'} \times \bvec \right ) e^{i \kvec_{\nvec'} \cdot \xvec} \right ] \cdot \left [ \hat{\phi}_{\nvec''} \left ( -i k^2_{\nvec''} \kvec_{\nvec''} \right ) e^{i \kvec_{\nvec''} \cdot \xvec} \right ] \right \}_\nvec \nonumber \\
+    &= -\sum_{\nvec'=-\infty}^\infty \sum_{\nvec''=-\infty}^\infty \left ( \kvec_{\nvec'} \times \bvec \right ) \cdot \kvec_{\nvec''} k^2_{\nvec''} \hat{\phi}_{\nvec'} \hat{\phi}_{\nvec''} \mathcal{F} \left \{ e^{i \kvec_{\nvec'} \cdot \xvec} e^{i \kvec_{\nvec''} \cdot \xvec} \right \} \nonumber \\
+    &= \sum_{\nvec'=-\infty}^\infty \sum_{\nvec''=-\infty}^\infty \left ( \kvec_{\nvec'} \times \kvec_{\nvec''} \right ) \cdot \bvec k^2_{\nvec''} \hat{\phi}_{\nvec'} \hat{\phi}_{\nvec''} \delta_{\nvec, \nvec' + \nvec''}
+\end{align}
+Since $\nvec'$ and $\nvec''$ are just symbolic variables for the summation, we can write the above as follows
+\begin{align}
+    \mathcal{F} \left \{ - \left (\nabla_\perp \phi \times \bvec \right ) \right . & \left . \cdot \nabla^3_\perp \phi \right \}_\nvec \nonumber \\
+    =& \frac{1}{2} \sum_{\nvec'=-\infty}^\infty \sum_{\nvec''=-\infty}^\infty \left ( \kvec_{\nvec'} \times \kvec_{\nvec''} \right ) \cdot \bvec k^2_{\nvec''} \hat{\phi}_{\nvec'} \hat{\phi}_{\nvec''} \delta_{\nvec, \nvec' + \nvec''} \nonumber \\
+    &+ \frac{1}{2} \sum_{\nvec''=-\infty}^\infty \sum_{\nvec'=-\infty}^\infty \left ( \kvec_{\nvec''} \times \kvec_{\nvec'} \right ) \cdot \bvec k^2_{\nvec'} \hat{\phi}_{\nvec''} \hat{\phi}_{\nvec'} \delta_{\nvec, \nvec'' + \nvec'} \nonumber \\
+    =& \sum_{\nvec'=-\infty}^\infty \sum_{\nvec''=-\infty}^\infty \frac{1}{2} \left ( \kvec_{\nvec'} \times \kvec_{\nvec''} \right ) \cdot \bvec \left ( k^2_{\nvec''} - k^2_{\nvec'} \right ) \hat{\phi}_{\nvec'} \hat{\phi}_{\nvec''} \delta_{\nvec, \nvec' + \nvec''}
+\end{align}
+Thus, we finally have
+\begin{equation}
+    \mathcal{F} \left \{ - \left (\nabla_\perp \phi \times \bvec \right ) \cdot \nabla^3_\perp \phi \right \}_\nvec = \sum_{\nvec = \nvec' + \nvec''} \left ( \kvec_{\nvec'} \times \kvec_{\nvec''} \right ) \cdot \bvec \left ( k^2_{\nvec''} - k^2_{\nvec'} \right ) \hat{\phi}_{\nvec'} \hat{\phi}_{\nvec''}
+\end{equation}
+Combining the results above, we obtain
+\begin{equation}
+    \frac{\partial \hat{\phi}_\nvec}{\partial t} + i w_\nvec \hat{\phi}_\nvec = \sum_{\nvec = \nvec' + \nvec''} \Lambda^\nvec_{\nvec', \nvec''} \hat{\phi}_{\nvec'} \hat{\phi}_{\nvec''},
+\end{equation}
+where
+\begin{equation}
+    w_\nvec = - \frac{ \left (\kvec_\nvec \times \bvec \right ) }{1 + k^2_\nvec} \cdot \nabla_\perp \ln \left ( \frac{n_o}{w_{ci}} \right ),
+\end{equation}
+and
+\begin{equation}
+    \Lambda^\nvec_{\nvec', \nvec''} = \frac{1}{2} \frac{  \left ( \kvec_{\nvec'} \times \kvec_{\nvec''} \right ) \cdot \bvec \left ( k^2_{\nvec''} - k^2_{\nvec'} \right ) }{1 + k^2_\nvec}.
 \end{equation}
 
 %--------------------------------------------
