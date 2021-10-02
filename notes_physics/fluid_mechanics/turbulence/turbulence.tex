@@ -1,4 +1,4 @@
-% NEED TO START WITH SECTION 2.5.5 
+% FINISHED CHAPTER 2
 
 \documentclass[oneside,a4paper,11pt]{report}
 
@@ -90,9 +90,6 @@
 \newcommand{\wrfluc}{w_r}
 \newcommand{\wtfluc}{w_t}
 \newcommand{\wsfluc}{w_s}
-
-\newcommand{\phiavg}{\overline{\Phi}}
-\newcommand{\phifluc}{\phi'}
 
 % Favre-averaged variables
 \newcommand{\aavgf}{\widetilde{a}}
@@ -733,26 +730,26 @@ The production term can be rewritten as $-\rs_{ij} S_{ij}$, that is, production 
 \subsection{Reynolds-stresses}
 %--------------------------------------------
 
-The transport equation for the Reynolds stresses is obtained by multiplying equation (\ref{eq:vel_fluc}) by $\ujfluc$, adding to it the same product but with indices $i$ and $j$ switched, and then performing an average of the resulting equation. Thus, one obtains
+The transport equation for the Reynolds stresses is obtained by multiplying equation (\ref{eq:vel_fluc}) by $\ufluc_j$, adding to it the same product but with indices $i$ and $j$ switched, and then performing an average of the resulting equation. Thus, one obtains
 \begin{equation}
 \label{rs_transport}
-\frac{\partial \rs_{ij}}{\partial t} + \ukavg \frac{\partial \rs_{ij}}{\partial x_k} = \mathcal{P}_{ij} + \Pi_{ij} - \epsilon_{ij} - \frac{\partial}{\partial x_k} \left ( \mathcal{T}^{(u)}_{kij} + \mathcal{T}^{(\nu)}_{kij} \right ) + \langle \ujfluc f_i \rangle + \langle \uifluc f_j \rangle.
+\frac{\partial \rs_{ij}}{\partial t} + \uavg_k \frac{\partial \rs_{ij}}{\partial x_k} = \mathcal{P}_{ij} + \Pi_{ij} - \epsilon_{ij} - \frac{\partial}{\partial x_k} \left ( \mathcal{T}^{(u)}_{kij} + \mathcal{T}^{(\nu)}_{kij} \right ) + \overline{ \ufluc_j \ffluc_i } + \overline{ \ufluc_i \ffluc_j }.
 \end{equation}
 The production is given by
 \begin{equation}
-\mathcal{P}_{ij} = -\rs_{ik} \frac{\partial \ujavg}{\partial x_k} - \rs_{jk} \frac{\partial \uiavg}{\partial x_k},
+\mathcal{P}_{ij} = -\rs_{ik} \frac{\partial \uavg_j}{\partial x_k} - \rs_{jk} \frac{\partial \uavg_i}{\partial x_k},
 \end{equation}
 the velocity-pressure-gradient tensor by
 \begin{equation}
-\Pi_{ij} = -\frac{1}{\rho} \left \langle \uifluc \frac{\partial \pfluc}{\partial x_j} + \ujfluc \frac{\partial \pfluc}{\partial x_i} \right \rangle,
+\Pi_{ij} = -\frac{1}{\rho} \overline{ \ufluc_i \frac{\partial \pfluc}{\partial x_j} + \ufluc_j \frac{\partial \pfluc}{\partial x_i} },
 \end{equation}
 the dissipation tensor by
 \begin{equation}
-\epsilon_{ij} = 2 \nu \left \langle \frac{\partial \uifluc}{\partial x_k}\frac{\partial \ujfluc}{\partial x_k} \right \rangle,
+\epsilon_{ij} = 2 \nu \overline{ \frac{\partial \ufluc_i}{\partial x_k}\frac{\partial \ufluc_j}{\partial x_k} },
 \end{equation}
 the turbulent transport by
 \begin{equation}
-\mathcal{T}^{(u)}_{kij} = \langle \uifluc \ujfluc \ukfluc \rangle,
+\mathcal{T}^{(u)}_{kij} = \overline{ \ufluc_i \ufluc_j \ufluc_k },
 \end{equation}
 and the viscous diffusion by
 \begin{equation}
@@ -765,9 +762,9 @@ The velocity-pressure-gradient tensor has two common decompositions. One of thes
 \end{equation}
 where $\redi_{ij}$ is the pressure-rate-of-strain tensor and $\mathcal{T}^{(p)}_{kij}$ is the pressure transport tensor. These are defined as follows
 \begin{equation}
-\redi_{ij} = \left \langle \frac{\pfluc}{\rho} \left ( \frac{\partial \uifluc}{\partial x_j} + \frac{\partial \ujfluc}{\partial x_i} \right ) \right \rangle \qquad \text{and} \qquad \mathcal{T}^{(p)}_{kij} = \frac{1}{\rho} \langle \uifluc \pfluc \rangle \delta_{jk} + \frac{1}{\rho} \langle \ujfluc \pfluc \rangle \delta_{ik}.
+\redi_{ij} = \overline{ \frac{\pfluc}{\rho} \left ( \frac{\partial \ufluc_i}{\partial x_j} + \frac{\partial \ufluc_j}{\partial x_i} \right ) } \qquad \text{and} \qquad \mathcal{T}^{(p)}_{kij} = \frac{1}{\rho} \overline{ \ufluc_i \pfluc } \delta_{jk} + \frac{1}{\rho} \overline{ \ufluc_j \pfluc } \delta_{ik}.
 \end{equation}
-An alternate decomposition is as follows
+An alternate decomposition is
 \begin{equation}
 \Pi_{ij} = \hat{\redi}_{ij} - \frac{\partial}{\partial x_k} \mathcal{T}^{(p')}_{kij},
 \end{equation}
@@ -775,23 +772,23 @@ where $\hat{\redi}_{ij}$ is the anisotropic velocity-pressure-gradient tensor an
 \begin{equation}
 - \frac{\partial}{\partial x_k} \mathcal{T}^{(p')}_{kij} = \frac{1}{3} \Pi_{kk} \delta_{ij} \qquad
 \mathcal{T}^{(p')}_{kij} =  \frac{2}{3} \delta_{ij} \mathcal{T}^{(p)}_k \qquad
-\mathcal{T}^{(p)}_{k} = \frac{1}{\rho} \langle \ukfluc \pfluc \rangle.
+\mathcal{T}^{(p)}_{k} = \frac{1}{\rho} \overline{ \ufluc_k \pfluc }.
 \end{equation}
 We label $\mathcal{T}^{(p')}_{kij}$ as the isotropic pressure transport.
 
-Assuming no body forces, we can decompose the fluctuating pressure $p$ into three contributions, namely
+Assuming no body forces, we can decompose the fluctuating pressure $\pfluc$ into three contributions, namely
 \begin{equation}
-p = p^{(r)} + p^{(s)} + p^{(h)},
+\pfluc = \pfluc^{(r)} + \pfluc^{(s)} + \pfluc^{(h)},
 \end{equation}
-where $p^{(r)}$ is the rapid pressure, $p^{(s)}$ is the slow pressure, and $p^{(h)}$ is the harmonic pressure (also referred to as Stokes pressure). Thus, $p^{(r)}$ satisfies
+where $\pfluc^{(r)}$ is the rapid pressure, $\pfluc^{(s)}$ is the slow pressure, and $\pfluc^{(h)}$ is the harmonic pressure (also referred to as Stokes pressure). Thus, $\pfluc^{(r)}$ satisfies
 \begin{equation}
-\frac{1}{\rho} \frac{\partial^2 \pfluc^{(r)}}{\partial x_j \partial x_j} = -2 \frac{\partial \uiavg}{\partial x_j} \frac{\partial \ujfluc}{\partial x_i},
+\frac{1}{\rho} \frac{\partial^2 \pfluc^{(r)}}{\partial x_j \partial x_j} = -2 \frac{\partial \uavg_i}{\partial x_j} \frac{\partial \ufluc_j}{\partial x_i},
 \end{equation}
-$p^{(s)}$ satisfies
+$\pfluc^{(s)}$ satisfies
 \begin{equation}
-\frac{1}{\rho} \frac{\partial^2 \pfluc^{(s)}}{\partial x_j \partial x_j} = - \frac{\partial^2 \uifluc \ujfluc}{\partial x_i \partial x_j} + \frac{\partial^2 \rs_{ij}}{\partial x_i \partial x_j},
+\frac{1}{\rho} \frac{\partial^2 \pfluc^{(s)}}{\partial x_j \partial x_j} = - \frac{\partial^2 \ufluc_i \ufluc_j}{\partial x_i \partial x_j} + \frac{\partial^2 \rs_{ij}}{\partial x_i \partial x_j},
 \end{equation}
-and $p^{(h)}$ satisfies
+and $\pfluc^{(h)}$ satisfies
 \begin{equation}
 \frac{1}{\rho} \frac{\partial^2 \pfluc^{(h)}}{\partial x_j \partial x_j} = 0.
 \end{equation}
@@ -824,7 +821,7 @@ Taking the material derivative of $b_{ij}$ one obtains
 Thus, the transport equation for the non-dimensional anisotropy without body forces can be expressed as follows
 \begin{multline}
 \label{anisotropy_eq}
-2k \left( \frac{\partial b_{ij}}{\partial t} + \ukavg \frac{\partial b_{ij}}{\partial x_k} \right ) =\\ \mathcal{P}_{ij} + \redi_{ij} - \epsilon_{ij} - \frac{\partial}{\partial x_k} \left ( \mathcal{T}^{(u)}_{kij} + \mathcal{T}^{(p)}_{kij} + \mathcal{T}^{(\nu)}_{kij} \right ) - \frac{\rs_{ij}}{k} \left [ \mathcal{P} - \epsilon - \frac{\partial}{\partial x_k} \left ( \mathcal{T}^{(u)}_{k} + \mathcal{T}^{(p)}_{k} + \mathcal{T}^{(\nu)}_{k} \right ) \right ].
+2k \left( \frac{\partial b_{ij}}{\partial t} + \uavg_k \frac{\partial b_{ij}}{\partial x_k} \right ) =\\ \mathcal{P}_{ij} + \redi_{ij} - \epsilon_{ij} - \frac{\partial}{\partial x_k} \left ( \mathcal{T}^{(u)}_{kij} + \mathcal{T}^{(p)}_{kij} + \mathcal{T}^{(\nu)}_{kij} \right ) - \frac{\rs_{ij}}{k} \left [ \mathcal{P} - \epsilon - \frac{\partial}{\partial x_k} \left ( \mathcal{T}^{(u)}_{k} + \mathcal{T}^{(p)}_{k} + \mathcal{T}^{(\nu)}_{k} \right ) \right ].
 \end{multline}
 
 %--------------------------------------------
@@ -834,18 +831,18 @@ Thus, the transport equation for the non-dimensional anisotropy without body for
 %--------------------------------------------
 \subsection{Squared averaged scalar}
 %--------------------------------------------
-Assuming incompressible flow for \cref{eq:squared_averaged_scalar_favre} leads to
+Assuming incompressible flow in \cref{eq:squared_averaged_scalar_favre}, we obtain
 \begin{equation}
-    \frac{\partial \yavg ^2}{\partial t} + \ujavg \frac{\partial \yavg^2}{\partial x_j} = 2\frac{\langle J_j \rangle}{\rho} \frac{\partial \yavg}{\partial x_j} + 2\langle \yfluc \ujfluc \rangle \frac{\partial \yavg}{\partial x_j} - 2\frac{\partial}{\partial x_j} \left ( \frac{\yavg \langle J_j \rangle}{\rho} + \yavg \langle \yfluc \ujfluc \rangle \right )
+    \frac{\partial \Yavg ^2}{\partial t} + \uavg_j \frac{\partial \Yavg^2}{\partial x_j} = 2\frac{ \Javg_j }{\rho} \frac{\partial \Yavg}{\partial x_j} + 2 \overline{ \Yfluc \ufluc_j } \frac{\partial \Yavg}{\partial x_j} - 2\frac{\partial}{\partial x_j} \left ( \frac{\Yavg \, \Javg_j }{\rho} + \Yavg \, \overline{ \Yfluc \ufluc_j } \right ) + 2 \Yavg \wavg
 \end{equation}
 
 %--------------------------------------------
 \subsection{Scalar variance}
 %--------------------------------------------
-Assuming incompressible flow for \cref{eq:scalar_variance_favre} leads to
+Assuming incompressible flow in \cref{eq:scalar_variance_favre}, we obtain 
 \begin{equation}
     \label{eq:scalar_variance_rans}
-    \frac{\partial \langle \yfluc \yfluc \rangle}{\partial t} + \ujavg \frac{\partial  \langle \yfluc \yfluc \rangle }{\partial x_j} = -2 \langle \yfluc \ujfluc \rangle \frac{\partial \yavg}{\partial x_j} + 2 \left < \frac{j_j}{\rho} \frac{\partial y}{\partial x_j} \right > - 2 \frac{\partial}{\partial x_j} \left ( \frac{1}{2} \langle \yfluc \yfluc \ujfluc \rangle +  \frac{ \langle \yfluc j_j \rangle}{\rho} \right).
+    \frac{\partial \overline{ \Yfluc \Yfluc }}{\partial t} + \uavg_j \frac{\partial  \overline{ \Yfluc \Yfluc } }{\partial x_j} = -2 \overline{ \Yfluc \ufluc_j } \frac{\partial \Yavg}{\partial x_j} + 2 \overline{ \frac{\Jfluc_j}{\rho} \frac{\partial \Yfluc}{\partial x_j} } - 2 \frac{\partial}{\partial x_j} \left ( \frac{1}{2} \overline{ \Yfluc \Yfluc \ufluc_j } +  \frac{ \overline{ \Yfluc \Jfluc_j }}{\rho} \right) + 2 \overline{\Yfluc \wfluc}.
 \end{equation}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

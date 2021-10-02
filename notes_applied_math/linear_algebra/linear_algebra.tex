@@ -1,0 +1,56 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{graphicx,subfigure,amssymb,amstext,amsmath}
+\begin{document}
+
+%===========================================================================
+\section{Linear System of Equations}
+
+%===========================================================================
+\section{Matrix Algebra}
+
+%===========================================================================
+\section{Determinants}
+
+%===========================================================================
+\section{Vector Spaces}
+
+%===========================================================================
+\section{Eigenvalues and Eigenvectors}
+
+%===========================================================================
+\section{Orthogonality and Least Squares}
+\subsection{Basic Definitions}
+\begin{itemize}
+\item Imagine a subspace $W$ of $\mathbb{R}^n$. The set of all vectors $\mathbf{z}$ that are orthogonal to all the vectors in $W$ is called the \textbf{orthogonal complement} of $W$, and is denoted as $W^+$. (Note: this is an orthogonal complement, all complements need not be orthogonal).
+\item $(\text{Row}\, A)^\perp = \text{Null}\,A$ and $(\text{Col}\,A)^\perp = \text{Null}\,A^T$
+\end{itemize}
+
+\subsection{Orthogonal Sets}
+\begin{itemize}
+\item An \textbf{orthogonal set} is a set of vectors that are orthogonal with each other.
+\item Assume $0 = c_1\mathbf{u}_1 + c_2\mathbf{u}_2 + ...  + c_p\mathbf{u}_p$. By multiplying by $\mathbf{u}_i$, we can show $c_i=0$ for all $i$. Thus, the vectors in an orthogonal set are linearly independent, and therefore form an invertible matrix.
+\item Because they are linearly independent, they also form a basis for span$\{\mathbf{u}_i,...,\mathbf{u}_p\}$.
+\item Let $\{\mathbf{u}_1,...,\mathbf{u}_p\}$ be an orthogonal basis for $W$. For each $\mathbf{y}$ in $W$, we have: $\mathbf{y} = c_1\mathbf{u}_1 + ... + c_p\mathbf{u_p}$, where $$c_i = \frac{\mathbf{y}\cdot\mathbf{u}_i}{\mathbf{u}_i\cdot\mathbf{u}_i}$$ 
+\item An orthogonal set composed of unit vectors is called an \textbf{orthonormal set}.
+\item If an $m\times n$ matrix $U$ has orthonormal columns, then $U^TU=I$.
+\item If such matrix is square, then $U^{-1}=U^T$ (which is the definition of an \textbf{orthogonal matrix}).
+$$U\text{ is invertible} \rightarrow (U^TU)U^{-1}=IU^{-1} \rightarrow U^T=U^{-1}$$
+\item For an $m\times n$ matrix with orthonormal columns:
+$$||U\mathbf{x}|| = ||\mathbf{x}|| \qquad \& \qquad (U\mathbf{x})\cdot(U\mathbf{y})=\mathbf{x}\cdot\mathbf{y}$$
+\end{itemize}
+
+\subsection{Orthogonal Projections}
+\begin{itemize}
+\item An \textbf{orthogonal projection} of $\mathbf{y}$ onto $W$ is the component $\mathbf{\hat{y}}$ such that $\mathbf{y} = \mathbf{\hat{y}}+\mathbf{z}$ and $\mathbf{z}$ is orthogonal to $W$.
+\item The vector $\mathbf{\hat{y}}$ can be expressed in terms of any orthogonal basis $\{\mathbf{u}_1,...\mathbf{u}_p\}$ of $W$ as follows,
+$$\mathbf{\hat{y}} = \frac{\mathbf{y} \cdot \mathbf{u}_1}{\mathbf{u}_1 \cdot \mathbf{u}_1} \mathbf{u}_1 + ... + \frac{\mathbf{y} \cdot \mathbf{u}_p}{\mathbf{u}_p \cdot \mathbf{u}_p} \mathbf{u}_p$$
+\item Let $W$ be a subspace of $\mathbb{R}^n$, $\mathbf{y}$ any vector in $\mathbb{R}^n$ and $\mathbf{\hat{y}}$ the orthogonal projection of $\mathbf{y}$ onto $W$. Then $\mathbf{\hat{y}}$ is the closest point in $W$ to $\mathbf{y}$ (or in other words, the best approximation to $\mathbf{y}$), because:
+$$||\mathbf{y}-\mathbf{\hat{y}}|| < ||\mathbf{y}-\mathbf{v}||\qquad \forall \mathbf{v} \in W \text{ distinct from }\mathbf{\hat{y}}$$
+\item If the orthogonal basis $\{\mathbf{u}_1,...,\mathbf{u}_p\}$ is orthonormal, then the matrix $U=[\mathbf{u}_1 \cdot\cdot\cdot \mathbf{u}_p]$ can be used to form the orthogonal projector $P=UU^T$, and
+$$\mathbf{\hat{y}}=UU^T\mathbf{y}$$
+\end{itemize}  
+%===========================================================================
+\section{Symmetric Matrices and Quadratic Forms}
+
+%===========================================================================	
+\end{document}

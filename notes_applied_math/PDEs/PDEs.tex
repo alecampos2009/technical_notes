@@ -1,0 +1,301 @@
+\documentclass[oneside,a4paper,11pt]{report}
+
+\usepackage{"../../info/packages"}
+\usepackage{"../../info/nomenclature"}
+\usepackage{fullpage}
+
+\begin{document}
+
+% ==================================================================================
+\section{Fundamental PDEs}
+% ==================================================================================
+\subsection{Laplace and Poisson Equations}
+% ---------------------------------------------------------------
+\subsubsection{Fundamental solutions}
+Assuming solutions to the Laplace eq.\ depend only on the distance from origin ($|x|$), we obtain, up to a constant, the ``fundamental solutions'' of the Laplace eq.
+\[ \Phi(x) =
+  \begin{cases}
+    -\frac{1}{2\pi} \log(|x|) & \quad n = 2\\
+     \frac{1}{n(n-2)\alpha(n)} \frac{1}{|x|^{n-2}} & \quad n \ge 3
+  \end{cases} \]
+  
+\subsubsection{Solving Poisson's Eq.} Let $f \in C_c^2(\Rn)$, $n > 2$, and $\Phi$ be the fundamental solution to the Laplace equation. Define $u(x)$ as follows,
+\[u(x) = \int_{\Rn}\Phi(x-y)f(y)dy. \]
+Then,
+\begin{itemize}
+\item $u \in C^2(\Rn)$
+\item $-\Delta u = f(x) \quad (x \in \Rn).$
+\end{itemize}
+
+\subsubsection{Mean value property}
+ Let $U \subset \Rn$ be an open set, and let $B(x,r)$ be a ball centered at $x \in \Rn$ contained in $U$. Assume $u(x)$ is harmonic in $U$ and that $u \in C^2(U)$. Then,
+\[u(x) = \frac{1}{|B(x,r)|} \int_{B(x,r)} u dy = \frac{1}{|\partial B(x,r)|} \int_{\partial B(x,r)} u dS. \] 
+
+\begin{itemize}
+\item \textbf{Max and Min principle}: let $u(x)$ be a harmonic function in a connected domain $U$ and assume $u \in C^2(U) \cap C(\bar{U})$. Then,
+\begin{align*}
+\max_{x \in \bar{U}} u(x) &= \max_{y \in \partial U} u(y)\\
+\min_{x \in \bar{U}} u(x) & =  \min_{y \in \partial U} u(y)
+\end{align*}
+Moreover, if $u(x)$ achieves its max or min in the interior of $U$, then $u(x)$ is constant in $U$.
+
+\begin{itemize}
+\item Strict positivity: assume $U$ is a connected domain, $g$ is continuous on $\partial U$, $g \ge 0$ and $\neq 0$, and that $u$ solves, 
+\[ \begin{cases}
+    -\Delta u = 0 & \text{in } U\\
+     u = g & \text{on } \partial U
+  \end{cases}  \]
+Then $u > 0$ at all $x \in U$.
+
+\item Uniqueness: let $g$ be continuous on $\partial U$ and $f$ be continuous in $U$. Then there exists at most one solution $u \in C^2(U) \cap C(\bar{U})$ to the boundary value problem,
+\[ \begin{cases}
+\Delta u = f & \text{in } U \\
+u = g & \text{on } \partial U
+\end{cases}\]
+
+\end{itemize}
+
+\item \textbf{Regularity}: Let $u \in C^2(U)$ be a harmonic function in a domain $U$. Then $u \in C^\infty(U)$.
+
+\item \textbf{Estimates on derivatives}:  Let $u(x)$ be a harmonic function in a domain $U$ and let $B(y_0,r)$ be a ball contained in $U$ centered at a point $y_0 \in U$. Then there exist universal constants $C_n$ and $D_n$ that depend only on the dimension $n$ so that,
+\begin{align*}
+|u(y_0)| & \le \frac{C_n}{r^n} \int_{B(y_0,r)} |u(y)|\,dy \\
+|\nabla u(y_0)| & \le \frac{D_n}{r^{n+1}} \int_{B(y_0,r)} |u(y)| \,dy
+\end{align*}
+
+\item \textbf{Liouville theorem}: Let $u(x)$ be a harmonic bounded function in $\Rn$. Then $u(x)$ is equal identically to a constant.
+
+\item \textbf{Harnack's inequality}: Let $U$ be an open set and let $V$ be strictly contained in $U$. Then there exists a constant $C$ that depends on $U$ and $V$ but nothing else so that for any non-negative harmonic function $u$ in $U$ we have,
+\[\sup_{x \in V}u(x) \le C \inf_{x \in V} u(x)\]
+\end{itemize}
+
+\subsubsection{Green's function}
+\begin{itemize}
+\item Dirichlet problem: Suppose $u \in C^2(\bar{U})$ solves
+\[ \begin{cases}
+\Delta u = f & \text{in } U \\
+u = g & \text{on } \partial U,
+\end{cases}\]
+then $u$ would be of the following form,
+\[ u(x) = \int_{U} G(x,y) f(y)\,dy - \int_{\partial U} g(y) \frac{\partial G}{\partial n}(x,y) \,dS(y) \qquad (x \in U),\]
+where $G(x,y)$ is the Green's function for the region $U$, and is defined as
+\[G(x,y) = \Phi(y-x) - \phi(y;x),\]
+where $\phi(y;x)$ is a corrector function that, for a fixed $x$, solves the following
+\[ \begin{cases}
+\Delta \phi(y;x) = 0 & \text{in } U\\
+\phi(y;x) = \Phi(y-x) & \text{on } \partial U.
+\end{cases}\]
+Finally, reciprocity holds for $G(x,y)$, that is, for all $x,y \in U, x\neq y$, we have $G(x;y) = G(y;x)$.
+
+\item Neuman problem: Suppose $u \in C^2(\bar{U})$ solves
+\[ \begin{cases}
+\Delta u = f & \text{in } U \\
+\frac{\partial u}{\partial n} = g & \text{on } \partial U,
+\end{cases}\]
+then $u$ would be of the following form,
+\[ u(x) = \int_{U} N(x,y)f(y) \,dy  + \int_{\partial U} N(x,y)g(y) \,dS(y)\qquad (x \in U),\]
+where $N(x,y)$ is the Green's function for the region $U$, and is defined as
+\[G(x,y) = \Phi(x-y) - h(y;x),\]
+where $h(y;x)$ is a corrector function that, for a fixed $x$, solves the following
+\[ \begin{cases}
+\Delta h(y;x) = 0 & \text{in } U\\
+\frac{\partial h(y;x)}{\partial n} = \frac{\partial \Phi(x-y)}{\partial n} + \frac{1}{|\partial U|} & \text{on } \partial U.
+\end{cases}\]
+Finally, if there were to be a solution we would need $\int_U f(x)\,dx = -\int_{\partial U} g(y) dS(y)$.
+
+\end{itemize}
+\subsection{Heat Equation}
+% ---------------------------------------------------------------
+\subsubsection{Fundamental solution}
+The function
+\[ \Phi(t,x) = \frac{1}{(4\alpha \pi t)^{n/2}} e^{\frac{-|x|^2}{4\alpha t}} \quad (x \in \Rn, t > 0) \]
+is called the fundamental solution, or heat Kernel, of the heat equation
+\[ \frac{\partial u}{\partial t} = \alpha \Delta u, \]
+where $\alpha$ is called the thermal diffusivity. Moreover, $\int_{\Rn} \Phi(t,x) dx = 1 $ for $\alpha=1$. We will from now on assume $\alpha = 1$.
+
+\subsubsection{Classification}
+\begin{itemize}
+
+\item The homogeneous \textbf{initial-value problem} follows,
+\[\begin{cases}
+\frac{\partial u}{\partial t} = \Delta u & \text{in } \Rn \times (0,T)\\
+u = g & \text{on } \Rn \times \{t=0\}.
+\end{cases} \]
+
+\item The homogeneous \textbf{initial/boundary-value problem} follows,
+\[\begin{cases}
+\frac{\partial u}{\partial t} = \Delta u & \text{in } U_T\\
+u = g & \text{on } \Gamma_T,
+\end{cases} \]
+where $U_T$ and $\Gamma_T$ are as defined in the book.
+
+\item For either problem we could add $f(t,x)$ to the PDE to obtain the \textbf{inhomogeneous} case. When referring to the initial-value or the initial/boundary-value problem, we are referring to both the homogeneous and inhomogeneous cases.
+\end{itemize}
+ 
+\subsubsection{Homogeneous initial-value problem} Let $g \in C(\Rn)\cap L^\infty(\Rn)$, and $\Phi$ be the fundamental solution to the heat equation. Define $u(t,x)$ as follows,
+\[u(t,x) = \int_{\Rn}\Phi(t,x-y)g(y)dy \qquad (x \in \Rn, t > 0). \]
+Then,
+\begin{itemize}
+\item $u \in C^\infty(\Rn \times (0,\infty))$
+\item $u$ satisfies the PDE for the homogeneous initial-value problem.
+\item $\lim_{(t,x) \to (0,x^0)} u(t,x) = g(x^0)$ for each point $x^0 \in \Rn$, and for any $x\in \Rn, t > 0.$
+\end{itemize}
+
+\subsubsection{Inhomogeneous initial-value problem}
+Define $v(t,x)$ as follows 
+\[u(t,x) = \int_0^t v(t,x;s)\,ds,\] 
+where $v(t,x;s) = \int_{\Rn} \Phi(t-s,x-y)f(s,y)\,dy$, parameterized by $s$, is the solution to the initial-value problem
+\[ \begin{cases}
+\frac{\partial v(t,x;s)}{\partial t} - \Delta v(t,x;s) = 0 & \text{in } \Rn \times  (s,\infty)\\
+v(t=s,x;s) = f(s,x) & \text{on } \Rn \times \{t=s\}.
+\end{cases}\]
+Then,
+\begin{itemize}
+\item $u \in C_1^2(\Rn \times (0,\infty))$
+\item $u$ satisfies the PDE for the inhomogeneous initial-value problem.
+\item $\lim_{(t,x) \to (0,x^0)} u(t,x) = 0$ for each point $x^0 \in \Rn$, and for any $x\in \Rn, t > 0.$
+\end{itemize}
+
+\subsubsection{Maximum principle}
+\begin{itemize}
+
+\item Assume $u \in C_1^2(U_\Gamma) \cap C(\bar{U}_T) $ solves the homogeneous initial/boundary-value problem. Then,
+\[\max_{\bar{U}_T} u = \max_{\Gamma_T} u \]
+\begin{itemize}
+\item Uniqueness: Let $g \in C(\Gamma_T)$, $f \in C(U_T)$. Then there exists at most one solution $u \in C_1^2(U_\Gamma) \cap C(\bar{U}_T) $ of the initial/boundary-value problem.
+\end{itemize}
+
+\item Assume $u \in C_1^2(\Rn \times (0,T]) \cap C(\Rn \times [0,T])$ solves the homogeneous initial-value problem and satisfies the estimate 
+\[u(t,x) \le Ae^{a|x|^2} \qquad (x \in \Rn, 0 \le t \le T), \]
+for constants $A,a>0$. Then,
+\[ \sup_{{\Rn} \times [0,T]} u = \sup_{\Rn} g\]
+\begin{itemize}
+\item Uniqueness: Let $g \in C(\Rn)$, $f \in C(\Rn \times [0,T])$. Then there exists at most one solution $u \in C_1^2(\Rn \times (0,T]) \cap C(\Rn \times [0,T])$ of the initial-value problem, that also satisfies the growth estimate
+\[u(t,x) \le Ae^{a|x|^2} \qquad (x \in \Rn, 0 \le t \le T), \]
+for constants $A,a>0$. 
+\end{itemize}
+
+\end{itemize}
+
+\subsubsection{Estimates on derivatives}
+For the homogeneous initial-value problem, we have
+\[ |u(t,x)| \le \frac{C_n}{ t^{n/2}} \int_{\Rn} |g(y)| \,dy \qquad (x \in \Rn, t > 0) \]
+and
+\[ |\nabla u(t,x)| \le \frac{D_n}{t^{(n+1)/2}} \int_{\Rn} |g(y)| \,dy \qquad (x \in \Rn, t > 0). \]
+ 
+\subsection{Wave Equation}
+% ---------------------------------------------------------------
+\subsubsection{The Cauchy Problem}
+Consider the Cauchy problem
+\[ \begin{cases}
+\frac{1}{c^2} \frac{\partial^2 u}{\partial t^2} - \frac{\partial^2 u}{\partial x^2} = 0 \quad & \text{ in } \mathbb{R} \times (0,\infty) \\
+u = p, \, u_t = q & \text{on } \mathbb{R} \times (t=0).
+\end{cases} \]
+Since the wave equation has solution of the form $\phi(t,x) = f(x-ct) + g(x+ct)$, a solution to the Cauchy problem follows,
+\[u(t,x) = \frac{1}{2}[p(x-ct) + p(x+ct)] + \frac{1}{2c} \int_{x-ct}^{x+ct} q(y) \, dy.\]
+
+\subsubsection{Energy Methods}
+\begin{itemize}
+
+\item \textbf{Definition}
+\[E(t) = \frac{1}{2} \int_{\Rn} \frac{1}{c^2(x)} u_t(t,x)^2 + \nabla u(t,x)^2 \, dx \]
+ It is easy to show that $E(t) = E(0)$ for $t\ge0$.
+ 
+\item \textbf{Uniqueness}: Using conservation of energy for $w(t,x) = u(t,x) - v(t,x)$, it can be easily shown that the Cauchy problem has a unique solution.
+ 
+\item \textbf{Domain of dependence}: $\phi(t^*,x^*)$ depends on the values of $\phi(t,x)$ for $t$ that satisfies $t^*> t \ge 0$ and all $x$ that lie inside the ball $B[x^*, c(t^*-t)]$. To prove show that two solutions with the same ICs inside the ball centered at $x^*$ have the same value at some later time $t^*$ and position $x^*$. Do this by showing $e(t)$, evaluated over the ball $B[x^*,c(t^*-t)]$ for the difference of both solutions, remains zero.
+ 
+\end{itemize} 
+
+\section{Solution Methods for PDEs}
+\subsection{Characteristics}
+\subsection{Self-similarity}
+\subsection{Separation of Variables}
+\subsection{Eigenfunction Expansions}
+\subsection{Transform Methods}
+
+%===============================================================================
+\appendix
+%-------------------------------------------------------------------------------------------------------------------------------------------
+\section{Useful Equalities and Inequalities}
+$$ |ab| = |a||b| \qquad \forall a,b \in \mathbb{C}$$
+$$ |a+b| \le |a| + |b| \qquad \forall a,b \in \mathbb{C}$$
+Analogously, we have the Cauchy-Schwarz and triangle inequalities, respectively.
+$$|(w,v)| \le ||w|| ||v|| \qquad \forall v,w \in \text{Inner-product Space}$$
+$$||w+v|| \le ||w|| + ||v|| \qquad \forall v,w \in \text{Normed space}$$
+Also,
+$$\left | \int_a^b v(x)dx \right | \le \int_a^b |v(x)| dx$$
+$$\left |\left | \int_a^b v(x,y) dx \right |\right| \le \int_a^b ||v(x,y)||dx \quad \text{,where the norm is over the y-domain.}$$
+For $v(x)$ defined on $[0,1]$, $$||v|| \le ||v'||, \qquad \text{if } v(0) = v(1) = 0$$
+
+%-------------------------------------------------------------------------------------------------------------------------------------------
+\section{Functional Analysis}
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+Space  &Norm & Inner product\\
+\hline
+$C(M)$ & X & X\\
+\hline
+$C(M,||v||_C)$ & \parbox{4cm}{\[||v||_C = \sup_{x \in M} |v(x)|\]} & X\\
+\hline
+$C^k(M)$ & X & X\\
+\hline
+$C^k(M,||v||_{C^k})$ & \parbox{5cm}{\[||v||_{C^k} = \max_{|\alpha| \le k} ||D^\alpha v||_C\]} & X\\
+\hline
+$L_p(\Omega)$ & \parbox{5cm}{\[||v|| = \left ( \int_\Omega |v|^p dx\right)^{1/p}\]} & X\\
+\hline
+$L_2(\Omega)$ & \parbox{5cm}{\[||v|| = \left ( \int_\Omega |v|^2 dx\right)^{1/2}\]} & \parbox{5cm}{\[(v,w) = \int_\Omega vw^* dx\]}\\
+\hline
+$H^k(\Omega)$ & \parbox{5cm}{\[||v||_k = \left(\sum_{|\alpha| \le k} ||D^\alpha v||^2 \right )^{1/2}\]} & \parbox{5cm}{\[(v,w)_k = \sum_{|\alpha | \le k} (D^\alpha v, D^\alpha w)\]}\\
+\hline
+\end{tabular}	
+\end{center}
+
+%--------------------------------------------------------------------------------------------------------------------------------------
+\section{Calculus}
+\subsection{Fundamental theorem of Calculus}
+Given two functions $f(x)$ and $F(x)$, then
+\[ \int_a^b f(x) \,dx = F(b) - F(a) \quad \Leftrightarrow \quad f(x) = \frac{dF(x)}{dx} \]
+where part 1 is the forward direction and part 2 is the backward direction. From such one can derive in a trivial fashion 
+\[ \frac{d}{dt} \int_a^t f(x) \,dx = f(t) \qquad \text{and} \qquad \frac{d}{dt}\int_t^b f(x) \,dx = - f(t) \]
+For multiple dimensions, where $\fvec(\xvec)$ is a vector and $F(\xvec)$ a scalar, we obtain
+\[ \int_\avec^\bvec \fvec(\xvec) \cdot \, d\lvec = F(\bvec) - F(\avec) \quad \Leftrightarrow \quad \fvec(\xvec) = \nablavec F(\xvec) \]
+which shows the implication that follows when the integral is independent of the path taken.
+
+\subsection{Stokes' theorem}
+Stokes' theorem pertains to integrals over an area:
+\begin{itemize}
+\item for a scalar $f \in C^1 (\bar{\Omega})$
+\[\int_{\partial \Omega} (\nvec \times \nablavec f)\,dS = \oint f \, d\lvec \]
+\item for a vector $\fvec \in C^1 (\bar{\Omega})$
+\[\int_{\partial \Omega} (\nablavec \times \fvec) \cdot \nvec \,dS = \oint \fvec \cdot \, d\lvec \]
+\end{itemize}
+
+\subsection{Gauss's theorem}
+Gauss's theorem pertains to integrals over a volume:
+\begin{itemize}
+\item for a scalar $f \in C^1 (\bar{\Omega})$
+\[\int_{\Omega} \nablavec f\,dV=\int_{\partial \Omega} f \nvec \,dS\] 
+\item for a vector $\fvec \in C^1 (\bar{\Omega})$
+\[\int_{\Omega} \nablavec \cdot \fvec \,dV=\int_{\partial \Omega} \fvec \cdot \nvec \,dS \] 
+\[\int_{\Omega} \nablavec \times \fvec\,dV=\int_{\partial \Omega} \nvec \times \fvec \,dS \]
+\item for a tensor $\fvec \in C^1 (\bar{\Omega})$
+\[\int_{\Omega} \frac{\partial f_{ij}}{\partial x_j}\,dV=\int_{\partial \Omega} f_{ij}n_j\,dS. \]
+\end{itemize}
+
+\subsection{Integration by parts}
+For $f$ and $g$ scalars $\in C^1(\bar{\Omega})$
+\[\int_{\Omega} (\nablavec f)g \,dV = - \int_{\Omega} f (\nablavec g) \,dV + \int_{\partial \Omega} fg \nvec \,dS,\]
+for $f$ a scalar and $\gvec$ a vector $\in C^1(\bar{\Omega})$
+\[\int_{\Omega} \nablavec f \cdot \gvec \,dV = - \int_{\Omega} f \nablavec \cdot \gvec \,dV + \int_{\partial \Omega} f \gvec \cdot \nvec \,dS.\]
+
+\subsection{Green's first and second identities ($f,g \in C^2(\bar{\Omega})$)}
+\[\int_{\Omega} \nablavec f \cdot \nablavec g \,dV = -\int_{\Omega} f \Delta g \,dV + \int_{\partial \Omega} f \nablavec g \cdot \nvec \,dS\]
+\[\int_{\Omega} f \Delta g - g \Delta f \,dV = \int_{\partial \Omega} f \nablavec g \cdot \nvec - g \nablavec f \cdot \nvec \, dS\] 
+
+\subsection{Integration by substitution}
+Given the continuously differentiable function $\phivec: \yvec \to \xvec$,
+\[\int_{\phivec(\Omega)}f(\xvec) \, d\xvec = \int_{\Omega} f(\phivec(\yvec)) J \,d\yvec\]
+where $J = |\det (D\phivec)(\yvec)|$, $d\xvec = dx_1...dx_n$, and $d\yvec = dy_1...dy_n$.
+\end{document}

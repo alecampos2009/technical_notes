@@ -672,6 +672,18 @@ As before, if the left-hand-side operator is bounded, then we have a unique solu
 %---------------------------------------------------------------
 \section{Function spaces}
 %---------------------------------------------------------------
+\begin{itemize}
+    \item $C^0$: the set of all continuous functions
+    \item $C^k$ the set of all functions whose derivatives up to order $k$ all exist and are continuous. These are called continuously differentiable functions of order $k$.
+    \item $L_2$: the set of all functions that are square integrable.
+    \item $H^k$: the set of all $L_2$ functions whose weak partial derivatives up to order $k$ also belong to $L_2$. 
+    \item Let $\Omega$ be a bounded domain in $\mathbb{R}^d$ with smooth or polygonal boundary. Then part of the Sobolev embedding theorem can be written as
+    \begin{equation}
+        H^k(\Omega) \subset C^l(\bar{\Omega}) \text{ if } k > l + d/2.
+    \end{equation}
+    Thus, we have $H^m(\Omega) \subset C^{m-1}(\bar{\Omega})$ for $\Omega \in \mathbb{R}$ and $H^m(\Omega) \subset C^{m-2}(\bar{\Omega})$ for $\Omega \in \mathbb{R}^2$ or $\mathbb{R}^3$.
+\end{itemize}
+
 \begin{figure}[ht]
    \centering
    \includegraphics[width=0.8\textwidth]{../../images/function_spaces.png}
@@ -695,17 +707,6 @@ $L_2(\Omega)$ & $ \displaystyle ||v||_{L_2} = \left ( \int_\Omega |v|^2 \, dx \r
 $H^k(\Omega)$ & $ \begin{aligned} &||v||_k = \left ( \sum_{|\alpha| \le k} ||D^\alpha v||^2 \right )^{1/2} \\ &|v|_k = \left ( \sum_{|\alpha| = k} ||D^\alpha v||^2 \right )^{1/2} \end{aligned}$ & $ \displaystyle (v,w)_k = \sum_{|\alpha \le k|} (D^\alpha v, D^\alpha w) $
 \end{tabu}	
 \end{center}
-
-\begin{itemize}
-    \item Let $\Omega$ be a bounded domain in $\mathbb{R}^d$ with smooth or polygonal boundary. Then part of the Sobolev embedding theorem can be written as
-    \begin{equation}
-        H^k(\Omega) \subset C^l(\bar{\Omega}) \text{ if } k > l + d/2.
-    \end{equation}
-    Thus, we have $H^m(\Omega) \subset C^{m-1}(\bar{\Omega})$ for $\Omega \in \mathbb{R}$ and $H^m(\Omega) \subset C^{m-2}(\bar{\Omega})$ for $\Omega \in \mathbb{R}^2$ or $\mathbb{R}^3$.
-\end{itemize}
-
-
-
 
 
 \end{document}

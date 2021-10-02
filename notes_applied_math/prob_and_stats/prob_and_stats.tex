@@ -1,0 +1,165 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{graphicx,subfigure,amssymb,amstext,amsmath}
+\usepackage{fullpage}
+
+\begin{document}
+%--------------------------------------------------------------------------------------------------------------------------------------------------
+\section{Events and Probabilities}
+%--------------------------------------------------------------------------------------------------------------------------------------------------
+\begin{itemize}
+\item $\Omega$ is a set of outcomes $\omega$ of a stochastic experiment. It is referred to as the sample space.
+\item $\mathcal{A}$ is a set of events $A$. An event $A$ is a subset of the sample space $\Omega$. $\mathcal{A}$ is a $\sigma$-algebra on $\Omega$, which means
+\begin{itemize}
+\item $\mathcal{A}$ is non-empty
+\item If $A \in \mathcal{A}$, then $A^c \in \mathcal{A}$, where $A^c = \Omega \backslash A$
+\item If $A_1, A_2, ..., A_n \in \mathcal{A}$ then $\bigcup_{n=1}^{\infty}A_n$.
+\end{itemize}  
+\item The function $P: \mathcal{A} \to [0,1]$ is a probability measure, if
+\begin{itemize}
+\item $P(\Omega) = 1$
+\item $P(A^c) = 1 - P(A)$
+\item $P \left ( \bigcup_{n=1}^\infty A_n \right ) = \sum_{n=1}^\infty P(A_n)$ for $A_i \cap A_j = \emptyset$ if $i \ne j$.
+\end{itemize}
+\item Conditional probability, Baye's rule
+\end{itemize}
+%--------------------------------------------------------------------------------------------------------------------------------------------------
+\section{Distribution Functions}
+%--------------------------------------------------------------------------------------------------------------------------------------------------
+\subsection{Random Variable}
+\begin{itemize}
+\item A random variable (RV) is a function $X:\Omega \to \mathbb{R}$ such that $\{ \omega \in \Omega : X(\omega) \le a \}$ is an event for each $a \in \mathbb{R}$. 
+\item Discrete RV: the image of $X$ is finite or countably infinite.
+\item Continuous RV: the image of $X$ is uncountably infinite.
+\end{itemize}
+
+\subsection{Discrete}
+\begin{itemize}
+\item Cumulative Distribution Function:
+\begin{equation}
+F(x_j) = P( \{\omega \in \Omega : X(\omega) \le x_j \} )
+\end{equation}
+\item Probability Density Function:
+\begin{equation}
+f(x_j) = P( \{ \omega \in \Omega : X(\omega) = x_j \} )
+\end{equation}
+\item Interchange:
+\begin{equation}
+F(x_j) = \sum_{i \le j} f(x_i)
+\end{equation}
+\begin{equation}
+f(x_j) = F(x_j) - F(x_{j-1})
+\end{equation}
+\end{itemize}
+
+\subsection{Continuous}
+\begin{itemize}
+\item Cumulative Distribution Function:
+\begin{equation}
+F(x) = P( \{\omega \in \Omega : X(\omega) \le x \} )
+\end{equation}
+\item Probability Density Function:
+\begin{equation}
+f(x_j) = \lim_{\Delta x \to 0} \frac{P( \{ \omega \in \Omega : x - \Delta x < X(\omega) \le x \} )}{\Delta x}
+\end{equation}
+\item Interchange:
+\begin{equation}
+F(x) = \int_{-\infty}^x f(x) dx
+\end{equation}
+\begin{equation}
+f(x) = \frac{dF}{dx}
+\end{equation}
+\end{itemize}
+
+\subsection{Joint Distribution Functions}
+Definitions, marginal, conditional, independent, uncorrelated.
+%--------------------------------------------------------------------------------------------------------------------------------------------------
+\section{Moments}
+%--------------------------------------------------------------------------------------------------------------------------------------------------
+\begin{itemize}
+\item Expectation $E[Q(X)]$ for discrete random variable
+\begin{equation}
+E[Q(X)] = \sum_{i \in I} Q(x_i) f(x_i)
+\end{equation}
+where $I = \{0, \pm 1, \pm 2, ...\}$ and $Q:\mathbb{R} \to \mathbb{R}$.
+
+\item Expectation $E[Q(X)]$ for continuous random variable
+\begin{equation}
+E[Q(X)] = \int_{-\infty}^{\infty} Q(x) f(x) dx
+\end{equation}
+where $Q:\mathbb{R} \to \mathbb{R}$.
+
+\item nth raw moments are defined by $E(X^n)$.
+
+\item nth central moments are defined by $E\{[X-E(X)]^n\}$
+
+\item The mean $\mu$ is given by $\mu = E(X)$.
+
+\item The variance $\sigma^2$ is given by $\sigma^2 = \text{Var}(X) = E \{[ X - E(X)]^2 \}$.
+
+\item Some properties of variance:
+\begin{itemize}
+\item For $a$ being a constant
+\begin{equation}
+\text{Var}(aX) = a^2 \text{Var}(X)
+\end{equation} 
+\item For $X_1$, $X_2$, $X_3$, ...., $X_n$ being uncorrelated
+\begin{equation}
+\text{Var} \left ( \sum_{i=1}^n X_i \right ) = \sum_{i=1}^n \text{Var}(X_i)
+\end{equation}
+\end{itemize}
+
+\end{itemize}
+
+%--------------------------------------------------------------------------------------------------------------------------------------------------
+\section{Random sequences}
+%--------------------------------------------------------------------------------------------------------------------------------------------------
+\subsection{Convergence}
+\subsection{Law of Large Numbers}
+Given the sequence
+\begin{equation}
+A_n = \frac{1}{n}S_n = \frac{1}{n} (X_1 + X_2 + ... + X_n )
+\end{equation}
+where the random variables $X_1$, $X_2$, $X_3$, ..., are independent and identically distributed, each with mean $\mu$, then the Law of Large Numbers states that
+\begin{equation}
+A_n \to \mu \quad \text{as} \quad n \to \infty.
+\end{equation}
+
+\subsection{Central Limit Theorem}
+Suppose $\{X_1, X_2, ...\}$ is a sequence of i.i.d. random variables, with $E[X_j] = \mu$ and $\text{Var}[X_j] = \sigma^2$ for all $j$. Then as $n$ approaches infinity
+\begin{equation}
+Z_n = \frac{A_n - \mu}{\sigma/\sqrt{n}}
+\end{equation}
+converges in distribution to a standard Gaussian random variable. That is, $A_n$ becomes normally distributed, with mean $\mu$ and variance $\sigma^2/n$.
+%--------------------------------------------------------------------------------------------------------------------------------------------------
+\section{Statistical tests}
+%--------------------------------------------------------------------------------------------------------------------------------------------------
+\subsection{Confidence Intervals}
+Consider an interval whose center $A_n$ is random, and has a given deterministic width $2b$. Given a specific value for $b$, there is a probability that such interval will enclose an unknown but deterministic parameter $\mu$, and is denoted by $P(A_n - b \le \mu \le A_n + b)$. For example, if the width of the interval is infinite, then the probability that such interval will enclose $\mu$ is 1, whereas if its length is very small, then the probability that it will enclose $\mu$ would be very low. Such intervals associated with a given probability are referred to as confidence intervals.
+
+Consider a standard normal RV $Z$. We can find numbers $-z$ and $z$ between which $Z$ lies with probability $1-\alpha$, that is
+\begin{equation}
+P(-z \le Z \le z) = 1 - \alpha.
+\end{equation}
+The way we find such value $z$ is by noting that the above requires $P(Z > z) = P(Z < -z) = \alpha /2$, because the distribution for $Z$ is symmetric. Thus, $P(Z \le z) = 1 - \alpha/2$. Given an $\alpha$, we can use a table for a standard normal distribution to obtain the value of $z$. Assume $A_n$ is normally distributed, which is a fair assumption due to the Central Limit Theorem, and has mean $\mu$ and variance $\sigma^2/n$. Thus, $(A_n - \mu)/(\sigma/\sqrt{n})$ will have a standard normal distribution as $n \to \infty$, which allows us to write
+\begin{equation}
+P(-z \le \frac{A_n - \mu}{\sigma/\sqrt{n}} \le z) = 1 - \alpha .
+\end{equation}
+Rewriting the inequality above, we obtain
+\begin{equation}
+P(A_n - z \frac{\sigma}{\sqrt{n}} \le \mu \le A_n + z \frac{\sigma}{\sqrt{n}} ) = 1 - \alpha .
+\end{equation}
+The above is thus the probability that the interval with center $A_n$ and width $2z\sigma/\sqrt{n}$ will enclose $\mu$. Such probability is equal to $1-\alpha$, and hence the interval is referred to as a $100 (1-\alpha) \%$ interval.
+%--------------------------------------------------------------------------------------------------------------------------------------------------
+\section{Stochastic Process}
+%--------------------------------------------------------------------------------------------------------------------------------------------------
+Consider the discrete-time stochastic process that consists of measuring the height of a random student in a classroom every minute that passes by. The outcome $w$ could be a vector consisting of the students that were picked, for example
+\begin{equation}
+w = \begin{pmatrix} \text{George} \\ \text{Paul} \\ \text{Monica} \end{pmatrix}
+\end{equation}
+The time dependence of the stochastic process would be as follows. For $t=1$, $X_t(1,w)$ picks the first element of $w$ and compares against a table that tells the of height such student, in this case George. For $t=2$, $X_t(2,w)$ picks the second element of $w$ and compares against the table to obtain the corresponding height, in this case the height of Paul. And so on for $t=3$. This thus shows how at each of the different times we have a different random variable, each of which acting on different elements of $w$.  This example also shows how we could chose a different $w$, namely
+\begin{equation}
+w = \begin{pmatrix} \text{Hilary} \\ \text{Sam} \\ \text{John} \end{pmatrix}
+\end{equation}
+to obtain a different sample path of the stochastic process. 
+
+\end{document}

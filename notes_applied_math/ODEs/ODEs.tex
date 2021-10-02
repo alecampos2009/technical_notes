@@ -1,0 +1,157 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{graphicx,subfigure,amssymb,amstext,amsmath}
+\begin{document}
+
+%===========================================================================
+\section{Initial Value Problems (IVP's)}
+Denoted by conditions that are specified at a point in space.
+\subsection{Linear}
+%-----------------------------------------------------------------------------------------------------------------------------------
+	\subsubsection{First Order}
+%-----------------------------------------------------------------------------------------------------------------------------------
+	\subsubsection{Second Order}
+		
+		$y''+p(t)y'+q(t)y=g(t)$ and $y(t_o)=y_o$, $y'(t_o)=y'_o$ has a unique solution in the interval where $p(t)$, $q(t)$, and $g(t)$ are continuous.
+		
+		Lets form the matrix $\bold{X}= \left( \begin{array}{cc}
+y_1 & y_2 \\
+y'_1 & y'_2 \\
+ \end{array} \right)$, where $y_1$ and $y_2$ are solutions to the ODE. 
+ 
+ The Wronskian is defined as $W(\bold{X})(t)=det(\bold{X}(t))$
+		
+		\begin{itemize}
+		\item Homogenous ODE 
+		
+		Def: one for which zero is a solution. Look like $y''+p(t)y'+q(t)y=0$
+		
+		If $W(\bold{X})(t_o)\neq 0$, then $c_1$ and $c_2$ are well defined for any $y_o$ and $y'_o$ specified at $t_o$, and therefore $y=c_1y_1+c_2y_2$ is the solution to any $y_o$ and $y'_o$, which makes it the general solution.
+		
+		If $W(\bold{X})(t_o)\neq 0$ then $y_1$ and $y_2$ are independent, and are the fundamental solutions, and $\bold{X}$ becomes the fundamental matrix.
+		
+		
+			\begin{itemize}
+			\item Constant Coefficient
+			
+			Assume $e^{rt}$, gives characteristic equation.
+				\begin{itemize}
+				\item Real distinct roots $r=r_1,r_2$: $y=c_1e^{r_1t}+c_2e^{r_2t}$
+				\item Real repeated roots $r_1=r_2$: $y=c_1e^{r_1t}+c_2te^{r_1t}$
+				\item Complex roots $r=\lambda \pm i\mu$: $y=c_1e^{\lambda t}cos(\mu t) + c_2 e^{\lambda t} sin(\mu t)$
+				\end{itemize}
+			\item Non-Constant Coefficient
+			\end{itemize}
+		\item Nonhomogeneous ODE  
+		
+		Def: not a homogeneous ODE. Look like $y''+p(t)y'+q(t)y=g(t)$
+		
+		The general solution is $y=c_1y_1+c_2y_2+y_p$
+			\begin{itemize}
+			\item Undetermined Coefficients (works for constant coefficients only)
+			
+			Assume a particular solution analogous to the forcing term up to undetermined coefficients, plug in the ODE to get the coefficient, form the general solution, and find coefficients through the initial conditions.
+			\item Variation of Parameters
+			
+			$y_p(t)=u_1(t)y_1(t)+u_2(t)y_2(t)$. Compute $y^{p'}$ (assuming $u_1'(t)y_1(t)+u_2'(t)y_2(t)=0$) and $y^{p''}$, plug them in ODE to obtain $u_1'(t)y_1'(t)+u_2'(t)y_2'(t)=g(t)$. Finally, solve for $u_1(t)$ and $u_2(t)$, which gives $\left( \begin{array}{c}
+u_1  \\
+u_2  \end{array} \right)=\int_0^t\bold{X}(\sigma)^{-1}\left( \begin{array}{c}
+0  \\
+g(\sigma)  \end{array} \right)d\sigma $.
+			\end{itemize}
+		\end{itemize}
+%-----------------------------------------------------------------------------------------------------------------------------------
+	\subsubsection{Higher Order}
+%-----------------------------------------------------------------------------------------------------------------------------------
+	\subsubsection{System of eqs.}
+	
+	$\bold{x'}=\bold{P(t)}\bold{x}+\bold{g(t)}$
+		
+	Lets form the matrix $\bold{X}=[\bold{x}^{(1)}(t)...\bold{x}^{(n)}(t)]$.
+		
+		\begin{itemize}
+		\item Homogenous System $\bold{x'}=\bold{P(t)x}$
+	
+		As with second order equations, if $W(\bold{X})\neq 0$, then $\bold{x}=c_1\bold{x}^{(1)}+...c_n\bold{x}^{(n)}$ is the general solution, $\bold{x}^{(1)}...\bold{x}^{(n)}$ are linearly independent, they are the fundamental solutions, and $\bold{X}$ becomes the fundamental matrix.
+			\begin{itemize}
+			\item Constant Coefficient $\bold{x'}=\bold{Ax}$
+			
+			Assume $ \boldsymbol{\xi} e^{rt} $, gives $(\bold{A}-r \bold{I}) \boldsymbol{\xi} = 0$
+				\begin{itemize}
+				\item real distinct eigenvalues: $\bold{x}=c_1 \boldsymbol{\xi}^{(1)}e^{r_1t}+...+c_n \boldsymbol{\xi}^{(n)} e^{r_nt}$
+				\item real repeated eigenvalues: $\bold{x}=c_1\boldsymbol{\xi}^{rt}+c_2\left[ \boldsymbol{\xi} te^{rt}+ \boldsymbol{\eta} e^{rt}\right]$, where $\boldsymbol{\xi}$ is the eigenvector and $\boldsymbol{\eta}$ satisfies $(\bold{A}-r\bold{I}) \boldsymbol{\eta} = \boldsymbol{\xi}$.
+				\item complex conjugate eigenvalues ($r_1, r_2$) with corresponding complex conjugate eigenvectors ($\boldsymbol{\xi}^{(1)}, \boldsymbol{\xi}^{(2)}$): \\
+				 $\bold{x}=c_1\text{Re}[ \boldsymbol{\xi}^{(1)}e^{r_1t}]+c_2 \text{Im}[ \boldsymbol{\xi}^{(1)}e^{r_1t}]+c_3 \boldsymbol{\xi}^{(3)}e^{r_3t}+...+c_n \boldsymbol{\xi}^{(n)}e^{r_nt}$ 
+				\end{itemize}
+			\item Non-Constant Coefficient
+			\end{itemize}
+		\item Nonhomogenous System
+		
+		The general solution is $\bold{x}=c_1\bold{x}^{(1)}(t)+...+c_n\bold{x}^{(n)}+\bold{v}(t)$
+			\begin{itemize}
+			\item{Diagonalization}
+			
+			If $\bold{A}$ can be diagonalize, perform diagonalization, form uncoupled system, solve and recombine to obtain general solution. 
+			\item{Undetermined Coefficients}
+			
+			Assume a particular solution analogous to the forcing term up to undetermined vectors of coefficients, plug in the ODE to get these undetermined vectors. The result is the particular solution.
+			\item{Variation of Parameters}
+			
+			$\bold{v}(t)=\bold{X}(t)\bold{u}(t)$. Follow same approach as in second order case, the end result is $\bold{u}(t)=\int_0^t\bold{X}(\sigma)^{-1}\bold{g}(\sigma)d\sigma$.
+			\end{itemize}
+		\end{itemize}
+%-----------------------------------------------------------------------------------------------------------------------------------
+\subsection{Nonlinear}
+
+%===========================================================================
+\section{Boundary Value Problems (BVP's)}
+Denoted by conditions that are specified at more than one point in space.
+\subsection{Linear}
+\subsubsection{ First Order}
+\subsubsection{Second Order}
+	\begin{itemize}
+	\item Sturm-Liouville BVP
+	
+	One that satisfies the S-L homogeneous or nonhomogenous ODE, has bc's $a_1y(a)+a_2y'(a)=0$ and $b_1y(b)+b_2y'(b)=0$, and has $p(x)>0$, $r(x)>0$. These are also known as regular Sturm Liouville BVP. 
+		
+	The goal is to find $\lambda$'s (known as eigenvalues) that give non-zero solutions (known as eigenfunctions) to the ODE. This is analogous to finding $\lambda$'s that give non-zero solutions (known as eigenvectors) to the matrix equation $\bold{A}\xi=\lambda \xi$.
+	
+	Common S-L solutions : Fourrier, Bessel, Chebyshev, Legendre, Hermite, Laguerre. 
+		\begin{itemize}
+		\item Homogenous Sturm-Liouville 
+		
+		$My=-\lambda^2y$ where $M=\frac{1}{r(x)}\left[\frac{d}{dx}\left(p(x)\frac{d}{dx}\right)+q(x)\right]$
+			\begin{itemize}
+			\item To solve, find general solution, apply boundary conditions to figure out eigenvalues that will give non zero solutions, obtain the eigenfunctions up to a multiplicative constant.
+			\item Infinite series of real, non-negative, distinct eigenvalues $\lambda_1<\lambda_2<...$
+			\item One to one correspondence between eigenvalue and LI eigenfunction.
+			\item All eigenfunctions of S-L problem are orthogonal $\int_a^b r(x)\phi_m(x)\phi_n(x)dx=N_m\delta_{nm}$, where $N_m=\int_a^br(x)\phi_m^2(x)dx$
+			\item A square integrable function $f$ can be expanded as $f=\displaystyle\sum_{n=1}^{\infty}c_n \phi_n(x)$, where $c_m=\frac{\int_a^br(x)f(x)\phi_m(x)dx}{\int_a^br(x)\phi_m^2(x)dx}$
+			\end{itemize}
+		\item Nonhomogenous Sturm-Liouville
+		
+		$My=-\mu^2y+f(x)$
+			\begin{itemize}
+			\item Solution is of the form: $\phi=\displaystyle\sum_{n=1}^{\infty}b_n \phi_n(x)$
+			\item If $\mu \neq \lambda_n$ for all $n$, then $b_n=\frac{c_n}{\mu^2-\lambda_n^2}$, where $c_n=\int_a^br(x)f(x)\phi_n(x)dx$.
+			\item If $\mu=\lambda_m$
+				\begin{itemize}
+				\item If $c_m\neq0$, then no solution
+				\item If $c_m=0$, $b_n$ is arbitrary, and there are infinite solutions
+				\end{itemize}
+			\end{itemize}
+			
+		\item Singular Sturm-Liouville
+			\begin{itemize}
+			\item A SL problem can be rewritten as $y''+\frac{p'(x)}{p(x)}y'+\frac{q(x)+\lambda^2r(x)}{p(x)}y=0$.
+			\item A singular point of an ODE is one where the coefficients blow up. For this case, $p(x) = 0$.
+			\item A Singular SL problem is one where we allow a singularity at either or both of the boundaries (i.e. p=0), and the bc at the singular point is one that ensures the following is satisfied $\lim_{x \to a or b} p(x)(y'_ny_m-y'_my_n)\to0$ 
+			\item Since we now allow $p=0$ at boundaries, this is an extension of the regular S-L BVP.
+			\item A boundary condition that ensures $\lim_{x \to a or b} p(x)(y'_ny_m-y'_my_n)\to0$  is satisfied basically forces the general solution to exclude the singular fundamental solution, that is, the one that blows up.
+			\end{itemize}
+		\end{itemize}
+	\item Other BVP's (i.e. do not satisfy Sturm-Liouville ODE or bc's, are higher order, etc.)
+	\end{itemize}
+\subsubsection{Higher Order}
+\subsection{Nonlinear}
+%===========================================================================	
+\end{document}
