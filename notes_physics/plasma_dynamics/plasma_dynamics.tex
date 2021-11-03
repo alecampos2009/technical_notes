@@ -1388,11 +1388,11 @@ Note that the second equation above is superfluous since it also follows from ta
 The two conservation of momentum equations will also lead to two single-fluid equations. The first is obtained by adding the ion and electron conservation of momentum equations, and the second is obtained by re-writing the electron conservation of momentum equations using the single-fluid variables. The results are
 \begin{equation}
 \label{eq:generalized_MHD_vel}
-    \rho \left (\frac{\partial \vvec}{\partial t} + \vvec \cdot \nabla \uvec \right) - \Jvec \times \Bvec = -\nabla p + \nabla \cdot \tvec_i + \nabla \cdot \tvec_e,
+    \rho \left (\frac{\partial \vvec}{\partial t} + \vvec \cdot \nabla \uvec \right) - \Jvec \times \Bvec + \nabla p = \nabla \cdot \tvec_i + \nabla \cdot \tvec_e,
 \end{equation}
 \begin{equation}
 \label{eq:generalized_MHD_ohms}
-    \Evec + \vvec \times \Bvec = \frac{1}{en} ( \Jvec \times \Bvec - \nabla P_e + \nabla \cdot \Tvec_e + \Rvec_e).
+    \Evec + \vvec \times \Bvec = \frac{1}{en} ( \Jvec \times \Bvec - \nabla p_e + \nabla \cdot \Tvec_e + \Rvec_e).
 \end{equation}
 
 The two conservation of energy equations will also lead to two single-fluid equations. Each is evaluated using the single-fluid variables. As part of this derivation, we first rewrite the ion and electron internal energy \cref{eq:twof_iei,eq:twof_iee} as
@@ -1536,7 +1536,7 @@ Combining the first order terms we obtain
 which, upon crossing by $\Bvec$, gives
 \begin{equation}
 \label{eq:e_cross_b_drift}
-    \uvec_{i,\perp}^{(0)} = - \frac{\nabla_\perp \phi \times \Bvec}{B^2}.
+    \uvec_{i,\perp}^{(0)} = -\nabla_\perp \phi \times \frac{\bvec}{B}.
 \end{equation}
 Combining the terms of order $\epsilon$ we obtain
 \begin{equation}
@@ -1623,7 +1623,7 @@ and \cref{eq:intermediate_hm_1} becomes
 Plugging in for $\uvec_{i,\perp}^{(0)}$,
 \begin{equation}
 \label{eq:intermediate_hm_2}
-   \frac{\partial}{\partial t}\left ( \frac{1}{w_{c,i} B}\nabla_\perp^2 \phi - \frac{e \phi}{T_e} \right ) - \frac{1}{B} \left [ \left( \nabla_\perp \phi \times \bvec \right) \cdot \nabla_\perp \right] \left [ \frac{1}{w_{c,i} B} \nabla_\perp^2 \phi - \ln \left ( \frac{n_0}{w_{c,i}} \right) \right ] = 0.
+   \frac{\partial}{\partial t}\left ( \frac{1}{w_{c,i} B}\nabla_\perp^2 \phi - \frac{e \phi}{T_e} \right ) - \left [ \left( \nabla_\perp \phi \times \frac{\bvec}{B} \right) \cdot \nabla_\perp \right] \left [ \frac{1}{w_{c,i} B} \nabla_\perp^2 \phi - \ln \left ( \frac{n_0}{w_{c,i}} \right) \right ] = 0.
 \end{equation}
 We now introduce the normalizations
 \begin{equation}

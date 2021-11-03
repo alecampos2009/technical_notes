@@ -1,4 +1,4 @@
-% FINISHED CHAPTER 2
+% FINISHED CHAPTER 9
 
 \documentclass[oneside,a4paper,11pt]{report}
 
@@ -50,6 +50,7 @@
 \newcommand{\tpvc}{\mathcal{R}} % Two-point velocity correlation
 \newcommand{\redi}{\phi}        % Redistribution
 \newcommand{\est}{E}            % Energy spectrum tensor
+\newcommand{\kappavec}{\boldsymbol{\kappa}}
 
 \newcommand{\Stau}{S^*}
 \newcommand{\Wtau}{W^*}
@@ -109,6 +110,8 @@
 \newcommand{\eflucf}{e''}
 \newcommand{\fflucf}{f''}
 \newcommand{\cflucf}{c''}
+
+\newcommand{\Sflucf}{S''}
 \newcommand{\Yflucf}{Y''}
 
 \newcommand{\Tflucf}{T''}
@@ -509,19 +512,19 @@ We define the dissipation $\epsilon$ as
 \end{equation}
 Since $\tfluc_{ij} = t_{ij} - \tavg_{ij}$, the above becomes
 \begin{equation}
-    \rhoavg \epsilon = \overline{ t_{ij} \frac{\partial \ufluc_i}{\partial x_j} } = \overline{ 2 \mu \frac{\partial \ufluc_i}{\partial x_j} } \Savg^*_{ij} + \overline{ 2 \mu \sfluc^*_{ij} \frac{\partial \ufluc_i}{\partial x_j} }.
+    \rhoavg \epsilon = \overline{ t_{ij} \frac{\partial \ufluc_i}{\partial x_j} } = \overline{ 2 \mu \frac{\partial \ufluc_i}{\partial x_j} } \Savg^*_{ij} + \overline{ 2 \mu \Sfluc^*_{ij} \frac{\partial \ufluc_i}{\partial x_j} }.
 \end{equation}
 Neglecting the molecular viscosity fluctuations, as stated in Sagaut \& Cambon (Homogeneous compressible dynamics) gives
 \begin{equation}
-    \rhoavg \epsilon = 2 \overline{ \mu } \; \overline{ \sfluc^*_{ij} \frac{\partial \ufluc_i}{\partial x_j} }.
+    \rhoavg \epsilon = 2 \overline{ \mu } \; \overline{ \Sfluc^*_{ij} \frac{\partial \ufluc_i}{\partial x_j} }.
 \end{equation}
-Expanding $\sfluc^*_{ij}$,
+Expanding $\Sfluc^*_{ij}$,
 \begin{equation}
-    \rhoavg \epsilon = 2 \overline{ \mu } \; \overline{ \sfluc_{ij} \sfluc_{ij} - \frac{1}{3} \left ( \frac{ \partial \ufluc_k }{ \partial x_k } \right )^2 }.
+    \rhoavg \epsilon = 2 \overline{ \mu } \; \overline{ \Sfluc_{ij} \Sfluc_{ij} - \frac{1}{3} \left ( \frac{ \partial \ufluc_k }{ \partial x_k } \right )^2 }.
 \end{equation}
 The above agrees with Sarkar et al, JFM, 1991. \cite{Sarkar1991}. Using the identities 
 \begin{equation}
-\sfluc_{ij} \sfluc_{ij} = \frac{1}{2} \wfluc_i \wfluc_i + \frac{ \partial \ufluc_i }{ \partial x_j } \frac{ \partial \ufluc_j }{ \partial x_i}, 
+\Sfluc_{ij} \Sfluc_{ij} = \frac{1}{2} \wfluc_i \wfluc_i + \frac{ \partial \ufluc_i }{ \partial x_j } \frac{ \partial \ufluc_j }{ \partial x_i}, 
 \end{equation}
 and
 \begin{equation}
@@ -695,7 +698,7 @@ Assuming incompressible flow, and taking the divergence of \cref{eq:cons_momentu
 \end{equation}
 Subtracting \cref{eq:rans_pressure} from the above leads to
 \begin{equation}
-\label{press_fluc}
+\label{eq:press_fluc}
 \frac{1}{\rho} \frac{\partial^2 \pfluc}{\partial x_j \partial x_j} = -2 \frac{\partial \uavg_i}{\partial x_j} \frac{\partial \ufluc_j}{\partial x_i} - \frac{\partial^2 \ufluc_i \ufluc_j}{\partial x_i \partial x_j} + \frac{\partial^2 \rs_{ij}}{\partial x_i \partial x_j} + \frac{\partial \ffluc_i}{\partial x_i}.
 \end{equation}
 
@@ -798,7 +801,7 @@ Using the pressure decompositions defined above we can correspondingly decompose
 \begin{equation}
 \redi_{ij} = \redi_{ij}^{(r)} + \redi_{ij}^{(s)} + \redi_{ij}^{(h)},
 \end{equation}
-where, instead of using $p$, $p^{(r)}$ is used in the definition of $\redi^{(r)}_{ij}$, $p^{(s)}$ in the definition of $\redi^{(s)}_{ij}$, and $p^{(h)}$ in the definition of $\redi^{(h)}_{ij}$. Similarly
+where, instead of using $\pfluc$, $\pfluc^{(r)}$ is used in the definition of $\redi^{(r)}_{ij}$, $\pfluc^{(s)}$ in the definition of $\redi^{(s)}_{ij}$, and $\pfluc^{(h)}$ in the definition of $\redi^{(h)}_{ij}$. Similarly
 \begin{equation}
 \Pi_{ij} = \Pi^{(r)}_{ij} + \Pi^{(s)}_{ij} + \Pi^{(h)}_{ij},
 \end{equation}
@@ -860,7 +863,7 @@ Assuming incompressible flow in \cref{eq:scalar_variance_favre}, we obtain
 
 %###############################################################################
 %
-\chapter{Introduction}
+\chapter{Governing equations for incompressible flows}
 %
 %###############################################################################
 
@@ -868,25 +871,25 @@ Assuming incompressible flow in \cref{eq:scalar_variance_favre}, we obtain
 \section{Evolution of the mean variables}
 %-------------------------------------------------------------------------------
 \label{sec:homo_mean_incomp}
-In this section we derive the time evolutions of $\uiavg$ and $\pavg$. We know that for homogeneous turbulence, gradients of turbulent statistics for homogeneous turbulence vanish. The incompressible conservation of TKE \cref{eq:tke_ransflow} for homogeneous flows thus becomes
+In this section we derive the time evolutions of $\uavg_i$ and $\pavg$. We know that for homogeneous turbulence, gradients of turbulent statistics vanish. The incompressible conservation of TKE \cref{eq:tke_ransflow} for homogeneous flows thus becomes
 \begin{equation}
-\frac{\partial k}{\partial t} = -\rs_{ij} \frac{\partial \uiavg}{\partial x_j} - \epsilon + \langle f_i \uifluc \rangle.
+\frac{\partial k}{\partial t} = -\rs_{ij} \frac{\partial \uavg_i}{\partial x_j} - \epsilon + \overline{ \ffluc_i \ufluc_i }.
 \end{equation}
-This shows that the derivative of mean velocity is a function of time only, which we label as $G_{ij} = G_{ij}(t)$. Thus, we express the mean velocity as $\uiavg = G_{ij} x_j + C_i$, or 
+This shows that the derivative of mean velocity is a function of time only, which we label as $G_{ij} = G_{ij}(t)$. Thus, we express the mean velocity as $\uavg_i = G_{ij} x_j + C_i$, or 
 \begin{equation}
 \label{eq:ui_homo_incomp}
-\uiavg = G_{ij} x_j ,
+\uavg_i = G_{ij} x_j ,
 \end{equation}
 after neglecting the constant of integration.
 
-The transport equation for velocity \cref{eq:rans_vel2} then simplifies to the following for homogeneous turbulence
+The transport equation for velocity \cref{eq:rans_vel} then simplifies to the following for homogeneous turbulence
 \begin{equation}
-\frac{\partial \uiavg}{\partial t} + \ukavg G_{ik} = -\frac{1}{\rho} \frac{\partial \pavg}{\partial x_i} + \langle F_i \rangle.
+\frac{\partial \uavg_i}{\partial t} + \uavg_k G_{ik} = -\frac{1}{\rho} \frac{\partial \pavg}{\partial x_i} + \favg_i.
 \end{equation}
 Differentiating the above by $x_j$ shows that $G_{ij}$ evolves according to
 \begin{equation}
 \label{eq:gij_homo_incomp}
-\frac{d G_{ij} }{d t} + G_{kj}G_{ik} = -\frac{1}{\rho} \frac{\partial ^2 \pavg}{\partial x_i \partial x_j} + \frac{\partial \langle F_i \rangle}{\partial x_j} .
+\frac{d G_{ij} }{d t} + G_{kj}G_{ik} = -\frac{1}{\rho} \frac{\partial ^2 \pavg}{\partial x_i \partial x_j} + \frac{\partial \favg_i}{\partial x_j} .
 \end{equation}
 Given no body forces, \cref{eq:gij_homo_incomp} shows that the second gradient of $\pavg$ is a function of time only, which we label as $C_{ij} = C_{ij}(t)$. We note that $C_{ij}$ is symmetric. We then express the pressure as $\pavg = C + C_i x_i + \frac{1}{2} C_{ij} x_ix_j$, or
 \begin{equation}
@@ -894,28 +897,28 @@ Given no body forces, \cref{eq:gij_homo_incomp} shows that the second gradient o
 \end{equation}
 after neglecting the constants of integration. 
 
-Using the definition of $S_{ij}$ one can show that
+Using the definition of $\Savg_{ij}$ one can show that
 \begin{align}
 \label{eq:sij_homo_incomp}
-\frac{d S_{ij}}{dt} &= \frac{1}{2} \left ( \frac{d G_{ij}}{dt} + \frac{d G_{ji}}{dt} \right ) \nonumber \\
-& = \frac{1}{2} \left ( -G_{kj}G_{ik} - G_{ki}G_{jk} - \frac{2}{\rho} \frac{\partial^2 \pavg}{\partial x_i \partial x_j}  + \frac{\partial \langle F_i \rangle}{\partial x_j} + \frac{ \partial \langle F_j \rangle}{\partial x_i} \right ) \nonumber \\
-& = -S_{ik}S_{jk} - W_{ik}W_{kj} - \frac{1}{\rho} \frac{\partial^2 \pavg}{\partial x_i \partial x_j} + F^{(s)}_{ij},
+\frac{d \Savg_{ij}}{dt} &= \frac{1}{2} \left ( \frac{d G_{ij}}{dt} + \frac{d G_{ji}}{dt} \right ) \nonumber \\
+& = \frac{1}{2} \left ( -G_{kj}G_{ik} - G_{ki}G_{jk} - \frac{2}{\rho} \frac{\partial^2 \pavg}{\partial x_i \partial x_j}  + \frac{\partial \favg_i }{\partial x_j} + \frac{ \partial \favg_j }{\partial x_i} \right ) \nonumber \\
+& = -\Savg_{ik} \Savg_{jk} - \Wavg_{ik} \Wavg_{kj} - \frac{1}{\rho} \frac{\partial^2 \pavg}{\partial x_i \partial x_j} + F^{(s)}_{ij},
 \end{align}
 where
 \begin{equation}
-F^{(s)}_{ij} = \frac{1}{2} \left ( \frac{\partial \langle F_i \rangle}{\partial x_j} + \frac{ \partial \langle F_j \rangle}{\partial x_i} \right ).
+F^{(s)}_{ij} = \frac{1}{2} \left ( \frac{\partial \favg_i }{\partial x_j} + \frac{ \partial \favg_j }{\partial x_i} \right ).
 \end{equation}
-Following the same approach for $W_{ij}$ one obtains
+Following the same approach for $\Wavg_{ij}$ one obtains
 \begin{equation}
 \label{eq:wij_homo_incomp}
-\frac{dW_{ij}}{dt} = -S_{kj}W_{ik} - W_{kj}S_{ik} + F^{(w)}_{ij},
+\frac{d \Wavg_{ij}}{dt} = -\Savg_{kj} \Wavg_{ik} - \Wavg_{kj} \Savg_{ik} + F^{(w)}_{ij},
 \end{equation}
 where
 \begin{equation}
-F^{(w)}_{ij} = \frac{1}{2} \left ( \frac{\partial \langle F_i \rangle}{\partial x_j} - \frac{ \partial \langle F_j \rangle}{\partial x_i} \right ).
+F^{(w)}_{ij} = \frac{1}{2} \left ( \frac{\partial \favg_i }{\partial x_j} - \frac{ \partial \favg_j }{\partial x_i} \right ).
 \end{equation}
 
-To know the evolution of the mean velocity and pressure for the case of incompressible homogeneous turbulence, one needs to know the evolution of $G_{ij}$ and $C_{ij}$. To do so, one can specify an evolution of $S_{ij}$, and use \cref{eq:wij_homo_incomp} to compute $W_{ij}$, to thus obtain the evolution of $G_{ij}$. $C_{ij}$ then follows from either \cref{eq:gij_homo_incomp} or \cref{eq:sij_homo_incomp}.
+To know the evolution of the mean velocity and pressure for the case of incompressible homogeneous turbulence, one needs to know the evolution of $G_{ij}$ and $C_{ij}$. To do so, one can specify an evolution of $\Savg_{ij}$, and use \cref{eq:wij_homo_incomp} to compute $\Wavg_{ij}$, to thus obtain the evolution of $G_{ij}$. $C_{ij}$ then follows from either \cref{eq:gij_homo_incomp} or \cref{eq:sij_homo_incomp}.
 
 
 %-------------------------------------------------------------------------------
@@ -925,79 +928,17 @@ To know the evolution of the mean velocity and pressure for the case of incompre
 %--------------------------------------------
 \subsection{Governing Equations}
 %--------------------------------------------
-Just as in section \ref{sec:homo_mean_incomp} our goal was to find evolution equations for the mean variables $\uiavg$ and $\pavg$, in this section we now seek to find the equations for the fluctuations $\uifluc = \uifluc(t,\xvec)$ and $\pfluc= p(t,\xvec)$. Under the assumption of homogeneous turbulence, the PDEs for these fluctuating variables become 
+Just as in section \ref{sec:homo_mean_incomp} our goal was to find evolution equations for the mean variables $\uavg_i$ and $\pavg$, in this section we now seek to find the equations for the fluctuations $\ufluc_i = \ufluc_i(t,\xvec)$ and $\pfluc= p(t,\xvec)$. Under the assumption of homogeneous turbulence, the PDEs for these fluctuating variables (\cref{eq:vel_fluc,eq:press_fluc}) without body forces become 
 \begin{equation}
-\label{fluc_u_homo}
-\frac{\partial \uifluc}{\partial t} + G_{jk} x_k \frac{\partial \uifluc}{\partial x_j} = -\ujfluc G_{ij} - \frac{\partial \uifluc \ujfluc}{\partial x_j} - \frac{1}{\rho} \frac{\partial \pfluc}{\partial x_i} + \nu \frac{\partial^2 \uifluc}{\partial x_j \partial x_j},
+\label{eq:fluc_u_homo}
+\frac{\partial \ufluc_i}{\partial t} + G_{jk} x_k \frac{\partial \ufluc_i}{\partial x_j} = -\ufluc_j G_{ij} - \frac{\partial \ufluc_i \ufluc_j}{\partial x_j} - \frac{1}{\rho} \frac{\partial \pfluc}{\partial x_i} + \nu \frac{\partial^2 \ufluc_i}{\partial x_j \partial x_j},
 \end{equation}
 \begin{equation}
-\label{fluc_p_homo}
-\frac{1}{\rho} \frac{\partial^2 \pfluc}{\partial x_j \partial x_j} = -2 G_{ij} \frac{\partial \ujfluc}{\partial x_i} - \frac{\partial^2 \uifluc \ujfluc}{\partial x_i \partial x_j}.
-\end{equation}
-
-%--------------------------------------------
-\subsection{Rogallo Transformation}
-%--------------------------------------------
-It is convenient to use the method of change of variables to transform the PDEs above to eliminate the convective term on the equation for the fluctuating velocity. Given functions $\urog_i = \urog_i(t,\xrogvec)$ and $\prog = \prog(t,\xrogvec)$ suppose the velocity and pressure fields can be re-expressed as follows
-\begin{align}
-\uifluc &= \urog_i(t,\fvec) \\
-p &= \prog(t,\fvec),
-\end{align}
-for some function $\fvec = \bold{f}(t,\xvec)$. Thus, derivatives in the original frame convert to the following in the transformed frame
-\begin{align}
-    \frac{\partial }{\partial t} &= \left [ \frac{\partial }{\partial t } \right ]_{\xrogvec = \bold{f}} + \left [ \frac{\partial }{\partial \xrog_k}\right ]_{\xrogvec = \fvec} \frac{\partial f_k }{\partial t} \\
-    \frac{\partial }{\partial x_i} &= \left [ \frac{\partial }{\partial \xrog_k} \right ]_{\xrogvec = \fvec} \frac{\partial f_k}{\partial x_i} \\
-    \frac{\partial^2 }{\partial x_i \partial x_j} &= \left [ \frac{\partial^2 }{\partial \xrog_p \partial \xrog_k} \right ]_{\xrogvec = \fvec} \frac{\partial f_p}{\partial x_i} \frac{\partial f_k}{\partial x_j} + \left [ \frac{\partial  }{\partial \xrog_k} \right]_{\xrogvec = \fvec } \frac{\partial^2 f_k }{\partial x_i \partial x_j} .
-\end{align}
-
-Lets now pick a specific form for the function $\fvec$, namely $\fvec = \mathbf{A}\xvec$, where $\mathbf{A} = \mathbf{A}(t)$ is a square matrix. In tensor notation this is equivalent to
-\begin{equation}
-f_i = A_{in} x_n.
-\end{equation}
-The first two terms in the PDE for the fluctuating velocity thus become
-\begin{equation}
-\frac{\partial \uifluc}{\partial t} + G_{jk}x_k\frac{\partial u_i }{\partial x_j} = \left [ \frac{\partial \urog_i }{\partial t } \right ]_{\xrogvec = \mathbf{A}\xvec} + \left [ \frac{\partial \urog_i }{\partial \xrog_k}\right ]_{\xrogvec = \mathbf{A} \xvec} \frac{d A_{kn} }{d t} x_n + G_{jn}x_n \left [ \frac{\partial \urog_i }{\partial \xrog_k} \right ]_{\xrogvec = \mathbf{A} \xvec} A_{kj}
-\end{equation}
-If we choose $A_{kn}$ to satisfy
-\begin{equation}
-\label{rogallo_trans}
-\frac{d A_{kn}}{dt} + G_{jn}A_{kj} = 0,
-\end{equation}
-with initial condition $A_{ij} = \delta_{ij}$ at $t = 0$, we then obtain 
-\begin{equation}
-\frac{\partial \uifluc }{\partial t} + G_{jk}x_k\frac{\partial u_i}{\partial x_j} = \left [ \frac{\partial \urog_i }{\partial t } \right ]_{\xrogvec = \mathbf{A} \xvec}.
+\label{eq:fluc_p_homo}
+\frac{1}{\rho} \frac{\partial^2 \pfluc}{\partial x_j \partial x_j} = -2 G_{ij} \frac{\partial \ufluc_j}{\partial x_i} - \frac{\partial^2 \ufluc_i \ufluc_j}{\partial x_i \partial x_j}.
 \end{equation}
 
-Using the above we can re-write the equation for the fluctuating velocity (\ref{fluc_u_homo}) as follows
-\begin{equation}
-\left [ \frac{\partial \urog_i }{\partial t } \right ]_{\xrogvec = \mathbf{A} \xvec} = -[\urog_j]_{\xrogvec = \mathbf{A} \xvec} G_{ij} - \left [ \frac{\partial \urog_i \urog_j}{\partial \xrog_k} \right ]_{\xrogvec = \mathbf{A}\xvec} A_{kj} - \left [ \frac{1}{\rho} \frac{\partial \prog }{\partial \xrog_k} \right ]_{\xrogvec = \mathbf{A}\xvec } A_{ki} + \nu \left [ \frac{ \partial^2 \urog_i}{\partial \xrog_p \partial \xrog_k} \right ]_{\xrogvec = \mathbf{A} \xvec} A_{pj} A_{kj},
-\end{equation}
-which is equivalent to
-\begin{equation}
-\label{eq:u_lin_tran}
-\frac{\partial \urog_i }{\partial t } = -\urog_j G_{ij} - \frac{\partial \urog_i \urog_j}{\partial \xrog_k} A_{kj} - \frac{1}{\rho} \frac{\partial \prog }{\partial \xrog_k} A_{ki} + \nu \frac{ \partial^2 \urog_i}{\partial \xrog_p \partial \xrog_k} A_{pj} A_{kj}.
-\end{equation}
-A similar analysis for the fluctuating pressure equation leads to
-\begin{equation}
-\label{p_lin_tran}
-\frac{1}{\rho} \frac{\partial^2 \prog }{\partial \xrog_m \partial \xrog_l} A_{mk} A_{lk} = -2 G_{ij} \frac{\partial \urog_j }{\partial \xrog_t} A_{ti} - \frac{\partial^2 \urog_i \urog_j}{\partial \xrog_p \partial \xrog_k} A_{pi}A_{kj}.
-\end{equation}
-
-%-------------------------------------------------------------------------------
-\section{The Reynolds-stress evolution equation}
-%-------------------------------------------------------------------------------
-
-The transport equation for the Reynolds stresses simplifies to the following evolution equation
-\begin{equation}
-\frac{d \rs_{ij}}{dt} = \mathcal{P}_{ij} +\redi_{ij} - \epsilon_{ij},
-\end{equation}
-where $\redi_{ij} = \redi^{(r)}_{ij} + \redi^{(s)}_{ij}$, that is, $\redi^{(h)} = 0$. The fluctuating pressure satisfies the following Poisson equation
-\begin{equation}
-\frac{\partial^2 \pfluc}{\partial x_j \partial x_j} = -2 \rho \frac{\partial \uiavg}{\partial x_j} \frac{\partial \ujfluc}{\partial x_i}  - \rho \frac{\partial^2 \uifluc \ujfluc}{\partial x_i \partial x_j},
-\end{equation}
-where the first term on the right hand side corresponds to the rapid pressure whereas the second corresponds to the slow pressure.
-
-The solution to the PDE above is obtained using Green's function, that is, for 
+We note that \cref{eq:fluc_p_homo} for fluctuating pressure is a Poisson equation. Thus, its solution is given by the Green's function. That is, for 
 \begin{equation}
 \frac{\partial^2 f(\xvec)}{\partial x_k \partial x_k} = S(\xvec) \qquad (\xvec \in \Rthree)
 \end{equation}
@@ -1009,44 +950,101 @@ where
 \begin{equation}
 G(\rvec) = \frac{-1}{4\pi ||\rvec||_2} \quad \text{for } \Rthree.
 \end{equation}
-Since the deformation $\partial \uiavg / \partial x_j$ is constant and $\partial u_j(\xvec) / \partial x_i$ as a function of $\yvec$ becomes $\partial u_j(\yvec) / \partial y_i$, we obtain,
+Since the deformation $\partial \uavg_i / \partial x_j$ is constant and $\partial \ufluc_j(\xvec) / \partial x_i$ as a function of $\yvec$ becomes $\partial \ufluc_j(\yvec) / \partial y_i$, we obtain,
 \begin{equation}
-\label{pfluc_homo}
-p(\xvec) =  -2 \rho \frac{\partial \uiavg}{\partial x_j} \int_\Rthree \frac{\partial u_j(\yvec)}{\partial y_i} G(\xvec-\yvec) d\yvec - \rho \int_\Rthree \frac{\partial^2 \uifluc \ujfluc}{\partial x_i \partial x_j} G(\xvec - \yvec) d\yvec 
+\label{eq:pfluc_homo}
+\pfluc(\xvec) =  -2 \rho \frac{\partial \uavg_i}{\partial x_j} \int_\Rthree \frac{\partial \ufluc_j(\yvec)}{\partial y_i} G(\xvec-\yvec) d\yvec - \rho \int_\Rthree \frac{\partial^2 \ufluc_i(\yvec) \ufluc_j(\yvec)}{\partial y_i \partial y_j} G(\xvec - \yvec) d\yvec 
 \end{equation}
+%--------------------------------------------
+\subsection{Rogallo Transformation}
+%--------------------------------------------
+It is convenient to use the method of change of variables to transform the PDEs above to eliminate the convective term on the equation for the fluctuating velocity. Given functions $\urog_i = \urog_i(t,\xrogvec)$ and $\prog = \prog(t,\xrogvec)$ suppose the velocity and pressure fields can be re-expressed as follows
+\begin{align}
+\ufluc_i &= \urog_i(t,\fvec) \\
+\pfluc &= \prog(t,\fvec),
+\end{align}
+for some function $\fvec = \mathbf{f}(t,\xvec)$. Thus, derivatives in the original frame convert to the following in the transformed frame
+\begin{align}
+    \frac{\partial }{\partial t} &= \left [ \frac{\partial }{\partial t } \right ]_{\xrogvec = \mathbf{f}} + \left [ \frac{\partial }{\partial \xrog_k}\right ]_{\xrogvec = \fvec} \frac{\partial f_k }{\partial t} \\
+    \frac{\partial }{\partial x_i} &= \left [ \frac{\partial }{\partial \xrog_k} \right ]_{\xrogvec = \fvec} \frac{\partial f_k}{\partial x_i} \\
+    \frac{\partial^2 }{\partial x_i \partial x_j} &= \left [ \frac{\partial^2 }{\partial \xrog_p \partial \xrog_k} \right ]_{\xrogvec = \fvec} \frac{\partial f_p}{\partial x_i} \frac{\partial f_k}{\partial x_j} + \left [ \frac{\partial  }{\partial \xrog_k} \right]_{\xrogvec = \fvec } \frac{\partial^2 f_k }{\partial x_i \partial x_j} .
+\end{align}
+
+Lets now pick a specific form for the function $\fvec$, namely $\fvec = \mathbf{A}\xvec$, where $\mathbf{A} = \mathbf{A}(t)$ is a square matrix. In tensor notation this is equivalent to
+\begin{equation}
+f_i = A_{in} x_n.
+\end{equation}
+The first two terms in the PDE for the fluctuating velocity thus become
+\begin{equation}
+\frac{\partial \ufluc_i}{\partial t} + G_{jk}x_k\frac{\partial \ufluc_i }{\partial x_j} = \left [ \frac{\partial \urog_i }{\partial t } \right ]_{\xrogvec = \mathbf{A}\xvec} + \left [ \frac{\partial \urog_i }{\partial \xrog_k}\right ]_{\xrogvec = \mathbf{A} \xvec} \frac{d A_{kn} }{d t} x_n + G_{jn}x_n \left [ \frac{\partial \urog_i }{\partial \xrog_k} \right ]_{\xrogvec = \mathbf{A} \xvec} A_{kj}
+\end{equation}
+If we choose $A_{kn}$ to satisfy
+\begin{equation}
+\label{rogallo_trans}
+\frac{d A_{kn}}{dt} + G_{jn}A_{kj} = 0,
+\end{equation}
+with initial condition $A_{ij} = \delta_{ij}$ at $t = 0$, we then obtain 
+\begin{equation}
+\frac{\partial \ufluc_i }{\partial t} + G_{jk} x_k \frac{\partial \ufluc_i}{\partial x_j} = \left [ \frac{\partial \urog_i }{\partial t } \right ]_{\xrogvec = \mathbf{A} \xvec}.
+\end{equation}
+
+Using the above we can re-write the equation for the fluctuating velocity (\ref{eq:fluc_u_homo}) as follows
+\begin{equation}
+\left [ \frac{\partial \urog_i }{\partial t } \right ]_{\xrogvec = \mathbf{A} \xvec} = -[\urog_j]_{\xrogvec = \mathbf{A} \xvec} G_{ij} - \left [ \frac{\partial \urog_i \urog_j}{\partial \xrog_k} \right ]_{\xrogvec = \mathbf{A}\xvec} A_{kj} - \left [ \frac{1}{\rho} \frac{\partial \prog }{\partial \xrog_k} \right ]_{\xrogvec = \mathbf{A}\xvec } A_{ki} + \nu \left [ \frac{ \partial^2 \urog_i}{\partial \xrog_p \partial \xrog_k} \right ]_{\xrogvec = \mathbf{A} \xvec} A_{pj} A_{kj},
+\end{equation}
+which is equivalent to
+\begin{equation}
+\label{eq:u_lin_tran}
+\frac{\partial \urog_i }{\partial t } = -\urog_j G_{ij} - \frac{\partial \urog_i \urog_j}{\partial \xrog_k} A_{kj} - \frac{1}{\rho} \frac{\partial \prog }{\partial \xrog_k} A_{ki} + \nu \frac{ \partial^2 \urog_i}{\partial \xrog_p \partial \xrog_k} A_{pj} A_{kj}.
+\end{equation}
+A similar analysis for the fluctuating pressure equation leads to
+\begin{equation}
+\label{eq:p_lin_tran}
+\frac{1}{\rho} \frac{\partial^2 \prog }{\partial \xrog_m \partial \xrog_l} A_{mk} A_{lk} = -2 G_{ij} \frac{\partial \urog_j }{\partial \xrog_t} A_{ti} - \frac{\partial^2 \urog_i \urog_j}{\partial \xrog_p \partial \xrog_k} A_{pi}A_{kj}.
+\end{equation}
+
+%-------------------------------------------------------------------------------
+\section{The Reynolds-stress evolution equation}
+%-------------------------------------------------------------------------------
+
+The transport equation for the Reynolds stresses simplifies to the following evolution equation
+\begin{equation}
+\frac{d \rs_{ij}}{dt} = \mathcal{P}_{ij} +\redi_{ij} - \epsilon_{ij},
+\end{equation}
+where $\redi_{ij} = \redi^{(r)}_{ij} + \redi^{(s)}_{ij}$, that is, $\redi^{(h)} = 0$.
 
 %--------------------------------------------
 \subsection{The rapid redistribution}
 %--------------------------------------------
 
-Using equation (\ref{pfluc_homo}) we have
+Using equation (\ref{eq:pfluc_homo}) we have
 \begin{equation}
-\left \langle \frac{p^{(r)}(\xvec)}{\rho}\frac{\partial u_i(\xvec)}{\partial x_j} \right \rangle= -2\frac{\partial \ukavg}{\partial x_l} \int_\Rthree \left \langle \frac{\partial u_i(\xvec)}{\partial x_j} \frac{\partial u_l(\yvec)}{\partial y_k} \right \rangle G(\xvec-\yvec) d\yvec.
+\overline{ \frac{\pfluc^{(r)}(\xvec)}{\rho} \frac{\partial \ufluc_i(\xvec)}{\partial x_j} }= -2\frac{\partial \uavg_k}{\partial x_l} \int_\Rthree \overline{ \frac{\partial \ufluc_i(\xvec)}{\partial x_j} \frac{\partial \ufluc_l(\yvec)}{\partial y_k} } G(\xvec-\yvec) d\yvec.
 \end{equation}
 Since the two-point correlation is a function of $\xvec - \yvec$ and not of $\xvec$ and $\yvec$ independently, we can rewrite the expectation inside the integral as follows,
 \begin{equation}
-\left \langle \frac{\partial u_i(\xvec)}{\partial x_j} \frac{\partial u_l(\yvec)}{\partial y_k} \right \rangle = \frac{\partial}{\partial x_j} \frac{\partial}{\partial y_k} \langle u_i(\xvec)u_l(\yvec) \rangle = \frac{\partial}{\partial x_j} \frac{\partial}{\partial y_k} \tpvc_{il}(\xvec - \yvec) = \left [-\frac{\partial}{\partial r_j} \frac{\partial}{\partial r_k} \tpvc_{il}(\rvec) \right]_{\rvec = \xvec-\yvec}
+\overline{ \frac{\partial \ufluc_i(\xvec)}{\partial x_j} \frac{\partial \ufluc_l(\yvec)}{\partial y_k} } = \frac{\partial}{\partial x_j} \frac{\partial}{\partial y_k} \overline{ \ufluc_i(\xvec) \ufluc_l(\yvec) } = \frac{\partial}{\partial x_j} \frac{\partial}{\partial y_k} \tpvc_{il}(\xvec - \yvec) = \left [-\frac{\partial}{\partial r_j} \frac{\partial}{\partial r_k} \tpvc_{il}(\rvec) \right]_{\rvec = \xvec-\yvec}
 \end{equation}
 where we have used the chain rule to obtain the last equality.
 Hence the expectation of the pressure-velocity gradient has the following form,
 \begin{equation}
-\left \langle \frac{p^{(r)}(\xvec)}{\rho}\frac{\partial u_i(\xvec)}{\partial x_j} \right \rangle= 2\frac{\partial \ukavg}{\partial x_l} \int_\Rthree \left [\frac{\partial^2 \tpvc_{il}(\rvec)}{\partial r_j \partial r_k} \right]_{\rvec = \xvec-\yvec} G(\xvec-\yvec) d\yvec.
+\overline{ \frac{\pfluc^{(r)}(\xvec)}{\rho} \frac{\partial \ufluc_i(\xvec)}{\partial x_j} }= 2\frac{\partial \uavg_k}{\partial x_l} \int_\Rthree \left [\frac{\partial^2 \tpvc_{il}(\rvec)}{\partial r_j \partial r_k} \right]_{\rvec = \xvec-\yvec} G(\xvec-\yvec) d\yvec.
 \end{equation}
 We then proceed by integration by substitution, with the substitution $\yvec = \xvec + \rvec$.
 \begin{equation}
-\left \langle \frac{p^{(r)}(\xvec)}{\rho}\frac{\partial u_i(\xvec)}{\partial x_j} \right \rangle = 2\frac{\partial \ukavg}{\partial x_l} \int_\Rthree\frac{\partial^2 \tpvc_{il}(\rvec)}{\partial r_j \partial r_k} G(\rvec) d\rvec.
+\overline{ \frac{\pfluc^{(r)}(\xvec)}{\rho} \frac{\partial \ufluc_i(\xvec)}{\partial x_j} } = 2\frac{\partial \uavg_k}{\partial x_l} \int_\Rthree\frac{\partial^2 \tpvc_{il}(\rvec)}{\partial r_j \partial r_k} G(\rvec) d\rvec.
 \end{equation}
 Using the definition of the Green's function, we rewrite the above as,
 \begin{equation}
-\left \langle \frac{p^{(r)}(\xvec)}{\rho}\frac{\partial u_i(\xvec)}{\partial x_j} \right \rangle = 2 \frac{\partial \ukavg}{\partial x_l} \int_\Rthree \frac{-1}{4\pi||\rvec||_2} \frac{\partial^2 \tpvc_{il}(\rvec)}{\partial r_j \partial r_k} d\rvec = 2 \frac{\partial \ukavg}{\partial x_l} M_{iljk}
+\overline{ \frac{\pfluc^{(r)}(\xvec)}{\rho} \frac{\partial \ufluc_i(\xvec)}{\partial x_j} } = 2 \frac{\partial \uavg_k}{\partial x_l} \int_\Rthree \frac{-1}{4 \pi |\rvec|} \frac{\partial^2 \tpvc_{il}(\rvec)}{\partial r_j \partial r_k} d\rvec = 2 \frac{\partial \uavg_k}{\partial x_l} M_{iljk}
 \end{equation}
 where we have defined the tensor 
 \begin{equation}
-M_{iljk} = \frac{-1}{4\pi}\int_\Rthree \frac{1}{||\rvec||_2} \frac{\partial^2 \tpvc_{il}(\rvec)}{\partial r_j \partial r_k} d\rvec 
+M_{iljk} = \frac{-1}{4\pi}\int_\Rthree \frac{1}{|\rvec|} \frac{\partial^2 \tpvc_{il}(\rvec)}{\partial r_j \partial r_k} d\rvec 
 \end{equation}
 The rapid pressure-rate-of-strain term can now be written in the succinct notation as follows,
 \begin{equation}
-\redi^{(r)}_{ij} = 2\frac{\partial \ukavg}{\partial x_l} (M_{iljk} + M_{jlik}).
+\redi^{(r)}_{ij} = 2\frac{\partial \uavg_k}{\partial x_l} (M_{iljk} + M_{jlik}).
 \end{equation}
 
 %###############################################################################
@@ -1058,7 +1056,7 @@ The rapid pressure-rate-of-strain term can now be written in the succinct notati
 %-------------------------------------------------------------------------------
 \section{Definitions}
 %-------------------------------------------------------------------------------
-One can use spectral tools such as the Fourier transform to analyze the fluid equations from a different perspective. In this section we provide definitions for various spectral quantities required for this spectral approach. For sake of notational simplicity, we refer to either the Reynolds-fluctuating or the Favre-fluctuating velocity simply as $u_i$ (no apostrophe or double apostrophe).
+One can use spectral tools such as the Fourier transform to analyze the fluid equations from a different perspective. In this section we provide definitions for various spectral quantities required for this spectral approach. 
 
 %--------------------------------------------
 \subsection{Three-dimensional spectral analysis}
@@ -1070,18 +1068,18 @@ The fluctuating velocity is expressed either as a Fourier series (denoted here a
 \begin{itemize}
 \item Discrete
 \begin{align}
-\ujfluc(\xvec,t) &= \sum_{\kvec} \hat{u}_j(\kvec,t) e^{i \kvec \cdot \xvec}, \\
-\hat{u}_j(\kvec,t) &= \frac{1}{L^3} \int_{\mathbb{L}^3} \ujfluc(\xvec,t) e^{-i \kvec \cdot \xvec} d\xvec.
+\ufluc_j(\xvec,t) &= \sum_{\kappavec} \hat{u}_j(\kappavec,t) e^{i \kappavec \cdot \xvec}, \\
+\hat{u}_j(\kappavec,t) &= \frac{1}{L^3} \int_{\mathbb{L}^3} \ufluc_j(\xvec,t) e^{-i \kappavec \cdot \xvec} d\xvec.
 \end{align}
 The above represents the entire flow as a juxtaposition of cubic domains 
 \begin{equation}
 \mathbb{L}^3 = \{ (x,y,z): 0< x < L, 0 < y < L, 0< z< L \}
 \end{equation}
-The velocity field is periodic across the cubes, i.e. $\uifluc(\xvec + NL,t) = \uifluc(\xvec,t)$ for all integer vectors $N$. Note that $\uifluc(\xvec,t)$ corresponds to the velocity of the original homogeneous flow within a cube of equal dimensions. This representation maintains spatial homogeneity over $\Rthree$. The effects of the artificially imposed periodicity decreases as the ratio of $L$ over the integral length scale approaches infinity.
+The velocity field is periodic across the cubes, i.e. $\ufluc_i(\xvec + NL,t) = \ufluc_i(\xvec,t)$ for all integer vectors $N$. Note that $\ufluc_i(\xvec,t)$ corresponds to the velocity of the original homogeneous flow within a cube of equal dimensions. This representation maintains spatial homogeneity over $\Rthree$. The effects of the artificially imposed periodicity decreases as the ratio of $L$ over the integral length scale approaches infinity.
 \item Continuous
 \begin{align}
-\ujfluc(\xvec,t) &= \int_\Rthree \hat{u}_j(\kvec,t) e^{i\kvec \cdot \xvec} d\kvec, \\
-\hat{u}_j(\kvec,t) &= \frac{1}{(2\pi)^3} \int_\Rthree \ujfluc(\xvec,t) e^{-i \kvec \cdot \xvec} d\xvec.
+\ufluc_j(\xvec,t) &= \int_\Rthree \hat{u}_j(\kappavec,t) e^{i\kappavec \cdot \xvec} d\kappavec, \\
+\hat{u}_j(\kappavec,t) &= \frac{1}{(2\pi)^3} \int_\Rthree \ufluc_j(\xvec,t) e^{-i \kappavec \cdot \xvec} d\xvec.
 \end{align}
 Write something here about why we can use the Fourier transform...generalized functions.
 \end{itemize}
@@ -1092,16 +1090,16 @@ Using the above representations, the two-point velocity correlation can be used 
 \item Discrete
 \begin{align}
 \label{eq:tpvc_discrete}
-\tpvc_{ij}(\rvec,t) & = \sum_{\kvec} \hat{\tpvc}_{ij}(\kvec,t) e^{i \kvec \cdot \rvec}, \\
+\tpvc_{ij}(\rvec,t) & = \sum_{\kappavec} \hat{\tpvc}_{ij}(\kappavec,t) e^{i \kappavec \cdot \rvec}, \\
 \label{espec_discrete}
-\hat{\tpvc}_{ij}(\kvec,t) & = \frac{1}{L^3} \int_{\mathbb{L}^3} \tpvc_{ij}(\rvec,t) e^{-i \kvec \cdot \rvec} d\rvec.
+\hat{\tpvc}_{ij}(\kappavec,t) & = \frac{1}{L^3} \int_{\mathbb{L}^3} \tpvc_{ij}(\rvec,t) e^{-i \kappavec \cdot \rvec} d\rvec.
 \end{align}
 \item Continuous
 \begin{align}
 \label{eq:tpvc_continuous}
-\tpvc_{ij}(\rvec,t) &= \int_\Rthree E_{ij}(\kvec,t) e^{i \kvec \cdot \rvec} d\kvec, \\
+\tpvc_{ij}(\rvec,t) &= \int_\Rthree E_{ij}(\kappavec,t) e^{i \kappavec \cdot \rvec} d\kappavec, \\
 \label{espec_continuous}
-E_{ij}(\kvec,t) & = \frac{1}{(2\pi)^3} \int_\Rthree \tpvc_{ij}(\rvec,t) e^{-i\kvec \cdot \rvec} d\rvec.
+E_{ij}(\kappavec,t) & = \frac{1}{(2\pi)^3} \int_\Rthree \tpvc_{ij}(\rvec,t) e^{-i\kappavec \cdot \rvec} d\rvec.
 \end{align}
 \end{itemize}
 
@@ -1110,12 +1108,12 @@ E_{ij}(\kvec,t) & = \frac{1}{(2\pi)^3} \int_\Rthree \tpvc_{ij}(\rvec,t) e^{-i\kv
 \item Discrete
 \begin{equation} 
 \label{fromu_toE_disc}
-\langle \hat{u}_i^*(\kvec,t) \hat{u}_j(\kvec',t) \rangle = \hat{\tpvc}_{ij}(\kvec',t) \delta_{\kvec',\kvec}.
+\overline{ \hat{u}_i^*(\kappavec,t) \hat{u}_j(\kappavec',t) } = \hat{\tpvc}_{ij}(\kappavec',t) \delta_{\kappavec',\kappavec}.
 \end{equation}
 \item Continuous
 \begin{equation} 
 \label{fromu_toE_cont}
-\langle \hat{u}_i^*(\kvec,t) \hat{u}_j(\kvec',t) \rangle = E_{ij}(\kvec',t)\delta(\kvec' - \kvec).
+\overline{ \hat{u}_i^*(\kappavec,t) \hat{u}_j(\kappavec',t) } = E_{ij}(\kappavec',t)\delta(\kappavec' - \kappavec).
 \end{equation}
 \end{itemize}
 
@@ -1128,13 +1126,13 @@ All of the relations above apply for transforms along one direction only. These 
 \begin{itemize}
 \item Discrete
 \begin{align}
-\ujfluc(\evec_1 x_1,t) &= \sum_{\kappa_1} \hat{u}^{(\evec_1)}_j(\kappa_1,t) e^{i \kappa_1 x_1}\\
-\hat{u}^{(\evec_1)}_j(\kappa_1,t) &= \frac{1}{L} \int_0^L \ujfluc(\evec_1 x_1,t) e^{-i \kappa_1 x_1} \, dx_1,
+\ufluc_j(\evec_1 x_1,t) &= \sum_{\kappa_1} \hat{u}^{(\evec_1)}_j(\kappa_1,t) e^{i \kappa_1 x_1}\\
+\hat{u}^{(\evec_1)}_j(\kappa_1,t) &= \frac{1}{L} \int_0^L \ufluc_j(\evec_1 x_1,t) e^{-i \kappa_1 x_1} \, dx_1,
 \end{align}
 \item Continuous
 \begin{align}
-\ujfluc(\evec_1 x_1,t) &= \int_{-\infty}^{\infty} \hat{u}^{(\evec_1)}_j(\kappa_1,t) e^{i \kappa_1 x_1} \, d\kappa_1 \\
-\hat{u}^{(\evec_1)}_j(\kappa_1,t) &= \frac{1}{2\pi} \int_{-\infty}^{\infty} \ujfluc(\evec_1 x_1,t) e^{-i \kappa_1 x_1} \, dx_1.
+\ufluc_j(\evec_1 x_1,t) &= \int_{-\infty}^{\infty} \hat{u}^{(\evec_1)}_j(\kappa_1,t) e^{i \kappa_1 x_1} \, d\kappa_1 \\
+\hat{u}^{(\evec_1)}_j(\kappa_1,t) &= \frac{1}{2\pi} \int_{-\infty}^{\infty} \ufluc_j(\evec_1 x_1,t) e^{-i \kappa_1 x_1} \, dx_1.
 \end{align}
 \end{itemize}
 
@@ -1156,11 +1154,11 @@ All of the relations above apply for transforms along one direction only. These 
 \begin{itemize}
 \item Discrete
 \begin{equation} 
-\langle \hat{u}^{(\evec_1)*}_i(\kappa_1,t) \hat{u}^{(\evec_1)}_j(\kappa'_1,t) \rangle = \hat{\tpvc}^{(\evec_1)}_{ij}(\kappa'_1,t) \delta_{\kappa'_1,\kappa_1}.
+\overline{ \hat{u}^{(\evec_1)*}_i(\kappa_1,t) \hat{u}^{(\evec_1)}_j(\kappa'_1,t) } = \hat{\tpvc}^{(\evec_1)}_{ij}(\kappa'_1,t) \delta_{\kappa'_1,\kappa_1}.
 \end{equation}
 \item Continuous
 \begin{equation} 
-\langle \hat{u}^{(\evec_1)*}_i(\kappa_1,t) \hat{u}^{(\evec_1)}_j(\kappa'_1,t) \rangle = E^{(\evec_1)}_{ij}(\kappa'_1,t)\delta(\kappa'_1 - \kappa_1).
+\overline{ \hat{u}^{(\evec_1)*}_i(\kappa_1,t) \hat{u}^{(\evec_1)}_j(\kappa'_1,t) } = E^{(\evec_1)}_{ij}(\kappa'_1,t)\delta(\kappa'_1 - \kappa_1).
 \end{equation}
 \end{itemize}
 
@@ -1168,11 +1166,11 @@ The relationship between one- and three-dimensional spectra are given by
 \begin{itemize}
 \item Discrete
 \begin{equation}
-\hat{\tpvc}_{ij}^{(\evec_1)}(\kappa_1,t) = \sum_{\kappa_2} \sum_{\kappa_3} \hat{\tpvc}_{ij} (\kvec)
+\hat{\tpvc}_{ij}^{(\evec_1)}(\kappa_1,t) = \sum_{\kappa_2} \sum_{\kappa_3} \hat{\tpvc}_{ij} (\kappavec)
 \end{equation}
 \item Continuous
 \begin{equation}
-\est_{ij}^{(1d)}(\kappa_1,t) = \iint_{-\infty}^{\infty} \est_{ij}(\kvec,t) \, d\kappa_2 \, d\kappa_3
+\est_{ij}^{(\evec_1)}(\kappa_1,t) = \iint_{-\infty}^{\infty} \est_{ij}(\kappavec,t) \, d\kappa_2 \, d\kappa_3
 \end{equation}
 \end{itemize}
 
@@ -1180,32 +1178,35 @@ The relationship between one- and three-dimensional spectra are given by
 \subsection{Kinetic Energy spectrum}
 %--------------------------------------------
 
-The energy spectrum is defined as 
+We first introduce the notation $\kappa = |\kappavec|$ for the magnitude of the wave vector $\kappavec$. The energy spectrum is then defined as 
 \begin{equation}
-\est( \kappa, t ) = \oint \frac{1}{2} \est_{ii}( \kvec, t ) \, dS(\kappa) = \int_0^{2\pi} \int_0^\pi \frac{1}{2} \est_{ii}(\kvec, t) \kappa^2 \sin(\theta) \, d\theta d\phi
+\est( \kappa, t ) = \oint \frac{1}{2} \est_{ii}( \kappavec, t ) \, dS(\kappa) = \int_0^{2\pi} \int_0^\pi \frac{1}{2} \est_{ii}(\kappavec, t) \kappa^2 \sin(\theta) \, d\theta d\phi
 \end{equation}
 
-A relationship can be obtained between the discrete and continuous approaches. If we denote $\kvec_D$ and $\kvec_C$ as the wave vectors of the discrete and continuous approach, this relationship is as follows
+%--------------------------------------------
+\subsection{Relations between discrete and continuous approaches}
+%--------------------------------------------
+
+A relationship can be obtained between the discrete and continuous approaches. If we denote $\kappavec_D$ and $\kappavec_C$ as the wave vectors of the discrete and continuous approach, this relationship is as follows
 \begin{equation}
 \label{eq:vst_discrete_continuous}
-\est_{ij}(\kvec_C,t) = \sum_{\kvec_D} \delta(\kvec_C - \kvec_D) \hat{\tpvc}_{ij}(\kvec_D,t).
+\est_{ij}(\kappavec_C,t) = \sum_{\kappavec_D} \delta(\kappavec_C - \kappavec_D) \hat{\tpvc}_{ij}(\kappavec_D,t).
 \end{equation}
 
 An alternative relationship between the discrete and continuous approaches that is more amenable for numerical computations can be established. We note that the TKE can be computed from either the discrete or continuous approach as follows
 \begin{equation}
     \label{eq:vst_discrete_continuous_temp1}
-    k = \sum_{\kvec} \frac{1}{2} \hat{\tpvc}_{ii}(\kvec,t) = \int_0^\infty \est(\kappa,t) \, d\kappa.
+    k = \sum_{\kappavec} \frac{1}{2} \hat{\tpvc}_{ii}(\kappavec,t) = \int_0^\infty \est(\kappa,t) \, d \kappa.
 \end{equation}
-We now discretize the magnitude of the wave vector, that is, $\kappa = n \Delta \kappa$, where $n$ is an integer and $\Delta \kappa$ is the width of the discrete chunks of $\kappa$. We introduce the set $S(\kappa)$ as all the wavevectors $\kvec$ whose magnitude falls within $[\kappa, \kappa + \Delta \kappa]$. Using the above, we re-write \cref{eq:vst_discrete_continuous_temp1} as
+We now discretize the magnitude of the wave vector, that is, $\kappa_n = n \Delta \kappa$, where $n$ is an integer and $\Delta \kappa$ is the width of the discrete chunks of $\kappa$. We introduce the set $S(\kappa_n)$ as all the wavevectors $\kappavec$ whose magnitude falls within $[\kappa_n, \kappa_n + \Delta \kappa]$. Using the above, we re-write \cref{eq:vst_discrete_continuous_temp1} as
 \begin{equation}
-    \sum_{\kappa} \left ( \sum_{\kvec \in S(\kappa)} \frac{1}{2} \hat{\tpvc}_{ii}(\kvec,t) \right) = \sum_{\kappa} \est(\kappa,t) \Delta \kappa.
+    \sum_{\kappa_n} \left ( \sum_{\kappavec \in S(\kappa)} \frac{1}{2} \hat{\tpvc}_{ii}(\kappavec,t) \right) = \sum_{\kappa_n} \est(\kappa_n,t) \Delta \kappa.
 \end{equation}
 Thus, we approximate the energy spectrum as
 \begin{equation}
     \label{eq:num_comp_spectra}
-    E(\kappa,t) = \frac{1}{\Delta \kappa} \sum_{\kvec \in S(\kappa)} \frac{1}{2} \hat{\tpvc}_{ii}(\kvec,t) .
+    E(\kappa_n,t) = \frac{1}{\Delta \kappa} \sum_{\kappavec \in S(\kappa_n)} \frac{1}{2} \hat{\tpvc}_{ii}(\kappavec,t) .
 \end{equation}
-
 
 %--------------------------------------------
 \subsection{Spectral representation of statistics}
@@ -1214,47 +1215,45 @@ Using expressions from the previous section we obtain
 \begin{itemize}
 \item Discrete
 \begin{equation}
-    \langle \uifluc \ujfluc \rangle = \sum_{\kvec} \hat{\tpvc}_{ij}(\kvec,t)
+    \overline{ \ufluc_i \ufluc_j } = \sum_{\kappavec} \hat{\tpvc}_{ij}(\kappavec,t)
 \end{equation} 
 \begin{equation}
     \label{eq:discrete_k_spectral}
-    k = \sum_{\kvec} \frac{1}{2} \hat{\tpvc}_{ii}(\kvec,t) 
+    k = \sum_{\kappavec} \frac{1}{2} \hat{\tpvc}_{ii}(\kappavec,t) 
 \end{equation}
 \begin{equation}
-    \left < \frac{ \partial \uifluc }{ \partial x_k} \frac{ \partial \ujfluc }{ \partial x_l } \right > = \sum_{\kvec} \kappa_k \kappa_l \hat{\tpvc}_{ij}(\kvec,t)
+    \overline{ \frac{ \partial \ufluc_i }{ \partial x_k} \frac{ \partial \ufluc_j }{ \partial x_l } } = \sum_{\kappavec} \kappa_k \kappa_l \hat{\tpvc}_{ij}(\kappavec,t)
 \end{equation}
 \begin{equation}
-    \langle s^2 \rangle = \langle 2 s_{ij} s_{ij} \rangle = \sum_{\kvec} \kappa_i \kappa_i \hat{\tpvc}_{jj}(\kvec,t)
+    \overline{ \Sfluc^2 } = \overline{ 2 \Sfluc_{ij} \Sfluc_{ij} } = \sum_{\kappavec} \kappa_i \kappa_i \hat{\tpvc}_{jj}(\kappavec,t)
 \end{equation}
 
 \item Continuous
 \begin{equation}
     \label{eq:continuous_uiuj_spectral}
-    \langle \uifluc \ujfluc \rangle = \int_\Rthree E_{ij}(\kvec,t) d\kvec
+    \overline{ \ufluc_i \ufluc_j } = \int_\Rthree E_{ij}(\kappavec,t) d\kappavec
 \end{equation} 
 \begin{equation}
     k =\int_0^\infty \est(\kappa,t) \, d\kappa
 \end{equation}
 \begin{equation}
-    \left < \frac{ \partial \uifluc }{ \partial x_k} \frac{ \partial \ujfluc }{ \partial x_l } \right > = \int_{\Rthree} \kappa_k \kappa_l \est_{ij}(\kvec,t) \, d\kvec
+    \overline{ \frac{ \partial \ufluc_i }{ \partial x_k} \frac{ \partial \ufluc_j }{ \partial x_l } } = \int_{\Rthree} \kappa_k \kappa_l \est_{ij}(\kappavec,t) \, d\kappavec
 \end{equation}
 \begin{equation}
     \label{eq:strain_mag_spectral}
-    \langle s^2 \rangle = \langle 2 s_{ij} s_{ij} \rangle = 2 \int_{0}^\infty \kappa^2 \est(\kappa,t) \, d\kappa
+    \overline{ \Sfluc^2 } = \overline{ 2 \Sfluc_{ij} \Sfluc_{ij} } = 2 \int_{0}^\infty \kappa^2 \est(\kappa,t) \, d\kappa
 \end{equation}
 \end{itemize}
-
-
 
 %-------------------------------------------------------------------------------
 \section{The fluctuating velocity}
 %-------------------------------------------------------------------------------
-We rewrite below \cref{eq:u_lin_tran} and \cref{eq:p_lin_tran} but with the $\mathring{}$ superscript neglected for convenience. 
+We rewrite \cref{eq:u_lin_tran} and \cref{eq:p_lin_tran} below for convenience,
 \begin{equation}
-\frac{\partial \uifluc }{\partial t } = -\ujfluc G_{ij} - \frac{\partial \uifluc \ujfluc}{\partial x_k} A_{kj} - \frac{1}{\rho} \frac{\partial \pfluc }{\partial x_k} A_{ki} + \nu \frac{ \partial^2 \uifluc}{\partial x_p \partial x_k} A_{pj} A_{kj}.
+    \frac{\partial \urog_i }{\partial t } = -\urog_j G_{ij} - \frac{\partial \urog_i \urog_j}{\partial \xrog_k} A_{kj} - \frac{1}{\rho} \frac{\partial \prog }{\partial \xrog_k} A_{ki} + \nu \frac{ \partial^2 \urog_i}{\partial \xrog_p \partial \xrog_k} A_{pj} A_{kj}.
 \end{equation}
 \begin{equation}
-\frac{1}{\rho} \frac{\partial^2 \pfluc }{\partial x_m \partial x_l} A_{mk} A_{lk} = -2 G_{ij} \frac{\partial \ujfluc }{\partial x_t} A_{ti} - \frac{\partial^2 \uifluc \ujfluc}{\partial x_p \partial x_k} A_{pi}A_{kj}.
+    \frac{1}{\rho} \frac{\partial^2 \prog }{\partial \xrog_m \partial \xrog_l} A_{mk} A_{lk} = -2 G_{ij} \frac{\partial \urog_j }{\partial \xrog_t} A_{ti} - \frac{\partial^2 \urog_i \urog_j}{\partial \xrog_p \partial \xrog_k} A_{pi}A_{kj}.
 \end{equation}
 
 The Fourier transform of the above two leads to
@@ -1264,13 +1263,13 @@ The Fourier transform of the above two leads to
 \begin{equation}
 -\frac{1}{\rho} A_{mk}\kappa_m A_{lk}\kappa_l \hat{ p } = -2 G_{ij} i A_{ti}\kappa_t \hat{u}_j + A_{pi}\kappa_p A_{kj}\kappa_k \hat{N}_{ij}.
 \end{equation}
-where $\hat{u}_i = \hat{u}_i(t,\kvec)$, $\hat{p} = \hat{p}(t,\kvec)$, and $\hat{N}_{ij} = \hat{N}_{ij}(t,\kvec)$ are the Fourier transforms of $\uifluc$, $p$, and $\uifluc \ujfluc$, respectively. 
+where $\hat{u}_i = \hat{u}_i(t,\kappavec)$, $\hat{p} = \hat{p}(t,\kappavec)$, and $\hat{N}_{ij} = \hat{N}_{ij}(t,\kappavec)$ are the Fourier transforms of $\urog_i$, $\prog$, and $\urog_i \urog_j$, respectively. 
 
-Define the function $\hat{\kvec} = \hat{\kvec}(t,\kvec)$, which is determined by the following ODE
+Define the function $\hat{\kappavec} = \hat{\kappavec}(t,\kappavec)$, which is determined by the following ODE
 \begin{equation}
 \frac{\partial \hat{\kappa}_i}{\partial t} = -G_{ki} \hat{\kappa}_k,
 \end{equation}
-with initial condition $\hat{\kvec} = \kvec$ at $t = 0$. Since the ODE is linear we can assume solutions of the form $\hat{\kappa}_i = B_{ji} \kappa_j$, where $B_{ij} = B_{ij}(t)$. Plugging this form into the ODE and the initial condition above, we require that $B_{ij}$ satisfy
+with initial condition $\hat{\kappavec} = \kappavec$ at $t = 0$. Since the ODE is linear we can assume solutions of the form $\hat{\kappa}_i = B_{ji} \kappa_j$, where $B_{ij} = B_{ij}(t)$. Plugging this form into the ODE and the initial condition above, we require that $B_{ij}$ satisfy
 \begin{equation}
 \frac{d B_{ji}}{dt} + G_{ki} B_{jk} = 0,
 \end{equation}
@@ -1278,7 +1277,7 @@ along with $B_{ij} = \delta_{ij}$ at $t=0$. Since these requirements are identic
 \begin{equation}
 \hat{\kappa}_i = A_{ji} \kappa_j,
 \end{equation}
-which in vector notation becomes $\hat{\kvec} = \mathbf{A}^T\kvec$. Using this definition for $\hat{\kvec}$ the evolution equation for $\hat{u}_i$ and $\hat{p}$ become
+which in vector notation becomes $\hat{\kappavec} = \mathbf{A}^T\kappavec$. Using this definition for $\hat{\kappavec}$ the evolution equation for $\hat{u}_i$ and $\hat{p}$ become
 \begin{equation}
 \frac{\partial \hat{u}_i }{\partial t } = -\hat{u}_j G_{ij} - i \hat{\kappa}_j  \hat{N}_{ij} - i\frac{1}{\rho} \hat{\kappa}_i  \hat{p} - \nu  \hat{\kappa}^2 \hat{u}_i,
 \end{equation}
@@ -1290,27 +1289,27 @@ Combining the above two we have
 \label{vhat_evol_homo}
 \frac{\partial \hat{u}_i }{\partial t } = -M_{ij}\hat{u}_j + s_i  - \nu  \hat{\kappa}^2 \hat{u}_i,
 \end{equation}
-where $M_{ij} = M_{ij}(t,\kvec)$ is given by
+where $M_{ij} = M_{ij}(t,\kappavec)$ is given by
 \begin{equation}
 M_{ij} = G_{ij} - 2 \frac{\hat{\kappa}_i \hat{\kappa}_k}{\hat{\kappa}^2} G_{kj},
 \end{equation}
-$s_{i} = s_{i}(t,\kvec)$ by
+$s_{i} = s_{i}(t,\kappavec)$ by
 \begin{equation}
 s_{i} = -i \hat{\kappa}_j L_{ik}\hat{N}_{kj},
 \end{equation}
-and $L_{ij} = L_{ij}(t,\kvec)$ by
+and $L_{ij} = L_{ij}(t,\kappavec)$ by
 \begin{equation}
 L_{ij} = \delta_{ij} - \frac{ \hat{\kappa}_i \hat{\kappa}_j}{\hat{\kappa}^2}.
 \end{equation}
-This last tensor is termed the projection operator since $L_{ij} y_j$ is the component of some generic vector $\yvec$ orthogonal to $\hat{\kvec}$. The term $-M_{ij}\hat{v}_j$, which is linear, arises from the combination of the first terms on the RHS of the velocity and pressure equations, whereas the term $s_{i}$, which is non-linear, arises from combination of the second terms on the RHS of the velocity and pressure equations.
+This last tensor is termed the projection operator since $L_{ij} y_j$ is the component of some generic vector $\yvec$ orthogonal to $\hat{\kappavec}$. The term $-M_{ij}\hat{u}_j$, which is linear, arises from the combination of the first terms on the RHS of the velocity and pressure equations, whereas the term $s_{i}$, which is non-linear, arises from combination of the second terms on the RHS of the velocity and pressure equations.
 
 The Fourier coefficient $\hat{N}_{ij}$ can be expressed as follows
 \begin{align}
-\hat{N}_{ij}(t,\kvec) &= \frac{1}{(2\pi)^3} \int_\Rthree u_i(t,\xvec) u_j(t,\xvec) e^{-i \kvec \cdot \xvec} d\xvec \nonumber \\
-&= \frac{1}{(2\pi)^3} \int_\Rthree \left ( \int_\Rthree \hat{u}_i(t,\pvec) e^{i \pvec \cdot \xvec} d\pvec \right ) \left ( \int_\Rthree \hat{u}_j(t,\qvec) e^{i\qvec \cdot \xvec} d \qvec \right ) e^{-i \kvec \cdot \xvec} d\xvec \nonumber \\
-&= \int_\Rthree \int_\Rthree \hat{u}_i(t,\pvec) \hat{u}_j(t,\qvec) \frac{1}{(2\pi)^3} \int_\Rthree e^{i (\pvec + \qvec) \cdot \xvec} e^{-i \kvec \cdot \xvec} d\xvec d\pvec d\qvec \nonumber \\
-&=  \int_\Rthree \int_\Rthree \hat{u}_i(t,\pvec) \hat{u}_j(t,\qvec) \boldsymbol{\delta}(\pvec + \qvec - \kvec)  d\pvec d\qvec \nonumber \\
-&= \int_\Rthree \hat{u}_i(t,\pvec) \hat{u}_j(t,\kvec - \pvec) d\pvec.
+\hat{N}_{ij}(t,\kappavec) &= \frac{1}{(2\pi)^3} \int_\Rthree \urog_i(t,\xrogvec) \urog_j(t,\xrogvec) e^{-i \kappavec \cdot \xrogvec} d\xrogvec \nonumber \\
+&= \frac{1}{(2\pi)^3} \int_\Rthree \left ( \int_\Rthree \hat{u}_i(t,\pvec) e^{i \pvec \cdot \xrogvec} d\pvec \right ) \left ( \int_\Rthree \hat{u}_j(t,\qvec) e^{i\qvec \cdot \xrogvec} d \qvec \right ) e^{-i \kappavec \cdot \xrogvec} d\xrogvec \nonumber \\
+&= \int_\Rthree \int_\Rthree \hat{u}_i(t,\pvec) \hat{u}_j(t,\qvec) \frac{1}{(2\pi)^3} \int_\Rthree e^{i (\pvec + \qvec) \cdot \xrogvec} e^{-i \kappavec \cdot \xrogvec} d\xrogvec d\pvec d\qvec \nonumber \\
+&=  \int_\Rthree \int_\Rthree \hat{u}_i(t,\pvec) \hat{u}_j(t,\qvec) \boldsymbol{\delta}(\pvec + \qvec - \kappavec)  d\pvec d\qvec \nonumber \\
+&= \int_\Rthree \hat{u}_i(t,\pvec) \hat{u}_j(t,\kappavec - \pvec) d\pvec.
 \end{align}
 
 %-------------------------------------------------------------------------------
@@ -1320,26 +1319,26 @@ The Fourier coefficient $\hat{N}_{ij}$ can be expressed as follows
 We proceed in deriving the evolution equation for the velocity-spectrum tensor as follows,
 \begin{align}
 \label{E_intermediate}
-\frac{\partial}{ \partial t} [ \hat{u}_i^*(t,\kvec) \hat{u}_j(t,\kvec') ] =& \frac{\partial \hat{u}_i^*(t,\kvec)}{\partial t} \hat{u}_j(t,\kvec') + \hat{u}_i^*(t,\kvec) \frac{\partial \hat{u}_j(t,\kvec')}{\partial t} \nonumber \\
-=& \left [ -M_{ik}(t,\kvec) \hat{u}_k^*(t,\kvec) + s_i^*(t,\kvec) - \nu \hat{\kappa}^2(t,\kvec) \hat{u}_i^*(t,\kvec) \right ] \hat{u}_j(t,\kvec') \nonumber \\
-&+ \hat{u}_i^*(t,\kvec)  \left [ -M_{jk}(t,\kvec') \hat{u}_k(t,\kvec') + s_j(t,\kvec') - \nu \hat{\kappa}^2(t,\kvec') \hat{u}_j(t,\kvec') \right ] \nonumber \\
-=& -M_{ik}(t,\kvec) \hat{u}_k^*(t,\kvec) \hat{u}_j(t,\kvec') - M_{jk}(t,\kvec') \hat{u}_i^*(t,\kvec) \hat{u}_k(t,\kvec') \nonumber \\
-& + \hat{u}_i^*(t,\kvec) s_j(t,\kvec') + s^*_i(t,\kvec) \hat{u}_j(t,\kvec') \nonumber \\
-& - \nu \hat{\kappa}^2(t,\kvec) \hat{u}^*_i(t,\kvec) \hat{u}_j(t,\kvec') - \nu \hat{\kappa}^2(t,\kvec') \hat{u}^*_i(t,\kvec) \hat{u}_j(t,\kvec')
+\frac{\partial}{ \partial t} [ \hat{u}_i^*(t,\kappavec) \hat{u}_j(t,\kappavec') ] =& \frac{\partial \hat{u}_i^*(t,\kappavec)}{\partial t} \hat{u}_j(t,\kappavec') + \hat{u}_i^*(t,\kappavec) \frac{\partial \hat{u}_j(t,\kappavec')}{\partial t} \nonumber \\
+=& \left [ -M_{ik}(t,\kappavec) \hat{u}_k^*(t,\kappavec) + s_i^*(t,\kappavec) - \nu \hat{\kappa}^2(t,\kappavec) \hat{u}_i^*(t,\kappavec) \right ] \hat{u}_j(t,\kappavec') \nonumber \\
+&+ \hat{u}_i^*(t,\kappavec)  \left [ -M_{jk}(t,\kappavec') \hat{u}_k(t,\kappavec') + s_j(t,\kappavec') - \nu \hat{\kappa}^2(t,\kappavec') \hat{u}_j(t,\kappavec') \right ] \nonumber \\
+=& -M_{ik}(t,\kappavec) \hat{u}_k^*(t,\kappavec) \hat{u}_j(t,\kappavec') - M_{jk}(t,\kappavec') \hat{u}_i^*(t,\kappavec) \hat{u}_k(t,\kappavec') \nonumber \\
+& + \hat{u}_i^*(t,\kappavec) s_j(t,\kappavec') + s^*_i(t,\kappavec) \hat{u}_j(t,\kappavec') \nonumber \\
+& - \nu \hat{\kappa}^2(t,\kappavec) \hat{u}^*_i(t,\kappavec) \hat{u}_j(t,\kappavec') - \nu \hat{\kappa}^2(t,\kappavec') \hat{u}^*_i(t,\kappavec) \hat{u}_j(t,\kappavec')
 \end{align}
-We now define the tensor $T_{ij} = T_{ij}(t,\kvec)$ using the following equation
+We now define the tensor $T_{ij} = T_{ij}(t,\kappavec)$ using the following equation
 \begin{equation}
 \label{fromvs_toT}
-\langle \hat{u}_i^*(t,\kvec) s_j(t,\kvec') + s^*_i(t,\kvec) \hat{u}_j(t,\kvec') \rangle = T_{ij}(t,\kvec') \boldsymbol{\delta}(\kvec' - \kvec).
+\overline{ \hat{u}_i^*(t,\kappavec) s_j(t,\kappavec') + s^*_i(t,\kappavec) \hat{u}_j(t,\kappavec') } = T_{ij}(t,\kappavec') \boldsymbol{\delta}(\kappavec' - \kappavec).
 \end{equation}
 Taking the expectation of both sides of equation (\ref{E_intermediate}), and using equations (\ref{fromu_toE_cont}) and (\ref{fromvs_toT}) one obtains
 \begin{equation}
 \begin{split}
-\frac{\partial E_{ij}(t,\kvec')}{\partial t} \boldsymbol{\delta}(\kvec' - \kvec) = \left [ -M_{ik}(t,\kvec) E_{kj}(t,\kvec') - M_{jk}(t,\kvec') E_{ik}(t,\kvec') + T_{ij}(t,\kvec') \right . \\
-\left . - \nu \hat{\kappa}^2(t,\kvec) E_{ij}(t,\kvec') - \nu \hat{\kappa}^2(t,\kvec') E_{ij}(t,\kvec') \right ] \boldsymbol{\delta}(\kvec' - \kvec).
+\frac{\partial E_{ij}(t,\kappavec')}{\partial t} \boldsymbol{\delta}(\kappavec' - \kappavec) = \left [ -M_{ik}(t,\kappavec) E_{kj}(t,\kappavec') - M_{jk}(t,\kappavec') E_{ik}(t,\kappavec') + T_{ij}(t,\kappavec') \right . \\
+\left . - \nu \hat{\kappa}^2(t,\kappavec) E_{ij}(t,\kappavec') - \nu \hat{\kappa}^2(t,\kappavec') E_{ij}(t,\kappavec') \right ] \boldsymbol{\delta}(\kappavec' - \kappavec).
 \end{split}
 \end{equation}
-Integrating over $\kvec'$ the evolution equation for the velocity-spectrum tensor $E_{ij} = E_{ij}(t,\kvec)$ becomes
+Integrating over $\kappavec'$ the evolution equation for the velocity-spectrum tensor $E_{ij} = E_{ij}(t,\kappavec)$ becomes
 \begin{equation}
 \label{E_evol_homo}
 \frac{\partial E_{ij}}{\partial t} = P_{ij} + T_{ij} - 2\nu \hat{\kappa}^2 E_{ij},
@@ -1347,36 +1346,36 @@ Integrating over $\kvec'$ the evolution equation for the velocity-spectrum tenso
 where $P_{ij} = -M_{ik} E_{kj} - M_{jk} E_{ik}$.
 
 \paragraph{A clarification note}
-At this point it is important to note that we've been working with Fourier transforms of variables that were defined in the Rogallo reference frame, that is, those that have the superscript $\mathring{}$ (this superscript was neglected for convenience). The relationship between statistics of $\uifluc(t,\xvec)$ and $\urog_i(t,\xrogvec)$ is now discussed. For the two-point correlations, both quantities are related as
+At this point it is important to note that we've been working with Fourier transforms of variables that were defined in the Rogallo reference frame, that is, those that have the superscript $\mathring{}$. The relationship between statistics of $\ufluc_i(t,\xvec)$ and $\urog_i(t,\xrogvec)$ is now discussed. For the two-point correlations, both quantities are related as
 \begin{equation}
-\langle \uifluc(t,\xvec) \ujfluc(t,\xvec') \rangle = \left [ \langle \urog_i(t,\xrogvec) \urog_j(t,\xrogvec') \rangle \right ]_{\xrogvec = \bold{A}\xvec, \; \xrogvec' = \bold{A}\xvec'}.
+\overline{ \ufluc_i(t,\xvec) \ufluc_j(t,\xvec') } = \left [ \overline{ \urog_i(t,\xrogvec) \urog_j(t,\xrogvec') } \right ]_{\xrogvec = \mathbf{A}\xvec, \; \xrogvec' = \mathbf{A}\xvec'}.
 \end{equation}
-Using equation (\ref{eq:tpvc_continuous}) we can express $\langle \urog_i(t,\xrogvec) \urog_j(t,\xrogvec') \rangle$ as the following integral
+Using equation (\ref{eq:tpvc_continuous}) we can express $\overline{ \urog_i(t,\xrogvec) \urog_j(t,\xrogvec') }$ as the following integral
 \begin{equation}
-\langle \urog_i(t,\xrogvec) \urog_j(t,\xrogvec') \rangle = \int_\Rthree E_{ij}(t,\kvec) e^{i\kvec \cdot (\xrogvec' - \xrogvec)} d\kvec.
+\overline{ \urog_i(t,\xrogvec) \urog_j(t,\xrogvec') } = \int_\Rthree E_{ij}(t,\kappavec) e^{i\kappavec \cdot (\xrogvec' - \xrogvec)} d\kappavec.
 \end{equation}
 Since
 \begin{equation}
-\kvec \cdot ( \mathbf{A} \xvec' - \mathbf{A} \xvec) = \kappa_iA_{ij} (x'_j - x_j) = \hat{\kappa}_j (x'_j - x_j)
+\kappavec \cdot ( \mathbf{A} \xvec' - \mathbf{A} \xvec) = \kappa_iA_{ij} (x'_j - x_j) = \hat{\kappa}_j (x'_j - x_j)
 \end{equation}
-the two-point velocity correlation for $\uifluc$ becomes
+the two-point velocity correlation for $\ufluc_i$ becomes
 \begin{equation}
-\langle u_i(t,\xvec) u_j(t,\xvec') \rangle = \int_\Rthree E_{ij}(t,\kvec) e^{i \hat{\kvec}(t,\kvec) \cdot ( \xvec' - \xvec)} d\kvec .
+\overline{ \ufluc_i(t,\xvec) \ufluc_j(t,\xvec') } = \int_\Rthree E_{ij}(t,\kappavec) e^{i \hat{\kappavec}(t,\kappavec) \cdot ( \xvec' - \xvec)} d\kappavec .
 \end{equation}
 The Reynolds stresses are therefore obtained from the following
 \begin{equation}
-\rs_{ij} = \int_\Rthree \est_{ij} \, d\kvec.
+\rs_{ij} = \int_\Rthree \est_{ij} \, d\kappavec.
 \end{equation}
 
 We now show a summary of the correspondence between the different terms in the evolution equations for the fluctuating velocity (\ref{eq:vel_fluc}), the energy spectrum (\ref{E_evol_homo}), and the Reynolds stresses (\ref{rs_transport}).
 
 \begin{tabular} {| Sc | Sc | Sc | Sc | Sc | Sc | Sc | Sc | Sc | Sc |}
 \hline
-$\uifluc$: & $\dfrac{\partial \uifluc}{\partial t}$ & $\ujavg \dfrac{\partial \uifluc}{\partial x_j}$ & $-\ujfluc \dfrac{ \partial \uiavg}{\partial x_j}$ & $-\dfrac{1}{\rho}\dfrac{\partial p^{(r)}}{\partial x_i}$ & $-\dfrac{1}{\rho}\dfrac{\partial p^{(s)}}{\partial x_i}$ & $-\dfrac{\partial \uifluc \ujfluc}{\partial x_j}$ & \multicolumn{2}{c |}{$\nu \dfrac{\partial^2 \uifluc}{\partial x_j \partial x_j}$} &$\dfrac{\partial \rs_{ij}}{\partial x_j}$ \\
+$\ufluc_i$: & $\dfrac{\partial \ufluc_i}{\partial t}$ & $\uavg_j \dfrac{\partial \ufluc_i}{\partial x_j}$ & $-\ufluc_j \dfrac{ \partial \uavg_i}{\partial x_j}$ & $-\dfrac{1}{\rho}\dfrac{\partial p^{(r)}}{\partial x_i}$ & $-\dfrac{1}{\rho}\dfrac{\partial p^{(s)}}{\partial x_i}$ & $-\dfrac{\partial \ufluc_i \ufluc_j}{\partial x_j}$ & \multicolumn{2}{c |}{$\nu \dfrac{\partial^2 \ufluc_i}{\partial x_j \partial x_j}$} &$\dfrac{\partial \rs_{ij}}{\partial x_j}$ \\
 \hline
-$\est_{ij}$: & $\dfrac{\partial \est_{ij}}{\partial t}$ & makes $\hat{\kvec}$ &  \multicolumn{2}{c |}{$P_{ij}$}  & \multicolumn{2}{c |}{$T_{ij}$} & \multicolumn{2}{c |}{$-2 \nu \hat{\kappa}^2 \est_{ij}$} & Null\\
+$\est_{ij}$: & $\dfrac{\partial \est_{ij}}{\partial t}$ & makes $\hat{\kappavec}$ &  \multicolumn{2}{c |}{$P_{ij}$}  & \multicolumn{2}{c |}{$T_{ij}$} & \multicolumn{2}{c |}{$-2 \nu \hat{\kappa}^2 \est_{ij}$} & Null\\
 \hline
-$\rs_{ij}$: & $\dfrac{\partial \rs_{ij}}{\partial t}$ & $\ukavg\dfrac{\partial \rs_{ij}}{\partial x_k}$ & $\mathcal{P}_{ij}$ &  \multicolumn{2}{c |}{$\Pi_{ij}$}  & $\mathcal{T}_{kij}^{(u)}$ & $\epsilon_{ij}$ & $\mathcal{T}_{kij}^{(\nu)}$ & Null \\
+$\rs_{ij}$: & $\dfrac{\partial \rs_{ij}}{\partial t}$ & $\uavg_k \dfrac{\partial \rs_{ij}}{\partial x_k}$ & $\mathcal{P}_{ij}$ &  \multicolumn{2}{c |}{$\Pi_{ij}$}  & $\mathcal{T}_{kij}^{(u)}$ & $\epsilon_{ij}$ & $\mathcal{T}_{kij}^{(\nu)}$ & Null \\
 \hline
 \end{tabular}
 
@@ -1394,20 +1393,20 @@ $\rs_{ij}$: & $\dfrac{\partial \rs_{ij}}{\partial t}$ & $\ukavg\dfrac{\partial \
 %-------------------------------------------------------------------------------
 \section{When are mean distortions rapid enough?}
 %-------------------------------------------------------------------------------
-Start with the homogeneous equations for the turbulent fluctuations,
+Start with the homogeneous \cref{eq:fluc_u_homo,eq:fluc_p_homo} for the turbulent fluctuations, repeated below for convenience
 \begin{equation}
-\frac{\partial \uifluc}{\partial t} + G_{jk} x_k \frac{\partial \uifluc}{\partial x_j} = -\ujfluc G_{ij} - \frac{\partial \uifluc \ujfluc}{\partial x_j} - \frac{1}{\rho} \frac{\partial \pfluc}{\partial x_i} + \nu \frac{\partial^2 \uifluc}{\partial x_j \partial x_j} 
+\frac{\partial \ufluc_i}{\partial t} + G_{jk} x_k \frac{\partial \ufluc_i}{\partial x_j} = -\ufluc_j G_{ij} - \frac{\partial \ufluc_i \ufluc_j}{\partial x_j} - \frac{1}{\rho} \frac{\partial \pfluc}{\partial x_i} + \nu \frac{\partial^2 \ufluc_i}{\partial x_j \partial x_j} 
 \end{equation}
 \begin{equation}
-\frac{1}{\rho} \frac{\partial^2 \pfluc}{\partial x_j \partial x_j} = -2 G_{ij} \frac{\partial \ujfluc}{\partial x_i} - \frac{\partial^2 \uifluc \ujfluc}{\partial x_i \partial x_j}.
+\frac{1}{\rho} \frac{\partial^2 \pfluc}{\partial x_j \partial x_j} = -2 G_{ij} \frac{\partial \ufluc_j}{\partial x_i} - \frac{\partial^2 \ufluc_i \ufluc_j}{\partial x_i \partial x_j}.
 \end{equation}
 We will now assume orders of magnitude for the variables above. This ordering is as follow
 \begin{equation}
-    u_i \sim u_0 \qquad p \sim p_0 \qquad G_{ij} \sim S \qquad t \sim S^{-1} \qquad x_i \sim l_0.  
+    \ufluc_i \sim u_0 \qquad \pfluc \sim p_0 \qquad G_{ij} \sim S \qquad t \sim S^{-1} \qquad x_i \sim l_0.  
 \end{equation}
 In the above, $u_0$ is the characteristic velocity of large-scale eddies, $l_0$ the length scale of large-scale eddies, $p_0$ the characteristic scale for pressure, and $S^{-1}$ the time scale of the deformation. Using the above, the terms in the pressure equation have the following order of magnitude
 \begin{equation}
-\underbrace{\frac{1}{\rho} \frac{\partial^2 \pfluc}{\partial x_j \partial x_j}}_{\dfrac{p_0}{\rho l_0^2}} = -\underbrace{2 G_{ij} \frac{\partial \ujfluc}{\partial x_i}}_{\dfrac{S u_0}{l_0}} - \underbrace{\frac{\partial^2 \uifluc \ujfluc}{\partial x_i \partial x_j}}_{\dfrac{u_0^2}{l_0^2}}.
+\underbrace{\frac{1}{\rho} \frac{\partial^2 \pfluc}{\partial x_j \partial x_j}}_{\dfrac{p_0}{\rho l_0^2}} = -\underbrace{2 G_{ij} \frac{\partial \ufluc_j}{\partial x_i}}_{\dfrac{S u_0}{l_0}} - \underbrace{\frac{\partial^2 \ufluc_i \ufluc_j}{\partial x_i \partial x_j}}_{\dfrac{u_0^2}{l_0^2}}.
 \end{equation}
 The linear term is of much larger magnitude when
 \begin{equation}
@@ -1419,7 +1418,7 @@ If this is satisfied, then
 \end{equation}
 Using this ordering for pressure, we obtain the following orders of magnitude for the terms in the fluctuating velocity equation
 \begin{equation}
-\underbrace{\frac{\partial \uifluc}{\partial t}}_{\displaystyle Su_0} + \underbrace{G_{jk} x_k \frac{\partial \uifluc}{\partial x_j}}_{ \displaystyle Su_0} = -\underbrace{\ujfluc G_{ij}}_{\displaystyle S u_0} - \underbrace{\frac{\partial \uifluc \ujfluc}{\partial x_j}}_{\dfrac{u_0^2}{l_0}} - \underbrace{\frac{1}{\rho} \frac{\partial \pfluc}{\partial x_i}}_{\displaystyle Su_0} + \underbrace{\nu \frac{\partial^2 \uifluc}{\partial x_j \partial x_j}}_{\dfrac{\nu u_0}{l_0^2}}. 
+\underbrace{\frac{\partial \ufluc_i}{\partial t}}_{\displaystyle Su_0} + \underbrace{G_{jk} x_k \frac{\partial \ufluc_i}{\partial x_j}}_{ \displaystyle Su_0} = -\underbrace{\ufluc_j G_{ij}}_{\displaystyle S u_0} - \underbrace{\frac{\partial \ufluc_i \ufluc_j}{\partial x_j}}_{\dfrac{u_0^2}{l_0}} - \underbrace{\frac{1}{\rho} \frac{\partial \pfluc}{\partial x_i}}_{\displaystyle Su_0} + \underbrace{\nu \frac{\partial^2 \ufluc_i}{\partial x_j \partial x_j}}_{\dfrac{\nu u_0}{l_0^2}}. 
 \end{equation}
 Again, the linear terms are of much larger magnitudes when
 \begin{equation}
@@ -1432,17 +1431,17 @@ The viscous terms can be neglected when
 Thus, one could conclude that the equations for the fluctuating velocities and pressure can be approximated by linear equations when $Sl_0/u_0 \gg 1$, that is, when the time scale of the deformation is much faster than the time scale of the energetic eddies. The linearized equations are shown below
 \begin{equation}
 \label{ulin}
-\frac{\partial \uifluc}{\partial t} + G_{jk}x_k \frac{\partial \uifluc}{\partial x_j} = - \ujfluc G_{ij} -\frac{1}{\rho}\frac{\partial \pfluc}{\partial x_i}
+\frac{\partial \ufluc_i}{\partial t} + G_{jk}x_k \frac{\partial \ufluc_i}{\partial x_j} = - \ufluc_j G_{ij} -\frac{1}{\rho} \frac{\partial \pfluc}{\partial x_i}
 \end{equation}
 \begin{equation}
-\frac{1}{\rho} \frac{\partial^2 \pfluc}{\partial x_j \partial x_j} = -2G_{ij}\frac{\partial \ujfluc}{\partial x_i}.
+\frac{1}{\rho} \frac{\partial^2 \pfluc}{\partial x_j \partial x_j} = -2 G_{ij} \frac{\partial \ufluc_j}{\partial x_i}.
 \label{plin}
 \end{equation}
 
 However, it is important to note the following points:
 \begin{itemize}
 \item For rapid distortions $S^{-1}$ is a very small number. Thus, the time is of the order of $S^{-1}$ only for the very first initial period. For longer times, scaling $t$ by $S^{-1}$ and still assuming that $\tau$ is of $O(1)$ does not hold.
-\item Having $\uifluc$ and $x_i$ to be of the order of $u_o$ and $l_o$ respectively implies that all velocities and lengths are of the order of $u_o$ and $l_o$. However, turbulence is a multi scale problem, and thus some velocities and lengths will scale as $u_\eta$ and $\eta$, respectively. Hence, for RDT to apply to all scales we also need to have $S\eta/u_\eta \gg 1$.
+\item Having $\ufluc_i$ and $x_i$ to be of the order of $u_o$ and $l_o$ respectively implies that all velocities and lengths are of the order of $u_o$ and $l_o$. However, turbulence is a multi scale problem, and thus some velocities and lengths will scale as $u_\eta$ and $\eta$, respectively. Hence, for RDT to apply to all scales we also need to have $S\eta/u_\eta \gg 1$.
 \end{itemize}
 
 %-------------------------------------------------------------------------------
@@ -1457,7 +1456,7 @@ Since the evolution equation for $\hat{u}_i$ is linear, we can assume solutions 
 \begin{equation}
 \hat{u}_i = H_{ik} \hat{u}_k^{(0)}
 \end{equation}
-where $\hat{u}_i^{(0)} = \hat{u}_i(0,\kvec)$, and $H_{ij} = H_{ij}(t,\kvec)$ is a real non-random function that satisfies
+where $\hat{u}_i^{(0)} = \hat{u}_i(0,\kappavec)$, and $H_{ij} = H_{ij}(t,\kappavec)$ is a real non-random function that satisfies
 \begin{equation}
 \frac{\partial H_{ik}}{\partial t} = - M_{ij} H_{jk}
 \end{equation}
@@ -1479,26 +1478,26 @@ which, after plugging in for $M_{ij}$, can be re-expressed as follows
 
 We could, however, compute the velocity-spectrum tensor using the transfer functions $H_{ij}$, due to the linearity of the governing equations. Using equation (\ref{fromu_toE_cont}) we obtain
 \begin{align}
-E_{ij}(t,\kvec') \boldsymbol{\delta}(\kvec' - \kvec) & = \langle \hat{v}^*_i(t,\kvec) \hat{v}_j(t,\kvec') \rangle \nonumber \\
-& = \langle H_{ik}(t,\kvec) \hat{v}_k^*(0,\kvec) H_{jp}(t,\kvec') \hat{v}_p(0,\kvec') \rangle \nonumber \\
-& = H_{ik}(t,\kvec) H_{jp}(t,\kvec') \langle \hat{v}_k^*(0,\kvec) \hat{v}_p(0,\kvec') \rangle \nonumber \\
-& = H_{ik}(t,\kvec) H_{jp}(t,\kvec') E_{kp}(0,\kvec') \boldsymbol{\delta}(\kvec' - \kvec).
+E_{ij}(t,\kappavec') \boldsymbol{\delta}(\kappavec' - \kappavec) & = \langle \hat{v}^*_i(t,\kappavec) \hat{v}_j(t,\kappavec') \rangle \nonumber \\
+& = \langle H_{ik}(t,\kappavec) \hat{v}_k^*(0,\kappavec) H_{jp}(t,\kappavec') \hat{v}_p(0,\kappavec') \rangle \nonumber \\
+& = H_{ik}(t,\kappavec) H_{jp}(t,\kappavec') \langle \hat{v}_k^*(0,\kappavec) \hat{v}_p(0,\kappavec') \rangle \nonumber \\
+& = H_{ik}(t,\kappavec) H_{jp}(t,\kappavec') E_{kp}(0,\kappavec') \boldsymbol{\delta}(\kappavec' - \kappavec).
 \end{align}
-Integrating both sides over $\kvec'$ we obtain
+Integrating both sides over $\kappavec'$ we obtain
 \begin{equation}
 E_{ij} = H_{ik} H_{jp} E_{kp}^{(0)},
 \end{equation}
-where $E_{ij}^{(0)} = E_{ij}(0,\kvec)$.
+where $E_{ij}^{(0)} = E_{ij}(0,\kappavec)$.
 
 The Reynolds stresses can be obtained from an alternate velocity-spectrum tensor. Define this tensor as $\tilde{\est}_{ij} = \tilde{\est}_{ij}(t,\chivec)$, such that
 \begin{equation}
-\est_{ij} = \left [ \tilde{\est}_{ij} \right ]_{\chivec = \hat{\kvec}}.
+\est_{ij} = \left [ \tilde{\est}_{ij} \right ]_{\chivec = \hat{\kappavec}}.
 \end{equation}
 We thus obtain the following
 \begin{align}
-\frac{\partial{\est_{ij}}}{\partial t} &= \left [ \frac{ \partial \tilde{\est}_{ij} }{\partial t} \right ]_{\chivec = \hat{\kvec}} + \left [ \frac{\partial \tilde{\est}_{ij} }{\partial \chi_k} \right ]_{\chivec = \hat{\kvec} } \frac{\partial \hat{\kappa}_k }{\partial t} \nonumber \\
-& = \left [ \frac{\partial \tilde{\est}_{ij} }{\partial t} \right ]_{\chivec = \hat{\kvec} } - \left [ \frac{\partial \tilde{\est}_{ij} }{\partial \chi_k} \right ]_{\chivec = \hat{\kvec} } G_{rk} \hat{\kappa}_r \nonumber \\
-& = \left [ \frac{\partial \tilde{\est}_{ij}}{\partial t} - \frac{\partial \tilde{\est}_{ij}}{\partial \chi_k} G_{rk}\chi_r \right ]_{\chivec = \hat{\kvec} }.
+\frac{\partial{\est_{ij}}}{\partial t} &= \left [ \frac{ \partial \tilde{\est}_{ij} }{\partial t} \right ]_{\chivec = \hat{\kappavec}} + \left [ \frac{\partial \tilde{\est}_{ij} }{\partial \chi_k} \right ]_{\chivec = \hat{\kappavec} } \frac{\partial \hat{\kappa}_k }{\partial t} \nonumber \\
+& = \left [ \frac{\partial \tilde{\est}_{ij} }{\partial t} \right ]_{\chivec = \hat{\kappavec} } - \left [ \frac{\partial \tilde{\est}_{ij} }{\partial \chi_k} \right ]_{\chivec = \hat{\kappavec} } G_{rk} \hat{\kappa}_r \nonumber \\
+& = \left [ \frac{\partial \tilde{\est}_{ij}}{\partial t} - \frac{\partial \tilde{\est}_{ij}}{\partial \chi_k} G_{rk}\chi_r \right ]_{\chivec = \hat{\kappavec} }.
 \end{align}
 Using the above in equation (\ref{evol_phi}) we obtain the following evolution equation for $\tilde{\est}_{ij}$
 \begin{equation}
@@ -1512,14 +1511,18 @@ Jacobi's formula allows us to compute the evolution of the determinant of $A_{ij
 & = -\det(A_{ij}) \text{tr} (G_{qj} \delta_{iq}) \nonumber \\
 & = -\det(A_{ij}) G_{kk}.
 \end{align}
-Since $\det(A_{ij}) = 1$ for $t = 0$, the determinant of $A_{ij}$ remains equal to one for all times $t$ when the flow is incompressible. Thus the Reynolds stresses can be computed from $\tilde{\est}_{ij}$ as well, since using integration by substitution one can show that
+Since $\det(A_{ij}) = 1$ for $t = 0$, the determinant of $A_{ij}$ remains equal to one for all times $t$ when the flow is incompressible. Thus we can write the following 
 \begin{align}
-\rs_{ij} &= \int \est_{ij} d\kvec \nonumber \\
-&= \int \left [ \tilde{\est}_{ij} \right ]_{\chivec = \hat{\kvec} } d\kvec \nonumber \\
-&= \int \left [ \tilde{\est}_{ij} \right ]_{\chivec = \hat{\kvec}} | \det(A_{pq}) | d\kvec \nonumber \\
-&= \int \left [ \tilde{\est}_{ij} \right ]_{\chivec = \hat{\kvec}} \left | \det \left (\frac{\partial \hat{\kappa}_q}{\partial \kappa_p} \right ) \right | d\kvec \nonumber \\
-&= \int \tilde{\est}_{ij} d\chivec.
+\rs_{ij} &= \int \est_{ij} d\kappavec \nonumber \\
+&= \int \left [ \tilde{\est}_{ij} \right ]_{\chivec = \hat{\kappavec} } d\kappavec \nonumber \\
+&= \int \left [ \tilde{\est}_{ij} \right ]_{\chivec = \hat{\kappavec}} | \det(A_{pq}) | d\kappavec \nonumber \\
+&= \int \left [ \tilde{\est}_{ij} \right ]_{\chivec = \hat{\kappavec}} \left | \det \left (\frac{\partial \hat{\kappa}_q}{\partial \kappa_p} \right ) \right | d\kappavec 
 \end{align}
+Finally, using integration by substitution, we get
+\begin{equation}
+    \rs_{ij} = \int \left [ \tilde{\est}_{ij} \right ]_{\chivec = \hat{\kappavec}} \left | \det \left (\frac{\partial \hat{\kappa}_q}{\partial \kappa_p} \right ) \right | d\kappavec = \int \tilde{\est}_{ij} d\chivec.
+\end{equation}
+This shows that the Reynolds stresses can be computed directly from $\tilde{\est}_{ij}$ as well.
 
 %Consider the initial velocity field $u_{0i}(\xvec) = \uifluc(\xvec,0)$, which is decomposed using the inverse Fourier transform as follows,
 %\begin{equation}
@@ -1716,10 +1719,10 @@ Since $\det(A_{ij}) = 1$ for $t = 0$, the determinant of $A_{ij}$ remains equal 
 
 For fully developed channel flow, with channel half height $\delta$, the streamwise and wall normal momentum equations simplify to the following
 \begin{equation}
-0 = -\frac{1}{\rho}\frac{\partial \pavg}{\partial x} + \nu \frac{d^2 \langle U \rangle}{d y^2} - \frac{d \langle uv \rangle}{d y}
+0 = -\frac{1}{\rho}\frac{\partial \pavg}{\partial x} + \nu \frac{d^2 \uavg}{d y^2} - \frac{ d \overline{\ufluc \vfluc} }{d y}
 \end{equation}
 \begin{equation}
-0 = -\frac{1}{\rho}\frac{\partial \pavg}{\partial y} - \frac{d \langle vv \rangle}{d y}
+0 = -\frac{1}{\rho}\frac{\partial \pavg}{\partial y} - \frac{d \overline{\vfluc \vfluc} }{d y}
 \end{equation}
 Differentiating the wall normal equation with respect to $x$ leads to
 \begin{equation}
@@ -1727,7 +1730,7 @@ Differentiating the wall normal equation with respect to $x$ leads to
 \end{equation}
 that is, the pressure drop is independent of $y$. Integrating the streamwise equation with respect to y, from zero to some location y, leads to
 \begin{align}
-\rho \nu \frac{d \langle U \rangle}{d y} - \rho\langle uv \rangle &= \left . \rho \nu \frac{d \langle U \rangle}{d y} \right |_{wall} + \frac{\partial \pavg}{\partial x} y \nonumber \\
+\rho \nu \frac{d \uavg}{d y} - \rho \overline{\ufluc \vfluc} &= \left . \rho \nu \frac{d \uavg}{d y} \right |_{wall} + \frac{\partial \pavg}{\partial x} y \nonumber \\
 & = \tau_{wall} + \frac{\partial \pavg}{\partial x} y.
 \end{align}
 Evaluating at $y = \delta$ shows that
@@ -1736,7 +1739,7 @@ Evaluating at $y = \delta$ shows that
 \end{equation}
 Thus, the integrated momentum equation becomes
 \begin{equation}
-\rho \nu \frac{d \langle U \rangle}{d y} - \rho\langle uv \rangle = \tau_{wall} \left ( 1 - \frac{y}{\delta} \right ).
+\rho \nu \frac{d \uavg}{d y} - \rho \overline{\ufluc \vfluc} = \tau_{wall} \left ( 1 - \frac{y}{\delta} \right ).
 \end{equation}
 Using the following wall scales
 \begin{equation}
@@ -1744,26 +1747,30 @@ u_\tau = \sqrt{\frac{\tau_{wall}}{\rho}} \qquad \delta_\nu = \frac{\nu}{u_\tau}
 \end{equation}
 and the friction Reynolds number $Re_\tau = u_\tau \delta/\nu$ the integrated momentum equation can be re-expressed in wall units as follows
 \begin{equation}
-\frac{du^+}{dy^+} - \langle uv \rangle^+ = 1 - \frac{y^+}{Re_\tau}.
+\frac{du^+}{dy^+} - \overline{\ufluc \vfluc}^+ = 1 - \frac{y^+}{Re_\tau},
+\end{equation}
+where 
+\begin{equation}
+    u^+ = \frac{\uavg}{u_\tau} \qquad y^+ = \frac{y}{\delta_{\nu}} \qquad \overline{\ufluc \vfluc}^+ = \frac{\overline{\ufluc \vfluc}}{u_\tau^2}.
 \end{equation}
 
 \subsubsection{Channel laws}
 %--------------------------------------------
 
-We choose the set of physical variables associated with the channel to consist of the following: $\rho$, $\nu$, $\delta$, $u_{\tau}$ (corresponds to the pressure gradient), $y$, and $d \langle U \rangle/dy$. Buckingham $\Pi$ theorem tells us that there are three non-dimensional groups formed from the above variables, and they are related by a single equation. This is shown below
+We choose the set of physical variables associated with the channel to consist of the following: $\rho$, $\nu$, $\delta$, $u_{\tau}$ (corresponds to the pressure gradient), $y$, and $d \uavg/dy$. Buckingham $\Pi$ theorem tells us that there are three non-dimensional groups formed from the above variables, and they are related by a single equation. This is shown below
 \begin{equation}
 \label{dudy_channel}
-\frac{d\langle U \rangle}{dy} = \frac{u_\tau}{y} \Phi \left ( \frac{y}{\delta_\nu}, \frac{y}{\delta} \right ).
+\frac{d\uavg}{dy} = \frac{u_\tau}{y} \Phi \left ( \frac{y}{\delta_\nu}, \frac{y}{\delta} \right ).
 \end{equation}
 It is postulated that very close to the wall one encounters the inner layer ($y/\delta < 0.1$) throughout which the velocity is independent of channel scales such as $\delta$. Thus, equation (\ref{dudy_channel}) becomes
 \begin{equation}
 \label{inner_layer}
-\frac{d\langle U \rangle}{dy} = \frac{u_\tau}{y} \Phi_I \left ( \frac{y}{\delta_\nu} \right ).
+\frac{d\uavg}{dy} = \frac{u_\tau}{y} \Phi_I \left ( \frac{y}{\delta_\nu} \right ).
 \end{equation}
 It is also postulated that far from the wall one encounters the outer layer ($y/\delta_\nu > 50$) throughout which the velocity is independent of the wall scales such as $\delta_\nu$. Thus equation (\ref{dudy_channel}) becomes 
 \begin{equation}
 \label{outer_layer}
-\frac{d\langle U \rangle}{dy} = \frac{u_\tau}{y} \Phi_O \left (\frac{y}{\delta} \right ).
+\frac{d\uavg}{dy} = \frac{u_\tau}{y} \Phi_O \left (\frac{y}{\delta} \right ).
 \end{equation}
 
 Rewriting the inner layer in wall units one obtains
@@ -1775,7 +1782,7 @@ and thus
 \label{law_wall}
 u^+ = \int_0^{y^+} \frac{1}{y'} \Phi_I (y') dy'.
 \end{equation}
-The integral above is referred to as the \textbf{law of the wall}, and experimental data shows this integral to be universal. At the wall $u^+=0$ and $du^+/dy^+ = 1$ (since $\tau_{wall} = \rho \nu d\langle U \rangle/dy$). Thus a Taylor series expansion about $y^+=0$ shows that
+The integral above is referred to as the \textbf{law of the wall}, and experimental data shows this integral to be universal. At the wall $u^+=0$ and $du^+/dy^+ = 1$ (since $\tau_{wall} = \rho \nu d\uavg/dy$). Thus a Taylor series expansion about $y^+=0$ shows that
 \begin{equation}
 u^+ = y^+ + H.O.T.
 \end{equation}
@@ -1787,17 +1794,17 @@ The overlap between the inner layer and the outer layer is described by the \tex
 \end{equation}
 Evaluating the law of the wall we obtain
 \begin{equation}
-u^+ = \int_0^{a} \frac{1}{y'} \Phi_I (y') dy' + \int_a^{y^+} \frac{1}{\kappa y'} dy' = C + \frac{1}{\kappa} [ \ln(y^+) - \ln(a)] = \frac{1}{\kappa} \ln(y^+) + B,
+u^+ = \int_0^{a} \frac{1}{y'} \Phi_I (y') dy' + \int_a^{y^+} \frac{1}{\kappa y'} dy' = C + \frac{1}{\kappa} \left [ \ln(y^+) - \ln(a) \right ] = \frac{1}{\kappa} \ln(y^+) + B,
 \end{equation}
 where $a < y^+$ is a location within the log law and $C$ and $B$ are constants.
 
 Integrating equation (\ref{outer_layer}) between $y$ and $\delta$ leads to the \textbf{velocity-defect law}. That is
 \begin{equation}
-\frac{U_0 - \langle U \rangle}{u_\tau} = \int_y^\delta \frac{1}{y'} \Phi_O(\frac{y'}{\delta}) dy' = \int_{y/\delta}^1 \frac{1}{y''} \Phi_O(y'') dy''.
+\frac{U_0 - \uavg}{u_\tau} = \int_y^\delta \frac{1}{y'} \Phi_O \left ( \frac{y'}{\delta} \right ) dy' = \int_{y/\delta}^1 \frac{1}{y''} \Phi_O ( y'' ) dy''.
 \end{equation}
 The integral above, as opposed to the law of the wall, is not expected to be universal. Within the log law $\Phi_O$ becomes a constant equal to $\kappa^{-1}$. Hence evaluating the velocity-defect law leads to
 \begin{equation}
-\frac{U_0 - \langle U \rangle}{u_\tau} = \int_{y/\delta}^b \frac{1}{\kappa y''} dy'' + \int_b^1 \frac{1}{y''}\Phi_O(y'')dy'' = \frac{1}{\kappa} [\ln(b) - \ln(y/\delta)] + C_1 = -\frac{1}{\kappa} \ln(y/\delta) + B_1
+\frac{U_0 - \uavg}{u_\tau} = \int_{y/\delta}^b \frac{1}{\kappa y''} dy'' + \int_b^1 \frac{1}{y''}\Phi_O(y'')dy'' = \frac{1}{\kappa} [\ln(b) - \ln(y/\delta)] + C_1 = -\frac{1}{\kappa} \ln(y/\delta) + B_1
 \end{equation}
 where $b > y/\delta$ is a location within the log law and $C_1$ and $B_1$ are constants.
 
@@ -1823,10 +1830,10 @@ where $b > y/\delta$ is a location within the log law and $C_1$ and $B_1$ are co
 
 For fully developed pipe flow the streamwise and radial momentum equations simplify to the following
 \begin{equation}
-0 =  -\frac{1}{\rho} \frac{\partial \pavg}{\partial z} + \nu \left ( \frac{\partial^2 \langle u_z \rangle}{\partial r^2} + \frac{1}{r} \frac{\partial \langle u_z \rangle}{\partial r} \right ) - \frac{\partial \langle u_z u_r \rangle}{\partial r} - \frac{\langle u_z u_r \rangle}{r}.
+0 =  -\frac{1}{\rho} \frac{\partial \pavg}{\partial z} + \nu \left ( \frac{\partial^2 \uavg_z}{\partial r^2} + \frac{1}{r} \frac{\partial \uavg_z}{\partial r} \right ) - \frac{\partial \overline{\ufluc_z \ufluc_r}}{\partial r} - \frac{\overline{\ufluc_z \ufluc_r}}{r}.
 \end{equation}
 \begin{equation}
-0 = -\frac{1}{\rho} \frac{\partial \pavg}{\partial r} - \frac{\partial \langle u_ru_r \rangle}{\partial r} - \frac{\langle u_ru_r \rangle}{r} + \frac{\langle u_\theta u_\theta \rangle}{r}
+0 = -\frac{1}{\rho} \frac{\partial \pavg}{\partial r} - \frac{\partial \overline{\ufluc_r \ufluc_r}}{\partial r} - \frac{\overline{\ufluc_r \ufluc_r}}{r} + \frac{\overline{\ufluc_\theta \ufluc_\theta}}{r}
 \end{equation} 
 Differentiating the radial equation with respect to $z$ leads to
 \begin{equation}
@@ -1835,15 +1842,15 @@ Differentiating the radial equation with respect to $z$ leads to
 that is, the pressure drop is independent of $r$. 
 We now rewrite the streamwise equation as follows
 \begin{equation}
-0 =  -\frac{1}{\rho} \frac{\partial \pavg}{\partial z} + \nu \frac{1}{r} \frac{\partial}{\partial r} \left (r \frac{\partial \langle u_z \rangle}{\partial r} \right ) - \frac{1}{r} \frac{\partial r \langle u_z u_r \rangle}{\partial r}.
+0 =  -\frac{1}{\rho} \frac{\partial \pavg}{\partial z} + \nu \frac{1}{r} \frac{\partial}{\partial r} \left (r \frac{\partial \uavg_z}{\partial r} \right ) - \frac{1}{r} \frac{\partial r \overline{\ufluc_z \ufluc_r}}{\partial r}.
 \end{equation}
-Multiplying the above by r, and then integrating with respect to $r$, from some location $r$ to the radius of the pipe $R$ leads to
+Multiplying the above by $r$ and then integrating with respect to $r$ (from some location $r$ to the radius of the pipe $R$) leads to
 \begin{equation}
-\rho \nu R \frac{\partial \langle u_z \rangle}{\partial r} - \left ( \rho \nu r \frac{\partial \langle u_z \rangle}{\partial r} - r \rho \langle u_z u_r \rangle \right )= \frac{\partial \pavg}{\partial z} \frac{R^2}{2} - \frac{\partial \pavg}{\partial z} \frac{r^2}{2}
+\rho \nu R \frac{\partial \uavg_z}{\partial r} - \left ( \rho \nu r \frac{\partial \uavg_z}{\partial r} - r \rho \overline{ \ufluc_z \ufluc_r } \right )= \frac{\partial \pavg}{\partial z} \frac{R^2}{2} - \frac{\partial \pavg}{\partial z} \frac{r^2}{2},
 \end{equation}
 which is rewritten as
 \begin{equation}
--R \tau_{wall} - \left ( \rho \nu r \frac{\partial \langle u_z \rangle}{\partial r} - r \rho \langle u_z u_r \rangle \right )= \frac{\partial \pavg}{\partial z} \frac{R^2}{2} - \frac{\partial \pavg}{\partial z} \frac{r^2}{2}.
+-R \tau_{wall} - \left ( \rho \nu r \frac{\partial \uavg_z}{\partial r} - r \rho \overline{\ufluc_z \ufluc_r} \right )= \frac{\partial \pavg}{\partial z} \frac{R^2}{2} - \frac{\partial \pavg}{\partial z} \frac{r^2}{2}.
 \end{equation}
 Evaluation at $r = 0$ shows that
 \begin{equation}
@@ -1851,7 +1858,7 @@ Evaluation at $r = 0$ shows that
 \end{equation}
 Thus, the integrated momentum equation becomes
 \begin{equation}
-\rho \nu \frac{\partial \langle u_z \rangle}{\partial r} - \rho \langle u_z u_r \rangle = -\tau_{wall} \frac{r}{R}
+\rho \nu \frac{\partial \uavg_z}{\partial r} - \rho \overline{\ufluc_z \ufluc_r} = -\tau_{wall} \frac{r}{R}
 \end{equation}
 which is of equivalent form to that of the channel if one uses the substitution $r = R - r'$ since then each of the first and second terms of the left-hand side would change signs. 
 
@@ -1898,9 +1905,9 @@ The $k-\omega$ model, another popular two-equation closure, has the following ch
 %-------------------------------------------------------------------------------
 
 \label{sec:polynomial_expansions}
-Assume $\Pi_{ij}$ is a model for the physical quantity $\Sigma_{ij}$. It is quite common for differential and algebraic Reynolds-stress models to define $\Pi_{ij}$ as an algebraic functional relationship whose inputs are tensors $\bold{C}^{(1)},...,\bold{C}^{(n)}$ and scalars $s^{(1)},...,s^{(m)}$. Thus,
+Assume $\Pi_{ij}$ is a model for the physical quantity $\Sigma_{ij}$. It is quite common for differential and algebraic Reynolds-stress models to define $\Pi_{ij}$ as an algebraic functional relationship whose inputs are tensors $\mathbf{C}^{(1)},...,\mathbf{C}^{(n)}$ and scalars $s^{(1)},...,s^{(m)}$. Thus,
 \begin{equation}
-\Pi_{ij} = F_{ij}(s^{(1)}, ..., s^{(m)},\bold{C}^{(1)}, ..., \bold{C}^{(n)}).
+\Pi_{ij} = F_{ij}(s^{(1)}, ..., s^{(m)},\mathbf{C}^{(1)}, ..., \mathbf{C}^{(n)}).
 \end{equation}
 An assumption that can be used to narrow down the functional form of $F_{ij}$ is to have both the exact physical tensor and its model satisfy the same transformation properties. For example, if $\Sigma_{ij}$ is objective we could enforce $\Pi_{ij}$ to be objective as well. An objective tensor is one that satisfies $\tilde{\Sigma}_{ij} = O_{ip}O_{jq}\Sigma_{pq}$ under Euclidean transformations, where $\tilde{\Sigma}_{ij}$ is such tensor in the transformed reference frame and $O_{ij}$ is a time-dependent rotation matrix.
 
@@ -1914,11 +1921,11 @@ The functions $f^{(k)}$ depend on the scalars $s^{(1)}, ...,s^{(m)}$ only, and e
 \label{tensor_product}
 \mathcal{F}_{ij}^{(k)} = c^{(a_k)}_{ip}c^{(b_k)}_{pq}c^{(c_k)}_{qr}...
 \end{equation}
-where $a_k,b_k,c_k,...$ can each take any value between one and $n$. Additionally, the scalars $s^{(1)},...,s^{(m)}$ and the tensors $\bold{C}^{(1)},...,\bold{C}^{(n)}$ would need to be objective, where an objective scalar is one that satisfies $\tilde{s} = s$. If all of these requirements are satisfied, then we can show that
+where $a_k,b_k,c_k,...$ can each take any value between one and $n$. Additionally, the scalars $s^{(1)},...,s^{(m)}$ and the tensors $\mathbf{C}^{(1)},...,\mathbf{C}^{(n)}$ would need to be objective, where an objective scalar is one that satisfies $\tilde{s} = s$. If all of these requirements are satisfied, then we can show that
 \begin{align}
-\tilde{\Pi}_{ij} & = F_{ij}(\tilde{s}^{(1)}, ..., \tilde{s}^{(m)},\tilde{\bold{C}}^{(1)}, ..., \tilde{\bold{C}}^{(n)}) \nonumber \\
-& = F_{ij}(s^{(1)}, ..., s^{(m)},\bold{Q} \bold{C}^{(1)}\bold{Q}^T, ..., \bold{Q} \bold{C}^{(n)}\bold{Q}^T) \nonumber \\
-& = Q_{ip}Q_{jq} F_{pq}(s^{(1)}, ..., s^{(m)}, \bold{C}^{(1)}, ..., \bold{C}^{(n)}) \nonumber \\
+\tilde{\Pi}_{ij} & = F_{ij}(\tilde{s}^{(1)}, ..., \tilde{s}^{(m)},\tilde{\mathbf{C}}^{(1)}, ..., \tilde{\mathbf{C}}^{(n)}) \nonumber \\
+& = F_{ij}(s^{(1)}, ..., s^{(m)},\mathbf{Q} \mathbf{C}^{(1)}\mathbf{Q}^T, ..., \mathbf{Q} \mathbf{C}^{(n)}\mathbf{Q}^T) \nonumber \\
+& = Q_{ip}Q_{jq} F_{pq}(s^{(1)}, ..., s^{(m)}, \mathbf{C}^{(1)}, ..., \mathbf{C}^{(n)}) \nonumber \\
 &= Q_{ip}Q_{jq} \Pi_{pq}, 
 \end{align}
 which shows $\Pi_{ij}$ is indeed objective. It is relevant to note that $\Pi_{ij} = F_{ji}$ is also a valid form.
@@ -2076,7 +2083,7 @@ The above states that the inhomogeneous contribution due to the transport terms 
 
 For incompressible flows, the production over dissipation can be expressed in terms of $\Stau_{ij}$ and $\Wtau_{ij}$ as follows
 \begin{align}
-\frac{\mathcal{P}_{ij}}{\epsilon} &= \frac{1}{\epsilon} \left (-\frac{2}{3} k \frac{\partial \ujavg}{\partial x_i} - 2kb_{ik}(S_{jk} + W_{jk}) - \frac{2}{3} k \frac{\partial \uiavg}{\partial x_j} - 2kb_{jk}(S_{ik} + W_{ik}) \right ) \nonumber \\
+\frac{\mathcal{P}_{ij}}{\epsilon} &= \frac{1}{\epsilon} \left (-\frac{2}{3} k \frac{\partial \uavg_j}{\partial x_i} - 2kb_{ik}(S_{jk} + W_{jk}) - \frac{2}{3} k \frac{\partial \uavg_i}{\partial x_j} - 2kb_{jk}(S_{ik} + W_{ik}) \right ) \nonumber \\
 & = -\frac{4}{3} \mathbf{\Stau} - 2( \mathbf{\Stau} \mathbf{b} + \mathbf{b} \mathbf{\Stau}) - 2 (\mathbf{\Wtau} \mathbf{b} - \mathbf{b} \mathbf{\Wtau} ).
 \end{align}
 Assuming the most generic linear model for the pressure-rate-rate-of-strain, equation (\ref{algebraic_rs}) becomes
@@ -2087,7 +2094,7 @@ where
 \begin{equation}
 a_1 = \left ( \frac{h^{(1)}}{2} +1 - \frac{\mathcal{P}}{\epsilon} \right ) \qquad a_2 = \frac{1}{2} \left (-\frac{4}{3} + h^{(3)} \right ) \qquad a_3 = \frac{1}{2} \left (-2 + h^{(4)} \right ) \qquad a_4 = \frac{1}{2} \left (-2 + h^{(5)} \right ).
 \end{equation}
-Linearity in $\mathbf{b}$ is required so that when the polynomial expansion (\ref{poly_expansion}) is used to replace $\mathbf{b}$ a system of linear equations is obtained for the coefficients of such expansion.
+Linearity in $\mathbf{b}$ is required so that when the polynomial expansion (\ref{eq:poly_expansion}) is used to replace $\mathbf{b}$ a system of linear equations is obtained for the coefficients of such expansion.
 
 The EASM of Rumsey \& Gatski (cite) uses the linearize SSG model to compute the pressure-rate-of-strain tensor. Thus, we have
 \begin{equation}
@@ -2109,7 +2116,7 @@ N = \frac{9}{4} \left ( C_R - 1 + \frac{\mathcal{P}}{\epsilon} \right ).
 \end{equation}
 Equation (\ref{implicit_rs}) is an implicit algebraic equation for the Reynolds stresses since the factor N depends on $\mathcal{P}/\epsilon$, which itself depends on $b_{ij}$. 
 
-The method for obtaining and explicit expression for $b_{ij}$ from equation (\ref{implicit_rs}) is the following. First, the polynomial expansion (\ref{poly_expansion}) is used to replace $b_{ij}$ in the implicit equation, except for the stresses that define $N$ since this variable is left as a yet undetermined function. All higher order tensors in this new equation are replaced by combinations of elements of the integrity basis using the Cayley-Hamilton theorem. By matching coefficients corresponding to the same element of the integrity basis one obtains expressions for the weights $p^{(k)}$ as a function of $N$. Finally, the polynomial expansion for $b_{ij}$ with the new  expressions for $p^{(k)}$ is used in the definition of $N$ (\ref{n_def}). This leads to a non-linear algebraic equation for N and its solution is used in the expressions for $p^{(k)}$.
+The method for obtaining and explicit expression for $b_{ij}$ from equation (\ref{implicit_rs}) is the following. First, the polynomial expansion (\ref{eq:poly_expansion}) is used to replace $b_{ij}$ in the implicit equation, except for the stresses that define $N$ since this variable is left as a yet undetermined function. All higher order tensors in this new equation are replaced by combinations of elements of the integrity basis using the Cayley-Hamilton theorem. By matching coefficients corresponding to the same element of the integrity basis one obtains expressions for the weights $p^{(k)}$ as a function of $N$. Finally, the polynomial expansion for $b_{ij}$ with the new  expressions for $p^{(k)}$ is used in the definition of $N$ (\ref{n_def}). This leads to a non-linear algebraic equation for N and its solution is used in the expressions for $p^{(k)}$.
 
 %###############################################################################
 %
@@ -2121,22 +2128,22 @@ The method for obtaining and explicit expression for $b_{ij}$ from equation (\re
 \section{The Eulerian Modeling Approach}
 %-------------------------------------------------------------------------------
 
-The transport equation for the one-point, one-time, Eulerian PDF $f=f(\Vvec ;\xvec,t)$ is derived in Appendix H of Pope (2000) and is shown below
+In this section we use brackets $\left < \cdot \right >$ to denote averages, in addition to the overline $\overline{\cdot}$. The transport equation for the one-point, one-time, Eulerian PDF $f=f(\Vvec ;\xvec,t)$ for the velocity $\uvec$ is derived in Appendix H of Pope (2000) and is shown below
 \begin{equation}
-\frac{\partial f}{\partial t} + V_i\frac{\partial f}{\partial x_i} = -\frac{\partial}{\partial V_i} \left ( f \left < \left . \frac{DU_i}{Dt} \right | \Vvec \right > \right ).
+\frac{\partial f}{\partial t} + V_i\frac{\partial f}{\partial x_i} = -\frac{\partial}{\partial V_i} \left ( f \left < \left . \frac{Du_i}{Dt} \right | \Vvec \right > \right ).
 \end{equation}
-This is a mathematical identity that contains no physics. The physics comes in by replacing the material derivative of $U_i$ using the Navier-Stokes equations, which leads to
+This is a mathematical identity that contains no physics. The physics comes in by replacing the material derivative of $u_i$ using the Navier-Stokes equations, which leads to
 \begin{equation}
 \label{pdf_ns}
-\frac{\partial f}{\partial t} + V_i\frac{\partial f}{\partial x_i} = \left ( \frac{1}{\rho} \frac{\partial \pavg}{\partial x_i} -\nu \frac{\partial^2 \uiavg}{\partial x_k \partial x_k} \right) \frac{\partial f}{\partial V_i} - \frac{\partial}{\partial V_i} \left ( f \left < \left . - \frac{1}{\rho} \frac{\partial \pfluc}{\partial x_i} +  \nu \frac{\partial ^2 \uifluc}{\partial x_k \partial x_k} \right | \Vvec \right > \right ).
+\frac{\partial f}{\partial t} + V_i\frac{\partial f}{\partial x_i} = \left ( \frac{1}{\rho} \frac{\partial \pavg}{\partial x_i} -\nu \frac{\partial^2 \uavg_i}{\partial x_k \partial x_k} \right) \frac{\partial f}{\partial V_i} - \frac{\partial}{\partial V_i} \left ( f \left < \left . - \frac{1}{\rho} \frac{\partial \pfluc}{\partial x_i} +  \nu \frac{\partial ^2 \ufluc_i}{\partial x_k \partial x_k} \right | \Vvec \right > \right ).
 \end{equation}
 The equation above can be multiplied by $V_j$ and then averaged over the velocity sample space to obtain the RANS momentum equation. For the first term on the left hand side one would obtain
 \begin{equation}
-\int V_j \frac{\partial f}{\partial t} d\Vvec = \frac{\partial}{\partial t} \int V_j f d\Vvec = \frac{\partial \ujavg}{\partial t},
+\int V_j \frac{\partial f}{\partial t} d\Vvec = \frac{\partial}{\partial t} \int V_j f d\Vvec = \frac{\partial \uavg_j}{\partial t},
 \end{equation} 
 whereas for the second term one obtains
 \begin{equation}
-\int V_j V_i \frac{\partial f}{\partial x_i} d\Vvec = \frac{\partial}{\partial x_i} \int V_j V_i f d\Vvec = \frac{\partial \langle U_j U_i \rangle}{\partial x_i}.
+\int V_j V_i \frac{\partial f}{\partial x_i} d\Vvec = \frac{\partial}{\partial x_i} \int V_j V_i f d\Vvec = \frac{\partial \overline{u_j u_i}}{\partial x_i}.
 \end{equation} 
 For the terms on the right hand side we make use of the identity
 \begin{equation}
@@ -2145,30 +2152,30 @@ For the terms on the right hand side we make use of the identity
 where $B_k = B_k(\Vvec)$ and $A_j = A_j(\Vvec)$.
 Thus, the first term on the right hand side becomes
 \begin{align}
-\int \left ( \frac{1}{\rho} \frac{\partial \pavg}{\partial x_i} -\nu \frac{\partial^2 \uiavg}{\partial x_k x_k} \right) V_j \frac{\partial f}{\partial V_i} d\Vvec & = \left (- \frac{1}{\rho} \frac{\partial \pavg}{\partial x_i} + \nu \frac{\partial^2 \uiavg}{\partial x_k \partial x_k} \right) \delta_{ij} \int f d\Vvec \nonumber \\
-& = -\frac{1}{\rho} \frac{\partial \pavg}{\partial x_j} + \nu \frac{\partial ^2 \ujavg}{\partial x_k x_k}.
+\int \left ( \frac{1}{\rho} \frac{\partial \pavg}{\partial x_i} -\nu \frac{\partial^2 \uavg_i}{\partial x_k x_k} \right) V_j \frac{\partial f}{\partial V_i} d\Vvec & = \left (- \frac{1}{\rho} \frac{\partial \pavg}{\partial x_i} + \nu \frac{\partial^2 \uavg_i}{\partial x_k \partial x_k} \right) \delta_{ij} \int f d\Vvec \nonumber \\
+& = -\frac{1}{\rho} \frac{\partial \pavg}{\partial x_j} + \nu \frac{\partial ^2 \uavg_i}{\partial x_k x_k}.
 \end{align}
-Given $f_{\Uvec \phi} = f_{\Uvec \phi}(\Vvec, \psi; \xvec, t)$ the joint PDF of $\Uvec$ and $\phi$, and $f_{\phi | \Uvec} = f_{\phi | \Uvec}(\psi | \Vvec; \xvec, t)$ the conditional PDF for $\phi$ conditioned on $\Vvec$, we write the following 
+Given $f_{\uvec \phi} = f_{\uvec \phi}(\Vvec, \psi; \xvec, t)$ the joint PDF of $\uvec$ and $\phi$, and $f_{\phi | \uvec} = f_{\phi | \uvec}(\psi | \Vvec; \xvec, t)$ the conditional PDF for $\phi$ conditioned on $\Vvec$, we write the following 
 \begin{equation}
-\langle \phi \rangle = \int \int \psi f_{\Uvec \phi} d\psi d\Vvec = \int \int \psi f_{\phi | \Uvec} f d\psi d\Vvec = \int \langle \phi | \Vvec \rangle f d\Vvec,
+\langle \phi \rangle = \int \int \psi f_{\uvec \phi} \, d\psi d\Vvec = \int \int \psi f_{\phi | \uvec} f \, d\psi d\Vvec = \int \langle \phi | \Vvec \rangle f \, d\Vvec,
 \end{equation}
 The derivation for the second term on the right hand side thus proceeds as follows
 \begin{align}
--\int V_j \frac{\partial}{\partial V_i} \left ( f \left < \left . - \frac{1}{\rho} \frac{\partial \pfluc}{\partial x_i} + \nu \frac{\partial^2 \uifluc}{\partial x_k \partial x_k} \right | \Vvec \right > \right ) d\Vvec &= \delta_{ij} \int \left < \left . - \frac{1}{\rho} \frac{\partial \pfluc}{\partial x_i} + \nu \frac{\partial^2 \uifluc}{\partial x_k \partial x_k} \right | \Vvec \right > f d\Vvec \nonumber \\
-& = \left < - \frac{1}{\rho} \frac{\partial \pfluc}{\partial x_j} + \nu \frac{\partial^2 \ujfluc}{\partial x_k \partial x_k} \right > \nonumber \\
+-\int V_j \frac{\partial}{\partial V_i} \left ( f \left < \left . - \frac{1}{\rho} \frac{\partial \pfluc}{\partial x_i} + \nu \frac{\partial^2 \ufluc_i}{\partial x_k \partial x_k} \right | \Vvec \right > \right ) d\Vvec &= \delta_{ij} \int \left < \left . - \frac{1}{\rho} \frac{\partial \pfluc}{\partial x_i} + \nu \frac{\partial^2 \ufluc_i}{\partial x_k \partial x_k} \right | \Vvec \right > f d\Vvec \nonumber \\
+& = \left < - \frac{1}{\rho} \frac{\partial \pfluc}{\partial x_j} + \nu \frac{\partial^2 \ufluc_j}{\partial x_k \partial x_k} \right > \nonumber \\
 & = 0.
 \end{align}
 
-Given the PDF one can compute $\uiavg$ and $\rs_{ij}$. The averaged pressure $\pavg$ can then be obtained from a poisson equation. Thus, the last term in the PDF equation (\ref{pdf_ns}) is the only unclosed term, and it is typically modeled using the Generalized Langevin Model (GLM), as shown below
+Given the PDF one can compute $\uavg_i$ and $\rs_{ij}$. The averaged pressure $\pavg$ can then be obtained from a poisson equation. Thus, the last term in the PDF equation (\ref{pdf_ns}) is the only unclosed term, and it is typically modeled using the Generalized Langevin Model (GLM), as shown below
 \begin{equation}
 \label{GLM}
-- \frac{\partial}{\partial V_i} \left ( f \left < \left . - \frac{1}{\rho} \frac{\partial \pfluc}{\partial x_i} +  \nu \frac{\partial^2 \uifluc}{\partial x_k \partial x_k} \right | \Vvec \right > \right ) = -\frac{\partial}{\partial V_i} [f G_{ij} (V_j - \ujavg)] + \frac{1}{2} C_0 \epsilon \frac{\partial^2 f}{\partial V_j \partial V_j}.
+- \frac{\partial}{\partial V_i} \left ( f \left < \left . - \frac{1}{\rho} \frac{\partial \pfluc}{\partial x_i} +  \nu \frac{\partial^2 \ufluc_i}{\partial x_k \partial x_k} \right | \Vvec \right > \right ) = -\frac{\partial}{\partial V_i} [f G_{ij} (V_j - \uavg_j)] + \frac{1}{2} C_0 \epsilon \frac{\partial^2 f}{\partial V_j \partial V_j}.
 \end{equation}
 The coefficients $G_{ij} = G_{ij}(\xvec,t)$ and $C_0 = C_0(\xvec,t)$ are specific to each of the different versions of the GLM. As with the exact unclosed term, the modeled terms vanish when the RANS momentum equations are formed. 
 
 Multiplying equation (\ref{pdf_ns}) by $v_j v_k$ and integrating over the velocity space one obtains the corresponding transport equation for the Reynolds stresses
 \begin{equation}
-\frac{\partial \rs_{ij}}{\partial t} + \ukavg \frac{\partial \rs_{ij}}{\partial x_k} = \mathcal{P}_{ij} - \frac{\partial \mathcal{T}^{(u)}_{kij} }{\partial x_k} + G_{ik} \rs_{kj} + G_{jk} \rs_{ki} + C_0 \epsilon \delta_{ij}.
+\frac{\partial \rs_{ij}}{\partial t} + \uavg_k \frac{\partial \rs_{ij}}{\partial x_k} = \mathcal{P}_{ij} - \frac{\partial \mathcal{T}^{(u)}_{kij} }{\partial x_k} + G_{ik} \rs_{kj} + G_{jk} \rs_{ki} + C_0 \epsilon \delta_{ij}.
 \end{equation} 
 In other words, the velocity-pressure-gradient tensor, the dissipation tensor, and viscous diffusion are modeled by the GLM as follows
 \begin{equation}
@@ -2176,20 +2183,20 @@ In other words, the velocity-pressure-gradient tensor, the dissipation tensor, a
 \end{equation}
 This shows that to each GLM there is a corresponding DRSM. The accuracy of the above framework ultimately depends on how accurately the modeled PDF represents the exact PDF.
 
-The Eulerian modeling approach thus proceeds as follows. From the exact equations for the instantaneous fluid properties, such as the Navier-Stokes equations for velocity, unclosed statistical equations are obtained, such as the RANS equation for $\uiavg$ or $\rs_{ij}$, or the transport equation for the Eulerian PDF $f$. The unclosed terms in these equations are then modeled in terms of the known variables.
+The Eulerian modeling approach thus proceeds as follows. From the exact equations for the instantaneous fluid properties, such as the Navier-Stokes equations for velocity, unclosed statistical equations are obtained, such as the RANS equation for $\uavg_i$ or $\rs_{ij}$, or the transport equation for the Eulerian PDF $f$. The unclosed terms in these equations are then modeled in terms of the known variables.
 
 %-------------------------------------------------------------------------------
 \section{The Stochastic Lagrangian Approach}
 %-------------------------------------------------------------------------------
 
-An alternate modeling approach, termed the stochastic Lagrangian approach, can be followed to derive a closed modeled conservation equation for the Eulerian PDF. As for the Eulerian modeling approach, mean quantities such as $\uiavg$ or $\rs_{ij}$ are known variables since they can be obtained from the Eulerian PDF. The mean pressure can be obtained by solving its corresponding Poisson equation, and it is thus also referred to as a known variable. 
+An alternate modeling approach, termed the stochastic Lagrangian approach, can be followed to derive a closed modeled conservation equation for the Eulerian PDF. As for the Eulerian modeling approach, mean quantities such as $\uavg_i$ or $\rs_{ij}$ are known variables since they can be obtained from the Eulerian PDF. The mean pressure can be obtained by solving its corresponding Poisson equation, and it is thus also referred to as a known variable. 
 
-The starting point is the Lagrangian evolution equations for the position $X_i^+ = X_i^+(t,\yvec)$ and velocity $U_i^+ = U_i^+(t,\yvec)$ of a fluid particle that at time $t_0$ was located at $\yvec$. These evolution equations are shown below 
+The starting point is the Lagrangian evolution equations for the position $x_i^+ = x_i^+(t,\yvec)$ and velocity $u_i^+ = u_i^+(t,\yvec)$ of a fluid particle that at time $t_0$ was located at $\yvec$. These evolution equations are shown below 
 \begin{equation}
-\frac{\partial X_i^+}{\partial t} = U_i^+ 
+\frac{\partial x_i^+}{\partial t} = u_i^+ 
 \end{equation}
 \begin{equation}
-\frac{\partial U_i^+}{\partial t} = \left (-\frac{1}{\rho} \frac{\partial \pavg}{\partial x_i} + \nu \frac{\partial^2 \uiavg}{\partial x_k \partial x_k} \right)_{\xvec = \Xvec^+} + \left ( - \frac{1}{\rho} \frac{\partial \pfluc}{\partial x_i} +  \nu \frac{\partial^2 \uifluc}{\partial x_k \partial x_k} \right)_{\xvec = \Xvec^+}.
+\frac{\partial u_i^+}{\partial t} = \left (-\frac{1}{\rho} \frac{\partial \pavg}{\partial x_i} + \nu \frac{\partial^2 \uavg_i}{\partial x_k \partial x_k} \right)_{\xvec = \xvec^+} + \left ( - \frac{1}{\rho} \frac{\partial \pfluc}{\partial x_i} +  \nu \frac{\partial^2 \ufluc_i}{\partial x_k \partial x_k} \right)_{\xvec = \xvec^+}.
 \end{equation}
 The first term in parenthesis of the right-hand side of the velocity evolution equation consists of known variables, whereas the second term consists of unknown terms and thus requires modeling. The above equations can be used to derive a transport equation for a Lagrangian PDF, from which an Eulerian PDF follows. These derivations will be shown in this section. 
 
@@ -2197,35 +2204,31 @@ The first term in parenthesis of the right-hand side of the velocity evolution e
 \subsection{Lagrangian probablity density functions}
 %--------------------------------------------
 
-The inverse of $\Xvec^+$ is $\Yvec^+ = \Yvec^+(t,\zvec)$, which gives the initial location of a fluid particle that at time $t$ is located at position $\zvec$. Thus,
-\begin{equation}
-\Xvec^+(t,\Yvec^+(t,\zvec)) = \zvec,
-\end{equation}
-which represents the location of a particle at time $t$, whose original location corresponds to such particle being located at $\zvec$ for time $t$.
+As a quick side note, we mention that the inverse of $\xvec^+$ is $\yvec^+ = \yvec^+(t,\zvec)$, which gives the initial location of a fluid particle that at time $t$ is located at position $\zvec$. Thus, $\xvec^+(t,\yvec^+(t,\zvec)) = \zvec$.
 
-The Lagrangian PDF is given by $f_L = f_L(\Vvec,\xvec;t|\bold{y})$, which is conditioned on the fluid particle being located at $\yvec$ at some initial time $t_0$. Here $\Vvec$ and $\xvec$ are the sample space variables for $\Uvec^+$ and $\Xvec^+$. $f_L$ can be obtained as follows 
+The Lagrangian PDF is given by $f_L = f_L(\Vvec,\xvec;t|\yvec)$, which is conditioned on the fluid particle being located at $\yvec$ at some initial time $t_0$. Here $\Vvec$ and $\xvec$ are the sample space variables for $\uvec^+$ and $\xvec^+$, respectively. $f_L$ can be obtained as follows 
 \begin{equation}
 f_L = \langle f'_L \rangle,
 \end{equation}
-where $f'_L = f'_L(\Vvec,\xvec;t|\bold{y})$ is the fine-grained Lagrangian PDF, which is given by
+where $f'_L = f'_L(\Vvec,\xvec;t|\yvec)$ is the fine-grained Lagrangian PDF, which is given by
 \begin{equation}
-f'_L = \delta(\bold{U}^+ - \Vvec) \delta(\bold{X}^+ - \xvec).
+f'_L = \delta(\uvec^+ - \Vvec) \delta(\xvec^+ - \xvec).
 \end{equation}
 
 We will now derive the relationship between the Lagrangian and Eulerian PDFs. We start with
 \begin{align}
-\int f'_L(\Vvec,\xvec;t|\yvec) d\yvec &= \int \delta(\bold{U}^+(t,\bold{y}) - \Vvec) \delta(\bold{X}^+(t,\bold{y}) - \xvec) d\yvec \nonumber \\
-&= \int \delta(\bold{U}(t,\bold{X}^+(t,\yvec)) - \Vvec) \delta(\bold{X}^+(t,\yvec) - \xvec) d\yvec \nonumber \\
-&= \int \delta(\bold{U}(t,\bold{X}^+(t,\yvec)) - \Vvec) \delta(\bold{X}^+(t,\yvec) - \xvec) | \det D\bold{X^+} | d\yvec,
+\int f'_L(\Vvec,\xvec;t|\yvec) \, d\yvec &= \int \delta(\uvec^+(t,\yvec) - \Vvec) \delta(\xvec^+(t,\yvec) - \xvec) \, d\yvec \nonumber \\
+&= \int \delta(\uvec(t,\xvec^+(t,\yvec)) - \Vvec) \delta(\xvec^+(t,\yvec) - \xvec) \, d\yvec \nonumber \\
+&= \int \delta(\uvec(t,\xvec^+(t,\yvec)) - \Vvec) \delta(\xvec^+(t,\yvec) - \xvec) | \det D \xvec^+ | \, d\yvec,
 \end{align}
-where we have introduced $| \det D\bold{X^+} |$, which is the absolute value of the determinant of the Jacobean $\partial \bold{X}^+/\partial \yvec$, and is equal to one for incompressible flows. Using integration by substitution we obtain
+where we have introduced $| \det D \xvec^+ |$, which is the absolute value of the determinant of the Jacobean $\partial \xvec^+/\partial \yvec$, and is equal to one for incompressible flows. Using integration by substitution we obtain
 \begin{equation}
-\int f'_L(\Vvec,\xvec;t|\yvec) d\yvec = \int \delta(\bold{U}(t,\zvec) - \Vvec) \delta(\zvec - \xvec) d\zvec = \delta(\Uvec(t,\xvec) - \Vvec)
+\int f'_L(\Vvec,\xvec;t|\yvec) \, d\yvec = \int \delta(\uvec(t,\zvec) - \Vvec) \delta(\zvec - \xvec) \, d\zvec = \delta(\uvec(t,\xvec) - \Vvec)
 \end{equation}
-Since $\delta(\Uvec(t,\xvec) - \Vvec)$ is the fine-grained Eulerian PDF, taking the expectation of the above we finally obtain
+$\delta(\uvec(t,\xvec) - \Vvec)$ is the fine-grained Eulerian PDF. Thus, taking the expectation of the above we finally obtain
 \begin{equation}
 \label{eul_lag}
-\int f_L(\Vvec,\xvec;t|\yvec) d\yvec = f(\Vvec;\xvec,t).
+\int f_L(\Vvec,\xvec;t|\yvec) \, d\yvec = f(\Vvec;\xvec,t).
 \end{equation}
 
 %--------------------------------------------
@@ -2234,13 +2237,13 @@ Since $\delta(\Uvec(t,\xvec) - \Vvec)$ is the fine-grained Eulerian PDF, taking 
 
 A Markov process is a stochastic process whose joint PDF satisfies the following
 \begin{equation}
-f_{N-1}(V_N;t_N| V_{N-1}, t_{N-1}, V_{N-2}, t_{N-2}, ... , V_1, t_1) = f_1(V_N; t_N | V_{N-1}, t_{N-1}). 
+f_{N-1}(V^{(N)};t^{(N)}| V^{(N-1)}, t^{(N-1)}, V^{(N-2)}, t^{(N-2)}, ... , V^{(1)}, t^{(1)}) = f_1(V^{(N)}; t^{(N)} | V^{(N-1)}, t^{(N-1)}). 
 \end{equation}
-That is, the probability distribution for the random variable at time $t$ depends only on one single previous realization at time $t_{N-1} < t$, and is independent of all the realizations at previous times less than $t_{N-1}$.
+That is, the probability distribution for the random variable at time $t$ depends only on one single previous realization at time $t^{(N-1)} < t$, and is independent of all the realizations at previous times less than $t^{(N-1)}$.
 
-Consider the operator $\Delta_h$ which operates on $U = U(t)$, such that $\Delta_hU(t) = U(t+h) - U(t)$. Using such operator define the set of infinitesimal parameters $B_n = B_n(V,t)$
+Consider the operator $\Delta_h$ which operates on $u = u(t)$, such that $\Delta_h u(t) = u(t+h) - u(t)$. Using such operator define the set of infinitesimal parameters $B_n = B_n(V,t)$
 \begin{equation}
-B_n = \lim_{h\to0} \frac{1}{h} \langle ( \Delta_h U )^n | U = V \rangle.
+B_n = \lim_{h\to0} \frac{1}{h} \langle ( \Delta_h u )^n | u = V \rangle.
 \end{equation}
 A diffusion process is a Markov process with drift coefficient $a = a(V,t)$ and diffusion coefficient $b = b(V,t)$ given by
 \begin{equation}
@@ -2249,81 +2252,81 @@ b^2 = B_2,
 \end{equation}
 and $B_i = 0$ for all $i \ge 3$. Diffusion processes  are governed by the following stochastic differential equation
 \begin{equation}
-dU(t) = a[U(t),t] dt + b[U(t),t] dW(t)
+du(t) = a[u(t),t] dt + b[u(t),t] dW(t)
 \end{equation}
-where $dW(t)$ is the infinitesimal increment for a Wiener process. The corresponding conditional PDF $f_1 = f_1(V;t | V_1,t_1)$ satisfies the Fokker-Plank equation
+where $dW(t)$ is the infinitesimal increment for a Wiener process. The corresponding conditional PDF $f_1 = f_1(V;t | V^{(1)},t^{(1)})$ satisfies the Fokker-Plank equation
 \begin{equation}
 \frac{\partial f_1}{\partial t} = - \frac{\partial a f_1}{\partial V} + \frac{1}{2} \frac{\partial ^2 b^2 f_1}{\partial V^2}.
 \end{equation}
-Multiplying the above by $f(V_1;t_1)$ and integrating over $V_1$ shows that the marginal PDF $f = f(V;t)$ satisfies the same Fokker-Plank equation.
+Multiplying the above by $f(V^{(1)};t^{(1)})$ and integrating over $V^{(1)}$ shows that the marginal PDF $f = f(V;t)$ satisfies the same Fokker-Plank equation.
 
-For a vector-valued diffusion process the sample paths are given by $\mathbf{U} =  \mathbf{U}(t)$. The drift coefficient is given by $a_i = a_i(\Vvec,t)$, where
+For a vector-valued diffusion process the sample paths are given by $\uvec =  \uvec(t)$. The drift coefficient is given by $a_i = a_i(\Vvec,t)$, where
 \begin{equation}
-a_i = \lim_{h\to0} \frac{1}{h} \langle ( \Delta_h U_i )^n | \Uvec = \Vvec \rangle.
+a_i = \lim_{h\to0} \frac{1}{h} \langle ( \Delta_h u_i )^n | \uvec = \Vvec \rangle.
 \end{equation}
 The coefficient $b_{ij} = b_{ij}(\Vvec, t)$ is defined such that $b_{ik}b_{jk} = B_{ij}$, where $B_{ij} = B_{ij}(\Vvec,t)$ is the diffusion coefficient and is given by
 \begin{equation}
-B_{ij} = \lim_{h\to0} \frac{1}{h} \langle \Delta_h U_i \Delta_h U_j  | \Uvec = \Vvec \rangle.
+B_{ij} = \lim_{h\to0} \frac{1}{h} \langle \Delta_h u_i \Delta_h u_j  | \uvec = \Vvec \rangle.
 \end{equation}
 The associated stochastic differential equation is
 \begin{equation}
-dU_i(t) = a_i[\bold{U}(t),t] dt + b_{ij} [\bold{U}(t),t] dW_j(t),
+du_i(t) = a_i[\uvec(t),t] dt + b_{ij} [\uvec(t),t] dW_j(t),
 \end{equation}
 and the Fokker-Plank equation for the conditional PDF $f_1 = f_1(\Vvec; t| \Vvec^{(1)}, t^{(1)})$ is
 \begin{equation}
 \label{fokkerplank_3d}
 \frac{\partial f_1}{\partial t} = - \frac{\partial a_i f_1}{\partial V_i} + \frac{1}{2} \frac{\partial^2 B_{ij} f_1}{\partial V_i V_j}.
 \end{equation}
-As with the scalar case, the marginal PDF is obtained by multiplying the above by $f(\bold{V}^{(1)};t^{(1)})$ and integrating over $\bold{V}^{(1)}$. Such PDF solves the exact same evolution equation as the conditional PDF.
+As with the scalar case, the marginal PDF is obtained by multiplying the above by $f(\Vvec^{(1)};t^{(1)})$ and integrating over $\Vvec^{(1)}$. Such PDF solves the exact same evolution equation as the conditional PDF.
 
 %--------------------------------------------
 \subsection{Evolution equations for the Lagrangian PDF}
 %--------------------------------------------
 
-Consider the six-dimensional diffusion process $\Zvec^* = \Zvec^*(t)$  that describes the position $\Xvec^* = \Xvec^*(t)$ and velocity $\Uvec^* = \Uvec^*(t)$ of a fluid particle. Thus
+Consider the six-dimensional diffusion process $\zvec^* = \zvec^*(t)$  that describes the position $\xvec^* = \xvec^*(t)$ and velocity $\uvec^* = \uvec^*(t)$ of a fluid particle. Thus
 \begin{equation}
-\bold{Z}^* = \begin{pmatrix}
-  Z_1^* \\
-  Z_2^* \\
-  Z_3^* \\
-  Z_4^* \\
-  Z_5^* \\
-  Z_6^*
+\zvec^* = \begin{pmatrix}
+  z_1^* \\
+  z_2^* \\
+  z_3^* \\
+  z_4^* \\
+  z_5^* \\
+  z_6^*
  \end{pmatrix}
 =\begin{pmatrix}
-  X_1^* \\
-  X_2^* \\
-  X_3^* \\
-  U_1^* \\
-  U_2^* \\
-  U_3^*
+  x_1^* \\
+  x_2^* \\
+  x_3^* \\
+  u_1^* \\
+  u_2^* \\
+  u_3^*
  \end{pmatrix}
 \end{equation}
-The corresponding sample space is given by the vector $\{x_1, x_2, x_3, V_1, V_2, V_3\}$. The vectors $\Xvec^*$ and $\Uvec^*$ evolve according to
+The corresponding sample space is given by the vector $\{x_1, x_2, x_3, V_1, V_2, V_3\}$. The vectors $\xvec^*$ and $\uvec^*$ evolve according to
 \begin{gather}
-\frac{d X^*_i}{dt} = U^*_i, \\
-dU_i^* = -\left ( \frac{1}{\rho} \frac{\partial \pavg}{\partial x_i} + \nu \frac{\partial^2 \uiavg}{\partial x_k \partial x_k} \right )_{\xvec = \Xvec^*} dt + G_{ij} (U_j^* - \ujavg) dt + (C_0 \epsilon)^{1/2} dW_i,
+\frac{d x^*_i}{dt} = u^*_i, \\
+du_i^* = -\left ( \frac{1}{\rho} \frac{\partial \pavg}{\partial x_i} + \nu \frac{\partial^2 \uavg_i}{\partial x_k \partial x_k} \right )_{\xvec = \xvec^*} dt + G_{ij} (u_j^* - \uavg_j) dt + (C_0 \epsilon)^{1/2} dW_i,
 \end{gather} 
-where the coefficient $G_{ij}$ and the expectation $\ujavg$ are evaluated at $\Xvec^*$. The drift term involving the pressure gradient and the laplacian of $\uiavg$ comes from the Navier-Stokes equations, whereas the remaining terms model the fluctuating pressure gradient and the Laplacian of the fluctuating velocity.
+where the coefficient $G_{ij}$ and the expectation $\uavg_j$ are evaluated at $\xvec^*$. The drift term involving the pressure gradient and the laplacian of $\uavg_i$ comes from the Navier-Stokes equations, whereas the remaining terms model the fluctuating pressure gradient and the Laplacian of the fluctuating velocity.
 
-The stochastic process $\bold{Z}^*$ evolves according the general diffusion equation
+The stochastic process $\zvec^*$ evolves according the general diffusion equation
 \begin{equation}
-dZ^*_i(t) = a_i[\bold{Z}^*(t),t] dt + b_{ij}[\bold{Z}^*(t),t] dW_j(t),
+dz^*_i(t) = a_i[\zvec^*(t),t] dt + b_{ij}[\zvec^*(t),t] dW_j(t),
 \end{equation}
 where 
 \begin{equation}
-\bold{a}[\bold{Z}^*(t),t)] =  \begin{pmatrix}
-  Z^*_4(t) \\
-  Z^*_5(t)  \\
-  Z^*_6(t) \\
--\left ( \frac{1}{\rho} \frac{\partial \pavg}{\partial x_1} + \nu \frac{\partial^2 \langle U_1 \rangle}{\partial x_k \partial x_k} \right ) + G_{1j} (Z_{(j+3)}^*(t) - \ujavg) \\
--\left ( \frac{1}{\rho} \frac{\partial \pavg}{\partial x_2} + \nu \frac{\partial^2 \langle U_2 \rangle}{\partial x_k \partial x_k} \right ) + G_{2j} (Z_{(j+3)}^*(t) - \ujavg) \\
--\left ( \frac{1}{\rho} \frac{\partial \pavg}{\partial x_3} + \nu \frac{\partial^2 \langle U_3 \rangle}{\partial x_k \partial x_k} \right ) + G_{3j} (Z_{(j+3)}^*(t) - \ujavg)
+\avec[\zvec^*(t),t] =  \begin{pmatrix}
+  z^*_4(t) \\
+  z^*_5(t)  \\
+  z^*_6(t) \\
+-\left ( \frac{1}{\rho} \frac{\partial \pavg}{\partial x_1} + \nu \frac{\partial^2 \uavg_1}{\partial x_k \partial x_k} \right ) + G_{1j} \left ( z_{j+3}^*(t) - \uavg_j \right ) \\
+-\left ( \frac{1}{\rho} \frac{\partial \pavg}{\partial x_2} + \nu \frac{\partial^2 \uavg_2}{\partial x_k \partial x_k} \right ) + G_{2j} \left ( z_{j+3}^*(t) - \uavg_j \right ) \\
+-\left ( \frac{1}{\rho} \frac{\partial \pavg}{\partial x_3} + \nu \frac{\partial^2 \uavg_3}{\partial x_k \partial x_k} \right ) + G_{3j} \left ( z_{j+3}^*(t) - \uavg_j \right )
  \end{pmatrix}
 \end{equation}
 and
 \begin{equation}
-\mathbf{b}[\bold{Z}^*(t),t] = \begin{pmatrix}
+\bvec[\zvec^*(t),t] = \begin{pmatrix}
   0 & 0 & 0 & 0 & 0 & 0 \\
   0 & 0 & 0 & 0 & 0 & 0 \\
   0 & 0 & 0 & 0 & 0 & 0 \\
@@ -2332,7 +2335,7 @@ and
   0 & 0 & 0 & 0 & 0 & (C_0 \epsilon)^{1/2} 
  \end{pmatrix}.
 \end{equation}
-The Eulerian fields for the pressure gradient, viscous diffusion, and $G_{ij}$ that appear in $\avec[\Zvec^*(t),t)]$ are evaluated at $\xvec = \Xvec^*$. From the expression for $\bvec$ we obtain
+The Eulerian fields for the pressure gradient, viscous diffusion, and $G_{ij}$ that appear in $\avec[\zvec^*(t),t]$ are evaluated at $\xvec = \xvec^*$. From the expression for $\bvec$ we obtain
 \begin{equation}
 B_{ij} = \begin{pmatrix}
   0 & 0 & 0 & 0 & 0 & 0 \\
@@ -2346,8 +2349,8 @@ B_{ij} = \begin{pmatrix}
 Using equation (\ref{fokkerplank_3d}) it is straightforward to derive the Fokker-Plank equation for the conditional PDF $f_1(\xvec,\Vvec;t | \xvec^{(1)}, \Vvec^{(1)}, t^{(1)})$. Assuming a fixed value of $t^{(1)} = t_0$, and labeling $\xvec^{(1)}$ by $\yvec$ and $\Vvec^{(1)}$ by $\Wvec$, we re-label this PDF as $f_L(\Vvec, \xvec; t | \Wvec, \yvec)$. Its Fokker-Plank equation follows
 \begin{align}
 \label{fokkerplank_xVx1V1}
-\frac{\partial}{\partial t} f_L(\Vvec, \xvec; t | \Wvec, \yvec) = &-V_i\frac{\partial} {\partial x_i}f_L(\Vvec, \xvec; t | \Wvec, \yvec) + \left (\frac{1}{\rho} \frac{\partial \pavg}{\partial x_i}  -\nu \frac{\partial^2 \uiavg}{\partial x_k \partial x_k} \right ) \frac{\partial}{\partial V_i}f_L(\Vvec, \xvec; t | \Wvec, \yvec) \nonumber \\
-&- G_{ij}\frac{\partial}{\partial V_i} [(V_j - \ujavg) f_L(\Vvec, \xvec; t | \Wvec, \yvec) ] + \frac{1}{2} C_0 \epsilon \frac{\partial ^2}{\partial V_i V_i} f_L(\Vvec, \xvec; t | \Wvec, \yvec ).
+\frac{\partial}{\partial t} f_L(\Vvec, \xvec; t | \Wvec, \yvec) = &-V_i\frac{\partial} {\partial x_i}f_L(\Vvec, \xvec; t | \Wvec, \yvec) + \left (\frac{1}{\rho} \frac{\partial \pavg}{\partial x_i}  -\nu \frac{\partial^2 \uavg_i}{\partial x_k \partial x_k} \right ) \frac{\partial}{\partial V_i}f_L(\Vvec, \xvec; t | \Wvec, \yvec) \nonumber \\
+&- G_{ij}\frac{\partial}{\partial V_i} [(V_j - \uavg_j) f_L(\Vvec, \xvec; t | \Wvec, \yvec) ] + \frac{1}{2} C_0 \epsilon \frac{\partial ^2}{\partial V_i V_i} f_L(\Vvec, \xvec; t | \Wvec, \yvec ).
 \end{align}
 The pressure gradient, viscous diffusion, and $G_{ij}$ are now functions of time and the sample space variable $\xvec$. The Lagrangian PDF $f_L$ can be obtained from $f_L(\Vvec, \xvec; t| \Wvec, \yvec)$ as shown below
 \begin{align}
@@ -2355,16 +2358,16 @@ f_L(\Vvec, \xvec; t | \yvec) &= \frac{ f_L(\Vvec, \xvec; t, \yvec)}{f_L(\yvec)} 
 & = \frac{ \int f_L(\Vvec, \xvec; t, \Wvec, \yvec) d\Wvec }{f_L(\yvec)} \nonumber \\
 & =  \int f_L(\Vvec, \xvec; t | \Wvec, \yvec) \frac{ f_L(\Wvec, \yvec) }{  f_L(\yvec)  } d\Wvec 
 \end{align}
-Multiplying equation (\ref{fokkerplank_xVx1V1}) by $f_L(\Wvec, \yvec) / f_L(\yvec)$ and integrating over $\Wvec$ shows that $f_L$ still satisfies the given Fokker-Plank, that is
+Multiplying equation (\ref{fokkerplank_xVx1V1}) by $f_L(\Wvec, \yvec) / f_L(\yvec)$ and integrating over $\Wvec$ shows that $f_L$ still satisfies the given Fokker-Plank equation, that is
 \begin{equation}
-\frac{\partial f_L}{\partial t} = -V_i\frac{\partial f_L} {\partial x_i} + \left ( \frac{1}{\rho} \frac{\partial \pavg}{\partial x_i} - \nu \frac{\partial^2 \uiavg}{\partial x_k \partial x_k} \right ) \frac{\partial f_L}{\partial V_i} - G_{ij}\frac{\partial}{\partial V_i} [(V_j - \ujavg) f_L] + \frac{1}{2} C_0 \epsilon \frac{\partial ^2 f_L}{\partial V_i V_i}.
+\frac{\partial f_L}{\partial t} = -V_i\frac{\partial f_L} {\partial x_i} + \left ( \frac{1}{\rho} \frac{\partial \pavg}{\partial x_i} - \nu \frac{\partial^2 \uavg_i}{\partial x_k \partial x_k} \right ) \frac{\partial f_L}{\partial V_i} - G_{ij}\frac{\partial}{\partial V_i} [(V_j - \uavg_j) f_L] + \frac{1}{2} C_0 \epsilon \frac{\partial ^2 f_L}{\partial V_i V_i}.
 \end{equation}
 Using equation (\ref{eul_lag}) we finally obtain the associated Eulerian PDF
 \begin{equation}
 \label{GLM2}
-\frac{\partial f}{\partial t}  + V_i\frac{\partial f} {\partial x_i} =  \left ( \frac{1}{\rho} \frac{\partial \pavg}{\partial x_i} - \nu \frac{\partial^2 \uiavg}{\partial x_k \partial x_k} \right ) \frac{\partial f}{\partial V_i} - G_{ij}\frac{\partial}{\partial V_i} [(V_j - \ujavg) f] + \frac{1}{2} C_0 \epsilon \frac{\partial ^2 f}{\partial V_i V_i}.
+\frac{\partial f}{\partial t}  + V_i\frac{\partial f} {\partial x_i} =  \left ( \frac{1}{\rho} \frac{\partial \pavg}{\partial x_i} - \nu \frac{\partial^2 \uavg_i}{\partial x_k \partial x_k} \right ) \frac{\partial f}{\partial V_i} - G_{ij}\frac{\partial}{\partial V_i} [(V_j - \uavg_j) f] + \frac{1}{2} C_0 \epsilon \frac{\partial ^2 f}{\partial V_i V_i}.
 \end{equation}
-This is equation is identical to the evolution equation (\ref{GLM}) for the Eulerian PDF using the GLM.
+This equation is identical to the evolution equation (\ref{GLM}) for the Eulerian PDF using the GLM.
 
 %--------------------------------------------
 \subsection{Particle methods}
@@ -2377,7 +2380,7 @@ so as to satisfy the normalization condition.
 
 Ultimately, we are interested in Eulerian quantities such as the mean velocity, which is obtained as follows
 \begin{equation}
-\uiavg = \int V_i f d\Vvec.
+\uavg_i = \int V_i f d\Vvec.
 \end{equation}
 Instead of computing the corresponding Eulerian PDF for the system of particles we make use of the following
 \begin{align}
@@ -2390,77 +2393,77 @@ f(\Vvec; \xvec,t) &= \int f_L(\Vvec, \xvec; t|\yvec) d\yvec \nonumber \\
 \end{align}
 We note that $f_L(\Vvec,\xvec;t)$ is the probability of seeing a particle with velocity $\Vvec$ and position $\xvec$ at time $t$, irrespective of where that particle originated. The PDF $f_{L_x} = f_{L_x}(\Vvec|\xvec;t)$ refers to the probability of seeing a particle with velocity $\Vvec$ given that the particle, irrespective of where it originated, is located at position $\xvec$. We now require that $f_L(\xvec;t) = f_L(\yvec)$ (the distribution of particles over space remains uniform) and thus we can compute statistical quantities, such as the mean velocity, as follows
 \begin{equation}
-\uiavg = \int V_i f_{L_x} d\Vvec.
+\uavg_i = \int V_i f_{L_x} d\Vvec.
 \end{equation}
-That is, we have stablished an equality between $f$ and $f_{L_x}$. If we were to use the GLM to model the particle evolution equations, the PDF $f_{L_x}$ would also satisfy eq. (\ref{GLM2}).
+That is, we have established an equality between $f$ and $f_{L_x}$. If we were to use the GLM to model the particle evolution equations, the PDF $f_{L_x}$ would also satisfy eq. (\ref{GLM2}).
 
 %-------------------------------------------------------------------------------
 \section{PDFs for the fluctuating velocity}
 %-------------------------------------------------------------------------------
 
-The Eulerian PDF  for $\uvec$ is given by $g = g(\vvec; \xvec,t)$, where $\vvec$ is the sample space for $\uvec$. The PDF $g$ contains no information on $\langle \Uvec \rangle$, but the information provided by both $g$ and $\langle \Uvec \rangle$ is identical to that obtained from $f$. The relationship between $f$ and $g$ is as follows
+The Eulerian PDF  for $\uvec'$ is given by $g = g(\vvec; \xvec,t)$, where $\vvec$ is the sample space for $\uvec'$. The PDF $g$ contains no information on $\overline{\uvec}$, but the information provided by both $g$ and $\overline{\uvec}$ is identical to that obtained from $f$. The relationship between $f$ and $g$ is as follows
 \begin{equation}
 \label{eul_g_f}
-g(\vvec; \xvec,t) = f(\langle \Uvec \rangle + \vvec; \xvec,t).
+g(\vvec; \xvec,t) = f(\overline{\uvec} + \vvec; \xvec,t).
 \end{equation}
-It is important to note that similar relationships follow for multi-variable PDFs. For example, consider the joint PDFs $g(\qvec,\vvec; \xvec, t)$ and $f(\qvec, \Vvec; \xvec, t)$, where $\qvec$ is the sample space variable for $- \frac{1}{\rho} \nabla \pvec +  \nu \Delta \uvec$. Thus, these two PDFs are related by 
+It is important to note that similar relationships follow for multi-variable PDFs. For example, consider the joint PDFs $g(\qvec,\vvec; \xvec, t)$ and $f(\qvec, \Vvec; \xvec, t)$, where $\qvec$ is the sample space variable for $- \frac{1}{\rho} \nabla \pvec' +  \nu \Delta \uvec'$. Thus, these two PDFs are related by 
 \begin{equation}
 \label{eul_g_f_joint}
-g(\qvec, \vvec; \xvec,t) = f(\qvec, \langle \Uvec \rangle + \vvec; \xvec,t).
+g(\qvec, \vvec; \xvec,t) = f(\qvec, \overline{\uvec} + \vvec; \xvec,t).
 \end{equation}
 
 We begin the derivation of the transport equation for the fluctuating Eulerian PDF as follows 
 \begin{align}
-\frac{\partial g}{\partial t} + ( \uiavg + v_i ) \frac{\partial g}{\partial x_i} = & \left ( \frac{\partial f}{\partial V_j} \right )_{\Vvec = \langle \Uvec \rangle + \vvec} \frac{\partial \ujavg}{\partial t} + \left (\frac{\partial f}{\partial t} \right )_{\Vvec = \langle \Uvec \rangle + \vvec} \nonumber \\
-&+ ( \uiavg + v_i ) \left [ \left ( \frac{\partial f}{\partial V_j} \right )_{\Vvec = \langle \Uvec \rangle + \vvec} \frac{\partial \ujavg}{\partial x_i} + \left (\frac{\partial f}{\partial x_i} \right )_{\Vvec = \langle \Uvec \rangle + \vvec} \right ].
+\frac{\partial g}{\partial t} + ( \uavg_i + v_i ) \frac{\partial g}{\partial x_i} = & \left ( \frac{\partial f}{\partial V_j} \right )_{\Vvec = \overline{\uvec} + \vvec} \frac{\partial \uavg_j}{\partial t} + \left (\frac{\partial f}{\partial t} \right )_{\Vvec = \overline{\uvec} + \vvec} \nonumber \\
+&+ ( \uavg_i + v_i ) \left [ \left ( \frac{\partial f}{\partial V_j} \right )_{\Vvec = \overline{\uvec} + \vvec} \frac{\partial \uavg_j}{\partial x_i} + \left (\frac{\partial f}{\partial x_i} \right )_{\Vvec = \overline{\uvec} + \vvec} \right ].
 \end{align}
 Regrouping the above we obtain
 \begin{equation}
-\frac{\partial g}{\partial t} + ( \uiavg + v_i ) \frac{\partial g}{\partial x_i} = \left ( \frac{\partial f}{\partial t} + V_i \frac{\partial f}{\partial x_i} \right )_{\Vvec = \langle \Uvec \rangle + \vvec} + \left ( \frac{\partial f}{\partial V_j} \right )_{\Vvec = \langle \Uvec \rangle + \vvec} \left [ \frac{\partial \ujavg}{\partial t} + (\uiavg + v_i) \frac{\partial \ujavg}{\partial x_i} \right ]
+\frac{\partial g}{\partial t} + ( \uavg_i + v_i ) \frac{\partial g}{\partial x_i} = \left ( \frac{\partial f}{\partial t} + V_i \frac{\partial f}{\partial x_i} \right )_{\Vvec = \overline{\uvec} + \vvec} + \left ( \frac{\partial f}{\partial V_j} \right )_{\Vvec = \overline{\uvec} + \vvec} \left [ \frac{\partial \uavg_j}{\partial t} + (\uavg_i + v_i) \frac{\partial \uavg_j}{\partial x_i} \right ]
 \end{equation}
 To proceed further we need the following identity. For any function $H(\Vvec; \xvec, t)$ we have
 \begin{equation}
 \label{deriv_v}
-\frac{\partial H(\langle \Uvec \rangle + \vvec; \xvec, t)}{\partial v_i} = \left ( \frac{\partial H(\Vvec; \xvec, t)}{\partial V_j} \right)_{\Vvec = \langle \Uvec \rangle + \vvec} \frac{\partial ( \ujavg + v_j) }{\partial v_i} = \left ( \frac{\partial H(\Vvec; \xvec,t )}{\partial V_i} \right)_{\Vvec = \langle \Uvec \rangle + \vvec}.
+\frac{\partial H(\overline{\uvec} + \vvec; \xvec, t)}{\partial v_i} = \left ( \frac{\partial H(\Vvec; \xvec, t)}{\partial V_j} \right )_{\Vvec = \overline{\uvec} + \vvec} \frac{\partial ( \uavg_j + v_j) }{\partial v_i} = \left ( \frac{\partial H(\Vvec; \xvec,t )}{\partial V_i} \right )_{\Vvec = \overline{\uvec} + \vvec}.
 \end{equation}
 The transport equation for $g$ then becomes
 \begin{equation}
-\frac{\partial g}{\partial t} + ( \uiavg + v_i ) \frac{\partial g}{\partial x_i} = \left ( \frac{\partial f}{\partial t} + V_i \frac{\partial f}{\partial x_i} \right )_{\Vvec = \langle \Uvec \rangle + \vvec} + \frac{\partial g}{\partial v_j} \left [ \frac{\partial \ujavg}{\partial t} + (\uiavg + v_i) \frac{\partial \ujavg}{\partial x_i} \right ]
+\frac{\partial g}{\partial t} + ( \uavg_i + v_i ) \frac{\partial g}{\partial x_i} = \left ( \frac{\partial f}{\partial t} + V_i \frac{\partial f}{\partial x_i} \right )_{\Vvec = \overline{\uvec} + \vvec} + \frac{\partial g}{\partial v_j} \left [ \frac{\partial \uavg_j}{\partial t} + (\uavg_i + v_i) \frac{\partial \uavg_j}{\partial x_i} \right ]
 \end{equation}
 Using equation (\ref{pdf_ns}) the first term on the right-hand side becomes
 \begin{multline}
-\left ( \frac{\partial f}{\partial t} + V_i \frac{\partial f}{\partial x_i} \right )_{\Vvec = \langle \Uvec \rangle + \vvec} = \left ( \frac{1}{\rho} \frac{\partial \pavg}{\partial x_j} -\nu \frac{\partial^2 \ujavg}{\partial x_k \partial x_k} \right) \left (\frac{\partial f}{\partial V_j} \right)_{\Vvec = \langle \Uvec \rangle + \vvec} \\
-- \left [ \frac{\partial}{\partial V_j} \left ( f \left < \left . - \frac{1}{\rho} \frac{\partial \pfluc}{\partial x_j} +  \nu \frac{\partial ^2 \ujfluc}{\partial x_k \partial x_k} \right | \Vvec \right > \right ) \right ]_{\Vvec = \langle \Uvec \rangle + \vvec} 
+\left ( \frac{\partial f}{\partial t} + V_i \frac{\partial f}{\partial x_i} \right )_{\Vvec = \overline{\uvec} + \vvec} = \left ( \frac{1}{\rho} \frac{\partial \pavg}{\partial x_j} -\nu \frac{\partial^2 \uavg_j}{\partial x_k \partial x_k} \right ) \left (\frac{\partial f}{\partial V_j} \right )_{\Vvec = \overline{\uvec} + \vvec} \\
+- \left [ \frac{\partial}{\partial V_j} \left ( f \left < \left . - \frac{1}{\rho} \frac{\partial \pfluc}{\partial x_j} +  \nu \frac{\partial ^2 \ufluc_j}{\partial x_k \partial x_k} \right | \Vvec \right > \right ) \right ]_{\Vvec = \overline{\uvec} + \vvec} 
 \end{multline}
 Using the identity shown in (\ref{deriv_v}) the above becomes
 \begin{multline}
-\left ( \frac{\partial f}{\partial t} + V_i \frac{\partial f}{\partial x_i} \right )_{\Vvec = \langle \Uvec \rangle + \vvec} = \left ( \frac{1}{\rho} \frac{\partial \pavg}{\partial x_j} -\nu \frac{\partial^2 \ujavg}{\partial x_k \partial x_k} \right) \frac{\partial g}{\partial v_j} \\
-- \frac{\partial}{\partial v_j} \left ( g \left < \left . - \frac{1}{\rho} \frac{\partial \pfluc}{\partial x_j} +  \nu \frac{\partial ^2 \ujfluc}{\partial x_k \partial x_k} \right | \langle \Uvec \rangle + \vvec \right > \right ). \end{multline}
+\left ( \frac{\partial f}{\partial t} + V_i \frac{\partial f}{\partial x_i} \right )_{\Vvec = \overline{\uvec} + \vvec} = \left ( \frac{1}{\rho} \frac{\partial \pavg}{\partial x_j} -\nu \frac{\partial^2 \uavg_j}{\partial x_k \partial x_k} \right ) \frac{\partial g}{\partial v_j} \\
+- \frac{\partial}{\partial v_j} \left ( g \left < \left . - \frac{1}{\rho} \frac{\partial \pfluc}{\partial x_j} +  \nu \frac{\partial ^2 \ufluc_j}{\partial x_k \partial x_k} \right | \overline{\uvec} + \vvec \right > \right ). \end{multline}
 Using equation (\ref{eul_g_f_joint}) the conditional expectation in the last term can be re-expressed as
 \begin{equation}
-\int \qvec\, f(\qvec | \langle \Uvec \rangle + \vvec; \xvec, t) d\qvec = \int \qvec\, g(\qvec | \vvec; \xvec, t) d\qvec = \left < \left . - \frac{1}{\rho} \nabla \pvec +  \nu \Delta \uvec \right | \vvec \right >.
+\int \qvec\, f(\qvec | \overline{\uvec} + \vvec; \xvec, t) d\qvec = \int \qvec\, g(\qvec | \vvec; \xvec, t) d\qvec = \left < \left . - \frac{1}{\rho} \nabla \pvec' +  \nu \Delta \uvec' \right | \vvec \right >.
 \end{equation}
 Using the RANS momentum equation one finally obtains the transport equation for $g$
 \begin{equation}
-\frac{\partial g}{\partial t} + ( \uiavg + v_i ) \frac{\partial g}{\partial x_i} = v_i \frac{\partial \ujavg}{\partial x_i} \frac{\partial g}{\partial v_j} - \frac{\partial \rs_{jk}}{\partial x_k} \frac{\partial g}{\partial v_j} - \frac{\partial}{\partial v_j} \left ( g \left < \left . - \frac{1}{\rho} \frac{\partial \pfluc}{\partial x_j} +  \nu \frac{\partial ^2 \ujfluc}{\partial x_k \partial x_k} \right | \vvec \right > \right ).
+\frac{\partial g}{\partial t} + ( \uavg_i + v_i ) \frac{\partial g}{\partial x_i} = v_i \frac{\partial \uavg_j}{\partial x_i} \frac{\partial g}{\partial v_j} - \frac{\partial \rs_{jk}}{\partial x_k} \frac{\partial g}{\partial v_j} - \frac{\partial}{\partial v_j} \left ( g \left < \left . - \frac{1}{\rho} \frac{\partial \pfluc}{\partial x_j} +  \nu \frac{\partial ^2 \ufluc_j}{\partial x_k \partial x_k} \right | \vvec \right > \right ).
 \end{equation}
 
 As before, the term that needs modeling is the last one on the right-hand side. If, during the derivation of the transport equation for $g$, the modeled equation for $f$ based on the GLM is used, then the modeled equation for $g$ corresponding to the GLM becomes
 \begin{equation}
-\frac{\partial g}{\partial t} + ( \uiavg + v_i ) \frac{\partial g}{\partial x_i} = v_i \frac{\partial \ujavg}{\partial x_i} \frac{\partial g}{\partial v_j} - \frac{\partial \rs_{jk}}{\partial x_k} \frac{\partial g}{\partial v_j} - \frac{\partial g G_{jk} v_k}{\partial v_j}  + \frac{1}{2} C_0 \epsilon \frac{\partial^2 g}{\partial v_k \partial v_k}.
+\frac{\partial g}{\partial t} + ( \uavg_i + v_i ) \frac{\partial g}{\partial x_i} = v_i \frac{\partial \uavg_j}{\partial x_i} \frac{\partial g}{\partial v_j} - \frac{\partial \rs_{jk}}{\partial x_k} \frac{\partial g}{\partial v_j} - \frac{\partial g G_{jk} v_k}{\partial v_j}  + \frac{1}{2} C_0 \epsilon \frac{\partial^2 g}{\partial v_k \partial v_k}.
 \end{equation}
 
-We can also set up a relationship between the fluctuating Eulerian and fluctuating Lagrangian PDFs. The fluctuating Lagrangian PDF $g_L = g_L(\vvec, \xvec; t|\yvec)$ is the joint PDF of $\bold{X}^+(t,\yvec)$ and the fluctuating velocity $\uvec^+ = \uvec^+(t,\yvec)$, where $\uvec^+ = \Uvec^+ - \langle  \Uvec^+ \rangle$. The evolution equations for these variables are
+We can also set up a relationship between the fluctuating Eulerian and fluctuating Lagrangian PDFs. The fluctuating Lagrangian PDF $g_L = g_L(\vvec, \xvec; t|\yvec)$ is the joint PDF of $\xvec^+(t,\yvec)$ and the fluctuating velocity $\uvec'^+= \uvec'^+(t,\yvec)$, where $\uvec'^+ = \uvec^+- \overline{\uvec}^+$. The evolution equations for these variables are
 \begin{equation}
-\frac{\partial X_i^+}{\partial t} = \uiavg_{\xvec = \Xvec^+} + \uifluc^+ ,
+\frac{\partial x_i^+}{\partial t} = \left ( \uavg_i \right )_{\xvec = \xvec^+} + u'^+_i,
 \end{equation}
 \begin{equation}
-\frac{\partial \uifluc^+}{\partial t} = -\ujfluc^+ \left ( \frac{\partial \uiavg}{\partial x_j} \right)_{\xvec = \Xvec^+} + \left ( \frac{\partial \rs_{ij}}{\partial x_j} \right )_{\xvec = \Xvec^+} + \left ( - \frac{1}{\rho} \frac{\partial \pfluc}{\partial x_i} + \nu \frac{\partial^2 \uifluc}{\partial x_j \partial x_j} \right)_{\xvec = \Xvec^+}.
+\frac{\partial u'^+_i}{\partial t} = -u'^+_j \left ( \frac{\partial \uavg_i}{\partial x_j} \right )_{\xvec = \xvec^+} + \left ( \frac{\partial \rs_{ij}}{\partial x_j} \right )_{\xvec = \xvec^+} + \left ( - \frac{1}{\rho} \frac{\partial \pfluc}{\partial x_i} + \nu \frac{\partial^2 \ufluc_i}{\partial x_j \partial x_j} \right )_{\xvec = \xvec^+},
 \end{equation}
-As with the Eulerian PDFs, we can relate the Lagrangian PDF and the fluctuating Lagrangian PDF as follows
+where the last equation follows from the evolution equation for $\ufluc_i$ given in \cref{eq:vel_fluc}. As with the Eulerian PDFs, we can relate the Lagrangian PDF and the fluctuating Lagrangian PDF as follows
 \begin{equation}
 \label{lag_g_f}
-g_L(\vvec,\xvec; t|\yvec) = f_L(\langle \Uvec(\xvec,t) \rangle + \vvec, \xvec; t|\yvec).
+g_L(\vvec,\xvec; t|\yvec) = f_L(\overline{\uvec} + \vvec, \xvec; t|\yvec).
 \end{equation}
 Thus, plugging in equations (\ref{eul_g_f}) and (\ref{lag_g_f}) into equation (\ref{eul_lag}), we finally obtain
 \begin{equation}
@@ -2472,11 +2475,11 @@ For homogeneous turbulence the fluctuating Eulerian PDF becomes independent of $
 \begin{equation}
 g_L(\vvec ,\xvec ; t |\yvec) = h_L(\vvec, \xvec - \yvec; t),
 \end{equation}
-where $h_L(\vvec, \xvec - \yvec; t)$ is the joint PDF for the fluctuating velocity $\uvec^+(t,\yvec)$ and the separation distance $\Xvec^+(t,\yvec) - \yvec$. Using equation (\ref{fluc_eul_lag}) we can show that
+where $h_L(\vvec, \xvec - \yvec; t)$ is the joint PDF for the fluctuating velocity $\uvec'^+(t,\yvec)$ and the separation distance $\xvec^+(t,\yvec) - \yvec$. Using equation (\ref{fluc_eul_lag}) we can show that
 \begin{equation}
 g^{(h)}(\vvec;t) =  \int g_L(\vvec,\xvec;t|\yvec)dy = \int h_L(\vvec, \xvec - \yvec; t) d\yvec = \int h_L(\vvec, \rvec;t) d\rvec,
 \end{equation}
-where we used integration by substitution for the variable $\yvec(\rvec) = \xvec - \rvec$. The last integral above constitutes the fluctuating Lagrangian PDF for $\uvec^+(t,\yvec)$, which we label as $g_L^{(h)} = g_L^{(h)}(\vvec; t)$. Thus, for homogeneous turbulence, the PDFs for $\uvec(t,\xvec)$ and $\uvec^+(t,\yvec)$ are equal, that is $g^{(h)} = g_L^{(h)}$.
+where we used integration by substitution for the variable $\yvec(\rvec) = \xvec - \rvec$. The last integral above constitutes the fluctuating Lagrangian PDF for $\uvec'^+(t,\yvec)$, which we label as $g_L^{(h)} = g_L^{(h)}(\vvec; t)$. Thus, for homogeneous turbulence, the PDFs for $\uvec'(t,\xvec)$ and $\uvec'^+(t,\yvec)$ are equal, that is $g^{(h)} = g_L^{(h)}$.
 
 %###############################################################################
 %
