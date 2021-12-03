@@ -890,6 +890,257 @@ and
     \nu_{m} = \frac{1}{\tau_m} = n_1 \sigma v.
 \end{equation}
 
+%--------------------------------------------------------------------------
+\section{Coulomb scattering}
+%--------------------------------------------------------------------------
+%--------------------------------------------
+\subsection{Particle equations}
+%--------------------------------------------
+Consider two particles, with positions $\rvec_1=\rvec_1(t)$ and $\rvec_2=\rvec_2(t)$, velocities $\vvec_1=\vvec_1(t)$ and $\vvec_2=\vvec_2(t)$, charges $q_1$ and $q_2$, and masses $m_1$ and $m_2$, respectively. Their positions and velocities are governed by the following equations 
+\begin{equation}
+    \label{eq:particle_1_pos}
+    \frac{d \rvec_1}{dt} = \vvec_1,
+\end{equation}
+\begin{equation}
+    \label{eq:particle_2_pos}
+    \frac{d \rvec_2}{dt} = \vvec_2,
+\end{equation}
+\begin{equation}
+    \label{eq:particle_1_vel}
+    m_1 \frac{d\vvec_1}{dt} = -\frac{q_1 q_2}{4 \pi \epsilon} \frac{\rvec_2 - \rvec_1}{\left | \rvec_2 - \rvec_1 \right |^3},
+\end{equation}
+\begin{equation}
+    \label{eq:particle_2_vel}
+    m_2 \frac{d\vvec_2}{dt} = -\frac{q_1 q_2}{4 \pi \epsilon} \frac{\rvec_1 - \rvec_2}{\left | \rvec_1 - \rvec_2 \right |^3}.
+\end{equation}
+We note that the above system consists of twelve equations for twelve unknowns. We now introduce the center-of-mass position $\Rvec = \Rvec(t)$, the center-of-mass velocity $\Vvec = \Vvec(t)$, the shifted position $\rvec = \rvec(t)$ and the shifted velocity $\vvec = \vvec(t)$ as follows
+\begin{equation}
+    \Rvec = \frac{m_1 \rvec_1 + m_2 \rvec_2}{m_1 + m_2} \qquad \rvec = \rvec_1 - \rvec_2,
+\end{equation}
+\begin{equation}
+    \Vvec = \frac{m_1 \vvec_1 + m_2 \vvec_2}{m_1 + m_2} \qquad \vvec = \vvec_1 - \vvec_2
+\end{equation}
+Thus, in terms of these new four variables, the particle equations can be written as
+\begin{equation}
+    \frac{d \Rvec}{dt} = \Vvec,
+\end{equation}
+\begin{equation}
+    \frac{d \Vvec}{dt} = 0 ,
+\end{equation}
+\begin{equation}
+    \label{eq:particle_pos}
+    \frac{d \rvec}{dt} = \vvec,
+\end{equation}
+\begin{equation}
+    \label{eq:particle_vel}
+    \frac{d \vvec}{dt} = \frac{q_1 q_2}{4\pi \epsilon_0 m_r} \frac{\rvec}{r^3},
+\end{equation}
+where the reduced mass $m_r$ is given by
+\begin{equation}
+    \frac{1}{m_r} = \frac{1}{m_1} + \frac{1}{m_2}.
+\end{equation}
+The first two equations above give the trivial solution $\Vvec = $ constant and $\Rvec$ = $\Rvec(0) + \Vvec t$. Thus, we have reduced the problem from twelve unknowns to six unknowns, namely $\rvec$ and $\vvec$.
+
+%--------------------------------------------
+\subsection{Conservation of energy}
+%--------------------------------------------
+Dotting \cref{eq:particle_vel} by $\vvec$ gives 
+\begin{align}
+    \vvec \cdot \frac{d \vvec}{dt} &= \frac{q_1 q_2}{4 \pi \epsilon_0 m_r} \vvec \cdot \frac{\rvec}{r^3} \nonumber \\
+    &= \frac{q_1 q_2}{4 \pi \epsilon_0 m_r} \frac{d\rvec}{dt} \cdot \frac{\rvec}{r^3} \nonumber \\
+    &= \frac{q_1 q_2}{4 \pi \epsilon_0 m_r} \frac{1}{2} \frac{dr^2}{dt} \frac{1}{r^3} \nonumber \\
+    &= \frac{q_1 q_2}{4 \pi \epsilon_0 m_r} \frac{1}{r^2} \frac{dr}{dt} \nonumber \\
+    &= -\frac{q_1 q_2}{4 \pi \epsilon_0 m_r} \frac{d}{dt} \left ( \frac{1}{r} \right ).
+\end{align} 
+For the left hand side above we have
+\begin{equation}
+    \vvec \cdot \frac{d \vvec}{dt} = \frac{1}{2} \frac{d v^2}{dt},
+\end{equation}
+and thus we obtain the following expression for conservation of energy
+\begin{equation}
+    \frac{d}{dt} \left ( \frac{1}{2} m_r v^2 + \frac{q_1 q_2}{4 \pi \epsilon_0} \frac{1}{r} \right ) = 0.
+\end{equation}
+
+%--------------------------------------------
+\subsection{Conservation of momentum}
+%--------------------------------------------
+Crossing \cref{eq:particle_vel} by $\rvec$ gives
+\begin{equation}
+    \rvec \times \frac{d \vvec}{dt} = \frac{q_1 q_2}{4 \pi \epsilon_0 m_r} \frac{\rvec \times \rvec}{r^3} = 0,
+\end{equation}
+and thus
+\begin{equation}
+    \frac{d}{dt} \left [ m_r \left ( \rvec \times \vvec \right ) \right ] = 0.
+\end{equation}
+That is, angular momentum is conserved. A consequence of this is that the vector $\rvec \times \vvec$ is always pointing in the same direction. Thus, if $\rvec(0)$ and $\vvec(0)$ form a plane, then $\rvec(t)$ and $\vvec(t)$ need to reside within that same plane for all times $t$ so that $\rvec(t) \times \vvec(t)$ points in the same direction as $\rvec(0) \times \vvec(0)$. Therefore, the evolution of the position and velocity are confined to a plane and the problem can be reduced from six unknowns to four unknowns. This planar encounter is depicted in \cref{fig:coulomb_scattering}.
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=10cm]{../../images/coulomb_scattering.png}
+    \caption{Depiction of Coulomb scattering.}
+    \label{fig:coulomb_scattering}
+    \end{figure}
+
+%--------------------------------------------
+\subsection{Polar coordinates}
+%--------------------------------------------
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=10cm]{../../images/polar_coordinates.png}
+    \caption{Polar coordinates in plane of interaction.}
+    \label{fig:polar_coordinates}
+    \end{figure}
+
+We re-orient the plane of interaction (referred to above) so that it is orthogonal to the $\hat{\zvec}$ direction. Using polar coordinates, as shown in \cref{fig:polar_coordinates}, we get
+\begin{equation}
+    r_x = r \cos \theta = r \cos ( \pi - \varphi ) = -r \cos \varphi,
+\end{equation}
+\begin{equation}
+    r_y = r \sin \theta = r \sin ( \pi - \varphi ) = r \sin \varphi.
+\end{equation}
+
+Also, since $\rvec = r \hat{\rvec}$, we have
+\begin{align}
+    \vvec = &\frac{d \rvec}{dt} = \frac{dr}{dt} \hat{\rvec} + r \frac{d\hat{\rvec}}{dt} \nonumber \\
+    &= \frac{d r}{dt} \hat{\rvec} + r \frac{d\hat{\rvec}}{d\theta} \frac{d\theta}{dt} \nonumber \\
+    &= \frac{dr}{dt} \hat{\rvec} + r \frac{d \theta}{dt} \hat{\boldsymbol{\theta}},
+\end{align}
+and
+\begin{align}
+    \frac{d \vvec}{dt} &= \frac{d^2r}{dt^2} \hat{\rvec} + \frac{dr}{dt} \frac{d\hat{\rvec}}{dt} + \frac{d}{dt} \left ( r \frac{d\theta}{dt} \right ) \hat{\boldsymbol{\theta}} + r \frac{d \theta}{dt} \frac{d \hat{\boldsymbol{\theta}}}{dt} \nonumber \\
+    &= \frac{d^2 r}{dt^2} \hat{\rvec} + \frac{dr}{dt} \frac{d\hat{\rvec}}{d\theta} \frac{d\theta}{dt} + \frac{d}{dt} \left ( r \frac{d\theta}{dt} \right ) \hat{\boldsymbol{\theta}} + r \frac{d \theta}{dt} \frac{d \hat{\boldsymbol{\theta}}}{d\theta} \frac{d \theta}{dt} \nonumber \\
+    &= \frac{d^2r}{dt^2} \hat{\rvec} + \frac{dr}{dt} \frac{d\theta}{dt} \hat{\boldsymbol{\theta}} + \frac{d}{dt} \left ( r \frac{d\theta}{dt} \right ) \hat{\boldsymbol{\theta}} - r \left ( \frac{d\theta}{dt} \right ) ^2 \hat{\rvec}.
+\end{align}
+
+%--------------------------------------------
+\subsection{The force equation}
+%--------------------------------------------
+The radial component of \cref{eq:particle_vel} thus becomes 
+\begin{equation}
+    \frac{d^2 r}{dt^2} - r \left ( \frac{d\theta}{dt} \right )^2 = \frac{q_1 q_2}{4 \pi \epsilon_0 m_r} \frac{1}{r^2}.
+\end{equation}
+Since $\theta = \pi - \varphi$, we have
+\begin{equation}
+    \label{eq:particle_position_ode}
+    \frac{d^2 r}{dt^2} - r \left ( \frac{d\varphi}{dt} \right )^2 = \frac{q_1 q_2}{4 \pi \epsilon_0 m_r} \frac{1}{r^2}.
+\end{equation}
+
+%--------------------------------------------
+\subsection{The angular momentum equation}
+%--------------------------------------------
+Using polar coordinates, we obtain
+\begin{equation}
+    m_r \rvec \times \vvec = m_r r \hat{\rvec} \times \left ( \frac{dr}{dt} \hat{\rvec} + r \frac{d\theta}{dt} \hat{\boldsymbol{\theta}} \right ) = m_r r^2 \frac{d\theta}{dt} \hat{\zvec}
+\end{equation}
+Since angular momentum $m_r \rvec \times \vvec$ is conserved, we have
+\begin{equation}
+    \label{eq:particle_cons_angular_polar}
+    m_r r^2 \frac{d\varphi}{dt} = L = constant.
+\end{equation}
+We note here that $L$ is positive since $d\varphi/dt$ is positive. Also, we have 
+\begin{equation}
+    \label{eq:particle_angular_sign}
+    m_r \rvec \times \vvec = -L \hat{\zvec},
+\end{equation}
+that is, the angular momentum is in the negative $\hat{\zvec}$ direction.
+
+%--------------------------------------------
+\subsection{Particle trajectory}
+%--------------------------------------------
+The goal is to find the radial position of the particle as a function of its angular orientation. That is, we want to find $\tilde{r} = \tilde{r}(\tilde{\varphi})$ such that
+\begin{equation}
+    \label{eq:particle_position_angle}
+    r(t) = \tilde{r}(\varphi(t)).
+\end{equation}
+To simplify the math, we introduce $\tilde{u} = \tilde{u}(\tilde{\varphi})$ such that $\tilde{u} = 1 / \tilde{r}$. Thus
+\begin{equation}
+    \frac{d \tilde{u}}{d\tilde{\varphi}} = -\frac{1}{\tilde{r}^2} \frac{d \tilde{r}}{d\tilde{\varphi}},
+\end{equation}
+or, after re-arranging
+\begin{equation}
+    \label{eq:rgrad_vs_ugrad}
+    \frac{d \tilde{r}}{d\tilde{\varphi}} = -\frac{1}{\tilde{u}^2} \frac{d \tilde{u}}{d\tilde{\varphi}}.
+\end{equation}
+
+We now proceed as follows. Taking the derivative of $r$, we get
+\begin{align}
+    \label{eq:particle_derivation_1}
+    \frac{dr}{dt} &= \left ( \frac{d \tilde{r}}{d\tilde{\varphi}} \right )_{\tilde{\varphi} = \varphi(t)} \frac{d \varphi}{dt} &&[\cref{eq:particle_position_angle}] \nonumber \\
+    &= \left ( -\frac{1}{\tilde{u}^2} \frac{d\tilde{u}}{d\tilde{\varphi}} \right )_{\tilde{\varphi} = \varphi(t)} \frac{d \varphi}{dt} &&[\cref{eq:rgrad_vs_ugrad}]\nonumber \\ 
+    &= \left ( -\frac{1}{\tilde{u}^2} \frac{d\tilde{u}}{d\tilde{\varphi}} \right )_{\tilde{\varphi} = \varphi(t)} \frac{L}{m_r r^2} &&[\cref{eq:particle_cons_angular_polar}] \nonumber \\
+    &= \left ( -\frac{1}{\tilde{u}^2} \frac{d\tilde{u}}{d\tilde{\varphi}} \frac{L}{m_r \tilde{r}^2} \right )_{\tilde{\varphi} = \varphi(t)} &&[\cref{eq:particle_position_angle}] \nonumber \\
+    &= \left ( - \frac{d\tilde{u}}{d\tilde{\varphi}} \frac{L}{m_r} \right )_{\tilde{\varphi} = \varphi(t)}
+\end{align}
+Taking the derivative of the above, we get
+\begin{align}
+    \frac{d}{dt} \frac{dr}{dt} &= \left [ \frac{d}{d\tilde{\varphi}} \left ( - \frac{d\tilde{u}}{d\tilde{\varphi}} \frac{L}{m_r} \right ) \right ]_{\tilde{\varphi} = \varphi(t)} \frac{d \varphi}{dt} \nonumber \\
+    &= \left ( - \frac{d^2 \tilde{u}}{d\tilde{\varphi}^2} \frac{L}{m_r} \right )_{\tilde{\varphi} = \varphi(t)} \frac{L}{m_r r^2} && [\cref{eq:particle_cons_angular_polar}] \nonumber \\
+    &= \left ( - \frac{d^2 \tilde{u}}{d\tilde{\varphi}^2} \frac{L}{m_r} \frac{L}{m_r \tilde{r}^2} \right )_{\tilde{\varphi} = \varphi(t)} && [\cref{eq:particle_position_angle}] \nonumber \\
+    &= \left ( - \frac{d^2 \tilde{u}}{d\tilde{\varphi}^2} \frac{L^2 \tilde{u}^2}{m_r^2} \right )_{\tilde{\varphi} = \varphi(t)}
+\end{align}
+Plugging the last relation into \cref{eq:particle_position_ode} gives
+\begin{equation}
+    \left [ - \frac{d^2 \tilde{u}}{d\tilde{\varphi}^2} \frac{L^2 \tilde{u}^2}{m_r^2} - \frac{1}{\tilde{u}} \left ( \frac{L \tilde{u}^2}{m_r} \right )^2 \right ]_{\tilde{\varphi} = \varphi(t)} = \left ( \frac{q_1 q_2}{4 \pi \epsilon_0 m_r} \tilde{u}^2 \right )_{\tilde{\varphi} = \varphi(t)},
+\end{equation}
+which, upon re-arranging and dropping the $\varphi(t)$ dependance, becomes
+\begin{equation}
+    \frac{d^2 \tilde{u}}{d \tilde{\varphi}^2} + \tilde{u} = -\frac{q_1 q_2 m_r}{4 \pi \epsilon_0 L^2}
+\end{equation}
+
+Using \cref{eq:particle_angular_sign}, we have
+\begin{align}
+    \label{eq:particle_momentum_impact}
+    L &= -m_r ( \rvec \times \vvec )\cdot \hat{\zvec} \nonumber \\
+    &= -m_r [\sin(-\theta) r v_0 \hat{\zvec} ] \cdot \hat{\zvec} \nonumber \\
+    &= m_r\sin(\theta) r v_0 \nonumber \\
+    &= m_r\sin(\pi - \varphi) r v_0 \nonumber \\
+    &= m_r\sin\varphi r v_0 \nonumber \\
+    &= m_r b v_0.
+\end{align}
+Thus, we write the evolution equation for $\tilde{u}$ as
+\begin{equation}
+    \frac{d^2 \tilde{u}}{d \tilde{\varphi}^2} + \tilde{u} = -\frac{q_1 q_2}{4 \pi \epsilon_0 m_r b^2 v_0^2}.
+\end{equation}
+Introducing the notation
+\begin{equation}
+    b_{90} = \frac{q_1 q_2}{4 \pi \epsilon_0 m_r v_0^2},
+\end{equation}
+the evolution equation for $\tilde{u}$ can be simply expressed as
+\begin{equation}
+    \label{eq:particle_u_equation}
+    \frac{d^2 \tilde{u}}{d \tilde{\varphi}^2} + \tilde{u} = -\frac{b_{90}}{b^2}.
+\end{equation}
+
+The boundary conditions for \cref{eq:particle_u_equation} are as follows
+\begin{equation}
+    \label{eq:particle_bc_1}
+    \text{as } \varphi(t) \to 0, \quad r(t) \to \infty
+\end{equation}
+\begin{equation}
+    \label{eq:particle_bc_2}
+    \text{as } \varphi(t) \to 0, \quad \frac{dr(t)}{dt} \to -v_0
+\end{equation}
+Given \cref{eq:particle_position_angle}, \cref{eq:particle_bc_1} can only be satisfied if as $\tilde{\varphi} \to 0$, $\tilde{r} \to \infty$. Thus, we also have, as $\tilde{\varphi} \to 0$, $\tilde{u} \to 0$. Similarly, given \cref{eq:particle_derivation_1}, \cref{eq:particle_bc_2} can only be satisfied if as $\tilde{\varphi} \to 0$
+\begin{equation}
+    \frac{d\tilde{u}}{d\tilde{\varphi}} \frac{L}{m_r} \to v_0.
+\end{equation}
+Using \cref{eq:particle_momentum_impact} we rewrite the above as 
+\begin{equation}
+    \frac{d\tilde{u}}{d\tilde{\varphi}} \to \frac{1}{b}.
+\end{equation}
+
+The general solution to \cref{eq:particle_u_equation} is 
+\begin{equation}
+    \tilde{u} = A \cos \tilde{\varphi} + B \sin \tilde{\varphi} - \frac{b_{90}}{b^2}.
+\end{equation}
+Applying the boundary conditions, we get
+\begin{equation}
+    \tilde{u} = \frac{b_{90}}{b^2} \cos \tilde{\varphi} + \frac{1}{b} \sin \tilde{\varphi} - \frac{b_{90}}{b^2},
+\end{equation}
+which we finally re-write as
+\begin{equation}
+    \frac{1}{\tilde{r}} = \frac{1}{b} \sin \tilde{\varphi} + \frac{b_{90}}{b^2} \left ( \cos \tilde{\varphi} - 1 \right ).
+\end{equation}
+
 %###############################################################################
 %
 %
@@ -1435,18 +1686,18 @@ and the electron energy equation becomes
 %--------------------------------------------
 \section{Ideal MHD}
 %--------------------------------------------
-The ideal MHD equations are obtained by neglecting the right-hand sides of \cref{eq:generalized_MHD_vel,eq:generalized_MHD_ohms,eq:generalized_MHD_pi,eq:generalized_MHD_pe}. Summing the two pressure equations, we can thus summarized the ideal MHD equations as
+The ideal MHD equations are obtained by neglecting the right-hand sides of \cref{eq:generalized_MHD_vel,eq:generalized_MHD_ohms,eq:generalized_MHD_pi,eq:generalized_MHD_pe}. Summing the two pressure equations, the resulting equations would be
 \begin{equation}
     \frac{\partial \rho}{\partial t} + \nabla \cdot (\rho \vvec) = 0,
 \end{equation}
 \begin{equation}
-    \rho \left (\frac{\partial \vvec}{\partial t} + \vvec \cdot \nabla \vvec \right) = - \nabla p  + \Jvec \times \Bvec
+    \rho \left (\frac{\partial \vvec}{\partial t} + \vvec \cdot \nabla \vvec \right ) = - \nabla p  + \Jvec \times \Bvec
 \end{equation}
 \begin{equation}
     \Evec + \vvec \times \Bvec = 0,
 \end{equation}
 \begin{equation}
-    \frac{\partial}{\partial t} \left ( \frac{p}{\rho^\gamma} \right) + \vvec \cdot \nabla \left (\frac{p}{\rho^\gamma} \right) = 0,
+    \frac{\partial}{\partial t} \left ( \frac{p}{\rho^\gamma} \right ) + \vvec \cdot \nabla \left (\frac{p}{\rho^\gamma} \right ) = 0,
 \end{equation}
 \begin{equation}
 \nabla \cdot \Bvec = 0.
@@ -1456,6 +1707,52 @@ The ideal MHD equations are obtained by neglecting the right-hand sides of \cref
 \end{equation}
 \begin{equation}
 \nabla \times \Bvec = \mu_0 \Jvec ,
+\end{equation}
+
+Given the vector identity
+\begin{equation}
+    \frac{1}{2} \nabla \left ( B^2 \right ) = \Bvec \times \left (\nabla \times \Bvec \right ) + \left ( \Bvec \cdot \nabla \right ) \Bvec,
+\end{equation}
+we can use Ampere's law to re-write the $\Jvec \times \Bvec$ term in the velocity equation as
+\begin{equation}
+    \Jvec \times \Bvec = \frac{1}{\mu_0} \left ( \nabla \times \Bvec \right ) \times \Bvec = \frac{1}{\mu_0} \left [ \left ( \Bvec \cdot \nabla \right ) \Bvec - \frac{1}{2} \nabla \left ( B^2 \right ) \right ].
+\end{equation}
+Similarly, given the vector identity
+\begin{equation}
+    \nabla \times \left ( \Bvec \times \vvec \right ) = \left (\vvec \cdot \nabla \right ) \Bvec - \left ( \Bvec \cdot \nabla \right ) \vvec + \Bvec \left ( \nabla \cdot \vvec \right ) - \vvec \left ( \nabla \cdot \Bvec \right ),
+\end{equation}
+we can use Ohm's law to re-write the $\nabla \times \Evec$ term in Faraday's law as
+\begin{equation}
+    \nabla \times \Evec = \nabla \times (-\vvec \times \Bvec) = \left (\vvec \cdot \nabla \right ) \Bvec - \left ( \Bvec \cdot \nabla \right ) \vvec + \Bvec \left ( \nabla \cdot \vvec \right ).
+\end{equation}
+Thus, the ideal MHD equations can be summarized as follows
+\begin{equation}
+    \frac{\partial \rho}{\partial t} + \nabla \cdot (\rho \vvec) = 0,
+\end{equation}
+\begin{equation}
+    \nabla \cdot \Bvec = 0.
+    \end{equation}
+\begin{equation}
+    \rho \left (\frac{\partial \vvec}{\partial t} + \vvec \cdot \nabla \vvec \right ) = - \nabla p  + \frac{1}{\mu_0} \left [ \left ( \Bvec \cdot \nabla \right ) \Bvec - \frac{1}{2} \nabla \left ( B^2 \right ) \right ]
+\end{equation}
+\begin{equation}
+    \frac{\partial \Bvec}{\partial t} + \left ( \vvec \cdot \nabla \right ) \Bvec = \left ( \Bvec \cdot \nabla \right ) \vvec - \Bvec (\nabla \cdot \vvec)
+\end{equation}
+\begin{equation}
+    \frac{\partial}{\partial t} \left ( \frac{p}{\rho^\gamma} \right ) + \vvec \cdot \nabla \left (\frac{p}{\rho^\gamma} \right ) = 0,
+\end{equation}
+If we assume incompressibility, then the above simplifies to
+\begin{equation}
+    \nabla \cdot \vvec = 0,
+\end{equation}
+\begin{equation}
+    \nabla \cdot \Bvec = 0.
+    \end{equation}
+\begin{equation}
+    \rho \left (\frac{\partial \vvec}{\partial t} + \vvec \cdot \nabla \vvec \right ) = - \nabla p  + \frac{1}{\mu_0} \left [ \left ( \Bvec \cdot \nabla \right ) \Bvec - \frac{1}{2} \nabla \left ( B^2 \right ) \right ]
+\end{equation}
+\begin{equation}
+    \frac{\partial \Bvec}{\partial t} + \left ( \vvec \cdot \nabla \right ) \Bvec = \left ( \Bvec \cdot \nabla \right ) \vvec
 \end{equation}
 
 %-------------------------------------------------------------------------------
@@ -1635,6 +1932,19 @@ where $\hat{t} = t w_{c,i}$ and $\hat{\xvec} = \xvec / r_s$. Neglecting the hat 
    \frac{\partial}{\partial t}\left ( \nabla_\perp^2 \phi - \phi \right ) - \left [ \left( \nabla_\perp \phi \times \bvec \right) \cdot \nabla_\perp \right] \left [ \nabla_\perp^2 \phi - \ln \left( \frac{n_0}{w_{c,i}} \right) \right ] = 0.
 \end{equation}
 
+Using the following expansion
+\begin{equation}
+    \left ( \nabla_\perp \phi \times \bvec \right ) \cdot \nabla_\perp = \frac{\partial \phi}{\partial x_2} \frac{\partial}{\partial x_1} - \frac{\partial \phi}{\partial x_1} \frac{\partial}{\partial x_2},
+\end{equation}
+The Hasegawa-Mima equation can be written as
+\begin{equation}
+   \frac{\partial}{\partial t}\left ( \nabla_\perp^2 \phi - \phi \right ) - \frac{\partial \phi}{\partial x_2} \frac{\partial \nabla_\perp^2 \phi}{\partial x_1} + \frac{\partial \phi}{\partial x_1} \frac{\partial \nabla_\perp^2 \phi}{\partial x_2} + \beta \frac{\partial \phi}{\partial x_2} = 0,
+\end{equation}
+where 
+\begin{equation}
+    \beta = \frac{\partial}{\partial x_1} \ln \left ( \frac{n_0}{w_{c,i}} \right ).
+\end{equation}
+
 %--------------------------------------------
 \subsection{Spectral space}
 %--------------------------------------------
@@ -1687,6 +1997,10 @@ where
 and
 \begin{equation}
     \Lambda^\nvec_{\nvec', \nvec''} = \frac{1}{2} \frac{  \left ( \kvec_{\nvec'} \times \kvec_{\nvec''} \right ) \cdot \bvec \left ( k^2_{\nvec''} - k^2_{\nvec'} \right ) }{1 + k^2_\nvec}.
+\end{equation}
+Note that $w_\nvec$ can also be written as
+\begin{equation}
+    w_\nvec = -\frac{k_{2,\nvec} \evec_1 - k_{1,\nvec} \evec_2}{1 + k^2_\nvec} \cdot \beta \evec_1 = -\frac{k_{2,\nvec} \beta}{1 + k^2_\nvec}.
 \end{equation}
 
 %--------------------------------------------

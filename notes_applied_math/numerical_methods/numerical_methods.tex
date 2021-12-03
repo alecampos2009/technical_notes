@@ -3,7 +3,9 @@
 
 \usepackage{../../info/packages}
 \usepackage{../../info/nomenclature}
-\usepackage{tabu}
+
+\setlength{\cellspacetoplimit}{3pt}
+\setlength{\cellspacebottomlimit}{3pt}
 
 \title{Numerical Methods\thanks{Disclaimer: a large chunk of the work in this document is not original; instead, parts of this document are personal notes obtained from the following books: Lomax, Pulliam, Zing; Larsson, Thomee; Hirsch; Leveque; Blazek; Laney; Moin.}}
 \date{\today}
@@ -225,8 +227,11 @@ where $\Delta \uvec = \uvec^{n+1} - \uvec^n$.
 %##########################################################################
 
 %----------------------------------------------------------------------------------------------------------------------------
-\chapter{Finite difference formulas}
+\chapter{Introduction}
 %----------------------------------------------------------------------------------------------------------------------------
+%---------------------------------------------------------------
+\section{Finite difference formulas}
+%---------------------------------------------------------------
 \begin{center}
 \begin{tabular}{|c|c|c|c|}
 \hline
@@ -555,46 +560,72 @@ As previously noted, the only Jacobians $\partial \Rvec_I/\partial \Wvec_J$ that
 %##########################################################################
 
 %----------------------------------------------------------------------------------------------------------------------------
-\chapter{Elliptic}
+\chapter{Introduction}
 %----------------------------------------------------------------------------------------------------------------------------
-\begin{itemize}
-\item Consider the boundary value problem in which a solution $u$ is sought such that
+%---------------------------------------------------------------
+\section{Definition of the finite element method}
+%---------------------------------------------------------------
+%--------------------------------------------
+\subsection{Weak form or variational formulation}
+%--------------------------------------------
+Consider the boundary value problem in which a scalar $u$ is sought as the solution to the following
 \begin{equation}
     \begin{aligned}
-        &Au = f \qquad &&\text{in } \Omega = (0,1) \\
-        &u = 0 && \text{on } \Gamma = 0,1
+        &Au = f \qquad &&\text{in } \Omega \\
+        &u = 0 && \text{on } \Gamma,
     \end{aligned}
 \end{equation}
-where $Au = -(au')' + cu$.
-
-\item The weak formulation of the above is to find the weak solution $u\in H^1_0$ such that 
+where $A$ is any given linear operator. The weak formulation of the above is to find the weak solution $u\in H^1_0$ such that 
+\begin{equation}
+    (Au,v) = (f,v) \qquad \forall v \in H^1_0,
+\end{equation}
+where $(a,b)= \int_\Omega av \, d\xvec$ is the $L_2$ inner product. Using Calculus identities, some of the derivatives in $(Au,v)$ can be moved from operating on $u$ to operating on $v$. We label the end result as $a(u,v)$, which is a bilinear form. We also label $(f,v)$ as $L(v)$, which is a linear form. Thus, the above is rewritten as 
 \begin{equation}
 \label{eq:weak_form}
-    a(u,v) = (f,v)\qquad \forall v \in H^1_0 ,
+    a(u,v) = L(v) \qquad \forall v \in H^1_0 .
 \end{equation}
-where $a(u,v) = \int_\Omega au'v'+cuv \, dx$, and $(f,v) = \int_\Omega fv \, dx$.
+Different linear operators $A$ lead to different bilinear forms. A few examples are shown in the table below 
+\begin{center}
+\begin{tabular}{Sc|Sc|Sc}
+    Operator & Definition & Bilinear Form \\
+    \hline
+    Mass & $ \lambda u $ & $(\lambda u, v)$ \\
+    \hline
+    Diffusion & $-\nabla \cdot ( \lambda \nabla u)$ & $(\lambda \nabla u, \nabla v)$ \\
+    \hline
+    Convection & $ \boldsymbol{\lambda} \cdot \nabla u $ & $(\boldsymbol{\lambda} \cdot \nabla u, v)$ \\
+\end{tabular}
+\end{center}
 
-\item Partition the domain into $M$ grid elements, and introduce $S_h \subset H^1_0$ as the set of functions that are linear within each grid element. We now aim to find $u_h \in S_h$ such that
+%--------------------------------------------
+\subsection{Discretization into finite elements}
+%--------------------------------------------
+The following step is to partition the domain into $M$ grid elements. Introduce $S_h \subset H^1_0$ as a finite dimensional space, that is, a space with a finite number of basis elements. We now aim to find $u_h \in S_h$ such that
 \begin{equation}
 \label{eq:fe_elliptic_sh_solution}
     a(u_h,v_h) = (f,v_h)\qquad \forall v_h \in S_h.
 \end{equation}
-
-\item $\{\Phi_i\}_{i=1}^{M-1}$ is the basis for $S_h$, where $M-1$ is the total number of interior points. That is, any $v_h \in S_h$ can be written as $v_h = \sum_{i=1}^{M-1} V_i \Phi_i$. \Cref{eq:fe_elliptic_sh_solution} is then automatically satisfied if the following is satisfied
+Label the finite basis of $S_h$ as $\{\Phi_i\}_{i=1}^n$, where $n$ is the total number of basis elements (also referred to as degrees of freedom). That is, any $v_h \in S_h$ can be written as $v_h = \sum_{i=1}^n V_i \Phi_i$. \Cref{eq:fe_elliptic_sh_solution} is then automatically satisfied if the following is satisfied
 \begin{equation}
-    a(u_h, \Phi_i) = (f, \Phi_i) \qquad \text{for }i=1,...,M-1.
+    a(u_h, \Phi_i) = (f, \Phi_i) \qquad \text{for }i=1,...,n.
 \end{equation}
 
-\item Since $u_h \in S_h$, we can write $u_h(x) = \sum_{j=1}^{M-1} U_j \Phi_j(x)$. Thus, the above becomes
+Since $u_h \in S_h$, we can write $u_h(x) = \sum_{j=1}^n U_j \Phi_j(x)$. Thus, the above becomes
 \begin{equation}
-    \sum_{j=1}^{M-1} U_j a(\Phi_j,\Phi_i) = (f,\Phi_i) \qquad \text{for }i=1,...,M-1.
+    \sum_{j=1}^n U_j a(\Phi_j,\Phi_i) = (f,\Phi_i) \qquad \text{for }i=1,...,n.
 \end{equation}
-
-\item Define the vectors $\Uvec$ and $\bvec$, as those whose components are $U_j$ and $(f,\Phi_i)$, respectively. Define the matrix $\Avec$ as that whose components are $a(\Phi_j,\Phi_i)$, where $i$ denotes the row and $j$ the column. Then, the equation above can be written as
+Define the vectors $\Uvec$ and $\bvec$, as those whose components are $U_j$ and $(f,\Phi_i)$, respectively. Define the matrix $\Avec$ as that whose components are $a(\Phi_j,\Phi_i)$, where $i$ denotes the row and $j$ the column. Then, the equation above can be written as
 \begin{equation}
     \Avec \Uvec = \bvec.
 \end{equation}
-\end{itemize} 
+
+%--------------------------------------------
+\subsection{Time dependent problems}
+%--------------------------------------------
+
+%----------------------------------------------------------------------------------------------------------------------------
+\chapter{Elliptic}
+%----------------------------------------------------------------------------------------------------------------------------
 
 %----------------------------------------------------------------------------------------------------------------------------
 \chapter{Parabolic}
@@ -692,21 +723,19 @@ As before, if the left-hand-side operator is bounded, then we have a unique solu
 \end{figure}
 
 \begin{center}
-\tabulinesep=1.2mm
-\begin{tabu}{c|c|c}
-Space & Norm & Inner product \\
-\hline
-$C(M)$ & $ \displaystyle ||v||_C = \sup_{x \in M} |v(x)| $ & X \\
-\hline
-$C^k(M)$ & $\begin{aligned} &||v||_{C^k} = \max_{|\alpha| \le k} ||D^\alpha v||_C \\ &|v|_{C^k}=\max_{|\alpha| = k} ||D^\alpha v||_C \end{aligned}$ & X \\
-\hline
-$L_p(\Omega)$ & $ \displaystyle ||v||_{L_p} = \left ( \int_\Omega |v|^p \, dx \right)^{1/p} $ & X \\
-\hline
-$L_2(\Omega)$ & $ \displaystyle ||v||_{L_2} = \left ( \int_\Omega |v|^2 \, dx \right)^{1/2} $ & $ \displaystyle (v,w) = \int_\Omega vw^* \, dx $ \\
-\hline
-$H^k(\Omega)$ & $ \begin{aligned} &||v||_k = \left ( \sum_{|\alpha| \le k} ||D^\alpha v||^2 \right )^{1/2} \\ &|v|_k = \left ( \sum_{|\alpha| = k} ||D^\alpha v||^2 \right )^{1/2} \end{aligned}$ & $ \displaystyle (v,w)_k = \sum_{|\alpha \le k|} (D^\alpha v, D^\alpha w) $
-\end{tabu}	
+\begin{tabular}{Sc|Sc|Sc}
+    Space & Norm & Inner product \\
+    \hline
+    $C(M)$ & $ \displaystyle ||v||_C = \sup_{x \in M} |v(x)| $ & X \\
+    \hline
+    $C^k(M)$ & $\begin{aligned} &||v||_{C^k} = \max_{|\alpha| \le k} ||D^\alpha v||_C \\ &|v|_{C^k}=\max_{|\alpha| = k} ||D^\alpha v||_C \end{aligned}$ & X \\
+    \hline
+    $L_p(\Omega)$ & $ \displaystyle ||v||_{L_p} = \left ( \int_\Omega |v|^p \, dx \right)^{1/p} $ & X \\
+    \hline
+    $L_2(\Omega)$ & $ \displaystyle ||v||_{L_2} = \left ( \int_\Omega |v|^2 \, dx \right)^{1/2} $ & $ \displaystyle (v,w) = \int_\Omega vw^* \, dx $ \\
+    \hline
+    $H^k(\Omega)$ & $ \begin{aligned} &||v||_k = \left ( \sum_{|\alpha| \le k} ||D^\alpha v||^2 \right )^{1/2} \\ &|v|_k = \left ( \sum_{|\alpha| = k} ||D^\alpha v||^2 \right )^{1/2} \end{aligned}$ & $ \displaystyle (v,w)_k = \sum_{|\alpha \le k|} (D^\alpha v, D^\alpha w) $
+\end{tabular}
 \end{center}
-
 
 \end{document}
