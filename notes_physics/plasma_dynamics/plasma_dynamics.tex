@@ -1643,7 +1643,7 @@ The two conservation of momentum equations will also lead to two single-fluid eq
 \end{equation}
 \begin{equation}
 \label{eq:generalized_MHD_ohms}
-    \Evec + \vvec \times \Bvec = \frac{1}{en} ( \Jvec \times \Bvec - \nabla p_e + \nabla \cdot \Tvec_e + \Rvec_e).
+    \Evec + \vvec \times \Bvec = \frac{1}{en} ( \Jvec \times \Bvec - \nabla p_e + \nabla \cdot \tvec_e + \Rvec_e).
 \end{equation}
 
 The two conservation of energy equations will also lead to two single-fluid equations. Each is evaluated using the single-fluid variables. As part of this derivation, we first rewrite the ion and electron internal energy \cref{eq:twof_iei,eq:twof_iee} as
@@ -1769,40 +1769,35 @@ If we assume incompressibility, then the above simplifies to
 \subsection{Assumptions}
 %--------------------------------------------
 \begin{enumerate}
-    \item Singly-charged ions. \label{it:single_charge_ions}
-    \item No shear stresses, sources, or collisions. \label{it:no_shear_source_coll}
-    \item Cold ion approximation, i.e. $T_e \gg T_i$ and thus $\nabla p_i \approx 0$ \cite{hasegawa1977}. \label{it:cold}.
-    \item Electrostatic field, i.e. $\Evec = - \nabla \phi$. \label{it:electrostatic}
+    \item Singly-charged ions. \label{it:hm_single_charge_ions}
+    \item No shear stresses, collisions, or sources. \label{it:hm_no_shear_source_coll}
+    \item Cold ion approximation, i.e. $T_e \gg T_i$ and thus $\nabla p_i \approx 0$ \cite{hasegawa1977}. \label{it:hm_cold}
+    \item Isothermal electron fluid, i.e.\@ $T_e$ is constant. \label{it:hm_isothermal_electron}
+    \item Electrostatic field, i.e. $\Evec = - \nabla \phi$. \label{it:hm_electrostatic}
     \item Magnetic field is constant.
-    \item Neglect parallel ion inertia, i.e. $\nabla \cdot (\alpha \uvec_i) \approx \nabla \cdot (\alpha \uvec_{i,\perp})$, or in other words $(\uvec_i \cdot \nabla) \approx (\uvec_{i,\perp} \cdot \nabla)$ and $\nabla \cdot \uvec_i \approx \nabla \cdot \uvec_{i,\perp}$ \cite{hasegawa1977}. \label{it:par_ion}
-    \item Adiabatic electrons, i.e. $n_e = n_0 \exp (e\phi/T_e)$, where $n_0 = n_0(\xvec)$. \label{it:adiabatic}
-    \item Quasi-neutrality, i.e. $n_i \approx n_e$. \label{it:quasineutrality}
+    \item Neglect parallel ion inertia, i.e. $\nabla \cdot (\alpha \uvec_i) \approx \nabla_\perp \cdot (\alpha \uvec_{i,\perp})$, or in other words $(\uvec_i \cdot \nabla) \approx (\uvec_{i,\perp} \cdot \nabla_\perp)$ and $\nabla \cdot \uvec_i \approx \nabla_\perp \cdot \uvec_{i,\perp}$ \cite{hasegawa1977}. \label{it:hm_par_ion}
+    \item Quasi-neutrality, i.e. $n_i \approx n_e$. \label{it:hm_quasineutrality}
+    \item Adiabatic electrons, i.e. $n_e = n_0 \exp (e\phi/T_e)$, where $n_0 = n_0(x_1)$. \label{it:hm_adiabatic}
 \end{enumerate}
 
 %--------------------------------------------
 \subsection{Derivation}
 %--------------------------------------------
-Using the assumptions in \cref{it:single_charge_ions,it:no_shear_source_coll}, the momentum \cref{eq:cons_mom} becomes
+Using the assumptions in \cref{it:hm_single_charge_ions,it:hm_no_shear_source_coll}, the momentum \cref{eq:cons_mom} for ions becomes
 \begin{equation}
     m_i n_i \left (\frac{\partial \uvec_i}{\partial t} + \uvec_i \cdot \nabla \uvec_i \right ) = e n_i (\Evec + \uvec_i \times \Bvec) - \nabla p_i.
 \end{equation}
-Using the assumptions in \cref{it:cold,it:electrostatic}, the above becomes
+Using the assumptions in \cref{it:hm_cold,it:hm_electrostatic}, the above becomes
 \begin{equation}
     \frac{\partial \uvec_i}{\partial t} + \uvec_i \cdot \nabla \uvec_i = -\frac{e}{m_i} \nabla \phi + \frac{e}{m_i}\uvec_i \times \Bvec.
 \end{equation}
-Introduce the coordinate system $\evec_1$, $\evec_2$, $\evec_3$, and assume $\Bvec$ points in the $\evec_3$ direction. Thus, in terms of its components, the above is
-\begin{align}
-    \frac{\partial u_{i,1}}{\partial t} + \uvec_i \cdot \nabla u_{i,1} &= -\frac{e}{m_i} \frac{\partial \phi}{\partial x_1} + \frac{e}{m_i} (\uvec_i \times \Bvec)_1, \nonumber \\
-    \frac{\partial u_{i,2}}{\partial t} + \uvec_i \cdot \nabla u_{i,2} &= -\frac{e}{m_i} \frac{\partial \phi}{\partial x_2} + \frac{e}{m_i} (\uvec_i \times \Bvec)_2, \nonumber \\
-    \frac{\partial u_{i,3}}{\partial t} + \uvec_i \cdot \nabla u_{i,3} &= -\frac{e}{m_i} \frac{\partial \phi}{\partial x_3}.
-\end{align}
-Defining the perpendicular velocity as $\uvec_{i,\perp} = [u_{i,1}, u_{i,2}, 0]^T$ and the perpendicular gradient as $\nabla_\perp = [\partial_1, \partial_2, 0]^T$, we have
+Introduce the coordinate system $\evec_1$, $\evec_2$, $\evec_3$, and assume $\Bvec$ points in the $\evec_3$ direction. Defining the perpendicular velocity as $\uvec_{i,\perp} = [u_{i,1}, u_{i,2}, 0]^T$ and the perpendicular gradient as $\nabla_\perp = [\partial_1, \partial_2, 0]^T$, we have
 \begin{equation}
     \frac{\partial \uvec_{i,\perp}}{\partial t} + \uvec_i \cdot \nabla \uvec_{i,\perp} = -\frac{e}{m_i} \nabla_\perp \phi + \frac{e}{m_i}\uvec_i \times \Bvec.
 \end{equation}
-Using the assumption in \cref{it:par_ion} and noting that $\uvec_{i} \times \Bvec = \uvec_{i,\perp} \times \Bvec$, we obtain
+Using the assumption in \cref{it:hm_par_ion} and noting that $\uvec_{i} \times \Bvec = \uvec_{i,\perp} \times \Bvec$, we obtain
 \begin{equation}
-\label{eq:momentum_perpendicular}
+\label{eq:hm_momentum_perpendicular}
     \frac{\partial \uvec_{i,\perp}}{\partial t} + \uvec_{i,\perp} \cdot \nabla_\perp \uvec_{i,\perp} = -\frac{e}{m_i} \nabla_\perp \phi + \frac{e}{m_i} \uvec_{i,\perp} \times \Bvec.
 \end{equation}
 
@@ -1814,7 +1809,7 @@ where $w_{c,i} = eB/m_i$ is the cyclotron frequency, $r_s = v_s/w_{c,i}$ is a re
 \begin{equation}
     \frac{\partial \uvec_{i,\perp}}{\partial t} \sim \uvec_{i,\perp} w \qquad \nabla_\perp \uvec_{i,\perp} \sim \frac{\uvec_{i,\perp}}{r} \qquad \Evec \sim \uvec_{i,\perp} B.
 \end{equation}
-Finally, we introduce the decomposition $\uvec_{i,\perp} = \uvec_{i,\perp}^{(0)} + \uvec_{i,\perp}^{(1)}$, where $\uvec_{i,\perp}^{(0)} \sim v_s$ and $\uvec_{i,\perp}^{(1)} \sim \epsilon v_s$. We use this decomposition in \cref{eq:momentum_perpendicular} and then divide the PDE by $w_{c,i} v_s$. The order of each element in the resulting equation is as follows
+Finally, we introduce the decomposition $\uvec_{i,\perp} = \uvec_{i,\perp}^{(0)} + \uvec_{i,\perp}^{(1)}$, where $\uvec_{i,\perp}^{(0)} \sim v_s$ and $\uvec_{i,\perp}^{(1)} \sim \epsilon v_s$. We use this decomposition in \cref{eq:hm_momentum_perpendicular} and then divide the PDE by $w_{c,i} v_s$. The order of each element in the resulting equation is as follows
 \begin{enumerate}
     \item $\frac{\partial \uvec_{i,\perp}^{(0)}}{\partial t} \sim \epsilon$.
     \item $\frac{\partial \uvec_{i,\perp}^{(1)}}{\partial t} \sim \epsilon^2$.
@@ -1832,7 +1827,7 @@ Combining the first order terms we obtain
 \end{equation}
 which, upon crossing by $\Bvec$, gives
 \begin{equation}
-\label{eq:e_cross_b_drift}
+\label{eq:hm_e_cross_b_drift}
     \uvec_{i,\perp}^{(0)} = -\nabla_\perp \phi \times \frac{\bvec}{B}.
 \end{equation}
 Combining the terms of order $\epsilon$ we obtain
@@ -1841,63 +1836,58 @@ Combining the terms of order $\epsilon$ we obtain
 \end{equation}
 which, upon crossing by $\Bvec$, gives
 \begin{equation}
-\label{eq:polarization_drift}
-    \uvec_{i,\perp}^{(1)} = -\frac{1}{w_{c,i} B} \left [ \frac{\partial \nabla_\perp \phi}{\partial t} + \left (\uvec_{i,\perp}^{(0)} \cdot \nabla_\perp \right ) \nabla_\perp \phi \right].
+\label{eq:hm_polarization_drift}
+    \uvec_{i,\perp}^{(1)} = -\frac{1}{w_{c,i} B} \left [ \frac{\partial \nabla_\perp \phi}{\partial t} + \uvec_{i,\perp}^{(0)} \cdot \nabla_\perp \left ( \nabla_\perp \phi \right ) \right ].
 \end{equation}
-The velocity given by \cref{eq:e_cross_b_drift} is referred to as the $E \times B$ drift, and the velocity given by \cref{eq:polarization_drift} as the polarization drift.
+The velocity given by \cref{eq:hm_e_cross_b_drift} is referred to as the $E \times B$ drift, and the velocity given by \cref{eq:hm_polarization_drift} as the polarization drift.
 
-Using the assumption in \cref{it:no_shear_source_coll}, the continuity equation for ions is
+Using the assumption in \cref{it:hm_no_shear_source_coll}, the continuity equation for ions is
 \begin{equation}
     \frac{\partial n_i}{\partial t} + \nabla \cdot (n_i \uvec_i) = 0.
 \end{equation}
-Using the assumption in \cref{it:par_ion} the above becomes
+Using the assumption in \cref{it:hm_par_ion} the above becomes
 \begin{equation}
     \frac{\partial n_i}{\partial t} + \nabla_\perp \cdot (n_i \uvec_{i,\perp}) = 0,
 \end{equation}
-which is re-written as
-\begin{equation}
-    \frac{1}{n_i} \frac{\partial n_i}{\partial t} + \uvec_{i,\perp} \cdot \left ( \frac{1}{n_i} \nabla_\perp n_i \right ) + \nabla_\perp \cdot \uvec_{i,\perp} = 0.
-\end{equation}
-We now perform a similar scaling analysis as with the momentum equation, assuming that
-\begin{equation}
-    \frac{\partial n_i}{\partial t} \sim n_i w \qquad \nabla_\perp n_i \sim \frac{n_i}{r}.
-\end{equation}
-The resulting order of each element after dividing by $w_c$ is as follows
-\begin{enumerate}
-    \item $\frac{1}{n_i} \frac{\partial n_i}{\partial t} \sim \epsilon$.
-    \item $\uvec_{i,\perp}^{(0)} \cdot \left ( \frac{1}{n_i} \nabla_\perp n_i \right ) \sim \epsilon$.
-    \item $\uvec_{i,\perp}^{(1)} \cdot \left ( \frac{1}{n_i} \nabla_\perp n_i \right ) \sim \epsilon^2$.
-    \item $\nabla_\perp \cdot \uvec_{i,\perp}^{(0)} \sim \epsilon$.
-    \item $\nabla_\perp \cdot \uvec_{i,\perp}^{(1)} \sim \epsilon^2$.
-\end{enumerate}
-However, this case reveals the limits of a scaling analysis. Using a vector identity, we show that
-\begin{equation}
-    \nabla_\perp \cdot (\nabla_\perp \phi \times \Bvec) = (\nabla_\perp \times \nabla_\perp \phi) \cdot \Bvec - \nabla_\perp \phi \cdot (\nabla_\perp \times \Bvec) = 0,
-\end{equation}
-Given the definition in \cref{eq:e_cross_b_drift} we conclude that $\nabla_\perp \cdot \uvec_{i,\perp}^{(0)} = 0$. Now, since scaling analysis indicates $\nabla_\perp \cdot \uvec_{i,\perp}^{(1)}$ is smaller than $\nabla_\perp \cdot \uvec_{i,\perp}^{(0)}$ by a factor of $\epsilon$, one would conclude $\nabla_\perp \cdot \uvec_{i,\perp}^{(1)}$ has to be zero as well. However, given the definition of $\uvec_{i,\perp}^{(1)}$, its divergence is not zero. Thus, for this case, we'll retain all terms up to order $\epsilon$, but since $\nabla_\perp \cdot \uvec_{i,\perp}^{(0)}$ is zero, we'll also retain the term $\nabla_\perp \cdot \uvec_{i,\perp}^{(1)}$. The governing equation is thus
-\begin{equation}
-    \frac{1}{n_i} \frac{\partial n_i }{\partial t} + \uvec_{i,\perp}^{(0)} \cdot \left( \frac{1}{n_i} \nabla_\perp n_i \right) + \nabla_\perp \cdot \uvec_{i,\perp}^{(1)} = 0,
-\end{equation}
-which can be re-written as
-\begin{equation}
-    \frac{w_{c,i}}{n_i} \frac{\partial }{\partial t} \left ( \frac{n_i}{w_{c,i}} \right) + \uvec_{i,\perp}^{(0)} \cdot \left[ \frac{w_{c,i}}{n_i} \nabla_\perp \left ( \frac{n_i}{w_{c,i}} \right ) \right] + \nabla_\perp \cdot \uvec_{i,\perp}^{(1)} = 0,
-\end{equation}
 or
 \begin{equation}
-    \frac{\partial }{\partial t} \left [ \ln \left( \frac{n_i}{w_{c,i}} \right) \right ] + \uvec_{i,\perp}^{(0)} \cdot \nabla_\perp \left [ \ln \left( \frac{n_i}{w_{c,i}} \right) \right ] + \nabla_\perp \cdot \uvec_{i,\perp}^{(1)} = 0.
+    \frac{\partial n_i}{\partial t} +  \uvec_{i,\perp} \cdot \nabla_\perp n_i + n_i \nabla_\perp \cdot \uvec_{i,\perp} = 0,
 \end{equation}
-Using the assumptions in \cref{it:adiabatic,it:quasineutrality}, one obtains
+One of the main components of the derivation of the Hasegawa-Mima equation is the assumption that advection is governed by the lowest-order velocity only; that is, by $\uvec^{(0)}_{i,\perp}$ and not $\uvec^{(1)}_{i,\perp}$. Thus, the above is written as
 \begin{equation}
-    \ln \left( \frac{n_i}{w_{c,i}} \right) = \ln \left [ \frac{n_0}{w_{c,i}} \exp \left ( \frac{e \phi}{T_e} \right ) \right ] = \ln \left ( \frac{n_0}{w_{c,i}} \right ) + \frac{e \phi}{T_e}.
+    \frac{\partial n_i}{\partial t} +  \uvec^{(0)}_{i,\perp} \cdot \nabla_\perp n_i + n_i \nabla_\perp \cdot \uvec_{i,\perp} = 0.
 \end{equation}
-Thus, the governing equation for density becomes
+We note that $\uvec^{(0)}_{i,\perp}$ is divergence free, and thus we have
 \begin{equation}
-\label{eq:intermediate_hm_1}
-    \frac{\partial}{\partial t} \left ( \frac{e \phi}{T_e} \right ) + \uvec_{i,\perp}^{(0)} \cdot \nabla_\perp \left [ \ln \left( \frac{n_0}{w_{c,i}} \right) \right ] + \uvec_{i,\perp}^{(0)} \cdot \frac{e \nabla_\perp \phi}{T_e} + \nabla_\perp \cdot \uvec_{i,\perp}^{(1)} = 0.
+    \frac{\partial n_i}{\partial t} +  \uvec^{(0)}_{i,\perp} \cdot \nabla_\perp n_i + n_i \nabla_\perp \cdot \uvec^{(1)}_{i,\perp} = 0.
 \end{equation}
-We note that the third term above is zero, and the fourth term is
+We divide by $n_i$ to express the density in terms of its logarithm 
 \begin{equation}
-    \nabla_\perp \cdot \uvec_{i,\perp}^{(1)} = -\frac{1}{w_{c,i} B} \left \{ \frac{\partial \nabla_\perp^2 \phi}{\partial t} + \nabla_\perp \cdot \left [ \left ( \uvec_{i,\perp}^{(0)} \cdot \nabla_\perp \right ) \nabla_\perp \phi \right ] \right \}.
+    \label{eq:intermediate_hm_1}
+    \frac{\partial \ln n_i}{\partial t} + \uvec^{(0)}_{i,\perp} \cdot \nabla_\perp \ln n_i + \nabla_\perp \cdot \uvec^{(1)}_{i,\perp} = 0.
+\end{equation}
+
+We now use the assumptions in \cref{it:hm_adiabatic,it:hm_quasineutrality} to obtain
+\begin{equation}
+    \ln n_i = \ln \left [ n_0 \exp \left ( \frac{e \phi}{T_e} \right ) \right ] = \ln n_0 + \frac{e \phi}{T_e}.
+\end{equation}
+Taking into account the fact that $n_0$ is time independent, the continuity equation becomes
+\begin{equation}
+    \frac{\partial}{\partial t} \left ( \frac{e\phi}{T_e} \right ) + \uvec^{(0)}_{i,\perp} \cdot \nabla_\perp \left [ \ln n_0 + \frac{e \phi}{T_e} \right ] +  \nabla_\perp \cdot \uvec^{(1)}_{i,\perp} = 0.
+\end{equation}
+Since $\uvec^{(0)}_{i,\perp}$ and $\nabla_\perp \phi$ are orthogonal, the above simplifies to
+\begin{equation}
+    \frac{\partial}{\partial t} \left ( \frac{e\phi}{T_e} \right ) + \uvec^{(0)}_{i,\perp} \cdot \nabla_\perp \ln n_0 +  \nabla_\perp \cdot \uvec^{(1)}_{i,\perp} = 0,
+\end{equation}
+which we re-write as
+\begin{equation}
+    \label{eq:intermediate_hm_2}
+    \frac{\partial}{\partial t} \left ( \frac{e\phi}{T_e} \right ) + \uvec^{(0)}_{i,\perp} \cdot \nabla_\perp \ln \left ( \frac{n_0}{w_{c,i}} \right ) +  \nabla_\perp \cdot \uvec^{(1)}_{i,\perp} = 0.
+\end{equation}
+
+Given the definition of the polarization drift, we have
+\begin{equation}
+    \nabla_\perp \cdot \uvec_{i,\perp}^{(1)} = -\frac{1}{w_{c,i} B} \left \{ \frac{\partial \nabla_\perp^2 \phi}{\partial t} + \nabla_\perp \cdot \left [ \uvec_{i,\perp}^{(0)} \cdot \nabla_\perp \left ( \nabla_\perp \phi \right ) \right ] \right \}.
 \end{equation}
 The second term above is best computed using tensor notation, and we'll use $u_j$ to denote the components of $\uvec_{i,\perp}^{(0)}$. Thus,
 \begin{equation}
@@ -1911,25 +1901,26 @@ Using the definition of $\uvec_{i,\perp}^{(0)}$, the first term on the right-han
 \end{align}
 Since $\epsilon_{qjp} \partial_j a \partial_p a \to \nabla a \times \nabla a = 0$ for any scalar $a$, the term above is identically zero. Thus, we have
 \begin{equation}
-    \nabla_\perp \cdot \uvec_{i,\perp}^{(1)} = -\frac{1}{w_{c,i} B} \left [ \frac{\partial \nabla_\perp^2 \phi}{\partial t} + \left ( \uvec_{i,\perp}^{(0)} \cdot \nabla_\perp \right ) \nabla_\perp^2 \phi \right ],
+    \label{eq:hm_divergence_polarization}
+    \nabla_\perp \cdot \uvec_{i,\perp}^{(1)} = -\frac{1}{w_{c,i} B} \left [ \frac{\partial \nabla_\perp^2 \phi}{\partial t} + \uvec_{i,\perp}^{(0)} \cdot \nabla_\perp \left ( \nabla_\perp^2 \phi \right ) \right ],
 \end{equation}
-and \cref{eq:intermediate_hm_1} becomes
+and \cref{eq:intermediate_hm_2} becomes
 \begin{equation}
-   \frac{\partial}{\partial t}\left ( \frac{1}{w_{c,i} B}\nabla_\perp^2 \phi - \frac{e \phi}{T_e} \right ) + \left (\uvec_{i,\perp}^{(0)} \cdot \nabla_\perp \right) \left [ \frac{1}{w_{c,i} B} \nabla_\perp^2 \phi - \ln \left( \frac{n_0}{w_{c,i}} \right) \right] = 0.
+   \frac{\partial}{\partial t}\left ( \frac{1}{w_{c,i} B}\nabla_\perp^2 \phi - \frac{e \phi}{T_e} \right ) + \uvec_{i,\perp}^{(0)} \cdot \nabla_\perp \left [ \frac{1}{w_{c,i} B} \nabla_\perp^2 \phi - \ln \left( \frac{n_0}{w_{c,i}} \right) \right] = 0.
 \end{equation}
 Plugging in for $\uvec_{i,\perp}^{(0)}$,
 \begin{equation}
-\label{eq:intermediate_hm_2}
-   \frac{\partial}{\partial t}\left ( \frac{1}{w_{c,i} B}\nabla_\perp^2 \phi - \frac{e \phi}{T_e} \right ) - \left [ \left( \nabla_\perp \phi \times \frac{\bvec}{B} \right) \cdot \nabla_\perp \right] \left [ \frac{1}{w_{c,i} B} \nabla_\perp^2 \phi - \ln \left ( \frac{n_0}{w_{c,i}} \right) \right ] = 0.
+\label{eq:intermediate_hm_3}
+   \frac{\partial}{\partial t}\left ( \frac{1}{w_{c,i} B}\nabla_\perp^2 \phi - \frac{e \phi}{T_e} \right ) - \left( \nabla_\perp \phi \times \frac{\bvec}{B} \right) \cdot \nabla_\perp \left [ \frac{1}{w_{c,i} B} \nabla_\perp^2 \phi - \ln \left ( \frac{n_0}{w_{c,i}} \right) \right ] = 0.
 \end{equation}
 We now introduce the normalizations
 \begin{equation}
-    \phi(t,\xvec) = \frac{T_e}{e} \hat{\phi}(\hat{t},\hat{\xvec}) \qquad n_0(\xvec) = \hat{n}_0(\hat{\xvec}),
+    \phi(t,\xvec) = \frac{T_e}{e} \hat{\phi}(\hat{t},\hat{\xvec}) \qquad n_0(x_1) = \hat{n}_0(\hat{x}_1),
 \end{equation}
-where $\hat{t} = t w_{c,i}$ and $\hat{\xvec} = \xvec / r_s$. Neglecting the hat notation for the sake of simplicity, \cref{eq:intermediate_hm_2} finally becomes
+where $\hat{t} = t w_{c,i}$ and $\hat{\xvec} = \xvec / r_s$. Neglecting the hat notation for the sake of simplicity, \cref{eq:intermediate_hm_3} finally becomes
 \begin{equation}
     \label{eq:hasegawa_mima}
-   \frac{\partial}{\partial t}\left ( \nabla_\perp^2 \phi - \phi \right ) - \left [ \left( \nabla_\perp \phi \times \bvec \right) \cdot \nabla_\perp \right] \left [ \nabla_\perp^2 \phi - \ln \left( \frac{n_0}{w_{c,i}} \right) \right ] = 0.
+   \frac{\partial}{\partial t}\left ( \nabla_\perp^2 \phi - \phi \right ) - \left( \nabla_\perp \phi \times \bvec \right) \cdot \nabla_\perp \left [ \nabla_\perp^2 \phi - \ln \left( \frac{n_0}{w_{c,i}} \right) \right ] = 0.
 \end{equation}
 
 Using the following expansion
@@ -2006,6 +1997,166 @@ Note that $w_\nvec$ can also be written as
 %--------------------------------------------
 \section{Hasegawa-Wakatani}
 %--------------------------------------------
+%--------------------------------------------
+\subsection{Assumptions}
+%--------------------------------------------
+\begin{enumerate}
+    \item Singly-charged ions. \label{it:hw_single_charge_ions}
+    \item No shear stresses in the electron momentum equation, no collisions in the ion momentum equation, no sources. \label{it:hw_no_shear_source_coll}
+    \item Cold ion approximation, i.e. $T_e \gg T_i$ and thus $\nabla p_i \approx 0$. \label{it:hw_cold}
+    \item Isothermal electron fluid, i.e.\@ $T_e$ is constant. \label{it:hw_isothermal_electron}
+    \item Electrostatic field, i.e. $\Evec = -\nabla \phi$. \label{it:hw_electrostatic}
+    \item Magnetic field is constant.
+    \item Neglect parallel ion inertia, i.e.\@ $\nabla \cdot (\alpha \uvec_i) \approx \nabla_\perp \cdot (\alpha \uvec_{i,\perp})$, or in other words $(\uvec_i \cdot \nabla) \approx (\uvec_{i,\perp} \cdot \nabla_\perp)$ and $\nabla \cdot \uvec_i \approx \nabla_\perp \cdot \uvec_{i,\perp}$. \label{it:hw_par_ion}
+    \item Quasi-neutrality, i.e. $n_i \approx n_e$. Note, this allows us to use the definition of the current $\Jvec = e (n_i \uvec_i - n_e \uvec_e)$ to write $\uvec_e = \uvec_i - \Jvec/e n_e$. \label{it:hw_quasineutrality}
+    \item $n_i = n_0 + n'$, where $n_0 = n_0(x_1)$ and $n'$ is smaller than $n_0$. \label{it:hw_ion_density}
+    \item Perpendicular components of the ion shear-stress term are modeled as $(\nabla \cdot \tvec_i)_\perp/(m_i n_i) = \mu \nabla_\perp^2 \uvec_{i,\perp}$. \label{it:hw_shear_stress}
+    \item Assume infinitesimally small electron mass, i.e.\@ $m_e \to 0$. \label{it:hw_small_electron_mass}
+    \item The electron collision term modeled as $\Rvec_e = m_e n_e \nu_{ei} (\uvec_i - \uvec_e)$. Given the expression for $\uvec_e$ in \cref{it:hw_quasineutrality}, we have $\Rvec_e = (m_e \nu_{ei}/e) \Jvec$. For the parallel component, assume $R_{e,||} = e n_e \eta J_{||}$, where $\eta$ is the resistivity. \label{it:hw_electron_collisions}
+\end{enumerate}
+
+%--------------------------------------------
+\subsection{Derivation}
+%--------------------------------------------
+Using the assumptions in \cref{it:hw_single_charge_ions,it:hw_no_shear_source_coll}, the momentum \cref{eq:cons_mom} for ions becomes
+\begin{equation}
+    m_i n_i \left (\frac{\partial \uvec_i}{\partial t} + \uvec_i \cdot \nabla \uvec_i \right ) = e n_i (\Evec + \uvec_i \times \Bvec) - \nabla p_i + \nabla \cdot \tvec.
+\end{equation}
+Using the assumptions in \cref{it:hw_cold,it:hw_electrostatic}, the above becomes
+\begin{equation}
+    \frac{\partial \uvec_i}{\partial t} + \uvec_i \cdot \nabla \uvec_i = -\frac{e}{m_i} \nabla \phi + \frac{e}{m_i}\uvec_i \times \Bvec + \frac{\nabla \cdot \tvec_i}{m_i n_i}.
+\end{equation}
+As before, introduce the coordinate system $\evec_1$, $\evec_2$, $\evec_3$, and assume $\Bvec$ points in the $\evec_3$ direction. Defining the perpendicular velocity as $\uvec_{i,\perp} = [u_{i,1}, u_{i,2}, 0]^T$, the perpendicular gradient as $\nabla_\perp = [\partial_1, \partial_2, 0]^T$, and the perpendicular shear stress as $(\nabla \cdot \tvec_i)_\perp = [(\nabla \cdot \tvec)_1, (\nabla \cdot \tvec)_2, 0]^T$, we have
+\begin{equation}
+    \frac{\partial \uvec_{i,\perp}}{\partial t} + \uvec_i \cdot \nabla \uvec_{i,\perp} = -\frac{e}{m_i} \nabla_\perp \phi + \frac{e}{m_i}\uvec_i \times \Bvec + \frac{(\nabla \cdot \tvec_i)_\perp}{m_i n_i}.
+\end{equation}
+Using the assumption in \cref{it:hw_par_ion} and noting that $\uvec_{i} \times \Bvec = \uvec_{i,\perp} \times \Bvec$, we obtain
+\begin{equation}
+    \frac{\partial \uvec_{i,\perp}}{\partial t} + \uvec_{i,\perp} \cdot \nabla_\perp \uvec_{i,\perp} = -\frac{e}{m_i} \nabla_\perp \phi + \frac{e}{m_i} \uvec_{i,\perp} \times \Bvec + \frac{(\nabla \cdot \tvec_i)_\perp}{m_i n_i}.
+\end{equation}
+Finally, using the assumption in \cref{it:hw_shear_stress}, we obtain
+\begin{equation}
+    \label{eq:hw_momentum_perpendicular}
+        \frac{\partial \uvec_{i,\perp}}{\partial t} + \uvec_{i,\perp} \cdot \nabla_\perp \uvec_{i,\perp} = -\frac{e}{m_i} \nabla_\perp \phi + \frac{e}{m_i} \uvec_{i,\perp} \times \Bvec + \mu \nabla_\perp^2 \uvec_{i,\perp}.
+\end{equation}
+The same scaling analysis performed for the derivation of the Hasegawa Mima equation is now applied. The only new term in \cref{eq:hw_momentum_perpendicular} is the viscous term. We note that the kinematic viscosity $\mu$ scales as
+\begin{equation}
+    \mu \sim r^2 w.
+\end{equation}
+Thus, the viscous stress term leads to the following scalings
+\begin{enumerate}
+    \item $\mu \nabla^2_\perp \uvec^{(0)}_{i,\perp} \sim \epsilon$
+    \item $\mu \nabla^2_\perp \uvec^{(1)}_{i,\perp} \sim \epsilon^2$
+\end{enumerate}
+As before, the first order terms lead to the $E \times B$ drift
+\begin{equation}
+    \label{eq:hw_e_cross_b_drift}
+    \uvec^{(0)}_{i,\perp} = -\nabla_\perp \phi \times \frac{\bvec}{B}.
+\end{equation}
+However, the equation for terms of order $\epsilon$ now contains the viscous term as shown below
+\begin{equation}
+    \frac{\partial \uvec_{i,\perp}^{(0)}}{\partial t} + \uvec_{i,\perp}^{(0)} \cdot \nabla_\perp \uvec_{i,\perp}^{(0)} = \frac{e}{m_i} \uvec_{i,\perp}^{(1)} \times \Bvec + \mu \nabla_\perp^2 \uvec^{(0)}_{i,\perp}.
+\end{equation}
+Upon crossing by $\Bvec$, the above gives
+\begin{equation}
+\label{eq:hw_polarization_drift}
+    \uvec_{i,\perp}^{(1)} = -\frac{1}{w_{c,i} B} \left [ \frac{\partial \nabla_\perp \phi}{\partial t} + \uvec_{i,\perp}^{(0)} \cdot \nabla_\perp \left ( \nabla_\perp \phi \right ) \right ] + \frac{\mu}{w_{c,i}B} \nabla^2_\perp (\nabla_\perp \phi).
+\end{equation}
+That is, an additional viscous term appears in the polarization drift.
+
+As shown in the derivation of the Hasegawa-Mima equation, the continuity equation for ions can be expressed in the form of \cref{eq:intermediate_hm_1}, which is repeated below for convenience
+\begin{equation}
+    \frac{\partial \ln n_i}{\partial t} + \uvec^{(0)}_{i,\perp} \cdot \nabla_\perp \ln n_i + \nabla_\perp \cdot \uvec^{(1)}_{i,\perp} = 0.
+\end{equation}
+Given the assumption in \cref{it:hw_ion_density}, the natural logarithm of density is re-written as follows
+\begin{equation}
+    \ln n_i = \ln \left ( n_0 + n' \right ) = \ln \left [ n_0 \left ( 1 + \frac{n'}{n_0} \right ) \right ] = \ln n_0 + \ln \left (1 + \frac{n'}{n_0} \right ).
+\end{equation}
+We now introduce $n = n' / n_0$, which is small due to the assumption in \cref{it:hw_ion_density}. Thus, a Taylor series expansion would allow us to write
+\begin{equation}
+    \label{eq:hw_ion_density}
+    \ln n_i = \ln n_0 + n.
+\end{equation}
+Since $n_0$ is time independent (assumption in \cref{it:hw_ion_density}), the continuity equation becomes
+\begin{equation}
+    \label{eq:hw_intermediate_ion_1}
+    \frac{\partial n}{\partial t} + \uvec^{(0)}_{i,\perp} \cdot \nabla_\perp \left ( \ln n_0 + n \right ) + \nabla_\perp \cdot \uvec^{(1)}_{i,\perp} = 0.
+\end{equation}
+In reference to \cref{eq:hm_divergence_polarization}, we now have
+\begin{equation}
+    \nabla_\perp \cdot \uvec_{i,\perp}^{(1)} = -\frac{1}{w_{c,i} B} \left [ \frac{\partial \nabla_\perp^2 \phi}{\partial t} + \uvec_{i,\perp}^{(0)} \cdot \nabla_\perp \left ( \nabla_\perp^2 \phi \right ) \right ] + \frac{\mu}{w_{c,i} B} \nabla^4_\perp \phi.
+\end{equation}
+Plugging this in \cref{eq:hw_intermediate_ion_1}, we obtain
+\begin{equation}
+    \frac{\partial}{\partial t} \left ( \frac{1}{w_{c,i} B} \nabla^2_\perp \phi - n \right ) + \uvec^{(0)}_{i,\perp} \cdot \nabla_\perp \left ( \frac{1}{w_{c,i} B} \nabla^2_\perp \phi - n - \ln n_0 \right ) - \frac{\mu}{w_{c,i} B} \nabla^4_\perp \phi = 0.
+\end{equation}
+Plugging in for $\uvec^{(0)}_{i,\perp}$,
+\begin{equation}
+    \label{eq:hw_ion_continuity}
+    \frac{\partial}{\partial t} \left ( \frac{1}{w_{c,i} B} \nabla^2_\perp \phi - n \right ) - \left (\nabla_\perp \phi \times \frac{\bvec}{B} \right ) \cdot \nabla_\perp \left ( \frac{1}{w_{c,i} B} \nabla^2_\perp \phi - n - \ln n_0 \right ) - \frac{\mu}{w_{c,i} B} \nabla^4_\perp \phi = 0.
+\end{equation}
+
+Using the assumptions in \cref{it:hw_single_charge_ions,it:hw_no_shear_source_coll}, the momentum \cref{eq:cons_mom} for electrons becomes
+\begin{equation}
+    m_e n_e \left (\frac{\partial \uvec_e}{\partial t} + \uvec_e \cdot \nabla \uvec_e \right ) = -e n_e (\Evec + \uvec_e \times \Bvec) - \nabla p_e + \Rvec_e.
+\end{equation}
+Using the assumptions in \cref{it:hw_small_electron_mass,it:hw_isothermal_electron,it:hw_electrostatic}, the above simplifies to
+\begin{equation}
+    0 = e n_e (\nabla \phi + \uvec_e \times \Bvec) - T_e \nabla n_e + \Rvec_e.
+\end{equation}
+Using the assumption in \cref{it:hw_quasineutrality} and dividing by $n_i$, we get
+\begin{equation}
+    0 = e (\nabla \phi + \uvec_e \times \Bvec) - T_e \nabla \ln n_i + \frac{1}{n_i}\Rvec_e.
+\end{equation}
+\Cref{eq:hw_ion_density} allows us to write the above as
+\begin{equation}
+    0 = e (\nabla \phi + \uvec_e \times \Bvec) - T_e \nabla \ln n_0 - T_e \nabla n + \frac{1}{n_i}\Rvec_e.
+\end{equation}
+We now focus on the component of the equation above that is parallel $\Bvec$. Since $n_0$ does not vary along that direction, the above simplifies to
+\begin{equation}
+    0 = e \nabla_{||} \phi - T_e \nabla_{||} n + \frac{1}{n_i} R_{e,||}.
+\end{equation}
+Using the assumption in \cref{it:hw_electron_collisions}, we have
+\begin{equation}
+    0 = e \nabla_{||} \phi - T_e \nabla_{||} n + e \eta J_{||},
+\end{equation}
+which, upon re-arranging, gives
+\begin{equation}
+    \label{eq:hw_electron_momentum}
+    J_{||} = \frac{T_e}{e \eta} \nabla_{||} \left ( n - \frac{e\phi}{T_e} \right ).
+\end{equation}
+
+Result
+\begin{equation}
+    \label{eq:hw_electron_continuity}
+    \frac{\partial n}{\partial t} - \left ( \nabla_\perp \phi \times \frac{\bvec}{B} \right ) \cdot \nabla_\perp \left ( n + \ln n_0 \right ) = \frac{1}{en_0} \nabla_{||} J_{||}.
+\end{equation}
+
+Combining \cref{eq:hw_electron_momentum,eq:hw_ion_continuity,eq:hw_electron_continuity} leads to the dimensional form of the Hasegawa-Wakatani model
+\begin{multline}
+    \frac{\partial}{\partial t} \left ( \frac{1}{w_{c,i} B} \nabla^2_\perp \phi \right ) - \left (\nabla_\perp \phi \times \frac{\bvec}{B} \right ) \cdot \nabla_\perp \left ( \frac{1}{w_{c,i} B} \nabla^2_\perp \phi \right ) \\
+    = \frac{T_e}{e^2 n_0 \eta} \nabla_{||}^2 \left (n - \frac{e \phi}{T_e} \right ) + \frac{\mu}{w_{c,i} B} \nabla^4_\perp \phi.
+\end{multline}
+\begin{equation}
+    \frac{\partial n}{\partial t} - \left ( \nabla_\perp \phi \times \frac{\bvec}{B} \right ) \cdot \nabla_\perp \left ( n + \ln n_0 \right ) = \frac{T_e}{e^2 n_0 \eta} \nabla_{||}^2 \left (n - \frac{e \phi}{T_e} \right ).
+\end{equation}
+We now introduce the following non-dimensionalization
+\begin{align}
+    \phi(t,x_1,x_2,x_3) &= \frac{T_e}{e} \hat{\phi}(\hat{t},\hat{x}_1,\hat{x}_2, x_3) \\
+    n_0(x_1) &= \hat{n}_0(\hat{x}_1) \\
+    n(t,x_1,x_2,x_3) &= \hat{n}(\hat{t}, \hat{x}_1, \hat{x}_2, x_3),
+\end{align}
+where $\hat{t} = t w_{c,i}$, $\hat{x}_1 = x_1 / r_s$, and $\hat{x}_2 = x_2 / r_s$. Neglecting the hat notation for the sake of simplicity, the Hasegawa-Wakatani model in non-dimensional form is written as
+\begin{equation}
+    \frac{\partial \nabla^2_\perp \phi}{\partial t} - \left (\nabla_\perp \phi \times \bvec \right ) \cdot \nabla_\perp \left ( \nabla^2_\perp \phi \right ) = c_1 ( \phi - n) + c_2 \nabla^4_\perp \phi,
+\end{equation}
+\begin{equation}
+    \frac{\partial n}{\partial t} - \left ( \nabla_\perp \phi \times \bvec \right ) \cdot \nabla_\perp \left ( n + \ln n_0 \right ) = c_1 (\phi - n),
+\end{equation}
+where
+\begin{equation}
+    c_1 = -\frac{T_e}{e^2 n_0 \eta w_{c,i}} \nabla^2_{||} \qquad c_2 = \frac{\mu}{w_{c,i} r_s^2}.
+\end{equation}
 
 %###############################################################################
 %
