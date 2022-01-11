@@ -2148,16 +2148,39 @@ We now introduce the following non-dimensionalization
 \end{align}
 where $\hat{t} = t w_{c,i}$, $\hat{x}_1 = x_1 / r_s$, and $\hat{x}_2 = x_2 / r_s$. Neglecting the hat notation for the sake of simplicity, the Hasegawa-Wakatani model in non-dimensional form is written as
 \begin{equation}
+    \label{eq:hw_potential}
     \frac{\partial \nabla^2_\perp \phi}{\partial t} - \left (\nabla_\perp \phi \times \bvec \right ) \cdot \nabla_\perp \left ( \nabla^2_\perp \phi \right ) = c_1 ( \phi - n) + c_2 \nabla^4_\perp \phi,
 \end{equation}
 \begin{equation}
+    \label{eq:hw_density}
     \frac{\partial n}{\partial t} - \left ( \nabla_\perp \phi \times \bvec \right ) \cdot \nabla_\perp \left ( n + \ln n_0 \right ) = c_1 (\phi - n),
 \end{equation}
 where
 \begin{equation}
     c_1 = -\frac{T_e}{e^2 n_0 \eta w_{c,i}} \nabla^2_{||} \qquad c_2 = \frac{\mu}{w_{c,i} r_s^2}.
 \end{equation}
+It is common for the $c_1$ operators to become a coefficient instead.
 
+%--------------------------------------------
+\subsection{Relationship to other models}
+%--------------------------------------------
+The Hasegawa-Wakatani \cref{eq:hw_potential,eq:hw_density} contain two limits. Assuming $c_1$ is a coefficient rather than an operator, one of the limits is obtained by letting $c_1 = 0$. Then, the $\phi$ and $n$ equations are decoupled, and the $\phi$ equation corresponds to the third (and only non-zero) component of the 2D Navier-Stokes equations for vorticity
+\begin{equation}
+    \frac{\partial \wvec}{\partial t} + \uvec \cdot \nabla_\perp \wvec = \nu \nabla^2_\perp \wvec,
+\end{equation}
+where
+\begin{equation}
+    \uvec = \nabla_\perp \times (-\phi \bvec) = - \nabla_\perp \phi \times \bvec,
+\end{equation}
+and
+\begin{equation}
+    \wvec = \nabla_\perp \times \uvec = \nabla^2_\perp \phi \bvec.
+\end{equation}
+If, on the other hand, $c_1 \to \infty$, then dividing \cref{eq:hw_density} by $c_1$ shows that $n = \phi$. Subtracting \cref{eq:hw_density} from \cref{eq:hw_potential} and assuming $c_2=0$ one obtains 
+\begin{equation}
+    \frac{\partial}{\partial t} \left ( \nabla^2_\perp \phi - \phi \right ) - \left (\nabla_\perp \phi \times \bvec \right ) \cdot \nabla_\perp \left ( \nabla^2_\perp \phi - \ln n_0 \right ) = 0.
+\end{equation}
+The above is the Hasegawa-Mima equation.
 %###############################################################################
 %
 %
