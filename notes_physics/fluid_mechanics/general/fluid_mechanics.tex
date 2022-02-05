@@ -1938,6 +1938,265 @@ Viscous effects include friction drag, flow separation(leading edge stall, trail
 
 %###############################################################################
 %
+\chapter{Vectors in rotating reference frames}
+%
+%###############################################################################
+
+%-------------------------------------------------------------------------------
+\section{Basic properties}
+%-------------------------------------------------------------------------------
+%--------------------------------------------
+\subsection{Position}
+%--------------------------------------------
+Consider the Eucledian transformation
+\begin{equation}
+\label{eq:x_rot}
+\tilde{x}^+_i(\tilde{t}) = Q_{ij}(\tilde{t}-c) x^+_j(\tilde{t}-c) + b_i(\tilde{t}-c) 
+\end{equation}
+where $x^+(t)$ is the Lagrangian position of a fluid particle, and $\tilde{x}^+(\tilde{t})$ is the Lagrangian position of the same particle but in a rotating reference frame. The transformation above amounts to a rotation of the reference frame determined by the orthogonal matrix $\mathbf{Q}(t)$, a translation of the reference frame determined by the vector $\mathbf{b}(t)$, and a translation in time given by $\tilde{t} = t + c$. 
+
+%--------------------------------------------
+\subsection{Velocity}
+%--------------------------------------------
+Since the velocity of a fluid particle is given by 
+\begin{equation}
+u^+_i(t) = \frac{d x^+_i(t)}{dt},
+\end{equation}
+the components of velocity in the non-inertial reference frame are defined as
+\begin{equation}
+\tilde{u}^+_i(\tilde{t}) = \frac{d \tilde{x}^+_i(\tilde{t})}{d \tilde{t}} .
+\end{equation}
+Thus, the relationship between the velocity components in the different reference frames is given by
+\begin{align}
+\label{eq:rot_vel_general}
+\tilde{u}^+_i(\tilde{t}) &= \frac{d}{d\tilde{t}} [Q_{ij}(\tilde{t} - c) x^+_j(\tilde{t} - c) + b_i(\tilde{t} - c)] \nonumber \\
+& = Q_{ij}(\tilde{t} - c) U^+_j(\tilde{t} - c) + \dot{Q}_{ij}(\tilde{t} - c) x^+_j(\tilde{t} - c) + \dot{b}_i(\tilde{t} - c).
+\end{align}
+If we assume there is no translation in space or time, the above reduces to
+\begin{equation}
+\label{eq:rot_vel_inter}
+\tilde{u}^+_i = Q_{ij} u^+_j + \dot{Q}_{ij} x^+_j, 
+\end{equation}
+where each quantity above depends on time $t$. Multiplying by $Q^{-1}_{ki}$ we obtain
+\begin{equation}
+Q_{ik} \tilde{u}^+_i = u^+_k + Q_{ik}\dot{Q}_{ij}x^+_j.
+\end{equation}
+Noting that the tensor $Q_{ik} \dot{Q}_{ij}$ is antisymmetric, we obtain
+\begin{equation}
+\label{eq:rot_vel}
+u^+_k = Q_{ik} \tilde{u}^+_i + Q_{ij}\dot{Q}_{ik}x^+_j.
+\end{equation}
+
+We now define the angular velocity tensor $\Omega_{ij}$ and the angular velocity vector $\Omega_i$ using the following relationship 
+\begin{equation}
+\label{eq:angular_definition}
+\Omega_{ij} = \epsilon_{jik}\Omega_{k} = Q_{kj}\dot{Q}_{ki}.
+\end{equation}
+Thus (\ref{eq:rot_vel}) can be expressed in terms of the angular velocity tensor as
+\begin{equation}
+\label{eq:rot_vel_angular_tensor}
+u^+_k = Q_{ik} \tilde{u}^+_i + \Omega_{kj}x^+_j,
+\end{equation}
+or in terms of the angular velocity vector as
+\begin{equation}
+\label{rot_vel_angular_vector}
+u^+_k = Q_{ik} \tilde{u}^+_i + \epsilon_{jki}\Omega_ix^+_j.
+\end{equation}
+
+%--------------------------------------------
+\subsection{Acceleration}
+%--------------------------------------------
+We assume again no translation in space or time. Taking the derivative of both sides of \cref{eq:rot_vel}
+\begin{equation}
+    \frac{du^+_k}{dt} = \dot{Q}_{ik} \tilde{u}^+_i + Q_{ik} \frac{d\tilde{u}^+_i}{dt} + \dot{Q}_{ik} \frac{dQ_{ij} x^+_j}{dt} + Q_{ij}\ddot{Q}_{ik} x^+_j.
+\end{equation}
+Using \cref{eq:x_rot} the above is re-written as
+\begin{equation}
+    \frac{du^+_k}{dt} = Q_{ik} \frac{d\tilde{u}^+_i}{dt} + 2 \dot{Q}_{ik} \tilde{u}^+_i + Q_{ij}\ddot{Q}_{ik} x^+_j.
+\end{equation}
+Re-writing the last term on the right-hand-side above leads to
+\begin{equation}
+    \frac{du^+_k}{dt} = Q_{ik} \frac{d\tilde{u}^+_i}{dt} + 2 \dot{Q}_{ik} \tilde{u}^+_i + \frac{d Q_{ij}\dot{Q}_{ik}}{dt} x^+_j - \dot{Q}_{ij} \dot{Q}_{ik} x^+_j.
+\end{equation}
+We now show that
+\begin{align}
+    \dot{Q}_{ij} \dot{Q}_{ik} & = \delta_{pi}\dot{Q}_{pj} \dot{Q}_{ik}  \nonumber \\
+    & = Q_{pq}Q^{-1}_{qi} \dot{Q}_{pj} \dot{Q}_{ik}  \nonumber \\
+    & = Q_{pq} \dot{Q}_{pj} Q_{iq} \dot{Q}_{ik} .
+\end{align}
+Thus, in terms of the angular velocity tensor, we have
+\begin{equation}
+    \frac{du^+_k}{dt} = Q_{ik} \frac{d\tilde{u}^+_i}{dt} + 2 \dot{Q}_{ik} \tilde{u}^+_i + \frac{d \Omega_{kj}}{dt} x^+_j - \Omega_{kq} \Omega_{jq} x^+_j.
+\end{equation}
+In terms of the angular velocity vector, the above becomes
+\begin{equation}
+    \frac{du^+_k}{dt} = Q_{ik} \frac{d\tilde{u}^+_i}{dt} + 2 \dot{Q}_{ik} \tilde{u}^+_i + \epsilon_{jki}\frac{d \Omega_{i}}{dt} x^+_j - \epsilon_{qki}\Omega_{i} \epsilon_{qjp}\Omega_{p} x^+_j,
+\end{equation}
+which, upon a simple re-arrangement of indices, gives
+\begin{equation}
+\label{eq:rot_acl_angular_vector}
+    \frac{du^+_k}{dt} = Q_{ik} \frac{d\tilde{u}^+_i}{dt} + 2 \dot{Q}_{ik} \tilde{u}^+_i + \epsilon_{kij}\frac{d \Omega_{i}}{dt} x^+_j + \epsilon_{kiq}\Omega_{i} \epsilon_{qpj}\Omega_{p} x^+_j.
+\end{equation}
+
+%-------------------------------------------------------------------------------
+\section{Unit vectors}
+%-------------------------------------------------------------------------------
+Let the orthogonal basis for the inertial reference frame be denoted by $\hat{a}^{(1)}$, $\hat{a}^{(2)}$, and $\hat{a}^{(3)}$, and the orthogonal basis for the rotating reference frame by $\hat{b}^{(1)}$, $\hat{b}^{(2)}$, and $\hat{b}^{(3)}$. We know that the unit vector $\hat{b}^{(i)}$ has components $\tilde{b}_j^{(i)}$ in the rotating reference frame, and components $b_j^{(i)}$ in the inertial reference frame. The vector is the same whether expressed in the rotating or inertial reference frames, that is
+\begin{equation}
+\tilde{b}_k^{(i)} \hat{b}^{(k)} = b_k^{(i)} \hat{a}^{(k)}
+\end{equation}
+Since $\tilde{b}_k^{(i)} = \delta_{ik}$, we rewrite the above as
+\begin{equation}
+\label{eq:unit_trans}
+\hat{b}^{(i)} = b_k^{(i)} \hat{a}^{(k)} = Q_{jk} \tilde{b}_j^{(i)} \hat{a}^{(k)} = Q_{ik} \hat{a}^{(k)}.
+\end{equation}
+Doting both sides by $\hat{a}^{(j)}$ shows that 
+\begin{equation}
+Q_{ij} = \hat{a}^{(j)} \cdot \hat{b}^{(i)}.
+\end{equation}
+
+One can also multiply both sides of \cref{rot_vel_angular_vector} by $\hat{a}^{(k)}$ and use \cref{eq:unit_trans} to obtain
+\begin{equation}
+    \label{eq:uine_urot_temp}
+u^+_k \hat{a}^{(k)} = \tilde{u}^+_i \hat{b}^{(i)} + \epsilon_{jki}\Omega_ix^+_j \hat{a}^{(k)}.
+\end{equation}
+If we introduce the following notation
+\begin{align}
+    \vec{u}^+_{ine} &= u^+_k \hat{a}^{(k)}, \\
+    \vec{u}^+_{rot} &= \tilde{u}^+_i \hat{b}^{(i)}, \\
+    \vec{\Omega} &= \Omega_i \hat{a}^{(i)}, \\
+    \vec{x}^+ &= x_i^+ \hat{a}^{(i)}.
+\end{align}
+then the \cref{eq:uine_urot_temp} is writen as 
+\begin{equation}
+\label{uine_urot}
+\vec{u}^+_{ine}  = \vec{u}^+_{rot}  + \vec{\Omega} \times \vec{x}^+.
+\end{equation}
+Similarly, multiplying both sides of \cref{eq:rot_acl_angular_vector} gives
+\begin{equation}
+\label{eq:aine_arot_inter}
+    \frac{du^+_k}{dt} \hat{a}^{(k)} = \frac{d\tilde{u}^+_i}{dt}\hat{b}^{(i)} + 2 \dot{Q}_{ik} \tilde{u}^+_i \hat{a}^{(k)} + \epsilon_{kij}\frac{d \Omega_{i}}{dt} x^+_j \hat{a}^{(k)} + \epsilon_{kiq}\Omega_{i} \epsilon_{qpj}\Omega_{p} x^+_j \hat{a}^{(k)}.
+\end{equation}
+Using \cref{eq:angular_definition} one can show that $\dot{Q}_{ik} = \epsilon_{pjk} \Omega_p Q_{ij}$. Thus, the second term on the left-hand-side above can be written as
+\begin{align}
+    2 \dot{Q}_{ik} \tilde{u}^+_i \hat{a}^{(k)} &= 2 \epsilon_{pjk} \Omega_p Q_{ij} \tilde{u}^+_i \hat{a}^{(k)} \nonumber \\
+    &= 2 \Omega_p Q_{ij} \tilde{u}^+_i \hat{a}^{(p)} \times \hat{a}^{(j)} \nonumber \\
+    &= 2 \Omega_p \hat{a}^{(p)} \times \tilde{u}^+_i \hat{b}^{(i)}.
+\end{align}
+Therefore, in vector notation \cref{eq:aine_arot_inter} becomes
+\begin{equation}
+    \label{eq:aine_arot}
+    \vec{a}^+_{ine} = \vec{a}^+_{rot} + 2 \vec{\Omega} \times \vec{u}^+_{rot} + \dot{\vec{\Omega}} \times \vec{x}^+ + \vec{\Omega} \times (\vec{\Omega} \times \vec{x}^+),
+\end{equation}
+where $\vec{a}^+_{ine} = \frac{du^+_k}{dt} \hat{a}^{(k)}$, $\vec{a}^+_{rot} = \frac{d\tilde{u}^+_i}{dt}\hat{b}^{(i)}$, and $\dot{\vec{\Omega}} = \frac{d\Omega_i}{dt} \hat{a}^{(i)}$.
+
+%-------------------------------------------------------------------------------
+\section{Eulerian variables}
+%-------------------------------------------------------------------------------
+We now introduce the Eulerian counterpart to the Lagrangian variables. In the inertial reference frame these are $\rho(t,\xvec)$, $u_i(t,\xvec)$, and $p(t,\xvec)$. They are defined by the following expressions
+\begin{align}
+    \rho^+ &= \rho(t,\xvec^+) \\
+    u_i^+ &= u_i(t,\xvec^+) \\
+    p^+ &= p(t,\xvec^+).
+\end{align}
+Similarly for the rotating reference frame, we have $\tilde{\rho}(t,\tilde{\xvec})$, $\tilde{u}_i(t,\tilde{\xvec})$, and $\tilde{p}(t,\tilde{\xvec})$. These are defined by
+\begin{align}
+    \tilde{\rho}^+ &= \tilde{\rho}(t,\tilde{\xvec}^+) \\
+    \tilde{u}_i^+ &= \tilde{u}_i(t,\tilde{\xvec}^+) \\
+    \tilde{p}^+ &= \tilde{p}(t,\tilde{\xvec}^+).
+\end{align}
+We now use the transformation rules for the Lagrangian variables to derive the transformation rules for the Eulerian variables. The transformation rules for the Lagrangian variables are
+\begin{align}
+    \rho^+ &= \tilde{\rho}^+ \\
+    u_k^+ &= Q_{ik} \tilde{u}_i^+ + Q_{ij} \dot{Q}_{ik} x_j^+ \\
+    p^+ &= \tilde{p}^+.
+\end{align}
+The second equation above is the previously derived \cref{eq:rot_vel}. Using the definition of the Eulerian variables, the above is re-written as
+\begin{align}
+    \rho(t,\xvec^+) &= \tilde{\rho}(t,\tilde{\xvec}^+) \label{eq:eul_rho_temp} \\
+    u_i(t,\xvec^+) &= Q_{ik} \tilde{u}_i(t,\tilde{\xvec}^+)  + Q_{ij} \dot{Q}_{ik} x_j^+ \label{eq:eul_vel_temp}\\
+    p(t,\xvec^+) &= \tilde{p}(t,\tilde{\xvec}^+). \label{eq:pres_temp}
+\end{align}
+Using \cref{eq:x_rot}, we get
+\begin{align}
+    \rho(t,\xvec^+) &= \tilde{\rho}(t,\Qvec \xvec^+) \\
+    u_i(t,\xvec^+) &= Q_{ik} \tilde{u}_i(t,\Qvec \xvec^+)  + Q_{ij} \dot{Q}_{ik} x_j^+ \\
+    p(t,\xvec^+) &= \tilde{p}(t,\Qvec \xvec^+)+.
+\end{align}
+Since the above holds for any $\xvec^+$, we finally re-write it as
+\begin{align}
+    \rho(t,\xvec) &= \tilde{\rho}(t,\Qvec \xvec) \label{eq:eul_rho_trans}\\
+    u_i(t,\xvec) &= Q_{ik} \tilde{u}_i(t,\Qvec \xvec)  + Q_{ij} \dot{Q}_{ik} x_j \label{eq:eul_vel_trans}\\
+    p(t,\xvec) &= \tilde{p}(t,\Qvec \xvec). \label{eq:eul_pres_trans}
+\end{align}
+
+%-------------------------------------------------------------------------------
+\section{Rotating Navier-Stokes equations}
+%-------------------------------------------------------------------------------
+We first obtain a few set of relationships that will later be used in deriving the rotating Navier-Stokes equations. Taking the derivative of \cref{eq:eul_pres_trans} gives
+\begin{align}
+    \frac{\partial p(t,\xvec)}{\partial x_i} &= \frac{ \partial \tilde{p}(t,\Qvec \xvec)}{\partial x_i} \nonumber \\
+    &= \frac{\partial}{\partial x_i} \tilde{p}(t,Q_{1j}x_j, Q_{2j}x_j, Q_{3j} x_3) \nonumber \\
+    &= \frac{\partial Q_{1j}x_j}{\partial x_i} \left [ \frac{\partial \tilde{p}(t,\tilde{\xvec})}{\partial \tilde{x}_1} \right]_{ \tilde{\xvec} = \Qvec \xvec} + \frac{\partial Q_{2j}x_j}{\partial x_i} \left [ \frac{\partial \tilde{p}(t,\tilde{\xvec})}{\partial \tilde{x}_2} \right ]_{\tilde{\xvec} = \Qvec \xvec} + \frac{\partial Q_{3j}x_j}{\partial x_i} \left [ \frac{\partial \tilde{p}(t,\tilde{\xvec})}{\partial \tilde{x}_3} \right ]_{\tilde{\xvec} = \Qvec \xvec} \nonumber \\
+    &= Q_{ji} \left [ \frac{\partial \tilde{p}(t,\tilde{\xvec})}{\partial \tilde{x}_j} \right ]_{\tilde{\xvec} = \Qvec \xvec}
+\end{align}
+If we evaluate the above at $\xvec = \xvec^+$, we get
+\begin{equation}
+    \left [ \frac{\partial p(t,\xvec)}{\partial x_i} \right]_{\xvec = \xvec^+} = Q_{ji} \left [ \frac{\partial \tilde{p}(t,\tilde{\xvec})}{\partial \tilde{x}_j} \right]_{\tilde{\xvec} = \tilde{\xvec}^+}.
+\end{equation}
+Multiplying both sides by $\hat{a}^{(i)}$ gives
+\begin{equation}
+\label{eq:ns_pressure_rot_transform}
+    \left [ \frac{\partial p(t,\xvec)}{\partial x_i} \right]_{\xvec = \xvec^+} \hat{a}^{(i)} = \left [ \frac{\partial \tilde{p}(t,\tilde{\xvec})}{\partial \tilde{x}_j} \right]_{\tilde{\xvec} = \tilde{\xvec}^+} \hat{b}^{(j)}.
+\end{equation}
+For the shear-stress tensor, we have
+\begin{equation}
+    \label{eq:ns_shear_stress_rot_transform}
+    \left [ \frac{\partial \tau_{ij}(t,\xvec)}{\partial x_j} \right]_{\xvec = \xvec^+} \hat{a}^{(i)} = \left [ \frac{\partial \tilde{\tau}_{ij}(t,\tilde{\xvec})}{\partial \tilde{x}_j} \right]_{\tilde{\xvec} = \tilde{\xvec}^+} \hat{b}^{(i)}.
+\end{equation}
+We also use \cref{eq:aine_arot} to write
+\begin{align}
+    \frac{du_i^+}{dt} \hat{a}^{(i)} &= \frac{d\tilde{u}_i^+}{dt} \hat{b}^{(i)} + 2 \vec{\Omega} \times \left ( \tilde{u}_i^+ \hat{b}^{(i)} \right ) + \dot{\vec{\Omega}} \times \vec{x}^+ + \vec{\Omega} \times \left ( \vec{\Omega} \times \vec{x}^+ \right ) \nonumber \\
+    &= \frac{d\tilde{u}_i^+}{dt} \hat{b}^{(i)} + 2 \vec{\Omega} \times \left ( \tilde{u}_i^+ \hat{b}^{(i)} \right ) + \dot{\vec{\Omega}} \times \left ( \tilde{x}_i^+ \hat{b}^{(i)}\right ) + \vec{\Omega} \times \left [ \vec{\Omega} \times \left ( \tilde{x}_i^+ \hat{b}^{(i)}\right ) \right ]
+\end{align}
+Expressing the above in terms of Eulerian quantities gives
+\begin{multline}
+    \label{eq:aine_arot_eulerian}
+    \left [ \frac{\partial u_i(t,\xvec)}{\partial t} + u_j(t,\xvec) \frac{\partial u_i(t,\xvec)}{\partial x_j} \right ]_{\xvec = \xvec^+} \hat{a}^{(i)} = \left [ \frac{\partial \tilde{u}_i(t,\tilde{\xvec})}{\partial t} + \tilde{u}_j(t,\tilde{\xvec}) \frac{\partial \tilde{u}_i(t,\tilde{\xvec})}{\partial \tilde{x}_j} \right ]_{\tilde{\xvec} = \tilde{\xvec}^+} \hat{b}^{(i)} \\
+    + 2 \vec{\Omega} \times \left \{ \left [\tilde{u}_i(t,\tilde{\xvec}) \right ]_{\tilde{\xvec} = \tilde{\xvec}^+} \hat{b}^{(i)} \right \} + \dot{\vec{\Omega}} \times \left [ \left ( \tilde{x}_i \right)_{\tilde{\xvec} = \tilde{\xvec}^+} \hat{b}^{(i)}\right ] + \vec{\Omega} \times \left \{ \vec{\Omega} \times \left [ \left ( \tilde{x}_i \right )_{\tilde{\xvec} = \tilde{\xvec}^+} \hat{b}^{(i)}\right ] \right \}
+\end{multline}
+
+The conservation of momentum equation is given by
+\begin{equation}
+    \rho(t,\xvec) \left [\frac{\partial u_i(t,\xvec)}{\partial t} + u_j(t,\xvec) \frac{\partial u_i(t,\xvec)}{\partial x_j} \right ] = -\frac{\partial p(t,\xvec)}{\partial x_i} + \frac{\partial \tau_{ij}(t,\xvec)}{\partial x_j}.
+\end{equation}
+Evaluating the above at $\xvec = \xvec^+$ can be written as
+\begin{equation}
+    \rho(t,\xvec^+) \left [\frac{\partial u_i(t,\xvec)}{\partial t} + u_j(t,\xvec) \frac{\partial u_i(t,\xvec)}{\partial x_j} \right ]_{\xvec = \xvec^+} = -\left [ \frac{\partial p(t,\xvec)}{\partial x_i} \right]_{\xvec = \xvec^+} + \left [ \frac{\partial \tau_{ij}(t,\xvec)}{\partial x_j} \right ]_{\xvec = \xvec^+}.
+\end{equation}
+Multiplying both sides by $\hat{a}^{(i)}$ gives
+\begin{multline}
+    \rho(t,\xvec^+) \left [\frac{\partial u_i(t,\xvec)}{\partial t} + u_j(t,\xvec) \frac{\partial u_i(t,\xvec)}{\partial x_j} \right ]_{\xvec = \xvec^+} \hat{a}^{(i)} \\
+    = -\left [ \frac{\partial p(t,\xvec)}{\partial x_i} \right]_{\xvec = \xvec^+} \hat{a}^{(i)} + \left [ \frac{\partial \tau_{ij}(t,\xvec)}{\partial x_j} \right ]_{\xvec = \xvec^+} \hat{a}^{(i)}.
+\end{multline}
+Using \cref{eq:eul_rho_temp,eq:ns_pressure_rot_transform,eq:ns_shear_stress_rot_transform} gives
+\begin{multline}
+    \left [ \tilde{\rho}(t,\tilde{\xvec}) \right]_{\tilde{\xvec} = \tilde{\xvec}^+} \left [\frac{\partial u_i(t,\xvec)}{\partial t} + u_j(t,\xvec) \frac{\partial u_i(t,\xvec)}{\partial x_j} \right ]_{\xvec = \xvec^+} \hat{a}^{(i)} \\
+    = -\left [ \frac{\partial \tilde{p}(t,\tilde{\xvec})}{\partial \tilde{x}_i} \right]_{\tilde{\xvec} = \tilde{\xvec}^+} \hat{b}^{(i)} + \left [ \frac{\partial \tilde{\tau}_{ij}(t,\tilde{\xvec})}{\partial \tilde{x}_j} \right ]_{\tilde{\xvec} = \tilde{\xvec}^+} \hat{b}^{(i)}.
+\end{multline}
+Using \cref{eq:aine_arot_eulerian} we obtain
+\begin{multline}
+    \left [ \tilde{\rho}(t,\tilde{\xvec}) \right]_{\tilde{\xvec} = \tilde{\xvec}^+} \left ( \left [ \frac{\partial \tilde{u}_i(t,\tilde{\xvec})}{\partial t} + \tilde{u}_j(t,\tilde{\xvec}) \frac{\partial \tilde{u}_i(t,\tilde{\xvec})}{\partial \tilde{x}_j} \right ]_{\tilde{\xvec} = \tilde{\xvec}^+} \hat{b}^{(i)} + 2 \vec{\Omega} \times \left \{ \left [\tilde{u}_i(t,\tilde{\xvec}) \right ]_{\tilde{\xvec} = \tilde{\xvec}^+} \hat{b}^{(i)} \right \} \right . \\
+    \left . + \dot{\vec{\Omega}} \times \left [ \left ( \tilde{x}_i \right)_{\tilde{\xvec} = \tilde{\xvec}^+} \hat{b}^{(i)}\right ] + \vec{\Omega} \times \left \{ \vec{\Omega} \times \left [ \left ( \tilde{x}_i \right )_{\tilde{\xvec} = \tilde{\xvec}^+} \hat{b}^{(i)}\right ] \right \} \right ) = -\left [ \frac{\partial \tilde{p}(t,\tilde{\xvec})}{\partial \tilde{x}_i} \right]_{\tilde{\xvec} = \tilde{\xvec}^+} \hat{b}^{(i)} + \left [ \frac{\partial \tilde{\tau}_{ij}(t,\tilde{\xvec})}{\partial \tilde{x}_j} \right ]_{\tilde{\xvec} = \tilde{\xvec}^+} \hat{b}^{(i)}.
+\end{multline}
+Finally, since this holds for any $\tilde{\xvec}^+$, we get
+\begin{multline}
+    \tilde{\rho}(t,\tilde{\xvec}) \left \{ \left [ \frac{\partial \tilde{u}_i(t,\tilde{\xvec})}{\partial t} + \tilde{u}_j(t,\tilde{\xvec}) \frac{\partial \tilde{u}_i(t,\tilde{\xvec})}{\partial \tilde{x}_j} \right ] \hat{b}^{(i)} + 2 \vec{\Omega} \times \left [ \tilde{u}_i(t,\tilde{\xvec}) \hat{b}^{(i)} \right ] \right . \\
+    \left . + \dot{\vec{\Omega}} \times \left ( \tilde{x}_i \hat{b}^{(i)}\right ) + \vec{\Omega} \times \left [ \vec{\Omega} \times \left ( \tilde{x}_i \hat{b}^{(i)} \right ) \right ] \right \} = -\frac{\partial \tilde{p}(t,\tilde{\xvec})}{\partial \tilde{x}_i} \hat{b}^{(i)} + \frac{\partial \tilde{\tau}_{ij}(t,\tilde{\xvec})}{\partial \tilde{x}_j} \hat{b}^{(i)}.
+\end{multline}
+
+%###############################################################################
+%
 \chapter{Multi-component fluid flows}
 %
 %###############################################################################

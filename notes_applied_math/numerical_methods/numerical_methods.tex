@@ -575,27 +575,28 @@ As previously noted, the only Jacobians $\partial \Rvec_I/\partial \Wvec_J$ that
 \chapter{Introduction}
 %----------------------------------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------
-\section{Definition of the finite element method}
+\section{The Galerkin method}
 %---------------------------------------------------------------
 %--------------------------------------------
 \subsection{Weak form or variational formulation}
 %--------------------------------------------
 Consider the problem in which a scalar $u = u(\xvec,t)$ is sought as the solution to the following
 \begin{equation}
+    \label{eq:fe_general_pde}
     \begin{aligned}
         &\frac{\partial u}{\partial t} + Au = f \qquad &&\text{in } \Omega \times \Rvec_+ \\
         &u = 0 && \text{on } \Gamma \times \Rvec_+ \\
         &u(\cdot,0) = u_0 && \text{in } \Omega 
     \end{aligned}
 \end{equation}
-where $A$ is any given linear operator, $\Omega$ is the spatial domain, $\Gamma$ its boundary, and $\Rvec_+$ the set of positive real numbers. The weak formulation of the above is to find the weak solution $u\in H^1_0$ such that 
+where $A$ is any given linear operator, $\Omega$ is the spatial domain, $\Gamma$ its boundary, and $\Rvec_+$ the set of positive real numbers. The weak formulation of the above is to find the weak solution $u\in U$ such that 
 \begin{equation}
-    \left ( \frac{\partial u}{\partial t} , v \right ) + (Au,v) = (f,v) \qquad \forall v \in H^1_0,
+    \left ( \frac{\partial u}{\partial t} , v \right ) + (Au,v) = (f,v) \qquad \forall v \in V,
 \end{equation}
-where $(a,b)= \int_\Omega av \, d\xvec$ is the $L_2$ inner product. Using Calculus identities, some of the derivatives in $(Au,v)$ can be moved from operating on $u$ to operating on $v$. We label the end result as $a(u,v)$, which is a bilinear form. We also label $(f,v)$ as $L(v)$, which is a linear form. Thus, the above is rewritten as 
+where $(a,b)= \int_\Omega av \, d\xvec$ is the $L_2$ inner product, $U$ is some functional space, and $V$ is either the same as $U$ or a different functional space. Using Calculus identities, some of the derivatives in $(Au,v)$ can be moved from operating on $u$ to operating on $v$. We label the end result as $a(u,v)$, which is a bilinear form. We also label $(f,v)$ as $L(v)$, which is a linear form. Thus, the above is rewritten as 
 \begin{equation}
 \label{eq:weak_form}
-    \left ( \frac{\partial u}{\partial t} , v \right ) + a(u,v) = L(v) \qquad \forall v \in H^1_0 .
+    \left ( \frac{\partial u}{\partial t} , v \right ) + a(u,v) = L(v) \qquad \forall v \in V .
 \end{equation}
 Different linear operators $A$ lead to different bilinear forms. A few examples are shown in the table below 
 \begin{center}
@@ -611,26 +612,63 @@ Different linear operators $A$ lead to different bilinear forms. A few examples 
 \end{center}
 
 %--------------------------------------------
-\subsection{Discretization into finite elements}
+\subsection{Discretization into finite spaces}
 %--------------------------------------------
-The following step is to partition the domain into $M$ grid elements. Introduce $S_h \subset H^1_0$ as a finite dimensional space, that is, a space with a finite number of basis elements. We now aim to find $u_h \in S_h$ such that
+Introduce $U_h \subset U$ and $V_h \subset V$ as finite dimensional spaces, that is, spaces with a finite number of basis elements. We now aim to find $u_h \in U_h$ such that
 \begin{equation}
     \label{eq:fe_elliptic_sh_solution}
-        \left ( \frac{\partial u_h}{\partial t} , v_h \right ) + a(u_h,v_h) = (f,v_h)\qquad \forall v_h \in S_h.
+        \left ( \frac{\partial u_h}{\partial t} , v_h \right ) + a(u_h,v_h) = (f,v_h)\qquad \forall v_h \in V_h.
     \end{equation}
-Label the finite basis of $S_h$ as $\{\Phi_i\}_{i=1}^n$, where $n$ is the total number of basis elements (also referred to as degrees of freedom), and $\Phi_i = \Phi_i(\xvec)$. That is, any $v_h \in S_h$ can be written as $v_h = \sum_{i=1}^n V_i \Phi_i$, where $V_i = V_i(t)$. \Cref{eq:fe_elliptic_sh_solution} is then automatically satisfied if the following is satisfied
+Label the finite basis of $U_h$ as $\{\Phi_i\}_{i=1}^n$, where $n$ is the total number of basis elements (also referred to as degrees of freedom), and $\Phi_i = \Phi_i(\xvec)$. For the sake of simplicity, lets use $V_h = U_h$ in this description. 
+
+Any $v_h \in V_h$ can be written as $v_h = \sum_{i=1}^n V_i \Phi_i$, where $V_i = V_i(t)$. \Cref{eq:fe_elliptic_sh_solution} is then automatically satisfied if the following is satisfied
 \begin{equation}
     \left ( \frac{\partial u_h}{\partial t}, \Phi_i \right ) + a(u_h, \Phi_i) = (f, \Phi_i) \qquad \text{for }i=1,...,n.
 \end{equation}
 
-Since $u_h \in S_h$, we can write $u_h(x) = \sum_{j=1}^n U_j \Phi_j$, where $U_j = U_j(t)$. Thus, the above becomes
+Since $u_h \in U_h$, we can write $u_h = \sum_{j=1}^n U_j \Phi_j$, where $U_j = U_j(t)$. Thus, the above becomes
 \begin{equation}
     \sum_{j=1}^n (\Phi_j, \Phi_i) \frac{dU_j}{dt} + \sum_{j=1}^n U_j a(\Phi_j,\Phi_i) = (f,\Phi_i) \qquad \text{for }i=1,...,n.
 \end{equation}
-Define the vectors $\Uvec$ and $\bvec$, as those whose components are $U_j$ and $(f,\Phi_i)$, respectively. Define the matrix $\Avec$ as that whose components are $a(\Phi_j,\Phi_i)$, where $i$ denotes the row and $j$ the column. Similarily, define the mass matrix $\Mvec$ as that whose components are $(\Phi_j, \Phi_i)$, where $i$ denotes the row and $j$ the column. Then, the equation above can be written as
+Define the vectors $\Uvec$ and $\bvec$, as those whose components are $U_j$ and $(f,\Phi_i)$, respectively. Define the matrix $\Avec$ as that whose components are $a_{ij} = a(\Phi_j,\Phi_i)$. Similarily, define the mass matrix $\Mvec$ as that whose components are $m_{i,j} = (\Phi_j, \Phi_i)$. Then, the equation above can be written as
 \begin{equation}
     \Mvec \frac{d \Uvec}{dt} + \Avec \Uvec = \bvec.
 \end{equation}
+
+%--------------------------------------------
+\subsection{The discontinuous Galerkin method}
+%--------------------------------------------
+
+%--------------------------------------------
+\subsection{The Petrov Galerkin method}
+%--------------------------------------------
+
+%---------------------------------------------------------------
+\section{The collocation method}
+%---------------------------------------------------------------
+For the collocation method, we again aim to solve \cref{eq:fe_general_pde} by assuming the solution is $u_h \in U_h$. This assumption allows us to write $u_h= \sum_{j=1}^n U_j \Phi_j$ and thus the governing PDE can be written as
+\begin{equation}
+    \sum_{j=1}^n \frac{dU_j}{dt} \Phi_j + \sum_{j=1}^n U_j A\Phi_j = f.
+\end{equation}
+The above equation is evaluated at a discrete set of $n$ points, termed the collocation points. Thus we have
+\begin{equation}
+    \sum_{j=1}^n \frac{dU_j}{dt} \Phi_j(x_i) + \sum_{j=1}^n U_j (A\Phi_j)(x_i) = f(x_i) \qquad \text{for }i=1,...,n.
+\end{equation}
+The above can be written as
+\begin{equation}
+    \tilde{\Mvec} \frac{d \Uvec}{dt} + \tilde{\Avec} \Uvec = \tilde{\bvec},
+\end{equation}
+where $\tilde{\Mvec}$ is a matrix whose components are $\tilde{m}_{ij} = \Phi_j(x_i)$, $\tilde{\Avec}$ is a matrix whose components are $a_{ij} = (A\Phi_j)(x_i)$, and $\tilde{\bvec}$ is a vector whose components are $f(x_i)$.
+
+%---------------------------------------------------------------
+\section{The spectral method}
+%---------------------------------------------------------------
+Spectral methods can be based on the Galerkin, spectral, or other methods, but have the defining property that $U_h$ is the space of functions that are global within $\Omega$; that is, they span all of $\Omega$.
+
+%---------------------------------------------------------------
+\section{The finite element method}
+%---------------------------------------------------------------
+The finite element method is typically based on the Galerkin method, and has as its defining property the use of a functional space $U_h$ that consists of functions that are local; that is, functions that are non-zero only among specific zones commonly referred to as elements.
 
 %----------------------------------------------------------------------------------------------------------------------------
 \chapter{Elliptic}
@@ -653,10 +691,10 @@ Define the vectors $\Uvec$ and $\bvec$, as those whose components are $U_j$ and 
 \section{Classification of methods}
 %---------------------------------------------------------------
 \begin{itemize}
-    \item Finite element method: local trial functions
+    \item Galerkin method: introduce trial functions, and reformulate the PDE in the weak form using those trial functions. Then express the solution in terms of test functions
+    \item Collocation method: trial functions not equal to test functions (test functions are delta functions)    
+    \item Finite element method: local trial and test functions
     \item Spectral method: global trial functions
-    \item Galerkin method: trial functions equal to test functions
-    \item Collocation method: trial functions not equal to test functions (test functions are delta functions)
 \end{itemize}
 
 %---------------------------------------------------------------
