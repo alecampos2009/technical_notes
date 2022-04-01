@@ -1636,11 +1636,25 @@ The two conservation of mass equations \cref{eq:twof_ni,eq:twof_ne} will lead to
 \end{equation}
 Note that the second equation above is superfluous since it also follows from taking the divergence of \cref{eq:preMax_amperes}
 
-The two conservation of momentum equations will also lead to two single-fluid equations. The first is obtained by adding the ion and electron conservation of momentum equations, and the second is obtained by re-writing the electron conservation of momentum equations using the single-fluid variables. The results are
+The two conservation of momentum equations will also lead to two single-fluid equations. The first is obtained by adding the ion and electron conservation of momentum equations to obtain
 \begin{equation}
 \label{eq:generalized_MHD_vel}
-    \rho \left (\frac{\partial \vvec}{\partial t} + \vvec \cdot \nabla \uvec \right) - \Jvec \times \Bvec + \nabla p = \nabla \cdot \tvec_i + \nabla \cdot \tvec_e,
+    \rho \left (\frac{\partial \vvec}{\partial t} + \vvec \cdot \nabla \uvec \right) - \Jvec \times \Bvec + \nabla p = \nabla \cdot \tvec_i + \nabla \cdot \tvec_e.
 \end{equation}
+For the second equation, we use $m_e \to 0$ and quasineutrality in the electron momentum equation to obtain
+\begin{equation}
+    e n ( \Evec + \uvec_e \times \Bvec ) = - \nabla p_e + \nabla \cdot \tvec_e + \Rvec_e,
+\end{equation}
+Assuming quasi-neutrality, the definition of the current given in \cref{eq:twof_curr_density} is now
+\begin{equation}
+\label{eq:current_def_quasineutral}
+    \Jvec = e n (\uvec_i - \uvec_e),
+\end{equation}
+which is also written as
+\begin{equation}
+    \Jvec = e n (\vvec - \uvec_e).
+\end{equation}
+Using the above in the electron continuity equation gives
 \begin{equation}
 \label{eq:generalized_MHD_ohms}
     \Evec + \vvec \times \Bvec = \frac{1}{en} ( \Jvec \times \Bvec - \nabla p_e + \nabla \cdot \tvec_e + \Rvec_e).
@@ -1682,6 +1696,33 @@ and the electron energy equation becomes
 %--------------------------------------------
 \section{Resisitive MHD}
 %--------------------------------------------
+The electron collision term is modeled as
+\begin{equation}
+    \Rvec_e = m_e n_e \nu_{ei} \left ( \uvec_i - \uvec_e \right ).
+\end{equation}
+Using quasi-neutrality and \cref{eq:current_def_quasineutral}, we have
+\begin{equation}
+\label{eq:elec_coll_current}
+    \Rvec_e = \frac{m_e \nu_{ei}}{e} \Jvec.
+\end{equation}
+Neglecting all terms on the right-hand side of \cref{eq:generalized_MHD_ohms} except for the electron collision term, we have
+\begin{equation}
+    \Evec + \vvec \times \Bvec = \frac{1}{en} \Rvec_e.
+\end{equation}
+Using \cref{eq:elec_coll_current} in the above, we have
+\begin{equation}
+    \Evec + \vvec \times \Bvec = \frac{m_e \nu_{ei}}{e^2n} \Jvec,
+\end{equation}
+which we re-write as 
+\begin{equation}
+    \Evec + \vvec \times \Bvec = \eta \Jvec,
+\end{equation}
+where
+\begin{equation}
+\label{eq:resistivity}
+    \eta = \frac{m_e \nu_{ei}}{e^2 n}
+\end{equation}
+is the resistivity.
 
 %--------------------------------------------
 \section{Ideal MHD}
@@ -2014,9 +2055,9 @@ References for this model can be found in \cite{wakatani1984,hasegawa1987}.
     \item Neglect parallel ion inertia, i.e.\@ $\nabla \cdot (\alpha \uvec_i) \approx \nabla_\perp \cdot (\alpha \uvec_{i,\perp})$, or in other words $(\uvec_i \cdot \nabla) \approx (\uvec_{i,\perp} \cdot \nabla_\perp)$ and $\nabla \cdot \uvec_i \approx \nabla_\perp \cdot \uvec_{i,\perp}$. \label{it:hw_par_ion}
     \item Quasi-neutrality, i.e. $n_i \approx n_e$. Note, this allows us to use the definition of the current $\Jvec = e (n_i \uvec_i - n_e \uvec_e)$ to write $\uvec_e = \uvec_i - \Jvec/e n_e$. \label{it:hw_quasineutrality}
     \item $n_i = n_0 + n'$, where $n_0 = n_0(x_1)$ and $n'$ is smaller than $n_0$. \label{it:hw_ion_density}
-    \item Perpendicular components of the ion shear-stress term are modeled as $(\nabla \cdot \tvec_i)_\perp/(m_i n_i) = \mu \nabla_\perp^2 \uvec_{i,\perp}$. \label{it:hw_shear_stress}
+    \item Perpendicular components of the ion shear-stress term are modeled as $(\nabla \cdot \tvec_i)_\perp/(m_i n_i) = \nu \nabla_\perp^2 \uvec_{i,\perp}$. \label{it:hw_shear_stress}
     \item Assume infinitesimally small electron mass, i.e.\@ $m_e \to 0$. \label{it:hw_small_electron_mass}
-    \item The electron collision term modeled as $\Rvec_e = m_e n_e \nu_{ei} (\uvec_i - \uvec_e)$. Given the expression for $\uvec_e$ in \cref{it:hw_quasineutrality}, we have $\Rvec_e = (m_e \nu_{ei}/e) \Jvec$. For the parallel component, assume $R_{e,||} = e n_e \eta J_{||}$, where $\eta$ is the resistivity. \label{it:hw_electron_collisions}
+    \item Combining \cref{eq:elec_coll_current,eq:resistivity}, we obtain $\Rvec_e = e n \eta \Jvec$. Thus, for the parallel component we have $R_{e,||} = e n \eta J_{||}$. \label{it:hw_electron_collisions}
 \end{enumerate}
 
 %--------------------------------------------
@@ -2041,16 +2082,16 @@ Using the assumption in \cref{it:hw_par_ion} and noting that $\uvec_{i} \times \
 Finally, using the assumption in \cref{it:hw_shear_stress}, we obtain
 \begin{equation}
     \label{eq:hw_momentum_perpendicular}
-        \frac{\partial \uvec_{i,\perp}}{\partial t} + \uvec_{i,\perp} \cdot \nabla_\perp \uvec_{i,\perp} = -\frac{e}{m_i} \nabla_\perp \phi + \frac{e}{m_i} \uvec_{i,\perp} \times \Bvec + \mu \nabla_\perp^2 \uvec_{i,\perp}.
+        \frac{\partial \uvec_{i,\perp}}{\partial t} + \uvec_{i,\perp} \cdot \nabla_\perp \uvec_{i,\perp} = -\frac{e}{m_i} \nabla_\perp \phi + \frac{e}{m_i} \uvec_{i,\perp} \times \Bvec + \nu \nabla_\perp^2 \uvec_{i,\perp}.
 \end{equation}
-The same scaling analysis performed for the derivation of the Hasegawa Mima equation is now applied. The only new term in \cref{eq:hw_momentum_perpendicular} is the viscous term. We note that the kinematic viscosity $\mu$ scales as
+The same scaling analysis performed for the derivation of the Hasegawa Mima equation is now applied. The only new term in \cref{eq:hw_momentum_perpendicular} is the viscous term. We note that the kinematic viscosity $\nu$ scales as
 \begin{equation}
-    \mu \sim r^2 w.
+    \nu \sim r^2 w.
 \end{equation}
 Thus, the viscous stress term leads to the following scalings
 \begin{enumerate}
-    \item $\mu \nabla^2_\perp \uvec^{(0)}_{i,\perp} \sim \epsilon$
-    \item $\mu \nabla^2_\perp \uvec^{(1)}_{i,\perp} \sim \epsilon^2$
+    \item $\nu \nabla^2_\perp \uvec^{(0)}_{i,\perp} \sim \epsilon$
+    \item $\nu \nabla^2_\perp \uvec^{(1)}_{i,\perp} \sim \epsilon^2$
 \end{enumerate}
 As before, the first order terms lead to the $E \times B$ drift
 \begin{equation}
@@ -2059,12 +2100,12 @@ As before, the first order terms lead to the $E \times B$ drift
 \end{equation}
 However, the equation for terms of order $\epsilon$ now contains the viscous term as shown below
 \begin{equation}
-    \frac{\partial \uvec_{i,\perp}^{(0)}}{\partial t} + \uvec_{i,\perp}^{(0)} \cdot \nabla_\perp \uvec_{i,\perp}^{(0)} = \frac{e}{m_i} \uvec_{i,\perp}^{(1)} \times \Bvec + \mu \nabla_\perp^2 \uvec^{(0)}_{i,\perp}.
+    \frac{\partial \uvec_{i,\perp}^{(0)}}{\partial t} + \uvec_{i,\perp}^{(0)} \cdot \nabla_\perp \uvec_{i,\perp}^{(0)} = \frac{e}{m_i} \uvec_{i,\perp}^{(1)} \times \Bvec + \nu \nabla_\perp^2 \uvec^{(0)}_{i,\perp}.
 \end{equation}
 Upon crossing by $\Bvec$, the above gives
 \begin{equation}
 \label{eq:hw_polarization_drift}
-    \uvec_{i,\perp}^{(1)} = -\frac{1}{w_{c,i} B} \left [ \frac{\partial \nabla_\perp \phi}{\partial t} + \uvec_{i,\perp}^{(0)} \cdot \nabla_\perp \left ( \nabla_\perp \phi \right ) \right ] + \frac{\mu}{w_{c,i}B} \nabla^2_\perp (\nabla_\perp \phi).
+    \uvec_{i,\perp}^{(1)} = -\frac{1}{w_{c,i} B} \left [ \frac{\partial \nabla_\perp \phi}{\partial t} + \uvec_{i,\perp}^{(0)} \cdot \nabla_\perp \left ( \nabla_\perp \phi \right ) \right ] + \frac{\nu}{w_{c,i}B} \nabla^2_\perp (\nabla_\perp \phi).
 \end{equation}
 That is, an additional viscous term appears in the polarization drift.
 
@@ -2088,16 +2129,16 @@ Since $n_0$ is time independent (assumption in \cref{it:hw_ion_density}), the co
 \end{equation}
 In reference to \cref{eq:hm_divergence_polarization}, we now have
 \begin{equation}
-    \nabla_\perp \cdot \uvec_{i,\perp}^{(1)} = -\frac{1}{w_{c,i} B} \left [ \frac{\partial \nabla_\perp^2 \phi}{\partial t} + \uvec_{i,\perp}^{(0)} \cdot \nabla_\perp \left ( \nabla_\perp^2 \phi \right ) \right ] + \frac{\mu}{w_{c,i} B} \nabla^4_\perp \phi.
+    \nabla_\perp \cdot \uvec_{i,\perp}^{(1)} = -\frac{1}{w_{c,i} B} \left [ \frac{\partial \nabla_\perp^2 \phi}{\partial t} + \uvec_{i,\perp}^{(0)} \cdot \nabla_\perp \left ( \nabla_\perp^2 \phi \right ) \right ] + \frac{\nu}{w_{c,i} B} \nabla^4_\perp \phi.
 \end{equation}
 Plugging this in \cref{eq:hw_intermediate_ion_1}, we obtain
 \begin{equation}
-    \frac{\partial}{\partial t} \left ( \frac{1}{w_{c,i} B} \nabla^2_\perp \phi - n \right ) + \uvec^{(0)}_{i,\perp} \cdot \nabla_\perp \left ( \frac{1}{w_{c,i} B} \nabla^2_\perp \phi - n - \ln n_0 \right ) - \frac{\mu}{w_{c,i} B} \nabla^4_\perp \phi = 0.
+    \frac{\partial}{\partial t} \left ( \frac{1}{w_{c,i} B} \nabla^2_\perp \phi - n \right ) + \uvec^{(0)}_{i,\perp} \cdot \nabla_\perp \left ( \frac{1}{w_{c,i} B} \nabla^2_\perp \phi - n - \ln n_0 \right ) - \frac{\nu}{w_{c,i} B} \nabla^4_\perp \phi = 0.
 \end{equation}
 Plugging in for $\uvec^{(0)}_{i,\perp}$,
 \begin{equation}
     \label{eq:hw_ion_continuity}
-    \frac{\partial}{\partial t} \left ( \frac{1}{w_{c,i} B} \nabla^2_\perp \phi - n \right ) - \left (\nabla_\perp \phi \times \frac{\bvec}{B} \right ) \cdot \nabla_\perp \left ( \frac{1}{w_{c,i} B} \nabla^2_\perp \phi - n - \ln n_0 \right ) - \frac{\mu}{w_{c,i} B} \nabla^4_\perp \phi = 0.
+    \frac{\partial}{\partial t} \left ( \frac{1}{w_{c,i} B} \nabla^2_\perp \phi - n \right ) - \left (\nabla_\perp \phi \times \frac{\bvec}{B} \right ) \cdot \nabla_\perp \left ( \frac{1}{w_{c,i} B} \nabla^2_\perp \phi - n - \ln n_0 \right ) - \frac{\nu}{w_{c,i} B} \nabla^4_\perp \phi = 0.
 \end{equation}
 
 Using the assumptions in \cref{it:hw_single_charge_ions,it:hw_no_shear_source_coll}, the momentum \cref{eq:cons_mom} for electrons becomes
@@ -2139,11 +2180,13 @@ Result
 Combining \cref{eq:hw_electron_momentum,eq:hw_ion_continuity,eq:hw_electron_continuity} leads to the dimensional form of the Hasegawa-Wakatani model
 \begin{multline}
     \frac{\partial}{\partial t} \left ( \frac{1}{w_{c,i} B} \nabla^2_\perp \phi \right ) - \left (\nabla_\perp \phi \times \frac{\bvec}{B} \right ) \cdot \nabla_\perp \left ( \frac{1}{w_{c,i} B} \nabla^2_\perp \phi \right ) \\
-    = \frac{T_e}{e^2 n_0 \eta} \nabla_{||}^2 \left (n - \frac{e \phi}{T_e} \right ) + \frac{\mu}{w_{c,i} B} \nabla^4_\perp \phi.
+    = \frac{T_e}{e^2 n_0 \eta} \nabla_{||}^2 \left (n - \frac{e \phi}{T_e} \right ) + \frac{\nu}{w_{c,i} B} \nabla^4_\perp \phi.
 \end{multline}
 \begin{equation}
     \frac{\partial n}{\partial t} - \left ( \nabla_\perp \phi \times \frac{\bvec}{B} \right ) \cdot \nabla_\perp \left ( n + \ln n_0 \right ) = \frac{T_e}{e^2 n_0 \eta} \nabla_{||}^2 \left (n - \frac{e \phi}{T_e} \right ).
 \end{equation}
+It is quite common to replace the parallel-gradient operator $\nabla_{||}$ by a coefficient, say $1/l^2$.
+
 We now introduce the following non-dimensionalization
 \begin{align}
     \phi(t,x_1,x_2,x_3) &= \frac{T_e}{e} \hat{\phi}(\hat{t},\hat{x}_1,\hat{x}_2, x_3) \\
@@ -2161,9 +2204,9 @@ where $\hat{t} = t w_{c,i}$, $\hat{x}_1 = x_1 / r_s$, and $\hat{x}_2 = x_2 / r_s
 \end{equation}
 where
 \begin{equation}
-    c_1 = -\frac{T_e}{e^2 n_0 \eta w_{c,i}} \nabla^2_{||} \qquad c_2 = \frac{\mu}{w_{c,i} r_s^2}.
+    c_1 = -\frac{T_e}{e^2 n_0 \eta w_{c,i}} \nabla^2_{||} \qquad c_2 = \frac{\nu}{w_{c,i} r_s^2}.
 \end{equation}
-It is common for the $c_1$ operators to become a coefficient instead.
+If $\nabla_{||}$ is replaced by $1/l^2$, then the $c_1$ operator is simply a coefficient.
 
 %--------------------------------------------
 \subsection{Relationship to other models}

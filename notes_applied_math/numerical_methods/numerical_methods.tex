@@ -105,7 +105,7 @@ u^{n+1} = u^n + \Delta t f(t_n, u^n) \qquad \text{1\textsuperscript{st} O.A.}
 u^{n+1} = u^n + \Delta t f(t_{n+1}, u^{n+1}) \qquad \text{1\textsuperscript{st} O.A.}
 \end{equation}
 
-\item Trapezoidal (Crank-Nicholson)
+\item Implicit Trapezoidal (Crank-Nicholson)
 \begin{equation}
 u^{n+1} = u^n + \frac{\Delta t}{2} [ f(t_n, u^n) + f(t_{n+1}, u^{n+1}) ] \qquad \text{2\textsuperscript{nd} O.A.}
 \end{equation}
@@ -575,6 +575,13 @@ As previously noted, the only Jacobians $\partial \Rvec_I/\partial \Wvec_J$ that
 \chapter{Introduction}
 %----------------------------------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------
+\section{The finite-element and spectral methods}
+%---------------------------------------------------------------
+The finite element method is a technique for solving partial differential equations in which the solution is represented as a sum of predefined functions, which are referred to as basis functions. This is not unlike the spectral method, but the key difference is that the basis functions of the finite element method are localized, that is, they are non-zero only among some specific regions of the domain, whereas the basis functions of the spectral method are defined over the entire domain.
+
+The finite element method typically relies on the Galerkin method to obtain a solution. This is an additional difference with the spectral method, which can be based on either the Galerkin method or other approaches such as the collocation method. For completeness, the collocation method is briefly described in \cref{sec:collocation_method}.
+
+%---------------------------------------------------------------
 \section{The Galerkin method}
 %---------------------------------------------------------------
 %--------------------------------------------
@@ -589,25 +596,39 @@ Consider the problem in which a scalar $u = u(\xvec,t)$ is sought as the solutio
         &u(\cdot,0) = u_0 && \text{in } \Omega 
     \end{aligned}
 \end{equation}
-where $A$ is any given linear operator, $\Omega$ is the spatial domain, $\Gamma$ its boundary, and $\Rvec_+$ the set of positive real numbers. The weak formulation of the above is to find the weak solution $u\in U$ such that 
+where $A$ is any given linear operator, $\Omega$ is the spatial domain, $\Gamma$ its boundary, and $\Rvec_+$ the set of positive real numbers. We now introduce $U$ as the space of trial functions and $V$ as the space of test functions. The weak formulation of the equation above is then to find the weak solution $u\in U$ such that 
 \begin{equation}
     \left ( \frac{\partial u}{\partial t} , v \right ) + (Au,v) = (f,v) \qquad \forall v \in V,
 \end{equation}
-where $(a,b)= \int_\Omega av \, d\xvec$ is the $L_2$ inner product, $U$ is some functional space, and $V$ is either the same as $U$ or a different functional space. Using Calculus identities, some of the derivatives in $(Au,v)$ can be moved from operating on $u$ to operating on $v$. We label the end result as $a(u,v)$, which is a bilinear form. We also label $(f,v)$ as $L(v)$, which is a linear form. Thus, the above is rewritten as 
+where $(a,b)= \int_\Omega av \, d\xvec$ is the $L_2$ inner product. Using the product rule and the divergence theorem, some of the derivatives in $(Au,v)$ can be moved from operating on $u$ to operating on $v$. We label the end result as $a(u,v)$, which is a bilinear form. We also label $(f,v)$ as $L(v)$, which is a linear form. Thus, the above is rewritten as 
 \begin{equation}
 \label{eq:weak_form}
     \left ( \frac{\partial u}{\partial t} , v \right ) + a(u,v) = L(v) \qquad \forall v \in V .
 \end{equation}
-Different linear operators $A$ lead to different bilinear forms. A few examples are shown in the table below 
+
+Different linear operators $A$ lead to different bilinear forms. Take as an example the operator $\nabla \cdot (\lambdavec u)$, where $\lambdavec$ is a vector. For this case, the product rule and the divergence theorem lead to
+\begin{align}
+    \label{eq:fe_product_and_divergence}
+    (\nabla \cdot (\lambdavec u), v) &= \int_\Omega \nabla \cdot (\lambdavec u) v \, d\xvec \nonumber \\
+    &= \int_\Omega \nabla \cdot (\lambdavec uv) \, d\xvec - \int_\Omega u \lambdavec \cdot \nabla v \, d\xvec \nonumber \\
+    &= \int_{\partial \Omega} uv \lambdavec \cdot \nvec \, d\xvec - \int_\Omega u \lambdavec \cdot \nabla v \, d\xvec.
+\end{align}
+We assume that either $u$, $v$, or $\lambdavec$ is zero on $\partial \Omega$, and thus we get
+\begin{equation}
+    (\nabla \cdot (\lambdavec u), v) = -(u \lambdavec, \nabla v).
+\end{equation}
+Some examples of operators and the corresponding bilinear forms are shown in the table below 
 \begin{center}
 \begin{tabular}{Sc|Sc|Sc}
     Operator & Definition & Bilinear Form \\
     \hline
     Mass & $ \lambda u $ & $(\lambda u, v)$ \\
     \hline
+    Divergence & $-\nabla \cdot (\lambdavec u)$ & $(u\lambdavec, \nabla v) $ \\
+    \hline
     Diffusion & $-\nabla \cdot ( \lambda \nabla u)$ & $(\lambda \nabla u, \nabla v)$ \\
     \hline
-    Convection & $ \boldsymbol{\lambda} \cdot \nabla u $ & $(\boldsymbol{\lambda} \cdot \nabla u, v)$ \\
+    Convection & $ \lambdavec \cdot \nabla u $ & $(\lambdavec \cdot \nabla u, v)$ \\
 \end{tabular}
 \end{center}
 
@@ -638,6 +659,34 @@ Define the vectors $\Uvec$ and $\bvec$, as those whose components are $U_j$ and 
 %--------------------------------------------
 \subsection{The discontinuous Galerkin method}
 %--------------------------------------------
+In \cref{eq:fe_product_and_divergence} we used the divergence theorem, which is defined below
+\begin{equation}
+    \int_\Omega \nabla \cdot (\lambdavec u) \, d\xvec = \int_{\partial \Omega} u \lambdavec \cdot \nvec \, d\xvec.
+\end{equation}
+This holds for continuous functions $u$ only. We'll now derive the corresponding form for cases where $u$ is discontinuous (note that we still assume $\lambdavec$ is continuous). Let's label the set of all finite elements as $\tau_h$, and an individual element as $K$. Thus, we now have
+\begin{equation}
+    \int_\Omega \nabla \cdot (\lambdavec u) \, d\xvec = \sum_{K \in \tau_h} \int_K \nabla \cdot (\lambdavec u) \, d\xvec = \sum_{K \in \tau_h} \int_{\partial K} u \lambdavec \cdot \nvec_K \, d\xvec,
+\end{equation}
+where $\nvec_K$ is the unit normal for element $K$. We now introduce the notation 
+\begin{equation}
+    [[u]] = u^+ - u^-,
+\end{equation}
+where $u^+$ is the value of $u$ on one side of the element boundary and $u^-$ is the value on the other side. Additionally, introduce $\Gamma$ as the skeleton of $\tau_h$, that is, the inner boundaries of all the finite elements in the domain. Thus, we now can write
+\begin{equation}
+    \int_\Omega \nabla \cdot (\lambdavec u) \, d\xvec = \int_{\partial \Omega} u \lambdavec \cdot \nvec \, d\xvec + \int_{\Gamma} [[u]]\lambdavec \cdot \nvec_K \, d\xvec.
+\end{equation}
+The above is the divergence theorem for discontinuous functions $u$. We now introduce the notation
+\begin{equation}
+{u} = \frac{1}{2} \left ( u^+ + u^- \right ).
+\end{equation}
+From its definitions, it can be shown that
+\begin{equation}
+    [[uv]] = \{u\}[[v]] + [[u]]\{v\}.
+\end{equation}
+Thus, the divergence theorem for two discontinuous functions $u$ and $v$ can be written as
+\begin{equation}
+    \int_\Omega \nabla \cdot (\lambdavec uv) \, d\xvec = \int_{\partial \Omega} uv \lambdavec \cdot \nvec \, d\xvec + \int_{\Gamma} \left ( \{u\} [[v]] + [[u]] \{v\} \right )\lambdavec \cdot \nvec_K \, d\xvec.
+\end{equation}
 
 %--------------------------------------------
 \subsection{The Petrov Galerkin method}
@@ -646,6 +695,7 @@ Define the vectors $\Uvec$ and $\bvec$, as those whose components are $U_j$ and 
 %---------------------------------------------------------------
 \section{The collocation method}
 %---------------------------------------------------------------
+\label{sec:collocation_method}
 For the collocation method, we again aim to solve \cref{eq:fe_general_pde} by assuming the solution is $u_h \in U_h$. This assumption allows us to write $u_h= \sum_{j=1}^n U_j \Phi_j$ and thus the governing PDE can be written as
 \begin{equation}
     \sum_{j=1}^n \frac{dU_j}{dt} \Phi_j + \sum_{j=1}^n U_j A\Phi_j = f.
@@ -659,16 +709,6 @@ The above can be written as
     \tilde{\Mvec} \frac{d \Uvec}{dt} + \tilde{\Avec} \Uvec = \tilde{\bvec},
 \end{equation}
 where $\tilde{\Mvec}$ is a matrix whose components are $\tilde{m}_{ij} = \Phi_j(x_i)$, $\tilde{\Avec}$ is a matrix whose components are $a_{ij} = (A\Phi_j)(x_i)$, and $\tilde{\bvec}$ is a vector whose components are $f(x_i)$.
-
-%---------------------------------------------------------------
-\section{The spectral method}
-%---------------------------------------------------------------
-Spectral methods can be based on the Galerkin, spectral, or other methods, but have the defining property that $U_h$ is the space of functions that are global within $\Omega$; that is, they span all of $\Omega$.
-
-%---------------------------------------------------------------
-\section{The finite element method}
-%---------------------------------------------------------------
-The finite element method is typically based on the Galerkin method, and has as its defining property the use of a functional space $U_h$ that consists of functions that are local; that is, functions that are non-zero only among specific zones commonly referred to as elements.
 
 %----------------------------------------------------------------------------------------------------------------------------
 \chapter{Elliptic}
@@ -686,16 +726,6 @@ The finite element method is typically based on the Galerkin method, and has as 
 %----------------------------------------------------------------------------------------------------------------------------
 \chapter{Notes on functional analysis}
 %----------------------------------------------------------------------------------------------------------------------------
-
-%---------------------------------------------------------------
-\section{Classification of methods}
-%---------------------------------------------------------------
-\begin{itemize}
-    \item Galerkin method: introduce trial functions, and reformulate the PDE in the weak form using those trial functions. Then express the solution in terms of test functions
-    \item Collocation method: trial functions not equal to test functions (test functions are delta functions)    
-    \item Finite element method: local trial and test functions
-    \item Spectral method: global trial functions
-\end{itemize}
 
 %---------------------------------------------------------------
 \section{Some terminology}
