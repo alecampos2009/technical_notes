@@ -306,7 +306,7 @@ Thus, $v^{(g)}_x = E_y/B$ and $v^{(g)}_y = -E_x/B$, which in vector notation can
 %--------------------------------------------
 \subsection{Change in magnitude along perpendicular directions}
 %--------------------------------------------
-The magnetic field still points in the $\evec_z$ direction, but its magnitude changes in directions parallel to $\evec_z$: $B = B(q_x,q_y)$. The equations of motion are
+The magnetic field still points in the $\evec_z$ direction, but its magnitude changes in directions perpendicular to $\evec_z$: $B = B(q_x,q_y)$. The equations of motion are
 \begin{subequations}
 \begin{alignat}{2}
     &\frac{d v_x}{dt} = \frac{eB(x,y)}{m} v_y  \qquad && v_x(0) = v_\perp \cos(\phi) -\frac{v^2_\perp}{2 w_c} \left . \frac{\partial B}{\partial q_y} \right |_{x_g,y_g} \frac{1}{B(x_g,y_g)}, \label{eq:nonuniB_1} \\
@@ -388,7 +388,7 @@ Solving for the guiding center velocities, we finally have
 \end{align}
 In vector notation, this is written as
 \begin{equation}
-    \vvec^{(g)}_{\nabla B} = \frac{v^2_\perp}{2 w_c} \frac{ \Bvec \times \nabla \Bvec }{B^2}.
+    \vvec^{(g)}_{\nabla B} = \mp \frac{v^2_\perp}{2 w_c} \frac{ \Bvec \times \nabla B }{B^2}.
 \end{equation}
 In the above, the fields and $w_c$ are evaluated at $(x_g,y_g)$.
 
@@ -401,19 +401,21 @@ Ideally, one would introduce a gradient along the parallel direction to the magn
     \frac{dv_y}{dt} &= -\frac{e}{m} [v_x B_z(x,z) - v_z B_x(x,z)] , \label{eq:par_grad_vy_inter}\\
     \frac{dv_z}{dt} &= -\frac{e}{m} v_y B_x(x,z) \label{eq:par_grad_vz_inter}.
 \end{align}
-However, the $z$ direction no longer corresponds to the parallel direction, since the magnetic field also has a component along the $x$ direction. Thus, we will introduce a rotating reference frame, in which one of the axis will always be aligned with the magnetic field vector, and thus would denote the parallel direction. This rotating reference frame is described by the rotation matrix
+However, the $z$ direction no longer corresponds to the parallel direction, since the magnetic field also has a component along the $x$ direction. To account for this, we will introduce a rotating reference frame, in which one of the axis will always be aligned with the magnetic field vector, and thus would denote the parallel direction. In the original static reference frame the unit vectors are $(\evec_x, \evec_y, \evec_z)$ and the velocity components are $(v_x, v_y, v_x)$, whereas in this new rotating reference frame the unit vectors are $(\evec_{\perp1}, \evec_{\perp2}, \bvec)$ and the velocity components are $(v_{\perp1}, v_{\perp2}, v_{||})$. 
+
+The rotating reference frame is described by the rotation matrix
 \begin{equation}
     \Qvec(t) = \begin{bmatrix} b_x & 0 & b_z \\ 0 & 1 & 0 \\ b_z & 0 & -b_x \end{bmatrix},
 \end{equation}
 where $b_x = b_x(t)$ and $b_y = b_y(t)$ are given by
 \begin{equation}
-    b_x = \frac{B_x(x,z)}{B(x,z)} \qquad b_z = \frac{B_z(x,z)}{B(x,z)}
+    b_x = \frac{B_x(x,z)}{B(x,z)} \qquad b_z = \frac{B_z(x,z)}{B(x,z)} \label{eq:bvec_components}
 \end{equation}
-In the above, $B(x,z) = [ B_x^2(x,z) + B_y^2(x,z) ]^{1/2}$. As an example, the transformation matrix above leads to the following unit vectors and velocities in the rotating reference frame 
+In the above, $B(x,z) = [ B_x^2(x,z) + B_z^2(x,z) ]^{1/2}$. As an example, the matrix above leads to the following transformations for the unit vectors and velocities in the rotating reference frame 
 \begin{align}
     \bvec &= b_x \evec_x + b_z \evec_z \\
     \evec_{\perp2} &= \evec_y \\
-    \evec_{\perp1} &= b_z \evec_x - b_x \evec_z = \evec_2 \times \bvec,
+    \evec_{\perp1} &= b_z \evec_x - b_x \evec_z = \evec_{\perp2} \times \bvec,
 \end{align}
 \begin{align}
     v_{||} &= b_x v_x + b_z v_z \label{eq:par_grad_vel_trans_1}\\
@@ -428,11 +430,17 @@ Using the transformation rule for the acceleration of a particle, but for some r
 \end{align}
 where $K = K(t)$ is given by $K = b_x db_z/dt - b_z db_x/dt$. Using \cref{eq:par_grad_vx_inter,eq:par_grad_vy_inter,eq:par_grad_vz_inter} in the above leads to
 \begin{align}
-    \frac{d v_{||}}{dt} &= \frac{e}{m} v_y [B_z(x,z) b_x - B_x(x,z) b_z] - Kv_{\perp1} = -Kv_{\perp1}, \label{eq:par_grad_vpar_inter} \\
-    \frac{dv_{\perp2}}{dt} &= -\frac{eB}{m} (v_x b_z - v_z b_x) = -w_c v_{\perp1}, \label{eq:par_grad_v2_inter} \\
-    \frac{dv_{\perp1}}{dt} &= \frac{e}{m} v_y [B_z(x,z) b_z + B_x(x,z) b_x] + Kv_{||} = w_c v_{\perp2} + K v_{||}, \label{eq:par_grad_v1_inter}
+    \frac{d v_{||}}{dt} &= \frac{e}{m} v_y [B_z(x,z) b_x - B_x(x,z) b_z] - Kv_{\perp1} \\
+    \frac{dv_{\perp2}}{dt} &= -\frac{eB}{m} (v_x b_z - v_z b_x) \\
+    \frac{dv_{\perp1}}{dt} &= \frac{e}{m} v_y [B_z(x,z) b_z + B_x(x,z) b_x] + Kv_{||} 
 \end{align}
-where $w_c = w_c(t)$ is given by $w_c = q B(x,z) / m$.
+Using the definitions for $b_x$ and $b_z$ in \cref{eq:bvec_components}, as well as the expressions for $v_{\perp1}$, $v_{\perp2}$ in \cref{eq:par_grad_vel_trans_2,eq:par_grad_vel_trans_3}, we get
+\begin{align}
+    \frac{d v_{||}}{dt} &= -Kv_{\perp1}, \label{eq:par_grad_vpar_inter} \\
+    \frac{dv_{\perp2}}{dt} &= -w_c v_{\perp1}, \label{eq:par_grad_v2_inter} \\
+    \frac{dv_{\perp1}}{dt} &= w_c v_{\perp2} + K v_{||}, \label{eq:par_grad_v1_inter}
+\end{align}
+where $w_c = w_c(t)$ is given by $w_c = e B(x,z) / m$.
 
 We now introduce a time transformation to simplify the equations above. To do so, we introduce the following variables
 \begin{gather}
@@ -521,11 +529,11 @@ where $\hat{\mu} = \hat{\mu}(\tau)$ is the adiabatic invariant, and is given by
 \begin{equation}
     \hat{\mu} = \frac{m \hat{v}^2_\perp}{2 B_z(\hat{z})}.
 \end{equation}
-Integrating \cref{eq:par_grad_mu_evol} from $\tau_1$ to $\tau_2$ such that $[\tau_2 + \epsilon(\tau_2)] - [\tau_1 + \epsilon(\tau_1)] = 2 \pi$, gives
+Integrating \cref{eq:par_grad_mu_evol} from $\tau_1$ to $\tau_2$ gives
 \begin{equation}
     \ln \hat{\mu}(\tau_2) - \ln \hat{\mu}(\tau_1) = \left . \ln [B_z(\hat{z})] \cos [2(\tau + \hat{\epsilon})] \right |^{\tau_2}_{\tau_1} + \int_{\tau_1}^{\tau_2} 2 \ln [ B_z(\hat{z}) ] \sin [2(\tau + \hat{\epsilon})] d\tau.
 \end{equation}
-Assuming $B(\hat{z})$ doesn't change significantly from $\tau_1$ to $\tau_2$, then we have $\hat{\mu}(\tau_2) = \hat{\mu}(\tau_1)$, that is, $\hat{\mu}$ is constant over one gyro-period. One can also define
+Picking $\tau_1$ and $\tau_2$ such that $[\tau_2 + \hat{\epsilon}(\tau_2)] - [\tau_1 + \hat{\epsilon}(\tau_1)] = 2 \pi$, and assuming $B(\hat{z})$ doesn't change significantly from $\tau_1$ to $\tau_2$, gives $\hat{\mu}(\tau_2) = \hat{\mu}(\tau_1)$, that is, $\hat{\mu}$ is constant over one gyro-period. One can also define
 \begin{equation}
     \mu = \frac{m v_\perp^2}{2B_z(z)}
 \end{equation}
@@ -535,7 +543,7 @@ Finally, we focus not on the perpendicular velocities but the parallel velocity.
 \begin{equation}
     \frac{d\hat{v}_{||}}{d\tau} = -\frac{\hat{v}^2_{\perp}}{2\hat{w}_c B_z(\hat{z})} \left ( \frac{dB_z}{dq_z} \right)_{q_z = \hat{z}} \{ 1 + \cos [2(\tau + \hat{\epsilon})] \}.
 \end{equation}
-We now average the above while assuming $B(\hat{z})$, $d\hat{v}_{||}/d\tau$ and $\hat{v}^2_\perp$ do not change significantly from $\tau_1$ to $\tau_2$. Not that since this is an average, we are not just integrating from $\tau_1$ to $\tau_2$, but we are also dividing by $\tau_2 - \tau_1$. After  averaging, we obtain
+We now average the above from $\tau_1$ to $\tau_2$ while assuming $B(\hat{z})$, $d\hat{v}_{||}/d\tau$ and $\hat{v}^2_\perp$ do not change significantly during that time scale. Note that since this is an average, we are not just integrating from $\tau_1$ to $\tau_2$, but we are also dividing by $\tau_2 - \tau_1$. After  averaging, we obtain
 \begin{equation}
     \frac{d\hat{v}_{||}}{d\tau} = -\frac{\hat{v}^2_{\perp}}{2\hat{w}_c B_z(\hat{z})} \left ( \frac{dB_z}{dq_z} \right)_{q_z = \hat{z}} .
 \end{equation}
@@ -552,7 +560,7 @@ Converting back to time $t$ gives
 %--------------------------------------------
 \subsection{Change in direction}
 %--------------------------------------------
-Rather than writing \cref{eq:single_particle_motion} in a Cartesian coordinate system as done in the previous sections, we begin by expressing the velocity as $\vvec = \vvec_\perp + v_{||} \bvec$. We assume there is no electric field, and thus write \cref{eq:single_particle_motion} as
+Rather than writing \cref{eq:single_particle_motion} in terns if its components as done in previous sections, we leave the equation in vector. Expressing the velocity as $\vvec = \vvec_\perp + v_{||} \bvec$ and assuming no electric field, we write \cref{eq:single_particle_motion} as
 \begin{equation}
     \frac{d}{dt} ( \vvec_\perp + v_{||} \bvec) = \mp w_c (\vvec_\perp + v_{||} \bvec ) \times \bvec,
 \end{equation}
@@ -589,26 +597,50 @@ where $\nabla \bvec$ is evaluated at $\xvec = \xvec(t)$. Thus, \cref{eq:curvatur
 \label{eq:curvature_2}
     \left ( \frac{ d \vvec_\perp}{dt} \right)_\perp - w_c \vvec_\perp \times \bvec = -v_{||} \vvec_\perp \cdot \nabla \bvec - v_{||}^2 \bvec \cdot \nabla \bvec.
 \end{equation}
-As was done for the other drifts, we assume the solution is of the form $\vvec_\perp = \vvec_\perp^{(gm)} + \Vvec_\kappa$, where we assume again $\Vvec_\kappa$ is time independent. The term $\vvec_\perp^{(gm)}$ corresponds to gyromotion in a rotating reference frame, and is thus given by $\vvec_\perp^{(gm)} = v^{(gm)}_{\perp1} \evec_{\perp1} + v^{(gm)}_{\perp2} \evec_{\perp2}$, where $\evec_{\perp1}$ and $\evec_{\perp2}$ are orthogonal to $\bvec$ and thus rotate in time. $v^{(gm)}_{\perp1}$ is given by \cref{eq:vel_gyro_x} and $v^{(gm)}_{\perp2}$ by \cref{eq:vel_gyro_y}. We note that, in the non-rotating reference frame, $\vvec_\perp^{(gm)}$ is expressed as $\vvec_\perp^{(gm)} = v^{(gm)}_x \evec_x + v^{(gm)}_y \evec_y + v^{(gm)}_z \evec_z$. We now prove that $\vvec_\perp^{(gm)}$ is the solution to the two terms on the left-hand side of \cref{eq:curvature_2}. To show this we first use the transformation rule for the acceleration of a particle in a rotating reference frame, but for some reason ignore the coriollis and centrifugal terms. Thus
-\begin{align}
-    \frac{d \vvec_\perp^{(gm)}}{dt} &= \frac{dv^{(gm)}_x}{dt} \evec_x + \frac{dv^{(gm)}_y}{dt} \evec_y + \frac{dv^{(gm)}_z}{dt} \evec_z \nonumber \\ &= \frac{dv^{(gm)}_{\perp1}}{dt} \evec_{\perp1} + \frac{dv^{(gm)}_{\perp2}}{dt} \evec_{\perp2} + 2\Omega \times \vvec_\perp^{(gm)}.
-\end{align}
-We do not allow the rotating reference frame to rotate about the $\bvec$ axis. Thus, $\Omega = \Omega_{\perp1} \evec_{\perp1} + \Omega_{\perp2} \evec_{\perp2}$. Given that $\Omega$ and $\vvec_\perp^{(gm)}$ are in the same plane, $\Omega \times \vvec_\perp^{(gm)}$ must point in the $\bvec$ direction. Thus, 
+As was done for the other drifts, we assume the solution is of the form $\vvec_\perp = \vvec^{(c)} + \vvec^{(g)}$, where we assume again that $\vvec^{(g)}$ is time independent. The term $\vvec^{(c)}$ corresponds to gyromotion in a rotating reference frame, and is thus given by 
 \begin{equation}
-    \left ( \frac{d \vvec_\perp^{(gm)}}{dt} \right)_\perp = \frac{dv^{(gm)}_{\perp1}}{dt} \evec_{\perp1} + \frac{dv^{(gm)}_{\perp2}}{dt} \evec_{\perp2}.
+    \vvec^{(c)} = v^{(c)}_{\perp1} \evec_{\perp1} + v^{(v)}_{\perp2} \evec_{\perp2},
+\end{equation}
+where $\evec_{\perp1}$ and $\evec_{\perp2}$ are orthogonal to $\bvec$ and thus rotate in time. $v^{(c)}_{\perp1}$ is given by \cref{eq:vel_gyro_x} and $v^{(c)}_{\perp2}$ by \cref{eq:vel_gyro_y}. We note that, in the non-rotating reference frame, $\vvec^{(c)}$ is expressed as $\vvec^{(c)} = v^{(c)}_x \evec_x + v^{(c)}_y \evec_y + v^{(c)}_z \evec_z$. We now prove that $\vvec_\perp^{(c)}$ is the solution to the two terms on the left-hand side of \cref{eq:curvature_2}. To show this we first use the transformation rule for the acceleration of a particle in a rotating reference frame, but for some reason ignore the coriollis and centrifugal terms. Thus
+\begin{align}
+    \frac{d \vvec^{(c)}}{dt} &= \frac{dv^{(c)}_x}{dt} \evec_x + \frac{dv^{(c)}_y}{dt} \evec_y + \frac{dv^{(c)}_z}{dt} \evec_z \nonumber \\ &= \frac{dv^{(c)}_{\perp1}}{dt} \evec_{\perp1} + \frac{dv^{(c)}_{\perp2}}{dt} \evec_{\perp2} + 2\Omega \times \vvec^{(c)}.
+\end{align}
+We do not allow the rotating reference frame to rotate about the $\bvec$ axis. Thus, $\Omega = \Omega_{\perp1} \evec_{\perp1} + \Omega_{\perp2} \evec_{\perp2}$. Given that $\Omega$ and $\vvec^{(c)}$ are in the same plane, $\Omega \times \vvec^{(c)}$ must point in the $\bvec$ direction. Thus, 
+\begin{equation}
+    \left ( \frac{d \vvec^{(c)}}{dt} \right)_\perp = \frac{dv^{(c)}_{\perp1}}{dt} \evec_{\perp1} + \frac{dv^{(c)}_{\perp2}}{dt} \evec_{\perp2}.
 \end{equation}
 This allows us to show that 
 \begin{equation}
-    \left ( \frac{d \vvec_\perp^{(gm)}}{dt} \right)_\perp - w_c \vvec_\perp^{(gm)} \times \bvec = \frac{dv^{(gm)}_{\perp1}}{dt} \evec_{\perp1} + \frac{dv^{(gm)}_{\perp2}}{dt} \evec_{\perp2} - w_c v^{(gm)}_{\perp2} \evec_{\perp1} + w_c v^{(gm)}_{\perp1} \evec_{\perp2} = 0.
+    \left ( \frac{d \vvec^{(c)}}{dt} \right)_\perp - w_c \vvec^{(v)} \times \bvec = \frac{dv^{(c)}_{\perp1}}{dt} \evec_{\perp1} + \frac{dv^{(c)}_{\perp2}}{dt} \evec_{\perp2} - w_c v^{(c)}_{\perp2} \evec_{\perp1} + w_c v^{(c)}_{\perp1} \evec_{\perp2} = 0.
 \end{equation}
-We now plug in $\vvec_\perp = \vvec_\perp^{(gm)} + \Vvec_\kappa$ in \cref{eq:curvature_2} to obtain
+We now plug in $\vvec_\perp = \vvec^{(c)} + \vvec^{(g)}$ in \cref{eq:curvature_2} to obtain
 \begin{equation}
 \label{eq:curvature_3}
-    -w_c \Vvec_\kappa \times \bvec = - v_{||} \vvec_\perp \cdot \nabla \bvec - v_{||}^2 \bvec \cdot \nabla \bvec.
+    -w_c \vvec^{(g)} \times \bvec = - v_{||} \vvec_\perp \cdot \nabla \bvec - v_{||}^2 \bvec \cdot \nabla \bvec.
 \end{equation}
-As explained in Freidberg, the term $v_{||} \vvec_\perp \cdot \nabla \bvec$ leads to small modifications of the gyro motion, but does not lead to a drift of the particles, and thus is ignored. Taking the cross product of \cref{eq:curvature_3} with $\bvec$ finally gives
+As explained in Freidberg, the term $v_{||} \vvec_\perp \cdot \nabla \bvec$ leads to small modifications of the gyro motion, but does not lead to a drift of the particles, and thus is ignored. Taking the cross product of \cref{eq:curvature_3} with $\bvec$ finally gives the curvature drift
 \begin{equation}
-    \Vvec_\kappa = - \frac{v_{||}^2}{w_c} \frac{( \bvec \cdot \nabla \bvec ) \times \Bvec}{B}.
+    \vvec^{(g)}_\kappa = \pm \frac{v_{||}^2}{w_c} \frac{( \bvec \cdot \nabla \bvec ) \times \Bvec}{B}.
+\end{equation}
+
+We now show that, if we assume $\nabla \times \Bvec = 0$, the grad-B drift 
+\begin{equation}
+    \vvec^{(g)}_{\nabla B} = \mp \frac{v^2_\perp}{2 w_c} \frac{\Bvec \times \nabla B}{B^2}
+\end{equation}
+can be written in the same form as the curvature drift. We begin by showing that
+\begin{equation}
+    \Bvec \times \nabla B = \Bvec \times \nabla \left ( \Bvec \cdot \Bvec \right )^{1/2} = \Bvec \times \frac{1}{2B} \nabla \left ( \Bvec \cdot \Bvec \right ).
+\end{equation}
+We now use the vector identity $\nabla (\Bvec \cdot \Bvec ) = 2 \Bvec \times (\nabla \times \Bvec) + 2 \Bvec \cdot \nabla \Bvec$, and assume magnetic curl of zero to obtain
+\begin{align}
+    \Bvec \times \nabla B &= \Bvec \times \frac{1}{B} \Bvec \cdot \nabla \Bvec \nonumber \\
+    &= \Bvec \times \bvec \cdot \nabla (B \bvec) \nonumber \\
+    &= \Bvec \times \left (\bvec \cdot \nabla B \right ) \bvec + \Bvec \times B \left (\bvec \cdot \nabla \bvec \right ) \nonumber \\
+    &= -B \left ( \bvec \cdot \nabla \bvec \right ) \times \Bvec.
+\end{align}
+Thus, the grab-B drift can be written as 
+\begin{equation}
+    \vvec^{(g)}_{\nabla B} = \pm \frac{v^2_\perp}{2 w_c} \frac{(\bvec \cdot \nabla \bvec) \times \Bvec}{B}.
 \end{equation}
 
 %-------------------------------------------------------------------------------

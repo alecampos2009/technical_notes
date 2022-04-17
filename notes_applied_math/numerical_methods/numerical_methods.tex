@@ -633,14 +633,20 @@ Some examples of operators and the corresponding bilinear forms are shown in the
 \end{center}
 
 %--------------------------------------------
-\subsection{Discretization into finite spaces}
+\subsection{Discretization into finite elements}
 %--------------------------------------------
-Introduce $U_h \subset U$ and $V_h \subset V$ as finite dimensional spaces, that is, spaces with a finite number of basis elements. We now aim to find $u_h \in U_h$ such that
+The domain $\Omega$ is now subdivided into smaller finite elements $K_j$, with $j=1,...,m$. We introduce the following function space
+\begin{equation}
+    S_h = \{v \in C \left ( \bar{\Omega} \right ) : v \in \Pi_{k} \text{ on each } K_j, v = 0 \text{ on } \Gamma \times \Rvec_+ \}.
+\end{equation}
+In the above, $\Pi_{k}$ denotes the space of polynomials of degree $\le k$. Thus, this space consists of piecewise polynomial functions. We note that this is a finite dimensional space: any function in $S_h$ can be constructed as a linear combination of basis polynomial functions.
+
+We now introduce $U_h \subset U$ and $V_h \subset V$ as functional spaces that belong to $S_h$. The aim is to find $u_h \in U_h$ such that
 \begin{equation}
     \label{eq:fe_elliptic_sh_solution}
         \left ( \frac{\partial u_h}{\partial t} , v_h \right ) + a(u_h,v_h) = (f,v_h)\qquad \forall v_h \in V_h.
     \end{equation}
-Label the finite basis of $U_h$ as $\{\Phi_i\}_{i=1}^n$, where $n$ is the total number of basis elements (also referred to as degrees of freedom), and $\Phi_i = \Phi_i(\xvec)$. For the sake of simplicity, lets use $V_h = U_h$ in this description. 
+Label the finite basis of $U_h$ as $\{\Phi_i\}_{i=1}^n$, where $n$ is the size of the basis (also referred to as degrees of freedom), and $\Phi_i = \Phi_i(\xvec)$. For the sake of simplicity, lets use $V_h = U_h$ in this description. 
 
 Any $v_h \in V_h$ can be written as $v_h = \sum_{i=1}^n V_i \Phi_i$, where $V_i = V_i(t)$. \Cref{eq:fe_elliptic_sh_solution} is then automatically satisfied if the following is satisfied
 \begin{equation}
