@@ -61,7 +61,7 @@ The two coordinate bases are not necessarily constant, orthogonal, of unit lengt
 \textbf{At the end, one way to think about it is that for every point $[x^1,x^2,x^3]$ in the Eucledian coordiante system, there is a coresponding coordinate given by $[\uhat^1,\uhat^2,\uhat^3]$, and that at every point of these new coordinates, there are two coordinate bases, given by \cref{eq:basis_sub} and \cref{eq:basis_sup}.} The latter basis is typically expresses as $\nabla \uhat^1$,$\nabla \uhat^2$, and $\nabla \uhat^3$.
 
 \subsection{Vectors}
-Since there are two coordinate bases, one can define two types of vectors in curvilinear coordinate systems. One is a vector in terms of contravariant components $v^i$ 
+Since there are two coordinate bases, one can define two types of vectors at every point in the domain. One is a vector in terms of contravariant components $v^i$ 
 \begin{equation}
     \vvec = v^1 \evec_1 + v^2 \evec_2 + v^3 \evec_3,
 \end{equation}
@@ -85,7 +85,7 @@ The cross product can be computed as
     \vvec \times \wvec &= \epsilon_{ijk} \sqrt{g} v^i w^j \evec^k \\
     \vvec \times \wvec &= \epsilon^{ijk} \frac{1}{\sqrt{g}} v_i w_j \evec_k,
 \end{align}
-where $g = \text{det}[ g_{ij} ]$. One can also define $g^{-1} = \text{det}[ g^{ij} ]$.
+where $g = \text{det}(g_{ij})$. One can also define $g^{-1} = \text{det}(g^{ij})$.
 
 \section{Calculus}
 \subsection{Integration}
@@ -94,9 +94,9 @@ where $g = \text{det}[ g_{ij} ]$. One can also define $g^{-1} = \text{det}[ g^{i
 \item Volume integrals: Define $d V_u$ as an infinitesimal volume in curvilinear coordinates, $\Omega_u$ as a finite volume of integration in curvilinear coordinates, and $f_u$ as a function whose input is in curvilinear coordinates, that is, $f_u = f_u(u^1,u^2,u^3)$. Then, the volume integral can be computed using
 \begin{equation}
 \label{eq:vol_int}
-    \int_{\Omega_u} f_u \, d V_u = \int_{\Omega_u} f_u \, J du^1 du^2 du^3,
+    \int_{\Omega_u} f_u \, d V_u = \int_{\Omega_u} f_u \, |\text{det}(J_{ij})| du^1 du^2 du^3,
 \end{equation}
-where $J$ is the Jacobian. Given that Eulerian coordinates can be thought of as an instance of curvilinear coordinates, we have
+where $J_{ij} = \partial \hat{x}^i / \partial u^j$ is the Jacobian. Given that Eulerian coordinates can be thought of as an instance of curvilinear coordinates, we have
 \begin{equation}
 \label{eq:vol_int_eulerian}
     \int_{\Omega_u} f_u \, dV_u =  \int_{\Omega_x} f_x \, dV_x = \int_{\Omega_x} f_x \, dx^1 dx^2 dx^3 
@@ -106,9 +106,9 @@ In other words, these functions satisfy
 \begin{equation}
     f_u(u^1,u^2,u^3) = f_x(\hat{x}^1, \hat{x}^2, \hat{x}^3).
 \end{equation}
-Equating \cref{eq:vol_int,eq:vol_int_eulerian} allows us to write the integration by substitution rule
+Equating \cref{eq:vol_int,eq:vol_int_eulerian} allows us to write the standard rule for integration by substitution
 \begin{equation}
-    \int_{\Omega_x} f_x(x^1,x^2,x^3) \, dx^1 dx^2 dx^3 = \int_{\Omega_u} f_x(\hat{x}^1, \hat{x}^2, \hat{x}^3) \, J du^1 du^2 du^3
+    \int_{\Omega_x} f_x(x^1,x^2,x^3) \, dx^1 dx^2 dx^3 = \int_{\Omega_u} f_x(\hat{x}^1, \hat{x}^2, \hat{x}^3) \, J du^1 du^2 du^3 .
 \end{equation}
 
 \item Surface integrals: Define $d S_u$ as an infinitesimal surface in curvilinear coordinates, $\Gamma_u$ as a finite surface of integration in curvilinear coordinates that belongs to the $u^1 = \text{constant}$ surfaces, and $f_u$ as a function whose input is defined using curvilinear coordinates. Then, a surface integral can be computed using 
