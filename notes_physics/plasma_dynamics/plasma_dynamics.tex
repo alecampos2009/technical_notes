@@ -1732,7 +1732,7 @@ The electron collision term is modeled as
 \begin{equation}
     \Rvec_e = m_e n_e \nu_{ei} \left ( \uvec_i - \uvec_e \right ).
 \end{equation}
-Using quasi-neutrality and \cref{eq:current_def_quasineutral}, we have
+Assuming quasi-neutrality, the expression for current in \cref{eq:current_def_quasineutral} can be used to obtain
 \begin{equation}
 \label{eq:elec_coll_current}
     \Rvec_e = \frac{m_e \nu_{ei}}{e} \Jvec.
@@ -1913,11 +1913,11 @@ References for this model can be found in \cite{hasegawa1977,horton1994}.
 \begin{enumerate}
     \item Singly-charged ions. \label{it:hm_single_charge_ions}
     \item No shear stresses, collisions, or sources. \label{it:hm_no_shear_source_coll}
-    \item Cold ion approximation, i.e. $T_e \gg T_i$ and thus $\nabla p_i \approx 0$ \cite{hasegawa1977}. \label{it:hm_cold}
+    \item Cold ion approximation, i.e. $T_e \gg T_i$ and thus $\nabla p_i \approx 0$, \cite{hasegawa1977}. \label{it:hm_cold}
     \item Isothermal electron fluid, i.e.\@ $T_e$ is constant. \label{it:hm_isothermal_electron}
     \item Electrostatic field, i.e. $\Evec = - \nabla \phi$. \label{it:hm_electrostatic}
     \item Magnetic field is constant.
-    \item Neglect parallel ion inertia, i.e. $\nabla \cdot (\alpha \uvec_i) \approx \nabla_\perp \cdot (\alpha \uvec_{i,\perp})$, or in other words $(\uvec_i \cdot \nabla) \approx (\uvec_{i,\perp} \cdot \nabla_\perp)$ and $\nabla \cdot \uvec_i \approx \nabla_\perp \cdot \uvec_{i,\perp}$ \cite{hasegawa1977}. \label{it:hm_par_ion}
+    \item Neglect parallel ion velocity, i.e. $u_{i,||} \approx 0$, \cite{hasegawa1977}. \label{it:hm_par_ion}
     \item Quasi-neutrality, i.e. $n_i \approx n_e$. \label{it:hm_quasineutrality}
     \item Adiabatic electrons, i.e. $n_e = n_0 \exp (e\phi/T_e)$, where $n_0 = n_0(x_1)$. \label{it:hm_adiabatic}
 \end{enumerate}
@@ -2151,12 +2151,11 @@ References for this model can be found in \cite{wakatani1984,hasegawa1987}.
     \item Isothermal electron fluid, i.e.\@ $T_e$ is constant. \label{it:hw_isothermal_electron}
     \item Electrostatic field, i.e. $\Evec = -\nabla \phi$. \label{it:hw_electrostatic}
     \item Magnetic field is constant.
-    \item Neglect parallel ion inertia, i.e.\@ $\nabla \cdot (\alpha \uvec_i) \approx \nabla_\perp \cdot (\alpha \uvec_{i,\perp})$, or in other words $(\uvec_i \cdot \nabla) \approx (\uvec_{i,\perp} \cdot \nabla_\perp)$ and $\nabla \cdot \uvec_i \approx \nabla_\perp \cdot \uvec_{i,\perp}$. \label{it:hw_par_ion}
-    \item Quasi-neutrality, i.e. $n_i \approx n_e$. Note, this allows us to use the definition of the current $\Jvec = e (n_i \uvec_i - n_e \uvec_e)$ to write $\uvec_e = \uvec_i - \Jvec/e n_e$. \label{it:hw_quasineutrality}
+    \item Neglect parallel ion velocity, i.e. $u_{i,||} \approx 0$. \label{it:hw_par_ion}
+    \item Quasi-neutrality, i.e. $n_i \approx n_e$. \label{it:hw_quasineutrality}
     \item $n_i = n_0 + n'$, where $n_0 = n_0(x_1)$ and $n'$ is smaller than $n_0$. \label{it:hw_ion_density}
     \item Perpendicular components of the ion shear-stress term are modeled as $(\nabla \cdot \tvec_i)_\perp/(m_i n_i) = \nu \nabla_\perp^2 \uvec_{i,\perp}$. \label{it:hw_shear_stress}
     \item Assume infinitesimally small electron mass, i.e.\@ $m_e \to 0$. \label{it:hw_small_electron_mass}
-    \item Combining \cref{eq:elec_coll_current,eq:resistivity}, we obtain $\Rvec_e = e n \eta \Jvec$. Thus, for the parallel component we have $R_{e,||} = e n \eta J_{||}$. \label{it:hw_electron_collisions}
 \end{enumerate}
 
 %--------------------------------------------
@@ -2226,7 +2225,7 @@ Since $n_0$ is time independent (assumption in \cref{it:hw_ion_density}), the co
     \label{eq:hw_intermediate_ion_1}
     \frac{\partial n}{\partial t} + \uvec^{(0)}_{i,\perp} \cdot \nabla_\perp \left ( \ln n_0 + n \right ) + \nabla_\perp \cdot \uvec^{(1)}_{i,\perp} = 0.
 \end{equation}
-In reference to \cref{eq:hm_divergence_polarization}, we now have
+Using the same derivation for \cref{eq:hm_divergence_polarization}, we now have
 \begin{equation}
     \nabla_\perp \cdot \uvec_{i,\perp}^{(1)} = -\frac{1}{w_{c,i} B} \left [ \frac{\partial \nabla_\perp^2 \phi}{\partial t} + \uvec_{i,\perp}^{(0)} \cdot \nabla_\perp \left ( \nabla_\perp^2 \phi \right ) \right ] + \frac{\nu}{w_{c,i} B} \nabla^4_\perp \phi.
 \end{equation}
@@ -2246,28 +2245,71 @@ Using the assumptions in \cref{it:hw_single_charge_ions,it:hw_no_shear_source_co
 \end{equation}
 Using the assumptions in \cref{it:hw_small_electron_mass,it:hw_isothermal_electron,it:hw_electrostatic}, the above simplifies to
 \begin{equation}
-    0 = e n_e (\nabla \phi + \uvec_e \times \Bvec) - T_e \nabla n_e + \Rvec_e.
+    0 = -e n_e (-\nabla \phi + \uvec_e \times \Bvec) - T_e \nabla n_e + \Rvec_e.
 \end{equation}
-Using the assumption in \cref{it:hw_quasineutrality} and dividing by $n_i$, we get
+Dividing by $-e n_e$, we get
 \begin{equation}
-    0 = e (\nabla \phi + \uvec_e \times \Bvec) - T_e \nabla \ln n_i + \frac{1}{n_i}\Rvec_e.
+    \label{eq:hw_electron_momentum_no_inertia}
+    0 = -\nabla \phi + \uvec_e \times \Bvec + \frac{T_e}{e} \nabla \ln n_e - \frac{1}{e n_e}\Rvec_e.
 \end{equation}
-\Cref{eq:hw_ion_density} allows us to write the above as
+We now focus on the component of the equation above that is parallel to $\Bvec$, that is 
 \begin{equation}
-    0 = e (\nabla \phi + \uvec_e \times \Bvec) - T_e \nabla \ln n_0 - T_e \nabla n + \frac{1}{n_i}\Rvec_e.
+    0 = -\nabla_{||} \phi + \frac{T_e}{e} \nabla_{||} \ln n_e - \frac{1}{e n_e} R_{e,||}.
 \end{equation}
-We now focus on the component of the equation above that is parallel $\Bvec$. Since $n_0$ does not vary along that direction, the above simplifies to
+Using quasineutrality to replace $n_e$ by $n_i$, and plugging in \cref{eq:hw_ion_density} for $n_i$ gives 
 \begin{equation}
-    0 = e \nabla_{||} \phi - T_e \nabla_{||} n + \frac{1}{n_i} R_{e,||}.
+    0 = -\nabla_{||} \phi + \frac{T_e}{e} \nabla_{||} (\ln n_0 + n) - \frac{1}{e n_e} R_{e,||}.
 \end{equation}
-Using the assumption in \cref{it:hw_electron_collisions}, we have
+We note that the gradient of $\ln n_0$ above is zero since $n_0$ does not vary along the direction of the magnetic field. The definition of the electron collision term is given by \cref{eq:elec_coll_current}, that is, $\Rvec_e = (m_e \nu_{ei}/e) \Jvec$. Using the definition of the resistivity given by \cref{eq:resistivity} ($\eta = m_e \nu_{ei}/e^2 n_e$), we get $\Rvec_e = e n_e \eta \Jvec$. Thus, we now have
 \begin{equation}
-    0 = e \nabla_{||} \phi - T_e \nabla_{||} n + e \eta J_{||},
+    0 = -\nabla_{||} \phi + \frac{T_e}{e} \nabla_{||} n - \eta J_{||},
 \end{equation}
 which, upon re-arranging, gives
 \begin{equation}
     \label{eq:hw_electron_momentum}
     J_{||} = \frac{T_e}{e \eta} \nabla_{||} \left ( n - \frac{e\phi}{T_e} \right ).
+\end{equation}
+The perpendicular component of \cref{eq:hw_electron_momentum_no_inertia} is as follows
+\begin{equation}
+    0 = -\nabla_\perp \phi + \uvec_e \times \Bvec + \frac{T_e}{e} \nabla_\perp \ln n_e - \frac{1}{e n_e}\Rvec_{e,\perp}.
+\end{equation}
+Since $\uvec_e \times \Bvec = \uvec_{e,\perp} \times \Bvec$ we have
+\begin{equation}
+    0 = -\nabla_\perp \phi + \uvec_{e,\perp} \times \Bvec + \frac{T_e}{e} \nabla_\perp \ln n_e - \frac{1}{e n_e}\Rvec_{e,\perp}.
+\end{equation}
+Again, using the definition of the electron collision term, we get
+\begin{equation}
+    0 = -\nabla_\perp \phi + \uvec_{e,\perp} \times \Bvec + \frac{T_e}{e} \nabla_\perp \ln n_e - \eta \Jvec_\perp.
+\end{equation}
+Crossing the above by $\Bvec$ gives 
+\begin{equation}
+    \uvec_{e,\perp} = -\nabla_\perp \phi \times \frac{\bvec}{B} - \frac{T_e}{e n_e B} {\bvec \times \nabla_\perp n_e} + \frac{\eta}{B} \bvec \times \Jvec_\perp.
+\end{equation}
+Typically the last term on the right-hand side above is significantly smaller, and thus it can be neglected. The electron velocity is thus
+\begin{equation}
+    \label{eq:hw_elec_vel}
+    \uvec_{e,\perp} = -\nabla_\perp \phi \times \frac{\bvec}{B} - \frac{T_e}{e n_e B} {\bvec \times \nabla_\perp n_e}.
+\end{equation}
+
+The continuity equation for electrons is as follows
+\begin{equation}
+    \frac{\partial n_e}{\partial t} + \nabla \cdot (n_e \uvec_e) = 0.
+\end{equation}
+We split the convection term in the above into the perpendicular and parallel components
+\begin{equation}
+    \frac{\partial n_e}{\partial t} + \nabla_\perp \cdot (n_e \uvec_{e,\perp}) + \nabla_{||} \cdot (n_e u_{e,||}) = 0.
+\end{equation}
+Given the assumption in \cref{it:hw_par_ion}, we have $J_{||} = e n_e (u_{i,||} - u_{e,||}) = -en_e u_{e,||}$. Thus, the above becomes
+\begin{equation}
+    \frac{\partial n_e}{\partial t} + \nabla_\perp \cdot (n_e \uvec_{e,\perp}) = \frac{1}{e} \nabla_{||} J_{||}.
+\end{equation}
+Using the identity $\nabla \cdot (\Avec \times \Bvec) = \Bvec \cdot (\nabla \times \Avec) - \Avec \cdot ( \nabla \times \Bvec)$ we show that 
+\begin{equation}
+    \nabla_\perp \cdot (\bvec \times \nabla_\perp n_e) = \nabla_\perp n_e \cdot (\nabla_\perp \times \bvec) - \bvec \cdot (\nabla_\perp \times \nabla_\perp n_e) = 0.
+\end{equation}
+As a result, the second term on the right-hand side of \cref{eq:hw_elec_vel} does not contribute to $\nabla_\perp \cdot (n_e \uvec_{e,\perp})$. The electron continuity equation then becomes
+\begin{equation}
+    \frac{\partial n_e}{\partial t} - \left ( \nabla_\perp \phi \times \frac{\bvec}{B} \right ) \cdot \nabla_\perp n_e = \frac{1}{e} \nabla_{||} J_{||}.
 \end{equation}
 
 Result
