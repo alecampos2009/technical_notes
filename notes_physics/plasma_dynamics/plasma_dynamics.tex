@@ -2311,8 +2311,15 @@ As a result, the second term on the right-hand side of \cref{eq:hw_elec_vel} doe
 \begin{equation}
     \frac{\partial n_e}{\partial t} - \left ( \nabla_\perp \phi \times \frac{\bvec}{B} \right ) \cdot \nabla_\perp n_e = \frac{1}{e} \nabla_{||} J_{||}.
 \end{equation}
-
-Result
+Dividing by $n_e$ and using quasi-neutrality
+\begin{equation}
+    \frac{\partial \ln n_i}{\partial t} - \left ( \nabla_\perp \phi \times \frac{\bvec}{B} \right ) \cdot \nabla_\perp \ln n_i = \frac{1}{e n_i} \nabla_{||} J_{||}.
+\end{equation}
+Using the expression for $\ln n_i$ in \cref{eq:hw_ion_density}, we get
+\begin{equation}
+    \frac{\partial n}{\partial t} - \left ( \nabla_\perp \phi \times \frac{\bvec}{B} \right ) \cdot \nabla_\perp (\ln n_0 + n ) = \frac{1}{e n_i} \nabla_{||} J_{||}.
+\end{equation}
+Finally, using the assumption in \cref{it:hw_ion_density}, we neglect $n'$ in the denominator of the right-hand side, and obtain
 \begin{equation}
     \label{eq:hw_electron_continuity}
     \frac{\partial n}{\partial t} - \left ( \nabla_\perp \phi \times \frac{\bvec}{B} \right ) \cdot \nabla_\perp \left ( n + \ln n_0 \right ) = \frac{1}{en_0} \nabla_{||} J_{||}.
