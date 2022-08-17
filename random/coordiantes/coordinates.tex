@@ -108,7 +108,7 @@ In other words, these functions satisfy
 \end{equation}
 Equating \cref{eq:vol_int,eq:vol_int_eulerian} allows us to write the standard rule for integration by substitution
 \begin{equation}
-    \int_{\Omega_x} f_x(x^1,x^2,x^3) \, dx^1 dx^2 dx^3 = \int_{\Omega_u} f_x(\hat{x}^1, \hat{x}^2, \hat{x}^3) \, J du^1 du^2 du^3 .
+    \int_{\Omega_x} f_x(x^1,x^2,x^3) \, dx^1 dx^2 dx^3 = \int_{\Omega_u} f_x(\hat{x}^1, \hat{x}^2, \hat{x}^3) \, |\text{det}(J_{ij})| du^1 du^2 du^3 .
 \end{equation}
 
 \item Surface integrals: Define $d S_u$ as an infinitesimal surface in curvilinear coordinates, $\Gamma_u$ as a finite surface of integration in curvilinear coordinates that belongs to the $u^1 = \text{constant}$ surfaces, and $f_u$ as a function whose input is defined using curvilinear coordinates. Then, a surface integral can be computed using 

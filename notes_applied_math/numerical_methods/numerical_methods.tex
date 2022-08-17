@@ -367,6 +367,34 @@ $$(E_kU^n)(x) = 1/2(a^2\lambda^2+a\lambda)U^n(x+h) + (1-a^2\lambda^2)U^n(x) + 1/
 %##########################################################################
 
 %----------------------------------------------------------------------------------------------------------------------------
+\chapter{Introduction}
+%----------------------------------------------------------------------------------------------------------------------------
+
+%---------------------------------------------------------------
+\section{Some schemes for high-speed flows}
+%---------------------------------------------------------------
+\begin{itemize}
+    \item Central
+    \begin{itemize}
+        \item Jameson
+    \end{itemize}
+    \item Upwinding
+    \begin{itemize}
+        \item Flux Vector Splitting
+        \begin{itemize}
+             \item Steger-Warming
+             \item AUSM
+        \end{itemize}
+        \item Flux Difference Splitting
+        \begin{itemize}
+            \item Godunov
+            \item Roe
+       \end{itemize}
+        \item Total Variation Diminishing
+    \end{itemize}
+\end{itemize}
+
+%----------------------------------------------------------------------------------------------------------------------------
 \chapter{Elliptic}
 %----------------------------------------------------------------------------------------------------------------------------
 
@@ -639,9 +667,9 @@ Some examples of operators and the corresponding bilinear forms are shown in the
 The domain $\Omega$ is now subdivided into smaller finite elements $K_j$, with $j=1,...,m$. We introduce the following function space
 \begin{equation}
     \label{eq:fe_cg_discrete_space}
-    \mathcal{S}_h = \{v \in C \left ( \bar{\Omega} \right ) : v(K_j) \in \Pi_{k}(K_j) \text{ for } j=1,...,m, \text{ and } v = 0 \text{ on } \partial \Omega \times \Rvec_+ \}.
+    \mathcal{S}_{h,k} = \{v \in C \left ( \bar{\Omega} \right ) : v(K_j) \in \Pi_{k}(K_j) \text{ for } j=1,...,m, \text{ and } v = 0 \text{ on } \partial \Omega \times \Rvec_+ \}.
 \end{equation}
-In the above, $\Pi_{k}(K_j)$ denotes the space of polynomials of degree $\le k$ defined within the finite element $K_j$. In other words, $\mathcal{S}_h$ is the space of piecewise-polynomial continuous functions. See for example \cref{fig:fe_cg_sample_function}. for a pictorial representation of these functions. For finite $k$, $S_h$ is a finite dimensional space: any function in $S_h$ can be constructed as a linear combination of basis polynomial functions.
+In the above, $\Pi_{k}(K_j)$ denotes the space of polynomials of degree $\le k$ defined within the finite element $K_j$. In other words, $\mathcal{S}_{h,k}$ is the space of piecewise-polynomial continuous functions. See for example \cref{fig:fe_cg_sample_function}. for a pictorial representation of these functions. For finite $k$, $S_{h,k}$ is a finite dimensional space: any function in $S_{h,k}$ can be constructed as a linear combination of basis polynomial functions.
 
 \begin{figure}[ht]
     \centering
@@ -659,7 +687,7 @@ In the above, $\Pi_{k}(K_j)$ denotes the space of polynomials of degree $\le k$ 
     \label{fig:fe_cg_dg_sample_functions}
  \end{figure}
 
-We now introduce $\mathcal{U}_h \subset \mathcal{U}$ and $\mathcal{V}_h \subset \mathcal{V}$ as functional spaces that belong to $\mathcal{S}_h$. The aim is to find $u_h \in \mathcal{U}_h$ such that
+We now introduce $\mathcal{U}_h \subset \mathcal{U}$ and $\mathcal{V}_h \subset \mathcal{V}$ as functional spaces that belong to $\mathcal{S}_{h,k}$. The aim is to find $u_h \in \mathcal{U}_h$ such that
 \begin{equation}
     \label{eq:fe_elliptic_sh_solution}
         \left ( \frac{\partial u_h}{\partial t} , v_h \right ) + a(u_h,v_h) = L(v_h) \qquad \forall v_h \in \mathcal{V}_h.
@@ -726,9 +754,9 @@ Thus, for DG, an additional term appears for every bilinear form. For example, \
 Unlike the finite dimensional space shown in \cref{eq:fe_cg_discrete_space}, we now use the following for DG 
 \begin{equation}
     \label{eq:dg_discretized_fe_space}
-    \mathcal{S}_h = \{v : v(K_j) \in \Pi_{k}(K_j) \text{ for } j=1,...,m \},
+    \mathcal{S}_{h,k} = \{v \in L_2 \left ( \bar{\Omega} \right ): v(K_j) \in \Pi_{k}(K_j) \text{ for } j=1,...,m \},
 \end{equation}
-where $\Pi_{k}(K_j)$ can be the same space as in the continuous Galerkin case. The main difference, however, is that the functions $v \in S_h$ can now be discontinuous from element to element (they do not belong to $C(\bar{\Omega})$). See \cref{fig:fe_dg_sample_function} for a pictorial representation of these functions. We note that the functions are discontinuous only across elements, and not within elements. Thus, we can now make the correspondence $\omega_j \to K_j$. The set of all $K_j$ is $\tau_h$, and the skeleton is $\Gamma_h$. The corresponding form of \cref{eq:fe_elliptic_sh_solution} is thus
+where $\Pi_{k}(K_j)$ can be the same space as in the continuous Galerkin case. The main difference, however, is that the functions $v \in S_{h,k}$ can now be discontinuous from element to element (they do not belong to $C(\bar{\Omega})$). See \cref{fig:fe_dg_sample_function} for a pictorial representation of these functions. We note that the functions are discontinuous only across elements, and not within elements. Thus, we can now make the correspondence $\omega_j \to K_j$. The set of all $K_j$ is $\tau_h$, and the skeleton is $\Gamma_h$. The corresponding form of \cref{eq:fe_elliptic_sh_solution} is thus
 \begin{equation}
     \left ( \frac{\partial u_h}{\partial t} , v_h \right ) + a(u_h,v_h)  + \int_{\Gamma_h} \left ( \{u_h\} [[v_h]] + [[u_h]] \{v_h\} \right )\lambdavec \cdot \nvec_{\Gamma_h} \, dS = L(v_h) \qquad \forall v_h \in \mathcal{V}_h .
 \end{equation}
@@ -853,9 +881,9 @@ We label function spaces using \textbackslash mathcal notation, except for the t
 \end{tabular}
 \end{center}
 
-%---------------------------------------------------------------
+%----------------------------------------------------------------------------------------------------------------------------
 \chapter{The collocation method}
-%---------------------------------------------------------------
+%----------------------------------------------------------------------------------------------------------------------------
 \label{sec:collocation_method}
 Finite-element methods rely on the Galerkin method. Spectral methods can rely on the Galerkin method, but also on others such as the collocation and tau method. In this appendix we describe the collocation method.
 
