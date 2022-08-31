@@ -708,6 +708,72 @@ Define the vectors $\Uvec$ and $\bvec$, as those whose components are $U_j$ and 
     \Mvec \frac{d \Uvec}{dt} + \Avec \Uvec = \bvec.
 \end{equation}
 
+%--------------------------------------------
+\subsection{Multi-dimensional finite elements}
+%--------------------------------------------
+To describe the use of finite elements in multiple dimensions, we'll solve the following elliptic PDE
+\begin{equation}
+    \label{eq:fe_elliptic_pde_3d}
+    -\frac{\partial}{\partial x_\beta} \left ( \frac{\partial u_\alpha}{\partial x_\beta} + \frac{\partial u_\beta}{\partial x_\alpha} \right ) = f_\alpha \qquad \text{in } \Omega^3,
+\end{equation}
+where $\uvec = 0$ at boundaries. In the above, we assume summation notation for the greek subindices. As in the previous section, we introduce trial and test function spaces, but they are now three dimensional, that is, $\mathcal{U}^3$ and $\mathcal{V}^3$. The weak formulation of \cref{eq:fe_elliptic_pde_3d} is to find the weak solution $\uvec \in \mathcal{U}^3$ such that
+\begin{equation}
+    \int_{\Omega^3} -\frac{\partial}{\partial x_\beta} \left ( \frac{\partial u_\alpha}{\partial x_\beta} + \frac{\partial u_\beta}{\partial x_\alpha} \right ) v_\alpha \, dV = \int_{\Omega^3} f_\alpha v_\alpha \,dV \qquad \forall \vvec \in \mathcal{V}^3.
+\end{equation}
+We now use the product rule and divergence theorem to obtain
+\begin{equation}
+    \int_{\Omega^3}  \left ( \frac{\partial u_\alpha}{\partial x_\beta} + \frac{\partial u_\beta}{\partial x_\alpha} \right ) \frac{\partial v_\alpha}{\partial x_\beta} \, dV = \int_{\Omega^3} f_\alpha v_\alpha \,dV \qquad \forall \vvec \in \mathcal{V}^3.
+\end{equation}
+As before, we now introduce the discrete function spaces $\mathcal{U}_h^3 \subset \mathcal{U}^3$ and $\mathcal{V}^3_h \subset \mathcal{V}^3$ that belong to $\mathcal{S}_{h,k}^3$, which will be defined at a later point. The aim is to find $\uvec_h \in \mathcal{U}_h^3$ such that
+\begin{equation}
+    \int_{\Omega^3}  \left ( \frac{\partial u_{h,\alpha}}{\partial x_\beta} + \frac{\partial u_{h,\beta}}{\partial x_\alpha} \right ) \frac{\partial v_{h,\alpha}}{\partial x_\beta} \, dV = \int_{\Omega^3} f_\alpha v_{h,\alpha} \,dV \qquad \forall \vvec_h \in \mathcal{V}_h^3.
+\end{equation}
+We will now expand $\vvec_h$ as follows
+\begin{equation}
+    \vvec_h = \sum_i^n \Vvec_i \Phi_i,
+\end{equation}
+where $\Vvec_i$ is now a vector but $\Phi_i$ is still a scalar. We thus have
+\begin{equation}
+    \sum_i V_{\alpha,i} \int_{\Omega^3}  \left ( \frac{\partial u_{h,\alpha}}{\partial x_\beta} + \frac{\partial u_{h,\beta}}{\partial x_\alpha} \right ) \frac{\partial \Phi_i}{\partial x_\beta} \, dV = \sum_i V_{\alpha,i} \int_{\Omega^3} f_\alpha \Phi_i \,dV \qquad \forall \vvec_h \in \mathcal{V}_h^3.
+\end{equation}
+One way to ensure the above is satisfied is to instead require that the following holds
+\begin{equation}
+    \int_{\Omega^3}  \left ( \frac{\partial u_{h,\alpha}}{\partial x_\beta} + \frac{\partial u_{h,\beta}}{\partial x_\alpha} \right ) \frac{\partial \Phi_i}{\partial x_\beta} \, dV = \int_{\Omega^3} f_\alpha \Phi_i \,dV \qquad \text{for } i = 1,...,n \text{ and } \alpha = x,y,z, 
+\end{equation}
+or in other words,
+\begin{align}
+    & \int_{\Omega^3}  \left ( \frac{\partial u_{h,x}}{\partial x_\beta} + \frac{\partial u_{h,\beta}}{\partial x_x} \right ) \frac{\partial \Phi_i}{\partial x_\beta} \, dV = \int_{\Omega^3} f_x \Phi_i \,dV \qquad \text{for } i = 1,...,n \nonumber \\ 
+    & \int_{\Omega^3}  \left ( \frac{\partial u_{h,y}}{\partial x_\beta} + \frac{\partial u_{h,\beta}}{\partial x_y} \right ) \frac{\partial \Phi_i}{\partial x_\beta} \, dV = \int_{\Omega^3} f_y \Phi_i \,dV \qquad \text{for } i = 1,...,n \nonumber \\
+    & \int_{\Omega^3}  \left ( \frac{\partial u_{h,z}}{\partial x_\beta} + \frac{\partial u_{h,\beta}}{\partial x_z} \right ) \frac{\partial \Phi_i}{\partial x_\beta} \, dV = \int_{\Omega^3} f_z \Phi_i \,dV \qquad \text{for } i = 1,...,n.
+\end{align}
+We'll re-group the above as follows
+\begin{equation}
+    \int_{\Omega^3} \frac{\partial u_{h,\alpha}}{\partial x_\beta} \frac{\partial \Phi_i}{\partial x_\beta} \,dV + \int_{\Omega^3} \frac{\partial u_{h,\beta}}{\partial x_\alpha} \frac{\partial \Phi_i}{\partial x_\beta} \, dV = \int_{\Omega^3} f_\alpha \Phi_i \,dV \qquad \text{for } i = 1,...,n \text{ and } \alpha = x,y,z.
+\end{equation}
+The next step is to introduce 
+\begin{equation}
+    \uvec_h = \sum_j^n \Uvec_j \Phi_j,
+\end{equation}
+to obtain
+\begin{equation}
+    \sum_j U_{j,\alpha} \int_{\Omega^3} \frac{\partial \Phi_j}{\partial x_\beta} \frac{\partial \Phi_i}{\partial x_\beta} \,dV + \sum_j U_{j,\beta} \int_{\Omega^3} \frac{\partial \Phi_j}{\partial x_\alpha} \frac{\partial \Phi_i}{\partial x_\beta} \, dV = \int_{\Omega^3} f_\alpha \Phi_i \,dV \qquad \text{for } i = 1,...,n \text{ and } \alpha = x,y,z.
+\end{equation}
+If we now introduce the bilinear forms 
+\begin{equation}
+    a_{ij} = \int_{\Omega^3} \frac{\partial \Phi_j}{\partial x_\beta} \frac{\partial \Phi_i}{\partial x_\beta} \,dV,
+\end{equation}
+\begin{equation}
+    b_{ij}^{\alpha \beta} = \int_{\Omega^3}\frac{\partial \Phi_j}{\partial x_\alpha} \frac{\partial \Phi_i}{\partial x_\beta} \, dV,
+\end{equation}
+and
+\begin{equation}
+    L_i^\alpha = \int_{\Omega^3} f_\alpha \Phi_i \,dV,
+\end{equation}
+we can write the linear system of equations as
+\begin{equation}
+    \sum_j U_{j,\alpha} a_{ij} + \sum_j U_{j,\beta} b_{ij}^{\alpha \beta} = L_i^\alpha \qquad \text{for } i = 1,...,n \text{ and } \alpha = x,y,z.
+\end{equation}
+
 %---------------------------------------------------------------
 \section{The discontinuous Galerkin method}
 %---------------------------------------------------------------
@@ -721,34 +787,35 @@ This holds true only when $u$ is a continuous function. An alternate formulation
 \end{equation}
 where $\nvec_{w_j}$ is the unit normal for the subdomain $w_j$. We introduce the notation 
 \begin{equation}
-    [[u]] = u^+ - u^-,
+    \llbracket u \rrbracket = u^+ - u^-,
 \end{equation}
 where $u^+$ is the value of $u$ on one side of the subdomain boundary and $u^-$ is the value on the other side. Additionally, introduce $\Gamma$ as the skeleton of $\tau$, that is, the inner boundaries of all the subdomains $w_j$ in the domain $\Omega_j$. We can now write
 \begin{equation}
     \label{eq:dg_div_theorem_discontinuous}
-    \int_\Omega \nabla \cdot (\lambdavec u) \, dV = \int_{\partial \Omega} u \lambdavec \cdot \nvec \, dS + \int_{\Gamma} [[u]]\lambdavec \cdot \nvec_{\Gamma} \, dS,
+    \int_\Omega \nabla \cdot (\lambdavec u) \, dV = \int_{\partial \Omega} u \lambdavec \cdot \nvec \, dS + \int_{\Gamma} \llbracket u \rrbracket \lambdavec \cdot \nvec_{\Gamma} \, dS,
 \end{equation}
 where $\nvec_{\Gamma}$ is a unit normal for each point in the skeleton $\Gamma$ (the orientation of $\nvec_{\Gamma}$ is arbitrary). \Cref{eq:dg_div_theorem_discontinuous} is the divergence theorem for discontinuous functions $u$. We introduce the notation
 \begin{equation}
-{u} = \frac{1}{2} \left ( u^+ + u^- \right ).
+\{ u \} = \frac{1}{2} \left ( u^+ + u^- \right ).
 \end{equation}
 From its definitions, it can be shown that
 \begin{equation}
-    [[uv]] = \{u\}[[v]] + [[u]]\{v\}.
+    \llbracket uv \rrbracket = \{ u \} \llbracket v \rrbracket + \llbracket u \rrbracket \{ v \}.
 \end{equation}
 Thus, the divergence theorem for two discontinuous functions $u$ and $v$ can be written as
 \begin{equation}
     \label{eq:div_theorem_2funcs}
-    \int_\Omega \nabla \cdot (\lambdavec uv) \, d\xvec = \int_{\partial \Omega} uv \lambdavec \cdot \nvec \, dS + \int_{\Gamma} \left ( \{u\} [[v]] + [[u]] \{v\} \right )\lambdavec \cdot \nvec_{\nvec_\Gamma} \, dS.
+    \int_\Omega \nabla \cdot (\lambdavec uv) \, d\xvec = \int_{\partial \Omega} uv \lambdavec \cdot \nvec \, dS + \int_{\Gamma} \left ( \{ u \} \llbracket v \rrbracket + \llbracket u \rrbracket \{ v \} \right )\lambdavec \cdot \nvec_{\nvec_\Gamma} \, dS.
 \end{equation}
 
 Consider the derivation carried out to obtain \cref{eq:fe_sample_bilinear_form}. If both $u$ and $v$ are discontinuous, then \cref{eq:div_theorem_2funcs} is used rather than the traditional divergence theorem and the result becomes
 \begin{equation}
-    (\nabla \cdot(\boldsymbol{\lambda}u),v) = -(u\boldsymbol{\lambda},\nabla v) + \int_{\Gamma} \left ( \{u\} [[v]] + [[u]] \{v\} \right )\lambdavec \cdot \nvec_{\Gamma} \, dS.
+    \label{eq:from_strong_to_weak_form}
+    (\nabla \cdot(\boldsymbol{\lambda}u),v) = -(u\boldsymbol{\lambda},\nabla v) + \int_{\Gamma} \left ( \{u\} \llbracket v \rrbracket + \llbracket u \rrbracket \{v\} \right ) \lambdavec \cdot \nvec_{\Gamma} \, dS.
 \end{equation}
 Thus, for DG, an additional term appears for every bilinear form. For example, \cref{eq:weak_form} for the weak formulation given the specific operator $\nabla \cdot (\boldsymbol{\lambda} u)$ is now
 \begin{equation}
-        \left ( \frac{\partial u}{\partial t} , v \right ) + a(u,v)  + \int_{\Gamma} \left ( \{u\} [[v]] + [[u]] \{v\} \right )\lambdavec \cdot \nvec_{\Gamma} \, dS = L(v) \qquad \forall v \in \mathcal{V} .
+        \left ( \frac{\partial u}{\partial t} , v \right ) + a(u,v)  + \int_{\Gamma} \left ( \{ u \} \llbracket v \rrbracket + \llbracket u \rrbracket \{ v \} \right ) \lambdavec \cdot \nvec_{\Gamma} \, dS = L(v) \qquad \forall v \in \mathcal{V} .
 \end{equation}
 
 Unlike the finite dimensional space shown in \cref{eq:fe_cg_discrete_space}, we now use the following for DG 
@@ -758,7 +825,8 @@ Unlike the finite dimensional space shown in \cref{eq:fe_cg_discrete_space}, we 
 \end{equation}
 where $\Pi_{k}(K_j)$ can be the same space as in the continuous Galerkin case. The main difference, however, is that the functions $v \in S_{h,k}$ can now be discontinuous from element to element (they do not belong to $C(\bar{\Omega})$). See \cref{fig:fe_dg_sample_function} for a pictorial representation of these functions. We note that the functions are discontinuous only across elements, and not within elements. Thus, we can now make the correspondence $\omega_j \to K_j$. The set of all $K_j$ is $\tau_h$, and the skeleton is $\Gamma_h$. The corresponding form of \cref{eq:fe_elliptic_sh_solution} is thus
 \begin{equation}
-    \left ( \frac{\partial u_h}{\partial t} , v_h \right ) + a(u_h,v_h)  + \int_{\Gamma_h} \left ( \{u_h\} [[v_h]] + [[u_h]] \{v_h\} \right )\lambdavec \cdot \nvec_{\Gamma_h} \, dS = L(v_h) \qquad \forall v_h \in \mathcal{V}_h .
+    \label{eq:dg_main_eq_total}
+    \left ( \frac{\partial u_h}{\partial t} , v_h \right ) + a(u_h,v_h)  + \int_{\Gamma_h} \left ( \{ u_h \} \llbracket v_h \rrbracket + \llbracket u_h \rrbracket \{ v_h \} \right )\lambdavec \cdot \nvec_{\Gamma_h} \, dS = L(v_h) \qquad \forall v_h \in \mathcal{V}_h .
 \end{equation}
 Note that we can break up the integrals above into sums of integrals over each finite element. That is,
 \begin{equation}
@@ -766,9 +834,40 @@ Note that we can break up the integrals above into sums of integrals over each f
 \end{equation}
 To satisfy the above, we can require
 \begin{equation}
+    \label{eq:dg_main_eq_element_wise}
     \left ( \frac{\partial u_h}{\partial t} , v_h \right )_{K_j} + a(u_h,v_h)_{K_j}  + \int_{\partial K_j} u_h v_h \lambdavec \cdot \nvec_{K_j} \, dS = L(v_h)_{K_j} \qquad \forall v_h \in \mathcal{V}_h .
 \end{equation}
-For many schemes, the flux term $\boldsymbol{\lambda} u_h$ above is replaced by a numerical flux $\hat{f}(u_h)$.
+
+For many schemes, the flux term $f(u_h) = \boldsymbol{\lambda} u_h$ in the surface integrals of \cref{eq:dg_main_eq_total,eq:dg_main_eq_element_wise} is replaced by a numerical flux $\hat{f}(u_h)$. In this case, we'll focus on the numerical flux $\hat{f}(u_h) = \boldsymbol{\lambda} \hat{u}_h$, where 
+\begin{equation}
+    \label{eq:dg_numerical_flux}
+    \hat{u}_h = \{ u_h \} + \delta \frac{\left | \boldsymbol{\lambda} \cdot \nvec_{\Gamma_h} \right |}{\boldsymbol{\lambda} \cdot \nvec_{\Gamma_h}} \llbracket u_h \rrbracket.
+\end{equation}
+Since $\hat{u}_h$ is now continuous, we have $\llbracket \hat{u}_h \rrbracket = 0$ and $\{ \hat{u}_h \} = \hat{u}_h$. Thus, \cref{eq:dg_main_eq_total} becomes
+\begin{equation}
+    \left ( \frac{\partial u_h}{\partial t} , v_h \right ) + a(u_h,v_h)  + \int_{\Gamma_h} \hat{u}_h \llbracket v_h \rrbracket \lambdavec \cdot \nvec_{\Gamma_h} \, dS = L(v_h) \qquad \forall v_h \in \mathcal{V}_h,
+\end{equation}
+or, after expanding the definition of $\hat{u}_h$
+\begin{equation}
+    \label{eq:dg_main_eq_total_with_upwinding_weak}
+    \left ( \frac{\partial u_h}{\partial t} , v_h \right ) + a(u_h,v_h)  + \int_{\Gamma_h} \lambdavec \cdot \nvec_{\Gamma_h} \{ u_h \} \llbracket v_h \rrbracket \, dS + \delta \int_{\Gamma_h} \left | \boldsymbol{\lambda} \cdot \nvec_{\Gamma_h} \right | \llbracket u_h \rrbracket \llbracket v_h \rrbracket \, dS = L(v_h) \qquad \forall v_h \in \mathcal{V}_h.
+\end{equation}
+
+Given that $a(u_h, v_h) = -(u_h \boldsymbol{\lambda}, \nabla v_h)$ for the operator $\nabla \cdot (\boldsymbol{\lambda} u)$, we can rewrite \cref{eq:dg_main_eq_total_with_upwinding_weak} as
+\begin{equation}
+    \left ( \frac{\partial u_h}{\partial t} , v_h \right ) - (u_h \boldsymbol{\lambda}, \nabla v_h) + \int_{\Gamma_h} \lambdavec \cdot \nvec_{\Gamma_h} \{ u_h \} \llbracket v_h \rrbracket \, dS + \delta \int_{\Gamma_h} \left | \boldsymbol{\lambda} \cdot \nvec_{\Gamma_h} \right | \llbracket u_h \rrbracket \llbracket v_h \rrbracket \, dS = L(v_h) \qquad \forall v_h \in \mathcal{V}_h.
+\end{equation}
+Using \cref{eq:from_strong_to_weak_form}, we get
+\begin{multline}
+    \left ( \frac{\partial u_h}{\partial t} , v_h \right ) + (\nabla \cdot ( \boldsymbol{\lambda} u_h ), v_h ) -\int_{\Gamma_h} \left ( \{ u_h \} \llbracket v_h \rrbracket + \llbracket u_h \rrbracket \{ v_h \} \right ) \boldsymbol{\lambda} \cdot \nvec_{\Gamma_h} \, dS\\
+    + \int_{\Gamma_h} \lambdavec \cdot \nvec_{\Gamma_h} \{ u_h \} \llbracket v_h \rrbracket \, dS + \delta \int_{\Gamma_h} \left | \boldsymbol{\lambda} \cdot \nvec_{\Gamma_h} \right | \llbracket u_h \rrbracket \llbracket v_h \rrbracket \, dS = L(v_h) \qquad \forall v_h \in \mathcal{V}_h,
+\end{multline}
+which, upon simplifying gives
+\begin{equation}
+    \label{eq:dg_main_eq_total_with_upwinding_strong}
+    \left ( \frac{\partial u_h}{\partial t} , v_h \right ) + (\nabla \cdot ( \boldsymbol{\lambda} u_h ), v_h ) -\int_{\Gamma_h} \boldsymbol{\lambda} \cdot \nvec_{\Gamma_h}\llbracket u_h \rrbracket \{ v_h \} \, dS + \delta \int_{\Gamma_h} \left | \boldsymbol{\lambda} \cdot \nvec_{\Gamma_h} \right | \llbracket u_h \rrbracket \llbracket v_h \rrbracket \, dS = L(v_h) \qquad \forall v_h \in \mathcal{V}_h.
+\end{equation}
+\Cref{eq:dg_main_eq_total_with_upwinding_weak} is the weak form of the equation, whereas \cref{eq:dg_main_eq_total_with_upwinding_strong} is the strong form.
 
 %---------------------------------------------------------------
 \section{The Petrov Galerkin method}

@@ -864,6 +864,7 @@ v_{T_\alpha} = \sqrt{\frac{2 k_B T_\alpha}{m_\alpha}}
 
 \item Coupling parameter:
 \begin{equation}
+    \label{eq:def_coupling_parameter}
     \Gamma_\alpha = \frac{q_\alpha^2}{4 \pi \epsilon_0 a_\alpha k_B T_\alpha} = \frac{1}{3} \Lambda_\alpha^{-2/3}
 \end{equation}
 
@@ -879,7 +880,11 @@ v_{T_\alpha} = \sqrt{\frac{2 k_B T_\alpha}{m_\alpha}}
 \end{itemize}
 
 \paragraph{Some notes on the coupling parameter}
-We can define two types of Coulomb interactions: strong and weak. Strong Coulomb interactions are those for which the particle's Coulomb potential energy is larger than its kinetic energy, and viceversa for weak Coulomb interactions. Plasmas for which the Coulomb interactions are mostly strong are dominated by those Coulomb interactions and are referred to as strongly coupled plasmas. On the other hand, plasmas for which the Coulomb interactions are mostly weak are dominated by long-range collective effects instead, and are referred to as weakly coupled plasmas. 
+We can define two types of Coulomb interactions: strong and weak. Strong Coulomb interactions are those for which the particle's Coulomb potential energy is larger than its kinetic energy, and viceversa for weak Coulomb interactions. Thus, we can also define two types of plasma regimes:
+\begin{itemize}
+    \item Strongly-coupled plasmas: plasmas where the Coulomb interactions are mostly strong and thus drive the dynamics of its evolution. Coulomb interactions tend to be strong when the inter-particle distances are small, and thus this regime would be dominated by \textit{short-range} interactions. These plasmas are also described as exhibiting \textit{collisional} behavior, since a strong Coulomb interaction essentially means a collision has occurred.
+    \item Weakly-coupled plasmas: plasmas where the Coulomb interactions are mostly weak, and as a result do not drive the dynamics of its evolution. The plasma dynamics are instead driven by \textit{long-range} effects caused by smooth electromagnetic fields that result from integrating a large number of particles. These plasmas are also described as exhibiting \textit{collective} behavior, since the long-range electromagnetic fields follow from the collective integration of many particles.
+\end{itemize}
 
 We describe an approximate Coulomb potential energy for particles in a plasma as
 \begin{equation}
@@ -898,6 +903,8 @@ The ratio of the particle's Coulomb potential energy and its kinetic energy is r
     \Gamma_\alpha = \frac{q_\alpha^2}{4 \pi \epsilon_0 a_\alpha k_b T_\alpha}.
 \end{equation}
 $\Gamma_\alpha > 1$ denotes a strongly coupled plasma, and $\Gamma_\alpha < 1$ denotes a weakly coupled plasma. 
+
+As shown in \cref{eq:def_coupling_parameter}, the coupling and plasma parameters are inversely proportional to each other. Thus, $\Lambda_\alpha < 1$ implies strongly-coupled plasmas, and $\Lambda_\alpha > 1$ weakly-coupled plasmas. Since $\Lambda_\alpha$ represents the number of particles per Debye sphere, it is interesting to note that a large number of particles within such a sphere is needed to be in the weakly-coupled-plasma regime. However, this does not correspond to a plasma with large density, in fact, it corresponds to the opposite. The explicit $n_\alpha$ term in the definition $\Lambda_\alpha = (4/3) \pi \lambda^3_{D\alpha} n_\alpha$ is dominated by the $n_\alpha$ in the denominator of $\lambda_{D\alpha}$. In other words, low plasma densities lead to large Debye spheres, which in turn leads to many particles per Debye sphere, and hence a weakly-coupled plasma.
 
 %--------------------------------------------------------------------------------------------------------------------------------------------
 \chapter{Single-particle motion---Collisions}
@@ -1575,7 +1582,8 @@ We note that $\mathcal{F}^{(lk)}_{\alpha \beta} = 4 \mathcal{K}_{lk}(g_{\alpha \
 %--------------------------------------------
 \section{Two-fluid equations}
 %--------------------------------------------
-The starting point are the multi-fluid conservation laws \cref{eq:cons_mass,eq:cons_mom,eq:cons_ie} and the Maxwell equations \cref{eq:maxwell_1,eq:maxwell_2,eq:maxwell_3,eq:maxwell_4}. We assume there are two species: electrons and singly-charged ions. Additionally, we assume no sources. Thus, the starting governing equations are
+\label{sec:two_fluid_equations}
+The starting point are the multi-fluid conservation laws \cref{eq:cons_mass,eq:cons_mom,eq:cons_ie} and the Maxwell equations \cref{eq:maxwell_1,eq:maxwell_2,eq:maxwell_3,eq:maxwell_4}. We assume there are two species: electrons and ions. Additionally, we assume no sources. Thus, the starting governing equations are
 \begin{equation}
 \label{eq:twof_ni}
     \frac{\partial n_i}{\partial t} + \nabla \cdot \left ( n_i \uvec_i \right ) = 0,
@@ -1587,7 +1595,7 @@ The starting point are the multi-fluid conservation laws \cref{eq:cons_mass,eq:c
 
 \begin{equation}
 \label{eq:twof_ui}
-    \frac{\partial m_i n_i \uvec_i}{\partial t} + \nabla \cdot \left ( m_i n_i \uvec_i \uvec_i \right) - e n_i ( \Evec + \uvec_i \times \Bvec ) = - \nabla p_i + \nabla \cdot \tvec_i + \Rvec_i,
+    \frac{\partial m_i n_i \uvec_i}{\partial t} + \nabla \cdot \left ( m_i n_i \uvec_i \uvec_i \right) - Z e n_i ( \Evec + \uvec_i \times \Bvec ) = - \nabla p_i + \nabla \cdot \tvec_i + \Rvec_i,
 \end{equation}
 \begin{equation}
 \label{eq:twof_ue}
@@ -1621,13 +1629,13 @@ The starting point are the multi-fluid conservation laws \cref{eq:cons_mass,eq:c
 \end{equation}
 \begin{equation}
 \label{eq:twof_curr_density}
-    \Jvec = e (n_i \uvec_i - n_e \uvec_e)
+    \Jvec = e (Z n_i \uvec_i - n_e \uvec_e)
 \end{equation}
 \begin{equation}
 \label{eq:twof_mass_density}
-    \rho_e = e (n_i - n_e) 
+    \rho_e = e (Z n_i - n_e) 
 \end{equation}
-These equations correspond to eq.\@ (2.22) in Freidberg's Ideal MHD book.
+These equations correspond to eq.\@ (2.22) in Freidberg's Ideal MHD book, but for ions that are not singly charged. For the sections below, however, we'll assume singly-charged ions.
 
 %--------------------------------------------
 \section{Low-frequency, long-wavelength, asymptotic expansions}
@@ -1918,6 +1926,180 @@ This is re-written as
 %-------------------------------------------------------------------------------
 \chapter{Waves in plasmas}
 %-------------------------------------------------------------------------------
+%--------------------------------------------
+\section{Electron Plasma and Ion Acoustic Waves}
+%--------------------------------------------
+The starting point are the density and momentum multi-fluid conservation laws in \cref{sec:two_fluid_equations}. Assuming no shear stresses and collisions, we have for particle density and momentum
+\begin{equation}
+    \frac{\partial n_i}{\partial t} + \nabla \cdot \left (n_i \uvec_i \right ) = 0,
+\end{equation}
+\begin{equation}
+    \frac{\partial n_e}{\partial t} + \nabla \cdot \left (n_e \uvec_e \right ) = 0,
+\end{equation}
+\begin{equation}
+    \frac{\partial m_i n_i \uvec_i}{\partial t} + \nabla \cdot \left ( m_i n_i \uvec_i \uvec_i \right ) - Ze n_i \left ( \Evec + \uvec_i \times \Bvec \right ) = -\nabla p_i,
+\end{equation}
+\begin{equation}
+    \frac{\partial m_e n_e \uvec_e}{\partial t} + \nabla \cdot \left ( m_e n_e \uvec_e \uvec_e \right ) + e n_e \left ( \Evec + \uvec_e \times \Bvec \right ) = -\nabla p_e.
+\end{equation}
+We will now decompose the variables as follows 
+\begin{align}
+    n_i &= n_{i0} + n_{i1}, \nonumber \\
+    n_e &= n_{e0} + n_{e1}, \nonumber \\
+    p_i &= p_{i0} + p_{i1}, \nonumber \\
+    p_e &= p_{e0} + p_{e1}, \nonumber \\
+    \uvec_i &= \uvec_{i0} + \uvec_{i1}, \nonumber \\
+    \uvec_e &= \uvec_{e0} + \uvec_{e1}, \nonumber \\
+    \Evec &= \Evec_0 + \Evec_1, \nonumber \\
+    \Bvec &= \Bvec_0 + \Bvec_1.
+\end{align}
+We'll use a few assumptions in the derivation of the equations
+\begin{itemize}
+    \item $n_{i0}$, $n_{e0}$, $p_{i0}$, and $p_{e0}$ are constant.
+    \item $\uvec_{i0}$, $\uvec_{e0}$, $\Evec_0$, and $\Bvec_0$ are zero.
+    \item All terms with a subscript 1 are small and thus products of two small quantities can be neglected. 
+    \item The flow is isentropic.
+    \item Quasi-neutrality for the base flow: $Zn_{i0} = n_{e0}$. 
+\end{itemize}
+Finally, we'll assume the following for each of the two waves:
+\begin{itemize}
+    \item electron plasma wave: $n_{i1} = 0$.
+    \item ion acoustic wave: $m_e \to 0$ and $Z n_{i1} \approx n_{e1}$.
+\end{itemize}
+
+%--------------------------------------------
+\subsection{Electron Plasma Waves}
+%--------------------------------------------
+Given the decompositions in the previous section, we can write the electron density equation as
+\begin{equation*}
+    \frac{\partial n_{e0} + n_{e1}}{\partial t} + \nabla \cdot \left [ \left ( n_{e0} + n_{e1} \right )  \left ( \uvec_{e0} + \uvec_{e1} \right ) \right ] = 0,
+\end{equation*}
+which simplifies to
+\begin{equation}
+    \label{eq:ep_waves_den_linearized}
+    \frac{\partial n_{e1}}{\partial t} + \nabla \cdot \left (n_{e0} \uvec_{e1} \right ) = 0.
+\end{equation}
+The electron momentum equation becomes
+\begin{multline*}
+    \frac{\partial}{\partial t} \left [ m_e \left ( n_{e0} + n_{e1} \right ) \left ( \uvec_{e0} + \uvec_{e1} \right ) \right ] + \nabla \cdot \left [ m_e \left ( n_{e0} + n_{e1} \right ) \left ( \uvec_{e0} + \uvec_{e1} \right ) \left ( \uvec_{e0} + \uvec_{e1} \right ) \right ] \\
+    + e \left ( n_{e0} + n_{e1} \right ) \left [ \left ( \Evec_0 + \Evec_1 \right ) + \left ( \uvec_{e0} + \uvec_{e1} \right ) \times \left ( \Bvec_0 + \Bvec_1 \right ) \right ] = -\nabla \left ( p_{e0} + p_{e1} \right ),
+\end{multline*}
+which simplifies to 
+\begin{equation}
+    \label{eq:ep_waves_mom_linearized_pressure}
+    \frac{\partial m_e n_{e0} \uvec_{e1}}{\partial t} + e n_{e0} \Evec_1 = - \nabla p_{e1}.
+\end{equation}
+We now use the isentropic flow assumption. As is the case for inert fluids, any thermodynamic quantity will now depend on only one rather than two thermodynamic variables, that is, for $p_e = p_e(s_e, n_e)$ we now have 
+\begin{equation}
+    \left ( \frac{\partial p_e}{\partial s_e} \right )_{n_e} = 0. 
+\end{equation}
+A Taylor-series expansion gives
+\begin{equation}
+    p_e = p_{e0} + \left [ \left ( \frac{\partial p_e}{\partial n_e} \right )_{s_e} \right ]_{n_e = n_{e0}} \left ( n_{e} - n_{e0} \right ) + h.o.t.
+\end{equation}
+Using the above in \cref{eq:ep_waves_mom_linearized_pressure},
+\begin{equation}
+    \label{eq:ep_waves_mom_linearized}
+    \frac{\partial m_e n_{e0} \uvec_{e1}}{\partial t} + e n_{e0} \Evec_1 = - \left [ \left ( \frac{\partial p_e}{\partial n_e} \right )_{s_e} \right ]_{n_e = n_{e0}} \nabla n_{e1}.
+\end{equation}
+
+Taking the time derivative of \cref{eq:ep_waves_den_linearized} and using \cref{eq:ep_waves_mom_linearized} leads to the the wave equation for electron density
+\begin{equation}
+    \frac{\partial^2 n_{e1}}{\partial t^2} - \frac{e n_{e0}}{m_e} \nabla \cdot \Evec_1 = \frac{1}{m_e} \left [ \left ( \frac{\partial p_e}{\partial n_e} \right )_{s_e} \right ]_{n_e = n_{e0}} \nabla^2 n_{e1}.
+\end{equation}
+For electron plasma waves, we'll assume that $n_{i}$ varies in space and time so slowly that it can be assumed to be constant. That is, we assume $n_{i1} = 0$. Thus, Gauss's law now takes the form
+\begin{equation}
+    \nabla \cdot \Evec_1 = \frac{e}{\epsilon_0} \left ( Z n_{i0} - n_{e0} - n_{e1} \right ).
+\end{equation}
+We now use the quasi-neutrality assumption ($Zn_{i0} = n_{e0}$) and plug in the above in the electron wave equation to obtain
+\begin{equation*}
+    \frac{\partial^2 n_{e1}}{\partial t^2} + \frac{e^2 n_{e0}}{m_e \epsilon_0} n_{e1} =  \frac{1}{m_e} \left [ \left ( \frac{\partial p_e}{\partial n_e} \right )_{s_e} \right ]_{n_e = n_{e0}} \nabla^2 n_{e1},
+\end{equation*}
+or 
+\begin{equation}
+    \frac{\partial^2 n_{e1}}{\partial t^2} + w^2_{pe} n_{e1} =  \frac{1}{m_e} \left [ \left ( \frac{\partial p_e}{\partial n_e} \right )_{s_e} \right ]_{n_e = n_{e0}} \nabla^2 n_{e1}.
+\end{equation}
+Finally, as for ideal gasses, we have 
+\begin{equation}
+    \label{eq:electron_speed_sound}
+    \left ( \frac{\partial p_e}{\partial n_e} \right )_{s_e} = \gamma_e \left ( \frac{\partial p_e}{\partial n_e} \right )_{T_e} = \gamma_e k_B T_e = \frac{\gamma_e p_e}{n_e}.
+\end{equation}
+Thus, the wave equation for electron plasma waves is finally written as
+\begin{equation}
+    \frac{\partial^2 n_{e1}}{\partial t^2} + w^2_{pe} n_{e1} - \frac{\gamma_e p_{e0}}{n_{e0} m_e} \nabla^2 n_{e1} = 0.
+\end{equation}
+
+Assuming a mode of the form $n_{e1} = \hat{n}_{e1} \exp [ i \left ( \kvec \cdot \xvec - w t \right ) ]$ gives the following dispersion relation
+\begin{equation}
+    w^2 - w^2_{pe} - \frac{\gamma_e p_{e0}}{n_{e0} m_e}  k^2 = 0.
+\end{equation}
+If we define the thermal velocity without the factor of two, that is, $v_{T\alpha} = \sqrt{k_BT_\alpha / m_\alpha}$, then we have
+\begin{equation}
+    w^2 - w^2_{pe} - \gamma_e k^2 v^2_{T_{e0}} = 0.
+\end{equation}
+
+%--------------------------------------------
+\subsection{Ion Acoustic Waves}
+%--------------------------------------------
+Unlike the case for the electron-plasma waves, we now do not assume that $n_i$ varies in space and time so slowly that it can be assumed constant. That is, we no longer assume $n_{i1} = 0$. Thus, the ion density equation gives
+\begin{equation*}
+    \frac{\partial n_{i0} + n_{i1}}{\partial t} + \nabla \cdot \left [ \left ( n_{i0} + n_{i1} \right )  \left ( \uvec_{i0} + \uvec_{i1} \right ) \right ] = 0,
+\end{equation*}
+which simplifies to
+\begin{equation}
+    \label{eq:ia_waves_den_linearized}
+    \frac{\partial n_{i1}}{\partial t} + \nabla \cdot \left (n_{i0} \uvec_{i1} \right ) = 0.
+\end{equation}
+The ion momentum equation becomes
+\begin{multline*}
+    \frac{\partial}{\partial t} \left [ m_i \left ( n_{i0} + n_{i1} \right ) \left ( \uvec_{i0} + \uvec_{i1} \right ) \right ] + \nabla \cdot \left [ m_i \left ( n_{i0} + n_{i1} \right ) \left ( \uvec_{i0} + \uvec_{i1} \right ) \left ( \uvec_{i0} + \uvec_{i1} \right ) \right ] \\
+    - Z e \left ( n_{i0} + n_{i1} \right ) \left [ \left ( \Evec_0 + \Evec_1 \right ) + \left ( \uvec_{i0} + \uvec_{i1} \right ) \times \left ( \Bvec_0 + \Bvec_1 \right ) \right ] = -\nabla \left ( p_{i0} + p_{i1} \right ),
+\end{multline*}
+which simplifies to 
+\begin{equation}
+    \label{eq:ia_waves_mom_linearized_pressure}
+    \frac{\partial m_i n_{i0} \uvec_{i1}}{\partial t} - Z e n_{i0} \Evec_1 = - \nabla p_{e1}.
+\end{equation}
+As with the electron equation, this can be written as
+\begin{equation}
+    \label{eq:ia_waves_mom_linearized}
+    \frac{\partial m_i n_{i0} \uvec_{i1}}{\partial t} - Z e n_{i0} \Evec_1 = - \left [ \left ( \frac{\partial p_i}{\partial n_i} \right )_{s_i} \right ]_{n_i = n_{i0}} \nabla n_{i1}.
+\end{equation}
+
+Taking the time derivative of \cref{eq:ia_waves_den_linearized} and using \cref{eq:ia_waves_mom_linearized} leads to the the wave equation for ion density
+\begin{equation}
+    \frac{\partial^2 n_{i1}}{\partial t^2} + \frac{Z e n_{i0}}{m_i} \nabla \cdot \Evec_1 = \frac{1}{m_i} \left [ \left ( \frac{\partial p_i}{\partial n_i} \right )_{s_i} \right ]_{n_i = n_{i0}} \nabla^2 n_{i1}.
+\end{equation}
+For this case, we now assume that the mass of the electron, which is significantly smaller than that of the ions, is negligible. Thus, \cref{eq:ep_waves_mom_linearized} simplifies to 
+\begin{equation}
+    e n_{e0} \Evec_1 = - \left [ \left ( \frac{\partial p_e}{\partial n_e} \right )_{s_e} \right ]_{n_e = n_{e0}} \nabla n_{e1}.
+\end{equation}
+Plugging in the above in the ion wave equation we obtain
+\begin{equation}
+    \frac{\partial^2 n_{i1}}{\partial t^2} = \frac{Z n_{i0}}{ n_{e0}} \frac{1}{m_i} \left [ \left ( \frac{\partial p_e}{\partial n_e} \right )_{s_e} \right ]_{n_e = n_{e0}} \nabla^2 n_{e1} + \frac{1}{m_i} \left [ \left ( \frac{\partial p_i}{\partial n_i} \right )_{s_i} \right ]_{n_i = n_{i0}} \nabla^2 n_{i1}.
+\end{equation}
+Due to quasi-neutrality, we have $Z n_{i0} = n_{e0}$ and $Z n_{i1} \approx n_{e1}$, which gives
+\begin{equation}
+    \frac{\partial^2 n_{i1}}{\partial t^2} = \left \{ \frac{Z}{m_i} \left [ \left ( \frac{\partial p_e}{\partial n_e} \right )_{s_e} \right ]_{n_e = n_{e0}} + \frac{1}{m_i} \left [ \left ( \frac{\partial p_i}{\partial n_i} \right )_{s_i} \right ]_{n_i = n_{i0}} \right \} \nabla^2 n_{i1}.
+\end{equation}
+The equivalent of \cref{eq:electron_speed_sound} for ions is
+\begin{equation}
+    \label{eq:ion_speed_sound}
+    \left ( \frac{\partial p_i}{\partial n_i} \right )_{s_i} = \gamma_i \left ( \frac{\partial p_i}{\partial n_i} \right )_{T_i} = \gamma_i k_B T_i = \frac{\gamma_i p_i}{n_i}.
+\end{equation}
+Thus, the wave equation for ion acoustic waves is finally written as
+\begin{equation}
+    \frac{\partial^2 n_{i1}}{\partial t^2} - \left ( \frac{Z \gamma_e k_B T_{e0} + \gamma_i k_B T_{i0}}{m_i} \right ) \nabla^2 n_{i1} = 0.
+\end{equation}
+
+The dispersion relation for an ion acoustic wave is quite simple, namely
+\begin{equation}
+    w^2 - k^2 v_s^2 = 0,
+\end{equation}
+where
+\begin{equation}
+    v_s = \sqrt{ \frac{Z \gamma_e k_B T_{e0} + \gamma_i k_B T_{i0}}{m_i} }.
+\end{equation}
 
 %-------------------------------------------------------------------------------
 \chapter{Simple models}
@@ -2406,6 +2588,11 @@ The above is the Hasegawa-Mima equation.
 \appendix
 
 \chapter{Electromagnetism}
+This appendix first focuses on electrostatics and magnetostatics, which can be understood as follows
+\begin{align}
+    \text{stationary charges} &\to \text{constant electric fields} = \text{electrostatics} \nonumber \\
+    \text{stationary currents} &\to \text{constant magnetic fields} = \text{magnetostatics} .
+\end{align}
 
 %--------------------------------------------------------------------------
 \section{Electrostatics}
@@ -2493,10 +2680,6 @@ were now $V$ represents the potential due to all charges. Thus, if $\rho$ is suc
 \end{itemize}
 
 %--------------------------------------------------------------------------
-\section{Electric Fields in Matter}
-%--------------------------------------------------------------------------
-
-%--------------------------------------------------------------------------
 \section{Magnetostatiscs}
 %--------------------------------------------------------------------------
 \begin{itemize}
@@ -2562,6 +2745,10 @@ whose solution is
 \begin{equation}
 \Avec(\rvec) = \frac{\mu_0}{4 \pi } \int \frac{ \Jvec(\rvec')}{r} d\tau'.
 \end{equation}
+
+%--------------------------------------------------------------------------
+\section{Electric Fields in Matter}
+%--------------------------------------------------------------------------
 
 %--------------------------------------------------------------------------
 \section{Magnetic Fields in Matter}
@@ -2681,6 +2868,36 @@ W = \frac{1}{2} \int \Avec \cdot \Jvec \, d\tau = \frac{1}{2\mu_0} \int B^2 \, d
 %--------------------------------------------------------------------------
 \section{Conservation Laws}
 %--------------------------------------------------------------------------
+%--------------------------------------------
+\subsection{Conservation of energy}
+%--------------------------------------------
+\begin{itemize}
+    \item Suppose you assemble a distribution of charges and currents, which at time $t$ produce fields $\Evec$ and $\Bvec$.
+    \item The potential energy of the system, as shown in previous sections, would be
+    \begin{equation}
+        U_{em} = \frac{1}{2} \left ( \epsilon_0 E^2 + \frac{1}{\mu_0} B^2 \right ).
+    \end{equation}
+    \item The question then arises, how much energy would be transferred to the charges as these charges are allowed to move?
+    \item Label $U_{mech}$ as the energy density gained by these charges as they are allowed to move.
+    \item The evolution of $U_{mech}$ is then
+    \begin{equation}
+        \frac{\partial U_{mech}}{\partial t} = -\frac{\partial U_{em}}{\partial t} - \nabla \cdot \Svec.
+    \end{equation}
+    In the above $\Svec$ is the pointing vector and is defined as 
+    \begin{equation}
+        \Svec = \frac{1}{\mu_0} ( \Evec \times \Bvec ).
+    \end{equation}
+    It represents the flux of energy across space.
+    \item As the evolution equation above shows, a decreasing potential energy in the electromagnetic field constitutes a transfer of this lost energy to the energy of the charges. 
+    \item In integral form, we write the above as 
+    \begin{equation}
+        \frac{d}{dt} \int_V U_{mech} \, d\tau = -\frac{d}{dt} \int_V U_{em} \, d\tau - \oint \Svec \cdot d\avec.
+    \end{equation}
+\end{itemize}
+
+%--------------------------------------------
+\subsection{Conservation of momentum}
+%--------------------------------------------
 
 %--------------------------------------------------------------------------
 \section{Electromagnetic waves}
