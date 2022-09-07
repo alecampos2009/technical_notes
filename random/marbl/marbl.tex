@@ -25,7 +25,7 @@ Define $\rho = \rho(\xvec,t)$, $\uvec = \uvec(\xvec,t)$, $e = e(\xvec,t)$, and $
 \end{equation}
 
 \section{Finite element expansion}
-Define the coefficients $R_i = R_i(t)$, $\Uvec_i = \Uvec_i(t)$, $e_i = e_i(t)$, $p_i = p_i(t)$, as well as the basis functions $\phi_i = \phi_i(\xvec,t)$, and $w_i = w_i(\xvec,t)$.
+We introduce the coefficients $R_i = R_i(t)$, $\Uvec_i = \Uvec_i(t)$, $E_i = E_i(t)$, $P_i = P_i(t)$, as well as the basis functions $\phi_i = \phi_i(\xvec,t)$, and $w_i = w_i(\xvec,t)$. We note that $\Uvec_i$ is a vector whose components are $U_{i,\alpha}$ for $\alpha = x,y,z$, where $U_{i,\alpha} = U_{i,\alpha}(t)$. These coefficients are used in the following expansions
 \begin{equation}
     \rho = \sum_i^{N_\rho} R_i \phi_i,
 \end{equation}
@@ -38,7 +38,7 @@ Define the coefficients $R_i = R_i(t)$, $\Uvec_i = \Uvec_i(t)$, $e_i = e_i(t)$, 
 \begin{equation}
     p = \sum_i^{N_p} P_i \phi_i.
 \end{equation}
-The basis functions satisfy
+The basis functions are defined so that they satisfy
 \begin{equation}
     \frac{\partial \phi_i}{\partial t} + \uvec \cdot \nabla \phi_i = 0,
 \end{equation}
@@ -49,18 +49,18 @@ The basis functions satisfy
 \section{Semi-discrete momentum conservation}
 We begin by showing that
 \begin{align}
-    \frac{\partial \uvec}{\partial t} + \uvec \cdot \nabla \uvec &= \left ( \sum_i^{N_u} \frac{d \Uvec_i}{d t} w_i + \Uvec_i \frac{\partial w_i}{\partial t} \right ) + \uvec \cdot \left ( \sum_i^{N_u} \Uvec_i \nabla w_i \right ) \nonumber \\
-    &= \sum_i^{N_u} \frac{d \Uvec_i}{d t} w_i + \Uvec_i \left ( \frac{\partial w_i}{\partial t} + \uvec \cdot \nabla w_i \right ) \nonumber \\
-    &= \sum_i^{N_u} \frac{d \Uvec_i}{d t} w_i.
+    \frac{\partial \uvec}{\partial t} + \uvec \cdot \nabla \uvec &= \left ( \sum_j^{N_u} \frac{d \Uvec_j}{d t} w_j + \Uvec_j \frac{\partial w_j}{\partial t} \right ) + \uvec \cdot \left ( \sum_j^{N_u} \Uvec_j \nabla w_j \right ) \nonumber \\
+    &= \sum_j^{N_u} \frac{d \Uvec_j}{d t} w_j + \Uvec_j \left ( \frac{\partial w_j}{\partial t} + \uvec \cdot \nabla w_j \right ) \nonumber \\
+    &= \sum_j^{N_u} \frac{d \Uvec_j}{d t} w_j.
 \end{align}
 Define $\Omega = \Omega(t)$. The finite element formulation of the momentum equation is thus 
 \begin{equation}
-    \int_\Omega \rho \sum_i^{N_u} \frac{d \Uvec_i}{d t} w_i w_j \, dV = \int_\Omega \sum_i^{N_p} P_i \phi_i \nabla w_j \, dV \qquad \text{for } j = 1,...,N_u.
+    \int_\Omega \rho \sum_j^{N_u} \frac{d \Uvec_j}{d t} w_j w_i \, dV = \int_\Omega \sum_j^{N_p} P_j \phi_j \nabla w_i \, dV \qquad \text{for } i = 1,...,N_u.
 \end{equation}
 The above is re-written as
 \begin{equation}
     \label{eq:semi_discrete_momentum_bilinear}
-    \sum_i^{N_u} \frac{d \Uvec_i}{d t} m_{ij} = \sum_i^{N_p} P_i \mathbf{d}_{ij} \qquad \text{for } j = 1,...,N_u.
+    \sum_j^{N_u} \frac{d \Uvec_j}{d t} m_{ij} = \sum_j^{N_p} P_j \mathbf{d}_{ji} \qquad \text{for } i = 1,...,N_u.
 \end{equation}
 where the mass bilinear form $m_{ij}$ is given by 
 \begin{equation}
@@ -70,13 +70,18 @@ and the derivative bilinear form $\mathbf{d}_{ij}$ by
 \begin{equation}
     \mathbf{d}_{ij} = \int_\Omega \phi_i \nabla w_j \, dV.
 \end{equation}
-In terms of its components, \cref{eq:semi_discrete_momentum_bilinear} becomes
+Note that $\mathbf{d}_{ij}$ is a vector whose components are $d_{ij,\alpha}$, for $\alpha = x,y,z$, where $\alpha$ determines which component of the $\nabla$ operator is being used. \Cref{eq:semi_discrete_momentum_bilinear} can thus be expanded as
 \begin{align}
-    \sum_i^{N_u} \frac{d U_{x,i}}{d t} m_{ij} &= \sum_i^{N_p} P_i d_{x,ij} \qquad \text{for } j = 1,...,N_u, \nonumber \\
-    \sum_i^{N_u} \frac{d U_{y,i}}{d t} m_{ij} &= \sum_i^{N_p} P_i d_{y,ij} \qquad \text{for } j = 1,...,N_u, \nonumber \\
-    \sum_i^{N_u} \frac{d U_{z,i}}{d t} m_{ij} &= \sum_i^{N_p} P_i d_{z,ij} \qquad \text{for } j = 1,...,N_u.
+    \label{eq:semi_discrete_momentum_bilinear_expanded}
+    \sum_j^{N_u} \frac{d U_{j,x}}{d t} m_{ij} &= \sum_i^{N_p} P_j d_{ji,x} \qquad \text{for } i = 1,...,N_u, \nonumber \\
+    \sum_j^{N_u} \frac{d U_{j,y}}{d t} m_{ij} &= \sum_i^{N_p} P_j d_{ji,y} \qquad \text{for } i = 1,...,N_u, \nonumber \\
+    \sum_j^{N_u} \frac{d U_{j,z}}{d t} m_{ij} &= \sum_i^{N_p} P_j d_{ji,z} \qquad \text{for } i = 1,...,N_u.
 \end{align}
-In matrix notation, the above can be written as 
-
+We'll now write the above in matrix notation. Introduce the vector $\Uvec_x = \Uvec_x(t)$ whose components are $U_{i,x}$ for $i=1,...,N_v$. The analogous holds for $\Uvec_y$ and $\Uvec_z$. Additionally, we introduce the matrix $\Dvec_x = \Dvec_x(t)$ whose components are $d_{ij,x}$. The analogous holds for $D_y$ and $D_z$. Finally, the vector $\Pvec = \Pvec(t)$ consists of the components $P_ji$. \Cref{eq:semi_discrete_momentum_bilinear_expanded} can now be written as 
+\begin{align}
+    M \frac{\Uvec_x}{dt} &= \Dvec_x^T \Pvec, \nonumber \\
+    M \frac{\Uvec_y}{dt} &= \Dvec_y^T \Pvec, \nonumber \\
+    M \frac{\Uvec_z}{dt} &= \Dvec_z^T\Pvec.
+\end{align}
 
 \end{document}

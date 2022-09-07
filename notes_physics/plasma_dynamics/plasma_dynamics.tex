@@ -2888,7 +2888,7 @@ W = \frac{1}{2} \int \Avec \cdot \Jvec \, d\tau = \frac{1}{2\mu_0} \int B^2 \, d
         \Svec = \frac{1}{\mu_0} ( \Evec \times \Bvec ).
     \end{equation}
     It represents the flux of energy across space.
-    \item As the evolution equation above shows, a decreasing potential energy in the electromagnetic field constitutes a transfer of this lost energy to the energy of the charges. 
+    \item As the evolution equation above shows, a decreasing potential energy in the electromagnetic field constitutes a transfer of this lost energy to that of the charges. 
     \item In integral form, we write the above as 
     \begin{equation}
         \frac{d}{dt} \int_V U_{mech} \, d\tau = -\frac{d}{dt} \int_V U_{em} \, d\tau - \oint \Svec \cdot d\avec.
@@ -2898,7 +2898,28 @@ W = \frac{1}{2} \int \Avec \cdot \Jvec \, d\tau = \frac{1}{2\mu_0} \int B^2 \, d
 %--------------------------------------------
 \subsection{Conservation of momentum}
 %--------------------------------------------
-
+\begin{itemize}
+    \item We now ask, how much momentum would be transferred to the charges as these are allowed to move?
+    \item Label $P_{mech}$ as the momentum density gained by the charges as they move around.
+    \item Label $P_{em}$ as the momentum density stored in the electromagnetic fields themselves. This is defined as 
+    \begin{equation}
+        P_{em} = \mu_0 \epsilon_0 \Svec.
+    \end{equation}
+    \item The evolution of $P_{mech}$ is then
+    \begin{equation}
+        \frac{\partial P_{mech}}{\partial t} = -\frac{\partial P_{em}}{\partial t} + \nabla \cdot \Tvec.
+    \end{equation}
+    In the above $\Tvec$ is the Maxwell stress tensor and is defined as 
+    \begin{equation}
+        T_{ij} = \epsilon_0 \left ( E_i E_j - \frac{1}{2} \delta_{ij} E^2 \right ) + \frac{1}{\mu_0} \left ( B_i B_j - \frac{1}{2} \delta_{ij} B^2 \right ).
+    \end{equation}
+    It represents the flux of momentum across space.
+    \item As the evolution equation above shows, a decreasing momentum in the electromagnetic field constitutes a transfer of this lost momentum to that of the charges. 
+    \item In integral form, we write the above as 
+    \begin{equation}
+        \frac{d}{dt} \int_V P_{mech} \, d\tau = -\frac{d}{dt} \int_V P_{em} \, d\tau + \oint \Tvec \cdot d\avec.
+    \end{equation}
+\end{itemize}
 %--------------------------------------------------------------------------
 \section{Electromagnetic waves}
 %--------------------------------------------------------------------------
@@ -2935,6 +2956,60 @@ then
 \begin{equation}
     v = \frac{w}{k} = \frac{\lambda}{T} = \lambda \nu.
 \end{equation}
+
+\item A general wave can be Fourier decomposed as follows
+\begin{equation}
+    u(x,t) = \sum_n \hat{u}_n e^{i \left ( k_n z - wt + \phi \right )},
+\end{equation}
+where $k_n = 2 \pi n/ L$. The above is often re-written as
+\begin{equation}
+    u(x,t) = \sum_n \tilde{u}_n e^{i \left ( k_n z - wt \right )},
+\end{equation}
+where $\tilde{u}_n = \hat{u}_n e^{i\phi}$.
+
+\item For the more general three-dimensional case, a wave is decomposed as follows
+\begin{equation}
+    \label{eq:electrodynamics_3d_wave}
+    \uvec(x,t) = \sum_{\nvec} \tilde{\uvec}_{\nvec} e^{i \left ( \kvec_{\nvec} \cdot \xvec - wt \right )},
+\end{equation}
+where $\kvec_{\nvec} = 2 \pi \nvec / L$ and $\nvec = [n_1, n_2, n_3]$.
+
+\item A plane wave is one for which the only existing $\kvec_{\nvec}$'s point along a single direction. Without loss of generality, we can assume this direction is the $z$ direction and thus write
+\begin{equation}
+    \uvec(x,t) = \sum_{n_3} \tilde{\uvec}_{n_3} e^{i \left ( k_{n_3} \cdot z - wt \right )},
+\end{equation}
+
+\end{itemize}
+
+%--------------------------------------------
+\subsection{Electromagnetic waves in vacuum}
+%--------------------------------------------
+\begin{itemize}
+    \item The application of \cref{eq:electrodynamics_3d_wave} to electric and magnetic fields gives 
+    \begin{equation}
+        \label{eq:electrodynamics_E_wave}
+        \Evec = \sum_{\nvec} \tilde{\Evec}_{\nvec} e^{i \left ( \kvec_{\nvec} \cdot \xvec - wt \right )},
+    \end{equation}
+    and 
+    \begin{equation}
+        \label{eq:electrodynamics_B_wave}
+        \Bvec = \sum_{\nvec} \tilde{\Bvec}_{\nvec} e^{i \left ( \kvec_{\nvec} \cdot \xvec - wt \right )}.
+    \end{equation}
+    \item For $\rho = \Jvec = 0$, Maxwell's equations can be combined to give the wave equations for $\Evec$ and $\Bvec$, that is,
+    \begin{equation}
+        \frac{\partial^2 \Evec}{\partial t^2} - \frac{1}{\epsilon_0 \mu_0} \nabla^2 \Evec = 0,
+    \end{equation}
+    \begin{equation}
+        \frac{\partial^2 \Bvec}{\partial t^2} - \frac{1}{\epsilon_0 \mu_0} \nabla^2 \Bvec = 0.
+    \end{equation}
+    The speed of electromagnetic waves is thus $c=1/\sqrt{\epsilon_0 \mu_0}$.
+
+    \item Using \cref{eq:electrodynamics_E_wave} in $\nabla \cdot \Evec = 0$ gives $\kvec_n \cdot \tilde{\Evec}_{\nvec} = 0$. That is, the $\Evec$ field is orthogonal to the direction of propagation of the mode.
+    
+    \item Using \cref{eq:electrodynamics_B_wave} in $\nabla \cdot \Bvec = 0$ gives $\kvec_n \cdot \tilde{\Bvec}_{\nvec} = 0$. That is, the $\Bvec$ field is orthogonal to the direction of propagation of the mode.
+    
+    \item Using \cref{eq:electrodynamics_E_wave,eq:electrodynamics_B_wave} in $\nabla \times \Evec = -\partial \Bvec / \partial t$ gives $\kvec_{\nvec} \times \tilde{\Evec}_{\nvec} = w \tilde{\Bvec}_{\nvec}$. That is, the $\Bvec$ field is orthogonal to the $\Evec$ field.
+
 \end{itemize}
 
 %--------------------------------------------------------------------------------------------------------------------------------------------
