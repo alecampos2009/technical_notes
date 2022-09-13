@@ -1413,16 +1413,52 @@ where $h_t$ is the stagnation enthalpy. This definition of stagnation enthalpy h
 %------------------------------------------------------------------------------------------------------------------------------------
 \section{Isentropic flow for a perfect gass}
 %------------------------------------------------------------------------------------------------------------------------------------
-For an isentropic flow, $q_i$ and $t_{ij} \partial u_i / \partial x_j$ are both negligible. Thus the pressure equation for a perfect gas given by \cref{eq:energy_form_pressure_2} becomes
+If we compare \cref{eq:energy_form_pressure_2} (the pressure evolution equation for a perfect gas) with \cref{eq:energy_form_entropy} (the entropy evolution equation) we can write
 \begin{equation}
-    \frac{D}{Dt} \left ( \frac{p}{\rho^\gamma} \right ) = 0.
+        \frac{1}{\gamma - 1} \rho^\gamma \frac{D}{D t} \left ( \frac{p}{\rho^\gamma} \right ) = \rho T \frac{Ds}{Dt}.
 \end{equation}
-In other words,
+If $Ds/Dt = 0$, that is, the flow is isentropic, then $p/\rho^\gamma$ is constant across each streamline.
+
+We now substitute $p = \rho R T$ to obtain,
 \begin{equation}
-\label{eq:isentropic_relation_for_p_rho_from_energy_eq}
-    p = C\rho^{\gamma}
+    \frac{1}{\gamma - 1} \rho^\gamma \frac{D}{D t} \left ( \frac{p}{\rho^\gamma} \right ) = \frac{p}{R} \frac{Ds}{Dt}.
 \end{equation}
-along a streamline, where $C$ is a constant. The above can be evaluated at two points to give
+Re-arranging, we have 
+\begin{equation}
+    \frac{\rho^\gamma}{p} \frac{D}{D t} \left ( \frac{p}{\rho^\gamma} \right ) = \frac{\gamma - 1}{R} \frac{Ds}{Dt},
+\end{equation}
+or 
+\begin{equation}
+    \frac{D}{D t} \ln \left ( \frac{p}{\rho^\gamma} \right ) = \frac{\gamma - 1}{R} \frac{Ds}{Dt}.
+\end{equation}
+The solution to the PDE above is
+\begin{equation}
+    \label{eq:p_rho_gamma_along_streamline}
+    \ln \left ( \frac{p}{\rho^\gamma} \right ) = C + \frac{\gamma -1}{R} s,
+\end{equation}
+where $C=C(\xvec,t)$ satisfies $DC/Dt = 0$. We can confirm this is the solution by simply taking $D/Dt$ of both sides. We now assume homentropic flow, that is 
+\begin{equation}
+    \partial s/\partial t = \nabla s = 0.
+\end{equation}
+Additionally assume that flow enters through the domain boundary, and that at each point of the boundary we have
+\begin{equation}
+    \left . \frac{\partial}{\partial t} \left ( \frac{p}{\rho^\gamma} \right ) \right |_{\partial \Omega} = \left . \nabla \left ( \frac{p}{\rho^\gamma} \right ) \right |_{\partial \Omega} = 0.
+\end{equation}
+Using each of the two equalities above in \cref{eq:p_rho_gamma_along_streamline} we get
+\begin{equation}
+    \left . \frac{\partial C}{\partial t} \right |_{\partial \Omega} = \left . \nabla C \right |_{\partial \Omega} = 0.
+\end{equation}
+Since $DC/Dt=0$, we can make the stronger statement that
+\begin{equation}
+    \frac{\partial C}{\partial t} = \nabla C = 0.
+\end{equation}
+Using each of the two equalities above in \cref{eq:p_rho_gamma_along_streamline} we finally obtain
+\begin{equation}
+    \label{eq:p_rho_gamma_homentropic}
+    \frac{\partial}{\partial t} \left ( \frac{p}{\rho^\gamma} \right ) = \nabla \left ( \frac{p}{\rho^\gamma} \right ) = 0.
+\end{equation}
+
+If we have isentropic flow, then the flow variables at two different states can be linked as follows
 \begin{equation}
 \label{eq:isentropic_relation_perfect_gas_1}
     \frac{p_2}{p_1} = \left(\frac{\rho_2}{\rho_1} \right)^\gamma.
@@ -1437,7 +1473,6 @@ and
 \label{eq:isentropic_relation_perfect_gas_3}
     \frac{\rho_2}{\rho_1} = \left ( \frac{T_2}{T_1} \right)^{1/(\gamma-1)}.
 \end{equation}
-If a fluid particle moves from state 1 to state 2 isentropically, then the three relations above can be used to linked their thermodynamic properties.
 
 \Cref{eq:stagnation_enthalpy} for a perfect gas can be written as
 \begin{equation}

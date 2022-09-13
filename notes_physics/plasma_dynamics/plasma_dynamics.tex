@@ -1857,79 +1857,9 @@ If we assume incompressibility, then the above simplifies to
 \end{equation}
 
 %-------------------------------------------------------------------------------
-\chapter{Stability}
-%-------------------------------------------------------------------------------
-Consider the following system of PDEs for a two-dimensional problem
-\begin{equation}
-    \frac{\partial w}{\partial t} = \frac{\partial \phi}{\partial y}\frac{\partial w}{\partial x} - \frac{\partial \phi}{\partial x} \frac{\partial w}{\partial y},
-\end{equation}
-\begin{equation}
-    w = \nabla^2 \phi .
-\end{equation}
-In the above, $\phi = \phi(x,y,t)$ is the electrostatic potential and $w = w(x,y,t)$ the vorticity.
-
-The analysis begins by splitting the variables into equilibrium and fluctuating components, namely
-\begin{equation}
-    \phi = \phi_0 + \phi_1,
-\end{equation}
-\begin{equation}
-    w = w_0 + w_1.
-\end{equation}
-For the above, $\phi_0 = \phi_0(x)$, $w_0 = w_0(x)$, and $\phi_1 = \phi_1(x,y,t)$, $w_1 = w_1(x,y,t)$. We now introduce a Fourier series decomposition for the fluctuating variables, and focus on a single Fourier mode as follows 
-\begin{equation}
-    \phi_1(x,y,t) = F(x,k_y,t) e^{ik_y y} = \tilde{\phi}(x,k_y) e^{\gamma t + i k_y y},
-\end{equation}
-\begin{equation}
-    w_1(x,y,t) = G(x,k_y,t) e^{ik_y y} = \tilde{w}(x,k_y) e^{\gamma t + i k_y y}.
-\end{equation}
-In the above, $\gamma$, which can be complex, is the growth rate factor, and $\tilde{\phi} = \tilde{\phi}(x, k_y)$, $\tilde{w} = \tilde{w}(x, k_y)$ are the remaining part of the Fourier coefficient.
-
-We then plug in the decompositions for $\phi$ and $w$ in the governing PDEs. Collecting the lowest order terms leads to equations for the equilibrium solution. For example, the Poisson equation to lowest order is
-\begin{equation}
-    \label{eq:lin_stab_w0_phi0}
-    w_0 = \nabla^2 \phi_0 = \frac{\partial^2 \phi_0}{\partial x^2}.
-\end{equation}
-Combining terms up to next order gives
-\begin{equation}
-    \label{eq:lin_stab_pde_mid_order}
-    \frac{\partial w_1}{\partial t} = \frac{\partial \phi_0}{\partial y}\frac{\partial w_1}{\partial x} + \frac{\partial \phi_1}{\partial y}\frac{\partial w_0}{\partial x} - \frac{\partial \phi_0}{\partial x} \frac{\partial w_1}{\partial y} - \frac{\partial \phi_1}{\partial x} \frac{\partial w_0}{\partial y},
-\end{equation}
-\begin{equation}
-    w_1 = \nabla^2 \phi_1.
-\end{equation}
-Using the expression for $\phi_1$ in the Poisson equation above leads to 
-\begin{equation}
-    w_1 = \left ( \frac{\partial^2 \tilde{\phi}}{\partial x^2} - k_y^2 \tilde{\phi} \right ) e^{\gamma t + i k_y y},
-\end{equation}
-or 
-\begin{equation}
-    \tilde{w} = \frac{\partial^2 \tilde{\phi}}{\partial x^2} - k_y^2 \tilde{\phi} .
-\end{equation}
-We'll now evaluate each of the terms in \cref{eq:lin_stab_pde_mid_order}.
-\begin{align}
-    \frac{\partial w_1}{\partial t} &= \gamma \left ( \frac{\partial^2 \tilde{\phi}}{\partial x^2} - k_y^2 \tilde{\phi} \right ) e^{\gamma t + i k_y y}, \nonumber \\
-    \frac{\partial \phi_0}{\partial y}\frac{\partial w_1}{\partial x} &= 0, \nonumber \\
-    \frac{\partial \phi_1}{\partial y}\frac{\partial w_0}{\partial x} &= i k_y \tilde{\phi} e^{\gamma t + i k_y y} \frac{\partial^3 \phi_0}{\partial x^3}, \nonumber \\
-    \frac{\partial \phi_0}{\partial x} \frac{\partial w_1}{\partial y} &= \frac{\partial \phi_0}{\partial x} i k_y \left ( \frac{\partial^2 \tilde{\phi}}{\partial x^2} - k_y^2 \tilde{\phi} \right ) e^{\gamma t + i k_y y},\nonumber \\
-    \frac{\partial \phi_1}{\partial x} \frac{\partial w_0}{\partial y} &= 0 . \nonumber \\
-\end{align}
-Combining all of the above, we obtain
-\begin{equation}
-    \gamma \left ( \frac{\partial^2 \tilde{\phi}}{\partial x^2} - k_y^2 \tilde{\phi} \right ) = ik_y \tilde{\phi} \frac{\partial^3 \phi_0}{\partial x^3} - \frac{\partial \phi_0}{\partial x} i k_y \left ( \frac{\partial^2 \tilde{\phi}}{\partial x^2} - k_y^2 \tilde{\phi} \right ).
-\end{equation}
-This is re-written as 
-\begin{equation}
-    \gamma \left ( \frac{\partial^2 \tilde{\phi}}{\partial x^2} - k_y^2 \tilde{\phi} \right ) = -i k_y \left [ \frac{\partial \phi_0}{\partial x} \left ( \frac{\partial^2 \tilde{\phi}}{\partial x^2} - k_y^2 \tilde{\phi} \right ) - \frac{\partial^3 \phi_0}{\partial x^3} \tilde{\phi} \right ].
-\end{equation}
-
-
-%-------------------------------------------------------------------------------
 \chapter{Waves in plasmas}
 %-------------------------------------------------------------------------------
-%--------------------------------------------
-\section{Electron Plasma and Ion Acoustic Waves}
-%--------------------------------------------
-The starting point are the density and momentum multi-fluid conservation laws in \cref{sec:two_fluid_equations}. Assuming no shear stresses and collisions, we have for particle density and momentum
+In this section we'll make heavy use of the density and momentum multi-fluid conservation laws described in \cref{sec:two_fluid_equations}. Assuming no shear stresses and collisions, we have for particle density and momentum
 \begin{equation}
     \frac{\partial n_i}{\partial t} + \nabla \cdot \left (n_i \uvec_i \right ) = 0,
 \end{equation}
@@ -1942,7 +1872,8 @@ The starting point are the density and momentum multi-fluid conservation laws in
 \begin{equation}
     \frac{\partial m_e n_e \uvec_e}{\partial t} + \nabla \cdot \left ( m_e n_e \uvec_e \uvec_e \right ) + e n_e \left ( \Evec + \uvec_e \times \Bvec \right ) = -\nabla p_e.
 \end{equation}
-We will now decompose the variables as follows 
+
+We will also make ample use of the following decompositions
 \begin{align}
     n_i &= n_{i0} + n_{i1}, \nonumber \\
     n_e &= n_{e0} + n_{e1}, \nonumber \\
@@ -1953,23 +1884,20 @@ We will now decompose the variables as follows
     \Evec &= \Evec_0 + \Evec_1, \nonumber \\
     \Bvec &= \Bvec_0 + \Bvec_1.
 \end{align}
-We'll use a few assumptions in the derivation of the equations
-\begin{itemize}
-    \item $n_{i0}$, $n_{e0}$, $p_{i0}$, and $p_{e0}$ are constant.
-    \item $\uvec_{i0}$, $\uvec_{e0}$, $\Evec_0$, and $\Bvec_0$ are zero.
-    \item All terms with a subscript 1 are small and thus products of two small quantities can be neglected. 
-    \item The flow is isentropic.
-    \item Quasi-neutrality for the base flow: $Zn_{i0} = n_{e0}$. 
-\end{itemize}
-Finally, we'll assume the following for each of the two waves:
-\begin{itemize}
-    \item electron plasma wave: $n_{i1} = 0$.
-    \item ion acoustic wave: $m_e \to 0$ and $Z n_{i1} \approx n_{e1}$.
-\end{itemize}
+In the above, all terms with a subscript 1 are small and thus products of two small quantities can be neglected.
 
 %--------------------------------------------
-\subsection{Electron Plasma Waves}
+\section{Electron Plasma Waves}
 %--------------------------------------------
+We'll use a few assumptions in the derivation of the equations:
+\begin{itemize}
+    \item The flow is homentropic.
+    \item $n_{i0}$, $n_{e0}$, $p_{i0}$, and $p_{e0}$ are constant.
+    \item $\uvec_{i0}$, $\uvec_{e0}$, $\Evec_0$, and $\Bvec_0$ are zero.
+    \item Quasi-neutrality for the base flow, $Zn_{i0} = n_{e0}$.
+    \item Uniform ion background, $n_{i1} = 0$. 
+\end{itemize}
+
 Given the decompositions in the previous section, we can write the electron density equation as
 \begin{equation*}
     \frac{\partial n_{e0} + n_{e1}}{\partial t} + \nabla \cdot \left [ \left ( n_{e0} + n_{e1} \right )  \left ( \uvec_{e0} + \uvec_{e1} \right ) \right ] = 0,
@@ -2039,8 +1967,18 @@ If we define the thermal velocity without the factor of two, that is, $v_{T\alph
 \end{equation}
 
 %--------------------------------------------
-\subsection{Ion Acoustic Waves}
+\section{Ion Acoustic Waves}
 %--------------------------------------------
+We'll use a few assumptions in the derivation of the equations:
+\begin{itemize}
+    \item The flow is homentropic.
+    \item $n_{i0}$, $n_{e0}$, $p_{i0}$, and $p_{e0}$ are constant.
+    \item $\uvec_{i0}$, $\uvec_{e0}$, $\Evec_0$, and $\Bvec_0$ are zero.
+    \item Quasi-neutrality for the base flow, $Zn_{i0} = n_{e0}$.
+    \item Approximate quasi-neutrality for the fluctuations, $Z n_{i1} \approx n_{e1}$.
+    \item Negligible electron mass, $m_e \to 0$.
+\end{itemize}
+
 Unlike the case for the electron-plasma waves, we now do not assume that $n_i$ varies in space and time so slowly that it can be assumed constant. That is, we no longer assume $n_{i1} = 0$. Thus, the ion density equation gives
 \begin{equation*}
     \frac{\partial n_{i0} + n_{i1}}{\partial t} + \nabla \cdot \left [ \left ( n_{i0} + n_{i1} \right )  \left ( \uvec_{i0} + \uvec_{i1} \right ) \right ] = 0,
@@ -2100,6 +2038,194 @@ where
 \begin{equation}
     v_s = \sqrt{ \frac{Z \gamma_e k_B T_{e0} + \gamma_i k_B T_{i0}}{m_i} }.
 \end{equation}
+
+%--------------------------------------------
+\section{Electromagnetic waves in plasmas}
+%--------------------------------------------
+We'll use a few assumptions in the derivation of the equations:
+\begin{itemize}
+    \item The flow is homentropic.
+    \item $n_{i0}$, $n_{e0}$, $p_{i0}$, and $p_{e0}$ depend on $\xvec$ only.
+    \item $\uvec_{i0}$, $\uvec_{e0}$, $\Evec_0$, and $\Bvec_0$ are zero.
+    \item Quasi-neutrality for the base flow, $Zn_{i0} = n_{e0}$. 
+    \item The density and pressure are stable, $n_{e1} = n_{i1} = p_{e1} = p_{i1} = 0$.
+    \item The ions are stationary, $\uvec_{i1} = 0$.
+\end{itemize}
+Given the assumptions above, $\rho_e = e(Zn_i - n_e)$ becomes $\rho_e = 0$, whereas $\Jvec = e \left (Z n_i \uvec_i - n_e \uvec_e \right )$ simplifies to $\Jvec = -e n_{e0} \uvec_{e1}$. Combining Maxwell's equations to form wave equations for $\Evec = \Evec(\xvec,t)$ and $\Bvec = \Bvec(\xvec,t)$, as done for \cref{eq:electrodynamics_E_wave_eq,eq:electrodynamics_B_wave_eq} but without assuming $\Jvec = 0$, we get
+\begin{equation}
+    \label{eq:lpi_E_wave_eq}
+    \frac{\partial^2 \Evec}{\partial t^2} - \frac{1}{\epsilon_0 \mu_0} \nabla^2 \Evec + \frac{1}{\epsilon_0} \frac{\partial \Jvec}{\partial t} = 0,
+\end{equation}
+\begin{equation}
+    \label{eq:lpi_B_wave_eq}
+    \frac{\partial^2 \Bvec}{\partial t^2} - \frac{1}{\epsilon_0 \mu_0} \nabla^2 \Bvec - \frac{1}{\epsilon_0} \nabla \times \Jvec = 0.
+\end{equation}
+We'll now split the vectors into transverse (zero divergence, finite curl) and longitudinal (zero curl, finite divergence) components. We'll label this decomposition as $\Evec = \Evec_t + \Evec_l$, $\Bvec = \Bvec_t + \Bvec_l$, $\Jvec = \Jvec_t + \Jvec_l$, etc., where the $t$ underscript denotes transverse and $l$ denotes longitudinal. Since $\nabla \cdot \Evec = \nabla \cdot \Bvec = 0$, $\Evec_l = \Bvec_l = 0$. Additionally, $\nabla \times \Jvec$ simplifies to $\nabla \times \Jvec_t$. Thus, the wave equations above become
+\begin{equation*}
+    \frac{\partial^2 \Evec_t}{\partial t^2} - \frac{1}{\epsilon_0 \mu_0} \nabla^2 \Evec_t + \frac{1}{\epsilon_0} \frac{\partial \Jvec}{\partial t} = 0,
+\end{equation*}
+\begin{equation*}
+    \frac{\partial^2 \Bvec_t}{\partial t^2} - \frac{1}{\epsilon_0 \mu_0} \nabla^2 \Bvec_t - \frac{1}{\epsilon_0} \nabla \times \Jvec_t = 0.
+\end{equation*}
+If we take the divergence of the electric-field wave equation above, we get $\nabla \cdot \Jvec = 0$, which implies $\Jvec_l = 0$. In a subsequent section, we'll look at a case where $\Jvec_l \ne 0$. For this case, we have to assume that there is a slight imbalance in the charges, so that $\rho_e \ne 0$, and thus through Gauss' law we get $\nabla \cdot \Evec \ne 0$. This last expression then implies $\Evec_l \ne 0$. An additional term containing $\nabla \cdot \Evec_l$ shows up in the electric wave equation, which balances the $\partial \Jvec_l/\partial t$ term. This longitudinal current follows from electron plasma waves. The wave equations are now expressed as
+\begin{equation}
+    \frac{\partial^2 \Evec_t}{\partial t^2} - \frac{1}{\epsilon_0 \mu_0} \nabla^2 \Evec_t + \frac{1}{\epsilon_0} \frac{\partial \Jvec_t}{\partial t} = 0,
+\end{equation}
+\begin{equation}
+    \frac{\partial^2 \Bvec_t}{\partial t^2} - \frac{1}{\epsilon_0 \mu_0} \nabla^2 \Bvec_t - \frac{1}{\epsilon_0} \nabla \times \Jvec_t = 0,
+\end{equation}
+which for consistency we re-write as 
+\begin{equation}
+    \frac{\partial^2 \Evec_{1,t}}{\partial t^2} - \frac{1}{\epsilon_0 \mu_0} \nabla^2 \Evec_{1,t} + \frac{1}{\epsilon_0} \frac{\partial \Jvec_{1,t}}{\partial t} = 0,
+\end{equation}
+\begin{equation}
+    \frac{\partial^2 \Bvec_{1,t}}{\partial t^2} - \frac{1}{\epsilon_0 \mu_0} \nabla^2 \Bvec_{1,t} - \frac{1}{\epsilon_0} \nabla \times \Jvec_{1,t} = 0.
+\end{equation}
+
+We now need to find expressions for $\partial \Jvec_{1,t} / \partial t$ and $\nabla \times \Jvec_{1,t}$. Expanding the electron momentum equation, we get
+\begin{multline*}
+    \frac{\partial}{\partial t} \left [ m_e \left ( n_{e0} + n_{e1} \right ) \left ( \uvec_{e0} + \uvec_{e1} \right ) \right ] + \nabla \cdot \left [ m_e \left ( n_{e0} + n_{e1} \right ) \left ( \uvec_{e0} + \uvec_{e1} \right ) \left ( \uvec_{e0} + \uvec_{e1} \right ) \right ] \\
+    + e \left ( n_{e0} + n_{e1} \right ) \left [ \left ( \Evec_0 + \Evec_1 \right ) + \left ( \uvec_{e0} + \uvec_{e1} \right ) \times \left ( \Bvec_0 + \Bvec_1 \right ) \right ] = -\nabla \left ( p_{e0} + p_{e1} \right ),
+\end{multline*}
+which simplifies to 
+\begin{equation}
+    \label{eq:em_waves_mom_linearized_pressure}
+    \frac{\partial m_e n_{e0} \uvec_{e1}}{\partial t} + e n_{e0} \Evec_1 = - \nabla p_{e0}.
+\end{equation}
+The transverse component of the above is
+\begin{equation}
+    \label{eq:em_waves_mom_linearized_pressure_transverse}
+    \frac{\partial \uvec_{e1,t}}{\partial t} + \frac{e}{m_e} \Evec_{1,t} = 0.
+\end{equation}
+As mentioned before, the current is given by $\Jvec = \Jvec_1 = -e n_{e0} \uvec_{e1}$, or, in terms of its transverse component, $\Jvec_{1,t} = -e n_{e0} \uvec_{e1,t}$. Using this and \cref{eq:em_waves_mom_linearized_pressure_transverse} in the wave equations, we get
+\begin{equation}
+    \frac{\partial^2 \Evec_{1,t}}{\partial t^2} - \frac{1}{\epsilon_0 \mu_0} \nabla^2 \Evec_{1,t} + w_{pe}^2 \Evec_{1,t} = 0,
+\end{equation}
+\begin{equation}
+    \frac{\partial^2 \Bvec_{1,t}}{\partial t^2} - \frac{1}{\epsilon_0 \mu_0} \nabla^2 \Bvec_{1,t} + \nabla \times \left ( \frac{e n_{e0}}{\epsilon_0} \uvec_{e1,t} \right ) = 0.
+\end{equation}
+
+Define the electric-field and magnetic-field waves as 
+\begin{equation}
+    \label{eq:lpi_E_wave_def}
+    \Evec_{1,t} = \bar{\Evec}_{1,t} e^{- iwt},
+\end{equation}
+\begin{equation}
+    \label{eq:lpi_B_wave_def}
+    \Bvec_{1,t} = \bar{\Bvec}_{1,t} e^{- iwt},
+\end{equation}
+where $\bar{\Evec}_{1,t} = \bar{\Evec}_{1,t}(\xvec)$ and $\bar{\Bvec}_{1,t} = \bar{\Bvec}_{1,t}(\xvec)$. Also introduce $\uvec_{e1,t} = \bar{\uvec}_{e1,t} e^{-iwt}$. Using this in the wave equations above we get
+\begin{equation}
+    -w^2 \bar{\Evec}_{1,t} - \frac{1}{\epsilon_0 \mu_0} \nabla^2 \bar{\Evec}_{1,t} + w_{pe}^2 \bar{\Evec}_{1,t} = 0,
+\end{equation}
+\begin{equation}
+    -w^2 \bar{\Bvec}_{1,t} - \frac{1}{\epsilon_0 \mu_0} \nabla^2 \bar{\Bvec}_{1,t} + \nabla \times \left ( \frac{e n_{e0}}{\epsilon_0} \bar{\uvec}_{e1,t} \right ) = 0.
+\end{equation}
+\Cref{eq:em_waves_mom_linearized_pressure_transverse} now gives 
+\begin{equation}
+    \bar{\uvec}_{e1,t} = -i \frac{e}{m_e w} \bar{\Evec}_{1,t},
+\end{equation}
+and thus the wave equations become
+\begin{equation}
+    -w^2 \bar{\Evec}_{1,t} - \frac{1}{\epsilon_0 \mu_0} \nabla^2 \bar{\Evec}_{1,t} + w_{pe}^2 \bar{\Evec}_{1,t} = 0,
+\end{equation}
+\begin{equation}
+    -w^2 \bar{\Bvec}_{1,t} - \frac{1}{\epsilon_0 \mu_0} \nabla^2 \bar{\Bvec}_{1,t} - i \nabla \times \left ( \frac{w_{pe}^2}{w} \bar{\Evec}_{1,t} \right ) = 0.
+\end{equation}
+We now use Faraday's equation again, that is 
+\begin{equation}
+    \nabla \times \Evec_{1,t} = -\frac{\partial \Bvec_{1,t}}{\partial t}
+\end{equation}
+Using the pre-determined wave forms, this becomes
+\begin{equation}
+    \nabla \times \bar{\Evec}_{1,t} = i w \bar{\Bvec}_{1,t}.
+\end{equation}
+Using the vector identity $\nabla \times (f \Fvec) = f \nabla \times \Fvec + \nabla f \times \Fvec$, the wave equations finally become 
+\begin{equation}
+    -w^2 \bar{\Evec}_{1,t} - \frac{1}{\epsilon_0 \mu_0} \nabla^2 \bar{\Evec}_{1,t} + w_{pe}^2 \bar{\Evec}_{1,t} = 0,
+\end{equation}
+\begin{equation}
+    -w^2 \bar{\Bvec}_{1,t} - \frac{1}{\epsilon_0 \mu_0} \nabla^2 \bar{\Bvec}_{1,t} + w_{pe}^2 \bar{\Bvec}_{1,t} - i \frac{1}{w} \nabla w_{pe}^2 \times \bar{\Evec}_{1,t} = 0.
+\end{equation}
+It interesting to compare this against the electromagnetic wave equations in free space. The fact that $\uvec_{e1} \ne 0$ leads to a current in the plasma, which in turn accounts for the extra terms with $w_{pe}^2$ in front. The fact that $n_{e0}$ is space dependent accounts for the last term in the magnetic-field wave equation.
+
+%-------------------------------------------------------------------------------
+\chapter{Instabilities}
+%-------------------------------------------------------------------------------
+
+%-------------------------------------------------------------------------------
+\section{Linear stability analysis}
+%-------------------------------------------------------------------------------
+Consider the following system of PDEs for a two-dimensional problem
+\begin{equation}
+    \frac{\partial w}{\partial t} = \frac{\partial \phi}{\partial y}\frac{\partial w}{\partial x} - \frac{\partial \phi}{\partial x} \frac{\partial w}{\partial y},
+\end{equation}
+\begin{equation}
+    w = \nabla^2 \phi .
+\end{equation}
+In the above, $\phi = \phi(x,y,t)$ is the electrostatic potential and $w = w(x,y,t)$ the vorticity.
+
+The analysis begins by splitting the variables into equilibrium and fluctuating components, namely
+\begin{equation}
+    \phi = \phi_0 + \phi_1,
+\end{equation}
+\begin{equation}
+    w = w_0 + w_1.
+\end{equation}
+For the above, $\phi_0 = \phi_0(x)$, $w_0 = w_0(x)$, and $\phi_1 = \phi_1(x,y,t)$, $w_1 = w_1(x,y,t)$. We now introduce a Fourier series decomposition for the fluctuating variables, and focus on a single Fourier mode as follows 
+\begin{equation}
+    \phi_1(x,y,t) = F(x,k_y,t) e^{ik_y y} = \tilde{\phi}(x,k_y) e^{\gamma t + i k_y y},
+\end{equation}
+\begin{equation}
+    w_1(x,y,t) = G(x,k_y,t) e^{ik_y y} = \tilde{w}(x,k_y) e^{\gamma t + i k_y y}.
+\end{equation}
+In the above, $\gamma$, which can be complex, is the growth rate factor, and $\tilde{\phi} = \tilde{\phi}(x, k_y)$, $\tilde{w} = \tilde{w}(x, k_y)$ are the remaining part of the Fourier coefficient.
+
+We then plug in the decompositions for $\phi$ and $w$ in the governing PDEs. Collecting the lowest order terms leads to equations for the equilibrium solution. For example, the Poisson equation to lowest order is
+\begin{equation}
+    \label{eq:lin_stab_w0_phi0}
+    w_0 = \nabla^2 \phi_0 = \frac{\partial^2 \phi_0}{\partial x^2}.
+\end{equation}
+Combining terms up to next order gives
+\begin{equation}
+    \label{eq:lin_stab_pde_mid_order}
+    \frac{\partial w_1}{\partial t} = \frac{\partial \phi_0}{\partial y}\frac{\partial w_1}{\partial x} + \frac{\partial \phi_1}{\partial y}\frac{\partial w_0}{\partial x} - \frac{\partial \phi_0}{\partial x} \frac{\partial w_1}{\partial y} - \frac{\partial \phi_1}{\partial x} \frac{\partial w_0}{\partial y},
+\end{equation}
+\begin{equation}
+    w_1 = \nabla^2 \phi_1.
+\end{equation}
+Using the expression for $\phi_1$ in the Poisson equation above leads to 
+\begin{equation}
+    w_1 = \left ( \frac{\partial^2 \tilde{\phi}}{\partial x^2} - k_y^2 \tilde{\phi} \right ) e^{\gamma t + i k_y y},
+\end{equation}
+or 
+\begin{equation}
+    \tilde{w} = \frac{\partial^2 \tilde{\phi}}{\partial x^2} - k_y^2 \tilde{\phi} .
+\end{equation}
+We'll now evaluate each of the terms in \cref{eq:lin_stab_pde_mid_order}.
+\begin{align}
+    \frac{\partial w_1}{\partial t} &= \gamma \left ( \frac{\partial^2 \tilde{\phi}}{\partial x^2} - k_y^2 \tilde{\phi} \right ) e^{\gamma t + i k_y y}, \nonumber \\
+    \frac{\partial \phi_0}{\partial y}\frac{\partial w_1}{\partial x} &= 0, \nonumber \\
+    \frac{\partial \phi_1}{\partial y}\frac{\partial w_0}{\partial x} &= i k_y \tilde{\phi} e^{\gamma t + i k_y y} \frac{\partial^3 \phi_0}{\partial x^3}, \nonumber \\
+    \frac{\partial \phi_0}{\partial x} \frac{\partial w_1}{\partial y} &= \frac{\partial \phi_0}{\partial x} i k_y \left ( \frac{\partial^2 \tilde{\phi}}{\partial x^2} - k_y^2 \tilde{\phi} \right ) e^{\gamma t + i k_y y},\nonumber \\
+    \frac{\partial \phi_1}{\partial x} \frac{\partial w_0}{\partial y} &= 0 . \nonumber \\
+\end{align}
+Combining all of the above, we obtain
+\begin{equation}
+    \gamma \left ( \frac{\partial^2 \tilde{\phi}}{\partial x^2} - k_y^2 \tilde{\phi} \right ) = ik_y \tilde{\phi} \frac{\partial^3 \phi_0}{\partial x^3} - \frac{\partial \phi_0}{\partial x} i k_y \left ( \frac{\partial^2 \tilde{\phi}}{\partial x^2} - k_y^2 \tilde{\phi} \right ).
+\end{equation}
+This is re-written as 
+\begin{equation}
+    \gamma \left ( \frac{\partial^2 \tilde{\phi}}{\partial x^2} - k_y^2 \tilde{\phi} \right ) = -i k_y \left [ \frac{\partial \phi_0}{\partial x} \left ( \frac{\partial^2 \tilde{\phi}}{\partial x^2} - k_y^2 \tilde{\phi} \right ) - \frac{\partial^3 \phi_0}{\partial x^3} \tilde{\phi} \right ].
+\end{equation}
+
+%-------------------------------------------------------------------------------
+\section{Stimulated Raman Scattering}
+%-------------------------------------------------------------------------------
+
+%-------------------------------------------------------------------------------
+\section{Stimulated Brillouin Scattering}
+%-------------------------------------------------------------------------------
 
 %-------------------------------------------------------------------------------
 \chapter{Simple models}
@@ -2855,10 +2981,10 @@ W = \frac{1}{2} \int \Avec \cdot \Jvec \, d\tau = \frac{1}{2\mu_0} \int B^2 \, d
 
 \item Ampere's law \cref{eq:amperes_law} was derived using assumptions of magnetostatics. Maxwell extended Ampere's law to work for magnetodynamics, so that the divergence of \cref{eq:amperes_law} would actually give zero on both sides. Thus, Maxwell's equations are
 \begin{align}
-\nabla \cdot \Evec &= \frac{1}{\epsilon_0} \rho \\
+\nabla \cdot \Evec &= \frac{\rho}{\epsilon_0} \\
 \nabla \cdot \Bvec &= 0 \\
 \nabla \times \Evec &= -\frac{ \partial \Bvec}{\partial t} \\
-\nabla \times \Bvec &= \mu_0 \Jvec + \mu_0 \epsilon \frac{\partial \Evec}{ \partial t}.
+\nabla \times \Bvec &= \mu_0 \Jvec + \mu_0 \epsilon_0 \frac{\partial \Evec}{ \partial t}.
 \end{align}
 
 \item As shown earlier, Faraday's law indicates that a changing magnetic field induces an electric field. Maxwell's correction to Ampere's law then indicates that a changing electric field induces a magnetic field. 
@@ -2987,28 +3113,30 @@ where $\kvec_{\nvec} = 2 \pi \nvec / L$ and $\nvec = [n_1, n_2, n_3]$.
 \begin{itemize}
     \item The application of \cref{eq:electrodynamics_3d_wave} to electric and magnetic fields gives 
     \begin{equation}
-        \label{eq:electrodynamics_E_wave}
+        \label{eq:electrodynamics_E_wave_def}
         \Evec = \sum_{\nvec} \tilde{\Evec}_{\nvec} e^{i \left ( \kvec_{\nvec} \cdot \xvec - wt \right )},
     \end{equation}
     and 
     \begin{equation}
-        \label{eq:electrodynamics_B_wave}
+        \label{eq:electrodynamics_B_wave_def}
         \Bvec = \sum_{\nvec} \tilde{\Bvec}_{\nvec} e^{i \left ( \kvec_{\nvec} \cdot \xvec - wt \right )}.
     \end{equation}
     \item For $\rho = \Jvec = 0$, Maxwell's equations can be combined to give the wave equations for $\Evec$ and $\Bvec$, that is,
     \begin{equation}
+        \label{eq:electrodynamics_E_wave_eq}
         \frac{\partial^2 \Evec}{\partial t^2} - \frac{1}{\epsilon_0 \mu_0} \nabla^2 \Evec = 0,
     \end{equation}
     \begin{equation}
+        \label{eq:electrodynamics_B_wave_eq}
         \frac{\partial^2 \Bvec}{\partial t^2} - \frac{1}{\epsilon_0 \mu_0} \nabla^2 \Bvec = 0.
     \end{equation}
     The speed of electromagnetic waves is thus $c=1/\sqrt{\epsilon_0 \mu_0}$.
 
-    \item Using \cref{eq:electrodynamics_E_wave} in $\nabla \cdot \Evec = 0$ gives $\kvec_n \cdot \tilde{\Evec}_{\nvec} = 0$. That is, the $\Evec$ field is orthogonal to the direction of propagation of the mode.
+    \item Using \cref{eq:electrodynamics_E_wave_def} in $\nabla \cdot \Evec = 0$ gives $\kvec_n \cdot \tilde{\Evec}_{\nvec} = 0$. That is, the $\Evec$ field is orthogonal to the direction of propagation of the mode.
     
-    \item Using \cref{eq:electrodynamics_B_wave} in $\nabla \cdot \Bvec = 0$ gives $\kvec_n \cdot \tilde{\Bvec}_{\nvec} = 0$. That is, the $\Bvec$ field is orthogonal to the direction of propagation of the mode.
+    \item Using \cref{eq:electrodynamics_B_wave_def} in $\nabla \cdot \Bvec = 0$ gives $\kvec_n \cdot \tilde{\Bvec}_{\nvec} = 0$. That is, the $\Bvec$ field is orthogonal to the direction of propagation of the mode.
     
-    \item Using \cref{eq:electrodynamics_E_wave,eq:electrodynamics_B_wave} in $\nabla \times \Evec = -\partial \Bvec / \partial t$ gives $\kvec_{\nvec} \times \tilde{\Evec}_{\nvec} = w \tilde{\Bvec}_{\nvec}$. That is, the $\Bvec$ field is orthogonal to the $\Evec$ field.
+    \item Using \cref{eq:electrodynamics_E_wave_def,eq:electrodynamics_B_wave_def} in $\nabla \times \Evec = -\partial \Bvec / \partial t$ gives $\kvec_{\nvec} \times \tilde{\Evec}_{\nvec} = w \tilde{\Bvec}_{\nvec}$. That is, the $\Bvec$ field is orthogonal to the $\Evec$ field.
 
 \end{itemize}
 
