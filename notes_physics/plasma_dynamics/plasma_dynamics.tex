@@ -5,6 +5,7 @@
 \usepackage{"../../info/nomenclature"}
 \usepackage{empheq}
 \usepackage[flushleft]{threeparttable}
+\usepackage{pict2e}
 \newcommand*\widefbox[1]{\fbox{\hspace{0.2em}#1\hspace{0.2em}}}
 
 \newcommand{\xvecdot}{\dot{\xvec}}
@@ -2114,40 +2115,178 @@ Define the electric-field and magnetic-field waves as
     \label{eq:lpi_B_wave_def}
     \Bvec_{1,t} = \bar{\Bvec}_{1,t} e^{- iwt},
 \end{equation}
-where $\bar{\Evec}_{1,t} = \bar{\Evec}_{1,t}(\xvec)$ and $\bar{\Bvec}_{1,t} = \bar{\Bvec}_{1,t}(\xvec)$. Also introduce $\uvec_{e1,t} = \bar{\uvec}_{e1,t} e^{-iwt}$. Using this in the wave equations above we get
+where $\bar{\Evec}_{1,t} = \bar{\Evec}_{1,t}(\xvec)$ and $\bar{\Bvec}_{1,t} = \bar{\Bvec}_{1,t}(\xvec)$. Given this wave form, the electric-field wave equation becomes
 \begin{equation}
-    -w^2 \bar{\Evec}_{1,t} - \frac{1}{\epsilon_0 \mu_0} \nabla^2 \bar{\Evec}_{1,t} + w_{pe}^2 \bar{\Evec}_{1,t} = 0,
+    \label{eq:em_E_wave_expanded}
+    -w^2 \bar{\Evec}_{1,t} - \frac{1}{\epsilon_0 \mu_0} \nabla^2 \bar{\Evec}_{1,t} + w_{pe}^2 \bar{\Evec}_{1,t} = 0.
 \end{equation}
+If we also introduce $\uvec_{e1,t} = \bar{\uvec}_{e1,t} e^{-iwt}$, then we get for the magnetic-field wave equation
 \begin{equation}
     -w^2 \bar{\Bvec}_{1,t} - \frac{1}{\epsilon_0 \mu_0} \nabla^2 \bar{\Bvec}_{1,t} + \nabla \times \left ( \frac{e n_{e0}}{\epsilon_0} \bar{\uvec}_{e1,t} \right ) = 0.
 \end{equation}
 \Cref{eq:em_waves_mom_linearized_pressure_transverse} now gives 
 \begin{equation}
+    \label{eq:em_waves_momentum_wave_form}
     \bar{\uvec}_{e1,t} = -i \frac{e}{m_e w} \bar{\Evec}_{1,t},
 \end{equation}
-and thus the wave equations become
-\begin{equation}
-    -w^2 \bar{\Evec}_{1,t} - \frac{1}{\epsilon_0 \mu_0} \nabla^2 \bar{\Evec}_{1,t} + w_{pe}^2 \bar{\Evec}_{1,t} = 0,
-\end{equation}
+and thus the magnetic-field wave equation becomes
 \begin{equation}
     -w^2 \bar{\Bvec}_{1,t} - \frac{1}{\epsilon_0 \mu_0} \nabla^2 \bar{\Bvec}_{1,t} - i \nabla \times \left ( \frac{w_{pe}^2}{w} \bar{\Evec}_{1,t} \right ) = 0.
 \end{equation}
-We now use Faraday's equation again, that is 
+Using the vector identity $\nabla \times (f \Fvec) = f \nabla \times \Fvec + \nabla f \times \Fvec$ we get
 \begin{equation}
-    \nabla \times \Evec_{1,t} = -\frac{\partial \Bvec_{1,t}}{\partial t}
+    -w^2 \bar{\Bvec}_{1,t} - \frac{1}{\epsilon_0 \mu_0} \nabla^2 \bar{\Bvec}_{1,t} - i \frac{w_{pe}^2}{w} \nabla \times \bar{\Evec}_{1,t} -i \frac{1}{w} \nabla w_{pe}^2 \times \bar{\Evec}_{1,t}  = 0.
+\end{equation}
+We now use Fraday's law, that is 
+\begin{equation}
+    \nabla \times \Evec_{1,t} = -\frac{\partial \Bvec_{1,t}}{\partial t},
 \end{equation}
 Using the pre-determined wave forms, this becomes
 \begin{equation}
     \nabla \times \bar{\Evec}_{1,t} = i w \bar{\Bvec}_{1,t}.
 \end{equation}
-Using the vector identity $\nabla \times (f \Fvec) = f \nabla \times \Fvec + \nabla f \times \Fvec$, the wave equations finally become 
+Thus, the magnetic-field wave equation can be written as 
 \begin{equation}
-    -w^2 \bar{\Evec}_{1,t} - \frac{1}{\epsilon_0 \mu_0} \nabla^2 \bar{\Evec}_{1,t} + w_{pe}^2 \bar{\Evec}_{1,t} = 0,
+    -w^2 \bar{\Bvec}_{1,t} - \frac{1}{\epsilon_0 \mu_0} \nabla^2 \bar{\Bvec}_{1,t} +  w_{pe}^2 \bar{\Bvec}_{1,t} -i \frac{1}{w} \nabla w_{pe}^2 \times \bar{\Evec}_{1,t}  = 0.
+\end{equation}
+Similarly, we'll now use Ampere's law with Maxwell's correction, that is
+\begin{equation}
+    \nabla \times \Bvec_{1,t} = -\mu_0 e n_{e0} \uvec_{e1,t} + \mu_0 \epsilon_0 \frac{\partial \Evec_{1,t}}{\partial t}.
+\end{equation}
+Using the pre-determined wave forms, this becomes
+\begin{equation}
+    \nabla \times \bar{\Bvec}_{1,t} = - \mu_0 e n_{e0} \bar{\uvec}_{e1,t} - i w \mu_0 \epsilon_0 \bar{\Evec}_{1,t}.
+\end{equation}
+Given \cref{eq:em_waves_momentum_wave_form} the above is written as 
+\begin{equation}
+    \nabla \times \bar{\Bvec}_{1,t} = i \frac{w_{pe}^2}{w} \epsilon_0 \mu_0 \bar{\Evec}_{1,t} - i w \mu_0 \epsilon_0 \bar{\Evec}_{1,t},
+\end{equation}
+or 
+\begin{equation}
+    \nabla \times \bar{\Bvec}_{1,t} = i \epsilon_0 \mu_0 \left ( \frac{w_{pe}^2}{w} - w \right ) \bar{\Evec}_{1,t}.
+\end{equation} 
+Using this in the magnetic-field wave equation we finally get 
+\begin{equation}
+    \label{eq:em_B_wave_expanded}
+    -w^2 \bar{\Bvec}_{1,t} - \frac{1}{\epsilon_0 \mu_0} \nabla^2 \bar{\Bvec}_{1,t} +  w_{pe}^2 \bar{\Bvec}_{1,t} - \frac{1}{\epsilon_0 \mu_0} \frac{1}{w_{pe}^2 - w^2} \nabla w_{pe}^2 \times \left ( \nabla \times \bar{\Bvec}_{1,t} \right ) = 0.
+\end{equation} 
+It is interesting to compare the newly derived electromagnetic wave equations \cref{eq:em_E_wave_expanded,eq:em_B_wave_expanded} against those in free space. The fact that $\uvec_{e1} \ne 0$ leads to a current in the plasma, which in turn accounts for the extra terms with $w_{pe}^2$ in front. The fact that $n_{e0}$ is space dependent accounts for the last term in the magnetic-field wave equation.
+
+If we introduce the dielectric function $\epsilon = 1 - w_{pe}^2 / w^2$, and make use of $c^2 = \epsilon_0 \mu_0$, then the electromagnetic wave equations are written as 
+\begin{equation}
+    \label{eq:em_E_wave_dielectric}
+    \nabla^2 \bar{\Evec}_{1,t} + \frac{w^2}{c^2} \epsilon \bar{\Evec}_{1,t} = 0.
 \end{equation}
 \begin{equation}
-    -w^2 \bar{\Bvec}_{1,t} - \frac{1}{\epsilon_0 \mu_0} \nabla^2 \bar{\Bvec}_{1,t} + w_{pe}^2 \bar{\Bvec}_{1,t} - i \frac{1}{w} \nabla w_{pe}^2 \times \bar{\Evec}_{1,t} = 0.
+    \label{eq:em_B_wave_dielectric}
+    \nabla^2 \bar{\Bvec}_{1,t} + \frac{w^2}{c^2} \epsilon \bar{\Bvec}_{1,t} + \frac{1}{\epsilon} \nabla \epsilon \times \left ( \nabla \times \bar{\Bvec}_{1,t} \right ) = 0.
+\end{equation} 
+
+%--------------------------------------------
+\section{Electromagnetic waves in plasmas}
+%--------------------------------------------
+Use the Helmholtz decomposition
+\begin{equation}
+    \Fvec = \Fvec_l + \Fvec_t
 \end{equation}
-It interesting to compare this against the electromagnetic wave equations in free space. The fact that $\uvec_{e1} \ne 0$ leads to a current in the plasma, which in turn accounts for the extra terms with $w_{pe}^2$ in front. The fact that $n_{e0}$ is space dependent accounts for the last term in the magnetic-field wave equation.
+where 
+\begin{align}
+    \nabla \times \Fvec_l &= 0 \\
+    \nabla \cdot \Fvec_t &= 0.
+\end{align}
+Assume vector functions are of the following form
+\begin{equation}
+    \Fvec(\xvec,t) = \hat{\Fvec} \exp \left [i\left ( \kvec \cdot \xvec - wt \right ) \right ]
+\end{equation}
+\begin{equation}
+    \Fvec_l(\xvec,t) = \hat{\Fvec}_l \exp \left [i\left ( \kvec \cdot \xvec - wt \right ) \right ]
+\end{equation}
+\begin{equation}
+    \Fvec_t(\xvec,t) = \hat{\Fvec}_t \exp \left [i\left ( \kvec \cdot \xvec - wt \right ) \right ]
+\end{equation}
+We now have
+\begin{align}
+    \kvec \times \hat{\Fvec}_l &= 0 \\
+    \kvec \cdot \hat{\Fvec}_t &= 0
+\end{align}
+The first says $\hat{\Fvec}_l$ is parallel to $\kvec$ and the second says $\hat{\Fvec}_t$ is orthogonal to $\kvec$. Thus, $\hat{\Fvec}_l \cdot \hat{\Fvec}_t = 0$. We will often have situations where $\nabla \times \Fvec = \nabla \cdot \Fvec = 0$. That is, $\kvec \times \hat{\Fvec} = \kvec \cdot \hat{\Fvec} =  0$, which means $\hat{\Fvec} = 0$ and thus $\Fvec = 0$. In other words,
+\begin{equation}
+    \label{eq:em_plasma_null_vector}
+    \nabla \times \Fvec = \nabla \cdot \Fvec = 0 \to \Fvec = 0.
+\end{equation}
+
+Consider the electric and magnetic fields as well as the scalar and vector potentials, which satisfy
+\begin{equation}
+    \label{eq:em_plasma_E_potential}
+    \Evec = -\nabla \phi - \frac{\partial \Avec}{\partial t},
+\end{equation}
+\begin{equation}
+    \label{eq:em_plasma_B_potential}
+    \Bvec = \nabla \times \Avec.
+\end{equation}
+For the above, we choose $\nabla \cdot \Avec = 0$. Using the fact that the magnetic field is solenoidal, we have
+\begin{equation}
+    \nabla \cdot \Bvec = \nabla \cdot \Bvec_l + \nabla \cdot \Bvec_t = \nabla \cdot \Bvec_l = 0.
+\end{equation}
+However, by definition, $\nabla \times \Bvec_l = 0$ as well. Thus, using \cref{eq:em_plasma_null_vector}, we have $\Bvec_l = 0$. The same argument applies to the vector potential, and thus $\Avec_l = 0$. For the electric field, we have
+\begin{equation}
+    \nabla \cdot \Evec = \nabla \cdot \Evec_l + \nabla \cdot \Evec_t = \nabla \cdot \Evec_l = \nabla \cdot \left ( -\nabla \phi \right ),
+\end{equation}
+where we used \cref{eq:em_plasma_E_potential} for the last equality. In other words, we have
+\begin{equation}
+    \nabla \cdot \left ( \Evec_l + \nabla \phi \right ) = 0.
+\end{equation}
+By definition, we also have
+\begin{equation}
+    \nabla \times \left ( \Evec_l + \nabla \phi \right ) = 0.
+\end{equation}
+Thus, using \cref{eq:em_plasma_null_vector}, we have $\Evec_l = -\nabla \phi$. A similar argument can be used to show $\Evec_t = -\partial \Avec / \partial t$. Our goal in this section will be to determine equations for $\Evec_l$, $\Evec_t$ and $\Bvec_t$.
+
+We'll begin with the conservation of charge equation
+\begin{equation}
+    \frac{\partial \rho_q}{\partial t} + \nabla \cdot \Jvec = 0,
+\end{equation}
+which we re-write as
+\begin{equation}
+    \frac{\partial \rho_q}{\partial t} + \nabla \cdot \Jvec_l = 0,
+\end{equation}
+Using Poisson's equation $\nabla^2\phi = -\rho_q / \epsilon_0$ in the above, we get
+\begin{equation}
+    \frac{\partial}{\partial t} \left ( -\epsilon_0 \nabla^2 \phi \right ) + \nabla \cdot \Jvec_l = 0,
+\end{equation}
+or
+\begin{equation}
+    \nabla \cdot \left ( \frac{\partial \nabla \phi}{\partial t} - \frac{1}{\epsilon_0} \Jvec_l \right ) = 0.
+\end{equation}
+However, by definition, we also have
+\begin{equation}
+    \nabla \times \left ( \frac{\partial \nabla \phi}{\partial t} - \frac{1}{\epsilon_0} \Jvec_l \right ) = 0.
+\end{equation}
+Using \cref{eq:em_plasma_null_vector}, we conclude
+\begin{equation}
+    \label{eq:em_plasma_longitudinal_J}
+    \frac{\partial \nabla \phi}{\partial t} = \frac{1}{\epsilon_0} \Jvec_l.
+\end{equation}
+This gives the equation for $\Evec_l$.
+
+Both $\Evec_t$ and $\Bvec_t$ can be extracted from $\Avec_t$, so now we proceed to find an equation for the transverse vector potential. Ampere's law with Maxwell's correction gives
+\begin{equation}
+    \nabla \times \left ( \nabla \times \Avec_t \right ) = \mu_0 \Jvec + \mu_0 \epsilon_0 \frac{\partial \Evec}{\partial t}.
+\end{equation}
+The above is re-written as
+\begin{equation}
+    \nabla \left ( \nabla \cdot \Avec_t \right ) - \nabla^2 \Avec_t = \mu_0 \Jvec + \mu_0 \epsilon_0 \left ( -\frac{\partial \nabla \phi}{\partial t} - \frac{\partial^2 \Avec_t}{\partial t^2} \right ),
+\end{equation}
+which gives
+\begin{equation}
+    \frac{\partial^2 \Avec_t}{\partial t} - \frac{1}{\mu_0 \epsilon_0} \nabla^2 \Avec_t = \frac{1}{\epsilon_0} \Jvec - \frac{\partial \nabla \phi}{\partial t}.
+\end{equation}
+Expanding the current density as $\Jvec = \Jvec_l + \Jvec_t$, and using \cref{eq:em_plasma_longitudinal_J}, we get
+\begin{equation}
+    \frac{\partial^2 \Avec_t}{\partial t} - \frac{1}{\mu_0 \epsilon_0} \nabla^2 \Avec_t = \frac{1}{\epsilon_0} \Jvec_t.
+\end{equation}
+Taking the time derivative of the above gives ... 
+Taking the curls of the above gives ...
 
 %-------------------------------------------------------------------------------
 \chapter{Instabilities}
@@ -3264,6 +3403,100 @@ For cases in which we are not interested in the energy generated by the collisio
 where $E(v,b)$ is the physical property associated with the collision.
 
 \end{itemize}
+
+%--------------------------------------------------------------------------------------------------------------------------------------------
+\chapter{Lagrangian and Eulerian PDFs}
+%--------------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------
+\section{Eulerian PDF}
+%-------------------------------------------------------------------------------
+Consider an Eulerian velocity field $\uvec = \uvec(\xvec,t)$. The Eulerian PDF $f = f(\Vvec; \xvec,t)$ gives the probability that the velocity field will have a value of $\Vvec$ at location $\xvec$ and at time $t$. We'll also introduce the fine-grained Eulerian PDF $f' = f'(\Vvec;\xvec,t)$, which is defined as 
+\begin{equation}
+    f'(\Vvec; \xvec, t) = \delta(\uvec(\xvec,t) - \Vvec).
+\end{equation}
+Note: a delta function of a 3D argument means the following $\delta(\avec) = \delta(a_1) \delta(a_2) \delta(a_3) $. The Eulerian PDF can be obtained from the fine-grained Eulerian PDF using 
+\begin{equation}
+    \label{eq:fine_eul_pdf}
+    f(\Vvec; \xvec, t)=\langle f'(\Vvec; \xvec, t) \rangle.
+\end{equation}
+The proof is as follows,
+\begin{align}
+    \langle f'(\Vvec; \xvec, t) \rangle &= \langle \delta( \uvec(\xvec,t) - \Vvec) \rangle \nonumber \\
+    &= \int \delta( \Vvec' - \Vvec) f(\Vvec';\xvec,t) d\Vvec' \nonumber \\
+    &= f(\Vvec; \xvec, t).
+\end{align}
+
+%-------------------------------------------------------------------------------
+\section{Lagrangian PDF}
+%-------------------------------------------------------------------------------
+Consider a Lagrangian particle with velocity $\uvec^+ = \uvec^+(t,\yvec)$ and position $\xvec^+(t,\yvec)$. The Lagrangian PDF $f_L = f_L(\Vvec, \xvec; t | \yvec)$ gives the probability that the particle that started at location $\yvec$ at the reference time $t_0$ will have a velocity $\Vvec$ and position $\xvec$ at time $t$. We'll also introduce the fine-grained Eulerian PDF $f'_L = f'_L(\Vvec, \xvec; t | \yvec)$, which is defined as 
+\begin{equation}
+    f'_L(\Vvec, \xvec; t | \yvec) = \delta(\uvec^+(t,\yvec) - \Vvec) \delta(\xvec^+(t,\yvec) - \xvec).
+\end{equation}
+Note: a delta function of a 3D argument means the following $\delta(\avec) = \delta(a_1) \delta(a_2) \delta(a_3) $. The Lagrangian PDF can be obtained from the fine-grained Lagrangian PDF using
+\begin{equation}
+    \label{eq:fine_lag_pdf}
+    f_L(\Vvec, \xvec; t | \yvec) = \langle f'_L(\Vvec, \xvec; t | \yvec) \rangle.
+\end{equation} 
+The proof is as follows,
+\begin{align}
+    \langle f'_L(\Vvec, \xvec; t | \yvec) \rangle &= \langle \delta( \uvec^+(t,\yvec) - \Vvec) \delta(\xvec^+(t,\yvec) - \xvec) \rangle \nonumber \\
+    &= \int \delta( \Vvec' - \Vvec) \delta ( \xvec' - \xvec) f(\Vvec', \xvec';t | \yvec) d\Vvec' d\xvec' \nonumber \\
+    &= f_L(\Vvec, \xvec; t | \yvec).
+\end{align}
+
+%-------------------------------------------------------------------------------
+\section{Relation between Lagrangian and Eulerian PDFs}
+%-------------------------------------------------------------------------------
+As a quick side note, we mention that the inverse of $\xvec^+$ is $\yvec^+ = \yvec^+(t,\zvec)$, which gives the initial location of a fluid particle that at time $t$ is located at position $\zvec$. Thus, $\xvec^+(t,\yvec^+(t,\zvec)) = \zvec$.
+
+We begin as follows
+\begin{align}
+\int f'_L(\Vvec,\xvec;t|\yvec) \, d\yvec &= \int \delta(\uvec^+(t,\yvec) - \Vvec) \delta(\xvec^+(t,\yvec) - \xvec) \, d\yvec \nonumber \\
+&= \int \delta(\uvec(\xvec^+(t,\yvec),t) - \Vvec) \delta(\xvec^+(t,\yvec) - \xvec) \, d\yvec \nonumber \\
+&= \int \delta(\uvec(\xvec^+(t,\yvec),t) - \Vvec) \delta(\xvec^+(t,\yvec) - \xvec) | \det D \xvec^+ | \, d\yvec,
+\end{align}
+where we have introduced $| \det D \xvec^+ |$, which is the absolute value of the determinant of the Jacobean $\partial \xvec^+/\partial \yvec$, and is equal to one for incompressible flows. Using integration by substitution we obtain
+\begin{equation}
+\int f'_L(\Vvec,\xvec;t|\yvec) \, d\yvec = \int \delta(\uvec(\zvec,t) - \Vvec) \delta(\zvec - \xvec) \, d\zvec = \delta(\uvec(\xvec,t) - \Vvec)
+\end{equation}
+Given the definition of $f'(\Vvec; \xvec, t)$, we have
+\begin{equation}
+    \label{eq:fine_eul_lag_pdf}
+    \int f'_L(\Vvec,\xvec;t|\yvec) \, d\yvec = f'(\Vvec; \xvec, t).
+\end{equation}
+Taking the expectation of the above we obtain
+\begin{equation}
+    \label{eq:eul_lag_pdf}
+    \int f_L(\Vvec,\xvec;t|\yvec) \, d\yvec = f(\Vvec;\xvec,t).
+\end{equation}
+
+A summary of all of the relations derived thus far is given by the following graph
+\setlength{\unitlength}{1cm}
+\begin{center}
+    \begin{picture}(12,2.5)(0,0)
+        \put(0.5,0){Eulerian PDF}
+        \put(8,0){Lagrangian PDF}
+            \put(8.0,0.1){\vector(-1,0){5.0}}
+            \put(4.5,0.2){\cref{eq:eul_lag_pdf}}
+        \put(-0.5,2){Eulerian fine-grained PDF}
+            \put(1.5,1.9){\vector(0,-1){1.5}}
+            \put(1.6,1.2){\cref{eq:fine_eul_pdf}}
+        \put(7,2){Lagrangian fine-grained PDF}
+            \put(9.0,1.9){\vector(0,-1){1.5}}
+            \put(9.1,1.2){\cref{eq:fine_lag_pdf}}
+            \put(7.0,2.1){\vector(-1,0){3.0}}
+            \put(4.7,2.2){\cref{eq:fine_eul_lag_pdf}}
+    \end{picture}
+\end{center}
+
+%-------------------------------------------------------------------------------
+\section{Evolution equation for fine-grained Eulerian PDF}
+%-------------------------------------------------------------------------------
+
+%-------------------------------------------------------------------------------
+\section{Evolution equation for fine-grained Lagrangian PDF}
+%-------------------------------------------------------------------------------
 
 \bibliographystyle{plainnat}
 \bibliography{library}

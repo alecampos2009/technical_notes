@@ -2203,32 +2203,10 @@ The first term in parenthesis of the right-hand side of the velocity evolution e
 %--------------------------------------------
 \subsection{Lagrangian probablity density functions}
 %--------------------------------------------
-
-As a quick side note, we mention that the inverse of $\xvec^+$ is $\yvec^+ = \yvec^+(t,\zvec)$, which gives the initial location of a fluid particle that at time $t$ is located at position $\zvec$. Thus, $\xvec^+(t,\yvec^+(t,\zvec)) = \zvec$.
-
-The Lagrangian PDF is given by $f_L = f_L(\Vvec,\xvec;t|\yvec)$, which is conditioned on the fluid particle being located at $\yvec$ at some initial time $t_0$. Here $\Vvec$ and $\xvec$ are the sample space variables for $\uvec^+$ and $\xvec^+$, respectively. $f_L$ can be obtained as follows 
+The Lagrangian PDF is given by $f_L = f_L(\Vvec,\xvec;t|\yvec)$, which is conditioned on the fluid particle being located at $\yvec$ at some initial time $t_0$. Here $\Vvec$ and $\xvec$ are the sample space variables for $\uvec^+$ and $\xvec^+$, respectively. The relation between the Lagrangian and Eulerian PDFs is derived in the appendix of my Plasma Physics notes. The result is
 \begin{equation}
-f_L = \langle f'_L \rangle,
-\end{equation}
-where $f'_L = f'_L(\Vvec,\xvec;t|\yvec)$ is the fine-grained Lagrangian PDF, which is given by
-\begin{equation}
-f'_L = \delta(\uvec^+ - \Vvec) \delta(\xvec^+ - \xvec).
-\end{equation}
-
-We will now derive the relationship between the Lagrangian and Eulerian PDFs. We start with
-\begin{align}
-\int f'_L(\Vvec,\xvec;t|\yvec) \, d\yvec &= \int \delta(\uvec^+(t,\yvec) - \Vvec) \delta(\xvec^+(t,\yvec) - \xvec) \, d\yvec \nonumber \\
-&= \int \delta(\uvec(t,\xvec^+(t,\yvec)) - \Vvec) \delta(\xvec^+(t,\yvec) - \xvec) \, d\yvec \nonumber \\
-&= \int \delta(\uvec(t,\xvec^+(t,\yvec)) - \Vvec) \delta(\xvec^+(t,\yvec) - \xvec) | \det D \xvec^+ | \, d\yvec,
-\end{align}
-where we have introduced $| \det D \xvec^+ |$, which is the absolute value of the determinant of the Jacobean $\partial \xvec^+/\partial \yvec$, and is equal to one for incompressible flows. Using integration by substitution we obtain
-\begin{equation}
-\int f'_L(\Vvec,\xvec;t|\yvec) \, d\yvec = \int \delta(\uvec(t,\zvec) - \Vvec) \delta(\zvec - \xvec) \, d\zvec = \delta(\uvec(t,\xvec) - \Vvec)
-\end{equation}
-$\delta(\uvec(t,\xvec) - \Vvec)$ is the fine-grained Eulerian PDF. Thus, taking the expectation of the above we finally obtain
-\begin{equation}
-\label{eul_lag}
-\int f_L(\Vvec,\xvec;t|\yvec) \, d\yvec = f(\Vvec;\xvec,t).
+    \label{eul_lag}
+    \int f_L(\Vvec,\xvec;t|\yvec) \, d\yvec = f(\Vvec;\xvec,t).
 \end{equation}
 
 %--------------------------------------------
