@@ -1411,15 +1411,13 @@ This equation was obtained by assuming steady inviscid flow along a streamline, 
 where $h_t$ is the stagnation enthalpy. This definition of stagnation enthalpy holds true even if we relax the assumptions of \cref{eq:bernoulli_enthalpy}, namely inviscid steady-state flow. This is because at any point in the domain, one can always imagine a hypothetical path that a particle follows as it decelerates to stagnation isentropically. At the end of this hypothetical path, the stagnation enthalpy would be computed as in \cref{eq:stagnation_enthalpy}. It is also interesting to note that the isentropic enthalpy reached as the particle isentropically decelerates to stagnation is independent of the path taken by the particle.
 
 %------------------------------------------------------------------------------------------------------------------------------------
-\section{Isentropic flow for a perfect gass}
+\section{Isentropic flow for a perfect gas}
 %------------------------------------------------------------------------------------------------------------------------------------
 If we compare \cref{eq:energy_form_pressure_2} (the pressure evolution equation for a perfect gas) with \cref{eq:energy_form_entropy} (the entropy evolution equation) we can write
 \begin{equation}
         \frac{1}{\gamma - 1} \rho^\gamma \frac{D}{D t} \left ( \frac{p}{\rho^\gamma} \right ) = \rho T \frac{Ds}{Dt}.
 \end{equation}
-If $Ds/Dt = 0$, that is, the flow is isentropic, then $p/\rho^\gamma$ is constant across each streamline.
-
-We now substitute $p = \rho R T$ to obtain,
+We now substitute $p = \rho R T$ on the right-hand side to obtain,
 \begin{equation}
     \frac{1}{\gamma - 1} \rho^\gamma \frac{D}{D t} \left ( \frac{p}{\rho^\gamma} \right ) = \frac{p}{R} \frac{Ds}{Dt}.
 \end{equation}
@@ -1434,11 +1432,24 @@ or
 The solution to the PDE above is
 \begin{equation}
     \label{eq:p_rho_gamma_along_streamline}
-    \ln \left ( \frac{p}{\rho^\gamma} \right ) = C + \frac{\gamma -1}{R} s,
+    \ln \left ( \frac{p}{\rho^\gamma} \right ) = c + \frac{\gamma -1}{R} s,
 \end{equation}
-where $C=C(\xvec,t)$ satisfies $DC/Dt = 0$. We can confirm this is the solution by simply taking $D/Dt$ of both sides. We now assume homentropic flow, that is 
+where $c=c(\xvec,t)$ satisfies $Dc/Dt = 0$. One can confirm this is the solution by simply taking $D/Dt$ of both sides. 
+
+Let's assume isentropic flow, that is 
 \begin{equation}
-    \partial s/\partial t = \nabla s = 0.
+\frac{Ds}{Dt} = 0. 
+\end{equation}
+Taking the $D/Dt$ derivative of \cref{eq:p_rho_gamma_along_streamline} gives
+\begin{equation}
+    \frac{D}{Dt} \left ( \frac{p}{\rho^\gamma} \right ) = 0.
+\end{equation}
+The solution to the above is $p = C \rho^\gamma$, where $C = C(\xvec,t)$ satisfies $DC/Dt = 0$. One can confirm this is the solution by simply substituting it in the equation above.
+
+We now assume homentropic flow, that is 
+\begin{equation}
+    \label{eq:homentropic_conditions_s}
+    \frac{\partial s}{\partial t} = \nabla s = 0.
 \end{equation}
 Additionally assume that flow enters through the domain boundary, and that at each point of the boundary we have
 \begin{equation}
@@ -1446,17 +1457,19 @@ Additionally assume that flow enters through the domain boundary, and that at ea
 \end{equation}
 Using each of the two equalities above in \cref{eq:p_rho_gamma_along_streamline} we get
 \begin{equation}
-    \left . \frac{\partial C}{\partial t} \right |_{\partial \Omega} = \left . \nabla C \right |_{\partial \Omega} = 0.
+    \left . \frac{\partial c}{\partial t} \right |_{\partial \Omega} = \left . \nabla c \right |_{\partial \Omega} = 0.
 \end{equation}
-Since $DC/Dt=0$, we can make the stronger statement that
+Since $Dc/Dt=0$, we can make the stronger statement that
 \begin{equation}
-    \frac{\partial C}{\partial t} = \nabla C = 0.
+    \label{eq:homentropic_conditions_c}
+    \frac{\partial c}{\partial t} = \nabla c = 0.
 \end{equation}
-Using each of the two equalities above in \cref{eq:p_rho_gamma_along_streamline} we finally obtain
+Using \cref{eq:homentropic_conditions_s,eq:homentropic_conditions_c} in \cref{eq:p_rho_gamma_along_streamline} we finally obtain
 \begin{equation}
     \label{eq:p_rho_gamma_homentropic}
     \frac{\partial}{\partial t} \left ( \frac{p}{\rho^\gamma} \right ) = \nabla \left ( \frac{p}{\rho^\gamma} \right ) = 0.
 \end{equation}
+The solution to the above is $p = C \rho^\gamma$, where $C$ is a constant across space and time.
 
 If we have isentropic flow, then the flow variables at two different states can be linked as follows
 \begin{equation}

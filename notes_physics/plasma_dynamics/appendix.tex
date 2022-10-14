@@ -1,0 +1,654 @@
+%###############################################################################
+%
+%
+\part{Appendices}
+%
+%
+%###############################################################################
+\appendix
+
+\chapter{Electromagnetism}
+This appendix first focuses on electrostatics and magnetostatics, which can be understood as follows
+\begin{align}
+    \text{stationary charges} &\to \text{constant electric fields} = \text{electrostatics} \nonumber \\
+    \text{stationary currents} &\to \text{constant magnetic fields} = \text{magnetostatics} .
+\end{align}
+
+%--------------------------------------------------------------------------
+\section{Electrostatics}
+%--------------------------------------------------------------------------
+\begin{itemize}
+
+\item Coulomb's Law
+\begin{equation}
+\Fvec = \frac{1}{4 \pi \epsilon_0} \frac{q Q}{r^2} \hat{\rvec}
+\end{equation}
+
+\item Electric Field $\Evec$ derived from $\Fvec = Q\Evec$
+\begin{equation}
+\Evec = \frac{1}{4 \pi \epsilon_0} \frac{q}{r^2} \hat{\rvec}
+\end{equation}
+
+\item If there are multiple point charges
+\begin{equation}
+\Evec = \frac{1}{4 \pi \epsilon_0} \sum_{i=1}^{n} \frac{q_i}{r_i^2} \hat{\rvec}_i
+\end{equation}
+
+\item \textbf{Charge distributions and fields:} if the charges are so small and so numerous that they can be described using a continuous distribution (i.e.\@ $q_i \to dq = \rho d\tau$, where $\rho$ is a charge density and $d\tau$ and infinitesimal volume)
+\begin{equation}
+\Evec = \frac{1}{4 \pi \epsilon_0} \int \frac{\rho(\rvec')}{r^2} \hat{\rvec} d\tau' \label{eq:efield_from_den}
+\end{equation}
+If the charge distribution is localized to a surface or a line, then the analogous of the above is
+\begin{equation}
+    \Evec = \frac{1}{4 \pi \epsilon_0} \int \frac{\sigma(\rvec')}{r^2} \hat{\rvec} da' \qquad \text{or} \qquad \Evec = \frac{1}{4 \pi \epsilon_0} \int \frac{\lambda(\rvec')}{r^2} \hat{\rvec} dl'
+\end{equation}
+
+Taking the divergence and curl of \cref{eq:efield_from_den}:
+\begin{align}
+\nabla \cdot \Evec &= \frac{1}{\epsilon_0} \rho \\
+\nabla \times \Evec &= 0
+\end{align}
+
+\item \textbf{Fields and potentials}\\
+Since $\nabla \times \Evec = 0$ we have 
+\begin{equation}
+\label{eq:efield_from_potential}
+\Evec = -\nablavec V.
+\end{equation}
+where $V$ is the electric potential. Fundamental theorem of calculus can be used to express the potential $V(\rvec)$ as
+\begin{equation}
+V(\rvec) - V(\mathcal{O}) = -\int_\mathcal{O}^\rvec \Evec \cdot d\lvec
+\end{equation}
+where $\mathcal{O}$ is the reference point, at which one usually defines $V(\mathcal{O}) = 0$ (e.g. sea-level as the altitude at which height is equal to zero). 
+
+\item \textbf{Charge distributions and potentials}\\
+Divergence of \cref{eq:efield_from_potential} gives
+\begin{equation}
+\nabla^2 V = - \frac{1}{\epsilon_0} \rho
+\end{equation}
+whose solution is
+\begin{equation}
+V = \frac{1}{4 \pi \epsilon_0} \int \frac{\rho(\rvec')}{r} d\tau'.
+\end{equation}
+
+\item Define potential energy $U$ as the negative of the work required to move charge $Q$ from $\avec$ to $\bvec$.
+\begin{equation}
+U = -\int_\avec^\bvec \Fvec \cdot d\lvec = Q [ V(\bvec) - V(\avec) ]
+\end{equation}
+If the reference point is infinity, then $U(\rvec) = Q V(\rvec)$.
+
+\item Potential energy of a set of charges $q_i$ 
+\begin{equation}
+\label{eq:Udiscrete}
+U = \frac{1}{4 \pi \epsilon_0} \sum^n_{i=1} \sum^n_{j = i+1} \frac{q_i q_j}{r_{ij}} = \frac{1}{2} \sum_{i=1}^{n} q_i \left ( \sum_{j = 1, j \ne i}^{n} \frac{1}{4 \pi \epsilon_0} \frac{q_j}{r_{ij}} \right ) = \frac{1}{2} \sum_{i=1}^{n} q_i V(\rvec_i)
+\end{equation}
+where $V(\rvec_i)$ is the potential due to all charges except the one at $\rvec_i$. The continuous form is
+\begin{equation}
+\label{eq:Uconti}
+U = \frac{1}{2} \int \rho V \, d\tau = \frac{\epsilon_0}{2} \int E^2 \, d\tau
+\end{equation}
+were now $V$ represents the potential due to all charges. Thus, if $\rho$ is such that it defines a set of point charges (e.g. $\delta(\rvec)$), then \cref{eq:Uconti} would be equal to \cref{eq:Udiscrete} plus the additional terms corresponding to $i=j$. Those additional terms correspond to the energy required to create point charges, which is infinity. 
+
+\item Electrostatic conductors: materials whose charges are free to move but are in a state of electrostatic equilibrium. $\Evec = 0$ inside, since if it were not, then charges would move and the material would not be in electrostatic equilibrium. As a consequence, $\rho = 0$ inside, all the charge is on the surface, and $\Evec$ is perpendicular to the outer surface.
+
+\item If there is a cavity within the conductor, and within the cavity a charge $q$, an amount $-q$ of charge will reside in the inner surface, and an amount $q$ on the outer surface, and that configuration will lead to $\Evec = 0$ inside the conductor.
+
+\item Faraday cage: if there are no charges within such cavity, then $\Evec = 0$ within the cavity as well, regardless of how many charges are outside the conductor. If $\Evec$ was not zero inside the cavity, then its field lines would start and end on the cavity walls. Letting the field lines be part of a closed loop, the rest of which is inside the conductor, then the line integral along the closed loop would be positive, in violation of $\nabla \times \Evec = 0$.
+
+\item A capacitor consists of two conductors, one with charge $Q$ and the other with charge $-Q$. The constant of proportionality between $Q$ and the voltage difference between the two conductors is the capacitance $C = Q/V$. The energy stored in a capacitor is $W = \frac{1}{2} CV^2$.
+
+\end{itemize}
+
+%--------------------------------------------------------------------------
+\section{Magnetostatiscs}
+%--------------------------------------------------------------------------
+\begin{itemize}
+
+\item Lorentz force law: $\Fvec = Q [\Evec + \vvec \times \Bvec ]$
+
+\item Given the charge densities $\lambda$, $\sigma$, and $\rho$
+\begin{itemize}
+\item Current [Amperes]: the amount of charge that passes a point in a small amount of time.
+\begin{equation}
+\Ivec = \lambda \vvec
+\end{equation}
+
+\item Surface current density: the amount of charge that passes a line in a small amount of time.
+\begin{equation}
+\Kvec = \sigma \vvec
+\end{equation}
+
+\item Volume current density: the amount of charge that passes an area in a small amount of time.
+\begin{equation}
+\Jvec = \rho \vvec
+\end{equation}
+\end{itemize}
+
+\item Magnetic component of Lorentz force
+\begin{equation}
+\Fvec_{\text{mag}} = \int \Ivec \times \Bvec \, dl = \int \Kvec \times \Bvec \, da = \int \Jvec \times \Bvec \, d\tau
+\end{equation}
+
+\item Conservation of current
+\begin{equation}
+\frac{\partial \rho}{\partial t} + \nabla \cdot \Jvec = 0
+\end{equation}
+
+\item \textbf{Charge currents and fields}
+\begin{align}
+\Bvec &= \frac{\mu_0}{4\pi} \int \frac{\Ivec(\rvec') \times \hat{\rvec}}{r^2}\, dl' \\
+\Bvec &= \frac{\mu_0}{4\pi} \int \frac{\Kvec(\rvec') \times \hat{\rvec}}{r^2}\, da' \\
+\Bvec &= \frac{\mu_0}{4\pi} \int \frac{\Jvec(\rvec') \times \hat{\rvec}}{r^2}\, d\tau' \label{eq:bfield_from_den}
+\end{align}
+
+Taking the divergence and curl of \cref{eq:bfield_from_den}:
+\begin{align}
+\nabla \cdot \Bvec &= 0 \\
+\nabla \times \Bvec &= \mu_0 \Jvec \label{eq:amperes_law}
+\end{align}
+
+
+\item A steady straight-line current leads to a circular magnetic field around it. A steady circular current leads to a straight magnetic field line along the axis of the circle.
+
+\item \textbf{Fields and potentials} \\
+Since $\nabla \cdot \Bvec = 0$  we have 
+\begin{equation} \Bvec = \nabla \times \Avec \end{equation}
+where $\Avec$ is the magnetic vector potential. 
+
+\item \textbf{Charge currents and potentials} \\
+The magnetic field is not altered if a function whose curl vanishes (that is $\nabla \lambda$ ) is added to $\Avec$. Thus, $\lambda$ can be picked to make $\Avec$ divergence-less. Taking the curl of $\Bvec$ then leads to 
+\begin{equation}
+\nabla^2 \Avec = -\mu_0 \Jvec, 
+\end{equation}
+whose solution is
+\end{itemize}
+\begin{equation}
+\Avec(\rvec) = \frac{\mu_0}{4 \pi } \int \frac{ \Jvec(\rvec')}{r} d\tau'.
+\end{equation}
+
+%--------------------------------------------------------------------------
+\section{Electric Fields in Matter}
+%--------------------------------------------------------------------------
+
+%--------------------------------------------------------------------------
+\section{Magnetic Fields in Matter}
+%--------------------------------------------------------------------------
+
+%--------------------------------------------------------------------------
+\section{Electrodynamics}
+%--------------------------------------------------------------------------
+
+%--------------------------------------------
+\subsection{Ohm's Law}
+%--------------------------------------------
+\begin{itemize}
+\item Ohm's law refers to the proportionality between the force per unit charge applied to charged elements and the resulting volume current that occurs. That is,
+\begin{equation}
+\Jvec = \sigma \fvec, 
+\end{equation}
+where $\fvec$ is the force per unit charge, and the proportionality $\sigma$ is the conductivity. If one neglects the magnetic contribution to $\fvec$, which is typically done for non-plasmas, then
+\begin{equation}
+\Jvec = \sigma \Evec.
+\end{equation}
+For steady currents ($\partial \rho/\partial t = 0$) and uniform conductivity
+\begin{equation}
+\nabla \cdot \Evec = \frac{1}{\sigma} \nabla \cdot \Jvec = 0
+\end{equation}
+ and thus, the charge density is zero. This is similar to a conductor, but now we have charges moving.
+
+\item Similarly, given an applied voltage, a current will result. The constant of proportionality $R$, known as the resistance, is given by 
+\begin{equation}
+V = IR.
+\end{equation}
+
+\end{itemize}
+
+%--------------------------------------------
+\subsection{Electromagnetic induction}
+%--------------------------------------------
+
+\begin{itemize} 
+\item Defined the electromotive force (emf) as
+\begin{equation}
+\mathcal{E} = \oint \fvec \cdot d \lvec
+\end{equation}
+
+\item The universal flux rule states: whenever the magnetic flux through a loop
+\begin{equation}
+\Phi = \int \Bvec \cdot d\avec
+\end{equation}
+changes, an emf
+\begin{equation}
+\label{eq:flux_rule}
+\mathcal{E} = -\frac{d \Phi}{dt}
+\end{equation}
+will appear in the loop. This can occur in two ways:
+\begin{enumerate}
+\item Magnetic field doesn't change, loop changes:\\
+For example, a loop of wire is pulled to the right through a constant magnetic field. In this case the emf is magnetic.
+\item Magnetic field changes, loop doesn't change:\\
+There is a stationary loop (any loop, not necessarily a physical loop of wire), and the magnetic field through it changes. In this case, the \textbf{changing magnetic field induces an electric field} and thus the emf is electric. Using \cref{eq:flux_rule} we get \textbf{Faraday's law}
+\begin{equation}
+\oint \Evec \cdot d\lvec = - \int \frac{ \partial \Bvec }{\partial t} \cdot d\avec,
+\end{equation}
+which, in differential form is
+\begin{equation}
+\nabla \times \Evec = -\frac{ \partial \Bvec}{\partial t}.
+\end{equation}
+\end{enumerate}
+
+\item Lenz's law:
+Nature abhors a change in flux. Thus, as the magnetic flux changes and it induces an electric field over a loop, the resulting current goes in a direction such that it would create an opposing flux that tries to cancel the original change in magnetic flux.
+
+\item Mutual inductance:\\
+If there is a steady current going through a wire loop, this will create a magnetic field and thus a magnetic flux through another wire loop close by. The constant of proportionality between the flux through the second loop and the current in the first is the mutual inductance M. That is
+\begin{equation}
+\Phi_2 = M_{21} I
+\end{equation}
+
+Note: If I ran the same current on loop two, then the flux in loop one would be $\Phi_1 = M_{12} I$. However, it can be shown that $M_{21} = M_{12}$ and thus $\Phi_1 = \Phi_2$.
+
+Now, imagine the current in loop one changes in time. The magnetic field associated with that current changes in time, and thus the magnetic flux through loop two changes as well. That is,
+\begin{equation}
+\Phi_2(t) = M I_1(t).
+\end{equation}
+Due to Faraday's law an induced emf would be created in the second loop, \begin{equation}
+\mathcal{E}_2(t) = - M \frac{d I(t)}{dt}.
+\end{equation}
+This emf creates a current $I_2(t)$ in the second loop.
+
+\item Self inductance:\\
+The changing magnetic field associated with the changing current in loop one also creates a changing flux within this loop. This is given by
+\begin{equation}
+\Phi_1(t) = L I_1(t),
+\end{equation}
+where $L$ is the self-inductance. Again, the changing flux leads to an emf within loop one, called the back emf
+\begin{equation}
+\mathcal{E}(t) = - L \frac{d I(t)}{dt}.
+\end{equation}
+This emf drives a new current in loop one that opposes the original current change.
+
+\item The energy stored in magnetic fields is given by
+\begin{equation}
+W = \frac{1}{2} \int \Avec \cdot \Jvec \, d\tau = \frac{1}{2\mu_0} \int B^2 \, d\tau.
+\end{equation}
+
+\item Ampere's law \cref{eq:amperes_law} was derived using assumptions of magnetostatics. Maxwell extended Ampere's law to work for magnetodynamics, so that the divergence of \cref{eq:amperes_law} would actually give zero on both sides. Thus, Maxwell's equations are
+\begin{align}
+\nabla \cdot \Evec &= \frac{\rho}{\epsilon_0} \\
+\nabla \cdot \Bvec &= 0 \\
+\nabla \times \Evec &= -\frac{ \partial \Bvec}{\partial t} \\
+\nabla \times \Bvec &= \mu_0 \Jvec + \mu_0 \epsilon_0 \frac{\partial \Evec}{ \partial t}.
+\end{align}
+
+\item As shown earlier, Faraday's law indicates that a changing magnetic field induces an electric field. Maxwell's correction to Ampere's law then indicates that a changing electric field induces a magnetic field. 
+
+\end{itemize}
+
+%--------------------------------------------------------------------------
+\section{Conservation Laws}
+%--------------------------------------------------------------------------
+%--------------------------------------------
+\subsection{Conservation of energy}
+%--------------------------------------------
+\begin{itemize}
+    \item Suppose you assemble a distribution of charges and currents, which at time $t$ produce fields $\Evec$ and $\Bvec$.
+    \item The potential energy of the system, as shown in previous sections, would be
+    \begin{equation}
+        U_{em} = \frac{1}{2} \left ( \epsilon_0 E^2 + \frac{1}{\mu_0} B^2 \right ).
+    \end{equation}
+    \item The question then arises, how much energy would be transferred to the charges as these charges are allowed to move?
+    \item Label $U_{mech}$ as the energy density gained by these charges as they are allowed to move.
+    \item The evolution of $U_{mech}$ is then
+    \begin{equation}
+        \frac{\partial U_{mech}}{\partial t} = -\frac{\partial U_{em}}{\partial t} - \nabla \cdot \Svec.
+    \end{equation}
+    In the above $\Svec$ is the pointing vector and is defined as 
+    \begin{equation}
+        \Svec = \frac{1}{\mu_0} ( \Evec \times \Bvec ).
+    \end{equation}
+    It represents the flux of energy across space.
+    \item As the evolution equation above shows, a decreasing potential energy in the electromagnetic field constitutes a transfer of this lost energy to that of the charges. 
+    \item In integral form, we write the above as 
+    \begin{equation}
+        \frac{d}{dt} \int_V U_{mech} \, d\tau = -\frac{d}{dt} \int_V U_{em} \, d\tau - \oint \Svec \cdot d\avec.
+    \end{equation}
+\end{itemize}
+
+%--------------------------------------------
+\subsection{Conservation of momentum}
+%--------------------------------------------
+\begin{itemize}
+    \item We now ask, how much momentum would be transferred to the charges as these are allowed to move?
+    \item Label $P_{mech}$ as the momentum density gained by the charges as they move around.
+    \item Label $P_{em}$ as the momentum density stored in the electromagnetic fields themselves. This is defined as 
+    \begin{equation}
+        P_{em} = \mu_0 \epsilon_0 \Svec.
+    \end{equation}
+    \item The evolution of $P_{mech}$ is then
+    \begin{equation}
+        \frac{\partial P_{mech}}{\partial t} = -\frac{\partial P_{em}}{\partial t} + \nabla \cdot \Tvec.
+    \end{equation}
+    In the above $\Tvec$ is the Maxwell stress tensor and is defined as 
+    \begin{equation}
+        T_{ij} = \epsilon_0 \left ( E_i E_j - \frac{1}{2} \delta_{ij} E^2 \right ) + \frac{1}{\mu_0} \left ( B_i B_j - \frac{1}{2} \delta_{ij} B^2 \right ).
+    \end{equation}
+    It represents the flux of momentum across space.
+    \item As the evolution equation above shows, a decreasing momentum in the electromagnetic field constitutes a transfer of this lost momentum to that of the charges. 
+    \item In integral form, we write the above as 
+    \begin{equation}
+        \frac{d}{dt} \int_V P_{mech} \, d\tau = -\frac{d}{dt} \int_V P_{em} \, d\tau + \oint \Tvec \cdot d\avec.
+    \end{equation}
+\end{itemize}
+%--------------------------------------------------------------------------
+\section{Electromagnetic waves}
+%--------------------------------------------------------------------------
+
+%--------------------------------------------
+\subsection{Simple waves}
+%--------------------------------------------
+\begin{itemize}
+\item The simplest kind of waves can be written as
+\begin{equation}
+    u(x,t) = A \sin\left ( \frac{2 \pi}{\lambda}x - \frac{2 \pi}{T} t +\phi \right)
+\end{equation}
+where
+\begin{align*}
+    A:&\, \text{magnitude} \\
+    \lambda:&\, \text{wavelength} \\
+    T:&\, \text{period} \\
+    \phi:&\, \text{phase constant}
+\end{align*}
+Thus, as $x$ goes from zero to $\lambda$, for example, an additional $2\pi$ value is added to the argument of the $\sin$, and thus a whole wave is traversed in space. Similarly, as $t$ goes from zero to $T$, an additional $2\pi$ value is added to the argument of the $\sin$, and thus a whole wave is traversed in time.
+
+\item Defining the wavevector and angular frequency as
+\begin{equation}
+    k = \frac{2 \pi}{\lambda} \qquad w = \frac{2 \pi}{T},
+\end{equation}
+then
+\begin{equation}
+    u(x,t) = A \sin(kx - wt + \phi),
+\end{equation}
+
+\item The frequency $\nu$ is the inverse of the period, $\nu = 1/T$.
+
+\item By inspecting the form of the simple sinusoidal wave above, it is clear that the velocity of the wave is
+\begin{equation}
+    v = \frac{w}{k} = \frac{\lambda}{T} = \lambda \nu.
+\end{equation}
+
+\item A general wave can be Fourier decomposed as follows
+\begin{equation}
+    u(x,t) = \sum_n \hat{u}_n e^{i \left ( k_n z - wt + \phi \right )},
+\end{equation}
+where $k_n = 2 \pi n/ L$. The above is often re-written as
+\begin{equation}
+    u(x,t) = \sum_n \tilde{u}_n e^{i \left ( k_n z - wt \right )},
+\end{equation}
+where $\tilde{u}_n = \hat{u}_n e^{i\phi}$.
+
+\item For the more general three-dimensional case, a wave is decomposed as follows
+\begin{equation}
+    \label{eq:electrodynamics_3d_wave}
+    \uvec(x,t) = \sum_{\nvec} \tilde{\uvec}_{\nvec} e^{i \left ( \kvec_{\nvec} \cdot \xvec - wt \right )},
+\end{equation}
+where $\kvec_{\nvec} = 2 \pi \nvec / L$ and $\nvec = [n_1, n_2, n_3]$.
+
+\item A plane wave is one for which the only existing $\kvec_{\nvec}$'s point along a single direction. Without loss of generality, we can assume this direction is the $z$ direction and thus write
+\begin{equation}
+    \uvec(x,t) = \sum_{n_3} \tilde{\uvec}_{n_3} e^{i \left ( k_{n_3} \cdot z - wt \right )},
+\end{equation}
+
+\end{itemize}
+
+%--------------------------------------------
+\subsection{Electromagnetic waves in vacuum}
+%--------------------------------------------
+\begin{itemize}
+    \item The application of \cref{eq:electrodynamics_3d_wave} to electric and magnetic fields gives 
+    \begin{equation}
+        \label{eq:electrodynamics_E_wave_def}
+        \Evec = \sum_{\nvec} \tilde{\Evec}_{\nvec} e^{i \left ( \kvec_{\nvec} \cdot \xvec - wt \right )},
+    \end{equation}
+    and 
+    \begin{equation}
+        \label{eq:electrodynamics_B_wave_def}
+        \Bvec = \sum_{\nvec} \tilde{\Bvec}_{\nvec} e^{i \left ( \kvec_{\nvec} \cdot \xvec - wt \right )}.
+    \end{equation}
+    \item For $\rho = \Jvec = 0$, Maxwell's equations can be combined to give the wave equations for $\Evec$ and $\Bvec$, that is,
+    \begin{equation}
+        \label{eq:electrodynamics_E_wave_eq}
+        \frac{\partial^2 \Evec}{\partial t^2} - \frac{1}{\epsilon_0 \mu_0} \nabla^2 \Evec = 0,
+    \end{equation}
+    \begin{equation}
+        \label{eq:electrodynamics_B_wave_eq}
+        \frac{\partial^2 \Bvec}{\partial t^2} - \frac{1}{\epsilon_0 \mu_0} \nabla^2 \Bvec = 0.
+    \end{equation}
+    The speed of electromagnetic waves is thus $c=1/\sqrt{\epsilon_0 \mu_0}$.
+
+    \item Using \cref{eq:electrodynamics_E_wave_def} in $\nabla \cdot \Evec = 0$ gives $\kvec_n \cdot \tilde{\Evec}_{\nvec} = 0$. That is, the $\Evec$ field is orthogonal to the direction of propagation of the mode.
+    
+    \item Using \cref{eq:electrodynamics_B_wave_def} in $\nabla \cdot \Bvec = 0$ gives $\kvec_n \cdot \tilde{\Bvec}_{\nvec} = 0$. That is, the $\Bvec$ field is orthogonal to the direction of propagation of the mode.
+    
+    \item Using \cref{eq:electrodynamics_E_wave_def,eq:electrodynamics_B_wave_def} in $\nabla \times \Evec = -\partial \Bvec / \partial t$ gives $\kvec_{\nvec} \times \tilde{\Evec}_{\nvec} = w \tilde{\Bvec}_{\nvec}$. That is, the $\Bvec$ field is orthogonal to the $\Evec$ field.
+
+\end{itemize}
+
+%--------------------------------------------------------------------------------------------------------------------------------------------
+\chapter{Nuclear Fusion}
+%--------------------------------------------------------------------------------------------------------------------------------------------
+
+%--------------------------------------------------------------------------
+\section{Basic definitions}
+%--------------------------------------------------------------------------
+
+\begin{itemize}
+
+\item Atomic number ($Z$): \# of protons
+
+\item Mass number ($A$): \# of protons + \# of neutrons
+
+\item Atomic mass ($m_a$): mass of a particular isotope of an element.
+
+\item Relative atomic mass ($A_r$): (also known as atomic weight). Average of the atomic masses of all the different isotopes in a sample, with each isotope's contribution to the average determined by how big a fraction of the sample it makes up.
+
+\item Atomic mass unit ($u$): unit of mass, equivalent to $\frac{1}{12}$ the mass of a carbon-12 atom. That is 
+\begin{equation}
+\label{eq:def_amu}
+1u = \frac{m_c}{12}.
+\end{equation}
+where $m_c$ is the mass of a carbon-12 atom, in grams. Think of $u$ as similar to a microgram.
+
+\item Mole: \# of elementary entities equal to \# of atoms in 12 grams of carbon-12. That is,
+\begin{equation}
+1 mol = \frac{12g}{m_c}
+\end{equation}
+Using \cref{eq:def_amu}, we get
+\begin{equation}
+\label{eq:u_g_mol}
+1u = \frac{1}{mol} g.
+\end{equation}
+The value of the mole is $6.02214086 \times 10^{23}$.
+
+\item Molar mass ($M$): 
+\begin{itemize}
+    \item If it is an atom (e.g.\@ Carbon, $C$), then it is its atomic weight, but one uses \cref{eq:u_g_mol} to express the value in $g/mol$. 
+    \item If it is a compound (e.g.\@ Methane, $CH_4$), simply add up the atomic weights of each atom in the molecule, and again, express the result in $g/mol$.
+    \item If it is a mixture (e.g.\@ air, $N_2,O_2,Ar,CO_2,...$), then it is the weighted average of the atomic weights of the constituents, and the result again is expressed in $g/mol$.
+\end{itemize}
+
+\item Avogadro's number ($N_a$): a conversion factor so that things can be measured in terms of moles. 
+\begin{equation}
+    N_a = \frac{6.02214086 \times 10^{23}}{mol} 
+\end{equation}
+
+%--------------------------------------------------------------------------
+\section{The fusion reaction}
+%--------------------------------------------------------------------------
+\item The fundamental relation for nuclear reactions is $E = m c^2$. A mass $m$ can be transformed into energy $E$, and viceversa. Two examples for $m$ are the following:
+\begin{itemize}
+\item Defect mass ($Dm$): the difference in mass between the atom and the sum of its constituents,
+\begin{equation}
+Dm = N m_n + Z m_p - m_a.
+\end{equation}
+For carbon
+\begin{equation}
+Dm = 6 \times 1.008664 u + 6 \times 1.007276 u - 12u = 0.09564 u.
+\end{equation}
+For fluorine
+\begin{equation}
+Dm = 10 \times 1.008664 u + 9 \times 1.007276 u - 18.998403u = 0.154 u.
+\end{equation}
+The binding energy is then the energy corresponding to the mass defect as given by  $E = (Dm)c^2$.
+
+\item Mass change of a fusion reaction:
+\begin{equation}
+m = \text{mass of particles before reaction} - \text{mass of particles after reaction} 
+\end{equation}
+Consider the DT reaction as an example, then we have
+\begin{equation}
+m = 2.013553u \;(D) + 3.015501u \;(T) - 4.001503u \;(\alpha) - 1.008665u \;(n) = 0.018886u
+\end{equation}
+The above mass translates to $E_f = mc^2 = 17.6MeV$.
+\end{itemize}
+
+\item Momentum conservation:\\
+Lets assume the particles before a fusion reaction move sufficiently slow that their velocities can be neglected. Conservation of momentum thus gives
+\begin{equation}
+0 = m_1 v_1 + m_2 v_2,
+\end{equation}
+where $m_1$, $m_2$, $v_1$, $v_2$ are the mass and velocity of particles after the reaction.
+
+\item Energy conservation: \\
+Energy is not conserved since some of the mass is converted to energy. The energy balance can be written as $E_{after} - E_{before} = E_f$. Assuming again that the particles before a fusion reaction move sufficiently slow, then
+\begin{equation}
+\frac{1}{2} m_1 v_1^2 + \frac{1}{2} m_2 v_2^2 = E_f,
+\end{equation}
+where $E_f$ is obtained from Einstein's equation.
+
+%-------------------------------------------------------------------------------
+\section{Fusion power density}
+%-------------------------------------------------------------------------------
+The fusion power density $S_f$ is the fusion energy produced per unit volume per unit time. Label the energy generated by each fusion collision between particles 1 and 2 by $E_f$, and the number of those fusion collisions per unit volume per unit time (also known as reaction rate) as $R_{12}$. Then the fusion power density is given by 
+\begin{equation}
+    S_f = E_f R_{12}.
+\end{equation}
+We note that $E_f$ is an energy released by the reaction (it can either be the total energy, the energy carried out by the alpha particles only, the energy carried out by the neutrons only, etc.). 
+
+The reaction rate between two distinct particle is given by
+\begin{align}
+    R_{12} = n_1 n_2 \langle \sigma v \rangle,
+\end{align}
+where $n_1$ and $n_2$ are the number densities of particles 1 and 2, respectively. The expected value $\langle \sigma v \rangle$ is given by
+\begin{equation}
+    \langle \sigma v \rangle = \frac{1}{n_1 n_2} \int_\Rthree \int_\Rthree f_1(\vvec_1) f_2(\vvec_2) \sigma(v) v \, d\vvec_1 d\vvec_2.
+\end{equation}
+Thus, the fusion power density can be expressed as
+\begin{equation}
+    S_f = E_f \int_\Rthree \int_\Rthree f_1(\vvec_1) f_2(\vvec_2) \sigma(v) v \, d\vvec_1 d\vvec_2.
+\end{equation}
+Using the definition of the cross-section \cref{eq:def_cross_section}, the above becomes
+\begin{equation}
+    S_f = E_f \int_\Rthree \int_\Rthree \int_0^{2\pi} \int_0^\infty f_1(\vvec_1) f_2(\vvec_2) F(v,b) v b \, db d\phi d\vvec_1 d\vvec_2.
+\end{equation}
+For cases in which we are not interested in the energy generated by the collision, but instead on some other physical property associated with the collision (for example change in momentum rather than change in energy) then the above needs to be generalized. Thus, we would use
+\begin{equation}
+    S = \int_\Rthree \int_\Rthree \int_0^{2\pi} \int_0^\infty f_1(\vvec_1) f_2(\vvec_2) E(v,b) F(v,b) v b \, db d\phi d\vvec_1 d\vvec_2,
+\end{equation}
+where $E(v,b)$ is the physical property associated with the collision.
+
+\end{itemize}
+
+%--------------------------------------------------------------------------------------------------------------------------------------------
+\chapter{Lagrangian and Eulerian PDFs}
+%--------------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------
+\section{Eulerian PDF}
+%-------------------------------------------------------------------------------
+Consider an Eulerian velocity field $\uvec = \uvec(\xvec,t)$. The Eulerian PDF $f = f(\Vvec; \xvec,t)$ gives the probability that the velocity field will have a value of $\Vvec$ at location $\xvec$ and at time $t$. We'll also introduce the fine-grained Eulerian PDF $f' = f'(\Vvec;\xvec,t)$, which is defined as 
+\begin{equation}
+    f'(\Vvec; \xvec, t) = \delta(\uvec(\xvec,t) - \Vvec).
+\end{equation}
+Note: a delta function of a 3D argument means the following $\delta(\avec) = \delta(a_1) \delta(a_2) \delta(a_3) $. The Eulerian PDF can be obtained from the fine-grained Eulerian PDF using 
+\begin{equation}
+    \label{eq:fine_eul_pdf}
+    f(\Vvec; \xvec, t)=\langle f'(\Vvec; \xvec, t) \rangle.
+\end{equation}
+The proof is as follows,
+\begin{align}
+    \langle f'(\Vvec; \xvec, t) \rangle &= \langle \delta( \uvec(\xvec,t) - \Vvec) \rangle \nonumber \\
+    &= \int \delta( \Vvec' - \Vvec) f(\Vvec';\xvec,t) d\Vvec' \nonumber \\
+    &= f(\Vvec; \xvec, t).
+\end{align}
+
+%-------------------------------------------------------------------------------
+\section{Lagrangian PDF}
+%-------------------------------------------------------------------------------
+Consider a Lagrangian particle with velocity $\uvec^+ = \uvec^+(t,\yvec)$ and position $\xvec^+(t,\yvec)$. The Lagrangian PDF $f_L = f_L(\Vvec, \xvec; t | \yvec)$ gives the probability that the particle that started at location $\yvec$ at the reference time $t_0$ will have a velocity $\Vvec$ and position $\xvec$ at time $t$. We'll also introduce the fine-grained Eulerian PDF $f'_L = f'_L(\Vvec, \xvec; t | \yvec)$, which is defined as 
+\begin{equation}
+    f'_L(\Vvec, \xvec; t | \yvec) = \delta(\uvec^+(t,\yvec) - \Vvec) \delta(\xvec^+(t,\yvec) - \xvec).
+\end{equation}
+Note: a delta function of a 3D argument means the following $\delta(\avec) = \delta(a_1) \delta(a_2) \delta(a_3) $. The Lagrangian PDF can be obtained from the fine-grained Lagrangian PDF using
+\begin{equation}
+    \label{eq:fine_lag_pdf}
+    f_L(\Vvec, \xvec; t | \yvec) = \langle f'_L(\Vvec, \xvec; t | \yvec) \rangle.
+\end{equation} 
+The proof is as follows,
+\begin{align}
+    \langle f'_L(\Vvec, \xvec; t | \yvec) \rangle &= \langle \delta( \uvec^+(t,\yvec) - \Vvec) \delta(\xvec^+(t,\yvec) - \xvec) \rangle \nonumber \\
+    &= \int \delta( \Vvec' - \Vvec) \delta ( \xvec' - \xvec) f(\Vvec', \xvec';t | \yvec) d\Vvec' d\xvec' \nonumber \\
+    &= f_L(\Vvec, \xvec; t | \yvec).
+\end{align}
+
+%-------------------------------------------------------------------------------
+\section{Relation between Lagrangian and Eulerian PDFs}
+%-------------------------------------------------------------------------------
+As a quick side note, we mention that the inverse of $\xvec^+$ is $\yvec^+ = \yvec^+(t,\zvec)$, which gives the initial location of a fluid particle that at time $t$ is located at position $\zvec$. Thus, $\xvec^+(t,\yvec^+(t,\zvec)) = \zvec$.
+
+We begin as follows
+\begin{align}
+\int f'_L(\Vvec,\xvec;t|\yvec) \, d\yvec &= \int \delta(\uvec^+(t,\yvec) - \Vvec) \delta(\xvec^+(t,\yvec) - \xvec) \, d\yvec \nonumber \\
+&= \int \delta(\uvec(\xvec^+(t,\yvec),t) - \Vvec) \delta(\xvec^+(t,\yvec) - \xvec) \, d\yvec \nonumber \\
+&= \int \delta(\uvec(\xvec^+(t,\yvec),t) - \Vvec) \delta(\xvec^+(t,\yvec) - \xvec) | \det D \xvec^+ | \, d\yvec,
+\end{align}
+where we have introduced $| \det D \xvec^+ |$, which is the absolute value of the determinant of the Jacobean $\partial \xvec^+/\partial \yvec$, and is equal to one for incompressible flows. Using integration by substitution we obtain
+\begin{equation}
+\int f'_L(\Vvec,\xvec;t|\yvec) \, d\yvec = \int \delta(\uvec(\zvec,t) - \Vvec) \delta(\zvec - \xvec) \, d\zvec = \delta(\uvec(\xvec,t) - \Vvec)
+\end{equation}
+Given the definition of $f'(\Vvec; \xvec, t)$, we have
+\begin{equation}
+    \label{eq:fine_eul_lag_pdf}
+    \int f'_L(\Vvec,\xvec;t|\yvec) \, d\yvec = f'(\Vvec; \xvec, t).
+\end{equation}
+Taking the expectation of the above we obtain
+\begin{equation}
+    \label{eq:eul_lag_pdf}
+    \int f_L(\Vvec,\xvec;t|\yvec) \, d\yvec = f(\Vvec;\xvec,t).
+\end{equation}
+
+A summary of all of the relations derived thus far is given by the following graph
+\setlength{\unitlength}{1cm}
+\begin{center}
+    \begin{picture}(12,2.5)(0,0)
+        \put(0.5,0){Eulerian PDF}
+        \put(8,0){Lagrangian PDF}
+            \put(8.0,0.1){\vector(-1,0){5.0}}
+            \put(4.5,0.2){\cref{eq:eul_lag_pdf}}
+        \put(-0.5,2){Eulerian fine-grained PDF}
+            \put(1.5,1.9){\vector(0,-1){1.5}}
+            \put(1.6,1.2){\cref{eq:fine_eul_pdf}}
+        \put(7,2){Lagrangian fine-grained PDF}
+            \put(9.0,1.9){\vector(0,-1){1.5}}
+            \put(9.1,1.2){\cref{eq:fine_lag_pdf}}
+            \put(7.0,2.1){\vector(-1,0){3.0}}
+            \put(4.7,2.2){\cref{eq:fine_eul_lag_pdf}}
+    \end{picture}
+\end{center}
+
+%-------------------------------------------------------------------------------
+\section{Evolution equation for fine-grained Eulerian PDF}
+%-------------------------------------------------------------------------------
+
+%-------------------------------------------------------------------------------
+\section{Evolution equation for fine-grained Lagrangian PDF}
+%-------------------------------------------------------------------------------

@@ -1,0 +1,368 @@
+%###############################################################################
+%
+%
+\part{Kinetic description}
+%
+%
+%###############################################################################
+%-------------------------------------------------------------------------------
+\chapter{Governing equations}
+%-------------------------------------------------------------------------------
+
+We denote the distribution function for a species $\alpha$ as $f_\alpha = f_\alpha(\rvec, \vvec, t)$, where $\rvec$ and $\vvec$ are the sample space variables for position and velocity. Note that the distribution function is appropriately normalized such that
+\begin{equation}
+\int f_\alpha \, d\rvec d\vvec = N_\alpha,
+\end{equation}
+where $N_\alpha$ is the total number of particles corresponding to species $\alpha$. 
+
+The dynamics of a plasma can be characterized by the Boltzmann evolution equation for the distribution along with Maxwell's equations
+\begin{equation}
+\label{eq:kinetic_equation}
+\frac{\partial f_\alpha}{\partial t} + \vvec \cdot \nabla f_\alpha + \frac{Z_\alpha e}{m_\alpha} ( \Evec + \vvec \times \Bvec ) \cdot \nabla_v f_\alpha = C_\alpha + S_\alpha
+\end{equation}
+\begin{equation}
+\label{eq:maxwell_3}
+\nabla \cdot \Evec = \frac{\rho_e}{\epsilon_0} 
+\end{equation}
+\begin{equation}
+\label{eq:maxwell_4}
+\nabla \cdot \Bvec = 0
+\end{equation}
+\begin{equation}
+\label{eq:maxwell_1}
+\nabla \times \Evec = -\frac{ \partial \Bvec}{\partial t}
+\end{equation}
+\begin{equation}
+\label{eq:maxwell_2}
+\nabla \times \Bvec = \mu_0 \Jvec + \mu_0 \epsilon_0 \frac{\partial \Evec}{\partial t}
+\end{equation}
+\begin{equation}
+\Jvec = \sum_\alpha Z_\alpha e \int \vvec f_\alpha \, d\vvec
+\end{equation}
+\begin{equation}
+\rho_e = \sum_\alpha Z_\alpha e \int f_\alpha \, d\vvec.
+\end{equation}
+In the above, 
+\begin{itemize}
+\item $m_\alpha$ is the species mass
+\item $e$ is the charge
+\item $Z_\alpha$ the charge number
+\item $\Jvec = \Jvec(\rvec,t)$ the charge current
+\item $\rho_e = \rho_e(\rvec,t)$ the charge density
+\item $\Evec = \Evec(\rvec,t)$ the electric field
+\item $\Bvec = \Bvec(\rvec,t)$ the magnetic field.
+\end{itemize}
+The terms $C_\alpha$ and $S_\alpha$ represent collision and source terms.
+
+If we express the collision term in the usual way, that is $C_\alpha = \sum_\beta C_{\alpha \beta}$, then we can make the following statements:
+\begin{enumerate}
+\item Conservation of particles:
+\begin{equation}
+\int C_{\alpha \alpha} \, d\vvec = 0 \quad \forall \alpha \qquad \qquad
+\int C_{\alpha \beta} \,d\vvec = 0 \quad \forall \alpha, \beta | \beta \ne \alpha.
+\end{equation}
+
+\item Conservation of momentum:
+\begin{equation}
+\int m_\alpha \vvec C_{\alpha \alpha} \, d\vvec = 0 \quad \forall \alpha \qquad \qquad \sum_\alpha \sum_{\beta, \beta \ne \alpha} \int m_\alpha \vvec C_{\alpha \beta} d\vvec = 0.
+\end{equation}
+
+\item Conservation of energy:
+\begin{equation}
+\int \frac{1}{2} m_\alpha v^2 C_{\alpha \alpha} \, d\vvec = 0 \quad \forall \alpha \qquad \qquad \sum_\alpha \sum_{\beta, \beta \ne \alpha} \int \frac{1}{2} m_\alpha v^2 C_{\alpha \beta} \, d\vvec = 0.
+\end{equation}
+
+\end{enumerate}
+
+%-------------------------------------------------------------------------------
+\section{Fluid equations}
+%-------------------------------------------------------------------------------
+We now define the particle density $n_\alpha = n_\alpha(\rvec,t)$, the fluid velocity $\uvec_\alpha = \uvec_\alpha(\rvec,t)$ and the fluid energy per unit mass $E_\alpha = E_\alpha(\rvec,t)$ as follows
+\begin{align}
+n_\alpha &= \int f_\alpha \, d\vvec \\
+\uvec_\alpha &= \frac{1}{n_\alpha} \int \vvec f_\alpha \, d\vvec \\
+E_\alpha &= \frac{1}{n_\alpha} \int \frac{1}{2} v^2 f_\alpha \, d\vvec.
+\end{align}
+Their evolution equations are obtained by taking the appropriate moments of the Boltzmann plasma equation. Before doing so, we re-write the Boltzmann equation as
+\begin{equation}
+\label{eq:boltz_mod}
+\frac{\partial f_\alpha}{\partial t} + \nabla \cdot (\vvec f_\alpha) + \nabla_v \cdot \left [ \frac{Z_\alpha e}{m_\alpha} ( \Evec + \vvec \times \Bvec ) f_\alpha \right ] = C_\alpha + S_\alpha
+\end{equation}
+
+%--------------------------------------------
+\subsection{Mass}
+%--------------------------------------------
+Integrating \cref{eq:boltz_mod} over all $\vvec$ we obtain
+%\begin{empheq}[box=\widefbox]{equation}
+\begin{equation}
+\frac{\partial n_\alpha}{\partial t} + \nabla \cdot \left ( n_\alpha \uvec_\alpha \right ) = \hat{S}_\alpha
+\end{equation}
+%\end{empheq}
+where 
+\begin{equation}
+\hat{S}_\alpha = \int S_\alpha \, d\vvec
+\end{equation}
+is an external source of mass.
+
+%--------------------------------------------
+\subsection{Momentum}
+%--------------------------------------------
+Multiplying \cref{eq:boltz_mod} by $\vvec$ and then integrating over all $\vvec$ leads to
+\begin{multline}
+\label{eq:mom_derv_1}
+\frac{\partial n_\alpha \uvec_\alpha}{\partial t} + \nabla \cdot \left ( \int \vvec \vvec f_\alpha \, d\vvec \right) + \int \nabla_v \cdot \left [ \vvec \frac{Z_\alpha e}{m_\alpha} ( \Evec + \vvec \times \Bvec ) f_\alpha \right ] - \nabla_v \vvec \cdot \left [ \frac{Z_\alpha e}{m_\alpha} ( \Evec + \vvec \times \Bvec ) f_\alpha \right ] \, d\vvec =\\
+\sum_{\beta, \beta \ne \alpha} \int \vvec C_{\alpha \beta} \, d\vvec + \int \vvec S_\alpha \, d\vvec.
+\end{multline}
+We note that the third term in \cref{eq:mom_derv_1} is zero since we are integrating over all space, and that $\nabla_v \vvec$ is the identity matrix. We thus have
+\begin{multline}
+\label{eq:mom_derv_2}
+\frac{\partial n_\alpha \uvec_\alpha}{\partial t} + \nabla \cdot \left ( \int \vvec \vvec f_\alpha \, d\vvec \right) - \frac{Z_\alpha e n_\alpha}{m_\alpha} ( \Evec + \uvec_\alpha \times \Bvec ) =\\
+\sum_{\beta, \beta \ne \alpha} \int \vvec C_{\alpha \beta} \, d\vvec + \int \vvec S_\alpha \, d\vvec.
+\end{multline}
+
+To proceed, we decompose $\vvec$ into a mean and a fluctuation, that is, $\vvec = \uvec_\alpha + \wvec_\alpha$. Using this decomposition 
+\begin{equation}
+\label{eq:identity_vv}
+\int \vvec \vvec f_\alpha \, d\vvec = \int ( \uvec_\alpha \uvec_\alpha + 2 \uvec_\alpha \wvec_\alpha + \wvec_\alpha \wvec_\alpha) f_\alpha \, d\vvec = n_\alpha \uvec_\alpha \uvec_\alpha + \int \wvec_\alpha \wvec_\alpha f_\alpha \, d\vvec.
+\end{equation}
+Thus, \cref{eq:mom_derv_2} becomes
+\begin{multline}
+\label{eq:mom_derv_3}
+\frac{\partial n_\alpha \uvec_\alpha}{\partial t} + \nabla \cdot \left ( n_\alpha \uvec_\alpha \uvec_\alpha \right) - \frac{Z_\alpha e n_\alpha}{m_\alpha} ( \Evec + \uvec_\alpha \times \Bvec ) = -\nabla \cdot \int \wvec_\alpha \wvec_\alpha f_\alpha d\vvec + \\
+\sum_{\beta, \beta \ne \alpha} \int \vvec C_{\alpha \beta} \, d\vvec + \int \vvec S_\alpha \, d\vvec.
+\end{multline}
+Conservation of particles is used to modify the collisional term to thus obtain
+\begin{multline}
+\label{eq:mom_derv_4}
+\frac{\partial n_\alpha \uvec_\alpha}{\partial t} + \nabla \cdot \left ( n_\alpha \uvec_\alpha \uvec_\alpha \right) - \frac{Z_\alpha e n_\alpha}{m_\alpha} ( \Evec + \uvec_\alpha \times \Bvec ) = -\nabla \cdot \int \wvec_\alpha \wvec_\alpha f_\alpha d\vvec + \\
+\sum_{\beta, \beta \ne \alpha} \int \wvec_\alpha C_{\alpha \beta} \, d\vvec + \int \vvec S_\alpha \, d\vvec.
+\end{multline}
+
+Multiplying by mass leads to the following equation
+%\begin{empheq}[box=\widefbox]{equation}
+\begin{equation}
+\label{eq:mom_derv_5}
+\frac{\partial m_\alpha n_\alpha \uvec_\alpha}{\partial t} + \nabla \cdot \left ( m_\alpha n_\alpha \uvec_\alpha \uvec_\alpha \right) - Z_\alpha e n_\alpha ( \Evec + \uvec_\alpha \times \Bvec ) = \nabla \cdot \boldsymbol{\sigma}_\alpha + \Rvec_\alpha + \hat{\Mvec}_\alpha,
+\end{equation}
+%\end{empheq}
+where the stress tensor is
+\begin{equation}
+\boldsymbol{\sigma}_\alpha = -\int m_\alpha \wvec_\alpha \wvec_\alpha f_\alpha \, d\vvec,
+\end{equation}
+the momentum transferred between unlike particles due to friction of collisions is
+\begin{equation}
+\Rvec_\alpha = \sum_{\beta, \beta \ne \alpha} \int m_\alpha \wvec_\alpha C_{\alpha \beta} \, d\vvec,
+\end{equation}
+and the external source of momentum is
+\begin{equation}
+\hat{\Mvec}_\alpha = \int m_\alpha \vvec S_\alpha \, d\vvec.
+\end{equation}
+ 
+
+The stress tensor is typically decomposed into isotropic $p_\alpha$ and anisotropic (shear) $\tvec_\alpha$ tensors as follows
+\begin{equation}
+\boldsymbol{\sigma}_\alpha = - p_\alpha \Ivec + \tvec_\alpha,
+\end{equation}
+where $P_\alpha$ is given by
+\begin{equation}
+p_\alpha = \frac{1}{3} \int m_\alpha (\wvec_\alpha \cdot \wvec_\alpha) f_\alpha d\vvec.
+\end{equation}
+Thus, conservation of momentum becomes
+\begin{equation}
+\label{eq:mom_derv_6}
+\frac{\partial m_\alpha n_\alpha \uvec_\alpha}{\partial t} + \nabla \cdot \left ( m_\alpha n_\alpha \uvec_\alpha \uvec_\alpha \right) - Z_\alpha e n_\alpha ( \Evec + \uvec_\alpha \times \Bvec ) = - \nabla p_\alpha + \nabla \cdot \tvec_\alpha + \Rvec_\alpha + \hat{\Mvec}_\alpha.
+\end{equation}
+
+%--------------------------------------------
+\subsection{Energy}
+%--------------------------------------------
+Multiplying \cref{eq:boltz_mod} by $\frac{1}{2} v^2$ and then integrating over all $\vvec$ leads to
+\begin{multline}
+\label{eq:energy_derv_1}
+\frac{\partial n_\alpha E_\alpha}{\partial t} + \nabla \cdot \left [ \int \frac{1}{2} (\vvec \cdot \vvec) \vvec f_\alpha \, d\vvec \right ] + \int \nabla_v \cdot \left [ \frac{1}{2} (\vvec \cdot \vvec) \frac{Z_\alpha e}{m_\alpha} ( \Evec + \vvec \times \Bvec ) f_\alpha \right ] \\
+- \nabla_v \left [ \frac{1}{2} (\vvec \cdot \vvec) \right ] \cdot \left [ \frac{Z_\alpha e}{m_\alpha} ( \Evec + \vvec \times \Bvec ) f_\alpha \right ] \, d\vvec = \sum_{\beta, \beta \ne \alpha} \int \frac{1}{2} (\vvec \cdot \vvec) C_{\alpha \beta} \, d\vvec + \int \frac{1}{2} (\vvec \cdot \vvec) S_\alpha \, d\vvec.
+\end{multline}
+We note that the third term above is zero since we are integrating over all space, and that $\nabla_v [ 1/2 (\vvec \cdot \vvec ) ] = \vvec$. Thus, we have
+\begin{multline}
+\label{eq:energy_derv_2}
+\frac{\partial n_\alpha E_\alpha}{\partial t} + \nabla \cdot \left [ \int \frac{1}{2} (\vvec \cdot \vvec) \vvec f_\alpha \, d\vvec \right ] - \frac{Z_\alpha e n_\alpha}{m_\alpha} \Evec \cdot \uvec_\alpha =\\
+\sum_{\beta, \beta \ne \alpha} \int \frac{1}{2} (\vvec \cdot \vvec) C_{\alpha \beta} \, d\vvec + \int \frac{1}{2} (\vvec \cdot \vvec) S_\alpha \, d\vvec.
+\end{multline}
+
+To proceed with the derivation we first note that
+\begin{multline}
+\int \frac{1}{2} (\vvec \cdot \vvec) \vvec f_\alpha \, d\vvec = \int \frac{1}{2} (\vvec \cdot \vvec) (\uvec_\alpha + \wvec_\alpha) f_\alpha \, d\vvec = n_\alpha E_\alpha \uvec_\alpha + \int \frac{1}{2} (\vvec \cdot \vvec ) \wvec_\alpha f_\alpha \, d\vvec
+\end{multline}
+The last term on the right-hand side above can be re-written as
+\begin{align}
+\int \frac{1}{2} ( \vvec \cdot \vvec ) \wvec_\alpha f_\alpha \, d\vvec &= \int \frac{1}{2} ( \uvec_\alpha \cdot \uvec_\alpha + 2\uvec_\alpha \cdot \wvec_\alpha + \wvec_\alpha \cdot \wvec_\alpha ) \wvec_\alpha f_\alpha \, d\vvec \\
+& =  \uvec_\alpha \cdot \int \wvec_\alpha \wvec_\alpha f_\alpha \, d\vvec + \int \frac{1}{2} ( \wvec_\alpha \cdot \wvec_\alpha ) \wvec_\alpha f_\alpha \, d\vvec.
+\end{align}
+Using the expressions above, \cref{eq:energy_derv_2} becomes
+\begin{multline}
+\label{eq:energy_derv_3}
+\frac{\partial n_\alpha E_\alpha}{\partial t} + \nabla \cdot (n_\alpha E_\alpha \uvec_\alpha ) - \frac{Z_\alpha e n_\alpha}{m_\alpha} \Evec \cdot \uvec_\alpha =  - \nabla \cdot \left ( \uvec_\alpha \cdot \int \wvec_\alpha \wvec_\alpha f_\alpha \, d\vvec \right ) - \nabla \cdot \int \frac{1}{2} ( \wvec_\alpha \cdot \wvec_\alpha ) \wvec_\alpha f_\alpha \, d\vvec\\
++ \sum_{\beta, \beta \ne \alpha} \int \frac{1}{2} (\vvec \cdot \vvec) C_{\alpha \beta} \, d\vvec + \int \frac{1}{2} (\vvec \cdot \vvec) S_\alpha \, d\vvec.
+\end{multline}
+Conservation of particles is used to modify the collisional term to thus obtain
+\begin{multline}
+\label{eq:energy_derv_4}
+\frac{\partial n_\alpha E_\alpha}{\partial t} + \nabla \cdot (n_\alpha E_\alpha \uvec_\alpha ) - \frac{Z_\alpha e n_\alpha}{m_\alpha} \Evec \cdot \uvec_\alpha = - \nabla \cdot \left ( \uvec_\alpha \cdot \int \wvec_\alpha \wvec_\alpha f_\alpha \, d\vvec  \right ) - \nabla \cdot \int \frac{1}{2} ( \wvec_\alpha \cdot \wvec_\alpha ) \wvec_\alpha f_\alpha \, d\vvec \\
++ \uvec_\alpha \cdot \sum_{\beta,\beta \ne \alpha} \int \wvec_\alpha C_{\alpha \beta} \, d\vvec + \sum_{\beta, \beta \ne \alpha} \int \frac{1}{2} (\wvec_\alpha \cdot \wvec_\alpha) C_{\alpha \beta} \, d\vvec + \int \frac{1}{2} (\vvec \cdot \vvec) S_\alpha \, d\vvec.
+\end{multline}
+
+Multiplying by mass leads to the following equation
+%\begin{empheq}[box=\widefbox]{multline}
+\begin{multline}
+\label{eq:energy_derv_5}
+\frac{\partial m_\alpha n_\alpha E_\alpha}{\partial t} + \nabla \cdot (m_\alpha n_\alpha E_\alpha \uvec_\alpha ) - Z_\alpha e n_\alpha \Evec \cdot \uvec_\alpha = \nabla \cdot ( \uvec_\alpha \cdot \boldsymbol{\sigma}_\alpha ) - \nabla \cdot \qvec_\alpha \\
++ \uvec_\alpha \cdot \Rvec_\alpha + Q_{\alpha} + \hat{Q}_\alpha, 
+\end{multline}
+%\end{empheq}
+where heat flux due to random motion is
+\begin{equation}
+\qvec_\alpha = \int \frac{1}{2} m_\alpha (\wvec_\alpha \cdot \wvec_\alpha ) \wvec_\alpha f_\alpha \, d\vvec,
+\end{equation}
+the heat generated and transferred between unlike particles due to collisional dissipation is 
+\begin{equation}
+Q_{\alpha} = \sum_{\beta,\beta \ne \alpha} \int \frac{1}{2} m_\alpha (\wvec_\alpha \cdot \wvec_\alpha) C_{\alpha \beta} \, d\vvec,
+\end{equation}
+and the external source of energy is
+\begin{equation}
+\hat{Q}_\alpha = \int \frac{1}{2} m_\alpha (\vvec \cdot \vvec) S_\alpha \, d\vvec.
+\end{equation}
+
+Using the decomposition for the stress tensor, the conservation of energy equation becomes
+\begin{multline}
+\label{eq:energy_derv_6}
+\frac{\partial m_\alpha n_\alpha E_\alpha}{\partial t} + \nabla \cdot (m_\alpha n_\alpha E_\alpha \uvec_\alpha + p_\alpha \uvec_\alpha ) - Z_\alpha e n_\alpha \Evec \cdot \uvec_\alpha = \nabla \cdot ( \uvec_\alpha \cdot \tvec_\alpha ) - \nabla \cdot \qvec_\alpha \\
++ \uvec_\alpha \cdot \Rvec_\alpha + Q_{\alpha} + \hat{Q}_\alpha, 
+\end{multline}
+We also note that the energy $m_\alpha n_\alpha E_\alpha$ can be decomposed into internal and kinetic energies. Using the trace of the decomposition shown in \cref{eq:identity_vv} one obtains
+\begin{align}
+m_\alpha n_\alpha E_\alpha & = \int \frac{1}{2} m_\alpha (\vvec \cdot \vvec) f_\alpha \, d\vvec \nonumber \\
+& = \int \frac{1}{2} m_\alpha (\wvec_\alpha \cdot \wvec_\alpha) f_\alpha \, d\vvec + \frac{1}{2} m_\alpha n_\alpha (\uvec_\alpha \cdot \uvec_\alpha) \nonumber \\
+& = \frac{3}{2} P_\alpha + \frac{1}{2} m_\alpha n_\alpha (\uvec_\alpha \cdot \uvec_\alpha) \nonumber \\
+& = \frac{3}{2} P_\alpha + m_\alpha n_\alpha K_\alpha.
+\end{align}
+where $K_\alpha = \frac{1}{2} \uvec_\alpha \cdot \uvec_\alpha$ is the kinetic energy of species $\alpha$.
+
+%--------------------------------------------
+\subsection{Kinetic and Internal Energies}
+%--------------------------------------------
+The equation for the kinetic energy is obtained by dotting \cref{eq:mom_derv_6} with $\uvec_\alpha$. For this, we first show that
+\begin{align}
+    \uvec_\alpha \cdot &\left [ \frac{\partial m_\alpha n_\alpha \uvec_\alpha}{\partial t} + \nabla \cdot \left ( m_\alpha n_\alpha \uvec_\alpha \uvec_\alpha \right) \right ] \\
+    & =\uvec_\alpha \cdot \left \{ \left [ \frac{\partial m_\alpha n_\alpha }{\partial t} + \nabla \cdot \left ( m_\alpha n_\alpha \uvec_\alpha \right) \right] \uvec_\alpha  + m_\alpha n_\alpha \left ( \frac{\partial \uvec_\alpha}{\partial t} + \uvec_\alpha \cdot \nabla \uvec_\alpha \right ) \right \}\\
+    & =\uvec_\alpha \cdot \left [ m_\alpha \hat{S}_\alpha \uvec_\alpha  + m_\alpha n_\alpha \left ( \frac{\partial \uvec_\alpha}{\partial t} + \uvec_\alpha \cdot \nabla \uvec_\alpha \right ) \right ] \\
+    & =2m_\alpha \hat{S}_\alpha K_\alpha + m_\alpha n_\alpha \left ( \frac{\partial K_\alpha}{\partial t} + \uvec_\alpha \cdot \nabla K_\alpha \right) \\
+    & =m_\alpha \hat{S}_\alpha K_\alpha + \left [ \frac{\partial m_\alpha n_\alpha}{\partial t} + \nabla \cdot \left (m_\alpha n_\alpha \uvec_\alpha \right ) \right] K_\alpha + m_\alpha n_\alpha \left ( \frac{\partial K_\alpha}{\partial t} + \uvec_\alpha \cdot \nabla K_\alpha \right) \\
+    & =m_\alpha \hat{S}_\alpha K_\alpha + \frac{\partial m_\alpha n_\alpha K_\alpha}{\partial t} + \nabla \cdot ( m_\alpha n_\alpha K \uvec_\alpha ).
+\end{align}
+Thus, the equation for the turbulent kinetic energy is
+\begin{multline}
+\frac{\partial m_\alpha n_\alpha K_\alpha}{\partial t} + \nabla \cdot ( m_\alpha n_\alpha K \uvec_\alpha ) - Z_\alpha e n_\alpha \Evec \cdot \uvec_\alpha =\\
+-\nabla \cdot ( \uvec_\alpha p_\alpha ) + \nabla \cdot (\uvec_\alpha \cdot \tvec_\alpha ) + p_\alpha \nabla \cdot \uvec_\alpha - \tvec_\alpha : \nabla \uvec_\alpha + \uvec_\alpha \cdot \Rvec_\alpha + \uvec_\alpha \cdot \hat{\Mvec}_\alpha - m_\alpha K_\alpha \hat{S}_\alpha .
+\end{multline}
+Subtracting the above equation from \cref{eq:energy_derv_6} leads to 
+\begin{equation}
+\frac{\partial}{\partial t} \left ( \frac{3}{2} p_\alpha \right ) + \nabla \cdot \left ( \frac{3}{2} p_\alpha \uvec_\alpha \right ) = -p_\alpha \nabla \cdot \uvec_\alpha + \tvec_\alpha : \nabla \uvec_\alpha - \nabla \cdot \qvec_\alpha + Q_{\alpha} + \hat{Q}_\alpha - \uvec_\alpha \cdot \hat{\Mvec}_\alpha + m_\alpha K_\alpha \hat{S}_\alpha .
+\end{equation}
+
+%--------------------------------------------
+\subsection{Summary}
+%--------------------------------------------
+To summarize, we have,
+\begin{itemize}
+    \item Particle density
+\begin{equation}
+\label{eq:cons_mass}
+    \frac{\partial n_\alpha}{\partial t} + \nabla \cdot \left ( n_\alpha \uvec_\alpha \right ) = \hat{S}_\alpha,
+\end{equation}
+
+    \item Momentum
+\begin{equation}
+\label{eq:cons_mom}
+    \frac{\partial m_\alpha n_\alpha \uvec_\alpha}{\partial t} + \nabla \cdot \left ( m_\alpha n_\alpha \uvec_\alpha \uvec_\alpha \right) - Z_\alpha e n_\alpha ( \Evec + \uvec_\alpha \times \Bvec ) = - \nabla p_\alpha + \nabla \cdot \tvec_\alpha + \Rvec_\alpha + \hat{\Mvec}_\alpha,
+\end{equation}
+
+    \item Total Energy
+\begin{multline}
+\label{eq:cons_te}
+\frac{\partial m_\alpha n_\alpha E_\alpha}{\partial t} + \nabla \cdot (m_\alpha n_\alpha E_\alpha \uvec_\alpha + p_\alpha \uvec_\alpha ) - Z_\alpha e n_\alpha \Evec \cdot \uvec_\alpha = \nabla \cdot ( \uvec_\alpha \cdot \tvec_\alpha ) - \nabla \cdot \qvec_\alpha \\
++ \uvec_\alpha \cdot \Rvec_\alpha + Q_{\alpha} + \hat{Q}_\alpha, 
+\end{multline}
+    
+    \item Kinetic Energy
+\begin{multline}
+\label{eq:cons_ke}
+\frac{\partial m_\alpha n_\alpha K_\alpha}{\partial t} + \nabla \cdot ( m_\alpha n_\alpha K \uvec_\alpha ) - Z_\alpha e n_\alpha \Evec \cdot \uvec_\alpha =\\
+-\nabla \cdot ( \uvec_\alpha p_\alpha ) + \nabla \cdot (\uvec_\alpha \cdot \tvec_\alpha ) + p_\alpha \nabla \cdot \uvec_\alpha - \tvec_\alpha : \nabla \uvec_\alpha + \uvec_\alpha \cdot \Rvec_\alpha + \uvec_\alpha \cdot \hat{\Mvec}_\alpha - m_\alpha K_\alpha \hat{S}_\alpha .
+\end{multline}    
+    
+    \item Internal Energy
+\begin{equation}
+\label{eq:cons_ie}
+    \frac{\partial}{\partial t} \left ( \frac{3}{2} p_\alpha \right ) + \nabla \cdot \left ( \frac{3}{2} p_\alpha \uvec_\alpha \right ) = -p_\alpha \nabla \cdot \uvec_\alpha + \tvec_\alpha : \nabla \uvec_\alpha - \nabla \cdot \qvec_\alpha + Q_{\alpha} + \hat{Q}_\alpha - \uvec_\alpha \cdot \hat{\Mvec}_\alpha + m_\alpha K_\alpha \hat{S}_\alpha .  
+\end{equation}
+
+\end{itemize}
+
+%-------------------------------------------------------------------------------
+\chapter{Transport coefficients}
+%-------------------------------------------------------------------------------
+Collison integral
+
+\begin{equation}
+    \Omega_{\alpha \beta}^{(lk)} = \sqrt{ \frac{k_B T}{2 \pi M_{\alpha \beta}} } \int_0^\infty e^{-g^2} g^{2k+3} \phi_{\alpha \beta}^{(l)} \, dg.
+\end{equation}
+In the above $M_{\alpha \beta}$ is the reduced mass, given by
+\begin{equation}
+    M_{\alpha \beta} = \frac{M_\alpha M_\beta}{M_\alpha + M_\beta},
+\end{equation}
+and $\phi^{(l)}_{\alpha \beta}$ is the collision cross section for a given velocity, and is computed as
+\begin{equation}
+    \phi_{\alpha \beta}^{(l)} = 2 \pi \int_0^\infty \left ( 1 - \cos^l \chi_{\alpha \beta} \right ) b \, db.
+\end{equation}
+The scattering angle $\chi_{\alpha \beta}$ is given by
+\begin{equation}
+    \chi_{\alpha \beta} = \pi - 2 \int_{r_{\alpha \beta}^{\text{min}}}^\infty \frac{b}{r^2 \left [ 1 - \frac{b^2}{r^2} - \frac{V_{\alpha \beta (r)}}{g^2 k_B T} \right ]^{1/2} } \, dr.
+\end{equation}
+
+For a Coulombic interaction between ions, we can define the natural scale fore the cross-sectional area as
+\begin{equation}
+    \phi^{(0)}_{\alpha \beta} = \frac{ \pi \left (Z_\alpha Z_\beta e^2 \right)^2}{ \left(2 k_B T\right)^2}.
+\end{equation}
+Given this definition, we express the collision integral as
+\begin{equation}
+    \Omega_{\alpha \beta} = \sqrt{ \frac{\pi }{M_{\alpha \beta}}} \frac{( Z_\alpha Z_\beta e^2)^2 }{(2 k_B T )^{3/2}} \mathcal{F}^{lk}_{\alpha \beta},
+\end{equation}
+where
+\begin{equation}
+    \mathcal{F}^{(lk)}_{\alpha \beta} = \frac{1}{2 \phi_0} \int_0^\infty e^{-g^2} g^{2k+3} \phi_{\alpha \beta}^{(l)} \, dg
+\end{equation}
+We note that $\mathcal{F}^{(lk)}_{\alpha \beta} = 4 \mathcal{K}_{lk}(g_{\alpha \beta})$, where $\mathcal{K}_{lk}(g_{\alpha \beta})$ is the notation from the Stanton-Murillo paper.
+
+%%-------------------------------------------------------------------------------
+%\section{Chapman-Enskog Method}
+%%-------------------------------------------------------------------------------
+%Equations \eqref{eq:cons_mass}, \eqref{eq:mom_derv_5}, and \eqref{eq:energy_derv_5} have many unclosed terms. To %simplify matters a bit, we'll look at the case where there is only one species, there is no external source %$S_\alpha$, and there is no external electromagnetic force. In that case, the fluid equations look as follows
+%\begin{equation}
+%\label{eq:cons_mass_simple}
+%\frac{\partial n}{\partial t} + \nabla \cdot \left ( n \uvec \right ) = 0,
+%\end{equation}
+%\begin{equation}
+%\label{eq:cons_mom_simple}
+%\frac{\partial m n \uvec}{\partial t} + \nabla \cdot \left ( m n \uvec \uvec \right) = \nabla \cdot %\boldsymbol{\sigma},
+%\end{equation}
+%\begin{equation}
+%\label{eq:cons_ene_simple}
+%\frac{\partial m n E}{\partial t} + \nabla \cdot (m n E \uvec ) = - \nabla \cdot \qvec + \nabla \cdot ( %\boldsymbol{\sigma} \cdot \uvec ).
+%\end{equation}
+%For the above, the unclosed terms are $\sigma$ and $\qvec$. An approach to obtain approximations to such values is %called the Chapman-Enskog method.
+
+%The kinetic equation for the distribution function, in this case where there is one species and no external sources %and forces, is given by
+%\begin{equation}
+%    \frac{\partial f}{\partial t} + \vvec \cdot \nabla f = C.
+%\end{equation}
+
