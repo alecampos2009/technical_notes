@@ -287,39 +287,68 @@ If we assume incompressibility, then the above simplifies to
 \end{equation}
 
 %-------------------------------------------------------------------------------
-\chapter{Waves in plasmas}
+\chapter{Laser-plasma interactions}
 %-------------------------------------------------------------------------------
 
 %--------------------------------------------
 \section{Governing equations}
 %--------------------------------------------
-We'll make use of the density and momentum multi-fluid conservation laws described in \cref{sec:two_fluid_equations}. Assuming no shear stresses and collisions, we have for particle density and momentum
+We'll start with the multi-fluid conservation laws described in \cref{sec:two_fluid_equations}. We'll assume no shear stresses, collisions, and homentropic flows. Thus, the governing equations are
 \begin{equation}
+    \label{eq:pwaves_ion_density}
     \frac{\partial n_i}{\partial t} + \nabla \cdot \left (n_i \uvec_i \right ) = 0,
 \end{equation}
 \begin{equation}
+    \label{eq:pwaves_electron_density}
     \frac{\partial n_e}{\partial t} + \nabla \cdot \left (n_e \uvec_e \right ) = 0,
 \end{equation}
 \begin{equation}
+    \label{eq:pwaves_ion_momentum}
     \frac{\partial m_i n_i \uvec_i}{\partial t} + \nabla \cdot \left ( m_i n_i \uvec_i \uvec_i \right ) - Ze n_i \left ( \Evec + \uvec_i \times \Bvec \right ) = -\nabla p_i,
 \end{equation}
 \begin{equation}
+    \label{eq:pwaves_electron_momentum}
     \frac{\partial m_e n_e \uvec_e}{\partial t} + \nabla \cdot \left ( m_e n_e \uvec_e \uvec_e \right ) + e n_e \left ( \Evec + \uvec_e \times \Bvec \right ) = -\nabla p_e.
 \end{equation}
-We'll also assume homentropic flow. As shown in my fluid equations, this means the ion and electron pressures satisfy
 \begin{equation}
     p_i = C_i n_i^{\gamma_i},
 \end{equation}
 \begin{equation}
     p_e = C_e n_e^{\gamma_e},
 \end{equation}
-where $C_i$ and $C_e$ are constants across space and time. The fluid equations above will be complemented with the Maxwell equations shown in \cref{sec:two_fluid_equations}.
+\begin{equation}
+    \label{eq:pwaves_maxwell_3}
+    \nabla \cdot \Evec = \frac{\rho_e}{\epsilon_0} 
+\end{equation}
+\begin{equation}
+    \label{eq:p_waves_maxwell_4}
+    \nabla \cdot \Bvec = 0.
+\end{equation}
+\begin{equation}
+    \label{eq:p_waves_maxwell_1}
+    \nabla \times \Evec = -\frac{ \partial \Bvec}{\partial t}
+\end{equation}
+\begin{equation}
+    \label{eq:p_waves_maxwell_2}
+    \nabla \times \Bvec = \mu_0 \Jvec + \mu_0 \epsilon_0 \frac{\partial \Evec}{\partial t}
+\end{equation}
+\begin{equation}
+    \label{eq:p_waves_curr_density}
+    \Jvec = e (Z n_i \uvec_i - n_e \uvec_e)
+\end{equation}
+\begin{equation}
+    \label{eq:p_waves_mass_density}
+    \rho_e = e (Z n_i - n_e) 
+\end{equation}
 
 %--------------------------------------------
-\section{Linearization}
+\section{Electron-plasma and ion-acoustic waves}
+%--------------------------------------------
+%--------------------------------------------
+\subsection{Linearization}
 %--------------------------------------------
 \label{sec:p_waves_linearization}
-The following decompositions will be used in some of the subsequent sections
+The following decompositions will be used in the derivation of electron plasma and ion acoustic waves:
 \begin{align}
     n_i &= n_{i0} + n_{i1}, \nonumber \\
     n_e &= n_{e0} + n_{e1}, \nonumber \\
@@ -401,7 +430,7 @@ The same applies for the ions, and thus
 \end{equation}
 
 %--------------------------------------------
-\section{Electron Plasma Waves}
+\subsection{Electron Plasma Waves}
 %--------------------------------------------
 On top of the assumptions in \cref{sec:p_waves_linearization}, we'll assume 
 \begin{itemize}
@@ -448,17 +477,17 @@ or
     \frac{\partial^2 n_{e1}}{\partial t^2} + w^2_{pe} n_{e1} - \frac{\gamma_e p_{e0}}{n_{e0} m_e} \nabla^2 n_{e1} = 0.
 \end{equation}
 
-Assuming a mode of the form $n_{e1} = \hat{n}_{e1} \exp [ i \left ( \kvec \cdot \xvec - w t \right ) ]$ gives the following dispersion relation
+Assuming a mode of the form $n_{e1} = \hat{n}_{e1} \exp [ i \left ( \kvec_e \cdot \xvec - w t \right ) ]$, where $\kvec_e$ is the wave vector of the electron-plasma wave, gives the following dispersion relation
 \begin{equation}
-    w^2 - w^2_{pe} - \frac{\gamma_e p_{e0}}{n_{e0} m_e}  k^2 = 0.
+    w^2 - w^2_{pe} - \frac{\gamma_e p_{e0}}{n_{e0} m_e}  k_e^2 = 0.
 \end{equation}
 If we define the thermal velocity without the factor of two, that is, $v_{T\alpha} = \sqrt{k_BT_\alpha / m_\alpha}$, then we have
 \begin{equation}
-    w^2 - w^2_{pe} - \gamma_e k^2 v^2_{T_{e0}} = 0.
+    w^2 - w^2_{pe} - \gamma_e k_e^2 v^2_{T_{e0}} = 0.
 \end{equation}
 
 %--------------------------------------------
-\section{Ion Acoustic Waves}
+\subsection{Ion Acoustic Waves}
 %--------------------------------------------
 On top of the assumptions in \cref{sec:p_waves_linearization}, we'll assume 
 \begin{itemize}
@@ -507,9 +536,9 @@ Since $p_{i0}/n_{i0} = k_B T_{i0}$ and $p_{e0}/n_{e0} = k_B T_{e0}$, we finally 
     \frac{\partial^2 n_{i1}}{\partial t^2} - \left ( \frac{Z \gamma_e k_B T_{e0} + \gamma_i k_B T_{i0}}{m_i} \right ) \nabla^2 n_{i1} = 0.
 \end{equation}
 
-The dispersion relation for an ion acoustic wave is quite simple, namely
+Assuming a mode of the form $n_{i1} = \hat{n}_{i1} \exp [ i \left ( \kvec_i \cdot \xvec - w t \right ) ]$, where $\kvec_i$ is the wave vector of the ion-acoustic wave, we obtain the following dispersion relation
 \begin{equation}
-    w^2 - k^2 v_s^2 = 0,
+    w^2 - k_i^2 v_s^2 = 0,
 \end{equation}
 where
 \begin{equation}
@@ -539,6 +568,8 @@ Assume the vector functions under consideration are of the following form
 \begin{equation}
     \Fvec_t(\xvec,t) = \hat{\Fvec}_t \exp \left [i\left ( \kvec \cdot \xvec - wt \right ) \right ].
 \end{equation}
+These are the so-called plane waves. Note that $\hat{\Fvec}$, $\hat{\Fvec}_l$, and $\hat{\Fvec}_t$ are complex vectors also, where the real and complex components point in the same direction. Also note that different waves will wave different wave vectors. For example, we'll use $\kvec_e$ for electron-plasma waves, $\kvec_i$ for ion-acoustic waves, $\kvec_L$ for laser waves and $\kvec_s$ for scattered waves.
+
 \Cref{eq:em_plasma_long_def,eq:em_plasma_tran_def} now translate to
 \begin{align}
     \kvec \times \hat{\Fvec}_l &= 0 \\
@@ -559,17 +590,17 @@ For both electron-plasma and ion-acoustic waves we can assume the magnetic field
 \end{equation}
 By definition, $\nabla \cdot \Evec_t = 0$. Thus, using \cref{eq:em_general_null_vector} we get $\Evec_t = 0$, that is, $\Evec = \Evec_l$. 
 
-For electron-plasma waves, we can write \cref{eq:ep_waves_mom_linearized_pressure} in spectral to obtain
+For electron-plasma waves, we can write \cref{eq:ep_waves_mom_linearized_pressure} in spectral form to obtain
 \begin{equation}
--i w m_e n_{e0} \hat{\uvec}_{e1} + e n_{e0} \hat{\Evec}_{1,l} = -\kvec \hat{p}_{e1}. 
+-i w m_e n_{e0} \hat{\uvec}_{e1} + e n_{e0} \hat{\Evec}_{1,l} = -\kvec_e \hat{p}_{e1}. 
 \end{equation}
-Since the second term on the left-hand side and the term on the right-hand side point along $\kvec$, $\hat{\uvec}_{e1}$ also points along $\kvec$, that is, $\hat{\uvec}_{e1} = \hat{\uvec}_{e1,l}$.
+Since the second term on the left-hand side and the term on the right-hand side point along $\kvec_e$, $\hat{\uvec}_{e1}$ also points along $\kvec_e$, that is, $\hat{\uvec}_{e1} = \hat{\uvec}_{e1,l}$.
 
 For ion-acoustic waves, we can write \cref{eq:ia_waves_mom_linearized_pressure} in spectral to obtain
 \begin{equation}
--i w m_i n_{i0} \hat{\uvec}_{i1} - Z e n_{i0} \hat{\Evec}_{1,l} = -\kvec \hat{p}_{i1}. 
+-i w m_i n_{i0} \hat{\uvec}_{i1} - Z e n_{i0} \hat{\Evec}_{1,l} = -\kvec_i \hat{p}_{i1}. 
 \end{equation}
-Since the second term on the left-hand side and the term on the right-hand side point along $\kvec$, $\hat{\uvec}_{i1}$ also points along $\kvec$, that is, $\hat{\uvec}_{i1} = \hat{\uvec}_{i1,l}$. Finally, we note that the electric field being purely longitudinal is in agreement with \cref{eq:ia_waves_E}.
+Since the second term on the left-hand side and the term on the right-hand side point along $\kvec_i$, $\hat{\uvec}_{i1}$ also points along $\kvec_i$, that is, $\hat{\uvec}_{i1} = \hat{\uvec}_{i1,l}$. Finally, we note that the electric field being purely longitudinal is in agreement with \cref{eq:ia_waves_E}.
 
 %--------------------------------------------
 \section{Electromagnetic waves in plasmas}
@@ -640,156 +671,164 @@ which gives
 \begin{equation*}
     \frac{\partial^2 \Avec_t}{\partial t} - \frac{1}{\mu_0 \epsilon_0} \nabla^2 \Avec_t = \frac{1}{\epsilon_0} \Jvec - \frac{\partial \nabla \phi}{\partial t}.
 \end{equation*}
-Expanding the current density as $\Jvec = \Jvec_l + \Jvec_t$, and using \cref{eq:em_general_longitudinal_J}, we get
+or
+\begin{equation*}
+    \frac{\partial^2 \Avec_t}{\partial t} - c_0^2 \nabla^2 \Avec_t = \frac{1}{\epsilon_0} \Jvec - \frac{\partial \nabla \phi}{\partial t},
+\end{equation*}
+where $c_0 = 1/\sqrt{\mu_0 \epsilon_0}$. Expanding the current density as $\Jvec = \Jvec_l + \Jvec_t$, and using \cref{eq:em_general_longitudinal_J}, we get
 \begin{equation}
     \label{eq:em_general_trans_vec_pot}
-    \frac{\partial^2 \Avec_t}{\partial t} - \frac{1}{\mu_0 \epsilon_0} \nabla^2 \Avec_t = \frac{1}{\epsilon_0} \Jvec_t.
+    \frac{\partial^2 \Avec_t}{\partial t} - c_0^2 \nabla^2 \Avec_t = \frac{1}{\epsilon_0} \Jvec_t.
 \end{equation}
-Applying the decomposition shown in \cref{eq:em_general_wave_form} to $\Avec_t$ and $\Jvec_t$ gives
+Using the functional form in \cref{eq:em_general_wave_form} for $\Avec_t$ and $\Jvec_t$ gives
 \begin{equation}
-    -w^2 \hat{\Avec}_t + \frac{k^2}{\mu_0 \epsilon_0} \hat{\Avec}_t= \frac{1}{\epsilon_0} \hat{\Jvec}_t.
+    -w^2 \hat{\Avec}_t + k^2 c_0^2 \hat{\Avec}_t= \frac{1}{\epsilon_0} \hat{\Jvec}_t.
 \end{equation}
 That is, $\Avec_t$ and $\Jvec_t$ point in the same direction.
 
 Taking the time derivative of \cref{eq:em_general_trans_vec_pot} gives the equation for $\Evec_t$, that is
 \begin{equation}
     \label{eq:em_general_trans_E}
-    \frac{\partial^2 \Evec_t}{\partial t^2} - \frac{1}{\epsilon_0 \mu_0} \nabla^2 \Evec_t + \frac{1}{\epsilon_0} \frac{\partial \Jvec_t}{\partial t} = 0.
+    \frac{\partial^2 \Evec_t}{\partial t^2} - c_0^2 \nabla^2 \Evec_t + \frac{1}{\epsilon_0} \frac{\partial \Jvec_t}{\partial t} = 0.
 \end{equation}
-Taking the curls of \cref{eq:em_general_trans_vec_pot} gives the equation for $\Bvec_t$, that is
+Taking the curl of \cref{eq:em_general_trans_vec_pot} gives the equation for $\Bvec_t$, that is
 \begin{equation}
     \label{eq:em_general_trans_B}
-    \frac{\partial^2 \Bvec_t}{\partial t^2} - \frac{1}{\epsilon_0 \mu_0} \nabla^2 \Bvec_t - \frac{1}{\epsilon_0} \nabla \times \Jvec_t = 0.
+    \frac{\partial^2 \Bvec_t}{\partial t^2} - c_0^2 \nabla^2 \Bvec_t - \frac{1}{\epsilon_0} \nabla \times \Jvec_t = 0.
 \end{equation}
-Applying the decomposition shown in \cref{eq:em_general_wave_form} to $\Evec_t$, $\Bvec_t$ and $\Jvec_t$ gives
+Using the functional form in \cref{eq:em_general_wave_form} for $\Evec_t$, $\Bvec_t$ and $\Jvec_t$ gives
 \begin{equation}
-    -w^2 \hat{\Evec}_t + \frac{k^2}{\epsilon_0 \mu_0} \hat{\Evec}_t - \frac{iw}{\epsilon_0} \hat{\Jvec}_t = 0,
+    -w^2 \hat{\Evec}_t + k^2 c_0^2 \hat{\Evec}_t - \frac{iw}{\epsilon_0} \hat{\Jvec}_t = 0,
 \end{equation}
 \begin{equation}
-    -w^2 \Bvec_t + \frac{k^2}{\epsilon_0 \mu_0} \Bvec_t - \frac{i}{\epsilon_0} \kvec \times \Jvec_t = 0.
+    -w^2 \Bvec_t + k^2 c_0^2 \Bvec_t - \frac{i}{\epsilon_0} \kvec \times \Jvec_t = 0.
 \end{equation}
 That is, $\Evec_t$ points in the same direction as $\Jvec_t$, which as shown before points in the same direction as $\Avec_t$. Additionally, $\Bvec_t$ points in the direction of $\kvec \times \Jvec_t$, that is, it is orthogonal to $\Evec_t$.
 
-It will often be the case that transverse waves will oscillate at too fast of a rate for the ions to react to the transverse effects, due to their large inertia. Thus, we can assume $\uvec_{i,t} = 0$. Given the definition of the current density in \cref{eq:twof_curr_density}, the transverse current density is given by $\Jvec_t = e \left (Z n_i \uvec_{i,t} - n_e \uvec_{e,t} \right )$, which simplifies to $\Jvec_t = -e n_e \uvec_{e,t}$.
+It will often be the case that transverse waves will oscillate at such a fast rate that the ions, which have too large of an inertia, will be unable to react to the oscillations. Thus, we can assume $\uvec_{i,t} = 0$. Given the definition of the current density in \cref{eq:p_waves_curr_density}, the transverse current density is expressed as $\Jvec_t = e \left (Z n_i \uvec_{i,t} - n_e \uvec_{e,t} \right )$, which simplifies to 
+\begin{equation}
+    \label{eq:em_transverse_current}
+    \Jvec_t = -e n_e \uvec_{e,t}.
+\end{equation}
+Thus, we now need an expression for $\uvec_{e,t}$. 
+
+We begin with \cref{eq:pwaves_electron_momentum}, the electron momentum equation, which, due to the electron continuity equation, can be written as
+\begin{equation*}
+    m_e n_e \frac{\partial\uvec_e}{\partial t} + m_e n_e \uvec_e \cdot \nabla \uvec_e + e n_e \left ( \Evec + \uvec_e \times \Bvec \right ) = -\nabla p_e.
+\end{equation*}
+Using the scalar and vector potentials we have
+\begin{equation*}
+    m_e n_e \frac{\partial\uvec_e}{\partial t} + m_e n_e \uvec_e \cdot \nabla \uvec_e + e n_e \left [ -\nabla \phi - \frac{\partial \Avec}{\partial t} + \uvec_e \times \left ( \nabla \times \Avec \right ) \right ] = -\nabla p_e.
+\end{equation*}
+Using the vector identity $\nabla \left ( F^2 / 2 \right ) = \Fvec \times \left ( \nabla \times \Fvec \right ) + \Fvec \cdot \nabla \Fvec$, we write the above as
+\begin{equation*}
+    m_e n_e \frac{\partial\uvec_e}{\partial t} - m_e n_e \uvec_e \times \left ( \nabla \times \uvec_e \right ) + m_e n_e \nabla \left (\frac{u_e^2}{2} \right ) + e n_e \left [ -\nabla \phi - \frac{\partial \Avec}{\partial t} + \uvec_e \times \left ( \nabla \times \Avec \right ) \right ] = -\nabla p_e.
+\end{equation*}
+We need the component of the above along the $\uvec_{e,t}$ direction, which is the same as the $\Jvec_t$, $\Evec_t$, and $\Avec_t$ directions. The requirement that this direction be orthogonal to $\kvec$ does not uniquely define it (there are multiple directions orthogonal to $\kvec$). Additionally, if there are multiple waves each with its own $\kvec$, which should be used?  We'll assume wave vectors of all waves (whether transverse or longitudinal) lie on a so-called base plane. That is, $\kvec_e$, $\kvec_i$, $\kvec_L$, and $\kvec_s$ are all on this plane. We now choose the direction of $\Jvec_t$, $\Evec_t$, $\Avec_t$ to be the direction orthogonal to this plane, so that these vectors are orthogonal to any $\kvec$. Note that since all wave vectors point along the base plane, $u_e^2$, $\phi$ and $p_e$ will only vary along that plane, and thus their gradients will be confined to that plane. Thus, the component of the electron momentum equation orthogonal to the base plane is
+\begin{equation*}
+    m_e n_e \frac{\partial\uvec_{e,t}}{\partial t} - m_e n_e \left [ \uvec_e \times \left ( \nabla \times \uvec_e \right ) \right ]_{\Avec_t} + e n_e \left \{ - \frac{\partial \Avec_t}{\partial t} + \left [ \uvec_e \times \left ( \nabla \times \Avec_t \right ) \right ]_{\Avec_t} \right \} = 0.
+\end{equation*}
+where the $\Avec_t$ subscript indicates component along the direction of $\Avec_t$. We'll re-write the above as
+\begin{equation*}
+    \frac{\partial\uvec_{e,t}}{\partial t} - \left [ \uvec_e \times \left ( \nabla \times \uvec_e \right ) \right ]_{\Avec_t} + \frac{e}{m_e} \left \{ - \frac{\partial \Avec_t}{\partial t} + \left [ \uvec_e \times \left ( \nabla \times \Avec_t \right ) \right ]_{\Avec_t} \right \} = 0.
+\end{equation*}
+Something something...
+\begin{equation}
+    \label{eq:em_transverse_velocity}
+    \uvec_{e,t} = \frac{e\Avec_t}{m_e}.
+\end{equation}
+
+Using both the transverse current given by \cref{eq:em_transverse_current} and the transverse velocity given by \cref{eq:em_transverse_velocity} in \cref{eq:em_general_trans_vec_pot} gives
+\begin{equation*}
+    \frac{\partial^2 \Avec_t}{\partial t} - c_0^2 \nabla^2 \Avec_t = -\frac{e n_e}{\epsilon_0} \uvec_{e,t} = -\frac{e^2 n_e}{\epsilon_0 m_e} \Avec_t.
+\end{equation*}
+We now use the decomposition $n_e = n_{e0} + n_{e1}$, where $n_{e0}$ is time independent. The above becomes
+\begin{equation}
+    \label{eq:em_general_trans_vec_pot_complete}
+    \frac{\partial^2 \Avec_t}{\partial t} + w_{pe}^2 \Avec_t - c_0^2 \nabla^2 \Avec_t = -\frac{e^2 n_{e1}}{\epsilon_0 m_e} \Avec_t,
+\end{equation}
+where $w_{pe}^2 = e^2 n_{e0} / m_e \epsilon_0$.
+% Using the scaling $c \sim w/k$, we show the following 
+% \begin{align}
+%     \frac{1}{c^2} \frac{\partial \uvec_e}{\partial t} &= -\frac{iw \uvec_e}{c^2} \sim i \frac{\uvec_e}{c} k \nonumber \\
+%     \frac{1}{c^2} \uvec_e \cdot \nabla \uvec_e & = \frac{i \left ( \uvec_e \cdot \kvec \right ) \uvec_e}{c^2} \sim i \frac{\uvec_e}{c} \frac{\uvec_e}{c} k \nonumber \\
+%     \frac{1}{c^2} \frac{\partial \Avec}{\partial t} &= -\frac{iw \Avec}{c^2} \sim i \frac{\Avec}{c} k \nonumber \\
+%     \frac{1}{c^2} \uvec_e \times \left ( \nabla \times \Avec \right ) &= \frac{i \uvec_e \times \left ( \kvec \times \Avec \right )}{c^2} \sim i \frac{\uvec_e}{c} \frac{\Avec}{c} k
+% \end{align}
 
 %--------------------------------------------
-\section{Transverse electromagnetic waves in plasmas}
+\section{Electromagnetic waves in a stable plasma}
 %--------------------------------------------
-We'll use a few assumptions in the derivation of the equations:
-\begin{itemize}
-    \item $n_{i0}$, $n_{e0}$, $p_{i0}$, and $p_{e0}$ depend on $\xvec$ only.
-    \item Quasi-neutrality for the base flow, $Zn_{i0} = n_{e0}$. 
-    \item The density and pressure are stable, $n_{e1} = n_{i1} = p_{e1} = p_{i1} = 0$.
-    \item Due to larger inertia, ion motion does not react fast enough to fields, $\uvec_{i1} = 0$.
-\end{itemize}
-Given the assumptions above, $\rho_e = e(Zn_i - n_e)$ becomes $\rho_e = 0$, whereas $\Jvec = e \left (Z n_i \uvec_i - n_e \uvec_e \right )$ simplifies to $\Jvec = -e n_{e0} \uvec_{e1}$. We also note that $\Jvec_t = -e n_{e0} \uvec_{e1,t}$.
-
-Since the $\Evec_0 = \Bvec_0 = 0$, we re-write \cref{eq:em_general_trans_E,eq:em_general_trans_B} as
+We start with \cref{eq:em_general_trans_vec_pot_complete}, but focus on the stable-plasma case, that is, $n_{e1} = 0$. Thus, we have
 \begin{equation}
-    \frac{\partial^2 \Evec_{1,t}}{\partial t^2} - \frac{1}{\epsilon_0 \mu_0} \nabla^2 \Evec_{1,t} + \frac{1}{\epsilon_0} \frac{\partial \Jvec_{1,t}}{\partial t} = 0,
+    \label{eq:tem_general_trans_vec_pot_complete}
+    \frac{\partial^2 \Avec_t}{\partial t} + w_{pe}^2 \Avec_t - c_0^2 \nabla^2 \Avec_t = 0.
 \end{equation}
+We note that $n_{e0}$ is only time independent, that is, it  still allowed to vary across space. As a result, $w_{pe}^2$ is also allowed to vary across space. We'll now use the functional form in \cref{eq:em_general_wave_form} for $\Avec_t$. However, we'll express the vector potential as $\Avec_t = \tilde{\Avec}_t \exp(-iwt)$, where $\tilde{\Avec}_t = \hat{\Avec}_t \exp(i\kvec \cdot \xvec)$. Thus, \cref{eq:tem_general_trans_vec_pot_complete} gives
 \begin{equation}
-    \frac{\partial^2 \Bvec_{1,t}}{\partial t^2} - \frac{1}{\epsilon_0 \mu_0} \nabla^2 \Bvec_{1,t} - \frac{1}{\epsilon_0} \nabla \times \Jvec_{1,t} = 0.
+    -w^2 \Avec_t + w_{pe}^2 \Avec_t - c_0^2 \nabla^2 \Avec_t = 0.
 \end{equation}
-
-We now need to find expressions for $\partial \Jvec_{1,t} / \partial t$ and $\nabla \times \Jvec_{1,t}$. Expanding the electron momentum equation, we get
-\begin{multline*}
-    \frac{\partial}{\partial t} \left [ m_e \left ( n_{e0} + n_{e1} \right ) \left ( \uvec_{e0} + \uvec_{e1} \right ) \right ] + \nabla \cdot \left [ m_e \left ( n_{e0} + n_{e1} \right ) \left ( \uvec_{e0} + \uvec_{e1} \right ) \left ( \uvec_{e0} + \uvec_{e1} \right ) \right ] \\
-    + e \left ( n_{e0} + n_{e1} \right ) \left [ \left ( \Evec_0 + \Evec_1 \right ) + \left ( \uvec_{e0} + \uvec_{e1} \right ) \times \left ( \Bvec_0 + \Bvec_1 \right ) \right ] = -\nabla \left ( p_{e0} + p_{e1} \right ),
-\end{multline*}
-which simplifies to 
+We re-write the above as
 \begin{equation}
-    \label{eq:em_waves_mom_linearized_pressure}
-    \frac{\partial m_e n_{e0} \uvec_{e1}}{\partial t} + e n_{e0} \Evec_1 = - \nabla p_{e0}.
+    \frac{w^2}{c_0^2} \Avec_t - \frac{w^2}{c_0^2} \frac{w_{pe}^2}{w^2} \Avec_t + \nabla^2 \Avec_t = 0.
 \end{equation}
-We'll assume $\Avec_t \cdot \nabla n_{e0} = 0$. Since the direction of $\nabla n_{e0}$ is the same as the direction of $\nabla p_{e0}$, then $\nabla p_{e0}$ is orthogonal to $\Avec_t$, $\Evec_t$ and $\Jvec_t$. Thus, the transverse component of the above gives
+Defining $\epsilon = 1 - w_{pe}^2 / w^2$, we ultimately get
 \begin{equation}
-    \label{eq:em_waves_mom_linearized_pressure_transverse}
-    \frac{\partial \uvec_{e1,t}}{\partial t} + \frac{e}{m_e} \Evec_{1,t} = 0.
-\end{equation}
-As mentioned before, the current is given by $\Jvec = \Jvec_1 = -e n_{e0} \uvec_{e1}$, or, in terms of its transverse component, $\Jvec_{1,t} = -e n_{e0} \uvec_{e1,t}$. Using this and \cref{eq:em_waves_mom_linearized_pressure_transverse} in the wave equations, we get
-\begin{equation}
-    \frac{\partial^2 \Evec_{1,t}}{\partial t^2} - \frac{1}{\epsilon_0 \mu_0} \nabla^2 \Evec_{1,t} + w_{pe}^2 \Evec_{1,t} = 0,
-\end{equation}
-\begin{equation}
-    \frac{\partial^2 \Bvec_{1,t}}{\partial t^2} - \frac{1}{\epsilon_0 \mu_0} \nabla^2 \Bvec_{1,t} + \nabla \times \left ( \frac{e n_{e0}}{\epsilon_0} \uvec_{e1,t} \right ) = 0.
+    \label{eq:tem_general_trans_vec_pot_complete_spec}
+    \frac{w^2}{c_0^2} \epsilon \Avec_t + \nabla^2 \Avec_t = 0.
 \end{equation}
 
-Define the electric-field and magnetic-field waves as 
+Taking the time derivative of \cref{eq:tem_general_trans_vec_pot_complete} gives the equation for $\Evec_t$, that is
 \begin{equation}
-    \label{eq:lpi_E_wave_def}
-    \Evec_{1,t} = \bar{\Evec}_{1,t} e^{- iwt},
+    \label{eq:tem_general_trans_E_complete}
+    \frac{\partial^2 \Evec_t}{\partial t^2} + w_{pe}^2 \Evec_t - c_0^2 \nabla^2 \Evec_t = 0.
 \end{equation}
+Using $\Evec_t = \tilde{\Evec}_t \exp(-iwt)$, where $\tilde{\Evec}_t = \hat{\Evec}_t \exp(i \kvec \cdot \xvec)$, we get
 \begin{equation}
-    \label{eq:lpi_B_wave_def}
-    \Bvec_{1,t} = \bar{\Bvec}_{1,t} e^{- iwt},
+    -w^2 \Evec_t + w_{pe}^2 \Evec_t - c_0^2 \nabla^2 \Evec_t = 0.
 \end{equation}
-where $\bar{\Evec}_{1,t} = \bar{\Evec}_{1,t}(\xvec)$ and $\bar{\Bvec}_{1,t} = \bar{\Bvec}_{1,t}(\xvec)$. Given this wave form, the electric-field wave equation becomes
+We re-write the above as 
 \begin{equation}
-    \label{eq:em_E_wave_expanded}
-    -w^2 \bar{\Evec}_{1,t} - \frac{1}{\epsilon_0 \mu_0} \nabla^2 \bar{\Evec}_{1,t} + w_{pe}^2 \bar{\Evec}_{1,t} = 0.
+    \frac{w^2}{c_0^2} \Evec_t - \frac{w^2}{c_0^2} \frac{w_{pe}^2}{w^2} \Evec_t + \nabla^2 \Evec_t = 0,
 \end{equation}
-If we also introduce $\uvec_{e1,t} = \bar{\uvec}_{e1,t} e^{-iwt}$, then we get for the magnetic-field wave equation
+which becomes
 \begin{equation}
-    -w^2 \bar{\Bvec}_{1,t} - \frac{1}{\epsilon_0 \mu_0} \nabla^2 \bar{\Bvec}_{1,t} + \nabla \times \left ( \frac{e n_{e0}}{\epsilon_0} \bar{\uvec}_{e1,t} \right ) = 0.
+    \frac{w^2}{c_0^2} \epsilon \Evec_t + \nabla^2 \Evec_t = 0.
 \end{equation}
-\Cref{eq:em_waves_mom_linearized_pressure_transverse} now gives 
-\begin{equation}
-    \label{eq:em_waves_momentum_wave_form}
-    \bar{\uvec}_{e1,t} = -i \frac{e}{m_e w} \bar{\Evec}_{1,t},
-\end{equation}
-and thus the magnetic-field wave equation becomes
-\begin{equation}
-    -w^2 \bar{\Bvec}_{1,t} - \frac{1}{\epsilon_0 \mu_0} \nabla^2 \bar{\Bvec}_{1,t} - i \nabla \times \left ( \frac{w_{pe}^2}{w} \bar{\Evec}_{1,t} \right ) = 0.
-\end{equation}
-Using the vector identity $\nabla \times (f \Fvec) = f \nabla \times \Fvec + \nabla f \times \Fvec$ we get
-\begin{equation}
-    -w^2 \bar{\Bvec}_{1,t} - \frac{1}{\epsilon_0 \mu_0} \nabla^2 \bar{\Bvec}_{1,t} - i \frac{w_{pe}^2}{w} \nabla \times \bar{\Evec}_{1,t} -i \frac{1}{w} \nabla w_{pe}^2 \times \bar{\Evec}_{1,t}  = 0.
-\end{equation}
-We now use Fraday's law, that is 
-\begin{equation}
-    \nabla \times \Evec_{1,t} = -\frac{\partial \Bvec_{1,t}}{\partial t},
-\end{equation}
-Using the pre-determined wave forms, this becomes
-\begin{equation}
-    \nabla \times \bar{\Evec}_{1,t} = i w \bar{\Bvec}_{1,t}.
-\end{equation}
-Thus, the magnetic-field wave equation can be written as 
-\begin{equation}
-    -w^2 \bar{\Bvec}_{1,t} - \frac{1}{\epsilon_0 \mu_0} \nabla^2 \bar{\Bvec}_{1,t} +  w_{pe}^2 \bar{\Bvec}_{1,t} -i \frac{1}{w} \nabla w_{pe}^2 \times \bar{\Evec}_{1,t}  = 0.
-\end{equation}
-Similarly, we'll now use Ampere's law with Maxwell's correction, that is
-\begin{equation}
-    \nabla \times \Bvec_{1,t} = -\mu_0 e n_{e0} \uvec_{e1,t} + \mu_0 \epsilon_0 \frac{\partial \Evec_{1,t}}{\partial t}.
-\end{equation}
-Using the pre-determined wave forms, this becomes
-\begin{equation}
-    \nabla \times \bar{\Bvec}_{1,t} = - \mu_0 e n_{e0} \bar{\uvec}_{e1,t} - i w \mu_0 \epsilon_0 \bar{\Evec}_{1,t}.
-\end{equation}
-Given \cref{eq:em_waves_momentum_wave_form} the above is written as 
-\begin{equation}
-    \nabla \times \bar{\Bvec}_{1,t} = i \frac{w_{pe}^2}{w} \epsilon_0 \mu_0 \bar{\Evec}_{1,t} - i w \mu_0 \epsilon_0 \bar{\Evec}_{1,t},
-\end{equation}
-or 
-\begin{equation}
-    \nabla \times \bar{\Bvec}_{1,t} = i \epsilon_0 \mu_0 \left ( \frac{w_{pe}^2}{w} - w \right ) \bar{\Evec}_{1,t}.
-\end{equation} 
-Using this in the magnetic-field wave equation we finally get 
-\begin{equation}
-    \label{eq:em_B_wave_expanded}
-    -w^2 \bar{\Bvec}_{1,t} - \frac{1}{\epsilon_0 \mu_0} \nabla^2 \bar{\Bvec}_{1,t} +  w_{pe}^2 \bar{\Bvec}_{1,t} - \frac{1}{\epsilon_0 \mu_0} \frac{1}{w_{pe}^2 - w^2} \nabla w_{pe}^2 \times \left ( \nabla \times \bar{\Bvec}_{1,t} \right ) = 0.
-\end{equation} 
-It is interesting to compare the newly derived electromagnetic wave equations \cref{eq:em_E_wave_expanded,eq:em_B_wave_expanded} against those in free space. The fact that $\uvec_{e1} \ne 0$ leads to a current in the plasma, which in turn accounts for the extra terms with $w_{pe}^2$ in front. The fact that $n_{e0}$ is space dependent accounts for the last term in the magnetic-field wave equation.
 
-If we introduce the dielectric function $\epsilon = 1 - w_{pe}^2 / w^2$, and make use of $c^2 = \epsilon_0 \mu_0$, then the electromagnetic wave equations are written as 
+Taking the curl of \cref{eq:em_general_trans_vec_pot_complete} gives the equation for $\Bvec_t$, that is
 \begin{equation}
-    \label{eq:em_E_wave_dielectric}
-    \nabla^2 \bar{\Evec}_{1,t} + \frac{w^2}{c^2} \epsilon \bar{\Evec}_{1,t} = 0.
+    \label{eq:em_general_trans_B_complete}
+    \frac{\partial^2 \Bvec_t}{\partial t^2} + w_{pe}^2 \Bvec_t - c_0^2 \nabla^2 \Bvec_t + \nabla w_{pe}^2 \times \Avec_t = 0.
 \end{equation}
+Using $\Bvec_t = \tilde{\Bvec}_t \exp(-iwt)$, where $\tilde{\Bvec}_t = \hat{\Bvec}_t \exp(i \kvec \cdot \xvec)$, we get
 \begin{equation}
-    \label{eq:em_B_wave_dielectric}
-    \nabla^2 \bar{\Bvec}_{1,t} + \frac{w^2}{c^2} \epsilon \bar{\Bvec}_{1,t} + \frac{1}{\epsilon} \nabla \epsilon \times \left ( \nabla \times \bar{\Bvec}_{1,t} \right ) = 0.
-\end{equation} 
+    -w^2 \Bvec_t + w_{pe}^2 \Bvec_t - c_0^2 \nabla^2 \Bvec_t + \nabla w_{pe}^2 \times \Avec_t = 0.
+\end{equation}
+We re-write the above as
+\begin{equation}
+    \frac{w^2}{c_0^2} \Bvec_t - \frac{w^2}{c_0^2} \frac{w_{pe}^2}{w^2} \Bvec_t + \nabla^2 \Bvec_t - \frac{w^2}{c_0^2} \nabla \left ( \frac{w_{pe}^2}{w^2} \right ) \times \Avec_t = 0,
+\end{equation}
+which becomes
+\begin{equation}
+    \frac{w^2}{c_0^2} \epsilon \Bvec_t + \nabla^2 \Bvec_t + \frac{w^2}{c_0^2} \nabla \epsilon \times \Avec_t = 0,
+\end{equation}
+Using \cref{eq:tem_general_trans_vec_pot_complete_spec} we get 
+\begin{equation}
+    \frac{w^2}{c_0^2} \epsilon \Bvec_t + \nabla^2 \Bvec_t - \frac{1}{\epsilon} \nabla \epsilon \times \nabla^2 \Avec_t = 0,
+\end{equation}
+The vector identity $\nabla \times \left ( \nabla \times \Fvec \right ) = \nabla \left ( \nabla \cdot \Fvec \right ) - \nabla^2 \Fvec$ gives $\nabla^2 \Avec_t = - \nabla \times \left ( \nabla \times \Avec_t \right ) = - \nabla \times \Bvec_t$. Thus, we finally get
+\begin{equation}
+    \frac{w^2}{c_0^2} \epsilon \Bvec_t + \nabla^2 \Bvec_t + \frac{1}{\epsilon} \nabla \epsilon \times \left ( \nabla \times \Bvec_t \right ) = 0.
+\end{equation}
+
+%-------------------------------------------------------------------------------
+\section{Stimulated Raman Scattering}
+%-------------------------------------------------------------------------------
+
+%-------------------------------------------------------------------------------
+\section{Stimulated Brillouin Scattering}
+%-------------------------------------------------------------------------------
 
 %-------------------------------------------------------------------------------
 \chapter{Instabilities}
@@ -860,14 +899,6 @@ This is re-written as
 \begin{equation}
     \gamma \left ( \frac{\partial^2 \tilde{\phi}}{\partial x^2} - k_y^2 \tilde{\phi} \right ) = -i k_y \left [ \frac{\partial \phi_0}{\partial x} \left ( \frac{\partial^2 \tilde{\phi}}{\partial x^2} - k_y^2 \tilde{\phi} \right ) - \frac{\partial^3 \phi_0}{\partial x^3} \tilde{\phi} \right ].
 \end{equation}
-
-%-------------------------------------------------------------------------------
-\section{Stimulated Raman Scattering}
-%-------------------------------------------------------------------------------
-
-%-------------------------------------------------------------------------------
-\section{Stimulated Brillouin Scattering}
-%-------------------------------------------------------------------------------
 
 %-------------------------------------------------------------------------------
 \chapter{Simple models}
