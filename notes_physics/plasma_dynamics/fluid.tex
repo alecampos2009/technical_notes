@@ -342,13 +342,13 @@ We'll start with the multi-fluid conservation laws described in \cref{sec:two_fl
 \end{equation}
 
 %--------------------------------------------
-\section{Plasma waves}
+\section{Electron-plasma and ion-acoustic waves}
 %--------------------------------------------
 %--------------------------------------------
 \subsection{Linearization}
 %--------------------------------------------
 \label{sec:p_waves_linearization}
-The following decompositions will be used in the derivation of electron plasma and ion acoustic waves:
+The following decompositions will be used in the derivation of electron-plasma and ion-acoustic waves:
 \begin{align}
     n_i &= n_{i0} + n_{i1}, \nonumber \\
     n_e &= n_{e0} + n_{e1}, \nonumber \\
@@ -360,50 +360,50 @@ The following decompositions will be used in the derivation of electron plasma a
     \Bvec &= \Bvec_0 + \Bvec_1.
 \end{align}
 For these decompositions, we'll assume
-\begin{itemize}
-    \item Terms with a subscript 1 are small and thus products of two small quantities can be neglected. 
-    \item $\uvec_{i0}$, $\uvec_{e0}$, $\Evec_0$, and $\Bvec_0$ are zero.
-    \item $n_{i0}$, $n_{e0}$, $p_{i0}$, and $p_{e0}$ are time independent.
-\end{itemize}
+\begin{enumerate}
+    \item Terms with a subscript 1 are small and thus products of two small quantities can be neglected. \label{it:p_waves_assumption_1}
+    \item $\uvec_{i0}$, $\uvec_{e0}$, $\Evec_0$, and $\Bvec_0$ are zero. \label{it:p_waves_assumption_2}
+    \item $n_{i0}$, $n_{e0}$, $p_{i0}$, and $p_{e0}$ are uniform in space and time. \label{it:p_waves_assumption_3}
+\end{enumerate}
 
-Using the decompositions above in the electron density equation, we have
+Using the variable decompositions in the electron density equation, we have
 \begin{equation*}
-    \frac{\partial n_{e0} + n_{e1}}{\partial t} + \nabla \cdot \left [ \left ( n_{e0} + n_{e1} \right )  \left ( \uvec_{e0} + \uvec_{e1} \right ) \right ] = 0,
+    \frac{\partial n_{e0} + n_{e1}}{\partial t} + \nabla \cdot \left [ \left ( n_{e0} + n_{e1} \right )  \left ( \uvec_{e0} + \uvec_{e1} \right ) \right ] = 0.
 \end{equation*}
-which simplifies to 
+Using assumptions in \cref{it:p_waves_assumption_1,it:p_waves_assumption_2,it:p_waves_assumption_3}, the above simplifies to
 \begin{equation}
     \label{eq:p_waves_e_den_linearized}
     \frac{\partial n_{e1}}{\partial t} + \nabla \cdot \left (n_{e0} \uvec_{e1} \right ) = 0.
 \end{equation}
-Using the decompositions above in the ion density equation, we have
+Using the variable decompositions in the ion density equation, we have
 \begin{equation*}
-    \frac{\partial n_{i0} + n_{i1}}{\partial t} + \nabla \cdot \left [ \left ( n_{i0} + n_{i1} \right )  \left ( \uvec_{i0} + \uvec_{i1} \right ) \right ] = 0,
+    \frac{\partial n_{i0} + n_{i1}}{\partial t} + \nabla \cdot \left [ \left ( n_{i0} + n_{i1} \right )  \left ( \uvec_{i0} + \uvec_{i1} \right ) \right ] = 0.
 \end{equation*}
-which simplifies to
+Given the assumptions in \cref{it:p_waves_assumption_1,it:p_waves_assumption_2,it:p_waves_assumption_3}, the above simplifies to
 \begin{equation}
     \label{eq:p_waves_i_den_linearized}
     \frac{\partial n_{i1}}{\partial t} + \nabla \cdot \left (n_{i0} \uvec_{i1} \right ) = 0.
 \end{equation}
 
-Using the decompositions above in the electron momentum equation, we have 
+Using the variable decompositions in the electron momentum equation, we have 
 \begin{multline*}
     \frac{\partial}{\partial t} \left [ m_e \left ( n_{e0} + n_{e1} \right ) \left ( \uvec_{e0} + \uvec_{e1} \right ) \right ] + \nabla \cdot \left [ m_e \left ( n_{e0} + n_{e1} \right ) \left ( \uvec_{e0} + \uvec_{e1} \right ) \left ( \uvec_{e0} + \uvec_{e1} \right ) \right ] \\
-    + e \left ( n_{e0} + n_{e1} \right ) \left [ \left ( \Evec_0 + \Evec_1 \right ) + \left ( \uvec_{e0} + \uvec_{e1} \right ) \times \left ( \Bvec_0 + \Bvec_1 \right ) \right ] = -\nabla \left ( p_{e0} + p_{e1} \right ),
+    + e \left ( n_{e0} + n_{e1} \right ) \left [ \left ( \Evec_0 + \Evec_1 \right ) + \left ( \uvec_{e0} + \uvec_{e1} \right ) \times \left ( \Bvec_0 + \Bvec_1 \right ) \right ] = -\nabla \left ( p_{e0} + p_{e1} \right ).
 \end{multline*}
-which simplifies to 
+Given the assumptions in \cref{it:p_waves_assumption_1,it:p_waves_assumption_2,it:p_waves_assumption_3}, the above simplifies to
 \begin{equation}
     \label{eq:p_waves_e_mom_linearized}
-    \frac{\partial m_e n_{e0} \uvec_{e1}}{\partial t} + e n_{e0} \Evec_1 = - \nabla \left ( p_{e0} + p_{e1} \right ).
+    \frac{\partial n_{e0} \uvec_{e1}}{\partial t} + \frac{e n_{e0}}{m_e} \Evec_1 = - \frac{1}{m_e} \nabla p_{e1} .
 \end{equation}
-Using the decompositions above in the ion momentum equation, we have 
+Using the variable decompositions in the ion momentum equation, we have 
 \begin{multline*}
     \frac{\partial}{\partial t} \left [ m_i \left ( n_{i0} + n_{i1} \right ) \left ( \uvec_{i0} + \uvec_{i1} \right ) \right ] + \nabla \cdot \left [ m_i \left ( n_{i0} + n_{i1} \right ) \left ( \uvec_{i0} + \uvec_{i1} \right ) \left ( \uvec_{i0} + \uvec_{i1} \right ) \right ] \\
-    - Z e \left ( n_{i0} + n_{i1} \right ) \left [ \left ( \Evec_0 + \Evec_1 \right ) + \left ( \uvec_{i0} + \uvec_{i1} \right ) \times \left ( \Bvec_0 + \Bvec_1 \right ) \right ] = -\nabla \left ( p_{i0} + p_{i1} \right ),
+    - Z e \left ( n_{i0} + n_{i1} \right ) \left [ \left ( \Evec_0 + \Evec_1 \right ) + \left ( \uvec_{i0} + \uvec_{i1} \right ) \times \left ( \Bvec_0 + \Bvec_1 \right ) \right ] = -\nabla \left ( p_{i0} + p_{i1} \right ).
 \end{multline*}
-which simplifies to 
+Given the assumptions in \cref{it:p_waves_assumption_1,it:p_waves_assumption_2,it:p_waves_assumption_3}, the above simplifies to
 \begin{equation}
     \label{eq:p_waves_i_mom_linearized}
-    \frac{\partial m_i n_{i0} \uvec_{i1}}{\partial t} - Z e n_{i0} \Evec_1 = - \nabla \left ( p_{i0} + p_{i1} \right ).
+    \frac{\partial n_{i0} \uvec_{i1}}{\partial t} - \frac{Z e n_{i0}}{m_i} \Evec_1 = - \frac{1}{m_i}\nabla p_{i1}.
 \end{equation}
 
 We'll often need to take the gradient of the ion and electron pressure. As an example, consider the electron pressure,
@@ -414,47 +414,35 @@ which we re-write as
 \begin{equation}
     n_e \nabla p_e = \gamma_e p_e \nabla n_e.
 \end{equation}
-Using the decompositions, we have
+Using the variable decompositions, we have
 \begin{equation}
     \left ( n_{e0} + n_{e1} \right ) \nabla \left ( p_{e0} + p_{e1} \right ) = \gamma_e \left ( p_{e0} + p_{e1} \right ) \nabla \left ( n_{e0} + n_{e1} \right ).
 \end{equation}
-Linearizing, we obtain
+Given the assumptions in \cref{it:p_waves_assumption_1,it:p_waves_assumption_3}, the above simplifies to
 \begin{equation}
     \label{eq:p_waves_e_pressure_linearized}
-    n_{e0} \nabla p_{e1} + n_{e1} \nabla p_{e0} = \gamma_e p_{e0} \nabla n_{e1} + \gamma_e p_{e1} \nabla n_{e0}.
+    n_{e0} \nabla p_{e1} = \gamma_e p_{e0} \nabla n_{e1} .
 \end{equation}
 The same applies for the ions, and thus
 \begin{equation}
     \label{eq:p_waves_i_pressure_linearized}
-    n_{i0} \nabla p_{i1} + n_{i1} \nabla p_{i0} = \gamma_i p_{i0} \nabla n_{i1} + \gamma_i p_{i1} \nabla n_{i0}.
+    n_{i0} \nabla p_{i1} = \gamma_i p_{i0} \nabla n_{i1}.
 \end{equation}
 
 %--------------------------------------------
 \subsection{Electron Plasma Waves}
 %--------------------------------------------
 On top of the assumptions in \cref{sec:p_waves_linearization}, we'll assume 
-\begin{itemize}
-    \item $n_{i0}$, $n_{e0}$, $p_{i0}$, and $p_{e0}$ are constant.
+\begin{enumerate}
     \item Quasi-neutrality for the base flow, $Zn_{i0} = n_{e0}$.
     \item Uniform ion density, $n_{i1} = 0$.
-\end{itemize}
+\end{enumerate}
 
-\Cref{eq:p_waves_e_mom_linearized} for the electron momentum now becomes
-\begin{equation}
-    \label{eq:ep_waves_mom_linearized_pressure}
-    \frac{\partial n_{e0} \uvec_{e1}}{\partial t} + \frac{e n_{e0}}{m_e} \Evec_1 = - \frac{1}{m_e}\nabla p_{e1}.
-\end{equation}
-Given that we are assuming $n_{e0}$ and $p_{e0}$ are constant, \cref{eq:p_waves_e_pressure_linearized} becomes
-\begin{equation}
-    \label{eq:ep_waves_e_pressure_linearized}
-    n_{e0} \nabla p_{e1} = \gamma_e p_{e0} \nabla n_{e1}.
-\end{equation}
-Using this in \cref{eq:ep_waves_mom_linearized_pressure},
+Combining \Cref{eq:p_waves_e_mom_linearized} with \cref{eq:p_waves_e_pressure_linearized} gives
 \begin{equation}
     \label{eq:ep_waves_mom_linearized}
     \frac{\partial n_{e0} \uvec_{e1}}{\partial t} + \frac{e n_{e0}}{m_e} \Evec_1 = - \frac{\gamma_e p_{e0}}{n_{e0} m_e} \nabla n_{e1}.
 \end{equation}
-
 Taking the time derivative of \cref{eq:p_waves_e_den_linearized} and using \cref{eq:ep_waves_mom_linearized} leads to the the wave equation for electron density
 \begin{equation}
     \label{eq:ep_waves_den_combined}
@@ -491,23 +479,13 @@ If we define the thermal velocity without the factor of two, that is, $v_{T\alph
 \subsection{Ion Acoustic Waves}
 %--------------------------------------------
 On top of the assumptions in \cref{sec:p_waves_linearization}, we'll assume 
-\begin{itemize}
-    \item $n_{i0}$, $n_{e0}$, $p_{i0}$, and $p_{e0}$ are constant.
+\begin{enumerate}
     \item Quasi-neutrality for the base flow, $Zn_{i0} = n_{e0}$.
     \item Approximate quasi-neutrality for the fluctuations, $Z n_{i1} \approx n_{e1}$.
     \item Negligible electron mass, $m_e \to 0$.
-\end{itemize}
+\end{enumerate}
 
-\Cref{eq:p_waves_i_mom_linearized} for the ion momentum now becomes
-\begin{equation}
-    \label{eq:ia_waves_mom_linearized_pressure}
-    \frac{\partial n_{i0} \uvec_{i1}}{\partial t} - \frac{Z e n_{i0}}{m_i} \Evec_1 = - \frac{1}{m_i} \nabla p_{i1}.
-\end{equation}
-Given that we are assuming $n_{i0}$ and $p_{i0}$ are constant, \cref{eq:p_waves_i_pressure_linearized} becomes
-\begin{equation}
-    n_{i0} \nabla p_{i1} = \gamma_i p_{i0} \nabla n_{i1}.
-\end{equation}
-Using this in \cref{eq:ia_waves_mom_linearized_pressure},
+Combining \cref{eq:p_waves_i_mom_linearized} with \cref{eq:p_waves_i_pressure_linearized} gives
 \begin{equation}
     \label{eq:ia_waves_mom_linearized}
     \frac{\partial n_{i0} \uvec_{i1}}{\partial t} - \frac{Z e n_{i0}}{m_i} \Evec_1 = - \frac{\gamma_i p_{i0}}{n_{i0} m_i} \nabla n_{i1}.
@@ -518,7 +496,7 @@ Taking the time derivative of \cref{eq:p_waves_i_den_linearized} and using \cref
     \label{eq:ia_waves_den_combined}
     \frac{\partial^2 n_{i1}}{\partial t^2} + \frac{Z e n_{i0}}{m_i} \nabla \cdot \Evec_1 = \frac{\gamma_i p_{i0}}{n_{i0} m_i} \nabla^2 n_{i1}.
 \end{equation}
-For this case, we now assume that the mass of the electron, which is significantly smaller than that of the ions, is negligible. Thus, \cref{eq:p_waves_e_mom_linearized} simplifies to 
+For this case, we assume that the mass of the electron, which is significantly smaller than that of the ions, is negligible. Thus, \cref{eq:p_waves_e_mom_linearized} simplifies to 
 \begin{equation}
     \label{eq:ia_waves_E}
     e n_{e0} \Evec_1 = - \frac{\gamma_e p_{e0}}{n_{e0}} \nabla n_{e1}.
@@ -575,7 +553,7 @@ These are the so-called plane waves. Note that $\hat{\Fvec}$, $\hat{\Fvec}_l$, a
     \kvec \times \hat{\Fvec}_l &= 0 \\
     \kvec \cdot \hat{\Fvec}_t &= 0
 \end{align}
-The first says $\hat{\Fvec}_l$ is parallel to $\kvec$ and the second says $\hat{\Fvec}_t$ is orthogonal to $\kvec$. Thus, $\hat{\Fvec}_l \cdot \hat{\Fvec}_t = 0$. We will often have situations where $\nabla \times \Fvec = \nabla \cdot \Fvec = 0$, which by its own does not imply $\Fvec = 0$. However, due to the wave form of $\Fvec$ (\cref{eq:em_general_wave_form}), we have $\kvec \times \hat{\Fvec} = \kvec \cdot \hat{\Fvec} =  0$. This can only be satisfied by $\hat{\Fvec} = 0$, and as a result we have $\Fvec = 0$. In other words,
+The first says $\hat{\Fvec}_l$ is parallel to $\kvec$ and the second says $\hat{\Fvec}_t$ is orthogonal to $\kvec$. Thus, $\hat{\Fvec}_l \cdot \hat{\Fvec}_t = 0$. We will often have situations where $\nabla \times \Fvec = \nabla \cdot \Fvec = 0$, which by its own does not imply $\Fvec = 0$. However, due to the wave form of $\Fvec$ (\cref{eq:em_general_wave_form}), the previous expressions translate to $\kvec \times \hat{\Fvec} = \kvec \cdot \hat{\Fvec} =  0$. The latter equality states that $\kvec$ and $\hat{\Fvec}$ are orthogonal, that is, the angle between them is $90^\circ$. The former equality leads to $|\hat{\Fvec}| \sin(90^\circ) = 0$, which in turn means $\hat{\Fvec} = 0$. As a result, the entire vector $\Fvec$ is equal to zero. In other words,
 \begin{equation}
     \label{eq:ltw_general_null_vector}
     \nabla \times \Fvec = \nabla \cdot \Fvec = 0 \to \Fvec = 0.
@@ -590,21 +568,22 @@ For both electron-plasma and ion-acoustic waves we can assume the magnetic field
 \end{equation}
 By definition, $\nabla \cdot \Evec_t = 0$. Thus, using \cref{eq:ltw_general_null_vector} we get $\Evec_t = 0$, that is, $\Evec = \Evec_l$. 
 
-For electron-plasma waves, we can write \cref{eq:ep_waves_mom_linearized_pressure} in spectral form to obtain
+For electron-plasma waves, we can write \cref{eq:ep_waves_mom_linearized} in spectral form to obtain
 \begin{equation}
--i w m_e n_{e0} \hat{\uvec}_{e1} + e n_{e0} \hat{\Evec}_{1,l} = -\kvec_e \hat{p}_{e1}. 
+-i w n_{e0} \hat{\uvec}_{e1} + \frac{e n_{e0}}{m_e} \hat{\Evec}_{1,l} = -\kvec_e \frac{\gamma_e p_{e0}}{n_{e0} m_e} \hat{n}_{e1}. 
 \end{equation}
 Since the second term on the left-hand side and the term on the right-hand side point along $\kvec_e$, $\hat{\uvec}_{e1}$ also points along $\kvec_e$, that is, $\hat{\uvec}_{e1} = \hat{\uvec}_{e1,l}$.
 
-For ion-acoustic waves, we can write \cref{eq:ia_waves_mom_linearized_pressure} in spectral to obtain
+For ion-acoustic waves, we can write \cref{eq:ia_waves_mom_linearized} in spectral to obtain
 \begin{equation}
--i w m_i n_{i0} \hat{\uvec}_{i1} - Z e n_{i0} \hat{\Evec}_{1,l} = -\kvec_i \hat{p}_{i1}. 
+-i w n_{i0} \hat{\uvec}_{i1} - \frac{Z e n_{i0}}{m_i} \hat{\Evec}_{1,l} = -\kvec_i \frac{\gamma_i p_{i0}}{n_{i0} m_i} \hat{n}_{i1}. 
 \end{equation}
 Since the second term on the left-hand side and the term on the right-hand side point along $\kvec_i$, $\hat{\uvec}_{i1}$ also points along $\kvec_i$, that is, $\hat{\uvec}_{i1} = \hat{\uvec}_{i1,l}$. Finally, we note that the electric field being purely longitudinal is in agreement with \cref{eq:ia_waves_E}.
 
 %--------------------------------------------
 \section{Electromagnetic waves in plasmas}
 %--------------------------------------------
+\label{sec:electromagnetic_waves_plasmas}
 In the Appendix we analyzed electromagnetic waves in vacuum, that is, for cases where $\rho_e = \Jvec = 0$. In this section we relax both of these assumptions. Consider the electric and magnetic fields as well as the scalar and vector potentials, which satisfy
 \begin{equation}
     \label{eq:emp_general_E_potential}
@@ -657,7 +636,11 @@ Using \cref{eq:ltw_general_null_vector}, we conclude
     \label{eq:emp_general_longitudinal_J}
     \frac{\partial \nabla \phi}{\partial t} = \frac{1}{\epsilon_0} \Jvec_l.
 \end{equation}
-This gives the equation for $\Evec_l$.
+This gives the equation for $\Evec_l$, namely,
+\begin{equation}
+    \label{eq:emp_general_long_E}
+    \frac{\partial^2 \Evec_l}{\partial t^2} + \frac{1}{\epsilon_0} \frac{\partial \Jvec_l}{\partial t} = 0.
+\end{equation}
 
 Both $\Evec_t$ and $\Bvec$ can be extracted from $\Avec$, so now we proceed to find an equation for the transverse vector potential. Ampere's law with Maxwell's correction gives
 \begin{equation*}
@@ -669,7 +652,7 @@ The above is re-written as
 \end{equation*}
 which gives
 \begin{equation*}
-    \frac{\partial^2 \Avec}{\partial t} - \frac{1}{\mu_0 \epsilon_0} \nabla^2 \Avec = \frac{1}{\epsilon_0} \Jvec - \frac{\partial \nabla \phi}{\partial t}.
+    \frac{\partial^2 \Avec}{\partial t} - \frac{1}{\mu_0 \epsilon_0} \nabla^2 \Avec = \frac{1}{\epsilon_0} \Jvec - \frac{\partial \nabla \phi}{\partial t},
 \end{equation*}
 or
 \begin{equation*}
@@ -705,7 +688,19 @@ Using the functional form in \cref{eq:em_general_wave_form} for $\Evec_t$, $\Bve
 \end{equation}
 That is, $\Evec_t$ points in the same direction as $\Jvec_t$, which as shown before points in the same direction as $\Avec$. Additionally, $\Bvec$ points in the direction of $\kvec \times \Jvec_t$, that is, it is orthogonal to $\Evec_t$.
 
-It will often be the case that transverse waves will oscillate at such a fast rate that the ions, which have too large of an inertia, will be unable to react to the oscillations. Thus, we can assume $\uvec_{i,t} = 0$. Given the definition of the current density in \cref{eq:p_waves_curr_density}, the transverse current density is expressed as $\Jvec_t = e \left (Z n_i \uvec_{i,t} - n_e \uvec_{e,t} \right )$, which simplifies to 
+We briefly note that taking the curl of \cref{eq:p_waves_maxwell_1}, and using \cref{eq:p_waves_maxwell_2}, gives the wave equation for the total electric field $\Evec$, that is 
+\begin{equation}
+    \frac{\partial^2 \Evec}{\partial t^2} - c_0^2 \nabla^2 \Evec + c_0^2 \nabla (\nabla \cdot \Evec) + \frac{1}{\epsilon_0} \frac{\partial \Jvec}{\partial t} = 0.
+\end{equation}
+The above can be considered as the sum of the following three equations
+\begin{align*}
+    \frac{\partial^2 \Evec_l}{\partial t^2} + \frac{1}{\epsilon_0} \frac{\partial \Jvec_l}{\partial t} &= 0, \\
+    \frac{\partial^2 \Evec_t}{\partial t^2} - c_0^2 \nabla^2 \Evec_t + \frac{1}{\epsilon_0} \frac{\partial \Jvec_t}{\partial t} &= 0, \\
+    -c_0^2 \nabla^2 \Evec_l + c_0^2 \nabla (\nabla \cdot \Evec_l) &= 0.
+\end{align*}
+The first is the equation for the longitudinal electric field, that is \cref{eq:emp_general_long_E}. The second is the equation for the transverse electric field, that is \cref{eq:emp_general_trans_E}. The third equation above follows from the vector identity $\nabla \times (\nabla \times \Fvec) = -\nabla^2 \Fvec + \nabla ( \nabla \cdot \Fvec )$ and the fact that $\nabla \times \Evec_l = 0$.
+
+It will often be the case that transverse waves will oscillate at such a fast rate that the ions, which have a large inertia, will be unable to react quickly enough. Thus, we can assume $\uvec_{i,t} = 0$. Given the definition of the current density in \cref{eq:p_waves_curr_density}, the transverse current density is expressed as $\Jvec_t = e \left (Z n_i \uvec_{i,t} - n_e \uvec_{e,t} \right )$, which now simplifies to 
 \begin{equation}
     \label{eq:emp_transverse_current}
     \Jvec_t = -e n_e \uvec_{e,t}.
@@ -726,19 +721,19 @@ Using the scalar and vector potentials we have
 \end{equation*}
 Using the vector identity $\nabla \left ( F^2 / 2 \right ) = \Fvec \times \left ( \nabla \times \Fvec \right ) + \Fvec \cdot \nabla \Fvec$, we write the above as
 \begin{equation}
-    \frac{\partial\uvec_e}{\partial t} - \uvec_e \times \left ( \nabla \times \uvec_e \right ) + \nabla \left (\frac{u_e^2}{2} \right ) + \frac{e}{m_e} \left [ -\nabla \phi - \frac{\partial \Avec}{\partial t} + \uvec_e \times \left ( \nabla \times \Avec \right ) \right ] = -\frac{1}{n_e m_e} \nabla p_e.
+    \frac{\partial\uvec_e}{\partial t} - \uvec_e \times \left ( \nabla \times \uvec_e \right ) + \nabla \left (\frac{u_e^2}{2} \right ) + \frac{e}{m_e} \left [ -\nabla \phi - \frac{\partial \Avec}{\partial t} + \uvec_e \times \left ( \nabla \times \Avec \right ) \right ] = -\frac{1}{n_e m_e} \nabla p_e,
 \end{equation}
 which is equivalent to 
 \begin{equation}
     \label{eq:emp_electron_momentum}
     \frac{\partial\uvec_e}{\partial t} - \uvec_e \times \left ( \nabla \times \uvec_{e,t} \right ) + \nabla \left (\frac{u_e^2}{2} \right ) + \frac{e}{m_e} \left [ -\nabla \phi - \frac{\partial \Avec}{\partial t} + \uvec_e \times \left ( \nabla \times \Avec \right ) \right ] = -\frac{1}{n_e m_e} \nabla p_e.
 \end{equation}
-We'll now introduce a more specific coordinate system. We'll be dealing with at most three waves at a time, a laser wave, a scattered wave, and a plasma wave (either electron-plasma or ion-acoustic wave). We'll assume all three of these waves lie on a so-called base plane. That is, $\kvec_e$ (or $\kvec_i$), $\kvec_L$, and $\kvec_s$ are all on this plane. We now choose the main transverse direction, that is, the direction ov $\uvec_{e,t}$, $\Jvec_t$, $\Evec_t$, and $\Avec$ to be the direction orthogonal to this plane, so that these vectors are orthogonal to any $\kvec$. As an aside, we note that the longitudinal and transverse components of the electron velocity can belong to different waves. That is
+We'll now introduce a more specific coordinate system. We'll be dealing with at most three waves at a time, a laser wave, a scattered wave, and a plasma wave (either electron-plasma or ion-acoustic wave). We'll assume all three of these waves lie on a so-called base plane. That is, $\kvec_e$ (or $\kvec_i$), $\kvec_L$, and $\kvec_s$ are all on this plane. We now choose the main transverse direction, that is, the direction of $\uvec_{e,t}$, $\Jvec_t$, $\Evec_t$, and $\Avec$ to be the direction orthogonal to this plane, so that these vectors are orthogonal to any $\kvec$. As an aside, we note that the longitudinal and transverse components of the electron velocity can belong to different waves. That is
 \begin{align}
     \uvec_{e,l} &= \hat{\uvec}_{e,l} \exp \left [ i (\kvec_p \cdot \xvec - w_pt) \right ] \\
-    \uvec_{e,t} &= \hat{\uvec}_{e,t} \exp \left [ i (\kvec_q \cdot \xvec - w_qt) \right ]
+    \uvec_{e,t} &= \hat{\uvec}_{e,t} \exp \left [ i (\kvec_q \cdot \xvec - w_qt) \right ].
 \end{align}
-Note that since all wave vectors point along the base plane, $u_e^2$, $\phi$ and $p_e$ will only vary along that plane, and thus their gradients will be confined to that plane. Thus, the component \cref{eq:emp_electron_momentum} along the main transverse direction is
+Note that since all wave vectors point along the base plane, $u_e^2$, $\phi$ and $p_e$ will only vary along that plane, and thus their gradients will be confined to that plane. Thus, the component of \cref{eq:emp_electron_momentum} along the main transverse direction is
 \begin{equation}
     \label{eq:emp_electron_momentum_transverse}
     \frac{\partial\uvec_{e,t}}{\partial t} - \uvec_{e,l} \times \left ( \nabla \times \uvec_{e,t} \right ) + \frac{e}{m_e} \left [ - \frac{\partial \Avec}{\partial t} + \uvec_{e,l} \times \left ( \nabla \times \Avec \right ) \right ] = 0.
@@ -783,7 +778,7 @@ We start with \cref{eq:emp_general_trans_vec_pot_complete}, but focus on the sta
     \label{eq:temp_general_trans_vec_pot_complete}
     \frac{\partial^2 \Avec}{\partial t} + w_{pe}^2 \Avec - c_0^2 \nabla^2 \Avec = 0.
 \end{equation}
-We note that $n_{e0}$ is only time independent, that is, it  still allowed to vary across space. As a result, $w_{pe}^2$ is also allowed to vary across space. We'll now use the functional form in \cref{eq:em_general_wave_form} for $\Avec_t$. However, we'll express the vector potential as $\Avec = \tilde{\Avec} \exp(-iwt)$, where $\tilde{\Avec} = \hat{\Avec} \exp(i\kvec \cdot \xvec)$. Thus, \cref{eq:temp_general_trans_vec_pot_complete} gives
+We note that $n_{e0}$ is only time independent, that is, it is still allowed to vary across space. As a result, $w_{pe}^2$ is also allowed to vary across space. We'll now use the functional form in \cref{eq:em_general_wave_form} for $\Avec$. However, we'll express the vector potential as $\Avec = \tilde{\Avec} \exp(-iwt)$, where $\tilde{\Avec} = \hat{\Avec} \exp(i\kvec \cdot \xvec)$. Thus, \cref{eq:temp_general_trans_vec_pot_complete} gives
 \begin{equation}
     -w^2 \Avec + w_{pe}^2 \Avec - c_0^2 \nabla^2 \Avec = 0.
 \end{equation}
@@ -830,11 +825,11 @@ We re-write the above as
 \end{equation}
 which becomes
 \begin{equation}
-    \frac{w^2}{c_0^2} \epsilon \Bvec + \nabla^2 \Bvec + \frac{w^2}{c_0^2} \nabla \epsilon \times \Avec = 0,
+    \frac{w^2}{c_0^2} \epsilon \Bvec + \nabla^2 \Bvec + \frac{w^2}{c_0^2} \nabla \epsilon \times \Avec = 0.
 \end{equation}
 Using \cref{eq:temp_general_trans_vec_pot_complete_spec} we get 
 \begin{equation}
-    \frac{w^2}{c_0^2} \epsilon \Bvec + \nabla^2 \Bvec - \frac{1}{\epsilon} \nabla \epsilon \times \nabla^2 \Avec = 0,
+    \frac{w^2}{c_0^2} \epsilon \Bvec + \nabla^2 \Bvec - \frac{1}{\epsilon} \nabla \epsilon \times \nabla^2 \Avec = 0.
 \end{equation}
 The vector identity $\nabla \times \left ( \nabla \times \Fvec \right ) = \nabla \left ( \nabla \cdot \Fvec \right ) - \nabla^2 \Fvec$ gives $\nabla^2 \Avec = - \nabla \times \left ( \nabla \times \Avec \right ) = - \nabla \times \Bvec$. Thus, we finally get
 \begin{equation}
@@ -842,25 +837,84 @@ The vector identity $\nabla \times \left ( \nabla \times \Fvec \right ) = \nabla
 \end{equation}
 
 %-------------------------------------------------------------------------------
-\section{Stimulated Raman Scattering}
+\section{Stimulated Raman and Brillouin instabilities}
 %-------------------------------------------------------------------------------
-We now drop the assumption that the plasma is stable, that is, we assume $n_{e1}$ is small but not zero. For simplicity, we'll also assume the plasma is uniform, that is $n_{e0}$ is not only constant in time but also in space. Thus, $p_{e0}$ is uniform in space and time, and $p_{e1}$ has small non-zero values. We'll also introduce the decomposition $\Avec = \Avec_L + \Avec_s$, where $\Avec_L$ is the vector potential associated with the laser light and $\Avec_s$ is the potential associated with the scattered light. For linearization purposes, we'll assume $\Avec_s$ is small. Thus, \cref{eq:emp_general_trans_vec_pot_complete} is written as 
+%-------------------------------------------------------------------------------
+\subsection{Linearization}
+%-------------------------------------------------------------------------------
+The following decompositions will be used in the derivation of stimulated Raman and Brillouin instabilities:
+\begin{align}
+    n_i &= n_{i0} + n_{i1}, \nonumber \\
+    n_e &= n_{e0} + n_{e1}, \nonumber \\
+    p_i &= p_{i0} + p_{i1}, \nonumber \\
+    p_e &= p_{e0} + p_{e1}, \nonumber \\
+    \uvec_{i,l} &= \uvec_{i0,l} + \uvec_{i1,l}, \nonumber \\
+    \uvec_{e,l} &= \uvec_{e0,l} + \uvec_{e1,l}, \nonumber \\
+    \Evec_l &= \Evec_{0,l} + \Evec_{1,l}, \nonumber \\
+    \Avec &= \Avec_L + \Avec_s.
+\end{align}
+For these decompositions, we'll assume
+\begin{enumerate}
+    \item Terms with a subscript 1 are small and thus products of two small quantities can be neglected. \label{it:p_instabilities_assumption_1}
+    \item $\uvec_{i0,l}$, $\uvec_{e0,l}$, and $\Evec_{0,l}$,are zero. \label{it:p_instabilities_assumption_2}
+    \item $n_{i0}$, $n_{e0}$, $p_{i0}$, and $p_{e0}$ are uniform in space and time. \label{it:p_instabilities_assumption_3}
+\end{enumerate}
+
+Thus, unlike the previous section, we do not assume the plasma is stable, that is, we assume fluctuations such as $n_{e1}$ are small but non zero. $\Avec_L$ is the vector potential associated with the laser light, and $\Avec_s$ is the potential associated with the scattered light. For linearization purposes, we'll assume $\Avec_s$ is small. 
+
+Using the decomposition for $\Avec$, \cref{eq:emp_general_trans_vec_pot_complete} is written as 
 \begin{equation}
-    \label{eq:srs_temp1}
     \frac{\partial^2 \Avec_L}{\partial t} + \frac{\partial^2 \Avec_s}{\partial t} + w_{pe}^2 \Avec_L + w_{pe}^2 \Avec_s - c_0^2 \nabla^2 \Avec_L - c_0^2 \nabla^2 \Avec_s = -\frac{e^2 n_{e1}}{\epsilon_0 m_e} \Avec_L -\frac{e^2 n_{e1}}{\epsilon_0 m_e} \Avec_s,
 \end{equation}
-Neglecting all terms with at least one small quantity, we get
+Dropping products of small quantities we have
+\begin{equation}
+    \label{eq:srs_temp1}
+    \frac{\partial^2 \Avec_L}{\partial t} + \frac{\partial^2 \Avec_s}{\partial t} + w_{pe}^2 \Avec_L + w_{pe}^2 \Avec_s - c_0^2 \nabla^2 \Avec_L - c_0^2 \nabla^2 \Avec_s = -\frac{e^2 n_{e1}}{\epsilon_0 m_e} \Avec_L.
+\end{equation}
+We'll assume the laser light is stable, that is, it satisfies \cref{eq:temp_general_trans_vec_pot_complete}, which we re-write below
 \begin{equation}
     \label{eq:srs_temp2}
-    \frac{\partial^2 \Avec_L}{\partial t} + w_{pe}^2 \Avec_L - c_0^2 \nabla^2 \Avec_L = 0,
+    \frac{\partial^2 \Avec_L}{\partial t} + w_{pe}^2 \Avec_L - c_0^2 \nabla^2 \Avec_L = 0.
 \end{equation}
-which is essentially \cref{eq:temp_general_trans_vec_pot_complete}, that is, the equation for an electromagnetic wave in a stable plasma. Neglecting all terms in \cref{eq:srs_temp1} that include products of two small quantities, and using \cref{eq:srs_temp2}, we get
+Thus, \cref{eq:srs_temp1} becomes
 \begin{equation}
     \frac{\partial^2 \Avec_s}{\partial t} + w_{pe}^2 \Avec_s - c_0^2 \nabla^2 \Avec_s = -\frac{e^2 n_{e1}}{\epsilon_0 m_e} \Avec_L.
 \end{equation}
-Thus, the fluctuating $n_{e1}$ couples with the laser light to serve as a source for the scattered light.
+The above shows that the fluctuating $n_{e1}$ couples with the laser light to serve as a source for the scattered light.
 
-Consider now the electron momentum equation. Subtracting \cref{eq:emp_electron_momentum_transverse} from \cref{eq:emp_electron_momentum} gives
+The electron density equation is now written as
+\begin{equation*}
+    \frac{\partial n_{e0} + n_{e1}}{\partial t } + \nabla \cdot \left [ \left ( n_{e0} + n_{e1} \right )\left ( \uvec_{e,t} + \uvec_{e0,l} + \uvec_{e1,l} \right ) \right ] = 0,
+\end{equation*}
+which, since $\uvec_{e,t}$ is transverse, can be written as
+\begin{equation*}
+    \frac{\partial n_{e0} + n_{e1}}{\partial t } + \uvec_{e,t} \cdot \nabla \left (n_{e0} + n_{e1} \right ) + \nabla \cdot \left [ \left ( n_{e0} + n_{e1} \right )\left ( \uvec_{e0,l} + \uvec_{e1,l} \right ) \right ] = 0.
+\end{equation*}
+Given the assumptions in \cref{it:p_instabilities_assumption_1,it:p_instabilities_assumption_2,it:p_instabilities_assumption_3}, the above simplifies to
+\begin{equation*}
+    \frac{\partial n_{e1}}{\partial t } + \uvec_{e,t} \cdot \nabla n_{e1} + \nabla \cdot \left ( n_{e0} \uvec_{e1,l} \right ) = 0.
+\end{equation*}
+Since $\uvec_{e,t}$ and $\nabla n_{e1}$ are orthogonal, we finally have
+\begin{equation}
+    \label{eq:p_instabilities_e_den_linearized}
+    \frac{\partial n_{e1}}{\partial t} + \nabla \cdot \left ( n_{e0} \uvec_{e1,l} \right ) = 0.
+\end{equation}
+
+The ion density equation is now written as
+\begin{equation*}
+    \frac{\partial n_{i0} + n_{i1}}{\partial t } + \nabla \cdot \left [ \left ( n_{i0} + n_{i1} \right )\left ( \uvec_{i,t} + \uvec_{i0,l} + \uvec_{i1,l} \right ) \right ] = 0,
+\end{equation*}
+As stated in \cref{sec:electromagnetic_waves_plasmas}, it is often the case that transverse waves oscillate at such a fast rate that the ions, which have large inertia, are unable to react on comparable time scales. Thus, we can assume $\uvec_{i,t} = 0$,
+\begin{equation*}
+    \frac{\partial n_{i0} + n_{i1}}{\partial t } + \nabla \cdot \left [ \left ( n_{i0} + n_{i1} \right )\left ( \uvec_{i0,l} + \uvec_{i1,l} \right ) \right ] = 0.
+\end{equation*}
+Given the assumptions in \cref{it:p_instabilities_assumption_1,it:p_instabilities_assumption_2,it:p_instabilities_assumption_3}, the above simplifies to
+\begin{equation}
+    \label{eq:p_instabilities_i_den_linearized}
+    \frac{\partial n_{i1}}{\partial t } + \nabla \cdot \left ( n_{i0} \uvec_{i1,l} \right ) = 0.
+\end{equation}
+
+Consider the electron momentum equation. Subtracting \cref{eq:emp_electron_momentum_transverse} from \cref{eq:emp_electron_momentum} gives
 \begin{equation}
     \label{eq:emp_electron_momentum_longitudinal}
     \frac{\partial\uvec_{e,l}}{\partial t} - \uvec_{e,t} \times \left ( \nabla \times \uvec_{e,t} \right ) + \nabla \left (\frac{u_e^2}{2} \right ) + \frac{e}{m_e} \left [ -\nabla \phi +\uvec_{e,t} \times \left ( \nabla \times \Avec \right ) \right ] = -\frac{1}{n_e m_e} \nabla p_e.
@@ -877,57 +931,107 @@ Since $\uvec_{e,l}$ and $\uvec_{e,t}$ are orthogonal $u_e^2 = \uvec_e \cdot \uve
 \begin{equation*}
     \frac{\partial\uvec_{e,l}}{\partial t} + \nabla \left (\frac{u_{e,l}^2 + u_{e,t}^2}{2} \right ) + \frac{e}{m_e} \Evec_l = -\frac{1}{n_e m_e} \nabla p_e.
 \end{equation*}
-
-We now follow similar steps to those taken to derive the electron-plasma wave equation. Decompose the longitudinal electron velocity as $\uvec_{e,l} = \uvec_{e0,l} + \uvec_{e1,l}$, and assume $\uvec_{e0,l} = 0$ and $\uvec_{e1,l}$ is small. We'll also decompose the longitudinal electric field as $\Evec_l = \Evec_{0,l} + \Evec_{1,l}$, and assume $\Evec_{0,l} = 0$ and $\Evec_{0,1}$ is small. Linearizing the electron momentum equation then gives
+Given the assumptions in \cref{it:p_instabilities_assumption_1,it:p_instabilities_assumption_2,it:p_instabilities_assumption_3}, the above simplifies to
 \begin{equation*}
-    \frac{\partial n_{e0} \uvec_{e1,l}}{\partial t} + n_{e0} \nabla \left (\frac{u_{e,t}^2}{2} \right ) + \frac{e n_{e0}}{m_e} \Evec_{1,l} = -\frac{1}{m_e} \nabla p_{e1}.
+    \frac{\partial n_{e0} \uvec_{e1,l}}{\partial t} + n_{e0} \nabla \left (\frac{u_{e,t}^2}{2} \right ) + \frac{e n_{e0}}{m_e} \Evec_{1,l} = -\frac{1}{m_e} \nabla p_{e1} .
 \end{equation*}
-Using \cref{eq:ep_waves_e_pressure_linearized}, we get
+For the transverse electron velocity we have
+\begin{equation*}
+    u_{e,t}^2 = \left ( \frac{e \Avec}{m_e} \right ) \cdot \left ( \frac{e \Avec}{m_e} \right ) = \frac{e^2}{m_e^2} \left ( \Avec_L \cdot \Avec_ L + 2 \Avec_L \cdot \Avec_s + \Avec_s \cdot \Avec_s \right ).
+\end{equation*}
+Since the product of small quantities can be neglected, the $\Avec_s \cdot \Avec_s$ term is dropped. We'll also ignore the $\Avec_L \cdot \Avec_L$ term, given that $\Avec_L$ is stable and thus its magnitude does not play a critical role in the growth of the instabilities. Thus, the electron momentum equation becomes
+\begin{equation}
+    \label{eq:p_instabilities_e_mom_linearized}
+    \frac{\partial n_{e0} \uvec_{e1,l}}{\partial t} + \frac{e^2 n_{e0}}{m_e^2} \nabla \left (\Avec_L \cdot \Avec_s \right ) + \frac{e n_{e0}}{m_e} \Evec_{1,l} = -\frac{1}{m_e} \nabla p_{e1}.
+\end{equation}
+
+Consider now the ion momentum equation, given by \cref{eq:pwaves_ion_momentum}, which we re-write below as 
+\begin{equation*}
+    \frac{\partial n_i \uvec_i}{\partial t} + \nabla \cdot \left ( n_i \uvec_i \uvec_i \right ) - \frac{Ze n_i}{m_i} \left ( \Evec + \uvec_i \times \Bvec \right ) = -\frac{1}{m_i} \nabla p_i,
+\end{equation*}
+The longitudinal component of the above is
+\begin{equation*}
+    \frac{\partial n_i \uvec_{i,l}}{\partial t} + \left [ \nabla \cdot \left (n_i \uvec_i \uvec_i \right ) \right ]_l - \frac{Z e n_i}{m_i} \left ( \Evec_l + \uvec_{i,t} \times \Bvec \right ) = -\frac{1}{m_i} \nabla p_i,
+\end{equation*}
+where $[\cdot]_l$ denotes longitudinal component. Since $\uvec_{i,t} = 0$, we have
+\begin{equation*}
+    \frac{\partial n_i \uvec_{i,l}}{\partial t} + \left [ \nabla \cdot \left (n_i \uvec_i \uvec_i \right ) \right ]_l - \frac{Z e n_i}{m_i} \Evec_l = -\frac{1}{m_i} \nabla p_i.
+\end{equation*}
+Using the variable decompositions, we have
+\begin{multline*}
+    \frac{\partial}{\partial t} \left [ \left ( n_{i0} + n_{i1} \right ) \left ( \uvec_{i0,l} + \uvec_{i1,l} \right ) \right ] \\
+    + \left \{ \nabla \cdot \left [ \left (n_{i0} + n_{i1} \right ) \left ( \uvec_{i,t} + \uvec_{i0,l} + \uvec_{i1,l} \right ) \left ( \uvec_{i,t} + \uvec_{i0,l} + \uvec_{i1,l} \right ) \right ] \right \}_l \\
+    - \frac{Z e}{m_i} \left ( n_{i0} + n_{i1} \right ) \left ( \Evec_{0,l} + \Evec_{1,l} \right ) = - \frac{1}{m_i} \nabla \left ( p_{i0} + p_{i1} \right ).
+\end{multline*}
+Given the assumptions in \cref{it:p_instabilities_assumption_1,it:p_instabilities_assumption_2,it:p_instabilities_assumption_3}, the above simplifies to
+\begin{equation}
+    \label{eq:p_instabilities_i_mom_linearized}
+    \frac{\partial n_{i0} \uvec_{i1,l}}{\partial t} - \frac{Z e n_{i0}}{m_i} \Evec_{1,l} = - \frac{1}{m_i} \nabla p_{i1}.
+\end{equation}
+
+%-------------------------------------------------------------------------------
+\subsection{Stimulated Raman Scattering}
+%-------------------------------------------------------------------------------
+We employ the same assumptions as for the electron-plasma waves, that is 
+\begin{enumerate}
+    \item Quasi-neutrality for the base flow, $Zn_{i0} = n_{e0}$.
+    \item Uniform ion density, $n_{i1} = 0$.
+\end{enumerate}
+
+Combining \cref{eq:p_instabilities_e_mom_linearized} with \cref{eq:p_waves_e_pressure_linearized} gives 
 \begin{equation}
     \label{eq:srs_mom_linearized}
-    \frac{\partial n_{e0} \uvec_{e1,l}}{\partial t} + n_{e0} \nabla \left (\frac{u_{e,t}^2}{2} \right ) + \frac{e n_{e0}}{m_e} \Evec_{1,l} = -\frac{\gamma_e p_{e0}}{n_{e0} m_e} \nabla n_{e1}.
+    \frac{\partial n_{e0} \uvec_{e1,l}}{\partial t} + \frac{e^2 n_{e0}}{m_e^2} \nabla \left (\Avec_L \cdot \Avec_s \right ) + \frac{e n_{e0}}{m_e} \Evec_{1,l} = -\frac{\gamma_e p_{e0}}{n_{e0} m_e} \nabla n_{e1}.
 \end{equation}
-The density equation is now written as
+Taking the time derivative of \cref{eq:p_instabilities_e_den_linearized} and using \cref{eq:srs_mom_linearized} leads to the wave equation for electron density
 \begin{equation*}
-    \frac{\partial n_{e0} + n_{e1}}{\partial t } + \nabla \cdot \left [ \left ( n_{e0} + n_{e1} \right )\left ( \uvec_{e,t} + \uvec_{e0,l} + \uvec_{e1,l} \right ) \right ] = 0,
+    \frac{\partial^2 n_{e1}}{\partial t^2} - \frac{e^2 n_{e0}}{m_e^2} \nabla^2 \left (\Avec_L \cdot \Avec_s \right ) - \frac{e n_{e0}}{m_e} \nabla \cdot \Evec_{1,l} = \frac{\gamma_e p_{e0}}{n_{e0} m_e} \nabla^2 n_{e1}.
 \end{equation*}
-which, since $\uvec_{e,t}$ is transverse, can be written as
+As before, using \cref{eq:ep_waves_efield_divergence} we obtain
 \begin{equation*}
-    \frac{\partial n_{e0} + n_{e1}}{\partial t } + \uvec_{e,t} \cdot \nabla \left (n_{e0} + n_{e1} \right ) + \nabla \cdot \left [ \left ( n_{e0} + n_{e1} \right )\left ( \uvec_{e0,l} + \uvec_{e1,l} \right ) \right ] = 0.
-\end{equation*}
-Using the linearization assumptions, the above becomes
-\begin{equation*}
-    \frac{n_{e1}}{\partial t } + \uvec_{e,t} \cdot \nabla n_{e1} + \nabla \cdot \left ( n_{e0} \uvec_{e1,l} \right ) = 0.
-\end{equation*}
-Since $\uvec_{e,t}$ and $\nabla n_{e1}$ are orthogonal, we finally have
-\begin{equation*}
-    \frac{\partial n_{e1}}{\partial t} + \nabla \cdot \left ( n_{e0} \uvec_{e1,l} \right ) = 0.
-\end{equation*}
-Taking the derivative of the above and using \cref{eq:srs_mom_linearized} leads to the the wave equation for electron density
-\begin{equation*}
-    \frac{\partial^2 n_{e1}}{\partial t^2} - n_{e0} \nabla^2 \left ( \frac{ u_{e,t}^2}{2} \right ) - \frac{e n_{e0}}{m_e} \nabla \cdot \Evec_{1,l} = \frac{\gamma_e p_{e0}}{n_{e0} m_e} \nabla^2 n_{e1}.
-\end{equation*}
-As before, using \cref{eq:ep_waves_efield_divergence} we have
-\begin{equation*}
-    \frac{\partial^2 n_{e1}}{\partial t^2} - n_{e0} \nabla^2 \left ( \frac{ u_{e,t}^2}{2} \right ) + \frac{e^2 n_{e0}}{m_e \epsilon_0} n_{e1} = \frac{\gamma_e p_{e0}}{n_{e0} m_e} \nabla^2 n_{e1}.
+    \frac{\partial^2 n_{e1}}{\partial t^2} - \frac{e^2 n_{e0}}{m_e^2} \nabla^2 \left (\Avec_L \cdot \Avec_s \right ) + \frac{e^2 n_{e0}}{m_e \epsilon_0} n_{e1} = \frac{\gamma_e p_{e0}}{n_{e0} m_e} \nabla^2 n_{e1}.
 \end{equation*}
 or
 \begin{equation}
-    \frac{\partial^2 n_{e1}}{\partial t^2} + w_{pe}^2 n_{e1} - \frac{\gamma_e p_{e0}}{n_{e0} m_e} \nabla^2 n_{e1} =  n_{e0} \nabla^2 \left ( \frac{ u_{e,t}^2}{2} \right ).
-\end{equation}
-For the transverse electron velocity we have
-\begin{equation}
-    u_{e,t}^2 = \left ( \frac{e \Avec}{m_e} \right ) \cdot \left ( \frac{e \Avec}{m_e} \right ) = \frac{e^2}{m_e^2} \left ( \Avec_L \cdot \Avec_ L + 2 \Avec_L \cdot \Avec_s + \Avec_s \cdot \Avec_s \right ).
-\end{equation}
-We'll focus only on the effect of the cross term, and thus, we write the electron-plasma wave equation as
-\begin{equation}
-    \frac{\partial^2 n_{e1}}{\partial t^2} + w_{pe}^2 n_{e1} - \frac{\gamma_e p_{e0}}{n_{e0} m_e} \nabla^2 n_{e1} =  \frac{e^2 n_{e0}}{m_e^2} \nabla^2 \left ( \Avec_L \cdot \Avec_s \right ).
+    \frac{\partial^2 n_{e1}}{\partial t^2} + w_{pe}^2 n_{e1} - \frac{\gamma_e p_{e0}}{n_{e0} m_e} \nabla^2 n_{e1} =   \frac{e^2 n_{e0}}{m_e^2} \nabla^2 \left (\Avec_L \cdot \Avec_s \right ).
 \end{equation}
 Thus, the scattered laser light $\Avec_s$ couples with the laser light to serve as a source for the electron-plasma wave.
 
 %-------------------------------------------------------------------------------
-\section{Stimulated Brillouin Scattering}
+\subsection{Stimulated Brillouin Scattering}
 %-------------------------------------------------------------------------------
+We employ the same assumptions as for the ion-acoustic waves, that is
+\begin{enumerate}
+    \item Quasi-neutrality for the base flow, $Zn_{i0} = n_{e0}$.
+    \item Approximate quasi-neutrality for the fluctuations, $Z n_{i1} \approx n_{e1}$.
+    \item Negligible electron mass, $m_e \to 0$.
+\end{enumerate}
+Combining \cref{eq:p_instabilities_i_mom_linearized} with \cref{eq:p_waves_i_pressure_linearized} gives
+\begin{equation}
+    \label{eq:sbs_mom_linearized}
+    \frac{\partial n_{i0} \uvec_{i1,l}}{\partial t} - \frac{Z e n_{i0}}{m_i} \Evec_{1,l} = - \frac{\gamma_i p_{i0}}{n_{i0} m_i} \nabla n_{i1}.
+\end{equation}
+Taking the time derivative of \cref{eq:p_instabilities_i_den_linearized} and using \cref{eq:sbs_mom_linearized} leads to the wave equation for ion density
+\begin{equation}
+    \frac{\partial^2 n_{i1}}{\partial t^2} + \frac{Z e n_{i0}}{m_i} \nabla \cdot \Evec_{1,l} = \frac{\gamma_i p_{i0}}{n_{i0} m_i} \nabla^2 n_{i1}.
+\end{equation}
+For this case, we assume that the mass of the electron, which is significantly smaller than that of the ions, is negligible. Thus, \cref{eq:p_instabilities_e_mom_linearized} simplifies to 
+\begin{equation}
+    \frac{e^2 n_{e0}}{m_e} \nabla \left (\Avec_L \cdot \Avec_s \right ) + e n_{e0} \Evec_{1,l} = -\frac{\gamma_e p_{e0}}{n_{e0}} \nabla n_{e1}.
+\end{equation}
+Plugging in the above in the ion wave equation we obtain
+\begin{equation}
+    \frac{\partial^2 n_{i1}}{\partial t^2} = \frac{Z n_{i0}}{n_{e0}} \frac{\gamma_e p_{e0}}{n_{e0} m_i} \nabla^2 n_{e1} + \frac{\gamma_i p_{i0}}{n_{i0} m_i} \nabla^2 n_{i1} + \frac{Z e^2 n_{i0}}{m_i m_e} \nabla^2 \left (\Avec_L \cdot \Avec_s \right ).
+\end{equation}
+Due to quasi-neutrality, we have $Zn_{i0} = n_{e0}$ and $Zn_{i1} \approx n_{e1}$, which gives
+\begin{equation}
+    \frac{\partial^2 n_{i1}}{\partial t^2} = \frac{1}{m_i} \left ( \frac{Z \gamma_e p_{e0}}{n_{e0}} + \frac{\gamma_i p_{i0}}{n_{i0}} \right ) \nabla^2 n_{i1} + \frac{Z e^2 n_{i0}}{m_i m_e} \nabla^2 \left (\Avec_L \cdot \Avec_s \right ).
+\end{equation}
+Since $p_{i0}/n_{i0} = k_B T_{i0}$ and $p_{e0} / n_{e0} = k_B T_{e0}$, we finally have
+\begin{equation}
+    \frac{\partial^2 n_{i1}}{\partial t^2} - \left ( \frac{Z \gamma_e k_B T_{e0} + \gamma_i k_B T_{i0}}{m_i} \right ) \nabla^2 n_{i1} = \frac{Z e^2 n_{i0}}{m_i m_e} \nabla^2 \left (\Avec_L \cdot \Avec_s \right ).
+\end{equation}
+Thus, the scattered laser light $\Avec_s$ couples with the laser light to serve as a source for the ion-acoustic wave.
 
 %-------------------------------------------------------------------------------
 \chapter{Instabilities}
