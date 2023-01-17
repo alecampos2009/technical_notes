@@ -406,28 +406,57 @@ Given the assumptions in \cref{it:p_waves_assumption_1,it:p_waves_assumption_2,i
     \frac{\partial n_{i0} \uvec_{i1}}{\partial t} - \frac{Z e n_{i0}}{m_i} \Evec_1 = - \frac{1}{m_i}\nabla p_{i1}.
 \end{equation}
 
-We'll often need to take the gradient of the ion and electron pressure. As an example, consider the electron pressure,
+We'll often need to take the gradient of the ion and electron pressure. We begin by showing
 \begin{equation*}
-    \nabla p_e = C_e \gamma_e n_e^{\gamma_e-1} \nabla n_e = C_e \gamma_e \frac{n_e^{\gamma_e}}{n_e} \nabla n_e = \gamma_e \frac{p_e}{n_e} \nabla n_e,
+    \nabla p_\alpha = C_\alpha \gamma_\alpha n_\alpha^{\gamma_\alpha-1} \nabla n_\alpha = C_\alpha \gamma_\alpha \frac{n_\alpha^{\gamma_\alpha}}{n_\alpha} \nabla n_\alpha = \gamma_\alpha \frac{p_\alpha}{n_\alpha} \nabla n_\alpha,
 \end{equation*}
-which we re-write as 
-\begin{equation}
-    n_e \nabla p_e = \gamma_e p_e \nabla n_e.
-\end{equation}
-Using the variable decompositions, we have
-\begin{equation}
-    \left ( n_{e0} + n_{e1} \right ) \nabla \left ( p_{e0} + p_{e1} \right ) = \gamma_e \left ( p_{e0} + p_{e1} \right ) \nabla \left ( n_{e0} + n_{e1} \right ).
-\end{equation}
+or
+\begin{equation*}
+    n_\alpha \nabla p_\alpha = \gamma_\alpha p_\alpha \nabla n_\alpha,
+\end{equation*}
+where $\alpha = i,e$. Using the variable decompositions, we have
+\begin{equation*}
+    \left ( n_{\alpha 0} + n_{\alpha 1} \right ) \nabla \left ( p_{\alpha 0} + p_{\alpha 1} \right ) = \gamma_\alpha \left ( p_{\alpha 0} + p_{\alpha 1} \right ) \nabla \left ( n_{\alpha 0} + n_{\alpha 1} \right ).
+\end{equation*}
 Given the assumptions in \cref{it:p_waves_assumption_1,it:p_waves_assumption_3}, the above simplifies to
 \begin{equation}
-    \label{eq:p_waves_e_pressure_linearized}
-    n_{e0} \nabla p_{e1} = \gamma_e p_{e0} \nabla n_{e1} .
+    \label{eq:p_waves_alpha_pressure_linearized}
+    n_{\alpha 0} \nabla p_{\alpha 1} = \gamma_\alpha p_{\alpha 0} \nabla n_{\alpha 1}.
 \end{equation}
-The same applies for the ions, and thus
+Thus, for electrons we have
+\begin{equation}
+    \label{eq:p_waves_e_pressure_linearized}
+    n_{e0} \nabla p_{e1} = \gamma_e p_{e0} \nabla n_{e1},
+\end{equation}
+and for ions
 \begin{equation}
     \label{eq:p_waves_i_pressure_linearized}
     n_{i0} \nabla p_{i1} = \gamma_i p_{i0} \nabla n_{i1}.
 \end{equation}
+
+An alternate derivation to obtain the previous results is to use an equation of state for the large pressure and density of the following form
+\begin{equation}
+    \label{eq:p_waves_eos}
+    p_{\alpha 0} = n_{\alpha 0} k_B T_\alpha,
+\end{equation}
+where $\alpha = i,e$. Note that the temperature is one whole quantity, that is, it is not split into large and small terms. Let's assume that the large quantities also satisfy isentropic flow, that is $p_{\alpha 0} = C n^{\gamma_\alpha}_{\alpha 0}$. Thus, we can show that
+\begin{align*}
+    p_{\alpha 1} &= p_{\alpha} - p_{\alpha 0} \\
+    &= C n_\alpha^{\gamma_\alpha} - p_{\alpha 0} \\
+    &= C (n_{\alpha 0} + n_{\alpha 1})^{\gamma_\alpha} - p_{\alpha 0} \\
+    &= C n_{\alpha 0}^{\gamma_\alpha} \left ( 1 + \frac{n_{\alpha 1}}{n_{\alpha 0}} \right )^{\gamma_\alpha} - p_{\alpha 0} \\
+    &= p_{\alpha 0} \left ( 1 + \frac{n_{\alpha 1}}{n_{\alpha 0}} \right )^{\gamma_\alpha} - p_{\alpha 0}.
+\end{align*} 
+Since $n_{\alpha 1} / n_{\alpha 0}$ is small, we can use the binomial series to proceed as follows
+\begin{align*}
+    p_{\alpha 1} &= p_{\alpha 0} \left ( 1 + \gamma_\alpha \frac{n_{\alpha 1}}{n_{\alpha 0}} \right ) - p_{\alpha 0} \\
+    &= \gamma_\alpha \frac{p_{\alpha 0}}{n_{\alpha 0}} n_{\alpha 1}.
+\end{align*}
+With $p_{\alpha 0}$ and $n_{\alpha 0}$ constant, this then gives \cref{eq:p_waves_alpha_pressure_linearized}. Finally, using \cref{eq:p_waves_eos} in the above we get
+\begin{equation}
+    p_{\alpha 1} = \gamma_\alpha k_B T_\alpha n_{\alpha 1},
+\end{equation}
+which can be interpreted as the equation of state for the small quantities.
 
 %--------------------------------------------
 \subsection{Electron Plasma Waves}
@@ -509,9 +538,9 @@ Due to quasi-neutrality, we have $Z n_{i0} = n_{e0}$ and $Z n_{i1} \approx n_{e1
 \begin{equation*}
     \frac{\partial^2 n_{i1}}{\partial t^2} = \frac{1}{m_i} \left ( \frac{Z \gamma_e p_{e0}}{n_{e0}} + \frac{\gamma_i p_{i0}}{n_{i0}} \right ) \nabla^2 n_{i1}.
 \end{equation*}
-Since $p_{i0}/n_{i0} = k_B T_{i0}$ and $p_{e0}/n_{e0} = k_B T_{e0}$, we finally have
+Since $p_{i0}/n_{i0} = k_B T_i$ and $p_{e0}/n_{e0} = k_B T_e$, we finally have
 \begin{equation}
-    \frac{\partial^2 n_{i1}}{\partial t^2} - \left ( \frac{Z \gamma_e k_B T_{e0} + \gamma_i k_B T_{i0}}{m_i} \right ) \nabla^2 n_{i1} = 0.
+    \frac{\partial^2 n_{i1}}{\partial t^2} - \left ( \frac{Z \gamma_e k_B T_e + \gamma_i k_B T_i}{m_i} \right ) \nabla^2 n_{i1} = 0.
 \end{equation}
 
 Assuming a mode of the form $n_{i1} = \hat{n}_{i1} \exp [ i \left ( \kvec_i \cdot \xvec - w t \right ) ]$, where $\kvec_i$ is the wave vector of the ion-acoustic wave, we obtain the following dispersion relation
@@ -520,7 +549,7 @@ Assuming a mode of the form $n_{i1} = \hat{n}_{i1} \exp [ i \left ( \kvec_i \cdo
 \end{equation}
 where
 \begin{equation}
-    v_s = \sqrt{ \frac{Z \gamma_e k_B T_{e0} + \gamma_i k_B T_{i0}}{m_i} }.
+    v_s = \sqrt{ \frac{Z \gamma_e k_B T_e + \gamma_i k_B T_i }{m_i} }.
 \end{equation}
 
 %--------------------------------------------
