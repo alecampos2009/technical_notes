@@ -2,11 +2,11 @@
 \usepackage{fullpage}
 \usepackage{hhline}
 
-\usepackage{../../../info/packages}
-\usepackage{../../../info/nomenclature}
+\usepackage{../../info/packages}
+\usepackage{../../info/nomenclature}
 \usepackage{scalerel}
 
-\title{Fluid Mechanics}
+\title{Fluid Dynamics}
 \author{Alejandro Campos}
 
 \begin{document}
@@ -1632,7 +1632,7 @@ Given an equation of state, we can write $h_2 = \xi(P_2,\vartheta_2)$ and $h_1 =
 In \cref{fig:shock_adiabat} an arbitrary shock adiabat $P_2 = f(\vartheta_2)$ is shown. One thing to note is that for $\vartheta_2 = \vartheta_1$ (no real shock), the shock adiabat naturally gives $P_2 = P_1$. Thus, the state corresponding to the flow upstream of the shock, i.e.\@ ($P_1$, $\vartheta_1$), is a point in the shock adiabat line. One can then draw a straight line to various possible states after the shock, as shown in \cref{fig:shock_adiabat}. The slope of any of these lines is $(P_2 - P_1)/(\vartheta_2 - \vartheta_1)$, which as shown in \cite{thompson1988} is equal to $-J^2$, where $J = \rho_1 w_1 = \rho_2 w_2$.
 \begin{figure}[ht]
    \centering
-   \includegraphics[width=0.7\textwidth]{../../../images/shock_adiabat.pdf}
+   \includegraphics[width=0.7\textwidth]{../../images/shock_adiabat.pdf}
    \caption{Shock adiabat for an arbitrary equation of state.}
    \label{fig:shock_adiabat}
 \end{figure}
@@ -1712,7 +1712,7 @@ as shown in \cite{thompson1988}.
 %---------------------------------
 \begin{figure}[ht]
 \centering
-\includegraphics[width=10cm]{../../../images/oblique_shock.pdf}
+\includegraphics[width=10cm]{../../images/oblique_shock.pdf}
 \caption{Oblique-shock geometry, $\beta$ is the shock angle and $\theta$ the turning angle.}
 \label{fig:oblique_shock}
 \end{figure}
@@ -1735,14 +1735,14 @@ Using the shock jump condition for velocity (\cref{eq:normal_shock_velocity}), a
 The information contained in the above relationship is quite vast, and can best be understood by looking at $\theta$ profiles as a function of $\beta$---for different Mach numbers---obtained from the equation above. A plot of these profiles is given in \cref{fig:theta_beta_1}. Starting from the right-most point on the $x$-axis, labelled as ``a'', is a normal shock with a shock angle of $90^\circ$. Moving along the blue line as the shock angle decreases, we see that the turning angle increases until a maximum, labeled as ``b'', is reached. A further decrease in shock angle leads to point ``c'', which corresponds to turning angles for which the flow behind the shock becomes subsonic. Smaller shock angles lead to even smaller turning angles, until point ``d'' is reached, which corresponds to a Mach wave, to be described in a subsequent section. It is important to note that there are two shock angles that can give the same turning angle. The turning angle corresponding to the smaller shock angle is referred to as the weak solution, whereas the turning angle corresponding to the larger shock angle is the strong solution. This nomenclature has no direct connection to that defined in \cref{eq:strong_weak_shocks}. The black dashed line in \cref{fig:theta_beta_1} corresponds to the peak value for each Mach number, and thus demarcates the weak and strong solutions. A more pictorial representation of this behavior, for the specific case of a shock in front of a cylinder, is given in \cref{fig:theta_beta_2}. 
 \begin{figure}[ht]
    \centering
-   \includegraphics[width=0.5\textwidth]{../../../images/theta_beta_1.pdf}
+   \includegraphics[width=0.5\textwidth]{../../images/theta_beta_1.pdf}
    \caption{$\theta$--$\beta$ curve for a perfect gas with $\gamma = 1.4$.}
    \label{fig:theta_beta_1}
 \end{figure}
 
 \begin{figure}[ht]
    \centering
-   \includegraphics[width=0.7\textwidth]{../../../images/theta_beta_2.pdf}
+   \includegraphics[width=0.7\textwidth]{../../images/theta_beta_2.pdf}
    \caption{Representation of different shock waves for different shock angles $\beta$.}
    \label{fig:theta_beta_2}
 \end{figure}
@@ -1838,7 +1838,7 @@ and
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=8cm]{../../../images/mach_wave.pdf}
+\includegraphics[width=8cm]{../../images/mach_wave.pdf}
 \caption{Mach wave}
 \label{fig:mach_wave}
 \end{figure}
@@ -1975,6 +1975,81 @@ Viscous effects include friction drag, flow separation(leading edge stall, trail
 \subsection{Falkner Skan}
 %---------------------------------
 
+%###############################################################################
+%                                                                              #
+%                                                                              #
+\part{Hydrodynamic Instabilities}                                             %#
+%                                                                              #
+%                                                                              #
+%###############################################################################
+
+%###############################################################################
+%
+\chapter{Linear Stability}
+%
+%###############################################################################
+Consider the following system of PDEs for a two-dimensional problem
+\begin{equation}
+    \frac{\partial w}{\partial t} = \frac{\partial \phi}{\partial y}\frac{\partial w}{\partial x} - \frac{\partial \phi}{\partial x} \frac{\partial w}{\partial y},
+\end{equation}
+\begin{equation}
+    w = \nabla^2 \phi .
+\end{equation}
+In the above, $\phi = \phi(x,y,t)$ is the electrostatic potential and $w = w(x,y,t)$ the vorticity.
+
+The analysis begins by splitting the variables into equilibrium and fluctuating components, namely
+\begin{equation}
+    \phi = \phi_0 + \phi_1,
+\end{equation}
+\begin{equation}
+    w = w_0 + w_1.
+\end{equation}
+For the above, $\phi_0 = \phi_0(x)$, $w_0 = w_0(x)$, and $\phi_1 = \phi_1(x,y,t)$, $w_1 = w_1(x,y,t)$. We now introduce a Fourier series decomposition for the fluctuating variables, and focus on a single Fourier mode as follows 
+\begin{equation}
+    \phi_1(x,y,t) = F(x,k_y,t) e^{ik_y y} = \tilde{\phi}(x,k_y) e^{\gamma t + i k_y y},
+\end{equation}
+\begin{equation}
+    w_1(x,y,t) = G(x,k_y,t) e^{ik_y y} = \tilde{w}(x,k_y) e^{\gamma t + i k_y y}.
+\end{equation}
+In the above, $\gamma$, which can be complex, is the growth rate factor, and $\tilde{\phi} = \tilde{\phi}(x, k_y)$, $\tilde{w} = \tilde{w}(x, k_y)$ are the remaining part of the Fourier coefficient.
+
+We then plug in the decompositions for $\phi$ and $w$ in the governing PDEs. Collecting the lowest order terms leads to equations for the equilibrium solution. For example, the Poisson equation to lowest order is
+\begin{equation}
+    \label{eq:lin_stab_w0_phi0}
+    w_0 = \nabla^2 \phi_0 = \frac{\partial^2 \phi_0}{\partial x^2}.
+\end{equation}
+Combining terms up to next order gives
+\begin{equation}
+    \label{eq:lin_stab_pde_mid_order}
+    \frac{\partial w_1}{\partial t} = \frac{\partial \phi_0}{\partial y}\frac{\partial w_1}{\partial x} + \frac{\partial \phi_1}{\partial y}\frac{\partial w_0}{\partial x} - \frac{\partial \phi_0}{\partial x} \frac{\partial w_1}{\partial y} - \frac{\partial \phi_1}{\partial x} \frac{\partial w_0}{\partial y},
+\end{equation}
+\begin{equation}
+    w_1 = \nabla^2 \phi_1.
+\end{equation}
+Using the expression for $\phi_1$ in the Poisson equation above leads to 
+\begin{equation}
+    w_1 = \left ( \frac{\partial^2 \tilde{\phi}}{\partial x^2} - k_y^2 \tilde{\phi} \right ) e^{\gamma t + i k_y y},
+\end{equation}
+or 
+\begin{equation}
+    \tilde{w} = \frac{\partial^2 \tilde{\phi}}{\partial x^2} - k_y^2 \tilde{\phi} .
+\end{equation}
+We'll now evaluate each of the terms in \cref{eq:lin_stab_pde_mid_order}.
+\begin{align}
+    \frac{\partial w_1}{\partial t} &= \gamma \left ( \frac{\partial^2 \tilde{\phi}}{\partial x^2} - k_y^2 \tilde{\phi} \right ) e^{\gamma t + i k_y y}, \nonumber \\
+    \frac{\partial \phi_0}{\partial y}\frac{\partial w_1}{\partial x} &= 0, \nonumber \\
+    \frac{\partial \phi_1}{\partial y}\frac{\partial w_0}{\partial x} &= i k_y \tilde{\phi} e^{\gamma t + i k_y y} \frac{\partial^3 \phi_0}{\partial x^3}, \nonumber \\
+    \frac{\partial \phi_0}{\partial x} \frac{\partial w_1}{\partial y} &= \frac{\partial \phi_0}{\partial x} i k_y \left ( \frac{\partial^2 \tilde{\phi}}{\partial x^2} - k_y^2 \tilde{\phi} \right ) e^{\gamma t + i k_y y},\nonumber \\
+    \frac{\partial \phi_1}{\partial x} \frac{\partial w_0}{\partial y} &= 0 . \nonumber \\
+\end{align}
+Combining all of the above, we obtain
+\begin{equation}
+    \gamma \left ( \frac{\partial^2 \tilde{\phi}}{\partial x^2} - k_y^2 \tilde{\phi} \right ) = ik_y \tilde{\phi} \frac{\partial^3 \phi_0}{\partial x^3} - \frac{\partial \phi_0}{\partial x} i k_y \left ( \frac{\partial^2 \tilde{\phi}}{\partial x^2} - k_y^2 \tilde{\phi} \right ).
+\end{equation}
+This is re-written as 
+\begin{equation}
+    \gamma \left ( \frac{\partial^2 \tilde{\phi}}{\partial x^2} - k_y^2 \tilde{\phi} \right ) = -i k_y \left [ \frac{\partial \phi_0}{\partial x} \left ( \frac{\partial^2 \tilde{\phi}}{\partial x^2} - k_y^2 \tilde{\phi} \right ) - \frac{\partial^3 \phi_0}{\partial x^3} \tilde{\phi} \right ].
+\end{equation}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -2699,7 +2774,7 @@ where $\rvec_{ap}$ is the vector pointing from the leading edge to the arbitrary
 
 \begin{figure}[ht]
    \centering
-   \includegraphics[width=0.8\textwidth]{../../../images/airfoil.pdf}
+   \includegraphics[width=0.8\textwidth]{../../images/airfoil.pdf}
    \caption{Coordinate system and representative forces on an airfoil.}
    \label{fig:airfoil}
 \end{figure}

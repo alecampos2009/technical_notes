@@ -1,0 +1,143 @@
+\documentclass[a4paper,11pt]{report}
+\usepackage{fullpage}
+
+\usepackage{"../../info/packages"}
+\usepackage{"../../info/nomenclature"}
+\usepackage{fullpage}
+
+
+\title{Nuclear Physics}
+\author{Alejandro Campos}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+%----------------------------------------------------------------------------------------------------------------------
+\chapter{Nuclear Fusion}
+%----------------------------------------------------------------------------------------------------------------------
+
+%--------------------------------------------------------------------------
+\section{Basic definitions}
+%--------------------------------------------------------------------------
+
+\begin{itemize}
+
+\item Atomic number ($Z$): \# of protons
+
+\item Mass number ($A$): \# of protons + \# of neutrons
+
+\item Atomic mass ($m_a$): mass of a particular isotope of an element.
+
+\item Relative atomic mass ($A_r$): (defined for an element only)(previously referred to as atomic weight). Average of the atomic masses of all the different isotopes in a \textit{sample}, with each isotope's contribution to the average being its abundance within the sample (as a percentage).
+
+\item Standard Atomic Weight ($A_r^o$): (defined for an element only). Average of the atomic masses of all the different isotopes in \textit{planet earth}, with each isotope's contribution to the average being tis abundance in earth (as a percentage).
+
+\item Atomic mass unit ($u$): unit of mass, equivalent to $\frac{1}{12}$ the mass of a carbon-12 atom. That is 
+\begin{equation}
+\label{eq:def_amu}
+1u = \frac{m_c}{12}.
+\end{equation}
+where $m_c$ is the mass of a carbon-12 atom, in grams. Think of $u$ as similar to a microgram.
+
+\item Mole: \# of elementary entities equal to \# of atoms in 12 grams of carbon-12. That is,
+\begin{equation}
+1 mol = \frac{12g}{m_c}
+\end{equation}
+Using \cref{eq:def_amu}, we get
+\begin{equation}
+\label{eq:u_g_mol}
+1u = \frac{1}{mol} g.
+\end{equation}
+The value of the mole is $6.02214086 \times 10^{23}$.
+
+\item Molar mass ($M$): 
+\begin{itemize}
+    \item If it is an atom (e.g.\@ Carbon, $C$), then it is its atomic weight, but one uses \cref{eq:u_g_mol} to express the value in $g/mol$. 
+    \item If it is a compound (e.g.\@ Methane, $CH_4$), simply add up the atomic weights of each atom in the molecule, and again, express the result in $g/mol$.
+    \item If it is a mixture (e.g.\@ air, $N_2,O_2,Ar,CO_2,...$), then it is the weighted average of the atomic weights of the constituents, and the result again is expressed in $g/mol$.
+\end{itemize}
+
+\item Avogadro's number ($N_a$): a conversion factor so that things can be measured in terms of moles. 
+\begin{equation}
+    N_a = \frac{6.02214086 \times 10^{23}}{mol} 
+\end{equation}
+
+%--------------------------------------------------------------------------
+\section{The fusion reaction}
+%--------------------------------------------------------------------------
+\item The fundamental relation for nuclear reactions is $E = m c^2$. A mass $m$ can be transformed into energy $E$, and viceversa. Two examples for $m$ are the following:
+\begin{itemize}
+\item Defect mass ($Dm$): the difference in mass between the atom and the sum of its constituents,
+\begin{equation}
+Dm = N m_n + Z m_p - m_a.
+\end{equation}
+For carbon
+\begin{equation}
+Dm = 6 \times 1.008664 u + 6 \times 1.007276 u - 12u = 0.09564 u.
+\end{equation}
+For fluorine
+\begin{equation}
+Dm = 10 \times 1.008664 u + 9 \times 1.007276 u - 18.998403u = 0.154 u.
+\end{equation}
+The binding energy is then the energy corresponding to the mass defect as given by  $E = (Dm)c^2$.
+
+\item Mass change of a fusion reaction:
+\begin{equation}
+m = \text{mass of particles before reaction} - \text{mass of particles after reaction} 
+\end{equation}
+Consider the DT reaction as an example, then we have
+\begin{equation}
+m = 2.013553u \;(D) + 3.015501u \;(T) - 4.001503u \;(\alpha) - 1.008665u \;(n) = 0.018886u
+\end{equation}
+The above mass translates to $E_f = mc^2 = 17.6MeV$.
+\end{itemize}
+
+\item Momentum conservation:\\
+Lets assume the particles before a fusion reaction move sufficiently slow that their velocities can be neglected. Conservation of momentum thus gives
+\begin{equation}
+0 = m_1 v_1 + m_2 v_2,
+\end{equation}
+where $m_1$, $m_2$, $v_1$, $v_2$ are the mass and velocity of particles after the reaction.
+
+\item Energy conservation: \\
+Energy is not conserved since some of the mass is converted to energy. The energy balance can be written as $E_{after} - E_{before} = E_f$. Assuming again that the particles before a fusion reaction move sufficiently slow, then
+\begin{equation}
+\frac{1}{2} m_1 v_1^2 + \frac{1}{2} m_2 v_2^2 = E_f,
+\end{equation}
+where $E_f$ is obtained from Einstein's equation.
+
+%-------------------------------------------------------------------------------
+\section{Fusion power density}
+%-------------------------------------------------------------------------------
+The fusion power density $S_f$ is the fusion energy produced per unit volume per unit time. Label the energy generated by each fusion collision between particles 1 and 2 by $E_f$, and the number of those fusion collisions per unit volume per unit time (also known as reaction rate) as $R_{12}$. Then the fusion power density is given by 
+\begin{equation}
+    S_f = E_f R_{12}.
+\end{equation}
+We note that $E_f$ is an energy released by the reaction (it can either be the total energy, the energy carried out by the alpha particles only, the energy carried out by the neutrons only, etc.). 
+
+The reaction rate between two distinct particle is given by
+\begin{align}
+    R_{12} = n_1 n_2 \langle \sigma v \rangle,
+\end{align}
+where $n_1$ and $n_2$ are the number densities of particles 1 and 2, respectively. The expected value $\langle \sigma v \rangle$ is given by
+\begin{equation}
+    \langle \sigma v \rangle = \frac{1}{n_1 n_2} \int_\Rthree \int_\Rthree f_1(\vvec_1) f_2(\vvec_2) \sigma(v) v \, d\vvec_1 d\vvec_2.
+\end{equation}
+Thus, the fusion power density can be expressed as
+\begin{equation}
+    S_f = E_f \int_\Rthree \int_\Rthree f_1(\vvec_1) f_2(\vvec_2) \sigma(v) v \, d\vvec_1 d\vvec_2.
+\end{equation}
+Using the definition of the cross-section \cref{eq:def_cross_section}, the above becomes
+\begin{equation}
+    S_f = E_f \int_\Rthree \int_\Rthree \int_0^{2\pi} \int_0^\infty f_1(\vvec_1) f_2(\vvec_2) F(v,b) v b \, db d\phi d\vvec_1 d\vvec_2.
+\end{equation}
+For cases in which we are not interested in the energy generated by the collision, but instead on some other physical property associated with the collision (for example change in momentum rather than change in energy) then the above needs to be generalized. Thus, we would use
+\begin{equation}
+    S = \int_\Rthree \int_\Rthree \int_0^{2\pi} \int_0^\infty f_1(\vvec_1) f_2(\vvec_2) E(v,b) F(v,b) v b \, db d\phi d\vvec_1 d\vvec_2,
+\end{equation}
+where $E(v,b)$ is the physical property associated with the collision.
+
+\end{itemize}
+
+\end{document}

@@ -1,143 +1,20 @@
-%###############################################################################
-%
-%
-\part{Particle description}
-%
-%
-%###############################################################################
+\documentclass[a4paper,11pt]{report}
+\usepackage{fullpage}
 
-%--------------------------------------------------------------------------------------------------------------------------------------------
-\chapter{Classical Mechanics}
-%--------------------------------------------------------------------------------------------------------------------------------------------
-\begin{table}[H]
-\renewcommand{\arraystretch}{1.5}
-\centering
-\caption{Various coordinates of classical mechanics. }
-\label{tb:classical_mechanics_coordinates}
- \begin{tabular}{l|l|l}
-    Classical coordinates & $\xvec(t)$ & $\vvec(t)$ \\
-    \hline
-    Generalized coordinates  & $\qvec$ & $\qvecdot$ \\
-    \hline
-    Canonical coordinates & $\qvec$ & $\pvec$ \\
-    \hline
-    Time-dependent canonical coordinates & $\tilde{\qvec}(t)$ & $ \tilde{\pvec}(t)$ \\
- \end{tabular}
-\end{table}
+\usepackage{"../../info/packages"}
+\usepackage{"../../info/nomenclature"}
 
-\section{Lagrangian mechanics}
+\title{Magnetized Flows and Magnetohydrodynamics}
+\author{Alejandro Campos}
 
-\begin{itemize}
-\item Define the position $\xvec = \xvec(t)$ and velocity $\vvec = \vvec(t)$ of a particle. 
+\begin{document}
+\maketitle
+\tableofcontents
 
-\item Define the Lagrangian as $L = L(\qvec, \qvecdot,t)$, where $\qvec$ and $\qvecdot$ are the generalized position and generalized velocity, respectively. 
-
-\item The equations of motion are obtained from the Euler-Lagrange equation, which is 
-\begin{equation}
-\frac{d}{dt} \left [ \left ( \frac{\partial L}{\partial \qdot_i } \right )_{\qvec =  \xvec, \qvecdot = \vvec }  \right] = \left ( \frac{\partial L}{\partial q_i} \right )_{ \qvec =  \xvec, \qvecdot = \vvec} .
-\end{equation}
-
-\item For example, the Lagrangian of a particle in an electromagnetic field where $\phi = \phi(\qvec,t)$ is the electric potential and $\Avec = \Avec(\qvec,t)$ is the magnetic potential, is
-\begin{equation}
-L = \frac{1}{2} m \qdot_i \qdot_i + e \qdot_i A_i - e\phi.
-\end{equation}
-The derivatives in the Euler-Lagrange equation are
-\begin{equation}
-\frac{\partial L}{\partial q_i} = e \qdot_j \frac{\partial A_j }{\partial q_i} - e \frac{\partial \phi}{ \partial q_i}
-\end{equation}
-\begin{equation}
-\frac{\partial L}{\partial \qdot_i} = m \qdot_i + e A_i 
-\end{equation}
-\begin{align}
-\frac{d}{dt}\left [ \left ( \frac{\partial L}{\partial \qdot_i } \right )_{\qvec =  \xvec, \qvecdot= \vvec }  \right] &= \frac{d}{dt} \left [ m v_i + e A_i(\xvec,t) \right ] \nonumber \\
-&= m \frac{ d v_i}{dt} + e v_j \left (\frac{\partial A_i}{\partial q_j} \right )_{\qvec = \xvec} +  e \left (\frac{\partial A_i}{\partial t} \right )_{\qvec = \xvec} .
-\end{align}
-Thus, the Euler-Lagrange equation becomes
-\begin{equation}
-\label{eq:lag_mech_tensor_lorentz}
-m \frac{ d v_i}{dt} = \left ( - e v_j \frac{\partial A_i}{\partial q_j} - e\frac{\partial A_i}{\partial t} + e v_j \frac{\partial A_j }{\partial q_i} - e \frac{\partial \phi}{ \partial q_i}\right )_{\qvec = \xvec}.
-\end{equation}
-In vector notation, this is written as
-\begin{equation}
-    m \frac{d \vvec}{dt} = \left(-e\vvec \cdot \nabla_q \Avec - e \frac{\partial \Avec}{\partial t} + e \nabla_q (\vvec \cdot \Avec) - e \nabla_q \phi \right)_{\qvec = \xvec}.
-\end{equation}
-Using the vector identity (4) from Griffiths book, the above can be expressed as
-\begin{equation}
-m \frac{d\vvec}{dt} = e \left ( \Evec + \vvec \times \Bvec \right)_{\qvec = \xvec},
-\end{equation}
-where $\Evec = \Evec(\qvec,t)$ and $\Bvec = \Bvec(\qvec,t)$.
-\end{itemize}
-
-\section{Hamiltonian mechanics}
-\begin{itemize}
-\item Define the Hamiltonian as $H = H(\qvec, \pvec, t)$, where $\qvec$ and $\pvec$ are the canonical position and momentum. For all purposes here, the canonical position is the same as the generalized position.
-
-\item The Hamiltonian is obtained from the Lagrangian using
-\begin{equation}
-H = \left ( \qvecdot \cdot \pvec - L \right)_{\qvecdot = \fvec(\qvec, \pvec)},
-\end{equation} 
-where the dependency of $\qvecdot$ on $\qvec$ and $\pvec$ is obtained from evaluating
-\begin{equation}
-\label{eq:v_from_qp}
-\pvec = \frac{ \partial L}{\partial \qvecdot}.
-\end{equation}
-
-\item For example, for a particle in an electromagnetic field we have
-\begin{equation}
-H = \left [ \qdot_i p_i - \left ( \frac{1}{2} m \qdot_i \qdot_i + e \qdot_i A_i - e\phi \right ) \right]_{\qvecdot = f(\qvec, \pvec)}. 
-\end{equation}
-Evaluating \cref{eq:v_from_qp} gives $ p_i = m \qdot_i + e A_i $, which allows us to express $\qvecdot$ in terms of $\qvec$ and $\pvec$ as $\qdot_i = \frac{1}{m} (p_i - eA_i )$. Thus
-\begin{align}
-H &= \frac{1}{m} (p_i - eA_i)p_i - \frac{1}{2m} (p_i - eA_i) (p_i-eA_i) - e\frac{1}{m} (p_i -eA_i) A_i + e\phi \nonumber \\
-& = \frac{1}{2m} (p_i -eA_i) (p_i -eA_i) + e\phi.
-\end{align}
-
-\item We introduce the variables $\tilde{\qvec} = \tilde{\qvec}(t)$ and $\tilde{\pvec} = \tilde{\pvec}(t)$, which are defined by
-\begin{align}
-\tilde{\qvec} &= \xvec \\ 
-\tilde{\pvec} & = \left ( \frac{\partial L}{\partial \qvecdot} \right)_{\qvec = \xvec, \qvecdot = \vvec}
-\end{align}
-
-\item The equations of motion are obtained from
-\begin{align}
-\frac{d \tilde{q}_i}{dt} &= \left ( \frac{ \partial H}{\partial p_i} \right )_{\qvec = \tilde{\qvec}, \pvec = \tilde{\pvec}} \\
-\frac{d \tilde{p}_i}{dt} & = -\left ( \frac{ \partial H}{\partial q_i} \right )_{\qvec = \tilde{\qvec}, \pvec = \tilde{\pvec}} \label{eq:hamil_p}
-\end{align}
-
-\item For example, for a particle in an electromagnetic field we have
-\begin{equation}
-\tilde{p}_i = mv_i + e A_i(\xvec,t)
-\end{equation}
-and thus
-\begin{align}
-\frac{d \tilde{p}_i}{dt} & = m \frac{d v_i}{dt} + e v_j \left ( \frac{\partial A_i}{\partial q_j} \right)_{\qvec = \xvec} + e \left ( \frac{ \partial A_i}{\partial t} \right)_{\qvec = \xvec}.
-\end{align}
-\begin{align}
-\frac{\partial H}{\partial q_i} &= \frac{\partial}{\partial q_i} \left [ \frac{1}{2m} (p_j -eA_j) (p_j -eA_j) + e\phi \right] \nonumber \\
-& = \frac{1}{m} (p_j -eA_j) \frac{\partial}{\partial q_i} (p_j - eA_j) + e\frac{\partial \phi}{\partial q_i} \nonumber \\
-&  = -\frac{e}{m} (p_j - eA_j) \frac{\partial A_j}{\partial q_i} + e \frac{\partial \phi}{\partial q_i}
-\end{align}
-\begin{align}
-\left ( \frac{ \partial H}{\partial q_i} \right )_{\qvec = \tilde{\qvec}, \pvec = \tilde{\pvec}} &= -\frac{e}{m} \left [ m v_j + eA_j(\xvec,t) - eA_j(\xvec,t) \right ] \left ( \frac{\partial A_j}{\partial q_i} \right)_{\qvec = \xvec} + e \left ( \frac{\partial \phi}{\partial q_i} \right)_{\qvec = \xvec} \nonumber \\
-& = \left( -e v_j \frac{\partial A_j}{\partial q_i} + e \frac{ \partial \phi}{\partial q_i} \right)_{\qvec = \xvec} .
-\end{align}
-
-\Cref{eq:hamil_p} thus leads to
-\begin{equation}
-m \frac{d v_i}{dt} = \left ( -e v_j \frac{ \partial A_i}{\partial q_j} - e \frac{ \partial A_i}{\partial t} + e v_j \frac{ \partial A_j}{\partial q_i} - e \frac{ \partial \phi}{\partial q_i} \right)_{\qvec = \xvec}.
-\end{equation}
-This is the same as \cref{eq:lag_mech_tensor_lorentz} and thus, as shown before, the above can be expressed as
-\begin{equation}
-\label{eq:single_particle_classical_mechanics}
-m \frac{d \vvec}{dt} = e \left ( \Evec + \vvec \times \Bvec \right)_{\qvec = \xvec}.
-\end{equation}
-
-\end{itemize}
-
-%--------------------------------------------------------------------------------------------------------------------------------------------
-\chapter{Single-particle motion---guiding center theory}
-%--------------------------------------------------------------------------------------------------------------------------------------------
-The motion of single particles is obtained by solving \cref{eq:single_particle_classical_mechanics}, which we re-write below
+%----------------------------------------------------------------------------------------------------------------------
+\chapter{Guiding center theory}
+%----------------------------------------------------------------------------------------------------------------------
+We begin with the velocity equation for a particle under the action of electric and magnetic fields, 
 \begin{equation}
 \label{eq:single_particle_motion}
     m \frac{d \vvec}{dt} = e \left ( \Evec + \vvec \times \Bvec \right )_{\qvec = \xvec}.
@@ -788,395 +665,285 @@ where top sign is for electrons and bottom sign is for ions, and it is assumed t
     \vvec^{(g)}_p = \mp \frac{1}{w_c} \bvec \times \frac{d\vvec^{(g)}_E}{dt}.
 \end{equation}
 
-%--------------------------------------------------------------------------------------------------------------------------------------------
-\chapter{Plasma parameters, time scales, and length scales}
-%--------------------------------------------------------------------------------------------------------------------------------------------
-A summary of fundamental time and length scales of plasmas in given in \cref{tb:plasma_time_scales,tb:plasma_length_scales}
-\begin{table}[H]
-\renewcommand{\arraystretch}{2.5}
-\centering
-\caption{Plasma time scales, for either electrons ($\alpha = e$) or ions ($\alpha = i$). }
-\label{tb:plasma_time_scales}
- \begin{tabular}{l|l}
-    Time scales & Formulas \\
-    \hline
-    Gyro period  & $\tau_{c\alpha} = \dfrac{2\pi}{w_{c\alpha}} \quad w_{c\alpha} = \dfrac{q_\alpha B}{m_\alpha}$ \\
-    Plasma period & $\tau_{p\alpha} = \dfrac{2 \pi }{w_{p\alpha}} \quad w_{p\alpha} = \sqrt{\dfrac{n_\alpha q_\alpha^2}{m_\alpha \epsilon_0}}$
- \end{tabular}
-\end{table}
+%----------------------------------------------------------------------------------------------------------------------
+\chapter{Magnetohydrodynamics}
+%----------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------
+\section{Two-fluid equations}
+%-------------------------------------------------------------------------------
+\label{sec:two_fluid_equations}
+The starting point are the multi-fluid conservation laws and the Maxwell equations. We assume there are two species: electrons and ions. Additionally, we assume no sources. Thus, the starting governing equations are
+\begin{equation}
+\label{eq:twof_ni}
+    \frac{\partial n_i}{\partial t} + \nabla \cdot \left ( n_i \uvec_i \right ) = 0,
+\end{equation}
+\begin{equation}
+\label{eq:twof_ne}
+    \frac{\partial n_e}{\partial t} + \nabla \cdot \left ( n_e \uvec_e \right ) = 0,
+\end{equation}
 
-\begin{table}[H]
-\renewcommand{\arraystretch}{2.5}
-\centering
-\caption{Plasma length scales, for either electrons ($\alpha = e$) or ions ($\alpha = i$).}
-\label{tb:plasma_length_scales}
- \begin{tabular}{l|l}
-   Length scales & Formulas \\
-   \hline
-   Gyro radius  & $r_{c\alpha} = \dfrac{v_{T\alpha}}{w_{c\alpha}} = \dfrac{m v_{T\alpha}}{q_\alpha B}$ \\
-   Debye length & $\lambda_{D\alpha} = \dfrac{v_{T\alpha}}{\sqrt{2} w_{p\alpha}} = \sqrt{ \dfrac{\epsilon_0 k_B T_\alpha}{ n_\alpha q_\alpha^2}}$ \\
-   DeBroglie wave length & $\lambda_{B\alpha} = \dfrac{h}{\sqrt{\pi} m_\alpha v_{T\alpha}}$ \\
-   Sphere radius & $a_\alpha = \left ( \dfrac{3}{4 \pi n_\alpha} \right )^{1/3}$
-\end{tabular}
-\end{table}
+\begin{equation}
+\label{eq:twof_ui}
+    \frac{\partial m_i n_i \uvec_i}{\partial t} + \nabla \cdot \left ( m_i n_i \uvec_i \uvec_i \right) - Z e n_i ( \Evec + \uvec_i \times \Bvec ) = - \nabla p_i + \nabla \cdot \tvec_i + \Rvec_i,
+\end{equation}
+\begin{equation}
+\label{eq:twof_ue}
+    \frac{\partial m_e n_e \uvec_e}{\partial t} + \nabla \cdot \left ( m_e n_e \uvec_e \uvec_e \right) + e n_e ( \Evec + \uvec_e \times \Bvec ) = - \nabla p_e + \nabla \cdot \tvec_e + \Rvec_e,
+\end{equation}
 
+\begin{equation}
+\label{eq:twof_iei}
+    \frac{\partial}{\partial t} \left ( \frac{3}{2} p_i \right ) + \nabla \cdot \left ( \frac{3}{2} p_i \uvec_i \right ) = -p_i \nabla \cdot \uvec_i + \tvec_i : \nabla \uvec_i - \nabla \cdot \qvec_i + Q_i,
+\end{equation}
+\begin{equation}
+\label{eq:twof_iee}
+    \frac{\partial}{\partial t} \left ( \frac{3}{2} p_e \right ) + \nabla \cdot \left ( \frac{3}{2} p_e \uvec_e \right ) = -p_e \nabla \cdot \uvec_e + \tvec_e : \nabla \uvec_e - \nabla \cdot \qvec_e + Q_e,
+\end{equation}
+
+\begin{equation}
+\label{eq:twof_maxwell_3}
+\nabla \cdot \Evec = \frac{\rho_e}{\epsilon_0} 
+\end{equation}
+\begin{equation}
+\label{eq:twof_maxwell_4}
+\nabla \cdot \Bvec = 0.
+\end{equation}
+\begin{equation}
+\label{eq:twof_maxwell_1}
+\nabla \times \Evec = -\frac{ \partial \Bvec}{\partial t}
+\end{equation}
+\begin{equation}
+\label{eq:twof_maxwell_2}
+\nabla \times \Bvec = \mu_0 \Jvec + \mu_0 \epsilon_0 \frac{\partial \Evec}{\partial t}
+\end{equation}
+\begin{equation}
+\label{eq:twof_curr_density}
+    \Jvec = e (Z n_i \uvec_i - n_e \uvec_e)
+\end{equation}
+\begin{equation}
+\label{eq:twof_mass_density}
+    \rho_e = e (Z n_i - n_e) 
+\end{equation}
+These equations correspond to eq.\@ (2.22) in Freidberg's Ideal MHD book, but for ions that are not singly charged. For the sections below, however, we'll assume singly-charged ions.
+
+%-------------------------------------------------------------------------------
+\section{Low-frequency, long-wavelength, asymptotic expansions}
+%-------------------------------------------------------------------------------
+Two assumptions:
+\begin{enumerate}
+\item Transform full Maxwell's equations to low-frequency pre-Maxwell's equations. Formally achieved with $\epsilon_0 \to 0$. This has two consequences:
 \begin{itemize}
-\item Thermal velocity:
-\begin{equation}
-v_{T_\alpha} = \sqrt{\frac{2 k_B T_\alpha}{m_\alpha}}
-\end{equation}
-
-\item Total Debye length:
-\begin{equation}
-    \frac{1}{\lambda_D^2} = \sum_\alpha \frac{1}{\lambda_{D\alpha}^2}.
-\end{equation}
-
-\item Plasma parameter
-\begin{equation}
-    \Lambda_\alpha = \frac{4}{3} \pi \lambda_{D\alpha}^3 n_\alpha
-\end{equation}
-
-\item Quantum plasma parameter
-\begin{equation}
-    \chi_\alpha = \frac{4}{3} \pi \lambda_{B\alpha}^3 n_\alpha
-\end{equation}
-
-\item Coupling parameter:
-\begin{equation}
-    \label{eq:def_coupling_parameter}
-    \Gamma_\alpha = \frac{q_\alpha^2}{4 \pi \epsilon_0 a_\alpha k_B T_\alpha} = \frac{1}{3} \Lambda_\alpha^{-2/3}
-\end{equation}
-
-\item Degeneracy parameter for electrons:
-\begin{equation}
-    \Theta_e = \frac{k_B T_e}{E_{fe}} = \left( \frac{2^{10} \pi}{3^4} \right)^{1/3} \chi_e^{-2/3}
-\end{equation}
-
-\item Fermi energy for electrons:
-\begin{equation}
-    E_{fe} = \frac{\hbar^2}{2m_e} \left ( 3 \pi^2 n_e \right)^{2/3}
-\end{equation}
+\item $\epsilon_0 \partial \Evec / \partial t \to 0$ \\
+For this to be achieved it is required that $w/k \ll c$ and $V_{Ti}, V_{Te} \ll c$.
+\item $\epsilon_0 \nabla \cdot \Evec \to 0$\\
+For this to be achieved it is required that $w \ll w_{pe}$ and $a \gg \lambda_{D}$.
 \end{itemize}
+\item Neglect electron inertia in the electron momentum equations. Formally achieved with $m_e \to 0$.
+\end{enumerate}
 
-\paragraph{Some notes on the coupling parameter}
-We can define two types of Coulomb interactions: strong and weak. Strong Coulomb interactions are those for which the particle's Coulomb potential energy is larger than its kinetic energy, and viceversa for weak Coulomb interactions. Thus, we can also define two types of plasma regimes:
-\begin{itemize}
-    \item Strongly-coupled plasmas: plasmas where the Coulomb interactions are mostly strong and thus drive the dynamics of its evolution. Coulomb interactions tend to be strong when the inter-particle distances are small, and thus this regime would be dominated by \textit{short-range} interactions. These plasmas are also described as exhibiting \textit{collisional} behavior, since a strong Coulomb interaction essentially means a collision has occurred.
-    \item Weakly-coupled plasmas: plasmas where the Coulomb interactions are mostly weak, and as a result do not drive the dynamics of its evolution. The plasma dynamics are instead driven by \textit{long-range} effects caused by smooth electromagnetic fields that result from integrating a large number of particles. These plasmas are also described as exhibiting \textit{collective} behavior, since the long-range electromagnetic fields follow from the collective integration of many particles.
-\end{itemize}
-
-We describe an approximate Coulomb potential energy for particles in a plasma as
+Due to the first assumption, the Maxwell equations \cref{eq:twof_maxwell_1,eq:twof_maxwell_2,eq:twof_maxwell_3,eq:twof_maxwell_4,eq:twof_curr_density,eq:twof_mass_density} are now written as
 \begin{equation}
-    \text{U} =  \frac{q_\alpha^2}{4 \pi \epsilon_0 a_\alpha}.
+\label{eq:preMax_gauss}
+n_i - n_e = 0
 \end{equation}
-The impact parameter that has been used above is $a_\alpha$, the sphere radius. This provides a decent measure on the average spacing between particles in a plasma. Since the volume of a single particle is $1/n_\alpha$, and if we assume that this volume is given by $4/3 \pi a_\alpha^3$, then equating these two gives the expression for the sphere radius
 \begin{equation}
-    a_\alpha = \left ( \frac{3}{4 \pi n_\alpha} \right )^{1/3}.
+\label{eq:preMax_Bdiv}
+\nabla \cdot \Bvec = 0.
 \end{equation}
-The kinetic energy of a particle in a plasma can be approximated by the thermal energy, thus
 \begin{equation}
-    \text{K} = \frac{1}{2} m_\alpha v_{T_\alpha}^2 = k_b T_\alpha.
+\label{eq:preMax_faradays}
+\nabla \times \Evec = -\frac{ \partial \Bvec}{\partial t}
 \end{equation}
-The ratio of the particle's Coulomb potential energy and its kinetic energy is referred to as the coupling parameter $\Gamma_\alpha$. That is 
 \begin{equation}
-    \Gamma_\alpha = \frac{q_\alpha^2}{4 \pi \epsilon_0 a_\alpha k_b T_\alpha}.
+\label{eq:preMax_amperes}
+\nabla \times \Bvec = \mu_0 \Jvec 
 \end{equation}
-$\Gamma_\alpha > 1$ denotes a strongly coupled plasma, and $\Gamma_\alpha < 1$ denotes a weakly coupled plasma. 
-
-As shown in \cref{eq:def_coupling_parameter}, the coupling and plasma parameters are inversely proportional to each other. Thus, $\Lambda_\alpha < 1$ implies strongly-coupled plasmas, and $\Lambda_\alpha > 1$ weakly-coupled plasmas. Since $\Lambda_\alpha$ represents the number of particles per Debye sphere, it is interesting to note that a large number of particles within such a sphere is needed to be in the weakly-coupled-plasma regime. However, this does not correspond to a plasma with large density, in fact, it corresponds to the opposite. The explicit $n_\alpha$ term in the definition $\Lambda_\alpha = (4/3) \pi \lambda^3_{D\alpha} n_\alpha$ is dominated by the $n_\alpha$ in the denominator of $\lambda_{D\alpha}$. In other words, low plasma densities lead to large Debye spheres, which in turn leads to many particles per Debye sphere, and hence a weakly-coupled plasma.
-
-%--------------------------------------------------------------------------------------------------------------------------------------------
-\chapter{Single-particle motion---Collisions}
-%--------------------------------------------------------------------------------------------------------------------------------------------
-%-------------------------------------------------------------------------------
-\section{Cross section}
-%-------------------------------------------------------------------------------
-The cross section characterizes in a quantitative form the probability that two particles traveling towards each other will undergo an interaction (also sometimes referred to as a collision). For example, imagine an incident particle traveling towards a target particle. This target particle has a spherical force field, and it affects incident particles that come within this sphere. Projecting the spherical force field to a plane perpendicular to the velocity of the incident particle gives a circular cross section. If the incident particle path takes it within this cross section, then the incident particle feels the force field of the target particle, that is, they interact. If the incident particle path does not take it within the cross section, then the particles do not interact. This is an example of a finite cross section, there can also be infinite cross sections for which particles always interact, although the farther away they are the weaker the interaction (e.g. electromagnetic force fields).
-
-\begin{figure}[ht]
-\centering
-\includegraphics[width=10cm]{../../images/cross_section.pdf}
-\caption{Cross section for particle interactions.}
-\label{fig:cross_section}
-\end{figure}
-
-To quantify the above, the reader is referred to \cref{fig:cross_section}. Imagine an incident particle traveling towards a stationary target particle with an impact parameter $b$ and velocity $\vvec$ (if the target particle is not stationary, then $\vvec = \vvec_2 - \vvec_1$, where $\vvec_1$ is the velocity of the target particle and $\vvec_2$ is the velocity of the incident particle.) As shown in \cref{fig:cross_section}, the impact parameter is the perpendicular offset between the path of the incident particle, and the line parallel to the incident particle velocity that crosses the origin of the target particle (or the origin of the force field of the target particle). To determine the cross section, we ask the following question: for a particle with impact parameter $b$ and velocity magnitude $v = |\vvec|$, does it interact with the target particle? Let's say it does not interact, then the infinitesimal surface located at $b$, i.e.\@ $b db d\phi$ for cylindrical coordinates, does not contribute to the cross section. If it does interact, then $b db d\phi$ does contribute to the cross section. To obtain the total cross section $\sigma = \sigma(v)$, we sum over all infinitesimal areas $b db d\phi$, but account whether a particle at a given $b$ interacts or not with the target particle. This is expressed mathematically as
-\begin{equation}
-\label{eq:def_cross_section}
-    \sigma = \int_0^{2\pi} \int_0^\infty F(v,b) \, b db d\phi.
-\end{equation}
-In the above $F(v,b) = 1$ if an incident particle with impact parameter $b$ and velocity $v$ interacts with the target particle, and $F(v,b) = 0$ if it does not. However, in reality, $F(v,b)$ is not necessarily binary, and can take other values besides 0 and 1.
-
-An example of $F(v,b)$ is that corresponding to particles that are hard spheres with radius R. For this case, $F(v,b) = H(2R - b)$, where $H$ is the heaviside function. Thus,
-\begin{equation}
-    \sigma = \int_0^{2\pi} \int_0^\infty H(2R-b) \, b db d\phi = 2\pi \int_0^{2R} b db = \pi (2R)^2,
-\end{equation}
-as expected.
 
 %-------------------------------------------------------------------------------
-\section{Mean free path, collision time, and collision frequency}
+\section{Single-fluid equations}
 %-------------------------------------------------------------------------------
-The cross section then defines the mean free path $\lambda_m$, collision time $\tau_m$ and collision frequency $\nu_m$. These are given by
+We define single-fluid variables as
 \begin{equation}
-    \lambda_m = \frac{1}{n_1 \sigma},
+    \rho = m_i n_i + m_e n_e = m_i n
 \end{equation}
 \begin{equation}
-    \tau_m = \frac{\lambda_m}{v} = \frac{1}{n_1 \sigma v},
-\end{equation}
-and
-\begin{equation}
-    \nu_{m} = \frac{1}{\tau_m} = n_1 \sigma v.
-\end{equation}
-
-%--------------------------------------------------------------------------
-\section{Coulomb scattering}
-%--------------------------------------------------------------------------
-%--------------------------------------------
-\subsection{Particle equations}
-%--------------------------------------------
-Consider two particles, with positions $\rvec_1=\rvec_1(t)$ and $\rvec_2=\rvec_2(t)$, velocities $\vvec_1=\vvec_1(t)$ and $\vvec_2=\vvec_2(t)$, charges $q_1$ and $q_2$, and masses $m_1$ and $m_2$, respectively. Their positions and velocities are governed by the following equations 
-\begin{equation}
-    \label{eq:particle_1_pos}
-    \frac{d \rvec_1}{dt} = \vvec_1,
+    \vvec = \frac{m_i n_i \uvec_i + m_e n_e \uvec_e}{m_i n_i + m_e n_e} = \uvec_i
 \end{equation}
 \begin{equation}
-    \label{eq:particle_2_pos}
-    \frac{d \rvec_2}{dt} = \vvec_2,
+    p = p_i + p_e = n (T_i + T_e)
 \end{equation}
 \begin{equation}
-    \label{eq:particle_1_vel}
-    m_1 \frac{d\vvec_1}{dt} = -\frac{q_1 q_2}{4 \pi \epsilon} \frac{\rvec_2 - \rvec_1}{\left | \rvec_2 - \rvec_1 \right |^3},
-\end{equation}
-\begin{equation}
-    \label{eq:particle_2_vel}
-    m_2 \frac{d\vvec_2}{dt} = -\frac{q_1 q_2}{4 \pi \epsilon} \frac{\rvec_1 - \rvec_2}{\left | \rvec_1 - \rvec_2 \right |^3}.
-\end{equation}
-We note that the above system consists of twelve equations for twelve unknowns. We now introduce the center-of-mass position $\Rvec = \Rvec(t)$, the center-of-mass velocity $\Vvec = \Vvec(t)$, the shifted position $\rvec = \rvec(t)$ and the shifted velocity $\vvec = \vvec(t)$ as follows
-\begin{equation}
-    \Rvec = \frac{m_1 \rvec_1 + m_2 \rvec_2}{m_1 + m_2} \qquad \rvec = \rvec_1 - \rvec_2,
-\end{equation}
-\begin{equation}
-    \Vvec = \frac{m_1 \vvec_1 + m_2 \vvec_2}{m_1 + m_2} \qquad \vvec = \vvec_1 - \vvec_2
-\end{equation}
-Thus, in terms of these new four variables, the particle equations can be written as
-\begin{equation}
-    \frac{d \Rvec}{dt} = \Vvec,
-\end{equation}
-\begin{equation}
-    \frac{d \Vvec}{dt} = 0 ,
-\end{equation}
-\begin{equation}
-    \label{eq:particle_pos}
-    \frac{d \rvec}{dt} = \vvec,
-\end{equation}
-\begin{equation}
-    \label{eq:particle_vel}
-    \frac{d \vvec}{dt} = \frac{q_1 q_2}{4\pi \epsilon_0 m_r} \frac{\rvec}{r^3},
-\end{equation}
-where the reduced mass $m_r$ is given by
-\begin{equation}
-    \frac{1}{m_r} = \frac{1}{m_1} + \frac{1}{m_2}.
-\end{equation}
-The first two equations above give the trivial solution $\Vvec = $ constant and $\Rvec$ = $\Rvec(0) + \Vvec t$. Thus, we have reduced the problem from twelve unknowns to six unknowns, namely $\rvec$ and $\vvec$.
-
-%--------------------------------------------
-\subsection{Conservation of energy}
-%--------------------------------------------
-Dotting \cref{eq:particle_vel} by $\vvec$ gives 
-\begin{align}
-    \vvec \cdot \frac{d \vvec}{dt} &= \frac{q_1 q_2}{4 \pi \epsilon_0 m_r} \vvec \cdot \frac{\rvec}{r^3} \nonumber \\
-    &= \frac{q_1 q_2}{4 \pi \epsilon_0 m_r} \frac{d\rvec}{dt} \cdot \frac{\rvec}{r^3} \nonumber \\
-    &= \frac{q_1 q_2}{4 \pi \epsilon_0 m_r} \frac{1}{2} \frac{dr^2}{dt} \frac{1}{r^3} \nonumber \\
-    &= \frac{q_1 q_2}{4 \pi \epsilon_0 m_r} \frac{1}{r^2} \frac{dr}{dt} \nonumber \\
-    &= -\frac{q_1 q_2}{4 \pi \epsilon_0 m_r} \frac{d}{dt} \left ( \frac{1}{r} \right ).
-\end{align} 
-For the left hand side above we have
-\begin{equation}
-    \vvec \cdot \frac{d \vvec}{dt} = \frac{1}{2} \frac{d v^2}{dt},
-\end{equation}
-and thus we obtain the following expression for conservation of energy
-\begin{equation}
-    \frac{d}{dt} \left ( \frac{1}{2} m_r v^2 + \frac{q_1 q_2}{4 \pi \epsilon_0} \frac{1}{r} \right ) = 0.
+    T = \frac{T_i + T_e}{2}.
 \end{equation}
 
-%--------------------------------------------
-\subsection{Conservation of momentum}
-%--------------------------------------------
-Crossing \cref{eq:particle_vel} by $\rvec$ gives
+The two conservation of mass equations \cref{eq:twof_ni,eq:twof_ne} will lead to two single-fluid equations. The first is obtained by multiplying \cref{eq:twof_ni} by $m_i$, and the second is obtained by multiplying the ion and electron mass equations by $e$ and then subtracting. The results are
 \begin{equation}
-    \rvec \times \frac{d \vvec}{dt} = \frac{q_1 q_2}{4 \pi \epsilon_0 m_r} \frac{\rvec \times \rvec}{r^3} = 0,
+    \frac{\partial \rho}{\partial t} + \nabla \cdot (\rho \vvec) = 0,
+\end{equation}
+\begin{equation}
+    \nabla \cdot \Jvec = 0.
+\end{equation}
+Note that the second equation above is superfluous since it also follows from taking the divergence of \cref{eq:preMax_amperes}
+
+The two conservation of momentum equations will also lead to two single-fluid equations. The first is obtained by adding the ion and electron conservation of momentum equations to obtain
+\begin{equation}
+\label{eq:generalized_MHD_vel}
+    \rho \left (\frac{\partial \vvec}{\partial t} + \vvec \cdot \nabla \uvec \right) - \Jvec \times \Bvec + \nabla p = \nabla \cdot \tvec_i + \nabla \cdot \tvec_e.
+\end{equation}
+For the second equation, we use $m_e \to 0$ and quasineutrality in the electron momentum equation to obtain
+\begin{equation}
+    e n ( \Evec + \uvec_e \times \Bvec ) = - \nabla p_e + \nabla \cdot \tvec_e + \Rvec_e,
+\end{equation}
+Assuming quasi-neutrality, the definition of the current given in \cref{eq:twof_curr_density} is now
+\begin{equation}
+\label{eq:current_def_quasineutral}
+    \Jvec = e n (\uvec_i - \uvec_e),
+\end{equation}
+which is also written as
+\begin{equation}
+    \Jvec = e n (\vvec - \uvec_e).
+\end{equation}
+Using the above in the electron continuity equation gives
+\begin{equation}
+\label{eq:generalized_MHD_ohms}
+    \Evec + \vvec \times \Bvec = \frac{1}{en} ( \Jvec \times \Bvec - \nabla p_e + \nabla \cdot \tvec_e + \Rvec_e).
+\end{equation}
+
+The two conservation of energy equations will also lead to two single-fluid equations. Each is evaluated using the single-fluid variables. As part of this derivation, we first rewrite the ion and electron internal energy \cref{eq:twof_iei,eq:twof_iee} as
+\begin{equation}
+\label{eq:twof_ie}
+    \frac{1}{\gamma-1} \left ( \frac{\partial p_i}{\partial t} + \uvec_i \cdot \nabla p_i + \gamma p_i \nabla \cdot \uvec_i \right ) = \tvec_i : \nabla \uvec_i - \nabla \cdot \qvec_i + Q_i,
+\end{equation}
+\begin{equation}
+    \frac{1}{\gamma-1} \left ( \frac{\partial p_e}{\partial t} + \uvec_e \cdot \nabla p_e + \gamma p_e \nabla \cdot \uvec_e \right ) = \tvec_e : \nabla \uvec_e - \nabla \cdot \qvec_e + Q_e,
+\end{equation}
+where we have used $\gamma = 5/3$ (the ratio of specific heats for monoatomic systems). We then note that
+\begin{equation}
+    \nabla \cdot \vvec = -\frac{1}{\rho} \frac{\partial \rho}{\partial t} - \frac{1}{\rho} \nabla \rho \cdot \vvec = - \frac{\partial \ln{\rho} }{\partial t} -  \nabla \ln{\rho} \cdot \vvec,
 \end{equation}
 and thus
 \begin{equation}
-    \frac{d}{dt} \left [ m_r \left ( \rvec \times \vvec \right ) \right ] = 0.
+    \gamma \nabla \cdot \vvec = -\frac{1}{\rho^\gamma} \frac{\partial \rho^\gamma}{\partial t} - \frac{1}{\rho^\gamma} \nabla \rho^\gamma \cdot \vvec.
 \end{equation}
-That is, angular momentum is conserved. A consequence of this is that the vector $\rvec \times \vvec$ is always pointing in the same direction. Thus, if $\rvec(0)$ and $\vvec(0)$ form a plane, then $\rvec(t)$ and $\vvec(t)$ need to reside within that same plane for all times $t$ so that $\rvec(t) \times \vvec(t)$ points in the same direction as $\rvec(0) \times \vvec(0)$. Therefore, the evolution of the position and velocity are confined to a plane and the problem can be reduced from six unknowns to four unknowns. This planar encounter is depicted in \cref{fig:coulomb_scattering}.
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=10cm]{../../images/coulomb_scattering.png}
-    \caption{Depiction of Coulomb scattering.}
-    \label{fig:coulomb_scattering}
-    \end{figure}
-
-%--------------------------------------------
-\subsection{Polar coordinates}
-%--------------------------------------------
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=10cm]{../../images/polar_coordinates.png}
-    \caption{Polar coordinates in plane of interaction.}
-    \label{fig:polar_coordinates}
-    \end{figure}
-
-We re-orient the plane of interaction (referred to above) so that it is orthogonal to the $\hat{\zvec}$ direction. Using polar coordinates, as shown in \cref{fig:polar_coordinates}, we get
-\begin{equation}
-    r_x = r \cos \theta = r \cos ( \pi - \varphi ) = -r \cos \varphi,
-\end{equation}
-\begin{equation}
-    r_y = r \sin \theta = r \sin ( \pi - \varphi ) = r \sin \varphi.
-\end{equation}
-
-Also, since $\rvec = r \hat{\rvec}$, we have
+The result above allows us to write
 \begin{align}
-    \vvec = &\frac{d \rvec}{dt} = \frac{dr}{dt} \hat{\rvec} + r \frac{d\hat{\rvec}}{dt} \nonumber \\
-    &= \frac{d r}{dt} \hat{\rvec} + r \frac{d\hat{\rvec}}{d\theta} \frac{d\theta}{dt} \nonumber \\
-    &= \frac{dr}{dt} \hat{\rvec} + r \frac{d \theta}{dt} \hat{\bm{\theta}},
+    \frac{\partial p_\alpha}{\partial t} + \vvec \cdot \nabla p_\alpha + \gamma p_\alpha \nabla \cdot \vvec 
+    &=  \frac{\partial p_\alpha}{\partial t} - p_\alpha \frac{1}{\rho^\gamma} \frac{\partial \rho^\gamma}{\partial t} + \vvec \cdot \nabla p_\alpha - p_\alpha \frac{1}{\rho^\gamma} \nabla \rho^\gamma \cdot \vvec \nonumber \\
+    & = \rho^\gamma \left [ \frac{\partial}{\partial t} \left ( \frac{p_\alpha}{\rho^\gamma} \right) + \vvec \cdot \nabla \left (\frac{p_\alpha}{\rho^\gamma} \right) \right ].
 \end{align}
-and
-\begin{align}
-    \frac{d \vvec}{dt} &= \frac{d^2r}{dt^2} \hat{\rvec} + \frac{dr}{dt} \frac{d\hat{\rvec}}{dt} + \frac{d}{dt} \left ( r \frac{d\theta}{dt} \right ) \hat{\bm{\theta}} + r \frac{d \theta}{dt} \frac{d \hat{\bm{\theta}}}{dt} \nonumber \\
-    &= \frac{d^2 r}{dt^2} \hat{\rvec} + \frac{dr}{dt} \frac{d\hat{\rvec}}{d\theta} \frac{d\theta}{dt} + \frac{d}{dt} \left ( r \frac{d\theta}{dt} \right ) \hat{\bm{\theta}} + r \frac{d \theta}{dt} \frac{d \hat{\bm{\theta}}}{d\theta} \frac{d \theta}{dt} \nonumber \\
-    &= \frac{d^2r}{dt^2} \hat{\rvec} + \frac{dr}{dt} \frac{d\theta}{dt} \hat{\bm{\theta}} + \frac{d}{dt} \left ( r \frac{d\theta}{dt} \right ) \hat{\bm{\theta}} - r \left ( \frac{d\theta}{dt} \right ) ^2 \hat{\rvec}.
-\end{align}
-
-%--------------------------------------------
-\subsection{The force equation}
-%--------------------------------------------
-The radial component of \cref{eq:particle_vel} thus becomes 
+Thus, the ion energy equation becomes
 \begin{equation}
-    \frac{d^2 r}{dt^2} - r \left ( \frac{d\theta}{dt} \right )^2 = \frac{q_1 q_2}{4 \pi \epsilon_0 m_r} \frac{1}{r^2}.
+\label{eq:generalized_MHD_pi}
+   \frac{\partial}{\partial t} \left ( \frac{p_i}{\rho^\gamma} \right) + \vvec \cdot \nabla \left (\frac{p_i}{\rho^\gamma} \right) = \frac{\gamma - 1}{\rho^\gamma} \left( \tvec_i : \nabla \vvec - \nabla \cdot \qvec_i + Q_i \right),
 \end{equation}
-Since $\theta = \pi - \varphi$, we have
+and the electron energy equation becomes
 \begin{equation}
-    \label{eq:particle_position_ode}
-    \frac{d^2 r}{dt^2} - r \left ( \frac{d\varphi}{dt} \right )^2 = \frac{q_1 q_2}{4 \pi \epsilon_0 m_r} \frac{1}{r^2}.
+\label{eq:generalized_MHD_pe}
+    \frac{\partial}{\partial t} \left ( \frac{p_e}{\rho^\gamma} \right) + \vvec \cdot \nabla \left (\frac{p_e}{\rho^\gamma} \right) = \frac{\gamma - 1}{\rho^\gamma} \left[ \tvec_e : \nabla \left (\vvec -\frac{\Jvec}{e n} \right) - \nabla \cdot \qvec_e + Q_e \right] + \frac{1}{e n} \Jvec \cdot \nabla \left ( \frac{ p_e}{\rho^\gamma} \right).
 \end{equation}
 
-%--------------------------------------------
-\subsection{The angular momentum equation}
-%--------------------------------------------
-Using polar coordinates, we obtain
+%-------------------------------------------------------------------------------
+\section{Resistive MHD}
+%-------------------------------------------------------------------------------
+The electron collision term is modeled as
 \begin{equation}
-    m_r \rvec \times \vvec = m_r r \hat{\rvec} \times \left ( \frac{dr}{dt} \hat{\rvec} + r \frac{d\theta}{dt} \hat{\bm{\theta}} \right ) = m_r r^2 \frac{d\theta}{dt} \hat{\zvec}
+    \Rvec_e = m_e n_e \nu_{ei} \left ( \uvec_i - \uvec_e \right ).
 \end{equation}
-Since angular momentum $m_r \rvec \times \vvec$ is conserved, we have
+Assuming quasi-neutrality, the expression for current in \cref{eq:current_def_quasineutral} can be used to obtain
 \begin{equation}
-    \label{eq:particle_cons_angular_polar}
-    m_r r^2 \frac{d\varphi}{dt} = L = constant.
+\label{eq:elec_coll_current}
+    \Rvec_e = \frac{m_e \nu_{ei}}{e} \Jvec.
 \end{equation}
-We note here that $L$ is positive since $d\varphi/dt$ is positive. Also, we have 
+Neglecting all terms on the right-hand side of \cref{eq:generalized_MHD_ohms} except for the electron collision term, we have
 \begin{equation}
-    \label{eq:particle_angular_sign}
-    m_r \rvec \times \vvec = -L \hat{\zvec},
+    \Evec + \vvec \times \Bvec = \frac{1}{en} \Rvec_e.
 \end{equation}
-that is, the angular momentum is in the negative $\hat{\zvec}$ direction.
+Using \cref{eq:elec_coll_current} in the above, we have
+\begin{equation}
+    \Evec + \vvec \times \Bvec = \frac{m_e \nu_{ei}}{e^2n} \Jvec,
+\end{equation}
+which we re-write as 
+\begin{equation}
+    \Evec + \vvec \times \Bvec = \eta \Jvec,
+\end{equation}
+where
+\begin{equation}
+\label{eq:resistivity}
+    \eta = \frac{m_e \nu_{ei}}{e^2 n}
+\end{equation}
+is the resistivity.
 
-%--------------------------------------------
-\subsection{Particle trajectory}
-%--------------------------------------------
-The goal is to find the radial position of the particle as a function of its angular orientation. That is, we want to find $\tilde{r} = \tilde{r}(\tilde{\varphi})$ such that
+%-------------------------------------------------------------------------------
+\section{Ideal MHD}
+%-------------------------------------------------------------------------------
+The ideal MHD equations are obtained by neglecting the right-hand sides of \cref{eq:generalized_MHD_vel,eq:generalized_MHD_ohms,eq:generalized_MHD_pi,eq:generalized_MHD_pe}. Summing the two pressure equations, the resulting equations would be
 \begin{equation}
-    \label{eq:particle_position_angle}
-    r(t) = \tilde{r}(\varphi(t)).
+    \frac{\partial \rho}{\partial t} + \nabla \cdot (\rho \vvec) = 0,
 \end{equation}
-To simplify the math, we introduce $\tilde{u} = \tilde{u}(\tilde{\varphi})$ such that $\tilde{u} = 1 / \tilde{r}$. Thus
 \begin{equation}
-    \frac{d \tilde{u}}{d\tilde{\varphi}} = -\frac{1}{\tilde{r}^2} \frac{d \tilde{r}}{d\tilde{\varphi}},
+    \rho \left (\frac{\partial \vvec}{\partial t} + \vvec \cdot \nabla \vvec \right ) = - \nabla p  + \Jvec \times \Bvec
 \end{equation}
-or, after re-arranging
 \begin{equation}
-    \label{eq:rgrad_vs_ugrad}
-    \frac{d \tilde{r}}{d\tilde{\varphi}} = -\frac{1}{\tilde{u}^2} \frac{d \tilde{u}}{d\tilde{\varphi}}.
+    \Evec + \vvec \times \Bvec = 0,
 \end{equation}
-
-We now proceed as follows. Taking the derivative of $r$, we get
-\begin{align}
-    \label{eq:particle_derivation_1}
-    \frac{dr}{dt} &= \left ( \frac{d \tilde{r}}{d\tilde{\varphi}} \right )_{\tilde{\varphi} = \varphi(t)} \frac{d \varphi}{dt} &&[\cref{eq:particle_position_angle}] \nonumber \\
-    &= \left ( -\frac{1}{\tilde{u}^2} \frac{d\tilde{u}}{d\tilde{\varphi}} \right )_{\tilde{\varphi} = \varphi(t)} \frac{d \varphi}{dt} &&[\cref{eq:rgrad_vs_ugrad}]\nonumber \\ 
-    &= \left ( -\frac{1}{\tilde{u}^2} \frac{d\tilde{u}}{d\tilde{\varphi}} \right )_{\tilde{\varphi} = \varphi(t)} \frac{L}{m_r r^2} &&[\cref{eq:particle_cons_angular_polar}] \nonumber \\
-    &= \left ( -\frac{1}{\tilde{u}^2} \frac{d\tilde{u}}{d\tilde{\varphi}} \frac{L}{m_r \tilde{r}^2} \right )_{\tilde{\varphi} = \varphi(t)} &&[\cref{eq:particle_position_angle}] \nonumber \\
-    &= \left ( - \frac{d\tilde{u}}{d\tilde{\varphi}} \frac{L}{m_r} \right )_{\tilde{\varphi} = \varphi(t)}
-\end{align}
-Taking the derivative of the above, we get
-\begin{align}
-    \frac{d}{dt} \frac{dr}{dt} &= \left [ \frac{d}{d\tilde{\varphi}} \left ( - \frac{d\tilde{u}}{d\tilde{\varphi}} \frac{L}{m_r} \right ) \right ]_{\tilde{\varphi} = \varphi(t)} \frac{d \varphi}{dt} \nonumber \\
-    &= \left ( - \frac{d^2 \tilde{u}}{d\tilde{\varphi}^2} \frac{L}{m_r} \right )_{\tilde{\varphi} = \varphi(t)} \frac{L}{m_r r^2} && [\cref{eq:particle_cons_angular_polar}] \nonumber \\
-    &= \left ( - \frac{d^2 \tilde{u}}{d\tilde{\varphi}^2} \frac{L}{m_r} \frac{L}{m_r \tilde{r}^2} \right )_{\tilde{\varphi} = \varphi(t)} && [\cref{eq:particle_position_angle}] \nonumber \\
-    &= \left ( - \frac{d^2 \tilde{u}}{d\tilde{\varphi}^2} \frac{L^2 \tilde{u}^2}{m_r^2} \right )_{\tilde{\varphi} = \varphi(t)}
-\end{align}
-Plugging the last relation into \cref{eq:particle_position_ode} gives
 \begin{equation}
-    \left [ - \frac{d^2 \tilde{u}}{d\tilde{\varphi}^2} \frac{L^2 \tilde{u}^2}{m_r^2} - \frac{1}{\tilde{u}} \left ( \frac{L \tilde{u}^2}{m_r} \right )^2 \right ]_{\tilde{\varphi} = \varphi(t)} = \left ( \frac{q_1 q_2}{4 \pi \epsilon_0 m_r} \tilde{u}^2 \right )_{\tilde{\varphi} = \varphi(t)},
+    \frac{\partial}{\partial t} \left ( \frac{p}{\rho^\gamma} \right ) + \vvec \cdot \nabla \left (\frac{p}{\rho^\gamma} \right ) = 0,
 \end{equation}
-which, upon re-arranging and dropping the $\varphi(t)$ dependance, becomes
 \begin{equation}
-    \frac{d^2 \tilde{u}}{d \tilde{\varphi}^2} + \tilde{u} = -\frac{q_1 q_2 m_r}{4 \pi \epsilon_0 L^2}
+\nabla \cdot \Bvec = 0.
+\end{equation}
+\begin{equation}
+\nabla \times \Evec = -\frac{ \partial \Bvec}{\partial t},
+\end{equation}
+\begin{equation}
+\nabla \times \Bvec = \mu_0 \Jvec ,
 \end{equation}
 
-Using \cref{eq:particle_angular_sign}, we have
-\begin{align}
-    \label{eq:particle_momentum_impact}
-    L &= -m_r ( \rvec \times \vvec )\cdot \hat{\zvec} \nonumber \\
-    &= -m_r [\sin(-\theta) r v_0 \hat{\zvec} ] \cdot \hat{\zvec} \nonumber \\
-    &= m_r\sin(\theta) r v_0 \nonumber \\
-    &= m_r\sin(\pi - \varphi) r v_0 \nonumber \\
-    &= m_r\sin\varphi r v_0 \nonumber \\
-    &= m_r b v_0.
-\end{align}
-Thus, we write the evolution equation for $\tilde{u}$ as
+Given the vector identity
 \begin{equation}
-    \frac{d^2 \tilde{u}}{d \tilde{\varphi}^2} + \tilde{u} = -\frac{q_1 q_2}{4 \pi \epsilon_0 m_r b^2 v_0^2}.
+    \frac{1}{2} \nabla \left ( B^2 \right ) = \Bvec \times \left (\nabla \times \Bvec \right ) + \left ( \Bvec \cdot \nabla \right ) \Bvec,
 \end{equation}
-Introducing the notation
+we can use Ampere's law to re-write the $\Jvec \times \Bvec$ term in the velocity equation as
 \begin{equation}
-    b_{90} = \frac{q_1 q_2}{4 \pi \epsilon_0 m_r v_0^2},
+    \Jvec \times \Bvec = \frac{1}{\mu_0} \left ( \nabla \times \Bvec \right ) \times \Bvec = \frac{1}{\mu_0} \left [ \left ( \Bvec \cdot \nabla \right ) \Bvec - \frac{1}{2} \nabla \left ( B^2 \right ) \right ].
 \end{equation}
-the evolution equation for $\tilde{u}$ can be simply expressed as
+Similarly, given the vector identity
 \begin{equation}
-    \label{eq:particle_u_equation}
-    \frac{d^2 \tilde{u}}{d \tilde{\varphi}^2} + \tilde{u} = -\frac{b_{90}}{b^2}.
+    \nabla \times \left ( \Bvec \times \vvec \right ) = \left (\vvec \cdot \nabla \right ) \Bvec - \left ( \Bvec \cdot \nabla \right ) \vvec + \Bvec \left ( \nabla \cdot \vvec \right ) - \vvec \left ( \nabla \cdot \Bvec \right ),
 \end{equation}
-
-The boundary conditions for \cref{eq:particle_u_equation} are as follows
+we can use Ohm's law to re-write the $\nabla \times \Evec$ term in Faraday's law as
 \begin{equation}
-    \label{eq:particle_bc_1}
-    \text{as } \varphi(t) \to 0, \quad r(t) \to \infty
+    \nabla \times \Evec = \nabla \times (-\vvec \times \Bvec) = \left (\vvec \cdot \nabla \right ) \Bvec - \left ( \Bvec \cdot \nabla \right ) \vvec + \Bvec \left ( \nabla \cdot \vvec \right ).
+\end{equation}
+Thus, the ideal MHD equations can be summarized as follows
+\begin{equation}
+    \frac{\partial \rho}{\partial t} + \nabla \cdot (\rho \vvec) = 0,
 \end{equation}
 \begin{equation}
-    \label{eq:particle_bc_2}
-    \text{as } \varphi(t) \to 0, \quad \frac{dr(t)}{dt} \to -v_0
-\end{equation}
-Given \cref{eq:particle_position_angle}, \cref{eq:particle_bc_1} can only be satisfied if as $\tilde{\varphi} \to 0$, $\tilde{r} \to \infty$. Thus, we also have, as $\tilde{\varphi} \to 0$, $\tilde{u} \to 0$. Similarly, given \cref{eq:particle_derivation_1}, \cref{eq:particle_bc_2} can only be satisfied if as $\tilde{\varphi} \to 0$
+    \nabla \cdot \Bvec = 0.
+    \end{equation}
 \begin{equation}
-    \frac{d\tilde{u}}{d\tilde{\varphi}} \frac{L}{m_r} \to v_0.
+    \rho \left (\frac{\partial \vvec}{\partial t} + \vvec \cdot \nabla \vvec \right ) = - \nabla p  + \frac{1}{\mu_0} \left [ \left ( \Bvec \cdot \nabla \right ) \Bvec - \frac{1}{2} \nabla \left ( B^2 \right ) \right ]
 \end{equation}
-Using \cref{eq:particle_momentum_impact} we rewrite the above as 
 \begin{equation}
-    \frac{d\tilde{u}}{d\tilde{\varphi}} \to \frac{1}{b}.
+    \frac{\partial \Bvec}{\partial t} + \left ( \vvec \cdot \nabla \right ) \Bvec = \left ( \Bvec \cdot \nabla \right ) \vvec - \Bvec (\nabla \cdot \vvec)
 \end{equation}
-
-The general solution to \cref{eq:particle_u_equation} is 
 \begin{equation}
-    \tilde{u} = A \cos \tilde{\varphi} + B \sin \tilde{\varphi} - \frac{b_{90}}{b^2}.
+    \frac{\partial}{\partial t} \left ( \frac{p}{\rho^\gamma} \right ) + \vvec \cdot \nabla \left (\frac{p}{\rho^\gamma} \right ) = 0,
 \end{equation}
-Applying the boundary conditions, we get
+If we assume incompressibility, then the above simplifies to
 \begin{equation}
-    \tilde{u} = \frac{b_{90}}{b^2} \cos \tilde{\varphi} + \frac{1}{b} \sin \tilde{\varphi} - \frac{b_{90}}{b^2},
+    \nabla \cdot \vvec = 0,
 \end{equation}
-which we finally re-write as
 \begin{equation}
-    \frac{1}{\tilde{r}} = \frac{1}{b} \sin \tilde{\varphi} + \frac{b_{90}}{b^2} \left ( \cos \tilde{\varphi} - 1 \right ).
+    \nabla \cdot \Bvec = 0.
+    \end{equation}
+\begin{equation}
+    \rho \left (\frac{\partial \vvec}{\partial t} + \vvec \cdot \nabla \vvec \right ) = - \nabla p  + \frac{1}{\mu_0} \left [ \left ( \Bvec \cdot \nabla \right ) \Bvec - \frac{1}{2} \nabla \left ( B^2 \right ) \right ]
 \end{equation}
-
-
+\begin{equation}
+    \frac{\partial \Bvec}{\partial t} + \left ( \vvec \cdot \nabla \right ) \Bvec = \left ( \Bvec \cdot \nabla \right ) \vvec
+\end{equation}
+\bibliographystyle{plainnat}
+\bibliography{library}
+\end{document}

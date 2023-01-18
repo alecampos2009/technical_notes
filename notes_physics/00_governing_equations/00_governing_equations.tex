@@ -1,14 +1,152 @@
-%###############################################################################
-%
-%
-\part{Kinetic description}
-%
-%
-%###############################################################################
-%-------------------------------------------------------------------------------
-\chapter{Governing equations}
-%-------------------------------------------------------------------------------
+\documentclass[a4paper,11pt]{report}
+\usepackage{fullpage}
 
+\usepackage{"../../info/packages"}
+\usepackage{"../../info/nomenclature"}
+
+\newcommand{\xvecdot}{\dot{\xvec}}
+\newcommand{\xdot}{\dot{x}}
+\newcommand{\qvecdot}{\dot{\qvec}}
+\newcommand{\qdot}{\dot{q}}
+
+\title{Governing Equations}
+\author{Alejandro Campos}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+%----------------------------------------------------------------------------------------------------------------------
+\chapter{Particle description}
+%----------------------------------------------------------------------------------------------------------------------
+\begin{table}[H]
+    \renewcommand{\arraystretch}{1.5}
+    \centering
+    \caption{Various coordinates of classical mechanics. }
+    \label{tb:classical_mechanics_coordinates}
+     \begin{tabular}{l|l|l}
+        Classical coordinates & $\xvec(t)$ & $\vvec(t)$ \\
+        \hline
+        Generalized coordinates  & $\qvec$ & $\qvecdot$ \\
+        \hline
+        Canonical coordinates & $\qvec$ & $\pvec$ \\
+        \hline
+        Time-dependent canonical coordinates & $\tilde{\qvec}(t)$ & $ \tilde{\pvec}(t)$ \\
+     \end{tabular}
+    \end{table}
+    
+    \section{Lagrangian mechanics}
+    
+    \begin{itemize}
+    \item Define the position $\xvec = \xvec(t)$ and velocity $\vvec = \vvec(t)$ of a particle. 
+    
+    \item Define the Lagrangian as $L = L(\qvec, \qvecdot,t)$, where $\qvec$ and $\qvecdot$ are the generalized position and generalized velocity, respectively. 
+    
+    \item The equations of motion are obtained from the Euler-Lagrange equation, which is 
+    \begin{equation}
+    \frac{d}{dt} \left [ \left ( \frac{\partial L}{\partial \qdot_i } \right )_{\qvec =  \xvec, \qvecdot = \vvec }  \right] = \left ( \frac{\partial L}{\partial q_i} \right )_{ \qvec =  \xvec, \qvecdot = \vvec} .
+    \end{equation}
+    
+    \item For example, the Lagrangian of a particle in an electromagnetic field where $\phi = \phi(\qvec,t)$ is the electric potential and $\Avec = \Avec(\qvec,t)$ is the magnetic potential, is
+    \begin{equation}
+    L = \frac{1}{2} m \qdot_i \qdot_i + e \qdot_i A_i - e\phi.
+    \end{equation}
+    The derivatives in the Euler-Lagrange equation are
+    \begin{equation}
+    \frac{\partial L}{\partial q_i} = e \qdot_j \frac{\partial A_j }{\partial q_i} - e \frac{\partial \phi}{ \partial q_i}
+    \end{equation}
+    \begin{equation}
+    \frac{\partial L}{\partial \qdot_i} = m \qdot_i + e A_i 
+    \end{equation}
+    \begin{align}
+    \frac{d}{dt}\left [ \left ( \frac{\partial L}{\partial \qdot_i } \right )_{\qvec =  \xvec, \qvecdot= \vvec }  \right] &= \frac{d}{dt} \left [ m v_i + e A_i(\xvec,t) \right ] \nonumber \\
+    &= m \frac{ d v_i}{dt} + e v_j \left (\frac{\partial A_i}{\partial q_j} \right )_{\qvec = \xvec} +  e \left (\frac{\partial A_i}{\partial t} \right )_{\qvec = \xvec} .
+    \end{align}
+    Thus, the Euler-Lagrange equation becomes
+    \begin{equation}
+    \label{eq:lag_mech_tensor_lorentz}
+    m \frac{ d v_i}{dt} = \left ( - e v_j \frac{\partial A_i}{\partial q_j} - e\frac{\partial A_i}{\partial t} + e v_j \frac{\partial A_j }{\partial q_i} - e \frac{\partial \phi}{ \partial q_i}\right )_{\qvec = \xvec}.
+    \end{equation}
+    In vector notation, this is written as
+    \begin{equation}
+        m \frac{d \vvec}{dt} = \left(-e\vvec \cdot \nabla_q \Avec - e \frac{\partial \Avec}{\partial t} + e \nabla_q (\vvec \cdot \Avec) - e \nabla_q \phi \right)_{\qvec = \xvec}.
+    \end{equation}
+    Using the vector identity (4) from Griffiths book, the above can be expressed as
+    \begin{equation}
+    m \frac{d\vvec}{dt} = e \left ( \Evec + \vvec \times \Bvec \right)_{\qvec = \xvec},
+    \end{equation}
+    where $\Evec = \Evec(\qvec,t)$ and $\Bvec = \Bvec(\qvec,t)$.
+    \end{itemize}
+    
+    \section{Hamiltonian mechanics}
+    \begin{itemize}
+    \item Define the Hamiltonian as $H = H(\qvec, \pvec, t)$, where $\qvec$ and $\pvec$ are the canonical position and momentum. For all purposes here, the canonical position is the same as the generalized position.
+    
+    \item The Hamiltonian is obtained from the Lagrangian using
+    \begin{equation}
+    H = \left ( \qvecdot \cdot \pvec - L \right)_{\qvecdot = \fvec(\qvec, \pvec)},
+    \end{equation} 
+    where the dependency of $\qvecdot$ on $\qvec$ and $\pvec$ is obtained from evaluating
+    \begin{equation}
+    \label{eq:v_from_qp}
+    \pvec = \frac{ \partial L}{\partial \qvecdot}.
+    \end{equation}
+    
+    \item For example, for a particle in an electromagnetic field we have
+    \begin{equation}
+    H = \left [ \qdot_i p_i - \left ( \frac{1}{2} m \qdot_i \qdot_i + e \qdot_i A_i - e\phi \right ) \right]_{\qvecdot = f(\qvec, \pvec)}. 
+    \end{equation}
+    Evaluating \cref{eq:v_from_qp} gives $ p_i = m \qdot_i + e A_i $, which allows us to express $\qvecdot$ in terms of $\qvec$ and $\pvec$ as $\qdot_i = \frac{1}{m} (p_i - eA_i )$. Thus
+    \begin{align}
+    H &= \frac{1}{m} (p_i - eA_i)p_i - \frac{1}{2m} (p_i - eA_i) (p_i-eA_i) - e\frac{1}{m} (p_i -eA_i) A_i + e\phi \nonumber \\
+    & = \frac{1}{2m} (p_i -eA_i) (p_i -eA_i) + e\phi.
+    \end{align}
+    
+    \item We introduce the variables $\tilde{\qvec} = \tilde{\qvec}(t)$ and $\tilde{\pvec} = \tilde{\pvec}(t)$, which are defined by
+    \begin{align}
+    \tilde{\qvec} &= \xvec \\ 
+    \tilde{\pvec} & = \left ( \frac{\partial L}{\partial \qvecdot} \right)_{\qvec = \xvec, \qvecdot = \vvec}
+    \end{align}
+    
+    \item The equations of motion are obtained from
+    \begin{align}
+    \frac{d \tilde{q}_i}{dt} &= \left ( \frac{ \partial H}{\partial p_i} \right )_{\qvec = \tilde{\qvec}, \pvec = \tilde{\pvec}} \\
+    \frac{d \tilde{p}_i}{dt} & = -\left ( \frac{ \partial H}{\partial q_i} \right )_{\qvec = \tilde{\qvec}, \pvec = \tilde{\pvec}} \label{eq:hamil_p}
+    \end{align}
+    
+    \item For example, for a particle in an electromagnetic field we have
+    \begin{equation}
+    \tilde{p}_i = mv_i + e A_i(\xvec,t)
+    \end{equation}
+    and thus
+    \begin{align}
+    \frac{d \tilde{p}_i}{dt} & = m \frac{d v_i}{dt} + e v_j \left ( \frac{\partial A_i}{\partial q_j} \right)_{\qvec = \xvec} + e \left ( \frac{ \partial A_i}{\partial t} \right)_{\qvec = \xvec}.
+    \end{align}
+    \begin{align}
+    \frac{\partial H}{\partial q_i} &= \frac{\partial}{\partial q_i} \left [ \frac{1}{2m} (p_j -eA_j) (p_j -eA_j) + e\phi \right] \nonumber \\
+    & = \frac{1}{m} (p_j -eA_j) \frac{\partial}{\partial q_i} (p_j - eA_j) + e\frac{\partial \phi}{\partial q_i} \nonumber \\
+    &  = -\frac{e}{m} (p_j - eA_j) \frac{\partial A_j}{\partial q_i} + e \frac{\partial \phi}{\partial q_i}
+    \end{align}
+    \begin{align}
+    \left ( \frac{ \partial H}{\partial q_i} \right )_{\qvec = \tilde{\qvec}, \pvec = \tilde{\pvec}} &= -\frac{e}{m} \left [ m v_j + eA_j(\xvec,t) - eA_j(\xvec,t) \right ] \left ( \frac{\partial A_j}{\partial q_i} \right)_{\qvec = \xvec} + e \left ( \frac{\partial \phi}{\partial q_i} \right)_{\qvec = \xvec} \nonumber \\
+    & = \left( -e v_j \frac{\partial A_j}{\partial q_i} + e \frac{ \partial \phi}{\partial q_i} \right)_{\qvec = \xvec} .
+    \end{align}
+    
+    \Cref{eq:hamil_p} thus leads to
+    \begin{equation}
+    m \frac{d v_i}{dt} = \left ( -e v_j \frac{ \partial A_i}{\partial q_j} - e \frac{ \partial A_i}{\partial t} + e v_j \frac{ \partial A_j}{\partial q_i} - e \frac{ \partial \phi}{\partial q_i} \right)_{\qvec = \xvec}.
+    \end{equation}
+    This is the same as \cref{eq:lag_mech_tensor_lorentz} and thus, as shown before, the above can be expressed as
+    \begin{equation}
+    \label{eq:single_particle_classical_mechanics}
+    m \frac{d \vvec}{dt} = e \left ( \Evec + \vvec \times \Bvec \right)_{\qvec = \xvec}.
+    \end{equation}
+    
+    \end{itemize}
+
+%-------------------------------------------------------------------------------
+\chapter{Kinetic description}
+%-------------------------------------------------------------------------------
 We denote the distribution function for a species $\alpha$ as $f_\alpha = f_\alpha(\rvec, \vvec, t)$, where $\rvec$ and $\vvec$ are the sample space variables for position and velocity. Note that the distribution function is appropriately normalized such that
 \begin{equation}
 \int f_\alpha \, d\rvec d\vvec = N_\alpha,
@@ -75,7 +213,7 @@ If we express the collision term in the usual way, that is $C_\alpha = \sum_\bet
 \end{enumerate}
 
 %-------------------------------------------------------------------------------
-\section{Fluid equations}
+\chapter{Fluid description}
 %-------------------------------------------------------------------------------
 We now define the particle density $n_\alpha = n_\alpha(\rvec,t)$, the fluid velocity $\uvec_\alpha = \uvec_\alpha(\rvec,t)$ and the fluid energy per unit mass $E_\alpha = E_\alpha(\rvec,t)$ as follows
 \begin{align}
@@ -89,9 +227,9 @@ Their evolution equations are obtained by taking the appropriate moments of the 
 \frac{\partial f_\alpha}{\partial t} + \nabla \cdot (\vvec f_\alpha) + \nabla_v \cdot \left [ \frac{Z_\alpha e}{m_\alpha} ( \Evec + \vvec \times \Bvec ) f_\alpha \right ] = C_\alpha + S_\alpha
 \end{equation}
 
-%--------------------------------------------
-\subsection{Mass}
-%--------------------------------------------
+%-------------------------------------------------------------------------------
+\section{Mass}
+%-------------------------------------------------------------------------------
 Integrating \cref{eq:boltz_mod} over all $\vvec$ we obtain
 %\begin{empheq}[box=\widefbox]{equation}
 \begin{equation}
@@ -104,9 +242,9 @@ where
 \end{equation}
 is an external source of mass.
 
-%--------------------------------------------
-\subsection{Momentum}
-%--------------------------------------------
+%-------------------------------------------------------------------------------
+\section{Momentum}
+%-------------------------------------------------------------------------------
 Multiplying \cref{eq:boltz_mod} by $\vvec$ and then integrating over all $\vvec$ leads to
 \begin{multline}
 \label{eq:mom_derv_1}
@@ -173,9 +311,9 @@ Thus, conservation of momentum becomes
 \frac{\partial m_\alpha n_\alpha \uvec_\alpha}{\partial t} + \nabla \cdot \left ( m_\alpha n_\alpha \uvec_\alpha \uvec_\alpha \right) - Z_\alpha e n_\alpha ( \Evec + \uvec_\alpha \times \Bvec ) = - \nabla p_\alpha + \nabla \cdot \tvec_\alpha + \Rvec_\alpha + \hat{\Mvec}_\alpha.
 \end{equation}
 
-%--------------------------------------------
-\subsection{Energy}
-%--------------------------------------------
+%-------------------------------------------------------------------------------
+\section{Energy}
+%-------------------------------------------------------------------------------
 Multiplying \cref{eq:boltz_mod} by $\frac{1}{2} v^2$ and then integrating over all $\vvec$ leads to
 \begin{multline}
 \label{eq:energy_derv_1}
@@ -247,9 +385,9 @@ m_\alpha n_\alpha E_\alpha & = \int \frac{1}{2} m_\alpha (\vvec \cdot \vvec) f_\
 \end{align}
 where $K_\alpha = \frac{1}{2} \uvec_\alpha \cdot \uvec_\alpha$ is the kinetic energy of species $\alpha$.
 
-%--------------------------------------------
-\subsection{Kinetic and Internal Energies}
-%--------------------------------------------
+%-------------------------------------------------------------------------------
+\section{Kinetic and Internal Energies}
+%-------------------------------------------------------------------------------
 The equation for the kinetic energy is obtained by dotting \cref{eq:mom_derv_6} with $\uvec_\alpha$. For this, we first show that
 \begin{align}
     \uvec_\alpha \cdot &\left [ \frac{\partial m_\alpha n_\alpha \uvec_\alpha}{\partial t} + \nabla \cdot \left ( m_\alpha n_\alpha \uvec_\alpha \uvec_\alpha \right) \right ] \\
@@ -269,9 +407,9 @@ Subtracting the above equation from \cref{eq:energy_derv_6} leads to
 \frac{\partial}{\partial t} \left ( \frac{3}{2} p_\alpha \right ) + \nabla \cdot \left ( \frac{3}{2} p_\alpha \uvec_\alpha \right ) = -p_\alpha \nabla \cdot \uvec_\alpha + \tvec_\alpha : \nabla \uvec_\alpha - \nabla \cdot \qvec_\alpha + Q_{\alpha} + \hat{Q}_\alpha - \uvec_\alpha \cdot \hat{\Mvec}_\alpha + m_\alpha K_\alpha \hat{S}_\alpha .
 \end{equation}
 
-%--------------------------------------------
-\subsection{Summary}
-%--------------------------------------------
+%-------------------------------------------------------------------------------
+\section{Summary}
+%-------------------------------------------------------------------------------
 To summarize, we have,
 \begin{itemize}
     \item Particle density
@@ -308,61 +446,6 @@ To summarize, we have,
 
 \end{itemize}
 
-%-------------------------------------------------------------------------------
-\chapter{Transport coefficients}
-%-------------------------------------------------------------------------------
-Collison integral
-
-\begin{equation}
-    \Omega_{\alpha \beta}^{(lk)} = \sqrt{ \frac{k_B T}{2 \pi M_{\alpha \beta}} } \int_0^\infty e^{-g^2} g^{2k+3} \phi_{\alpha \beta}^{(l)} \, dg.
-\end{equation}
-In the above $M_{\alpha \beta}$ is the reduced mass, given by
-\begin{equation}
-    M_{\alpha \beta} = \frac{M_\alpha M_\beta}{M_\alpha + M_\beta},
-\end{equation}
-and $\phi^{(l)}_{\alpha \beta}$ is the collision cross section for a given velocity, and is computed as
-\begin{equation}
-    \phi_{\alpha \beta}^{(l)} = 2 \pi \int_0^\infty \left ( 1 - \cos^l \chi_{\alpha \beta} \right ) b \, db.
-\end{equation}
-The scattering angle $\chi_{\alpha \beta}$ is given by
-\begin{equation}
-    \chi_{\alpha \beta} = \pi - 2 \int_{r_{\alpha \beta}^{\text{min}}}^\infty \frac{b}{r^2 \left [ 1 - \frac{b^2}{r^2} - \frac{V_{\alpha \beta (r)}}{g^2 k_B T} \right ]^{1/2} } \, dr.
-\end{equation}
-
-For a Coulombic interaction between ions, we can define the natural scale fore the cross-sectional area as
-\begin{equation}
-    \phi^{(0)}_{\alpha \beta} = \frac{ \pi \left (Z_\alpha Z_\beta e^2 \right)^2}{ \left(2 k_B T\right)^2}.
-\end{equation}
-Given this definition, we express the collision integral as
-\begin{equation}
-    \Omega_{\alpha \beta} = \sqrt{ \frac{\pi }{M_{\alpha \beta}}} \frac{( Z_\alpha Z_\beta e^2)^2 }{(2 k_B T )^{3/2}} \mathcal{F}^{lk}_{\alpha \beta},
-\end{equation}
-where
-\begin{equation}
-    \mathcal{F}^{(lk)}_{\alpha \beta} = \frac{1}{2 \phi_0} \int_0^\infty e^{-g^2} g^{2k+3} \phi_{\alpha \beta}^{(l)} \, dg
-\end{equation}
-We note that $\mathcal{F}^{(lk)}_{\alpha \beta} = 4 \mathcal{K}_{lk}(g_{\alpha \beta})$, where $\mathcal{K}_{lk}(g_{\alpha \beta})$ is the notation from the Stanton-Murillo paper.
-
-%%-------------------------------------------------------------------------------
-%\section{Chapman-Enskog Method}
-%%-------------------------------------------------------------------------------
-%Equations \eqref{eq:cons_mass}, \eqref{eq:mom_derv_5}, and \eqref{eq:energy_derv_5} have many unclosed terms. To %simplify matters a bit, we'll look at the case where there is only one species, there is no external source %$S_\alpha$, and there is no external electromagnetic force. In that case, the fluid equations look as follows
-%\begin{equation}
-%\label{eq:cons_mass_simple}
-%\frac{\partial n}{\partial t} + \nabla \cdot \left ( n \uvec \right ) = 0,
-%\end{equation}
-%\begin{equation}
-%\label{eq:cons_mom_simple}
-%\frac{\partial m n \uvec}{\partial t} + \nabla \cdot \left ( m n \uvec \uvec \right) = \nabla \cdot %\boldsymbol{\sigma},
-%\end{equation}
-%\begin{equation}
-%\label{eq:cons_ene_simple}
-%\frac{\partial m n E}{\partial t} + \nabla \cdot (m n E \uvec ) = - \nabla \cdot \qvec + \nabla \cdot ( %\boldsymbol{\sigma} \cdot \uvec ).
-%\end{equation}
-%For the above, the unclosed terms are $\sigma$ and $\qvec$. An approach to obtain approximations to such values is %called the Chapman-Enskog method.
-
-%The kinetic equation for the distribution function, in this case where there is one species and no external sources %and forces, is given by
-%\begin{equation}
-%    \frac{\partial f}{\partial t} + \vvec \cdot \nabla f = C.
-%\end{equation}
-
+\bibliographystyle{plainnat}
+\bibliography{library}
+\end{document}
