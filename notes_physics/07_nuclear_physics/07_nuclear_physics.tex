@@ -31,7 +31,7 @@
 
 \item Relative atomic mass ($A_r$): (defined for an element only)(previously referred to as atomic weight). Average of the atomic masses of all the different isotopes in a \textit{sample}, with each isotope's contribution to the average being its abundance within the sample (as a percentage).
 
-\item Standard Atomic Weight ($A_r^o$): (defined for an element only). Average of the atomic masses of all the different isotopes in \textit{planet earth}, with each isotope's contribution to the average being tis abundance in earth (as a percentage).
+\item Standard Atomic Weight ($A_r^o$): (defined for an element only). Average of the atomic masses of all the different isotopes in \textit{planet earth}, with each isotope's contribution to the average being its abundance in earth (as a percentage).
 
 \item Atomic mass unit ($u$): unit of mass, equivalent to $\frac{1}{12}$ the mass of a carbon-12 atom. That is 
 \begin{equation}
@@ -68,19 +68,19 @@ The value of the mole is $6.02214086 \times 10^{23}$.
 %--------------------------------------------------------------------------
 \item The fundamental relation for nuclear reactions is $E = m c^2$. A mass $m$ can be transformed into energy $E$, and viceversa. Two examples for $m$ are the following:
 \begin{itemize}
-\item Defect mass ($Dm$): the difference in mass between the atom and the sum of its constituents,
+\item Defect mass: the difference in mass between the atom and the sum of its constituents,
 \begin{equation}
-Dm = N m_n + Z m_p - m_a.
+m = N m_n + Z m_p - m_a.
 \end{equation}
 For carbon
 \begin{equation}
-Dm = 6 \times 1.008664 u + 6 \times 1.007276 u - 12u = 0.09564 u.
+m = 6 \times 1.008664 u + 6 \times 1.007276 u - 12u = 0.09564 u.
 \end{equation}
 For fluorine
 \begin{equation}
-Dm = 10 \times 1.008664 u + 9 \times 1.007276 u - 18.998403u = 0.154 u.
+m = 10 \times 1.008664 u + 9 \times 1.007276 u - 18.998403u = 0.154 u.
 \end{equation}
-The binding energy is then the energy corresponding to the mass defect as given by  $E = (Dm)c^2$.
+The binding energy is then the energy corresponding to the mass defect as given by  $E = m c^2$.
 
 \item Mass change of a fusion reaction:
 \begin{equation}
@@ -116,7 +116,7 @@ The fusion power density $S_f$ is the fusion energy produced per unit volume per
 \end{equation}
 We note that $E_f$ is an energy released by the reaction (it can either be the total energy, the energy carried out by the alpha particles only, the energy carried out by the neutrons only, etc.). 
 
-The reaction rate between two distinct particle is given by
+The reaction rate between two distinct particles is given by
 \begin{align}
     R_{12} = n_1 n_2 \langle \sigma v \rangle,
 \end{align}
@@ -128,7 +128,7 @@ Thus, the fusion power density can be expressed as
 \begin{equation}
     S_f = E_f \int_\Rthree \int_\Rthree f_1(\vvec_1) f_2(\vvec_2) \sigma(v) v \, d\vvec_1 d\vvec_2.
 \end{equation}
-Using the definition of the cross-section \cref{eq:def_cross_section}, the above becomes
+Using the definition of the cross-section, the above can be written as
 \begin{equation}
     S_f = E_f \int_\Rthree \int_\Rthree \int_0^{2\pi} \int_0^\infty f_1(\vvec_1) f_2(\vvec_2) F(v,b) v b \, db d\phi d\vvec_1 d\vvec_2.
 \end{equation}

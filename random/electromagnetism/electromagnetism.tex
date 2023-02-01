@@ -165,14 +165,91 @@ The magnetic field is not altered if a function whose curl vanishes (that is $\n
 \nabla^2 \Avec = -\mu_0 \Jvec, 
 \end{equation}
 whose solution is
-\end{itemize}
 \begin{equation}
-\Avec(\rvec) = \frac{\mu_0}{4 \pi } \int \frac{ \Jvec(\rvec')}{r} d\tau'.
+    \Avec(\rvec) = \frac{\mu_0}{4 \pi } \int \frac{ \Jvec(\rvec')}{r} d\tau'.
 \end{equation}
+
+\end{itemize}
 
 %--------------------------------------------------------------------------
 \section{Electric Fields in Matter}
 %--------------------------------------------------------------------------
+%--------------------------------------------
+\subsection{Dipole moments}
+%--------------------------------------------
+\begin{itemize}
+    \item The dipole moment of a continuous distribution of charge is define as
+    \begin{equation}
+        \pvec(\rvec) = \int_V \rho(\rvec')(\rvec' - \rvec) d\tau.
+    \end{equation}
+    \item For a discrete, rather than continuous, distribution of charges, the charge density is given by $\rho(\rvec) = \sum_i q_i \delta(\rvec - \rvec_i)$, and thus the dipole moment becomes
+    \begin{equation}
+        \pvec(\rvec) = \int_V \sum_i q_i \delta(\rvec' - \rvec_i) (\rvec' - \rvec) d\tau = \sum_i q_i (\rvec_i - \rvec).
+    \end{equation}
+    \item If there are only two opposite charges, then the dipole moment simplifies to
+    \begin{equation}
+        \pvec(\rvec) = q (\rvec_1 - \rvec) - q(\rvec_2 - \rvec) = q (\rvec_1 - \rvec_2) = q \dvec.
+    \end{equation}
+    where $\dvec$ points from the negative to the positive charge.
+    \item When an electric field is applied to an atom, its nucleus shifts slightly in the direction of the field, and the center of the surrounding sphere of electrons shift slightly against the field. A tiny dipole moment is induced. This dipole moment is often proportional to the electric field, i.e.
+    \begin{equation}
+        \pvec = \alpha \Evec,
+    \end{equation}
+    where $\alpha$ is the atomic polarizability.
+    \item For molecules, the induced dipole moment might not necessarily be aligned with the electric field. Additionally, you get different dipole moments depending on which direction the electric field comes from. A general expression of the dipole moment is then
+    \begin{align}
+         p_x &= \alpha_{xx} E_x + \alpha_{xy} E_y + \alpha_{xz} E_z \nonumber \\
+         p_y &= \alpha_{yx} E_x + \alpha_{yy} E_y + \alpha_{yz} E_z\nonumber \\
+         p_z &= \alpha_{zx} E_x + \alpha_{zy} E_y + \alpha_{zz} E_z,
+    \end{align}
+    where the polarizability is now a tensor.
+    \item Polar molecules: molecules have an inherent dipole moment, i.e. there is no need to apply an electric field to induce the dipole moment. Applying an electric field to those molecules would create a torque so that their inherent dipole moment becomes aligned with the electric field.
+    \item Polarized matter: matter whose constituents have a dipole moment aligned with the field (either because the dipole moments where induced or because the inherent dipole moments where rotated to be aligned with the field).
+    \item Polarization $\Pvec$: dipole moment per unit volume.
+\end{itemize}
+%--------------------------------------------
+\subsection{Electric displacement}
+%--------------------------------------------
+\begin{itemize}
+    \item What is the electric field caused by all of the tiny little dipoles in polarized matter? The field of such a polarized object is identical to the field that would be produced by a distribution of bound charges with volume charge density $\rho_b$ and surface charge density $\sigma_b$. These two are given by 
+    \begin{equation}
+        \rho_b = - \nabla \cdot \Pvec,
+    \end{equation}
+    \begin{equation}
+        \sigma_b = \Pvec \cdot \hat{\nvec}.
+    \end{equation}
+    \item There are now two charge distributions, one characterized by $\rho_b$, which we refer to as bound charges and which follows from the dipole moments in a material, and another that consists of any extra charges that may be present and that are not bound to the material. The latter charge distribution is label as $\rho_f$.
+    \item Combining the contributions of both, Gauss's law reads
+    \begin{equation}
+        \nabla \cdot \Evec = \frac{\rho}{\epsilon_0} = \frac{1}{\epsilon_0}(\rho_b + \rho_f) = \frac{1}{\epsilon_0} (-\nabla \cdot \Pvec + \rho_f)
+    \end{equation}
+    \item Defining the electric displacement $\Dvec$ as 
+    \begin{equation}
+        \Dvec = \epsilon_0 \Evec + \Pvec,
+    \end{equation}
+    allows us to write Gauss's Law as 
+    \begin{equation}
+        \nabla \cdot \Dvec = \rho_f.
+    \end{equation}
+\end{itemize}
+
+%--------------------------------------------
+\subsection{Linear dielectric}
+%-------------------------------------------- 
+\begin{itemize}
+    \item A linear dielectric is one whose polarization $\Pvec$ is directly proportional to $\Evec$, that is,
+    \begin{equation}
+        \Pvec = \epsilon_0 \chi_e \Evec.
+    \end{equation}
+    In the above, $\chi_e$ is the constant of proportionality and is referred to as the electric susceptibility.
+    \item The electric displacement for a linear dielectric than takes the form
+    \begin{equation}
+        \Dvec = \epsilon_0 \Evec + \epsilon_0 \chi_e \Evec = \epsilon_0 (1 + \chi_e) \Evec.
+    \end{equation}
+    \item Relative permittivity: $\epsilon_r = 1 + \chi_e$.
+    \item Permittivity: $\epsilon = \epsilon_0 (1 + \chi_e)$.
+\end{itemize}
+
 
 %--------------------------------------------------------------------------
 \section{Magnetic Fields in Matter}
