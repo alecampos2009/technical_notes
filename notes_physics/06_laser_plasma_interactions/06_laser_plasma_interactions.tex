@@ -288,59 +288,61 @@ where $\Fvec_l = \Fvec_l(\xvec,t)$ is the longitudinal component and $\Fvec_t = 
     \nabla \times \Fvec_l &= 0, \label{eq:ltw_plasma_long_def}\\
     \nabla \cdot \Fvec_t &= 0. \label{eq:ltw_plasma_tran_def}
 \end{align}
-We'll assume that for any vector function $\Gvec = \Gvec(\xvec,t)$, we can express it as
-\begin{equation}
-    \label{eq:em_general_wave_form}
-    \Gvec = \hat{\Gvec} \exp \left [i\left ( \kvec \cdot \xvec - wt \right ) \right ],
-\end{equation}
-These are the so-called plane waves. In the above, $\hat{\Gvec}$, $\kvec$, and $w$ are all constant. Also note that $\hat{\Gvec}$ is a complex vector, where the real and complex components point in the same direction. In terms of notation, we'll use a different subscript in the wave vector and frequencies of different waves. For example, we'll use $\kvec_e$ for electron-plasma waves, $\kvec_i$ for ion-acoustic waves, $\kvec_L$ for laser waves, and $\kvec_s$ for scattered waves. Similarly for the frequencies $w_e$, $w_i$, $w_L$, $w_s$.
-
-We note that
-\begin{equation}
-    \nabla \exp \left [ i \left (\kvec \cdot \xvec - wt \right ) \right ] = i \kvec \exp \left [ i \left (\kvec \cdot \xvec - wt \right ) \right ].
-\end{equation}
-Given the identity $\nabla \times (f \Avec) = f (\nabla \times \Avec ) + (\nabla f) \times \Avec$, if a function has no curl we can show that
-\begin{align}
-    \label{eq:ltw_no_curl}
-    0 &= \nabla \times \Gvec \nonumber \\
-    &= \nabla \times \left ( \hat{\Gvec} \exp \left [i \left ( \kvec \cdot \xvec - wt \right ) \right ] \right ) \nonumber \\
-    &= \exp \left [ i \left (\kvec \cdot \xvec - wt \right ) \right ] \nabla \times \hat{\Gvec} + \nabla \exp \left [ i \left (\kvec \cdot \xvec - wt \right ) \right ] \times \hat{\Gvec} \nonumber \\
-    &= i \exp \left [ i \left (\kvec \cdot \xvec - wt \right ) \right ] \kvec \times \hat{\Gvec}.
-\end{align}
-Given the identity $\nabla \cdot (f\Avec) = f ( \nabla \cdot \Avec) + (\nabla f) \cdot \Avec$, if a function has no divergence we can show that
-\begin{align}
-    \label{eq:ltw_no_div}
-    0 &= \nabla \cdot \Gvec \nonumber \\
-    &= \nabla \cdot \left ( \hat{\Gvec} \exp \left [i \left ( \kvec \cdot \xvec - wt \right ) \right ] \right ) \nonumber \\
-    &= \exp \left [ i \left (\kvec \cdot \xvec - wt \right ) \right ] \nabla \cdot \hat{\Gvec} + \nabla \exp \left [ i \left (\kvec \cdot \xvec - wt \right ) \right ] \cdot \hat{\Gvec} \nonumber \\
-    &= i \exp \left [ i \left (\kvec \cdot \xvec - wt \right ) \right ] \kvec \cdot \hat{\Gvec}.
-\end{align}
-Thus, since by definition $\Fvec_l$ has no curl and $\Fvec_t$ has no divergence, \cref{eq:ltw_no_curl,eq:ltw_no_div} give
-\begin{align}
-    \kvec \times \hat{\Fvec}_l = 0 \nonumber \\
-    \kvec \cdot \hat{\Fvec}_t = 0.
-\end{align}
-
-The first expression above says $\hat{\Fvec}_l$ is parallel to $\kvec$ and the second says $\hat{\Fvec}_t$ is orthogonal to $\kvec$. Thus, $\hat{\Fvec}_l \cdot \hat{\Fvec}_t = 0$. We will often have situations where $\nabla \times \Fvec = \nabla \cdot \Fvec = 0$, which by its own does not imply $\Fvec = 0$. However, using \cref{eq:ltw_no_curl,eq:ltw_no_div}, this translates to to $\kvec \times \hat{\Fvec} = \kvec \cdot \hat{\Fvec} =  0$. The latter equality states that $\kvec$ and $\hat{\Fvec}$ are orthogonal, that is, the angle between them is $90^\circ$. The former equality leads to $|\hat{\Fvec}| \sin(90^\circ) = 0$, which in turn means $\hat{\Fvec} = 0$. As a result, the entire vector $\Fvec$ is equal to zero. In other words,
-\begin{equation}
-    \label{eq:ltw_general_null_vector}
-    \nabla \times \Fvec = \nabla \cdot \Fvec = 0 \to \Fvec = 0.
-\end{equation}
-
-We note that a slightly more general expression than \cref{eq:em_general_wave_form,} can be used for most of the analysis in subsequent sections. Given a wave vector $\kvec = [k_x, k_y, k_z]$ such that $k_x = k_x(x)$, $k_y = k_y(y)$, and $k_z = k_z(z)$, the more general function takes the form
+We'll assume that any vector function $\Gvec = \Gvec(\xvec,t)$ can be expressed as the real component of
 \begin{equation}
     \label{eq:em_more_general_wave_form}
     \Gvec = \hat{\Gvec} \exp \left [ i \left ( \int_0^x k_x(x') \, dx' + \int_0^y k_y(y') \, dy' + \int_0^z k_z(z') \, dz'  - wt \right ) \right ].
 \end{equation}
-For the above, we now have $\hat{\Gvec} = \hat{\Gvec}(\xvec,t)$, that is, the vector coefficient is no longer constant. However, $\hat{\Gvec}$ can't be of any general form. We enforce the constraint that if $\nabla \times \Gvec = 0$, then $\nabla \times \hat{\Gvec} = 0$, and similarly, if $\nabla \cdot \Gvec = 0$, then $\nabla \cdot \hat{\Gvec} = 0$.
+For the above, $w$ a frequency constant in time and space, and $k_x = k_x(x)$, $k_y = k_y(y)$, and $k_z = k_z(z)$ form the wave vector $\kvec = [k_x, k_y, k_z]$. $\hat{\Gvec} = \hat{\Gvec}(\xvec,t)$ is a complex vector where the real and complex components point in the same direction. Additionally, we enforce the constraint that if $\nabla \times \Gvec = 0$, then $\nabla \times \hat{\Gvec} = 0$, and similarly, if $\nabla \cdot \Gvec = 0$, then $\nabla \cdot \hat{\Gvec} = 0$. We'll often use a different subscript in the wave vectors and frequencies of different waves. For example, we'll use $\kvec_e$ for electron-plasma waves, $\kvec_i$ for ion-acoustic waves, $\kvec_L$ for laser waves, and $\kvec_s$ for scattered waves. Similarly for the frequencies $w_e$, $w_i$, $w_L$, $w_s$.
+
 We note that
 \begin{multline}
     \nabla \exp \left [ i \left ( \int_0^x k_x(x') \, dx' + \int_0^y k_y(y') \, dy' + \int_0^z k_z(z') \, dz'  - wt \right ) \right ] \\
     = i \kvec \exp \left [ i \left ( \int_0^x k_x(x') \, dx' + \int_0^y k_y(y') \, dy' + \int_0^z k_z(z') \, dz'  - wt \right ) \right ]
 \end{multline}
-Thus, equivalent derivations to those shown in \cref{eq:ltw_no_curl,eq:ltw_no_div} allow us to again obtain $\kvec \times \hat{\Fvec}_l = 0$ and $\kvec \cdot \hat{\Fvec}_t = 0$. Similarly, for a function that has $\nabla \times \Fvec = \nabla \cdot \Fvec = 0$, \cref{eq:ltw_no_curl,eq:ltw_no_div} allows us to express this as $\kvec \times \hat{\Fvec} = \kvec \cdot \hat{\Fvec} = 0$, and thus $\Fvec = 0$. We end with the cautionary note that thus fur we've been working with first gradients of $\Gvec$. Second gradients of $\Gvec$ do not lead to the same results when using \cref{eq:em_general_wave_form} vs \cref{eq:em_more_general_wave_form}.
+Given the identity $\nabla \times (\Avec f) = (\nabla \times \Avec ) f - \Avec \times (\nabla f)$, we can show that
+\begin{align}
+    \label{eq:ltw_no_curl}
+    \nabla \times \Gvec &= \nabla \times \left [ \hat{\Gvec} \exp (...) \right ] \nonumber \\
+    &= \left ( \nabla \times \hat{\Gvec} \right ) \exp (...) - \hat{\Gvec} \times \left [ \nabla \exp (...) \right ] \nonumber \\
+    &= \left ( \nabla \times \hat{\Gvec} \right ) \exp (...) - \hat{\Gvec} \times \left [ i\kvec \exp (...) \right ] \nonumber \\
+    &= \left ( \nabla \times \hat{\Gvec} \right ) \exp (...) + i \kvec \times \Gvec.
+\end{align}
+Given the identity $\nabla \cdot (\Avec f) = ( \nabla \cdot \Avec) f + \Avec \cdot (\nabla f)$, we can show that
+\begin{align}
+    \label{eq:ltw_no_div}
+    \nabla \cdot \Gvec &= \nabla \cdot \left [ \hat{\Gvec} \exp (...) \right ] \nonumber \\
+    &= \left ( \nabla \cdot \hat{\Gvec} \right ) \exp (...) + \hat{\Gvec} \cdot \left [ \nabla \exp (...) \right ] \nonumber \\
+    &= \left ( \nabla \cdot \hat{\Gvec} \right ) \exp (...) + \hat{\Gvec} \cdot \left [ i \kvec \exp (...) \right ] \nonumber \\
+    &= \left ( \nabla \cdot \hat{\Gvec} \right ) \exp (...) + i \kvec \cdot \Gvec.
+\end{align}
+By definition, $\Fvec_l$ has no curl and $\Fvec_t$ has no divergence. As mentioned earlier, we then require $\hat{\Fvec}_l$ to have no curl and $\hat{\Fvec}_t$ to have no divergence. Using this in \cref{eq:ltw_no_curl,eq:ltw_no_div} allow us to write
+\begin{align}
+    \kvec \times \Fvec_l = 0 \label{eq:ltw_plasma_long_wavevector} \\
+    \kvec \cdot \Fvec_t = 0 \label{eq:ltw_plasma_trans_wavevector}.
+\end{align}
 
+The first expression above says $\Fvec_l$ is parallel to $\kvec$ and the second says $\Fvec_t$ is orthogonal to $\kvec$. Thus, $\Fvec_l \cdot \Fvec_t = 0$. We will often have situations where $\nabla \times \Fvec = \nabla \cdot \Fvec = 0$, which by its own does not imply $\Fvec = 0$. However, using \cref{eq:ltw_no_curl,eq:ltw_no_div}, this translates to to $\kvec \times \Fvec = \kvec \cdot \Fvec =  0$. The latter equality states that $\kvec$ and $\Fvec$ are orthogonal, that is, the angle between them is $90^\circ$. The former equality leads to $|\Fvec| \sin(90^\circ) = 0$, which in turn means $\Fvec = 0$. To summarize,
+\begin{equation}
+    \label{eq:ltw_general_null_vector}
+    \nabla \times \Fvec = \nabla \cdot \Fvec = 0 \to \Fvec = 0.
+\end{equation}
 
+For some cases we'll further restrict $\hat{\Gvec}$ in \cref{eq:em_more_general_wave_form} such that $\hat{\Gvec} = \hat{\Gvec} (\xvec)$, that is, the time dependence of the wave is fully captured by the $\exp(-iwt)$ term. For this case, we'll often re-write the expression for $\Gvec$ as
+\begin{equation}
+    \label{eq:em_semi_general_wave_form}
+    \Gvec = \tilde{\Gvec} \exp (-iwt),
+\end{equation}
+where $\tilde{\Gvec} = \tilde{\Gvec}(\xvec)$ is given by
+\begin{equation}
+    \tilde{\Gvec} = \hat{\Gvec} \exp \left [ i \left ( \int_0^x k_x(x') \, dx' + \int_0^y k_y(y') \, dy' + \int_0^z k_z(z') \, dz' \right ) \right ].
+\end{equation}
+Finally, a further simplification occurs when $\kvec$ and $\hat{\Gvec}$ are assumed to be constant in space. For this case, the expression for $\Gvec$ becomes
+\begin{equation}
+    \label{eq:em_general_wave_form}
+    \Gvec = \hat{\Gvec} \exp \left [i\left ( \kvec \cdot \xvec - wt \right ) \right ].
+\end{equation}
+These are the so-called plane waves. We end with the cautionary note that the second gradients of $\Gvec$ in \cref{eq:em_more_general_wave_form} are not necessarily the same as those of $\Gvec$ in \cref{eq:em_general_wave_form}.
 %-------------------------------------------------------------------------------
 \section{Electron-plasma and ion-acoustic waves}
 %-------------------------------------------------------------------------------
@@ -350,13 +352,13 @@ For both electron-plasma and ion-acoustic waves we can assume the magnetic field
 \end{equation}
 By definition, $\nabla \cdot \Evec_t = 0$. Thus, using \cref{eq:ltw_general_null_vector} we get $\Evec_t = 0$, that is, $\Evec = \Evec_l$. 
 
-For electron-plasma waves, we can write \cref{eq:ep_waves_mom_linearized} in spectral form to obtain
+For electron-plasma waves, we can use \cref{eq:em_general_wave_form} to write \cref{eq:ep_waves_mom_linearized} in spectral form and thus obtain
 \begin{equation}
 -i w n_{e0} \hat{\uvec}_{e1} + \frac{e n_{e0}}{m_e} \hat{\Evec}_{1,l} = -\kvec_e \frac{\gamma_e p_{e0}}{n_{e0} m_e} \hat{n}_{e1}. 
 \end{equation}
 Since the second term on the left-hand side and the term on the right-hand side point along $\kvec_e$, $\hat{\uvec}_{e1}$ also points along $\kvec_e$, that is, $\hat{\uvec}_{e1} = \hat{\uvec}_{e1,l}$.
 
-For ion-acoustic waves, we can write \cref{eq:ia_waves_mom_linearized} in spectral form to obtain
+For ion-acoustic waves, we can use \cref{eq:em_general_wave_form} to write \cref{eq:ia_waves_mom_linearized} in spectral form and thus obtain
 \begin{equation}
 -i w n_{i0} \hat{\uvec}_{i1} - \frac{Z e n_{i0}}{m_i} \hat{\Evec}_{1,l} = -\kvec_i \frac{\gamma_i p_{i0}}{n_{i0} m_i} \hat{n}_{i1}. 
 \end{equation}
@@ -519,7 +521,7 @@ We'll now introduce a more specific coordinate system. We'll be dealing with at 
     \uvec_{e,l} &= \hat{\uvec}_{e,l} \exp \left [ i (\kvec_p \cdot \xvec - w_pt) \right ] \\
     \uvec_{e,t} &= \hat{\uvec}_{e,t} \exp \left [ i (\kvec_q \cdot \xvec - w_qt) \right ].
 \end{align}
-Note that since all wave vectors point along the base plane, $u_e^2$, $\phi$ and $p_e$ will only vary along that plane, and thus their gradients will be confined to that plane. Thus, the component of \cref{eq:emp_electron_momentum} along the main transverse direction is
+The vectors $\nabla \left ( u_e^2 / 2 \right )$, $\nabla \phi$ and $\nabla p_e$ are all by definition longitudinal. As \cref{eq:ltw_plasma_long_wavevector} states, longitudinal vectors point along their wave vectors. Since we chose all wave vectors to be confined to the base plane, $\nabla \left ( u_e^2 / 2 \right )$, $\nabla \phi$ and $\nabla p_e$ do not have a component along the main transverse direction. As a result, the component of \cref{eq:emp_electron_momentum} along the main transverse direction simplifies to
 \begin{equation}
     \label{eq:emp_electron_momentum_transverse}
     \frac{\partial\uvec_{e,t}}{\partial t} - \uvec_{e,l} \times \left ( \nabla \times \uvec_{e,t} \right ) + \frac{e}{m_e} \left [ - \frac{\partial \Avec}{\partial t} + \uvec_{e,l} \times \left ( \nabla \times \Avec \right ) \right ] = 0.
@@ -535,7 +537,7 @@ Thus, assuming $\uvec_{e,l} \ll c$, the terms involving the double cross product
 \begin{equation}
     \frac{\partial\uvec_{e,t}}{\partial t} - \frac{e}{m_e} \frac{\partial \Avec}{\partial t} = 0.
 \end{equation}
-The above is equivalent to 
+Using \cref{eq:em_semi_general_wave_form}, the above is equivalent to 
 \begin{equation}
     -i w \uvec_{e,t} +i w \frac{e \Avec}{m_e} = 0,
 \end{equation}
@@ -568,7 +570,7 @@ We start with \cref{eq:emp_general_trans_vec_pot_complete}, but focus on the sta
     \label{eq:semp_general_trans_vec_pot_complete}
     \frac{\partial^2 \Avec}{\partial t} + w_{pe}^2 \Avec - c_0^2 \nabla^2 \Avec = 0.
 \end{equation}
-We note that $n_{e0}$ is only time independent, that is, it is still allowed to vary across space. As a result, $w_{pe}^2$ is also allowed to vary across space. Making use of the wave's functional dependence on time, i.e.\@ $\Avec(\xvec,t) = \tilde{\Avec}(\xvec) \exp(-iwt)$, the time derivative in \cref{eq:semp_general_trans_vec_pot_complete} evaluates such that one obtains
+We note that $n_{e0}$ is only time independent, that is, it is still allowed to vary across space. As a result, $w_{pe}^2$ is also allowed to vary across space. Using \cref{eq:em_semi_general_wave_form} for the vector potential, \cref{eq:semp_general_trans_vec_pot_complete} becomes
 \begin{equation*}
     -w^2 \Avec + w_{pe}^2 \Avec - c_0^2 \nabla^2 \Avec = 0.
 \end{equation*}
@@ -612,7 +614,7 @@ Taking the time derivative of \cref{eq:semp_general_trans_vec_pot_complete} give
     \label{eq:semp_general_trans_E_complete}
     \frac{\partial^2 \Evec_t}{\partial t^2} + w_{pe}^2 \Evec_t - c_0^2 \nabla^2 \Evec_t = 0.
 \end{equation}
-Making use of the wave's functional dependence on time, i.e.\@ $\Evec(\xvec,t) = \tilde{\Evec}(\xvec) \exp(-iwt)$, the time derivative in \cref{eq:semp_general_trans_E_complete} evaluates such that one obtains
+Using \cref{eq:em_semi_general_wave_form} for the electric field, the time derivative in \cref{eq:semp_general_trans_E_complete} evaluates such that 
 \begin{equation*}
     -w^2 \Evec_t + w_{pe}^2 \Evec_t - c_0^2 \nabla^2 \Evec_t = 0.
 \end{equation*}
@@ -634,7 +636,7 @@ Taking the curl of \cref{eq:semp_general_trans_vec_pot_complete} gives the equat
     \label{eq:semp_general_trans_B_complete}
     \frac{\partial^2 \Bvec}{\partial t^2} + w_{pe}^2 \Bvec - c_0^2 \nabla^2 \Bvec + \nabla w_{pe}^2 \times \Avec = 0.
 \end{equation}
-Making use of the wave's functional dependence on time, i.e.\@ $\Bvec(\xvec,t) = \tilde{\Bvec}(\xvec) \exp(-iwt)$, the time derivative in \cref{eq:semp_general_trans_B_complete} evaluates such that one obtains
+Using \cref{eq:em_semi_general_wave_form} for the magnetic field, the time derivative in \cref{eq:semp_general_trans_B_complete} evaluates such that 
 \begin{equation*}
     -w^2 \Bvec + w_{pe}^2 \Bvec - c_0^2 \nabla^2 \Bvec + \nabla w_{pe}^2 \times \Avec = 0.
 \end{equation*}
@@ -665,7 +667,7 @@ As a side note, we can use the expressions above to write Ampere's law in a new 
 \begin{equation*}
     \nabla \times \Bvec = \frac{w^2}{c_0^2} \epsilon \Avec.
 \end{equation*}
-Making use of the wave's functional dependence on time, i.e.\@ $\Avec(\xvec,t) = \tilde{\Avec}(\xvec) \exp(-iwt)$, the expression $\Evec_t = -\partial \Avec / \partial t$ gives
+Using \cref{eq:em_semi_general_wave_form} for the vector potential, the expression $\Evec_t = -\partial \Avec / \partial t$ gives
 \begin{equation*}
     \Evec_t = iw \Avec.
 \end{equation*}
