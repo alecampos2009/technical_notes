@@ -1,0 +1,69 @@
+\documentclass[a4paper,11pt]{report}
+\usepackage{fullpage}
+
+\usepackage{"../../info/packages"}
+\usepackage{"../../info/nomenclature"}
+
+\title{Radiation}
+\author{Alejandro Campos}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+%----------------------------------------------------------------------------------------------------------------------
+\chapter{Thermal radiation}
+%----------------------------------------------------------------------------------------------------------------------
+\begin{table}
+    \centering
+    \begin{tabular} { | Sc | Sc | Sc |}
+        \hline
+        \multicolumn{2}{| c |}{} & spectral \\
+        \hline
+         \begin{tabular}{c} Radiance \\ Specific Intensity \end{tabular} & $ I_\Omega \; \left [ \frac{\text{J}}{\text{s$\cdot$m\textsuperscript{2}$\cdot$sr}} \right ] $ & $I_{\Omega,\nu} \; \left [ \frac{\text{J}}{\text{s$\cdot$m\textsuperscript{2}$\cdot$sr$\cdot$Hz}} \right ] $ \\
+        \hline
+        \begin{tabular}{c} Irradiance \\ Radiancy \\ Flux \end{tabular} & $I \; \left [ \frac{\text{J}}{\text{s$\cdot$m\textsuperscript{2}}} \right ]$ & $I_\nu \; \left [ \frac{\text{J}}{\text{s$\cdot$m\textsuperscript{2}$\cdot$Hz}} \right ]$ \\
+        \hline
+        Radiant Energy Density & $u \; \left [ \frac{\text{J}}{\text{ m\textsuperscript{3}}} \right ]$ & $u_\nu \; \left [ \frac{\text{J}}{\text{m\textsuperscript{3}$\cdot$Hz}} \right ]$ \\
+        \hline
+    \end{tabular}
+    \caption{Radiation quantities}
+    \label{tab:thermal_rad_quantities}
+\end{table}
+
+There are various variables commonly used to describe a radiation field, these are listed in \cref{tab:thermal_rad_quantities}. To go from a spectral quantity to a non-spectral quantity one simply integrates over all frequencies, e.g.
+\begin{equation}
+    I = \int_0^\infty I_\nu \, d\nu.
+\end{equation}
+To go from the radiance to the flux, one integrates over the upper half of a surface of a sphere, e.g.
+\begin{equation}
+    I = \int_{\phi=0}^{2\pi} \int_{\theta=0}^{\pi/2} I_\Omega \, d\Omega.
+\end{equation}
+To obtain the radiant energy density from the flux, one uses
+\begin{equation}
+    \label{eq:th_rad_energy_density}
+    u = \frac{4}{c} I
+\end{equation}
+
+In this chapter we'll concern our selves with thermal radiation, which is defined as electromagnetic radiation produced by matter due to the thermal motion of its constituent particles (electrons, atoms, molecules, etc.). All matter with a temperature greater than absolute zero emits thermal radiation.There are four main processes by which thermal radiation interacts with matter:
+\begin{enumerate}
+    \item Emission
+    \item Reflection
+    \item Absorption
+    \item Transmission/scattering
+\end{enumerate}
+
+A blackbody is matter that absorbs all of the incoming radiation, none of it is reflected or transmitted. For a blackbody, we have
+\begin{align}
+    I_{\Omega,\nu} &= \frac{2 \nu^2}{c^2} \frac{h \nu}{\exp (h\nu/kT) - 1} \cos \theta, \\
+    I_\nu &= \frac{2 \pi \nu^2}{c^2} \frac{h \nu}{\exp (h\nu/kT) - 1}, \\
+    u_\nu &= \frac{8 \pi \nu^2}{c^3} \frac{h \nu}{\exp (h\nu/kT) - 1} .
+\end{align}
+Integrating the above three over all frequencies gives 
+\begin{align}
+    I_{\Omega} &= \sigma T^4 \frac{\cos \theta}{\pi}, \\
+    I &= \sigma T^4, \label{eq:th_rad_stefans_law}\\
+    u &= \frac{4}{c} \sigma T^4.
+\end{align}
+where $\sigma$ is the Stefan-Boltzmann constant and has units of J/s$\cdot$m\textsuperscript{2}$\cdot$K\textsuperscript{4}. \Cref{eq:th_rad_stefans_law} is known as Stefan's law.
+\end{document}

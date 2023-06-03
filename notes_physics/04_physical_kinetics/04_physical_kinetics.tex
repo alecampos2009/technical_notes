@@ -16,9 +16,9 @@
 %----------------------------------------------------------------------------------------------------------------------
 \chapter{Lagrangian and Eulerian PDFs}
 %----------------------------------------------------------------------------------------------------------------------
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Eulerian PDF}
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 Consider an Eulerian velocity field $\uvec = \uvec(\xvec,t)$. The Eulerian PDF $f = f(\Vvec; \xvec,t)$ gives the probability that the velocity field will have a value of $\Vvec$ at location $\xvec$ and at time $t$. We'll also introduce the fine-grained Eulerian PDF $f' = f'(\Vvec;\xvec,t)$, which is defined as 
 \begin{equation}
     f'(\Vvec; \xvec, t) = \delta(\uvec(\xvec,t) - \Vvec).
@@ -35,9 +35,9 @@ The proof is as follows,
     &= f(\Vvec; \xvec, t).
 \end{align}
 
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Lagrangian PDF}
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 Consider a Lagrangian particle with velocity $\uvec^+ = \uvec^+(t,\yvec)$ and position $\xvec^+(t,\yvec)$. The Lagrangian PDF $f_L = f_L(\Vvec, \xvec; t | \yvec)$ gives the probability that the particle that started at location $\yvec$ at the reference time $t_0$ will have a velocity $\Vvec$ and position $\xvec$ at time $t$. We'll also introduce the fine-grained Eulerian PDF $f'_L = f'_L(\Vvec, \xvec; t | \yvec)$, which is defined as 
 \begin{equation}
     f'_L(\Vvec, \xvec; t | \yvec) = \delta(\uvec^+(t,\yvec) - \Vvec) \delta(\xvec^+(t,\yvec) - \xvec).
@@ -54,9 +54,9 @@ The proof is as follows,
     &= f_L(\Vvec, \xvec; t | \yvec).
 \end{align}
 
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Relation between Lagrangian and Eulerian PDFs}
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 As a quick side note, we mention that the inverse of $\xvec^+$ is $\yvec^+ = \yvec^+(t,\zvec)$, which gives the initial location of a fluid particle that at time $t$ is located at position $\zvec$. Thus, $\xvec^+(t,\yvec^+(t,\zvec)) = \zvec$.
 
 We begin as follows
@@ -99,12 +99,12 @@ A summary of all of the relations derived thus far is given by the following gra
     \end{picture}
 \end{center}
 
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Evolution equation for fine-grained Eulerian PDF}
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Evolution equation for fine-grained Lagrangian PDF}
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 
 \end{document}

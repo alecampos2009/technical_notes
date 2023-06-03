@@ -65,9 +65,9 @@ The starting point are the multi-fluid conservation laws and the Maxwell equatio
 %----------------------------------------------------------------------------------------------------------------------
 \chapter{Electron-plasma and ion-acoustic waves}
 %----------------------------------------------------------------------------------------------------------------------
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Linearization}
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \label{sec:p_waves_linearization}
 The following decompositions will be used in the derivation of electron-plasma and ion-acoustic waves:
 \begin{align}
@@ -179,9 +179,9 @@ With $p_{\alpha 0}$ and $n_{\alpha 0}$ constant, this then gives \cref{eq:p_wave
 \end{equation}
 which can be interpreted as the equation of state for the small quantities.
 
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Electron Plasma Waves}
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 On top of the assumptions in \cref{sec:p_waves_linearization}, we'll assume 
 \begin{enumerate}
     \item Quasi-neutrality for the base flow, $Zn_{i0} = n_{e0}$.
@@ -225,9 +225,9 @@ If we define the thermal velocity without the factor of two, that is, $v_{T\alph
     w^2 - w^2_{pe} - \gamma_e k_e^2 v^2_{T_{e0}} = 0.
 \end{equation}
 
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Ion Acoustic Waves}
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 On top of the assumptions in \cref{sec:p_waves_linearization}, we'll assume 
 \begin{enumerate}
     \item Quasi-neutrality for the base flow, $Zn_{i0} = n_{e0}$.
@@ -276,9 +276,9 @@ where
 %----------------------------------------------------------------------------------------------------------------------
 \chapter{Longitudinal and transverse waves}
 %----------------------------------------------------------------------------------------------------------------------
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Definitions}
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 The Helmholtz decomposition for a function $\Fvec = \Fvec(\xvec,t)$ is of the following form
 \begin{equation}
     \Fvec = \Fvec_l + \Fvec_t,
@@ -343,9 +343,10 @@ Finally, a further simplification occurs when $\kvec$ and $\hat{\Gvec}$ are assu
     \Gvec = \hat{\Gvec} \exp \left [i\left ( \kvec \cdot \xvec - wt \right ) \right ].
 \end{equation}
 These are the so-called plane waves. We end with the cautionary note that the second gradients of $\Gvec$ in \cref{eq:em_more_general_wave_form} are not necessarily the same as those of $\Gvec$ in \cref{eq:em_general_wave_form}.
-%-------------------------------------------------------------------------------
+
+%-------------------------------------------------------------------------
 \section{Electron-plasma and ion-acoustic waves}
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 For both electron-plasma and ion-acoustic waves we can assume the magnetic field does not change. Thus, Faraday's law gives
 \begin{equation}
     \nabla \times \Evec = \nabla \times \Evec_t = 0.
@@ -561,9 +562,9 @@ where $w_{pe}^2 = e^2 n_{e0} / m_e \epsilon_0$.
 %----------------------------------------------------------------------------------------------------------------------
 \chapter{Electromagnetic waves in a stable plasma}
 %----------------------------------------------------------------------------------------------------------------------
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{The vector potential}
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \label{sec:semp_vector_potential}
 We start with \cref{eq:emp_general_trans_vec_pot_complete}, but focus on the stable-plasma case, that is, $n_{e1} = 0$. Thus, we have
 \begin{equation}
@@ -606,9 +607,9 @@ Using \cref{eq:semp_uniform_dispersion_relation}, we can also write the above as
     v_g = \frac{c_0^2 k}{w} = c_0^2 \frac{\sqrt{\epsilon}}{c_0} = c_0 \sqrt{\epsilon}.
 \end{equation}
 
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{The electric field}
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 Taking the time derivative of \cref{eq:semp_general_trans_vec_pot_complete} gives the equation for $\Evec_t$, that is
 \begin{equation}
     \label{eq:semp_general_trans_E_complete}
@@ -628,9 +629,9 @@ which becomes
     \frac{w^2}{c_0^2} \epsilon \Evec_t + \nabla^2 \Evec_t = 0.
 \end{equation}
 
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{The magnetic field}
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 Taking the curl of \cref{eq:semp_general_trans_vec_pot_complete} gives the equation for $\Bvec$, that is
 \begin{equation}
     \label{eq:semp_general_trans_B_complete}
@@ -681,9 +682,9 @@ As mentioned in \cref{sec:semp_vector_potential}, for a uniform stable plasma we
 %----------------------------------------------------------------------------------------------------------------------
 \chapter{Stimulated Raman and Brillouin instabilities}
 %----------------------------------------------------------------------------------------------------------------------
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Linearization}
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 The following decompositions will be used in the derivation of stimulated Raman and Brillouin instabilities:
 \begin{align}
     n_i &= n_{i0} + n_{i1}, \nonumber \\
@@ -811,9 +812,9 @@ Given the assumptions in \cref{it:p_instabilities_assumption_1,it:p_instabilitie
     \frac{\partial n_{i0} \uvec_{i1,l}}{\partial t} - \frac{Z e n_{i0}}{m_i} \Evec_{1,l} = - \frac{1}{m_i} \nabla p_{i1}.
 \end{equation}
 
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Stimulated Raman Scattering}
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 We employ the same assumptions as for the electron-plasma waves, that is 
 \begin{enumerate}
     \item Quasi-neutrality for the base flow, $Zn_{i0} = n_{e0}$.
@@ -839,9 +840,9 @@ or
 \end{equation}
 Thus, the scattered laser light $\Avec_s$ couples with the laser light to serve as a source for the electron-plasma wave.
 
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Stimulated Brillouin Scattering}
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 We employ the same assumptions as for the ion-acoustic waves, that is
 \begin{enumerate}
     \item Quasi-neutrality for the base flow, $Zn_{i0} = n_{e0}$.
@@ -874,6 +875,44 @@ Since $p_{i0}/n_{i0} = k_B T_{i0}$ and $p_{e0} / n_{e0} = k_B T_{e0}$, we finall
     \frac{\partial^2 n_{i1}}{\partial t^2} - \left ( \frac{Z \gamma_e k_B T_{e0} + \gamma_i k_B T_{i0}}{m_i} \right ) \nabla^2 n_{i1} = \frac{Z e^2 n_{i0}}{m_i m_e} \nabla^2 \left (\Avec_L \cdot \Avec_s \right ).
 \end{equation}
 Thus, the scattered laser light $\Avec_s$ couples with the laser light to serve as a source for the ion-acoustic wave.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\appendix
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------------------------------------
+\chapter{Light-matter interactions}
+%----------------------------------------------------------------------------------------------------------------------
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=15cm]{../../images/light_matter.pdf}
+    \caption{A summary of various methods by which light interacts with matter.}
+    \label{fig:light_matter}
+\end{figure}
+
+%-------------------------------------------------------------------------
+\section{Scattering processes}
+%-------------------------------------------------------------------------
+\begin{itemize}
+    \item \textbf{Rayleigh} scattering: elastic scattering of a photon from an atom or molecule whose size is less than that of the wavelength of the photon. 
+    \item \textbf{Mie} scattering: same as Rayleigh scattering but for cases where the sizes of the atoms or molecules are comparable to the wavelength of the incoming photon.
+    \item \textbf{Raman} scattering: inelastic scattering of a photon from a molecule. The interaction changes the molecule's vibrational, rotational, or electron energy.
+    \item \textbf{Brillouin} scattering: inelastic scattering of a photon caused by its interaction with material waves in a medium (i.e. mass oscillation modes, charge displacement modes, magnetic spin oscillation modes). 
+    \item \textbf{Compton} scattering: inelastic scattering of a photon from a free charged particle. 
+    \item \textbf{Thomson} scattering: low-energy limit of Compton scattering. The photon energy and the particle's kinetic energy do not change as a result of the scattering. Can be explained with classical electrodynamics.
+\end{itemize}
+
+%-------------------------------------------------------------------------
+\section{Photoelectric effect}
+%-------------------------------------------------------------------------
+
+%-------------------------------------------------------------------------
+\section{Bremsstrahlung}
+%-------------------------------------------------------------------------
+
+%-------------------------------------------------------------------------
+\section{Pair production/annihilation}
+%-------------------------------------------------------------------------
 
 
 \bibliographystyle{plainnat}

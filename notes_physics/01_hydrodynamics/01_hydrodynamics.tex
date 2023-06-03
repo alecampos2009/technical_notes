@@ -6,7 +6,7 @@
 \usepackage{../../info/nomenclature}
 \usepackage{scalerel}
 
-\title{Fluid Dynamics}
+\title{Hydrodynamics}
 \author{Alejandro Campos}
 
 \begin{document}
@@ -30,9 +30,9 @@
 %
 %###############################################################################
 
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Eulerian \& Lagrangian reference frames}
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 There are two types of frameworks used to described properties of fluids: Eulerian and Lagrangian. The Eulerian framework is used to describe fields, for which fluid properties are of the form $\fvec = \fvec(t,\xvec)$, where $t$ and $\xvec$ denote time and position. Lagrangian fields are used to describe moving particles, for which fluid properties are of the form $\fvec^+ = \fvec^+(t,\yvec)$, where $t$ denotes time and $\yvec$ the location of the particle at an initial time. Eulerian and Lagrangian properties are related to each other according to 
 \begin{equation}
 \fvec^+(t,\yvec)=\fvec(t,\xvec^+(t,\yvec)).
@@ -43,9 +43,9 @@ There are two Lagrangian properties that deserve further attention. The position
 \frac{\partial \xvec^+}{\partial t} = \vvec^+.
 \end{equation}
 
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Material derivative}
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 
 We are interested in knowing how $\fvec^+(t,\yvec)$ for a hypothetical particle changes as we move along the particle's path. Applying the chain rule and product rule,
 \begin{align}
@@ -87,9 +87,9 @@ We now introduce a fluid particle with Lagrangian temperature $T^+_u = T^+_u(t,y
 \end{equation}
 Thus, we can interpret the PDE as describing the rate of change of a particle's property as the particle moves through space. This rate of change is given by the RHS term of \cref{eq:sample_pde} evaluated at the particle's position. 
 
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Reynolds transport theorem}
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 Define the Eulerian function $I = I(t,a,b)$ and the Lagrangian function $I^+ = I^+(t)$. These two are given by 
 \begin{equation}
     I(t,a,b) = \int_a^b f(t,x) \, dx
@@ -140,9 +140,9 @@ This is the analogue of \cref{eq:material_derivative_fluid}. The term in parenth
 \end{equation}
 This is the analogue of \cref{eq:material_derivative_definition}.
 
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{The Cauchy matrix}
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 We introduce the Cauchy matrix $c^+_{ij} = c^+_{ij}(t,\yvec)$, which is defined by
 \begin{equation}
     c^+_{ij} = \frac{\partial x^+_i}{\partial y_j}.
@@ -175,9 +175,9 @@ where $G_{ij} = \partial v_i / \partial x_j$. Using the fact that the trace is i
     \frac{\partial J^+}{\partial t} = J^+ \left (\frac{\partial v_k}{\partial x_k} \right )_{\xvec = \xvec^+}.
 \end{equation}
 
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Material line}
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 A material line $l^+_i = l^+_i(t, \yvec)$ is defined as the segment that joins two fluid particles that are infinitesimally close to each other, that is
 \begin{equation}
 \label{eq:material_line}
@@ -278,9 +278,9 @@ Passive scalar & $\rho Y$ \\
 \end{center}
 When each of these densities is multiplied by $\uvec \cdot \nvec$, then the resulting terms are referred to as convective fluxes.
 
-%--------------------------------------------
+%-------------------------------------------------------------------------
 \section{Mass}
-%--------------------------------------------
+%-------------------------------------------------------------------------
 \paragraph{Lagrangian C.V. Approach:}
 Amount of mass contained in a Lagrangian C.V attached to the fluid is conserved.
 \begin{equation}
@@ -322,9 +322,9 @@ Expanding the second term above, the conservation of mass equation can be writte
 \frac{D\rho}{Dt}+\rho \frac{\partial u_i}{\partial x_i} = 0.
 \end{equation}
 
-%--------------------------------------------
+%-------------------------------------------------------------------------
 \section{Momentum}
-%--------------------------------------------
+%-------------------------------------------------------------------------
 \paragraph{Lagrangian C.V. Approach:}
 Change of momentum contained in a Lagrangian C.V. is equal to applied forces.
 \begin{equation}
@@ -416,9 +416,9 @@ If the bulk viscosity is zero we obtain:
 If the flow is incompressible, we obtain:
 \[ \frac{\partial \rho u_i}{\partial t}+\frac{\partial \rho u_i u_j}{\partial x_j} = -\frac{\partial p}{\partial x_i} + \mu\frac{\partial^2 u_i}{\partial x_j \partial x_j} +\rho f_i \] 
 
-%--------------------------------------------
+%-------------------------------------------------------------------------
 \section{Energy}
-%--------------------------------------------
+%-------------------------------------------------------------------------
 
 \paragraph{Lagrangian C.V. Approach:}
 The total energy per unit mass $E$ is defined as $E = e + K$, where $e$ and $K$ are the internal energy per unit mass and the kinetic energy per unit mass, respectively. These are defined as $e = C_vT$ and $K = \frac{1}{2} U_i U_i$, where $C_v$ is the specific heat at constant volume and $T$ the temperature. The total change of $E$ is equal to work done by forces on the C.V and heat transferred to the C.V.
@@ -507,9 +507,10 @@ where $\kappa$ is the thermal conductivity and $T$ the temperature. The thermal 
 \kappa = \frac{\mu C_p}{Pr}
 \end{equation}
 where $Pr$ is the Prandtl number. We note here that the thermal diffusivity $d$ is expressed in terms of the thermal conductivity through the relation $d = \kappa/ \rho C_p$. 
-%--------------------------------------------
+
+%-------------------------------------------------------------------------
 \section{Passive Scalar}
-%--------------------------------------------
+%-------------------------------------------------------------------------
 
 \paragraph{Lagrangian C.V. Approach:}
 Define $Y$ as some passive scalar per unit mass. The total amount of this passive scalar within a Lagrangian C.V. can change due to diffusion through the borders of the C.V., or due to sources and sinks within. Thus
@@ -569,9 +570,9 @@ D = \frac{\mu}{\rho Sc},
 \end{equation}\
 where $Sc$ is the Schmidt number.
 
-%--------------------------------------------
+%-------------------------------------------------------------------------
 \section{Additional relations}
-%--------------------------------------------
+%-------------------------------------------------------------------------
 \begin{table}
 \centering
 \caption{List of variables used in this section.}
@@ -662,9 +663,9 @@ Thus, we can make the following equivalences
 Combining the relationships above we get $U = \frac{1}{\gamma - 1} P$, which is the same as $P = \rho (\gamma -1) e$.
 
 
-%--------------------------------------------
+%-------------------------------------------------------------------------
 \section{Summary of Navier-Stokes equations for ideal gas}
-%--------------------------------------------
+%-------------------------------------------------------------------------
 We summarize the governing equations below.
 
 %---------------------------------
@@ -743,9 +744,9 @@ Transport coefficients:
 %
 %###############################################################################
 
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Vorticity Equation}
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 
 The vorticity vector $\wvec$ is defined as
 \begin{equation}
@@ -802,9 +803,9 @@ For inviscid flows, the vorticity equation becomes
 
 Explain stream tubes, vortex tubes, vortex lines and line vortex (filament). NOTE: A vortex line is not a line vortex!
 
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Kinetic energy equation}
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 The kinetic energy is defined as $K = \frac{1}{2} u_i u_i$. To derive its transport equation, multiply the conservation of momentum \cref{eq:momentum_conservation_tensor} by $u_i$. For example, for the left-hand side, one would proceed as follows
 \begin{align}
 u_i \frac{\partial \rho u_i}{\partial t} + u_i \frac{ \partial \rho u_i u_j}{\partial x_j} = &\frac{1}{2} \left ( u_i \frac{\partial \rho u_i}{\partial t} + u_i \frac{ \partial \rho u_i u_j}{\partial x_j} \right ) + \frac{1}{2} \left ( u_i \frac{\partial \rho u_i}{\partial t} + u_i \frac{ \partial \rho u_i u_j}{\partial x_j} \right ) \nonumber \\
@@ -818,9 +819,9 @@ Thus the transport equation for the TKE is as follows
 \frac{\partial \rho K}{\partial t} + \frac{\partial \rho K u_j}{\partial x_j} = - \frac{\partial u_j p}{\partial x_j} + \frac{\partial u_i t_{ij}}{\partial x_j} + p \frac{\partial u_i}{\partial x_i} - t_{ij} \frac{\partial u_i}{\partial x_j} + \rho f_j u_j .
 \end{equation}
 
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Internal energy equation}
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \label{sec:alternate_forms_internal_energy_equation}
 The internal enegy is defined as $e = C_v T$. To derive its transport equation, we subtract the kinetic energy \cref{eq:kinetic_energy} from the total energy \cref{eq:energy_conservation_tensor} to obtain
 \begin{equation}
@@ -913,13 +914,13 @@ to obtain
 \rho T \frac{ D s}{D t} = -\frac{\partial q_j}{\partial x_j} + t_{ij} \frac{\partial u_i}{\partial x_j}.
 \end{equation}
 
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Kelvin's Theorem}
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Bernoulli's equation}
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 We'll assume the flow is steady, inviscid, and the volume force is conservative. Thus, \cref{eq:diff_cons_momentum} in vector notation becomes
 \begin{equation}
     \uvec \cdot \nabla \uvec = -\frac{1}{\rho} \nabla p + \nabla G.
@@ -965,9 +966,9 @@ The above is equivalent to
     h + \frac{1}{2} \uvec \cdot \uvec -G = \text{constant along a streamline}.
 \end{equation}
 
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Arbitrary Lagrangian Eulerian equations}
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 %---------------------------------
 \subsection{Differential form} 
 %---------------------------------
@@ -1134,9 +1135,9 @@ Velocity potential; Cauchy-Riemman eqs.; Laplace's eq.; Uniform, Source/Sink, Do
 \chapter{Thermodynamics}
 %
 %###############################################################################
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Thermodynamic variables}
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 We will focus on a basic set of thermodynamic variables, namely 
 \begin{align}
     \rho & \quad \text{density} \nonumber \\
@@ -1157,9 +1158,9 @@ and the specific heat at constant pressure is
 \end{equation}
 Their ratio is labelled as $\gamma$.
 
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Equation of state}
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \label{sec:eos}
 According to the state principle only two thermodynamic variables are required to know any of the thermodynamic variables (as long as the chemical composition of the fluid is not changed by mixing or diffusion). Thus, for example, if $P$ and $T$ are the independent variables, then $e = \xi(P,T)$, or if $\rho$ and $s$ are the independent variables, then $e = \chi(\rho,s)$. These two expressions can be equated in the following manner
 \begin{equation}
@@ -1179,9 +1180,9 @@ and a caloric equations of state
 \end{equation}
 Given that $\rho$ and $e$ are provided by the conservation of mass and conservation of energy equations, we now have four equations for the four unknowns $\rho$, $p$, $T$, and $e$.
 
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{The Gibb's equations}
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 %---------------------------------
 \subsection{Definitions and additional relationships}
 %---------------------------------
@@ -1285,9 +1286,9 @@ This equation is identical to that shown on the left of (\ref{eq:material_line_e
 \frac{w^+_{u,i}(t,\yvec)}{\rho^+_u(t,\yvec)} = \frac{w^+_{u,j}(0,\yvec)}{\rho^+_u(0,\yvec)} c^+_{ij}.
 \end{equation}
 
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Ideal gasses}
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 An ideal gas is defined as one whose thermal equation of state, i.e.\@ \cref{eq:thermal_eos}, is
 \begin{equation}
     p = \rho R T.
@@ -1341,9 +1342,9 @@ For perfect gasses, $C_v$ and $C_p$ are constant. Thus, $e(T) - e(T_0) = C_v (T 
 \chapter{Isentropic flow}
 %
 %###############################################################################
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Definitions and governing equations}
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 We begin with the equation for entropy derived in \cref{sec:alternate_forms_internal_energy_equation}, namely, \cref{eq:energy_form_entropy}, which is repeated below
 \begin{equation}
 \tag{\ref{eq:energy_form_entropy}}
@@ -1394,9 +1395,9 @@ and the heat conduction by
 \end{equation}
 then both of the above are zero for an inviscid fluid, and thus the flow is isentropic.
 
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Isentropic stagnation variables}
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 An isentropic stagnation variable is used to describe the value a flow variable would reach as the flow decelerates to a stagnation point in an isentropic fashion.
 
 We re-write \cref{eq:bernoulli_enthalpy}, without a body force, below 
@@ -1410,9 +1411,9 @@ This equation was obtained by assuming steady inviscid flow along a streamline, 
 \end{equation}
 where $h_t$ is the stagnation enthalpy. This definition of stagnation enthalpy holds true even if we relax the assumptions of \cref{eq:bernoulli_enthalpy}, namely inviscid steady-state flow. This is because at any point in the domain, one can always imagine a hypothetical path that a particle follows as it decelerates to stagnation isentropically. At the end of this hypothetical path, the stagnation enthalpy would be computed as in \cref{eq:stagnation_enthalpy}. It is also interesting to note that the isentropic enthalpy reached as the particle isentropically decelerates to stagnation is independent of the path taken by the particle.
 
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Isentropic flow for a perfect gas}
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 If we compare \cref{eq:energy_form_pressure_2} (the pressure evolution equation for a perfect gas) with \cref{eq:energy_form_entropy} (the entropy evolution equation) we can write
 \begin{equation}
         \frac{1}{\gamma - 1} \rho^\gamma \frac{D}{D t} \left ( \frac{p}{\rho^\gamma} \right ) = \rho T \frac{Ds}{Dt}.
@@ -1596,9 +1597,9 @@ which represents the speed of sound. Using \cref{eq:thermo_relationship_for_sos}
 %###############################################################################
 Shock jump relations; Prandtl relation and Shock equations; Oblique shocks, theta-beta curve; Shock wave boundary layer interaction.
 
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Shock waves}
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \label{sec:shock_waves}
 Shock waves are thin regions through which flow variables change drastically. For inviscid flows, these thin regions become actual discontinuities. We will label flow variables before the shock with the underscript 1, and variables after the shock with the underscript 2. We also define the unit vector normal to the shock and pointing towards the outgoing flow as $\nvec$, and the shock velocity as $\bvec$. Then, we can define the relative velocities normal to the shock as 
 \begin{align}
@@ -1832,9 +1833,9 @@ and
 \end{equation}
 
 
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Mach Waves}
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 
 \begin{figure}[ht]
 \centering
@@ -1848,9 +1849,9 @@ Assume a vehicle is moving at a Mach number greater than one. In \cref{fig:mach_
 \end{equation}
 
 
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Contact discontinuities}
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 A contact discontinuity is defined as a surface that separates two fluids of different properties or at different states. A defining condition is that there is no flow of matter across a contact discontinuity, that is, $w_1 = w_2 = 0$. Using this in the integral momentum conservation equation for a thin box bounding the discontinuity, and assuming negligible viscous stresses and heat fluxes, leads to $P_1 = P_2$. However, other flow properties, such as $\rho$, $T$, and $v$ can change across the discontinuity.
 
 %###############################################################################
@@ -1889,9 +1890,9 @@ Prandtl-Meyer (Compressive, Expansive); Shock-Expansion Theory: 2D Airfoil Calcu
 %###############################################################################
 Viscous effects include friction drag, flow separation(leading edge stall, trailing edge stall, thin airfoil stall), and viscous dissipation.
 
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Steady Parallel Flows}
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 
 %---------------------------------
 \subsection{Couette flow} 
@@ -1905,9 +1906,9 @@ Viscous effects include friction drag, flow separation(leading edge stall, trail
 \subsection{Combined Couette and Poiseuille flow}
 %---------------------------------
 
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Unsteady Parallel Flows}
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 
 %---------------------------------
 \subsection{Stokes first problem}
@@ -1917,9 +1918,9 @@ Viscous effects include friction drag, flow separation(leading edge stall, trail
 \subsection{Stokes second problem}
 %---------------------------------
 
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Lubrication Theory and Flow in thin structures}
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 
 %###############################################################################
 %
@@ -1927,9 +1928,9 @@ Viscous effects include friction drag, flow separation(leading edge stall, trail
 %
 %###############################################################################
 
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Introduction}
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 
 %---------------------------------
 \subsection{Scaling of boundary layer thickness}
@@ -1947,9 +1948,9 @@ Viscous effects include friction drag, flow separation(leading edge stall, trail
 \subsection{Iterative procedure for coupled viscous-inviscid solution.}
 %---------------------------------
 
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Integral Methods}
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 
 %---------------------------------
 \subsection{Von Karman Momentum Integral Equation}
@@ -1963,9 +1964,9 @@ Viscous effects include friction drag, flow separation(leading edge stall, trail
 \subsection{Thwaites}
 %---------------------------------
 
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Exact Solutions}
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 
 %---------------------------------
 \subsection{Blasius}
@@ -2065,9 +2066,10 @@ This is re-written as
 %
 %###############################################################################
 
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Basic properties}
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
+
 %--------------------------------------------
 \subsection{Position}
 %--------------------------------------------
@@ -2161,9 +2163,9 @@ which, upon a simple re-arrangement of indices, gives
     \frac{du^+_k}{dt} = Q_{ik} \frac{d\tilde{u}^+_i}{dt} + 2 \dot{Q}_{ik} \tilde{u}^+_i + \epsilon_{kij}\frac{d \Omega_{i}}{dt} x^+_j + \epsilon_{kiq}\Omega_{i} \epsilon_{qpj}\Omega_{p} x^+_j.
 \end{equation}
 
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Unit vectors}
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 Let the orthogonal basis for the inertial reference frame be denoted by $\hat{a}^{(1)}$, $\hat{a}^{(2)}$, and $\hat{a}^{(3)}$, and the orthogonal basis for the rotating reference frame by $\hat{b}^{(1)}$, $\hat{b}^{(2)}$, and $\hat{b}^{(3)}$. We know that the unit vector $\hat{b}^{(i)}$ has components $\tilde{b}_j^{(i)}$ in the rotating reference frame, and components $b_j^{(i)}$ in the inertial reference frame. The vector is the same whether expressed in the rotating or inertial reference frames, that is
 \begin{equation}
 \tilde{b}_k^{(i)} \hat{b}^{(k)} = b_k^{(i)} \hat{a}^{(k)}
@@ -2213,9 +2215,9 @@ Therefore, in vector notation \cref{eq:aine_arot_inter} becomes
 \end{equation}
 where $\vec{a}^+_{ine} = \frac{du^+_k}{dt} \hat{a}^{(k)}$, $\vec{a}^+_{rot} = \frac{d\tilde{u}^+_i}{dt}\hat{b}^{(i)}$, and $\dot{\vec{\Omega}} = \frac{d\Omega_i}{dt} \hat{a}^{(i)}$.
 
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Eulerian variables}
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 We now introduce the Eulerian counterpart to the Lagrangian variables. In the inertial reference frame these are $\rho(t,\xvec)$, $u_i(t,\xvec)$, and $p(t,\xvec)$. They are defined by the following expressions
 \begin{align}
     \rho^+ &= \rho(t,\xvec^+) \\
@@ -2253,9 +2255,9 @@ Since the above holds for any $\xvec^+$, we finally re-write it as
     p(t,\xvec) &= \tilde{p}(t,\Qvec \xvec). \label{eq:eul_pres_trans}
 \end{align}
 
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Rotating Navier-Stokes equations}
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 We first obtain a few set of relationships that will later be used in deriving the rotating Navier-Stokes equations. Taking the derivative of \cref{eq:eul_pres_trans} gives
 \begin{align}
     \frac{\partial p(t,\xvec)}{\partial x_i} &= \frac{ \partial \tilde{p}(t,\Qvec \xvec)}{\partial x_i} \nonumber \\
@@ -2325,9 +2327,9 @@ Finally, since this holds for any $\tilde{\xvec}^+$, we get
 %###############################################################################
 Multi-component fluid flows are governed by the multi-component Navier-Stokes equations. These consist of the traditional Navier-Stokes equations augmented with multiple scalars, where each scalar is the species mass fraction of a component in the system. The species mass fraction of component $\alpha$ is given by $Y_\alpha = m_\alpha/m$, where $m_\alpha = m_\alpha(t,\xvec)$ is the mass of the $\alpha$ component, and $m = m(t,\xvec)$ is the total mass. The species mass fractions are no longer passive scalars. For ideal gases, for example, they affect the value of $R$, which in turns affects the pressure, density, and temperature of the whole mixture. They also affect the enthalpy diffusion, which then alters the heat flux and internal energy. 
 
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Relevant fractions}
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \begin{itemize}
     \item Mole fraction ($X_\alpha$): number of moles $o_\alpha$ of the $\alpha$ species over the total number of moles $o$.
     \begin{equation}
@@ -2357,9 +2359,9 @@ Multi-component fluid flows are governed by the multi-component Navier-Stokes eq
     \end{equation}
 \end{itemize}
 
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Equations of state}
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 The main thermodynamic variables are $\rho_\alpha$, $p_\alpha$, $T_\alpha$, and $e_\alpha$, for a total of $4N$ variables, where $N$ is the number of species.
 
 The thermal equation of state is expressed as
@@ -2457,9 +2459,9 @@ Using the above, we can easily show that
     R = \sum_\alpha Y_\alpha \frac{R_u}{M_\alpha} = \sum_\alpha Y_\alpha R_\alpha = \sum_\alpha Y_\alpha \left ( C_{p,\alpha} - C_{v,\alpha} \right ) = C_p - C_v.
 \end{equation}
 
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Summary of multi-component Navier-Stokes equations for ideal gas}
-%------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 %---------------------------------
 \subsection{Conservation equations}
 %---------------------------------
@@ -2547,9 +2549,9 @@ K = \frac{1}{2} u_i u_i
 %
 %###############################################################################
 In this chapter we describe the governing equations for a system of species in thermochemical nonequilibrium. The total number of molecular species is $nms$ and the total number of species (atomic + molecular) is $ns$.
-%------------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Conservation equations}
-%------------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 The conservation equations that govern the dynamics of a compressible gas in thermochemical nonequilibrium are the following:
 \begin{equation}
 \frac{\partial \rho}{\partial t} + \frac{\partial \rho u_i}{\partial x_i} = 0
@@ -2567,9 +2569,10 @@ The conservation equations that govern the dynamics of a compressible gas in the
 \frac{\partial\rho Y_\alpha}{\partial t}+\frac{\partial \rho Y_\alpha u_i}{\partial x_i} = -\frac{\partial J_{\alpha,i}}{\partial x_i} + w_\alpha \quad \alpha \in [1,ns]
 \end{equation}
 
-%------------------------------------------------------------------------------------------------------------------------------------------ 
+%-------------------------------------------------------------------------
 \section{Transport models}
-%------------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
+
 %------------------------------------------ 
 \subsection{Shear stress, heat fluxes, and diffusive flux}
 %------------------------------------------ 
@@ -2620,9 +2623,10 @@ where $\phi_\alpha$ is computed using
 \end{equation}
 Note that the equation for the Wilke mixing rule given in \cite{palmer2003} differs from the above since it doesn't include the $X_\beta$ shown in \cref{eq:wilke_mixing_phi}. 
 
-%------------------------------------------------------------------------------------------------------------------------------------------ 
+%-------------------------------------------------------------------------
 \section{Equation of state}
-%------------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
+
 %------------------------------------------ 
 \subsection{Perfect gas}
 %------------------------------------------ 
@@ -2640,9 +2644,9 @@ R = \frac{R_u}{M}
 \subsection{Ideal gas}
 %------------------------------------------
 
-%------------------------------------------------------------------------------------------------------------------------------------------ 
+%-------------------------------------------------------------------------
 \section{Thermal nonequilibrium}
-%------------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 
 %------------------------------------------ 
 \subsection{Energy definitions}
@@ -2719,9 +2723,9 @@ C_\alpha = \sqrt{ \frac{8}{\pi} R_\alpha T^{(t,r)}},
 \end{equation}
 
 
-%------------------------------------------------------------------------------------------------------------------------------------------ 
+%-------------------------------------------------------------------------
 \section{Chemical nonequilibrium}
-%------------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 The reaction rate for each species $\alpha$ is given by
 \begin{equation}
 w_\alpha = \sum_{\beta = 1}^{nr} w_{\alpha, \beta},
@@ -2742,9 +2746,9 @@ K^{(f)}_\beta = A_\beta \left ( T^{(c)} \right)^{\eta_\beta} \exp \left ( -\frac
 \end{equation}
 For the above, $A_\beta$ is the pre-exponential factor, $\eta_\beta$ is the temperature exponent, and $\theta_\beta$ is the activation temperature---these are obtained from tables for each reaction $\beta$, and can be found, for example, in \cite{park1993}. $T^{(c)}$ is the controlling temperature, which depends on the type of reaction under consideration. For example, for dissociation reactions $T^{(c)}$ is typically of the form $T^{(c)} = \sqrt{ T^{(t,r)} T^{(v)}}$, whereas for exchange reactions $T^{(c)} = T^{(t,r)}$. The backward rate constant $K^{(b)}_\beta$ is often computed from the forward rate constant using $K^{(b)}_\beta = K^{(f)}_\beta / K_{eq}$. Multiple forms for $K_{eq}$ are available, see \cite{poinsot2012,knisely2018}.
 
-%------------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Additional relations}
-%------------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \begin{equation}
     S^*_{ij} = \frac{1}{2} \left ( \frac{\partial u_i}{\partial x_j} + \frac{\partial u_j}{\partial x_i} \right ) - \frac{1}{3} \frac{\partial u_k}{\partial x_k} \delta_{ij}
 \end{equation}
@@ -2931,7 +2935,7 @@ We then set $\gamma = 1.4$, $R = \frac{1}{\gamma}$ and compute $\kappa$ from $Pr
 %###############################################################################
 \begin{equation}
     \uvec = \uvec^{(s)} + \uvec^{(d)} + \uvec^{(h)}
-    \end{equation}
+\end{equation}
     
     We require
     \begin{align}

@@ -9,7 +9,7 @@
 \newcommand{\qvecdot}{\dot{\qvec}}
 \newcommand{\qdot}{\dot{q}}
 
-\title{Governing Equations}
+\title{Intro}
 \author{Alejandro Campos}
 
 \begin{document}
@@ -33,11 +33,13 @@
         \hline
         Time-dependent canonical coordinates & $\tilde{\qvec}(t)$ & $ \tilde{\pvec}(t)$ \\
      \end{tabular}
-    \end{table}
+\end{table}
     
-    \section{Lagrangian mechanics}
+%-------------------------------------------------------------------------
+\section{Lagrangian mechanics}
+%-------------------------------------------------------------------------
     
-    \begin{itemize}
+\begin{itemize}
     \item Define the position $\xvec = \xvec(t)$ and velocity $\vvec = \vvec(t)$ of a particle. 
     
     \item Define the Lagrangian as $L = L(\qvec, \qvecdot,t)$, where $\qvec$ and $\qvecdot$ are the generalized position and generalized velocity, respectively. 
@@ -76,10 +78,12 @@
     m \frac{d\vvec}{dt} = e \left ( \Evec + \vvec \times \Bvec \right)_{\qvec = \xvec},
     \end{equation}
     where $\Evec = \Evec(\qvec,t)$ and $\Bvec = \Bvec(\qvec,t)$.
-    \end{itemize}
+\end{itemize}
     
-    \section{Hamiltonian mechanics}
-    \begin{itemize}
+%-------------------------------------------------------------------------
+\section{Hamiltonian mechanics}
+%-------------------------------------------------------------------------
+\begin{itemize}
     \item Define the Hamiltonian as $H = H(\qvec, \pvec, t)$, where $\qvec$ and $\pvec$ are the canonical position and momentum. For all purposes here, the canonical position is the same as the generalized position.
     
     \item The Hamiltonian is obtained from the Lagrangian using
@@ -142,11 +146,11 @@
     m \frac{d \vvec}{dt} = e \left ( \Evec + \vvec \times \Bvec \right)_{\qvec = \xvec}.
     \end{equation}
     
-    \end{itemize}
+\end{itemize}
 
-%-------------------------------------------------------------------------------
+%----------------------------------------------------------------------------------------------------------------------
 \chapter{Kinetic description}
-%-------------------------------------------------------------------------------
+%----------------------------------------------------------------------------------------------------------------------
 We denote the distribution function for a species $\alpha$ as $f_\alpha = f_\alpha(\rvec, \vvec, t)$, where $\rvec$ and $\vvec$ are the sample space variables for position and velocity. Note that the distribution function is appropriately normalized such that
 \begin{equation}
 \int f_\alpha \, d\rvec d\vvec = N_\alpha,
@@ -212,9 +216,9 @@ If we express the collision term in the usual way, that is $C_\alpha = \sum_\bet
 
 \end{enumerate}
 
-%-------------------------------------------------------------------------------
+%----------------------------------------------------------------------------------------------------------------------
 \chapter{Fluid description}
-%-------------------------------------------------------------------------------
+%----------------------------------------------------------------------------------------------------------------------
 We now define the particle density $n_\alpha = n_\alpha(\rvec,t)$, the fluid velocity $\uvec_\alpha = \uvec_\alpha(\rvec,t)$ and the fluid energy per unit mass $E_\alpha = E_\alpha(\rvec,t)$ as follows
 \begin{align}
 n_\alpha &= \int f_\alpha \, d\vvec \\
@@ -227,9 +231,9 @@ Their evolution equations are obtained by taking the appropriate moments of the 
 \frac{\partial f_\alpha}{\partial t} + \nabla \cdot (\vvec f_\alpha) + \nabla_v \cdot \left [ \frac{Z_\alpha e}{m_\alpha} ( \Evec + \vvec \times \Bvec ) f_\alpha \right ] = C_\alpha + S_\alpha
 \end{equation}
 
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Mass}
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 Integrating \cref{eq:boltz_mod} over all $\vvec$ we obtain
 %\begin{empheq}[box=\widefbox]{equation}
 \begin{equation}
@@ -242,9 +246,9 @@ where
 \end{equation}
 is an external source of mass.
 
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Momentum}
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 Multiplying \cref{eq:boltz_mod} by $\vvec$ and then integrating over all $\vvec$ leads to
 \begin{multline}
 \label{eq:mom_derv_1}
@@ -311,9 +315,9 @@ Thus, conservation of momentum becomes
 \frac{\partial m_\alpha n_\alpha \uvec_\alpha}{\partial t} + \nabla \cdot \left ( m_\alpha n_\alpha \uvec_\alpha \uvec_\alpha \right) - Z_\alpha e n_\alpha ( \Evec + \uvec_\alpha \times \Bvec ) = - \nabla p_\alpha + \nabla \cdot \tvec_\alpha + \Rvec_\alpha + \hat{\Mvec}_\alpha.
 \end{equation}
 
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Energy}
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 Multiplying \cref{eq:boltz_mod} by $\frac{1}{2} v^2$ and then integrating over all $\vvec$ leads to
 \begin{multline}
 \label{eq:energy_derv_1}
@@ -385,9 +389,9 @@ m_\alpha n_\alpha E_\alpha & = \int \frac{1}{2} m_\alpha (\vvec \cdot \vvec) f_\
 \end{align}
 where $K_\alpha = \frac{1}{2} \uvec_\alpha \cdot \uvec_\alpha$ is the kinetic energy of species $\alpha$.
 
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Kinetic and Internal Energies}
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 The equation for the kinetic energy is obtained by dotting \cref{eq:mom_derv_6} with $\uvec_\alpha$. For this, we first show that
 \begin{align}
     \uvec_\alpha \cdot &\left [ \frac{\partial m_\alpha n_\alpha \uvec_\alpha}{\partial t} + \nabla \cdot \left ( m_\alpha n_\alpha \uvec_\alpha \uvec_\alpha \right) \right ] \\
@@ -407,9 +411,9 @@ Subtracting the above equation from \cref{eq:energy_derv_6} leads to
 \frac{\partial}{\partial t} \left ( \frac{3}{2} p_\alpha \right ) + \nabla \cdot \left ( \frac{3}{2} p_\alpha \uvec_\alpha \right ) = -p_\alpha \nabla \cdot \uvec_\alpha + \tvec_\alpha : \nabla \uvec_\alpha - \nabla \cdot \qvec_\alpha + Q_{\alpha} + \hat{Q}_\alpha - \uvec_\alpha \cdot \hat{\Mvec}_\alpha + m_\alpha K_\alpha \hat{S}_\alpha .
 \end{equation}
 
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Summary}
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 To summarize, we have,
 \begin{itemize}
     \item Particle density
@@ -444,6 +448,218 @@ To summarize, we have,
     \frac{\partial}{\partial t} \left ( \frac{3}{2} p_\alpha \right ) + \nabla \cdot \left ( \frac{3}{2} p_\alpha \uvec_\alpha \right ) = -p_\alpha \nabla \cdot \uvec_\alpha + \tvec_\alpha : \nabla \uvec_\alpha - \nabla \cdot \qvec_\alpha + Q_{\alpha} + \hat{Q}_\alpha - \uvec_\alpha \cdot \hat{\Mvec}_\alpha + m_\alpha K_\alpha \hat{S}_\alpha .  
 \end{equation}
 
+\end{itemize}
+
+%----------------------------------------------------------------------------------------------------------------------
+\chapter{Additional topics}
+%----------------------------------------------------------------------------------------------------------------------
+
+%-------------------------------------------------------------------------
+\section{Debye length}
+%-------------------------------------------------------------------------
+
+%-------------------------------------------------------------------------
+\section{Plasma frequency}
+%-------------------------------------------------------------------------
+
+%-------------------------------------------------------------------------
+\section{Cross section}
+%-------------------------------------------------------------------------
+that two particles traveling towards each other will undergo an interaction. Types of interactions include Coulomb collisions between two charged particles, fusion reactions between ions, and photon-matter phenomena such as Compton scattering, the photoelectric effect, and pair production.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=10cm]{../../images/cross_section.pdf}
+    \caption{Interaction of incident and target particles.}
+    \label{fig:cross_many_particles}
+\end{figure}
+To define the cross section, we'll consider various incident particles heading towards a stationary set of target particles (see \cref{fig:cross_many_particles}). The number of incident particles is denoted as $I$, and the areal density of target particles is denoted by $n_A$. Not all of the incident particles will interact with the target particles, some will instead continue to travel in a uniform trajectory. The number of incident particles that do interact with the target particles is labeled as $N$. The cross section $\sigma$ is then a constant of proportionality defined by the following equation
+\begin{equation}
+    \label{eq:cross_def}
+    N = \sigma I n_A.
+\end{equation}
+
+%-------------------------------------------------------------------------
+\section{Differential cross section}
+%-------------------------------------------------------------------------
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=10cm]{../../images/scattering.pdf}
+    \caption{Depiction of particle scattering.}
+    \label{fig:scattering}
+\end{figure}
+
+Consider the scattering of two particles: an incident and a target particle. If we fix the reference frame to follow the target particle, then the scattering can be depicted as shown in \cref{fig:scattering}. The displacement parameter is labelled as $b$, and the scattering angle as $\theta_s$. For three dimensional scattering, the encounter is as shown in \cref{fig:scattering_3d}. Not that in that figure the incident particle starts within the $x-z$ plane, and after scattering the particle is confined to a plane that is tilted an angle $\phi_s$ from the $x-z$ plane.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=10cm]{../../images/scattering_3d.pdf}
+    \caption{Depiction of particle scattering in 3D.}
+    \label{fig:scattering_3d}
+\end{figure}
+
+From the entire set of incident particles $N$ that interact with the target particles, one can define an infinitesimal subset $N_{\theta,\phi} d\Omega$ as the number of particles scattered into an infinitesimal solid angle $d\Omega = \sin \theta_s d\theta_s d\phi_s$, as shown in \cref{fig:scattering_3d}. We note that $N_{\theta,\phi} = N_{\theta,\phi} (\theta_s, \phi_s)$. The subset of particles $N_{\theta, \phi} d\Omega$ is now given by
+\begin{equation}
+    \label{eq:cross_def_diff}
+    N_{\theta, \phi} d\Omega = \left ( \frac{d\sigma_{\theta,\phi}}{d\Omega} d\Omega \right ) I n_A.
+\end{equation}
+In the above, 
+\begin{equation}
+    \frac{d\sigma_{\theta,\phi}}{d\Omega} = \frac{d\sigma_{\theta,\phi}}{d\Omega}(\theta_s,\phi_s)
+\end{equation}
+is the differential cross section. It is best to not think of it as a derivative (what does a derivative with respect to solid angle mean?) and instead to simply think of it as a function that depends on $\theta_s$ and $\phi_s$. Integrating over all $\theta_s$ and $\phi_s$, i.e.
+\begin{equation}
+    \int_{\theta_s = 0}^\pi \int_{\phi_s = 0}^{2\pi} N_{\theta, \phi} d\Omega = \int_{\theta_s = 0}^\pi \int_{\phi_s = 0}^{2\pi} \frac{d\sigma_{\theta,\phi}}{d\Omega}  d\Omega I n_A
+\end{equation}
+gives \cref{eq:cross_def}.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=10cm]{../../images/scattering_axi.pdf}
+    \caption{Depiction of particle scattering in for axisymmetric interactions.}
+    \label{fig:scattering_axi}
+\end{figure}
+For various cases the scattering is axisymmetric, that is, it is independent of $\phi_s$. Thus
+\begin{equation}
+    N_{\theta, \phi} \to N_\theta \qquad \frac{d\sigma_{\theta,\phi}}{d\Omega} \to \frac{d\sigma_\theta}{d\Omega},
+\end{equation}
+where 
+\begin{equation}
+    N_\theta = N_\theta (\theta_s),
+\end{equation}
+and
+\begin{equation}
+    \frac{d\sigma_\theta}{d\Omega} = \frac{d\sigma_\theta}{d\Omega} (\theta_s).
+\end{equation}
+Integrating \cref{eq:cross_def_diff} from $\phi_s = 0$ to $\phi_s = 2\pi$ gives
+\begin{equation}
+    \label{eq:cross_def_diff_axi}
+    N_\theta d\Omega_\theta = \frac{d\sigma_\theta}{d\Omega} d\Omega_\theta I n_A,
+\end{equation}
+where $d \Omega_\theta = 2\pi \sin \theta_s d\theta_s$. $N_\theta d\Omega_\theta$ thus represents the number of particles that are scattered into the infinitesimal band $d\Omega_\theta$ on a sphere, where $d\Omega_\theta$ is defined by scattering angle $\theta_s$ (see \cref{fig:scattering_axi}). We will note that there is a one-to-one correspondence between the impact parameter $b$ and the scattering angle $\theta_s$, that is, $b = b(\theta_s)$. Thus, any incident particle scattered out through the infinitesimal band $d\Omega_\theta$ would have approached the target-particle through the infinitesimal ring $dA_\theta$ that corresponds to $d\Omega_\theta$. Since there are many target particles, there are many $dA_\theta$'s that correspond to the same $d\Omega_\theta$. Thus, the total number of particles scattered through $d\Omega_\theta$ is given by all the incident particles that cross through the $dA_\theta$'s of all the target particles.
+
+The number of incident particles crossing all the infinitesimal rings $dA_\theta$ is equal to the total number of incident particles $I$ times the probability $P$ that a single incident particle will cross one of those rings. Thus, we can write
+\begin{equation*}
+    N_\theta d\Omega_\theta = I P.
+\end{equation*}
+The probability that an incident particle will cross one of those rings is simply the ratio of the surface area covered by all the rings in a section of the target material to the total area of that section. The surface area covered by all the rings in a section of area $S$ is given by $(n_A S) dA_\theta$. Thus, $P = ndA_\theta$ and 
+\begin{equation*}
+    N_\theta d\Omega_\theta = I n_A dA_\theta.
+\end{equation*}
+We now introduce the differential 
+\begin{equation}
+    \label{eq:cross_impact_differential}
+    db = \frac{db}{d\theta_s} d\theta_s.
+\end{equation}
+We note that by definition $d\theta_s$ is positive but $db$ can be either positive or negative depending on the sign of $db/d\theta_s$. The infinitesimal area $dA_\theta$ is then given by 
+\begin{equation}
+    \label{eq:cross_impact_area}
+    dA_\theta= 2\pi b |db| = 2 \pi b \left | \frac{db}{d\theta_s} \right | d \theta_s.
+\end{equation}
+Thus, 
+\begin{equation*}
+    N_\theta d\Omega_\theta = n_A I 2 \pi b \left | \frac{db}{d\theta_s} \right | d \theta_s.
+\end{equation*}
+Using \cref{eq:cross_def_diff_axi} in the above, we get
+\begin{equation*}
+    \frac{d\sigma_\theta}{d\Omega} d\Omega_\theta I n_A = I n_A 2 \pi b \left | \frac{db}{d\theta_s} \right | d \theta_s, 
+\end{equation*}
+or 
+\begin{equation}
+    \label{eq:cross_diff_impact_axi}
+    \frac{d\sigma_\theta}{d\Omega} = \frac{b}{\sin \theta_s} \left | \frac{db}{d\theta_s} \right |.
+\end{equation}
+
+%-------------------------------------------------------------------------
+\section{Mean free path \& collision frequency}
+%-------------------------------------------------------------------------
+The mean free path can be expressed in terms of the cross section as
+\begin{equation}
+    \lambda_m = \frac{1}{n_1 \sigma}.
+\end{equation}
+Given the particle's speed $v$, on can also define the collision time as follows
+\begin{equation}
+    \tau_m = \frac{\lambda_m}{v} = \frac{1}{n_1 \sigma v}.
+\end{equation}
+Finally, the collision frequency is simply the inverse of the collision time, that is
+\begin{equation}
+    \nu_{m} = \frac{1}{\tau_m} = n_1 \sigma v.
+\end{equation}
+
+%-------------------------------------------------------------------------
+\section{The coupling parameter}
+%-------------------------------------------------------------------------
+
+Coulomb interactions are those which occur when two charge particles head towards each other. We can define two types of Coulomb interactions: strong and weak. Strong Coulomb interactions are those for which the particle's Coulomb potential energy is larger than its kinetic energy, and viceversa for weak Coulomb interactions. Thus, we can also define two types of plasma regimes:
+\begin{itemize}
+    \item Strongly-coupled plasmas: plasmas where the Coulomb interactions are mostly strong and thus drive the dynamics of its evolution. Coulomb interactions tend to be strong when the inter-particle distances are small, and thus this regime would be dominated by \textit{short-range} interactions. These plasmas are also described as exhibiting \textit{collisional} behavior, since a strong Coulomb interaction essentially means a collision has occurred.
+    \item Weakly-coupled plasmas: plasmas where the Coulomb interactions are mostly weak, and as a result do not drive the dynamics of its evolution. The plasma dynamics are instead driven by \textit{long-range} effects caused by smooth electromagnetic fields that result from integrating a large number of particles. These plasmas are also described as exhibiting \textit{collective} behavior, since the long-range electromagnetic fields follow from the collective integration of many particles.
+\end{itemize}
+
+We describe an approximate Coulomb potential energy for particles in a plasma as
+\begin{equation}
+    U =  \frac{q_\alpha^2}{4 \pi \epsilon_0 a_\alpha}.
+\end{equation}
+The impact parameter that has been used above is $a_\alpha$, the sphere radius. This provides a decent measure on the average spacing between particles in a plasma. Since the volume of a single particle is $1/n_\alpha$, and if we assume that this volume is given by $4/3 \pi a_\alpha^3$, then equating these two gives the expression for the sphere radius
+\begin{equation}
+    a_\alpha = \left ( \frac{3}{4 \pi n_\alpha} \right )^{1/3}.
+\end{equation}
+The thermal velocity of a particle is given by
+\begin{equation}
+    v_{T_\alpha} = \sqrt{\frac{k_B T_\alpha}{m_\alpha}}
+\end{equation}
+A measure of the kinetic energy of a particle is given in terms of the thermal velocity as shown below
+\begin{equation}
+    K = m_\alpha v_{T_\alpha}^2 = k_B T_\alpha
+\end{equation}
+The ratio of the particle's Coulomb potential energy and its kinetic energy is referred to as the coupling parameter $\Gamma_\alpha$. That is 
+\begin{equation}
+    \Gamma_\alpha = \frac{q_\alpha^2}{4 \pi \epsilon_0 a_\alpha k_B T_\alpha}.
+\end{equation}
+$\Gamma_\alpha > 1$ denotes a strongly coupled plasma, and $\Gamma_\alpha < 1$ denotes a weakly coupled plasma. 
+
+%-------------------------------------------------------------------------
+\section{The plasma parameter}
+%-------------------------------------------------------------------------
+The standard plasma parameter $\Lambda_\alpha$ is defined as
+\begin{equation}
+    \Lambda_\alpha = \frac{4}{3} \pi \lambda_{D\alpha}^3 n_\alpha.
+\end{equation}
+
+There is a one to one relationship between the coupling parameter and the standard plasma parameter. Simple algebra shows that 
+\begin{equation}
+    \Gamma_\alpha = (1/3) \Lambda_\alpha^{-2/3}.
+\end{equation}
+Thus, the coupling and plasma parameters are inversely proportional to each other. $\Lambda_\alpha < 1$ implies strongly-coupled plasmas, and $\Lambda_\alpha > 1$ weakly-coupled plasmas. Since $\Lambda_\alpha$ represents the number of particles per Debye sphere, it is interesting to see that a large number of particles within such a sphere is needed to be in the weakly-coupled-plasma regime. However, this does not correspond to a plasma with large density, in fact, it corresponds to the opposite. The explicit $n_\alpha$ term in the definition $\Lambda_\alpha = (4/3) \pi \lambda^3_{D\alpha} n_\alpha$ is dominated by the $n_\alpha$ in the denominator of $\lambda_{D\alpha}$. In other words, low plasma densities lead to large Debye spheres, which in turn leads to many particles per Debye sphere, and hence a weakly-coupled plasma.
+
+%-------------------------------------------------------------------------
+\section{Electron degeneracy}
+%-------------------------------------------------------------------------
+
+\begin{itemize}
+    \item DeBroglie wavelength
+    \begin{equation}
+        \lambda_{B\alpha} = \dfrac{h}{\sqrt{2 \pi} m_\alpha v_{T\alpha}}
+    \end{equation}
+    \item Quantum plasma parameter
+    \begin{equation}
+        \chi_\alpha = \frac{4}{3} \pi \lambda_{B\alpha}^3 n_\alpha
+    \end{equation}
+    
+    \item Fermi energy:
+    \begin{equation}
+        E_{f\alpha} = \frac{\hbar^2}{2m_\alpha} \left ( 3 \pi^2 n_\alpha \right)^{2/3}
+    \end{equation}
+
+    \item The Fermi energy can be used to define the Fermi temperature $T_{f\alpha}$, Fermi velocity $v_{f\alpha}$, Fermi momentum $p_{f\alpha}$, and Fermi wavevector $k_{f\alpha}$
+    \begin{equation}
+        E_{f\alpha} = k_B T_{f\alpha} = \frac{1}{2} m_\alpha v_{f\alpha}^2  = \frac{p_{f\alpha}^2}{2m_\alpha} = \frac{\left ( \hbar k_{f\alpha} \right ) ^2}{2m_\alpha}
+    \end{equation}
+
+    \item Degeneracy parameter:
+    \begin{equation}
+        \Theta_\alpha = \frac{k_B T_\alpha}{E_{f\alpha}} = \left( \frac{2^{10} \pi}{3^4} \right)^{1/3} \chi_\alpha^{-2/3}
+    \end{equation}
 \end{itemize}
 
 \bibliographystyle{plainnat}

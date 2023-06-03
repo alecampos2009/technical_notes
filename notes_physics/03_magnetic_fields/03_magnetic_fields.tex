@@ -4,7 +4,7 @@
 \usepackage{"../../info/packages"}
 \usepackage{"../../info/nomenclature"}
 
-\title{Magnetized Flows and Magnetohydrodynamics}
+\title{Magnetic fields}
 \author{Alejandro Campos}
 
 \begin{document}
@@ -59,9 +59,9 @@ Thus, the particle position is finally expressed as
 
 
  
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Uniform $\Evec$ and $\Bvec$ fields}
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 
 %--------------------------------------------
 \subsection{Only $\Evec$ field}
@@ -156,9 +156,10 @@ Thus, $v^{(g)}_x = E_y/B$ and $v^{(g)}_y = -E_x/B$, which in vector notation can
     \vvec^{(g)}_E = \frac{\Evec \times \Bvec}{B^2}.
 \end{equation}
 
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Non-uniform $\Bvec$ field}
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
+
 %--------------------------------------------
 \subsection{Change in magnitude along perpendicular directions}
 %--------------------------------------------
@@ -499,13 +500,13 @@ Thus, the grab-B drift can be written as
     \vvec^{(g)}_{\nabla B} = \pm \frac{v^2_\perp}{2 w_c} \frac{(\bvec \cdot \nabla \bvec) \times \Bvec}{B}.
 \end{equation}
 
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Non-uniform $\Evec$ field}
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Time-varying $\Evec$ field}
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 Consider the scenario used in \cref{sec:E_and_B_field}, but with a time varying electric field. The equations of motion are
 \begin{subequations}
 \label{eq:time_var_E_temp1}
@@ -556,9 +557,9 @@ and thus $v_x^{(g,2)} = (m/eB^2)dE_x(t)/dt$ and $v_y^{(g,2)} = (m/eB^2) dE_y(t)/
 \end{equation}
 We note that, by looking at the solutions for $v_x^{(g,1)}$ and $v_y^{(g,1)}$, the assumption in \cref{eq:time_var_E_temp3} is equivalent to stating that the electric field changes slowly. 
 
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Time-varying $\Bvec$ field}
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 Let's assume the magnetic field points in the $z$ direction again. Using Faraday's law, we have
 \begin{equation}
     \left(\frac{\partial E_z}{\partial q_y} - \frac{\partial E_y}{\partial q_z} \right) \evec_x - \left(\frac{\partial E_z}{\partial q_x} - \frac{\partial E_x}{\partial q_z} \right) \evec_y + \left(\frac{\partial E_y}{\partial q_x} - \frac{\partial E_x}{\partial q_y} \right) \evec_z = -\frac{\partial B}{\partial t} \evec_z.
@@ -668,9 +669,9 @@ where top sign is for electrons and bottom sign is for ions, and it is assumed t
 %----------------------------------------------------------------------------------------------------------------------
 \chapter{Magnetohydrodynamics}
 %----------------------------------------------------------------------------------------------------------------------
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Two-fluid equations}
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \label{sec:two_fluid_equations}
 The starting point are the multi-fluid conservation laws and the Maxwell equations. We assume there are two species: electrons and ions. Additionally, we assume no sources. Thus, the starting governing equations are
 \begin{equation}
@@ -726,9 +727,9 @@ The starting point are the multi-fluid conservation laws and the Maxwell equatio
 \end{equation}
 These equations correspond to eq.\@ (2.22) in Freidberg's Ideal MHD book, but for ions that are not singly charged. For the sections below, however, we'll assume singly-charged ions.
 
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Low-frequency, long-wavelength, asymptotic expansions}
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 Two assumptions:
 \begin{enumerate}
 \item Transform full Maxwell's equations to low-frequency pre-Maxwell's equations. Formally achieved with $\epsilon_0 \to 0$. This has two consequences:
@@ -759,9 +760,9 @@ n_i - n_e = 0
 \nabla \times \Bvec = \mu_0 \Jvec 
 \end{equation}
 
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Single-fluid equations}
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 We define single-fluid variables as
 \begin{equation}
     \rho = m_i n_i + m_e n_e = m_i n
@@ -842,9 +843,9 @@ and the electron energy equation becomes
     \frac{\partial}{\partial t} \left ( \frac{p_e}{\rho^\gamma} \right) + \vvec \cdot \nabla \left (\frac{p_e}{\rho^\gamma} \right) = \frac{\gamma - 1}{\rho^\gamma} \left[ \tvec_e : \nabla \left (\vvec -\frac{\Jvec}{e n} \right) - \nabla \cdot \qvec_e + Q_e \right] + \frac{1}{e n} \Jvec \cdot \nabla \left ( \frac{ p_e}{\rho^\gamma} \right).
 \end{equation}
 
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Resistive MHD}
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 The electron collision term is modeled as
 \begin{equation}
     \Rvec_e = m_e n_e \nu_{ei} \left ( \uvec_i - \uvec_e \right ),
@@ -873,9 +874,9 @@ where
 \end{equation}
 is the resistivity.
 
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 \section{Ideal MHD}
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------
 The ideal MHD equations are obtained by neglecting the right-hand sides of \cref{eq:generalized_MHD_vel,eq:generalized_MHD_ohms,eq:generalized_MHD_pi,eq:generalized_MHD_pe}. Summing the two pressure equations, the resulting equations would be
 \begin{equation}
     \frac{\partial \rho}{\partial t} + \nabla \cdot (\rho \vvec) = 0,
