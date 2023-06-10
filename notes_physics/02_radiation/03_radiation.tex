@@ -12,7 +12,133 @@
 \tableofcontents
 
 %----------------------------------------------------------------------------------------------------------------------
+\chapter{Introduction}
+%----------------------------------------------------------------------------------------------------------------------
+
+%-------------------------------------------------------------------------
+\section{Definitions}
+%-------------------------------------------------------------------------
+Consider an infinitesimal amount of energy $dE$ which is the energy at location $\xvec$ and time $t$ with frequencies in the infinitesimal range $d\nu$ about the frequency $\nu$ and flowing in the direction of the solid angle $d\Omegavec$ about the vector $\Omegavec$ and passing through an infinitesimal area $d\Avec$ orthogonal to $\Omegavec$. We express this energy in terms of a distribution $I_\nu = I_\nu(\xvec, t, \nu, \Omegavec)$ as follows
+\begin{equation}
+    dE = I_\nu dt d\nu d\Omegavec d\Avec.
+\end{equation}
+If we want to consider the case when the infinitesimal area is not orthogonal to $\Omegavec$ and is instead defined by the unit normal $\Avec$, then the above is written as
+\begin{equation}
+    dE = I_\nu (\Omegavec \cdot \Avec) dt d\nu d\Omegavec d\Avec.
+\end{equation}
+$I_\nu$ is referred to as the spectral radiance, or spectral specific intensity. Any quantity dependent on $\nu$ can be integrated over all frequencies to obtain a total value, as shown below
+\begin{equation}
+    I = \int_0^\infty I_\nu \, d\nu.
+\end{equation}
+In the above, $I = I(\xvec, t, \Omegavec)$ is the radiance, or specific intensity. $I$ and $I_\nu$ can be used to define various additional quantities, as shown in \cref{tab:definitions}.
+
+\setlength{\cellspacetoplimit}{3pt}
+\setlength{\cellspacebottomlimit}{3pt}
+
+\begin{table}
+    \centering
+    \begin{tabular} { | Sc | Sc | Sc | Sc | Sc |}
+        \hline
+
+        & \multicolumn{2}{c|}{total} & \multicolumn{2}{c|}{spectral} \\
+
+        \hline
+
+        & definition & units & definition & units \\ 
+
+        \hline 
+         
+        \begin{tabular}{c} Radiance / \\ Specific intensity \end{tabular} 
+        & $ I $ 
+        & $ \left [ \frac{\text{J}}{\text{s$\cdot$m\textsuperscript{2}$\cdot$sr}} \right ] $ 
+        & $I_\nu $ 
+        & $ \left [ \frac{\text{J}}{\text{s$\cdot$m\textsuperscript{2}$\cdot$sr$\cdot$Hz}} \right ] $ \\ 
+
+        \hline
+
+        0\textsuperscript{th} moment 
+        & $ \displaystyle J = \frac{1}{4\pi} \int_{4\pi} I \, d\Omegavec $ 
+        & $ \left [ \frac{\text{J}}{\text{s$\cdot$m\textsuperscript{2}}} \right ] $ 
+        & $ \displaystyle J_\nu = \frac{1}{4\pi} \int_{4\pi} I_\nu \, d\Omegavec $ 
+        & $ \left [ \frac{\text{J}}{\text{s$\cdot$m\textsuperscript{2}$\cdot$Hz}} \right ]$ \\
+
+        \hline
+
+        1\textsuperscript{st} moment 
+        & $\begin{aligned} \Hvec &= \frac{1}{4\pi} \int_{4\pi} I \Omegavec \, d\Omegavec \\ &= \frac{\Fvec}{4\pi} \end{aligned}$ 
+        & $ \left [ \frac{\text{J}}{\text{s$\cdot$m\textsuperscript{2}}} \right ] $ 
+        & $ \begin{aligned} \Hvec_\nu &= \frac{1}{4\pi} \int_{4\pi} I_\nu \Omegavec \, d\Omegavec \\ &= \frac{\Fvec_\nu}{4\pi} \end{aligned}$ 
+        & $ \left [ \frac{\text{J}}{\text{s$\cdot$m\textsuperscript{2}$\cdot$Hz}} \right ]$ \\
+
+        \hline
+
+        2\textsuperscript{nd} moment 
+        & $ \begin{aligned} \Kvec &= \frac{1}{4\pi} \int_{4\pi} I \Omegavec \Omegavec \, d\Omegavec \\ &= \frac{c}{4\pi} \Pvec \end{aligned} $ 
+        & $ \left [ \frac{\text{J}}{\text{s$\cdot$m\textsuperscript{2}}} \right ] $ 
+        & $ \begin{aligned} \Kvec_\nu &= \frac{1}{4\pi} \int_{4\pi} I_\nu \Omegavec \Omegavec \, d\Omegavec \\ &= \frac{c}{4\pi} \Pvec_\nu \end{aligned} $ 
+        & $ \left [ \frac{\text{J}}{\text{s$\cdot$m\textsuperscript{2}$\cdot$Hz}} \right ]$ \\
+
+        \hline
+        
+        \begin{tabular}{c} Radiant \\ energy \\ density \end{tabular} 
+        & $ \begin{aligned} E &= \frac{1}{c} \int_{4\pi} I \, d\Omegavec \\ &= \frac{4 \pi}{c} J \end{aligned} $ 
+        & $ \left [ \frac{\text{J}}{\text{ m\textsuperscript{3}}} \right ]$ 
+        & $ \begin{aligned} E_\nu &= \frac{1}{c} \int_{4 \pi} I_\nu \, d\Omegavec \\ &= \frac{4 \pi}{c} J_\nu \end{aligned} $ 
+        & $ \left [ \frac{\text{J}}{\text{m\textsuperscript{3}$\cdot$Hz}} \right ]$ \\
+
+        \hline
+    \end{tabular}
+    \caption{Radiation quantities. In the above $\Fvec$/$\Fvec_\nu$ is the radiation flux and $\Pvec$/$\Pvec_\nu$ the radiation pressure tensor.}
+    \label{tab:definitions}
+\end{table}
+
+If we want to consider ...
+\begin{equation}
+    S_\nu = \int_{\phi=0}^{2\pi} \int_{\theta=0}^{\pi/2} I_\nu (\Omegavec \cdot \Avec) \, d\Omegavec.
+\end{equation}
+
+%----------------------------------------------------------------------------------------------------------------------
 \chapter{Thermal radiation}
+%----------------------------------------------------------------------------------------------------------------------
+For blackbody radiation we have
+\begin{equation}
+    I_\nu = \frac{2h\nu^3}{c^2} \frac{1}{\exp(h\nu/kT) - 1}.
+\end{equation}
+Consider the identity 
+\begin{equation}
+    \int_0^\infty \frac{x^3}{\exp(yx) - 1} \, dx = \frac{1}{15} \left ( \frac{\pi}{y} \right )^4.
+\end{equation}
+Using the above to integrate over all frequencies, we get
+\begin{equation}
+    I = \frac{2h}{c^2} \frac{1}{15} \left ( \frac{ \pi kT}{h} \right )^4.
+\end{equation}
+Defining the Stefan-Boltzmann constant as
+\begin{equation}
+    \sigma = \frac{2 \pi^5 k^4}{15 c^2 h^3},
+\end{equation}
+we have
+\begin{equation}
+    I = \frac{1}{\pi} \sigma T^4.
+\end{equation}
+In this case both $I$ and $I_\nu$ are isotropic, that is, they are independent of the direction $\Omegavec$. Thus we have $J = I$ and $J_\nu = I_\nu$. \Cref{tab:blackbody_quantities} shows a few of the radiation terms for a blackbody. 
+
+\begin{table}
+    \centering
+    \begin{tabular} { | Sc | Sc | Sc |}
+        \hline
+         & total & spectral \\
+        \hline
+         \begin{tabular}{c} Radiance / \\ Specific intensity \end{tabular} & $ \displaystyle I = \frac{1}{\pi} \sigma T^4 $ & $\displaystyle I_\nu = \frac{2h\nu^3}{c^2} \frac{1}{\exp(h\nu/kT) - 1} $  \\
+        \hline
+        \begin{tabular}{c} Radiant \\ energy \\ density \end{tabular}  & $\displaystyle E = \frac{4}{c} \sigma T^4 $ & $ \displaystyle E_\nu = \frac{8 \pi h\nu^3}{c^3} \frac{1}{\exp(h\nu/kT) - 1} $ \\
+        \hline
+    \end{tabular}
+    \caption{Radiation quantities for a blackbody spectrum}
+    \label{tab:blackbody_quantities}
+\end{table}
+
+%----------------------------------------------------------------------------------------------------------------------
+\chapter{Old stuff}
 %----------------------------------------------------------------------------------------------------------------------
 \begin{table}
     \centering
@@ -24,7 +150,7 @@
         \hline
         \begin{tabular}{c} Irradiance \\ Radiancy \\ Flux \end{tabular} & $I \; \left [ \frac{\text{J}}{\text{s$\cdot$m\textsuperscript{2}}} \right ]$ & $I_\nu \; \left [ \frac{\text{J}}{\text{s$\cdot$m\textsuperscript{2}$\cdot$Hz}} \right ]$ \\
         \hline
-        Radiant Energy Density & $u \; \left [ \frac{\text{J}}{\text{ m\textsuperscript{3}}} \right ]$ & $u_\nu \; \left [ \frac{\text{J}}{\text{m\textsuperscript{3}$\cdot$Hz}} \right ]$ \\
+        Radiant energy density & $u \; \left [ \frac{\text{J}}{\text{ m\textsuperscript{3}}} \right ]$ & $u_\nu \; \left [ \frac{\text{J}}{\text{m\textsuperscript{3}$\cdot$Hz}} \right ]$ \\
         \hline
     \end{tabular}
     \caption{Radiation quantities}
@@ -37,7 +163,7 @@ There are various variables commonly used to describe a radiation field, these a
 \end{equation}
 To go from the radiance to the flux, one integrates over the upper half of a surface of a sphere, e.g.
 \begin{equation}
-    I = \int_{\phi=0}^{2\pi} \int_{\theta=0}^{\pi/2} I_\Omega \, d\Omega.
+    I = \int_{\phi=0}^{2\pi} \int_{\theta=0}^{\pi/2} I_\Omega \, d\Omegavec.
 \end{equation}
 To obtain the radiant energy density from the flux, one uses
 \begin{equation}
