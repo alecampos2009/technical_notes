@@ -1,0 +1,522 @@
+\documentclass[11pt]{article}
+
+\usepackage{"../../info/packages"}
+\usepackage{"../../info/nomenclature"}
+\usepackage{fullpage}
+
+
+\title{Electromagnetism}
+
+
+\begin{document}
+
+\maketitle
+
+This document first focuses on electrostatics and magnetostatics, which can be understood as follows
+\begin{align}
+    \text{stationary charges} &\to \text{constant electric fields} = \text{electrostatics} \nonumber \\
+    \text{stationary currents} &\to \text{constant magnetic fields} = \text{magnetostatics} .
+\end{align}
+
+%--------------------------------------------------------------------------
+\section{Electrostatics}
+%--------------------------------------------------------------------------
+\begin{itemize}
+
+\item Coulomb's Law
+\begin{equation}
+\Fvec = \frac{1}{4 \pi \epsilon_0} \frac{q Q}{r^2} \hat{\rvec}
+\end{equation}
+
+\item Electric Field $\Evec$ derived from $\Fvec = Q\Evec$
+\begin{equation}
+\Evec = \frac{1}{4 \pi \epsilon_0} \frac{q}{r^2} \hat{\rvec}
+\end{equation}
+
+\item If there are multiple point charges
+\begin{equation}
+\Evec = \frac{1}{4 \pi \epsilon_0} \sum_{i=1}^{n} \frac{q_i}{r_i^2} \hat{\rvec}_i
+\end{equation}
+
+\item \textbf{Charge distributions and fields:} if the charges are so small and so numerous that they can be described using a continuous distribution (i.e.\@ $q_i \to dq = \rho d\tau$, where $\rho$ is a charge density and $d\tau$ and infinitesimal volume)
+\begin{equation}
+\Evec = \frac{1}{4 \pi \epsilon_0} \int \frac{\rho(\rvec')}{r^2} \hat{\rvec} d\tau' \label{eq:efield_from_den}
+\end{equation}
+If the charge distribution is localized to a surface or a line, then the analogous of the above is
+\begin{equation}
+    \Evec = \frac{1}{4 \pi \epsilon_0} \int \frac{\sigma(\rvec')}{r^2} \hat{\rvec} da' \qquad \text{or} \qquad \Evec = \frac{1}{4 \pi \epsilon_0} \int \frac{\lambda(\rvec')}{r^2} \hat{\rvec} dl'
+\end{equation}
+
+Taking the divergence and curl of \cref{eq:efield_from_den}:
+\begin{align}
+\nabla \cdot \Evec &= \frac{1}{\epsilon_0} \rho \\
+\nabla \times \Evec &= 0
+\end{align}
+
+\item \textbf{Fields and potentials}\\
+Since $\nabla \times \Evec = 0$ we have 
+\begin{equation}
+\label{eq:efield_from_potential}
+\Evec = -\nablavec V.
+\end{equation}
+where $V$ is the electric potential. Fundamental theorem of calculus can be used to express the potential $V(\rvec)$ as
+\begin{equation}
+V(\rvec) - V(\mathcal{O}) = -\int_\mathcal{O}^\rvec \Evec \cdot d\lvec
+\end{equation}
+where $\mathcal{O}$ is the reference point, at which one usually defines $V(\mathcal{O}) = 0$ (e.g. sea-level as the altitude at which height is equal to zero). 
+
+\item \textbf{Charge distributions and potentials}\\
+Divergence of \cref{eq:efield_from_potential} gives
+\begin{equation}
+\nabla^2 V = - \frac{1}{\epsilon_0} \rho
+\end{equation}
+whose solution is
+\begin{equation}
+V = \frac{1}{4 \pi \epsilon_0} \int \frac{\rho(\rvec')}{r} d\tau'.
+\end{equation}
+
+\item Define potential energy $U$ as the negative of the work required to move charge $Q$ from $\avec$ to $\bvec$.
+\begin{equation}
+U = -\int_\avec^\bvec \Fvec \cdot d\lvec = Q [ V(\bvec) - V(\avec) ]
+\end{equation}
+If the reference point is infinity, then $U(\rvec) = Q V(\rvec)$.
+
+\item Potential energy of a set of charges $q_i$ 
+\begin{equation}
+\label{eq:Udiscrete}
+U = \frac{1}{4 \pi \epsilon_0} \sum^n_{i=1} \sum^n_{j = i+1} \frac{q_i q_j}{r_{ij}} = \frac{1}{2} \sum_{i=1}^{n} q_i \left ( \sum_{j = 1, j \ne i}^{n} \frac{1}{4 \pi \epsilon_0} \frac{q_j}{r_{ij}} \right ) = \frac{1}{2} \sum_{i=1}^{n} q_i V(\rvec_i)
+\end{equation}
+where $V(\rvec_i)$ is the potential due to all charges except the one at $\rvec_i$. The continuous form is
+\begin{equation}
+\label{eq:Uconti}
+U = \frac{1}{2} \int \rho V \, d\tau = \frac{\epsilon_0}{2} \int E^2 \, d\tau
+\end{equation}
+were now $V$ represents the potential due to all charges. Thus, if $\rho$ is such that it defines a set of point charges (e.g. $\delta(\rvec)$), then \cref{eq:Uconti} would be equal to \cref{eq:Udiscrete} plus the additional terms corresponding to $i=j$. Those additional terms correspond to the energy required to create point charges, which is infinity. 
+
+\item Electrostatic conductors: materials whose charges are free to move but are in a state of electrostatic equilibrium. $\Evec = 0$ inside, since if it were not, then charges would move and the material would not be in electrostatic equilibrium. As a consequence, $\rho = 0$ inside, all the charge is on the surface, and $\Evec$ is perpendicular to the outer surface.
+
+\item If there is a cavity within the conductor, and within the cavity a charge $q$, an amount $-q$ of charge will reside in the inner surface, and an amount $q$ on the outer surface, and that configuration will lead to $\Evec = 0$ inside the conductor.
+
+\item Faraday cage: if there are no charges within such cavity, then $\Evec = 0$ within the cavity as well, regardless of how many charges are outside the conductor. If $\Evec$ was not zero inside the cavity, then its field lines would start and end on the cavity walls. Letting the field lines be part of a closed loop, the rest of which is inside the conductor, then the line integral along the closed loop would be positive, in violation of $\nabla \times \Evec = 0$.
+
+\item A capacitor consists of two conductors, one with charge $Q$ and the other with charge $-Q$. The constant of proportionality between $Q$ and the voltage difference between the two conductors is the capacitance $C = Q/V$. The energy stored in a capacitor is $W = \frac{1}{2} CV^2$.
+
+\end{itemize}
+
+%--------------------------------------------------------------------------
+\section{Magnetostatiscs}
+%--------------------------------------------------------------------------
+\begin{itemize}
+
+\item Lorentz force law: $\Fvec = Q [\Evec + \vvec \times \Bvec ]$
+
+\item Given the charge densities $\lambda$, $\sigma$, and $\rho$
+\begin{itemize}
+\item Current [Amperes]: the amount of charge that passes a point in a small amount of time.
+\begin{equation}
+\Ivec = \lambda \vvec
+\end{equation}
+
+\item Surface current density: the amount of charge that passes a line in a small amount of time.
+\begin{equation}
+\Kvec = \sigma \vvec
+\end{equation}
+
+\item Volume current density: the amount of charge that passes an area in a small amount of time.
+\begin{equation}
+\Jvec = \rho \vvec
+\end{equation}
+\end{itemize}
+
+\item Magnetic component of Lorentz force
+\begin{equation}
+\Fvec_{\text{mag}} = \int \Ivec \times \Bvec \, dl = \int \Kvec \times \Bvec \, da = \int \Jvec \times \Bvec \, d\tau
+\end{equation}
+
+\item Conservation of current
+\begin{equation}
+\frac{\partial \rho}{\partial t} + \nabla \cdot \Jvec = 0
+\end{equation}
+
+\item \textbf{Charge currents and fields}
+\begin{align}
+\Bvec &= \frac{\mu_0}{4\pi} \int \frac{\Ivec(\rvec') \times \hat{\rvec}}{r^2}\, dl' \\
+\Bvec &= \frac{\mu_0}{4\pi} \int \frac{\Kvec(\rvec') \times \hat{\rvec}}{r^2}\, da' \\
+\Bvec &= \frac{\mu_0}{4\pi} \int \frac{\Jvec(\rvec') \times \hat{\rvec}}{r^2}\, d\tau' \label{eq:bfield_from_den}
+\end{align}
+
+Taking the divergence and curl of \cref{eq:bfield_from_den}:
+\begin{align}
+\nabla \cdot \Bvec &= 0 \\
+\nabla \times \Bvec &= \mu_0 \Jvec \label{eq:amperes_law}
+\end{align}
+
+
+\item A steady straight-line current leads to a circular magnetic field around it. A steady circular current leads to a straight magnetic field line along the axis of the circle.
+
+\item \textbf{Fields and potentials} \\
+Since $\nabla \cdot \Bvec = 0$  we have 
+\begin{equation} \Bvec = \nabla \times \Avec \end{equation}
+where $\Avec$ is the magnetic vector potential. 
+
+\item \textbf{Charge currents and potentials} \\
+The magnetic field is not altered if a function whose curl vanishes (that is $\nabla \lambda$ ) is added to $\Avec$. Thus, $\lambda$ can be picked to make $\Avec$ divergence-less. Taking the curl of $\Bvec$ then leads to 
+\begin{equation}
+\nabla^2 \Avec = -\mu_0 \Jvec, 
+\end{equation}
+whose solution is
+\begin{equation}
+    \Avec(\rvec) = \frac{\mu_0}{4 \pi } \int \frac{ \Jvec(\rvec')}{r} d\tau'.
+\end{equation}
+
+\end{itemize}
+
+%--------------------------------------------------------------------------
+\section{Electric Fields in Matter}
+%--------------------------------------------------------------------------
+%--------------------------------------------
+\subsection{Dipole moments}
+%--------------------------------------------
+\begin{itemize}
+    \item The dipole moment of a continuous distribution of charge is define as
+    \begin{equation}
+        \pvec(\rvec) = \int_V \rho(\rvec')(\rvec' - \rvec) d\tau.
+    \end{equation}
+    \item For a discrete, rather than continuous, distribution of charges, the charge density is given by $\rho(\rvec) = \sum_i q_i \delta(\rvec - \rvec_i)$, and thus the dipole moment becomes
+    \begin{equation}
+        \pvec(\rvec) = \int_V \sum_i q_i \delta(\rvec' - \rvec_i) (\rvec' - \rvec) d\tau = \sum_i q_i (\rvec_i - \rvec).
+    \end{equation}
+    \item If there are only two opposite charges, then the dipole moment simplifies to
+    \begin{equation}
+        \pvec(\rvec) = q (\rvec_1 - \rvec) - q(\rvec_2 - \rvec) = q (\rvec_1 - \rvec_2) = q \dvec.
+    \end{equation}
+    where $\dvec$ points from the negative to the positive charge.
+    \item When an electric field is applied to an atom, its nucleus shifts slightly in the direction of the field, and the center of the surrounding sphere of electrons shift slightly against the field. A tiny dipole moment is induced. This dipole moment is often proportional to the electric field, i.e.
+    \begin{equation}
+        \pvec = \alpha \Evec,
+    \end{equation}
+    where $\alpha$ is the atomic polarizability.
+    \item For molecules, the induced dipole moment might not necessarily be aligned with the electric field. Additionally, you get different dipole moments depending on which direction the electric field comes from. A general expression of the dipole moment is then
+    \begin{align}
+         p_x &= \alpha_{xx} E_x + \alpha_{xy} E_y + \alpha_{xz} E_z \nonumber \\
+         p_y &= \alpha_{yx} E_x + \alpha_{yy} E_y + \alpha_{yz} E_z\nonumber \\
+         p_z &= \alpha_{zx} E_x + \alpha_{zy} E_y + \alpha_{zz} E_z,
+    \end{align}
+    where the polarizability is now a tensor.
+    \item Polar molecules: molecules have an inherent dipole moment, i.e. there is no need to apply an electric field to induce the dipole moment. Applying an electric field to those molecules would create a torque so that their inherent dipole moment becomes aligned with the electric field.
+    \item Polarized matter: matter whose constituents have a dipole moment aligned with the field (either because the dipole moments where induced or because the inherent dipole moments where rotated to be aligned with the field).
+    \item Polarization $\Pvec$: dipole moment per unit volume.
+\end{itemize}
+%--------------------------------------------
+\subsection{Electric displacement}
+%--------------------------------------------
+\begin{itemize}
+    \item What is the electric field caused by all of the tiny little dipoles in polarized matter? The field of such a polarized object is identical to the field that would be produced by a distribution of bound charges with volume charge density $\rho_b$ and surface charge density $\sigma_b$. These two are given by 
+    \begin{equation}
+        \rho_b = - \nabla \cdot \Pvec,
+    \end{equation}
+    \begin{equation}
+        \sigma_b = \Pvec \cdot \hat{\nvec}.
+    \end{equation}
+    \item There are now two charge distributions, one characterized by $\rho_b$, which we refer to as bound charges and which follows from the dipole moments in a material, and another that consists of any extra charges that may be present and that are not bound to the material. The latter charge distribution is label as $\rho_f$.
+    \item Combining the contributions of both, Gauss's law reads
+    \begin{equation}
+        \nabla \cdot \Evec = \frac{\rho}{\epsilon_0} = \frac{1}{\epsilon_0}(\rho_b + \rho_f) = \frac{1}{\epsilon_0} (-\nabla \cdot \Pvec + \rho_f)
+    \end{equation}
+    \item Defining the electric displacement $\Dvec$ as 
+    \begin{equation}
+        \Dvec = \epsilon_0 \Evec + \Pvec,
+    \end{equation}
+    allows us to write Gauss's Law as 
+    \begin{equation}
+        \nabla \cdot \Dvec = \rho_f.
+    \end{equation}
+\end{itemize}
+
+%--------------------------------------------
+\subsection{Linear dielectric}
+%-------------------------------------------- 
+\begin{itemize}
+    \item A linear dielectric is one whose polarization $\Pvec$ is directly proportional to $\Evec$, that is,
+    \begin{equation}
+        \Pvec = \epsilon_0 \chi_e \Evec.
+    \end{equation}
+    In the above, $\chi_e$ is the constant of proportionality and is referred to as the electric susceptibility.
+    \item The electric displacement for a linear dielectric than takes the form
+    \begin{equation}
+        \Dvec = \epsilon_0 \Evec + \epsilon_0 \chi_e \Evec = \epsilon_0 (1 + \chi_e) \Evec.
+    \end{equation}
+    \item Relative permittivity or dielectric constant: $\epsilon_r = 1 + \chi_e$.
+    \item Permittivity: $\epsilon = \epsilon_0 (1 + \chi_e)$.
+    \item The energy stored in a volume that includes a linear dielectric is given by
+    \begin{equation}
+        W = \frac{1}{2} \int \Dvec \cdot \Evec \, d\tau.
+    \end{equation}
+\end{itemize}
+
+
+%--------------------------------------------------------------------------
+\section{Magnetic Fields in Matter}
+%--------------------------------------------------------------------------
+
+%--------------------------------------------------------------------------
+\section{Electrodynamics}
+%--------------------------------------------------------------------------
+
+%--------------------------------------------
+\subsection{Ohm's Law}
+%--------------------------------------------
+\begin{itemize}
+\item Ohm's law refers to the proportionality between the force per unit charge applied to charged elements and the resulting volume current that occurs. That is,
+\begin{equation}
+\Jvec = \sigma \fvec, 
+\end{equation}
+where $\fvec$ is the force per unit charge, and the proportionality $\sigma$ is the conductivity. If one neglects the magnetic contribution to $\fvec$, which is typically done for non-plasmas, then
+\begin{equation}
+\Jvec = \sigma \Evec.
+\end{equation}
+For steady currents ($\partial \rho/\partial t = 0$) and uniform conductivity
+\begin{equation}
+\nabla \cdot \Evec = \frac{1}{\sigma} \nabla \cdot \Jvec = 0
+\end{equation}
+ and thus, the charge density is zero. This is similar to a conductor, but now we have charges moving.
+
+\item Similarly, given an applied voltage, a current will result. The constant of proportionality $R$, known as the resistance, is given by 
+\begin{equation}
+V = IR.
+\end{equation}
+
+\end{itemize}
+
+%--------------------------------------------
+\subsection{Electromagnetic induction}
+%--------------------------------------------
+
+\begin{itemize} 
+\item Defined the electromotive force (emf) as
+\begin{equation}
+\mathcal{E} = \oint \fvec \cdot d \lvec
+\end{equation}
+
+\item The universal flux rule states: whenever the magnetic flux through a loop
+\begin{equation}
+\Phi = \int \Bvec \cdot d\avec
+\end{equation}
+changes, an emf
+\begin{equation}
+\label{eq:flux_rule}
+\mathcal{E} = -\frac{d \Phi}{dt}
+\end{equation}
+will appear in the loop. This can occur in two ways:
+\begin{enumerate}
+\item Magnetic field doesn't change, loop changes:\\
+For example, a loop of wire is pulled to the right through a constant magnetic field. In this case the emf is magnetic.
+\item Magnetic field changes, loop doesn't change:\\
+There is a stationary loop (any loop, not necessarily a physical loop of wire), and the magnetic field through it changes. In this case, the \textbf{changing magnetic field induces an electric field} and thus the emf is electric. Using \cref{eq:flux_rule} we get \textbf{Faraday's law}
+\begin{equation}
+\oint \Evec \cdot d\lvec = - \int \frac{ \partial \Bvec }{\partial t} \cdot d\avec,
+\end{equation}
+which, in differential form is
+\begin{equation}
+\nabla \times \Evec = -\frac{ \partial \Bvec}{\partial t}.
+\end{equation}
+\end{enumerate}
+
+\item Lenz's law:
+Nature abhors a change in flux. Thus, as the magnetic flux changes and it induces an electric field over a loop, the resulting current goes in a direction such that it would create an opposing flux that tries to cancel the original change in magnetic flux.
+
+\item Mutual inductance:\\
+If there is a steady current going through a wire loop, this will create a magnetic field and thus a magnetic flux through another wire loop close by. The constant of proportionality between the flux through the second loop and the current in the first is the mutual inductance M. That is
+\begin{equation}
+\Phi_2 = M_{21} I
+\end{equation}
+
+Note: If I ran the same current on loop two, then the flux in loop one would be $\Phi_1 = M_{12} I$. However, it can be shown that $M_{21} = M_{12}$ and thus $\Phi_1 = \Phi_2$.
+
+Now, imagine the current in loop one changes in time. The magnetic field associated with that current changes in time, and thus the magnetic flux through loop two changes as well. That is,
+\begin{equation}
+\Phi_2(t) = M I_1(t).
+\end{equation}
+Due to Faraday's law an induced emf would be created in the second loop, \begin{equation}
+\mathcal{E}_2(t) = - M \frac{d I(t)}{dt}.
+\end{equation}
+This emf creates a current $I_2(t)$ in the second loop.
+
+\item Self inductance:\\
+The changing magnetic field associated with the changing current in loop one also creates a changing flux within this loop. This is given by
+\begin{equation}
+\Phi_1(t) = L I_1(t),
+\end{equation}
+where $L$ is the self-inductance. Again, the changing flux leads to an emf within loop one, called the back emf
+\begin{equation}
+\mathcal{E}(t) = - L \frac{d I(t)}{dt}.
+\end{equation}
+This emf drives a new current in loop one that opposes the original current change.
+
+\item The energy stored in magnetic fields is given by
+\begin{equation}
+W = \frac{1}{2} \int \Avec \cdot \Jvec \, d\tau = \frac{1}{2\mu_0} \int B^2 \, d\tau.
+\end{equation}
+
+\item Ampere's law \cref{eq:amperes_law} was derived using assumptions of magnetostatics. Maxwell extended Ampere's law to work for magnetodynamics, so that the divergence of \cref{eq:amperes_law} would actually give zero on both sides. Thus, Maxwell's equations are
+\begin{align}
+\nabla \cdot \Evec &= \frac{\rho}{\epsilon_0} \\
+\nabla \cdot \Bvec &= 0 \\
+\nabla \times \Evec &= -\frac{ \partial \Bvec}{\partial t} \\
+\nabla \times \Bvec &= \mu_0 \Jvec + \mu_0 \epsilon_0 \frac{\partial \Evec}{ \partial t}.
+\end{align}
+
+\item As shown earlier, Faraday's law indicates that a changing magnetic field induces an electric field. Maxwell's correction to Ampere's law then indicates that a changing electric field induces a magnetic field. 
+
+\end{itemize}
+
+%--------------------------------------------------------------------------
+\section{Conservation Laws}
+%--------------------------------------------------------------------------
+%--------------------------------------------
+\subsection{Conservation of energy}
+%--------------------------------------------
+\begin{itemize}
+    \item Suppose you assemble a distribution of charges and currents, which at time $t$ produce fields $\Evec$ and $\Bvec$.
+    \item The potential energy of the system, as shown in previous sections, would be
+    \begin{equation}
+        U_{em} = \frac{1}{2} \left ( \epsilon_0 E^2 + \frac{1}{\mu_0} B^2 \right ).
+    \end{equation}
+    \item The question then arises, how much energy would be transferred to the charges as these charges are allowed to move?
+    \item Label $U_{mech}$ as the energy density gained by these charges as they are allowed to move.
+    \item The evolution of $U_{mech}$ is then
+    \begin{equation}
+        \frac{\partial U_{mech}}{\partial t} = -\frac{\partial U_{em}}{\partial t} - \nabla \cdot \Svec.
+    \end{equation}
+    In the above $\Svec$ is the pointing vector and is defined as 
+    \begin{equation}
+        \Svec = \frac{1}{\mu_0} ( \Evec \times \Bvec ).
+    \end{equation}
+    It represents the flux of energy across space.
+    \item As the evolution equation above shows, a decreasing potential energy in the electromagnetic field constitutes a transfer of this lost energy to that of the charges. 
+    \item In integral form, we write the above as 
+    \begin{equation}
+        \frac{d}{dt} \int_V U_{mech} \, d\tau = -\frac{d}{dt} \int_V U_{em} \, d\tau - \oint \Svec \cdot d\avec.
+    \end{equation}
+\end{itemize}
+
+%--------------------------------------------
+\subsection{Conservation of momentum}
+%--------------------------------------------
+\begin{itemize}
+    \item We now ask, how much momentum would be transferred to the charges as these are allowed to move?
+    \item Label $P_{mech}$ as the momentum density gained by the charges as they move around.
+    \item Label $P_{em}$ as the momentum density stored in the electromagnetic fields themselves. This is defined as 
+    \begin{equation}
+        P_{em} = \mu_0 \epsilon_0 \Svec.
+    \end{equation}
+    \item The evolution of $P_{mech}$ is then
+    \begin{equation}
+        \frac{\partial P_{mech}}{\partial t} = -\frac{\partial P_{em}}{\partial t} + \nabla \cdot \Tvec.
+    \end{equation}
+    In the above $\Tvec$ is the Maxwell stress tensor and is defined as 
+    \begin{equation}
+        T_{ij} = \epsilon_0 \left ( E_i E_j - \frac{1}{2} \delta_{ij} E^2 \right ) + \frac{1}{\mu_0} \left ( B_i B_j - \frac{1}{2} \delta_{ij} B^2 \right ).
+    \end{equation}
+    It represents the flux of momentum across space.
+    \item As the evolution equation above shows, a decreasing momentum in the electromagnetic field constitutes a transfer of this lost momentum to that of the charges. 
+    \item In integral form, we write the above as 
+    \begin{equation}
+        \frac{d}{dt} \int_V P_{mech} \, d\tau = -\frac{d}{dt} \int_V P_{em} \, d\tau + \oint \Tvec \cdot d\avec.
+    \end{equation}
+\end{itemize}
+%--------------------------------------------------------------------------
+\section{Electromagnetic waves}
+%--------------------------------------------------------------------------
+
+%--------------------------------------------
+\subsection{Simple waves}
+%--------------------------------------------
+\begin{itemize}
+\item The simplest kind of waves can be written as
+\begin{equation}
+    u(x,t) = A \sin\left ( \frac{2 \pi}{\lambda}x - \frac{2 \pi}{T} t +\phi \right)
+\end{equation}
+where
+\begin{align*}
+    A:&\, \text{magnitude} \\
+    \lambda:&\, \text{wavelength} \\
+    T:&\, \text{period} \\
+    \phi:&\, \text{phase constant}
+\end{align*}
+Thus, as $x$ goes from zero to $\lambda$, for example, an additional $2\pi$ value is added to the argument of the $\sin$, and thus a whole wave is traversed in space. Similarly, as $t$ goes from zero to $T$, an additional $2\pi$ value is added to the argument of the $\sin$, and thus a whole wave is traversed in time.
+
+\item Defining the wavevector and angular frequency as
+\begin{equation}
+    k = \frac{2 \pi}{\lambda} \qquad w = \frac{2 \pi}{T},
+\end{equation}
+then
+\begin{equation}
+    u(x,t) = A \sin(kx - wt + \phi),
+\end{equation}
+
+\item The frequency $\nu$ is the inverse of the period, $\nu = 1/T$.
+
+\item By inspecting the form of the simple sinusoidal wave above, it is clear that the velocity of the wave is
+\begin{equation}
+    v = \frac{w}{k} = \frac{\lambda}{T} = \lambda \nu.
+\end{equation}
+
+\item A general wave can be Fourier decomposed as follows
+\begin{equation}
+    u(x,t) = \sum_n \hat{u}_n e^{i \left ( k_n z - wt + \phi \right )},
+\end{equation}
+where $k_n = 2 \pi n/ L$. The above is often re-written as
+\begin{equation}
+    u(x,t) = \sum_n \tilde{u}_n e^{i \left ( k_n z - wt \right )},
+\end{equation}
+where $\tilde{u}_n = \hat{u}_n e^{i\phi}$.
+
+\item For the more general three-dimensional case, a wave is decomposed as follows
+\begin{equation}
+    \label{eq:electrodynamics_3d_wave}
+    \uvec(x,t) = \sum_{\nvec} \tilde{\uvec}_{\nvec} e^{i \left ( \kvec_{\nvec} \cdot \xvec - wt \right )},
+\end{equation}
+where $\kvec_{\nvec} = 2 \pi \nvec / L$ and $\nvec = [n_1, n_2, n_3]$.
+
+\item A plane wave is one for which the only existing $\kvec_{\nvec}$'s point along a single direction. Without loss of generality, we can assume this direction is the $z$ direction and thus write
+\begin{equation}
+    \uvec(x,t) = \sum_{n_3} \tilde{\uvec}_{n_3} e^{i \left ( k_{n_3} \cdot z - wt \right )},
+\end{equation}
+
+\end{itemize}
+
+%--------------------------------------------
+\subsection{Electromagnetic waves in vacuum}
+%--------------------------------------------
+\begin{itemize}
+    \item The application of \cref{eq:electrodynamics_3d_wave} to electric and magnetic fields gives 
+    \begin{equation}
+        \label{eq:electrodynamics_E_wave_def}
+        \Evec = \sum_{\nvec} \tilde{\Evec}_{\nvec} e^{i \left ( \kvec_{\nvec} \cdot \xvec - wt \right )},
+    \end{equation}
+    and 
+    \begin{equation}
+        \label{eq:electrodynamics_B_wave_def}
+        \Bvec = \sum_{\nvec} \tilde{\Bvec}_{\nvec} e^{i \left ( \kvec_{\nvec} \cdot \xvec - wt \right )}.
+    \end{equation}
+    \item For $\rho = \Jvec = 0$, Maxwell's equations can be combined to give the wave equations for $\Evec$ and $\Bvec$, that is,
+    \begin{equation}
+        \label{eq:electrodynamics_E_wave_eq}
+        \frac{\partial^2 \Evec}{\partial t^2} - \frac{1}{\epsilon_0 \mu_0} \nabla^2 \Evec = 0,
+    \end{equation}
+    \begin{equation}
+        \label{eq:electrodynamics_B_wave_eq}
+        \frac{\partial^2 \Bvec}{\partial t^2} - \frac{1}{\epsilon_0 \mu_0} \nabla^2 \Bvec = 0.
+    \end{equation}
+    The speed of electromagnetic waves is thus $c=1/\sqrt{\epsilon_0 \mu_0}$.
+
+    \item Using \cref{eq:electrodynamics_E_wave_def} in $\nabla \cdot \Evec = 0$ gives $\kvec_n \cdot \tilde{\Evec}_{\nvec} = 0$. That is, the $\Evec$ field is orthogonal to the direction of propagation of the mode.
+    
+    \item Using \cref{eq:electrodynamics_B_wave_def} in $\nabla \cdot \Bvec = 0$ gives $\kvec_n \cdot \tilde{\Bvec}_{\nvec} = 0$. That is, the $\Bvec$ field is orthogonal to the direction of propagation of the mode.
+    
+    \item Using \cref{eq:electrodynamics_E_wave_def,eq:electrodynamics_B_wave_def} in $\nabla \times \Evec = -\partial \Bvec / \partial t$ gives $\kvec_{\nvec} \times \tilde{\Evec}_{\nvec} = w \tilde{\Bvec}_{\nvec}$. That is, the $\Bvec$ field is orthogonal to the $\Evec$ field.
+
+\end{itemize}
+
+\end{document}
