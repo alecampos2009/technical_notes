@@ -465,7 +465,7 @@ To summarize, we have,
 %-------------------------------------------------------------------------
 \section{Cross section}
 %-------------------------------------------------------------------------
-that two particles traveling towards each other will undergo an interaction. Types of interactions include Coulomb collisions between two charged particles, fusion reactions between ions, and photon-matter phenomena such as Compton scattering, the photoelectric effect, and pair production.
+Two particles traveling towards each other can undergo an interaction. Types of interactions include Coulomb collisions between two charged particles, fusion reactions between ions, and photon-matter phenomena such as Compton scattering, the photoelectric effect, and pair production.
 
 \begin{figure}[ht]
     \centering
@@ -473,11 +473,12 @@ that two particles traveling towards each other will undergo an interaction. Typ
     \caption{Interaction of incident and target particles.}
     \label{fig:cross_many_particles}
 \end{figure}
-To define the cross section, we'll consider various incident particles heading towards a stationary set of target particles (see \cref{fig:cross_many_particles}). The number of incident particles is denoted as $I$, and the areal density of target particles is denoted by $n_A$. Not all of the incident particles will interact with the target particles, some will instead continue to travel in a uniform trajectory. The number of incident particles that do interact with the target particles is labeled as $N$. The cross section $\sigma$ is then a constant of proportionality defined by the following equation
+To define the cross section, we'll consider $I$ incident particles heading towards $J$ stationary target particles (see \cref{fig:cross_many_particles}). Not all of the incident particles will interact with the target particles, some will instead continue to travel in a uniform trajectory. The number of incident particles that do interact with the target particles is labeled as $N$. The cross section $\sigma$ is then a constant of proportionality defined by the following equation
 \begin{equation}
     \label{eq:cross_def}
     N = \sigma I n_A.
 \end{equation}
+In the above, $n_A$ is the areal number density, that is, $n_A = J / A = n \Delta x$, where $n$ is the volume number density.
 
 %-------------------------------------------------------------------------
 \section{Differential cross section}
@@ -542,7 +543,7 @@ The number of incident particles crossing all the infinitesimal rings $dA_\theta
 \begin{equation*}
     N_\theta d\Omega_\theta = I P.
 \end{equation*}
-The probability that an incident particle will cross one of those rings is simply the ratio of the surface area covered by all the rings in a section of the target material to the total area of that section. The surface area covered by all the rings in a section of area $S$ is given by $(n_A S) dA_\theta$. Thus, $P = ndA_\theta$ and 
+The probability that an incident particle will cross one of those rings is simply the ratio of the surface area covered by all the rings in a section of the target material to the total area of that section. The surface area covered by all the rings in a section of area $S$ is given by $(n_A S) dA_\theta$. Thus, $P = n_A dA_\theta$ and 
 \begin{equation*}
     N_\theta d\Omega_\theta = I n_A dA_\theta.
 \end{equation*}
