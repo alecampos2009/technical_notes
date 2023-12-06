@@ -1,0 +1,40 @@
+\documentclass[11pt]{article}
+
+\usepackage{"../../info/packages"}
+\usepackage{"../../info/nomenclature"}
+\usepackage{fullpage}
+
+
+\title{Units}
+
+
+\begin{document}
+
+\maketitle
+
+\section{Energy}
+
+\setlength{\cellspacetoplimit}{3pt}
+\setlength{\cellspacebottomlimit}{3pt}
+
+\begin{center}
+    \begin{tabular}{|Sc|Sc|Sc|Sc|Sc|}
+        \hline
+        unit system & name & definition & in J & in MJ \\
+        \hline
+        adiv & jerk & g \( \cdot \) cm\textsuperscript{2} / sh\textsuperscript{2} & $10^9$ & $10^3$ \\
+        \hline
+        bdivkev & n/a & g \( \cdot \) cm\textsuperscript{2} / us\textsuperscript{2} & $10^5$ & $10^{-1}$ \\
+        \hline
+        cgs & erg & g \( \cdot \) cm\textsuperscript{2} / s\textsuperscript{2} & $10^{-7}$ & $10^{-13}$ \\
+        \hline
+    \end{tabular}
+\end{center}
+
+\section{Pressure}
+
+\begin{align}
+    1 \, \frac{jerk}{cc} & = 1 \, \frac{g}{cm \cdot sh^2} = 10^{15} \, Pa = 10^{10} \, bar = 10 \, Gbar
+\end{align}
+
+\end{document}
