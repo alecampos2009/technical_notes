@@ -66,7 +66,7 @@ For an arbitrary particle, we have for its velocity $\vvec^+ = \vvec(t,\xvec^+)$
 
 Given the the particle property $\fvec^+_u = \fvec(t,\xvec^+_u)$, we have
 \begin{align}
-\label{eq:material_derivative_fluid}
+\label{eq:kinematic_material_derivative_fluid}
 \frac{\partial \fvec^+_u}{\partial t} &=\left(\frac{\partial \fvec}{\partial t}\right)_{\xvec=\xvec^+_u} + \vvec^+_u \cdot \left(\nabla \fvec\right)_{\xvec=\xvec^+_u} \nonumber \\
 &=\left(\frac{\partial \fvec}{\partial t} + \uvec \cdot \nabla \fvec\right)_{\xvec=\xvec^+_u}.
 \end{align}
@@ -81,7 +81,7 @@ An application of the above follows. Say we are given a fluid whose temperature 
 \label{eq:sample_pde}
 \frac{\partial T}{\partial t} + u\frac{\partial T}{\partial x} = \frac{\partial^2 T}{\partial x^2}.
 \end{equation}
-We now introduce a fluid particle with Lagrangian temperature $T^+_u = T^+_u(t,y)$. This Lagrangian property is related to its corresponding Eulerian field by $T^+_u(t,y) = T_u(t,x^+_u(t,y))$. Using \cref{eq:material_derivative_fluid} we find the rate of change of $T^+_u$ to be
+We now introduce a fluid particle with Lagrangian temperature $T^+_u = T^+_u(t,y)$. This Lagrangian property is related to its corresponding Eulerian field by $T^+_u(t,y) = T_u(t,x^+_u(t,y))$. Using \cref{eq:kinematic_material_derivative_fluid} we find the rate of change of $T^+_u$ to be
 \begin{equation}
 \frac{\partial T^+_u}{\partial t} = \left( \frac{\partial T}{\partial t} +  u\frac{\partial T}{\partial x} \right)_{x = x^+_u} = \left ( \frac{\partial^2 T}{\partial x^2} \right)_{x = x^+_u}. 
 \end{equation}
@@ -134,7 +134,7 @@ If the moving volume is attached to the fluid, then we use the notation $\Omega^
   \frac{d I^+_u}{dt} &=  \int_{\Omega^+_u(t)} \frac{\partial f}{\partial t} + \nabla \cdot ( f \uvec ) \, dv  \nonumber \\
   &=\left ( \int_{\Omega} \frac{\partial f}{\partial t} + \nabla \cdot ( f \uvec ) \, dv \right)_{\Omega = \Omega^+_u(t)}.
 \end{align}
-This is the analogue of \cref{eq:material_derivative_fluid}. The term in parenthesis above is typically labeled as follows
+This is the analogue of \cref{eq:kinematic_material_derivative_fluid}. The term in parenthesis above is typically labeled as follows
 \begin{equation}
     \frac{DI}{Dt} = \int_{\Omega} \frac{\partial f}{\partial t} + \nabla \cdot ( f \uvec ) \, dv.
 \end{equation}
@@ -145,6 +145,7 @@ This is the analogue of \cref{eq:material_derivative_definition}.
 %-------------------------------------------------------------------------
 We introduce the Cauchy matrix $c^+_{ij} = c^+_{ij}(t,\yvec)$, which is defined by
 \begin{equation}
+    \label{eq:kinematics_cauchy_def}
     c^+_{ij} = \frac{\partial x^+_i}{\partial y_j}.
 \end{equation}
 Thus, the total differential for the Lagrangian velocity can be expressed as follows
@@ -167,13 +168,28 @@ Jacobi's formula for some matrix $\avec = \avec(t)$ is as follows
 \end{equation}
 Thus, for the Cauchy matrix, we have
 \begin{equation}
-    \frac{\partial \det(\cvec^+) }{\partial t} = \det( \cvec^+ ) tr \left [ (\cvec^+)^{-1} \cdot \left ( \Gvec \right )_{\xvec = \xvec^+_u} \cdot \cvec^+ \right ],
+    \frac{\partial \det(\cvec^+) }{\partial t} = \det( \cvec^+ ) tr \left [ (\cvec^+)^{-1} \cdot \left ( \Gvec \right )_{\xvec = \xvec^+} \cdot \cvec^+ \right ],
 \end{equation}
-where $G_{ij} = \partial v_i / \partial x_j$. Using the fact that the trace is invariant under cyclic permutations, we finally obtain
+where $G_{ij} = \partial v_i / \partial x_j$. The trace on the right-hand is a product of three matrices of the following form $a^{-1}_{ij} b_{jk} a_{ki}$. This is equivalent to $b_{kk}$.
+Thus, we finally have
 \begin{equation}
-    \label{eq:evolution_J}
+    \label{eq:kinematic_evolution_J}
     \frac{\partial J^+}{\partial t} = J^+ \left (\frac{\partial v_k}{\partial x_k} \right )_{\xvec = \xvec^+}.
 \end{equation}
+Consider now a fluid particle, so that 
+\begin{equation}
+    \label{eq:kinematic_cauchy_def_fluid}
+    c_{u,ij}^+ = \frac{\partial x_{u,i}^+}{\partial y_j},
+\end{equation}
+and
+\begin{equation}
+    J_u^+ = \det(\cvec_u^+).
+\end{equation}
+Given \cref{eq:kinematic_evolution_J}, its evolution equation is
+\begin{equation}
+    \label{eq:kinematic_evolution_J_fluid}
+    \frac{\partial J^+_u}{\partial t} = J^+_u \left (\frac{\partial u_k}{\partial x_k} \right )_{\xvec = \xvec^+_u}.
+\end{equation}   
 
 %-------------------------------------------------------------------------
 \section{Material line}
@@ -974,53 +990,55 @@ The above is equivalent to
 %---------------------------------
 Consider an arbitrary particle---not a fluid particle---with position $\xvec^+$ and velocity field $\vvec$. Using \cref{eq:material_derivative_generic} for the density function $\rho^+ = \rho(t,\xvec^+)$ we have
 \begin{equation}
-\label{eq:ale_transformation_diferential_mass}
+\label{eq:ale_diferential_mass}
     \frac{\partial \rho^+}{\partial t} = \left (\frac{\partial \rho}{\partial t} \right)_{\xvec = \xvec^+} + \left (\vvec \cdot \nabla \rho \right)_{\xvec = \xvec^+} .
 \end{equation}
 We evaluate \cref{eq:mass_conservation_vector} at the particle's location $\xvec^+$, which we express as
-\begin{equation}
+\begin{equation*}
     \left ( \frac{\partial \rho}{\partial t} \right)_{\xvec = \xvec^+} + \left ( \uvec \cdot \nabla \rho \right)_{\xvec = \xvec^+} + \left ( \rho \nabla \cdot \uvec \right)_{\xvec = \xvec^+}= 0.
-\end{equation}
-Using \cref{eq:ale_transformation_diferential_mass}, this can be written as
-\begin{equation}
+\end{equation*}
+Using \cref{eq:ale_diferential_mass}, this can be written as
+\begin{equation*}
     \frac{\partial \rho^+}{\partial t} + \left [ ( \uvec - \vvec) \cdot \nabla \rho \right]_{\xvec = \xvec^+} + \left (\rho \nabla \cdot \uvec \right)_{\xvec = \xvec^+}= 0.
-\end{equation}
+\end{equation*}
 Manipulating, we have
-\begin{equation}
+\begin{equation*}
     \frac{\partial \rho^+}{\partial t} + \left \{ \nabla \cdot [ \rho ( \uvec - \vvec) ] \right \}_{\xvec = \xvec^+} + \left (\rho \nabla \cdot \vvec \right)_{\xvec = \xvec^+}= 0.
-\end{equation}
-Using \cref{eq:evolution_J}, the above becomes
-\begin{equation}
+\end{equation*}
+Using \cref{eq:kinematic_evolution_J}, the above becomes
+\begin{equation*}
     \frac{\partial \rho^+}{\partial t} + \left \{ \nabla \cdot [ \rho ( \uvec - \vvec) ] \right \}_{\xvec = \xvec^+} + \rho^+ \frac{1}{J^+} \frac{\partial J^+}{\partial t}= 0.
-\end{equation}
+\end{equation*}
 Multiplying by $J^+$ we finally obtain 
 \begin{equation}
+    \label{eq:ale_differential_mass_conservation}
     \frac{\partial J^+ \rho^+}{\partial t} + J^+ \left \{ \nabla \cdot [ \rho ( \uvec - \vvec) ] \right \}_{\xvec = \xvec^+} = 0.
 \end{equation}
 
 We follow the same procedure detailed above but for the momentum equation. Using \cref{eq:material_derivative_generic}, we have
 \begin{equation}
-\label{eq:ale_transformation_differential_momentum}
+\label{eq:ale_differential_momentum}
     \frac{\partial \rho^+ \uvec^+}{\partial t} = \left ( \frac{\partial \rho \uvec}{\partial t} \right )_{\xvec = \xvec^+} + \left(\vvec \cdot \nabla \rho \uvec \right)_{\xvec = \xvec +}.
 \end{equation}
 We evaluate \cref{eq:momentum_conservation_vector} at the particle's location, which we express as
-\begin{equation}
+\begin{equation*}
 \left ( \frac{\partial \rho\uvec }{\partial t} \right )_{\xvec = \xvec^+} + \left [ \uvec \cdot \nabla (\rho\uvec ) \right]_{\xvec = \xvec^+} + \left ( \rho \uvec \nabla \cdot \uvec \right)_{\xvec = \xvec^+} = \left ( -\nabla p + \nabla\cdot \tvec +\rho \fvec \right)_{\xvec = \xvec^+}.
-\end{equation}
-Using \cref{eq:ale_transformation_differential_momentum}, this can be written as
-\begin{equation}
+\end{equation*}
+Using \cref{eq:ale_differential_momentum}, this can be written as
+\begin{equation*}
 \frac{\partial \rho^+ \uvec^+}{\partial t} + \left [ (\uvec - \vvec) \cdot \nabla (\rho\uvec ) \right]_{\xvec = \xvec^+} + \left ( \rho \uvec \nabla \cdot \uvec \right)_{\xvec = \xvec^+} = \left ( -\nabla p + \nabla\cdot \tvec +\rho \fvec \right)_{\xvec = \xvec^+}.
-\end{equation}
+\end{equation*}
 Manipulating, we have
-\begin{equation}
+\begin{equation*}
 \frac{\partial \rho^+ \uvec^+}{\partial t} + \left \{ \nabla \cdot [\rho \uvec (\uvec - \vvec) ] \right \}_{\xvec = \xvec^+} + \left ( \rho \uvec \nabla \cdot \vvec \right)_{\xvec = \xvec^+} = \left ( -\nabla p + \nabla\cdot \tvec +\rho \fvec \right)_{\xvec = \xvec^+}.
-\end{equation}
-Using \cref{eq:evolution_J}, the above becomes
-\begin{equation}
+\end{equation*}
+Using \cref{eq:kinematic_evolution_J}, the above becomes
+\begin{equation*}
 \frac{\partial \rho^+ \uvec^+}{\partial t} + \left \{ \nabla \cdot [\rho \uvec (\uvec - \vvec) ] \right \}_{\xvec = \xvec^+} + \rho^+ \uvec^+ \frac{1}{J^+} \frac{\partial J^+}{\partial t} = \left ( -\nabla p + \nabla\cdot \tvec +\rho \fvec \right)_{\xvec = \xvec^+}.
-\end{equation}
+\end{equation*}
 Multiplying by $J^+$ we finally obtain 
 \begin{equation}
+    \label{eq:ale_differential_momentum_conservation}
 \frac{\partial J^+ \rho^+ \uvec^+}{\partial t} + J^+ \left \{ \nabla \cdot [\rho \uvec (\uvec - \vvec) ] \right \}_{\xvec = \xvec^+} = J^+ \left ( -\nabla p + \nabla\cdot \tvec +\rho \fvec \right)_{\xvec = \xvec^+}.
 \end{equation}
 
@@ -1030,27 +1048,28 @@ We now follow the previous procedure but for the energy equation. Using \cref{eq
     \frac{\partial \rho^+ E^+}{\partial t} = \left ( \frac{\partial \rho E}{\partial t} \right )_{\xvec = \xvec^+} + \left(\vvec \cdot \nabla \rho E \right)_{\xvec = \xvec +}.
 \end{equation}
 We evaluate \cref{eq:energy_conservation_vector} at the particle's location, which we express as
-\begin{multline}
+\begin{multline*}
 \left ( \frac{\partial \rho E}{\partial t} \right )_{\xvec = \xvec^+} + \left [ \uvec \cdot \nabla (\rho E) \right]_{\xvec = \xvec^+} + (\rho E \nabla \cdot \uvec)_{\xvec = \xvec^+} = \\
 \left [ -\nabla \cdot (p \uvec) + \nabla \cdot (\uvec \cdot \tvec) + \rho \fvec \cdot \uvec - \nabla \cdot \qvec \right ]_{\xvec = \xvec^+}.
-\end{multline}
+\end{multline*}
 Using \cref{eq:ale_transformation_differential_energy}, this can be written as
-\begin{multline}
+\begin{multline*}
 \frac{\partial \rho^+ E^+}{\partial t} + \left [ (\uvec - \vvec) \cdot \nabla (\rho E) \right]_{\xvec = \xvec^+} + (\rho E \nabla \cdot \uvec)_{\xvec = \xvec^+} = \\
 \left [ -\nabla \cdot (p \uvec) + \nabla \cdot (\uvec \cdot \tvec) + \rho \fvec \cdot \uvec - \nabla \cdot \qvec \right ]_{\xvec = \xvec^+}.
-\end{multline}
+\end{multline*}
 Manipulating, we have
-\begin{multline}
+\begin{multline*}
 \frac{\partial \rho^+ E^+}{\partial t} + \left \{ \nabla \cdot [ (\rho E) (\uvec - \vvec) ] \right \}_{\xvec = \xvec^+} + (\rho E \nabla \cdot \vvec)_{\xvec = \xvec^+} = \\
 \left [ -\nabla \cdot (p \uvec) + \nabla \cdot (\uvec \cdot \tvec) + \rho \fvec \cdot \uvec - \nabla \cdot \qvec \right ]_{\xvec = \xvec^+}.
-\end{multline}
-Using \cref{eq:evolution_J}, the above becomes
-\begin{multline}
+\end{multline*}
+Using \cref{eq:kinematic_evolution_J}, the above becomes
+\begin{multline*}
 \frac{\partial \rho^+ E^+}{\partial t} + \left \{ \nabla \cdot [ (\rho E) (\uvec - \vvec) ] \right \}_{\xvec = \xvec^+} + \rho^+ E^+ \frac{1}{J^+} \frac{\partial J^+}{\partial t} = \\
 \left [ -\nabla \cdot (p \uvec) + \nabla \cdot (\uvec \cdot \tvec) + \rho \fvec \cdot \uvec - \nabla \cdot \qvec \right ]_{\xvec = \xvec^+}.
-\end{multline}
+\end{multline*}
 Multiplying by $J^+$ we finally obtain
 \begin{multline}
+    \label{eq:ale_differential_energy_conservation}
 \frac{\partial J^+ \rho^+ E^+}{\partial t} + J^+ \left \{ \nabla \cdot [ (\rho E) (\uvec - \vvec) ] \right \}_{\xvec = \xvec^+} = \\
 J^+ \left [ -\nabla \cdot (p \uvec) + \nabla \cdot (\uvec \cdot \tvec) + \rho \fvec \cdot \uvec - \nabla \cdot \qvec \right ]_{\xvec = \xvec^+}.
 \end{multline}
@@ -1060,43 +1079,46 @@ J^+ \left [ -\nabla \cdot (p \uvec) + \nabla \cdot (\uvec \cdot \tvec) + \rho \f
 %---------------------------------
 Consider an arbitrary volume---not a material volume---whose volume is given by $\Omega^+(t)$, and its boundary motion is given by $\vvec$. Using \cref{eq:reynolds_transport_theorem_generic} for the density we have
 \begin{equation}
-\label{eq:ale_transformation_integral_mass}
+\label{eq:ale_integral_mass}
     \frac{d}{dt} \int_{\Omega^+(t)} \rho \, dv = \int_{\Omega^+(t)} \frac{\partial \rho}{\partial t} \, dv + \int_{\Omega^+(t)} \nabla \cdot (\rho \vvec) \, dv.
 \end{equation}
 We integrate \cref{eq:mass_conservation_vector} over the volume $\Omega^+(t)$, which we express as
-\begin{equation}
+\begin{equation*}
     \int_{\Omega^+(t)} \frac{\partial \rho}{\partial t} \, dv + \int_{\Omega^+(t)} \nabla \cdot (\rho \uvec) \, dv = 0.
-\end{equation}
-Using \cref{eq:ale_transformation_integral_mass} and the divergence theorem, this can be written as
+\end{equation*}
+Using \cref{eq:ale_integral_mass} and the divergence theorem, this can be written as
 \begin{equation}
+    \label{eq:ale_integral_mass_conservation}
     \frac{d}{dt} \int_{\Omega^+(t)} \rho \, dv + \int_{\partial \Omega^+(t)} \rho (\uvec - \vvec) \cdot \nvec \, ds.
 \end{equation}
 
 We follow the same procedure as detailed above but for the momentum equations. Using \cref{eq:reynolds_transport_theorem_generic} for momentum we have
 \begin{equation}
-\label{eq:ale_transformation_integral_momentum}
+\label{eq:ale_integral_momentum}
     \frac{d}{dt} \int_{\Omega^+(t)} \rho \uvec \, dv = \int_{\Omega^+(t)} \frac{\partial \rho \uvec}{\partial t} \, dv + \int_{\Omega^+(t)} \nabla \cdot (\rho \uvec \vvec) \, dv.
 \end{equation}
 We integrate \cref{eq:momentum_conservation_vector} over the volume $\Omega^+(t)$, which we express as
-\begin{equation}
+\begin{equation*}
     \int_{\Omega^+(t)} \frac{\partial \rho \uvec}{\partial t} \, dv + \int_{\Omega^+(t)} \nabla \cdot (\rho \uvec \uvec) \, dv = \int_{\Omega^+(t)} -\nabla p + \nabla \cdot \tvec + \rho \fvec \, dv.
-\end{equation}
-Using \cref{eq:ale_transformation_integral_momentum} and the divergence theorem, this can be written as
+\end{equation*}
+Using \cref{eq:ale_integral_momentum} and the divergence theorem, this can be written as
 \begin{equation}
+    \label{eq:ale_integral_momentum_conservation}
     \frac{d}{dt} \int_{\Omega^+(t)}  \rho \uvec \, dv + \int_{\partial \Omega^+(t)} \rho \uvec (\uvec - \vvec) \cdot \nvec \, ds = \int_{\partial \Omega^+(t)} (- p \Ivec + \tvec) \cdot \nvec \, ds + \int_{\Omega^+(t)} \rho \fvec \, dv.
 \end{equation}
 
 We repeat the same procedure as above but for the energy equation. Using \cref{eq:reynolds_transport_theorem_generic} for energy we have
 \begin{equation}
-\label{eq:ale_transformation_integral_energy}
+\label{eq:ale_integral_energy}
     \frac{d}{dt} \int_{\Omega^+(t)} \rho E \, dv = \int_{\Omega^+(t)} \frac{\partial \rho E}{\partial t} \, dv + \int_{\Omega^+(t)} \nabla \cdot (\rho E \vvec) \, dv.
 \end{equation}
 We integrate \cref{eq:energy_conservation_vector} over the volume $\Omega^+(t)$, which we express as
-\begin{equation}
+\begin{equation*}
     \int_{\Omega^+(t)} \frac{\partial \rho E}{\partial t} \, dv + \int_{\Omega^+(t)} \nabla \cdot (\rho \uvec E) \, dv = \int_{\Omega^+(t)} -\nabla \cdot (p\uvec) + \nabla \cdot (\uvec \cdot \tvec) + \rho \fvec \cdot \uvec - \nabla \cdot \qvec \, dv.
-\end{equation}
-Using \cref{eq:ale_transformation_integral_energy} and the divergence theorem, this can be written as
+\end{equation*}
+Using \cref{eq:ale_integral_energy} and the divergence theorem, this can be written as
 \begin{multline}
+    \label{eq:ale_integral_energy_conservation}
     \frac{d}{dt} \int_{\Omega^+(t)} \rho E \, dv + \int_{\partial \Omega^+(t)} \rho E (\uvec - \vvec) \cdot \nvec \, ds = \\
     \int_{\partial \Omega^+(t)} -(p\uvec + \uvec \cdot \tvec) \cdot \nvec \, ds + \int_{\Omega^+(t)} \rho \fvec \cdot \uvec \, ds - \int_{\partial \Omega^+(t)} \qvec \cdot \nvec \, ds.
 \end{multline}

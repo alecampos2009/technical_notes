@@ -12,29 +12,65 @@
 
 \maketitle
 
-\section{Energy}
-
 \setlength{\cellspacetoplimit}{3pt}
 \setlength{\cellspacebottomlimit}{3pt}
+
+\section{Unit systems}
+Note: the adiv energy unit is called the Jerk, whereas in cgs units it is called the erg.
+\section{adiv}
 
 \begin{center}
     \begin{tabular}{|Sc|Sc|Sc|Sc|Sc|}
         \hline
-        unit system & name & definition & in J & in MJ \\
+        variable & definition & in SI \\
+        \hline 
+        Length & cm & \\
         \hline
-        adiv & jerk & g \( \cdot \) cm\textsuperscript{2} / sh\textsuperscript{2} & $10^9$ & $10^3$ \\
+        Mass & g & \\
         \hline
-        bdivkev & n/a & g \( \cdot \) cm\textsuperscript{2} / us\textsuperscript{2} & $10^5$ & $10^{-1}$ \\
+        Time & sh & \\
         \hline
-        cgs & erg & g \( \cdot \) cm\textsuperscript{2} / s\textsuperscript{2} & $10^{-7}$ & $10^{-13}$ \\
+        Temperature & KeV & \\
+        \hline
+        Velocity & cm/sh & \\
+        \hline
+        Energy & g \( \cdot \) cm\textsuperscript{2} / sh\textsuperscript{2} & $10^9$ J  $(10^3$ MJ)\\
+        \hline 
+        Pressure & g / cm \( \cdot \) sh\textsuperscript{2} & $10^{15}$ Pa ($10^4$ Mbar) \\
+        \hline
+        Density & g / cm\textsuperscript{3} & \\
+        \hline 
+        Intensity & g / sh\textsuperscript{3} & $10^{21}$ W/m\textsuperscript{2} ($10^{17}$ W/cm\textsuperscript{2}) \\
         \hline
     \end{tabular}
 \end{center}
 
-\section{Pressure}
+\section{bdiv}
 
-\begin{align}
-    1 \, \frac{jerk}{cc} & = 1 \, \frac{g}{cm \cdot sh^2} = 10^{15} \, Pa = 10^{10} \, bar = 10 \, Gbar
-\end{align}
+\begin{center}
+    \begin{tabular}{|Sc|Sc|Sc|Sc|Sc|}
+        \hline
+        variable & definition & in SI \\
+        \hline 
+        Length & cm & \\
+        \hline
+        Mass & g & \\
+        \hline
+        Time & us & \\
+        \hline
+        Temperature & KeV & \\
+        \hline
+        Velocity & cm/us & \\
+        \hline
+        Energy & g \( \cdot \) cm\textsuperscript{2} / us\textsuperscript{2} & $10^5$ J  $(10^{-1}$ MJ)\\
+        \hline 
+        Pressure & g / cm \( \cdot \) us\textsuperscript{2} & \\
+        \hline
+        Density & g / cm\textsuperscript{3} & \\
+        \hline 
+        Intensity & g / us\textsuperscript{3} & $10^{15}$ W/m\textsuperscript{2} ($10^{11}$ W/cm\textsuperscript{2})\\
+        \hline
+    \end{tabular}
+\end{center}
 
 \end{document}
