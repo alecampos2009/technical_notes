@@ -4,7 +4,7 @@
 \usepackage{../../info/packages}
 \usepackage{../../info/nomenclature}
 
-\title{Numerical Methods\thanks{Disclaimer: a large chunk of the work in this document is not original; instead, parts of this document are personal notes obtained from the following books: Lomax, Pulliam, Zing; Larsson, Thomee; Hirsch; Leveque; Blazek; Laney; Moin.}}
+\title{Numerical Methods\thanks{Disclaimer: most of the work in this document is not original; instead, it consists of personal notes that folow from various books, such as Lomax, Pulliam, Zing; Larsson, Thomee; Hirsch; Leveque; Blazek; Laney; Moin.}}
 \date{\today}
 \author{Alejandro Campos}
 
@@ -609,6 +609,8 @@ The finite element method typically relies on the Galerkin method to obtain a so
 %---------------------------------------------------------------
 \section{The Galerkin method}
 %---------------------------------------------------------------
+\label{sec:galerkin_method}
+
 %--------------------------------------------
 \subsection{Weak form or variational formulation}
 %--------------------------------------------
@@ -693,6 +695,7 @@ Label the finite basis of $\mathcal{U}_h$ as $\{\Phi_i\}_{i=1}^n$, where $n$ is 
 
 Any $v_h \in \mathcal{V}_h$ can be written as $v_h = \sum_{i=1}^n V_i \Phi_i$, where $V_i = V_i(t)$. \Cref{eq:fe_elliptic_sh_solution} is then automatically satisfied if the following is satisfied
 \begin{equation}
+    \label{eq:fe_cg_pde_basis_requirement}
     \left ( \frac{\partial u_h}{\partial t}, \Phi_i \right ) + a(u_h, \Phi_i) = L(\Phi_i) \qquad \text{for }i=1,...,n.
 \end{equation}
 
@@ -703,69 +706,6 @@ Since $u_h \in \mathcal{U}_h$, we can write $u_h = \sum_{j=1}^n U_j \Phi_j$, whe
 Define the vectors $\Uvec$ and $\bvec$, as those whose components are $U_j$ and $L(\Phi_i)$, respectively. Define the matrix $\Avec$ as that whose components are $a_{ij} = a(\Phi_j,\Phi_i)$. Similarily, define the mass matrix $\Mvec$ as that whose components are $m_{i,j} = (\Phi_j, \Phi_i)$. Then, the equation above can be written as
 \begin{equation}
     \Mvec \frac{d \Uvec}{dt} + \Avec \Uvec = \bvec.
-\end{equation}
-
-%--------------------------------------------
-\subsection{Multi-dimensional finite elements}
-%--------------------------------------------
-To describe the application of finite elements to cases where the unknowns are vectors (e.g. $\uvec = [u_x,u_y,u_z]$), we'll use the following elliptic PDE
-\begin{equation}
-    \label{eq:fe_elliptic_pde_vector}
-    \sum_{\beta=x,y,z} -\frac{\partial}{\partial x_\beta} \left ( \frac{\partial u_\alpha}{\partial x_\beta} + \frac{\partial u_\beta}{\partial x_\alpha} \right ) = f_\alpha \qquad \text{in } \Omega^3 \text{ for } \alpha = x,y,z.
-\end{equation}
-For the above, $\uvec = 0$ at boundaries. As in the previous section, we introduce trial and test function spaces, but these are now three dimensional and are labeled as $\mathcal{U}^3$ and $\mathcal{V}^3$. The objective is thus to find the weak solution $\uvec \in \mathcal{U}^3$ such that
-\begin{equation}
-    \int_{\Omega^3} \sum_{\alpha=x,y,z} \sum_{\beta=x,y,z} -\frac{\partial}{\partial x_\beta} \left ( \frac{\partial u_\alpha}{\partial x_\beta} + \frac{\partial u_\beta}{\partial x_\alpha} \right ) v_\alpha \, dV = \int_{\Omega^3} \sum_{\alpha=x,y,z} f_\alpha v_\alpha \,dV \qquad \forall \vvec \in \mathcal{V}^3.
-\end{equation}
-We now use the product rule and divergence theorem to obtain
-\begin{equation}
-    \int_{\Omega^3} \sum_{\alpha=x,y,z} \sum_{\beta=x,y,z} \left ( \frac{\partial u_\alpha}{\partial x_\beta} + \frac{\partial u_\beta}{\partial x_\alpha} \right ) \frac{\partial v_\alpha}{\partial x_\beta} \, dV = \int_{\Omega^3} \sum_{\alpha=x,y,z} f_\alpha v_\alpha \,dV \qquad \forall \vvec \in \mathcal{V}^3.
-\end{equation}
-As before, we introduce the discrete function spaces $\mathcal{U}_h^3 \subset \mathcal{U}^3$ and $\mathcal{V}^3_h \subset \mathcal{V}^3$ that belong to $\mathcal{S}_{h,k}^3$, which will be defined at a later point. The aim is now to find $\uvec_h \in \mathcal{U}_h^3$ such that
-\begin{equation}
-    \int_{\Omega^3} \sum_{\alpha=x,y,z} \sum_{\beta=x,y,z} \left ( \frac{\partial u_{h,\alpha}}{\partial x_\beta} + \frac{\partial u_{h,\beta}}{\partial x_\alpha} \right ) \frac{\partial v_{h,\alpha}}{\partial x_\beta} \, dV = \int_{\Omega^3} \sum_{\alpha=x,y,z} f_\alpha v_{h,\alpha} \,dV \qquad \forall \vvec_h \in \mathcal{V}_h^3.
-\end{equation}
-We expand $\vvec_h$ as follows
-\begin{equation}
-    \vvec_h = \sum_i^n \Vvec_i \Phi_i,
-\end{equation}
-where $\Vvec_i=[V_{i,x}, V_{i,y}, V_{i,z}]$ is now a vector but $\Phi_i$ is still a scalar. We thus have
-\begin{multline}
-    \sum_{\alpha=x,y,z} \sum_i^n V_{i,\alpha} \int_{\Omega^3} \sum_{\beta=x,y,z} \left ( \frac{\partial u_{h,\alpha}}{\partial x_\beta} + \frac{\partial u_{h,\beta}}{\partial x_\alpha} \right ) \frac{\partial \Phi_i}{\partial x_\beta} \, dV = \\
-    \sum_{\alpha=x,y,z} \sum_i^n V_{i,\alpha} \int_{\Omega^3} f_\alpha \Phi_i \,dV \qquad \forall \vvec_h \in \mathcal{V}_h^3.
-\end{multline}
-One way to ensure the above is satisfied is to instead require that the following holds
-\begin{equation}
-    \int_{\Omega^3} \sum_{\beta=x,y,z} \left ( \frac{\partial u_{h,\alpha}}{\partial x_\beta} + \frac{\partial u_{h,\beta}}{\partial x_\alpha} \right ) \frac{\partial \Phi_i}{\partial x_\beta} \, dV = \int_{\Omega^3} f_\alpha \Phi_i \,dV \qquad \text{for } i = 1,...,n \text{ and } \alpha = x,y,z.
-\end{equation}
-We'll re-group the above as follows
-\begin{multline}
-    \int_{\Omega^3} \sum_{\beta=x,y,z} \frac{\partial u_{h,\alpha}}{\partial x_\beta} \frac{\partial \Phi_i}{\partial x_\beta} \,dV + \int_{\Omega^3} \sum_{\beta=x,y,z} \frac{\partial u_{h,\beta}}{\partial x_\alpha} \frac{\partial \Phi_i}{\partial x_\beta} \, dV \\
-    = \int_{\Omega^3} f_\alpha \Phi_i \,dV \qquad \text{for } i = 1,...,n \text{ and } \alpha = x,y,z.
-\end{multline}
-The next step is to introduce 
-\begin{equation}
-    \uvec_h = \sum_j^n \Uvec_j \Phi_j,
-\end{equation}
-where again $\Uvec_j = [U_{i,x}, U_{i,y}, U_{i,z}]$. Plugging this in the PDE we have
-\begin{multline}
-    \sum_j^n U_{j,\alpha} \int_{\Omega^3} \sum_{\beta=x,y,z} \frac{\partial \Phi_j}{\partial x_\beta} \frac{\partial \Phi_i}{\partial x_\beta} \,dV + \sum_{\beta=x,y,z} \sum_j^n U_{j,\beta} \int_{\Omega^3} \frac{\partial \Phi_j}{\partial x_\alpha} \frac{\partial \Phi_i}{\partial x_\beta} \, dV \\
-    = \int_{\Omega^3} f_\alpha \Phi_i \,dV \qquad \text{for } i = 1,...,n \text{ and } \alpha = x,y,z.
-\end{multline}
-If we now introduce the bilinear forms 
-\begin{equation}
-    a_{ij} = \int_{\Omega^3} \sum_{\beta=x,y,z} \frac{\partial \Phi_j}{\partial x_\beta} \frac{\partial \Phi_i}{\partial x_\beta} \,dV,
-\end{equation}
-\begin{equation}
-    b_{ij}^{\alpha \beta} = \int_{\Omega^3}\frac{\partial \Phi_j}{\partial x_\alpha} \frac{\partial \Phi_i}{\partial x_\beta} \, dV,
-\end{equation}
-and
-\begin{equation}
-    L_i^\alpha = \int_{\Omega^3} f_\alpha \Phi_i \,dV,
-\end{equation}
-we can write the linear system of equations as
-\begin{equation}
-    \sum_j^n U_{j,\alpha} a_{ij} + \sum_{\beta=x,y,z} \sum_j^n U_{j,\beta} b_{ij}^{\alpha \beta} = L_i^\alpha \qquad \text{for } i = 1,...,n \text{ and } \alpha = x,y,z.
 \end{equation}
 
 %---------------------------------------------------------------
@@ -862,6 +802,106 @@ which, upon simplifying gives
     \left ( \frac{\partial u_h}{\partial t} , v_h \right ) + (\nabla \cdot ( \boldsymbol{\lambda} u_h ), v_h ) -\int_{\Gamma_h} \boldsymbol{\lambda} \cdot \nvec_{\Gamma_h}\llbracket u_h \rrbracket \{ v_h \} \, dS + \delta \int_{\Gamma_h} \left | \boldsymbol{\lambda} \cdot \nvec_{\Gamma_h} \right | \llbracket u_h \rrbracket \llbracket v_h \rrbracket \, dS = L(v_h) \qquad \forall v_h \in \mathcal{V}_h.
 \end{equation}
 \Cref{eq:dg_main_eq_total_with_upwinding_weak} is the weak form of the equation, whereas \cref{eq:dg_main_eq_total_with_upwinding_strong} is the strong form.
+
+%---------------------------------------------------------------
+\section{Multi-dimensional finite elements}
+%---------------------------------------------------------------
+To describe the application of finite elements to cases where the unknowns are vectors (e.g. $\uvec = [u_x,u_y,u_z]$), we'll use the following elliptic PDE
+\begin{equation}
+    \label{eq:fe_elliptic_pde_vector}
+    \sum_{\beta=x,y,z} -\frac{\partial}{\partial x_\beta} \left ( \frac{\partial u_\alpha}{\partial x_\beta} + \frac{\partial u_\beta}{\partial x_\alpha} \right ) = f_\alpha \qquad \text{in } \Omega^3 \text{ for } \alpha = x,y,z.
+\end{equation}
+For the above, $\uvec = 0$ at boundaries. As for the 1D case, we introduce trial and test function spaces, but these are now three dimensional and are labeled as $\mathcal{U}^3$ and $\mathcal{V}^3$. As for the 1D case again, we'll assume for simplicity that $\mathcal{U}^3$ and $\mathcal{V}^3$ are the same function space. The objective is now to find the weak solution $\uvec \in \mathcal{U}^3$ such that
+\begin{equation}
+    \int_{\Omega^3} \sum_{\alpha=x,y,z} \sum_{\beta=x,y,z} -\frac{\partial}{\partial x_\beta} \left ( \frac{\partial u_\alpha}{\partial x_\beta} + \frac{\partial u_\beta}{\partial x_\alpha} \right ) v_\alpha \, dV = \int_{\Omega^3} \sum_{\alpha=x,y,z} f_\alpha v_\alpha \,dV \qquad \forall \vvec \in \mathcal{V}^3.
+\end{equation}
+We now use the product rule and divergence theorem to obtain
+\begin{equation}
+    \int_{\Omega^3} \sum_{\alpha=x,y,z} \sum_{\beta=x,y,z} \left ( \frac{\partial u_\alpha}{\partial x_\beta} + \frac{\partial u_\beta}{\partial x_\alpha} \right ) \frac{\partial v_\alpha}{\partial x_\beta} \, dV = \int_{\Omega^3} \sum_{\alpha=x,y,z} f_\alpha v_\alpha \,dV \qquad \forall \vvec \in \mathcal{V}^3.
+\end{equation}
+As before, we introduce the discrete function spaces $\mathcal{U}_h^3 \subset \mathcal{U}^3$ and $\mathcal{V}^3_h \subset \mathcal{V}^3$ that belong to $\mathcal{S}_{h,k}^3$, which will be defined at a later point. The aim is now to find $\uvec_h \in \mathcal{U}_h^3$ such that
+\begin{equation}
+    \int_{\Omega^3} \sum_{\alpha=x,y,z} \sum_{\beta=x,y,z} \left ( \frac{\partial u_{h,\alpha}}{\partial x_\beta} + \frac{\partial u_{h,\beta}}{\partial x_\alpha} \right ) \frac{\partial v_{h,\alpha}}{\partial x_\beta} \, dV = \int_{\Omega^3} \sum_{\alpha=x,y,z} f_\alpha v_{h,\alpha} \,dV \qquad \forall \vvec_h \in \mathcal{V}_h^3.
+\end{equation}
+We expand $\vvec_h$ as follows
+\begin{equation}
+    \vvec_h = \sum_i^n \Vvec_i \Phi_i,
+\end{equation}
+where $\Vvec_i=[V_{i,x}, V_{i,y}, V_{i,z}]$ is now a vector but $\Phi_i$ is still a scalar. We thus have
+\begin{multline}
+    \sum_{\alpha=x,y,z} \sum_i^n V_{i,\alpha} \int_{\Omega^3} \sum_{\beta=x,y,z} \left ( \frac{\partial u_{h,\alpha}}{\partial x_\beta} + \frac{\partial u_{h,\beta}}{\partial x_\alpha} \right ) \frac{\partial \Phi_i}{\partial x_\beta} \, dV = \\
+    \sum_{\alpha=x,y,z} \sum_i^n V_{i,\alpha} \int_{\Omega^3} f_\alpha \Phi_i \,dV \qquad \forall \vvec_h \in \mathcal{V}_h^3.
+\end{multline}
+The above is satisfied if we require that the following holds
+\begin{equation}
+    \label{eq:fe_3d_pde_basis_requirement}
+    \int_{\Omega^3} \sum_{\beta=x,y,z} \left ( \frac{\partial u_{h,\alpha}}{\partial x_\beta} + \frac{\partial u_{h,\beta}}{\partial x_\alpha} \right ) \frac{\partial \Phi_i}{\partial x_\beta} \, dV = \int_{\Omega^3} f_\alpha \Phi_i \,dV \qquad \text{for } i = 1,...,n \text{ and } \alpha = x,y,z.
+\end{equation}
+The equation above would be the analogue of \cref{eq:fe_cg_pde_basis_requirement} for 1D. That is, it is not necessary to test the PDE against every function in $\mathcal{V}_h^3$, but only against the basis functions of that space. We'll re-group the result as follows
+\begin{multline}
+    \int_{\Omega^3} \sum_{\beta=x,y,z} \frac{\partial u_{h,\alpha}}{\partial x_\beta} \frac{\partial \Phi_i}{\partial x_\beta} \,dV + \int_{\Omega^3} \sum_{\beta=x,y,z} \frac{\partial u_{h,\beta}}{\partial x_\alpha} \frac{\partial \Phi_i}{\partial x_\beta} \, dV \\
+    = \int_{\Omega^3} f_\alpha \Phi_i \,dV \qquad \text{for } i = 1,...,n \text{ and } \alpha = x,y,z.
+\end{multline}
+The next step is to introduce 
+\begin{equation}
+    \uvec_h = \sum_j^n \Uvec_j \Phi_j,
+\end{equation}
+where again $\Uvec_j = [U_{i,x}, U_{i,y}, U_{i,z}]$. Plugging this in the PDE we have
+\begin{multline}
+    \sum_j^n U_{j,\alpha} \int_{\Omega^3} \sum_{\beta=x,y,z} \frac{\partial \Phi_j}{\partial x_\beta} \frac{\partial \Phi_i}{\partial x_\beta} \,dV + \sum_{\beta=x,y,z} \sum_j^n U_{j,\beta} \int_{\Omega^3} \frac{\partial \Phi_j}{\partial x_\alpha} \frac{\partial \Phi_i}{\partial x_\beta} \, dV \\
+    = \int_{\Omega^3} f_\alpha \Phi_i \,dV \qquad \text{for } i = 1,...,n \text{ and } \alpha = x,y,z.
+\end{multline}
+If we now introduce the bilinear forms 
+\begin{equation}
+    a_{ij} = \int_{\Omega^3} \sum_{\beta=x,y,z} \frac{\partial \Phi_j}{\partial x_\beta} \frac{\partial \Phi_i}{\partial x_\beta} \,dV,
+\end{equation}
+\begin{equation}
+    b_{ij}^{\alpha \beta} = \int_{\Omega^3}\frac{\partial \Phi_j}{\partial x_\alpha} \frac{\partial \Phi_i}{\partial x_\beta} \, dV,
+\end{equation}
+and
+\begin{equation}
+    L_i^\alpha = \int_{\Omega^3} f_\alpha \Phi_i \,dV,
+\end{equation}
+we can write the linear system of equations as
+\begin{equation}
+    \sum_j^n U_{j,\alpha} a_{ij} + \sum_{\beta=x,y,z} \sum_j^n U_{j,\beta} b_{ij}^{\alpha \beta} = L_i^\alpha \qquad \text{for } i = 1,...,n \text{ and } \alpha = x,y,z.
+\end{equation}
+
+%---------------------------------------------------------------
+\section{Lagrangian finite elements}
+%---------------------------------------------------------------
+We introduce a Lagrangian basis function $\Phi_i^+ = \Phi_i^+(t,\yvec)$ and an Eulerian basis function $\Phi_i = \Phi_i(t,\xvec)$, such that they are related to each other as follows
+\begin{equation}
+    \label{eq:fe_lag_phi_correspondence}
+    \Phi_i^+(t,\yvec) = \Phi_i(t,\xvec_u^+(t,\yvec)).
+\end{equation}
+In the above, $\xvec_u^+ = \xvec_u^+(t,\yvec)$ is the position of a Lagrangian fluid particle, whose velocity is $\uvec^+ = \uvec^+(t,\yvec)$. As shown in my fluid mechanics notes, we also have
+\begin{equation}
+    \label{eq:fe_lag_deriv_correspondence}
+    \frac{\partial \Phi_i^+}{\partial t} = \left ( \frac{\partial \Phi_i}{\partial t} + \uvec \cdot \nabla \Phi_i \right )_{\xvec = \xvec_u^+},
+\end{equation}
+where $\uvec = \uvec(t,\xvec)$ is the Eulerian counterpart to $\uvec^+$.
+
+We'll introduce the restriction that $\Phi_i^+$ is constant in time, that is $\partial \Phi_i^+/\partial t = 0$. From \cref{eq:fe_lag_deriv_correspondence}, we have
+\begin{equation}
+    \frac{\partial \Phi_i}{\partial t} + \uvec \cdot \nabla \Phi_i = 0.
+\end{equation}
+
+We now introduce the Lagrangian variable $u^+ = u^+(t,\yvec)$ and the Eulerian counterpart $u = u(t,\xvec)$ such that they satisfy
+\begin{equation}
+    \label{eq:fe_lag_u_correspondence}
+    u^+(t,\yvec) = u(t,\xvec_u^+(t,\yvec)).
+\end{equation}
+As shown in \cref{sec:galerkin_method}, the expansion of an Eulerian variable in terms of basis functions is as follows
+\begin{equation}
+    u = \sum_i^n U_i \Phi_i,
+\end{equation}
+where $U_i = U_i(t)$. Plugging in $\xvec_u^+$ for $\xvec$ in the above, and using \cref{eq:fe_lag_phi_correspondence,eq:fe_lag_u_correspondence} gives
+\begin{equation}
+    u^+ = \sum_i^n U_i \Phi_i^+.
+\end{equation}
+We note that, since $\Phi_i^+$ is time independent, $U_i$ in the above accounts for the time dependence of $u^+$, whereas $\Phi_i^+$ accounts for the dependence on $\yvec$. Finally, and most importantly, we note that both the Lagrangian and Eulerian variables share the same FE coefficients $U_i$.
+
 
 %---------------------------------------------------------------
 \section{The Petrov Galerkin method}

@@ -38,7 +38,7 @@ There are two types of frameworks used to described properties of fluids: Euleri
 \fvec^+(t,\yvec)=\fvec(t,\xvec^+(t,\yvec)).
 \end{equation}
 
-There are two Lagrangian properties that deserve further attention. The position and velocity of a fluid particle are given by $\xvec^+ = \xvec^+(t,\yvec)$ and $\vvec^+ = \vvec^+(t,\yvec)$, respectively. These two are related to each other according to 
+There are two Lagrangian properties that deserve further attention. The position and velocity of a particle are given by $\xvec^+ = \xvec^+(t,\yvec)$ and $\vvec^+ = \vvec^+(t,\yvec)$, respectively. These two are related to each other according to 
 \begin{equation}
 \frac{\partial \xvec^+}{\partial t} = \vvec^+.
 \end{equation}
@@ -62,7 +62,7 @@ In abridged notation this becomes
 }
 \end{equation}
 
-For an arbitrary particle, we have for its velocity $\vvec^+ = \vvec(t,\xvec^+)$. Given the velocity of the flow field $\uvec$, one can also define the particle property $\uvec^+ = \uvec(t,\xvec^+)$. We emphasize that $\uvec^+$ is not the velocity of the particle, it is instead an additional particle property since $\vvec^+$ is the actual velocity of the particle. There is a special type of particle, referred to as a fluid particle, which is one that moves with the flow. For this particle $\vvec = \uvec$. We denote properties of a fluid particle with the subscript $_u$, e.g. $\xvec^+_u$, $\fvec^+_u$, etc.
+For an arbitrary particle, the Lagrangian velocity $\vvec^+$ has an Eulerian counterpart $\vvec=\vvec(t,\xvec)$ such that the following is satisfied $\vvec^+ = \vvec(t,\xvec^+)$. For this same particle, we can also introduce the Lagrangian variable $\uvec^+ = \uvec^+(t,\yvec)$ and the Eulerian counterpart $\uvec = \uvec(t,\xvec)$, such that the following is satisfied $\uvec^+ = \uvec(t,\xvec^+)$. We emphasize that $\uvec^+$ is not the velocity of the particle, it is instead an additional particle property since $\vvec^+$ is the actual velocity of the particle. There is a special type of particle, referred to as a fluid particle, which is one that moves with the flow. For this particle $\vvec = \uvec$. We denote properties of a fluid particle with the subscript $u$, e.g. $\xvec^+_u$, $\fvec^+_u$, etc.
 
 Given the the particle property $\fvec^+_u = \fvec(t,\xvec^+_u)$, we have
 \begin{align}
