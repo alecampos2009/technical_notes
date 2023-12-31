@@ -12,7 +12,9 @@
 
 \maketitle
 
+%------------------------------------------------------------------------
 \section{Governing equations}
+%------------------------------------------------------------------------
 We introduce the flow variables for density $\rho = \rho(\xvec,t)$, velocity $\uvec = \uvec(\xvec,t)$, internal energy $e = e(\xvec,t)$, and stress tensor $\sigmavec = \sigmavec(\xvec,t)$. These are defined within a domain $\Omega = \Omega(t)$, which can be moving. The governing equations that dictate their evolution in the laboratory reference frame are
 \begin{equation}
     \frac{\partial \rho}{\partial t} + \uvec \cdot \nabla \rho = -\rho \nabla \cdot \uvec,
@@ -38,7 +40,9 @@ A note on notation. The products that involve a tensor $\tauvec$ can be expresse
 \end{equation}
 where $\alpha$ is a scalar and $\fvec$ a vector. In these notes we'll mostly be using indices $i$ and $j$ for FE expansions, rather than for Einstein notation.
 
+%------------------------------------------------------------------------
 \section{Finite element expansion}
+%------------------------------------------------------------------------
 We introduce the coefficients $\hat{d}_i = \hat{d}_i(t)$, $\hat{\uvec}_i = \hat{\uvec}_i(t)$ and $\hat{e}_i = \hat{e}_i(t)$, as well as the basis functions $\phi_i = \phi_i(\xvec,t) \in L^2$, and $w_i = w_i(\xvec,t) \in H^1$. We note that $\hat{\uvec}_i$ is a vector whose components are $\hat{u}_{i,\alpha} = \hat{u}_{i,\alpha}(t)$ for $\alpha = x,y,z$. These coefficients are used in the following expansions
 \begin{equation}
     \rho = \sum_j^{N_\phi} \hat{d}_j \phi_j,
@@ -57,7 +61,9 @@ The basis functions are defined so that they are Lagrangian, that is,
     \frac{\partial w_j}{\partial t} + \uvec \cdot \nabla w_j = 0.
 \end{equation}
 
+%------------------------------------------------------------------------
 \section{Semi-discrete momentum conservation}
+%------------------------------------------------------------------------
 We begin by showing that
 \begin{align}
     \frac{\partial \uvec}{\partial t} + \uvec \cdot \nabla \uvec &= \sum_j^{N_w} \left ( \frac{d \hat{\uvec}_j}{d t} w_j + \hat{\uvec}_j \frac{\partial w_j}{\partial t} \right ) + \uvec \cdot \left ( \sum_j^{N_w} \hat{\uvec}_j \nabla w_j \right ) \nonumber \\
@@ -98,8 +104,11 @@ The above is the negative of the right-hand side of \cref{eq:semi_discrete_momen
 \begin{equation}
     \Mvec^{(w)} \frac{d\Uvec}{dt} = -\Fvec \Cvec.
 \end{equation}
+We note that since both the Lagrangian and Eulerian velocities share the same coefficients $\Uvec$, we now have a solution for both.
 
+%------------------------------------------------------------------------
 \section{Semi-discrete energy conservation}
+%------------------------------------------------------------------------
 As with momentum conservation, we have
 \begin{align}
     \frac{\partial \evec}{\partial t} + \uvec \cdot \nabla \evec &= \sum_j^{N_\phi} \left ( \frac{d \hat{\evec}_j}{d t} \phi_j + \hat{\evec}_j \frac{\partial \phi_j}{\partial t} \right ) + \uvec \cdot \left ( \sum_j^{N_\phi} \hat{\evec}_j \nabla \phi_j \right ) \nonumber \\
@@ -133,6 +142,11 @@ We now introduce the vector $\Evec$ whose components are $\hat{e}_i$. We also in
 \begin{equation}
     \Mvec^{(\phi)} \frac{d\Evec}{dt} = \Fvec^T \cdot \Uvec.
 \end{equation}
-Note again that on the right-hand side above there is a matrix-vector product \textit{and} a dot product.
+Note again that on the right-hand side above there is a matrix-vector product \textit{and} a dot product. We also note that since both the Lagrangian and Eulerian internal energies share the same coefficients $\Evec$, we now have a solution for both.
+
+%------------------------------------------------------------------------
+\section{Semi-discrete equations for $\xvec^+$, $\Jvec^+$ and $\rho^+$}
+%------------------------------------------------------------------------
+
 
 \end{document}

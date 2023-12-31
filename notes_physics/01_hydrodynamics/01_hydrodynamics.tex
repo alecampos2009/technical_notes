@@ -16,19 +16,13 @@
 \chapter*{Preface}
 \addcontentsline{toc}{chapter}{Preface}
 
-%###############################################################################
-%                                                                              #
-%                                                                              #
-\part{Introductory Concepts}                                                  %#
-%                                                                              #
-%                                                                              #
-%###############################################################################
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\part{Introductory Concepts}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%###############################################################################
-%
+%########################################################################
 \chapter{Kinematics of fluid motion}
-%
-%###############################################################################
+%########################################################################
 
 %-------------------------------------------------------------------------
 \section{Eulerian \& Lagrangian reference frames}
@@ -141,34 +135,34 @@ This is the analogue of \cref{eq:kinematic_material_derivative_fluid}. The term 
 This is the analogue of \cref{eq:material_derivative_definition}.
 
 %-------------------------------------------------------------------------
-\section{The Cauchy matrix}
+\section{The Jacobian matrix}
 %-------------------------------------------------------------------------
-We introduce the Cauchy matrix $c^+_{ij} = c^+_{ij}(t,\yvec)$, which is defined by
+We introduce the Jacobian matrix $\Jvec^+$ with components $J^+_{ij} = J^+_{ij}(t,\yvec)$ defined by
 \begin{equation}
-    \label{eq:kinematics_cauchy_def}
-    c^+_{ij} = \frac{\partial x^+_i}{\partial y_j}.
+    \label{eq:kinematics_Jacobian_def}
+    J^+_{ij} = \frac{\partial x^+_i}{\partial y_j}.
 \end{equation}
 Thus, the total differential for the Lagrangian velocity can be expressed as follows
 \begin{equation}
-dx^+_i = \frac{ \partial x^+_i}{\partial t} dt + \frac{\partial x^+_i}{\partial y_j}dy_j = v^+_i dt + c^+_{ij} dy_j,
+dx^+_i = \frac{ \partial x^+_i}{\partial t} dt + \frac{\partial x^+_i}{\partial y_j}dy_j = v^+_i dt + J^+_{ij} dy_j,
 \end{equation}
-The evolution equation for the Cauchy matrix is derived as follows
+The evolution equation for the Jacobian matrix is derived as follows
 \begin{align}
-\label{eq:pde_of_cauchy_matrix}
-\frac{\partial c^+_{ij}}{\partial t} & = \frac{\partial}{\partial y_j} \left ( \frac{\partial x^+_i}{\partial t} \right ) = \frac{\partial v^+_i}{\partial y_j} = \frac{\partial v_i(t,\xvec^+)}{\partial y_j} = \frac{\partial x^+_{k}}{\partial y_j} \left ( \frac{ \partial v_i}{\partial x_k} \right )_{\xvec = \xvec^+} = c^+_{kj} \left ( \frac{ \partial v_i}{\partial x_k} \right )_{\xvec = \xvec^+} 
+\label{eq:pde_of_Jacobian_matrix}
+\frac{\partial J^+_{ij}}{\partial t} & = \frac{\partial}{\partial y_j} \left ( \frac{\partial x^+_i}{\partial t} \right ) = \frac{\partial v^+_i}{\partial y_j} = \frac{\partial v_i(t,\xvec^+)}{\partial y_j} = \frac{\partial x^+_{k}}{\partial y_j} \left ( \frac{ \partial v_i}{\partial x_k} \right )_{\xvec = \xvec^+} = J^+_{kj} \left ( \frac{ \partial v_i}{\partial x_k} \right )_{\xvec = \xvec^+} 
 \end{align}
 
 We now introduce $J^+ = J^+(t)$ as
 \begin{equation}
-    J^+ = \det (\cvec^+).
+    J^+ = \det (\Jvec^+).
 \end{equation}
 Jacobi's formula for some matrix $\avec = \avec(t)$ is as follows
 \begin{equation}
     \frac{\partial \det( \avec )}{\partial t} = \det( \avec ) tr \left ( \avec^{-1} \cdot \frac{\partial \avec}{\partial t} \right ).
 \end{equation}
-Thus, for the Cauchy matrix, we have
+Thus, for the Jacobian matrix, we have
 \begin{equation}
-    \frac{\partial \det(\cvec^+) }{\partial t} = \det( \cvec^+ ) tr \left [ (\cvec^+)^{-1} \cdot \left ( \Gvec \right )_{\xvec = \xvec^+} \cdot \cvec^+ \right ],
+    \frac{\partial \det(\Jvec^+) }{\partial t} = \det( \Jvec^+ ) tr \left [ (\Jvec^+)^{-1} \cdot \left ( \Gvec \right )_{\xvec = \xvec^+} \cdot \Jvec^+ \right ],
 \end{equation}
 where $G_{ij} = \partial v_i / \partial x_j$. The trace on the right-hand is a product of three matrices of the following form $a^{-1}_{ij} b_{jk} a_{ki}$. This is equivalent to $b_{kk}$.
 Thus, we finally have
@@ -178,12 +172,12 @@ Thus, we finally have
 \end{equation}
 Consider now a fluid particle, so that 
 \begin{equation}
-    \label{eq:kinematic_cauchy_def_fluid}
-    c_{u,ij}^+ = \frac{\partial x_{u,i}^+}{\partial y_j},
+    \label{eq:kinematic_Jacobian_def_fluid}
+    J_{u,ij}^+ = \frac{\partial x_{u,i}^+}{\partial y_j},
 \end{equation}
 and
 \begin{equation}
-    J_u^+ = \det(\cvec_u^+).
+    J_u^+ = \det(\Jvec_u^+).
 \end{equation}
 Given \cref{eq:kinematic_evolution_J}, its evolution equation is
 \begin{equation}
@@ -236,21 +230,21 @@ Using (\cref{eq:material_line}), the above becomes
 \begin{equation}
 l^+_i(t,\yvec) = f_j(\yvec) \left ( \frac{\partial x_i^+(t,\zvec)}{\partial z_j} \right )_{\zvec = \yvec} + o[|\fvec( \yvec)|].
 \end{equation}
-In terms of the Cauchy matrix, the above is rewritten as
+In terms of the Jacobian matrix, the above is rewritten as
 \begin{equation}
-l^+_i(t,\yvec) = f_j(\yvec)c^+_{ij}(t,\yvec) + o[|\fvec( \yvec)|].
+l^+_i(t,\yvec) = f_j(\yvec)J^+_{ij}(t,\yvec) + o[|\fvec( \yvec)|].
 \end{equation}
 
 Neglecting higher order terms, we have the following ODE and its proposed solution
 \begin{equation}
 \label{eq:material_line_eqs}
-\frac{\partial l_i^+}{\partial t} = l_j^+ \left ( \frac{\partial u_i}{\partial x_j} \right )_{\xvec = \xvec^+_u} \qquad l^+_i = f_j c^+_{ij}.
+\frac{\partial l_i^+}{\partial t} = l_j^+ \left ( \frac{\partial u_i}{\partial x_j} \right )_{\xvec = \xvec^+_u} \qquad l^+_i = f_j J^+_{ij}.
 \end{equation}
-Plugging the proposed solution for $l_i^+$ into its ODE, and using equation (\ref{eq:pde_of_cauchy_matrix}) for a fluid particle, shows that this is indeed a solution, as shown below
+Plugging the proposed solution for $l_i^+$ into its ODE, and using equation (\ref{eq:pde_of_Jacobian_matrix}) for a fluid particle, shows that this is indeed a solution, as shown below
 \begin{equation}
-\frac{\partial l_i^+}{\partial t} = \frac{\partial}{\partial t}  ( f_j c^+_{ij} ) 
-= f_j \frac{\partial c^+_{ij}}{\partial t}
-= f_j c^+_{kj} \left ( \frac{\partial u_i}{\partial x_k} \right )_{\xvec=\xvec^+_u} 
+\frac{\partial l_i^+}{\partial t} = \frac{\partial}{\partial t}  ( f_j J^+_{ij} ) 
+= f_j \frac{\partial J^+_{ij}}{\partial t}
+= f_j J^+_{kj} \left ( \frac{\partial u_i}{\partial x_k} \right )_{\xvec=\xvec^+_u} 
 = l_k^+ \left ( \frac{\partial u_i}{\partial x_k} \right )_{\xvec = \xvec^+_u}.
 \end{equation}
 
@@ -273,9 +267,9 @@ Plugging the proposed solution for $l_i^+$ into its ODE, and using equation (\re
 %If we let $\bold{b}(t,\bold{x})=\bold{U}(t,\bold{x})$, that is, be the same as the velocity of the flow, and then apply Gauss's theorem, we obtain the Reynolds transport theorem,
 %\[\frac{D}{Dt}\int_{v} F\,dV=\int_{v} \frac{\partial F}{\partial t}+\nabla\cdot(F\mathbf{U})\,dv\]
 
-%------------------------------------------------------------------------------------------------------------------------------------
+%########################################################################
 \chapter{Conservation laws}
-%------------------------------------------------------------------------------------------------------------------------------------
+%########################################################################
 Conservation laws describe changes in mass, momentum, energy and passive scalars. The densities of these four variables are shown below 
 \begin{center}
 \begin{tabular}{|c|c|}
@@ -754,11 +748,9 @@ Transport coefficients:
     S^*_{ij} = \frac{1}{2} \left ( \frac{\partial u_i}{\partial x_j} + \frac{\partial u_j}{\partial x_i} \right ) - \frac{1}{3} \frac{\partial u_k}{\partial x_k} \delta_{ij}
 \end{equation}
 
-%###############################################################################
-%
+%########################################################################
 \chapter{Alternate Forms of the Governing Equations}
-%
-%###############################################################################
+%########################################################################
 
 %-------------------------------------------------------------------------
 \section{Vorticity Equation}
@@ -1123,40 +1115,27 @@ Using \cref{eq:ale_integral_energy} and the divergence theorem, this can be writ
     \int_{\partial \Omega^+(t)} -(p\uvec + \uvec \cdot \tvec) \cdot \nvec \, ds + \int_{\Omega^+(t)} \rho \fvec \cdot \uvec \, ds - \int_{\partial \Omega^+(t)} \qvec \cdot \nvec \, ds.
 \end{multline}
 
-%###############################################################################
-%                                                                              #
-%                                                                              #
-\part{Inviscid Incompressible Flow}                                           %#
-%                                                                              #
-%                                                                              #
-%###############################################################################
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\part{Inviscid Incompressible Flow}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%###############################################################################
-%	
+%########################################################################	
 \chapter{Inviscid solutions of the Navier Stokes Equations}
-%
-%###############################################################################
+%########################################################################
 
-%###############################################################################
-%
+%########################################################################
 \chapter{Potential Flow}
-%
-%###############################################################################
+%########################################################################
 Velocity potential; Cauchy-Riemman eqs.; Laplace's eq.; Uniform, Source/Sink, Doublet and Vortex flows; Kutta-Joukowski Thm.; Cylinder flow.
 
-%###############################################################################
-%                                                                              #
-%                                                                              #
-\part{Compressible Flow}                                                      %#
-%                                                                              #
-%                                                                              #
-%###############################################################################
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\part{Compressible Flow}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%###############################################################################
-%
+%########################################################################
 \chapter{Thermodynamics}
-%
-%###############################################################################
+%########################################################################
+
 %-------------------------------------------------------------------------
 \section{Thermodynamic variables}
 %-------------------------------------------------------------------------
@@ -1305,7 +1284,7 @@ If we evaluate the above at the position $\xvec^+_u$ of a fluid particle, we can
 \end{equation}
 This equation is identical to that shown on the left of (\ref{eq:material_line_eqs}), and thus its solution is 
 \begin{equation}
-\frac{w^+_{u,i}(t,\yvec)}{\rho^+_u(t,\yvec)} = \frac{w^+_{u,j}(0,\yvec)}{\rho^+_u(0,\yvec)} c^+_{ij}.
+\frac{w^+_{u,i}(t,\yvec)}{\rho^+_u(t,\yvec)} = \frac{w^+_{u,j}(0,\yvec)}{\rho^+_u(0,\yvec)} J^+_{ij}.
 \end{equation}
 
 %-------------------------------------------------------------------------
@@ -1359,11 +1338,10 @@ For perfect gasses, $C_v$ and $C_p$ are constant. Thus, $e(T) - e(T_0) = C_v (T 
     h = C_p T.
 \end{equation}
 
-%###############################################################################
-%
+%########################################################################
 \chapter{Isentropic flow}
-%
-%###############################################################################
+%########################################################################
+
 %-------------------------------------------------------------------------
 \section{Definitions and governing equations}
 %-------------------------------------------------------------------------
@@ -1537,11 +1515,9 @@ Using \cref{eq:isentropic_relation_perfect_gas_2,eq:isentropic_relation_perfect_
     \frac{\rho_t}{\rho} = \left ( 1 + \frac{\gamma -1}{2} M^2 \right)^{1 / (\gamma - 1)}.
 \end{equation}
 
-%###############################################################################
-%
+%########################################################################
 \chapter{Acousitcs}
-%
-%###############################################################################
+%########################################################################
 
 Express the density, pressure, and velocity as 
 \begin{equation}
@@ -1612,11 +1588,9 @@ which represents the speed of sound. Using \cref{eq:thermo_relationship_for_sos}
     c^2 = \gamma R T.
 \end{equation}
 
-%###############################################################################
-%
+%########################################################################
 \chapter{Shock waves and related discontinuities}
-%
-%###############################################################################
+%########################################################################
 Shock jump relations; Prandtl relation and Shock equations; Oblique shocks, theta-beta curve; Shock wave boundary layer interaction.
 
 %-------------------------------------------------------------------------
@@ -1876,40 +1850,28 @@ Assume a vehicle is moving at a Mach number greater than one. In \cref{fig:mach_
 %-------------------------------------------------------------------------
 A contact discontinuity is defined as a surface that separates two fluids of different properties or at different states. A defining condition is that there is no flow of matter across a contact discontinuity, that is, $w_1 = w_2 = 0$. Using this in the integral momentum conservation equation for a thin box bounding the discontinuity, and assuming negligible viscous stresses and heat fluxes, leads to $P_1 = P_2$. However, other flow properties, such as $\rho$, $T$, and $v$ can change across the discontinuity.
 
-%###############################################################################
-%
+%########################################################################
 \chapter{Quasi 1-D steady flow}
-%
-%###############################################################################
+%########################################################################
 Quasi 1-D eqs; mass balance, f(M), and PAFMT; Fanno flow, Rayleigh flow.
 
-%###############################################################################
-%
+%########################################################################
 \chapter{Quasi 1-D unsteady flow}
-%
-%###############################################################################
+%########################################################################
 Local acoustic speed, Expansion and Compression wave, Shock tube.
 
-%###############################################################################
-%
+%########################################################################
 \chapter{2-D Compressible flow}
-%
-%###############################################################################
+%########################################################################
 Prandtl-Meyer (Compressive, Expansive); Shock-Expansion Theory: 2D Airfoil Calculations, Shock Reflection, Isentropic flow in curved channel, Nozzle exit flows.
 
-%###############################################################################
-%                                                                              #
-%                                                                              #
-\part{Viscous Flow}                                                           %#
-%                                                                              #
-%                                                                              #
-%###############################################################################
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\part{Viscous Flow}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%###############################################################################
-%
+%########################################################################
 \chapter{Viscous solutions of the Navier Stokes Equations}
-%
-%###############################################################################
+%########################################################################
 Viscous effects include friction drag, flow separation(leading edge stall, trailing edge stall, thin airfoil stall), and viscous dissipation.
 
 %-------------------------------------------------------------------------
@@ -1944,11 +1906,9 @@ Viscous effects include friction drag, flow separation(leading edge stall, trail
 \section{Lubrication Theory and Flow in thin structures}
 %-------------------------------------------------------------------------
 
-%###############################################################################
-%
+%########################################################################
 \chapter{Boundary Layers}
-%
-%###############################################################################
+%########################################################################
 
 %-------------------------------------------------------------------------
 \section{Introduction}
@@ -1998,19 +1958,13 @@ Viscous effects include friction drag, flow separation(leading edge stall, trail
 \subsection{Falkner Skan}
 %---------------------------------
 
-%###############################################################################
-%                                                                              #
-%                                                                              #
-\part{Hydrodynamic Instabilities}                                             %#
-%                                                                              #
-%                                                                              #
-%###############################################################################
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\part{Hydrodynamic Instabilities}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%###############################################################################
-%
+%########################################################################
 \chapter{Linear Stability}
-%
-%###############################################################################
+%########################################################################
 Consider the following system of PDEs for a two-dimensional problem
 \begin{equation}
     \frac{\partial w}{\partial t} = \frac{\partial \phi}{\partial y}\frac{\partial w}{\partial x} - \frac{\partial \phi}{\partial x} \frac{\partial w}{\partial y},
@@ -2074,19 +2028,13 @@ This is re-written as
     \gamma \left ( \frac{\partial^2 \tilde{\phi}}{\partial x^2} - k_y^2 \tilde{\phi} \right ) = -i k_y \left [ \frac{\partial \phi_0}{\partial x} \left ( \frac{\partial^2 \tilde{\phi}}{\partial x^2} - k_y^2 \tilde{\phi} \right ) - \frac{\partial^3 \phi_0}{\partial x^3} \tilde{\phi} \right ].
 \end{equation}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \appendix
-%
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%###############################################################################
-%
+%########################################################################
 \chapter{Vectors in rotating reference frames}
-%
-%###############################################################################
+%########################################################################
 
 %-------------------------------------------------------------------------
 \section{Basic properties}
@@ -2342,11 +2290,9 @@ Finally, since this holds for any $\tilde{\xvec}^+$, we get
     \left . + \dot{\vec{\Omega}} \times \left ( \tilde{x}_i \hat{b}^{(i)}\right ) + \vec{\Omega} \times \left [ \vec{\Omega} \times \left ( \tilde{x}_i \hat{b}^{(i)} \right ) \right ] \right \} = -\frac{\partial \tilde{p}(t,\tilde{\xvec})}{\partial \tilde{x}_i} \hat{b}^{(i)} + \frac{\partial \tilde{\tau}_{ij}(t,\tilde{\xvec})}{\partial \tilde{x}_j} \hat{b}^{(i)}.
 \end{multline}
 
-%###############################################################################
-%
+%########################################################################
 \chapter{Multi-component fluid flows}
-%
-%###############################################################################
+%########################################################################
 Multi-component fluid flows are governed by the multi-component Navier-Stokes equations. These consist of the traditional Navier-Stokes equations augmented with multiple scalars, where each scalar is the species mass fraction of a component in the system. The species mass fraction of component $\alpha$ is given by $Y_\alpha = m_\alpha/m$, where $m_\alpha = m_\alpha(t,\xvec)$ is the mass of the $\alpha$ component, and $m = m(t,\xvec)$ is the total mass. The species mass fractions are no longer passive scalars. For ideal gases, for example, they affect the value of $R$, which in turns affects the pressure, density, and temperature of the whole mixture. They also affect the enthalpy diffusion, which then alters the heat flux and internal energy. 
 
 %-------------------------------------------------------------------------
@@ -2565,11 +2511,9 @@ K = \frac{1}{2} u_i u_i
     S^*_{ij} = \frac{1}{2} \left ( \frac{\partial u_i}{\partial x_j} + \frac{\partial u_j}{\partial x_i} \right ) - \frac{1}{3} \frac{\partial u_k}{\partial x_k} \delta_{ij}
 \end{equation}
 
-%###############################################################################
-%
+%########################################################################
 \chapter{Multi-component fluid flows in thermochemical nonequilibrium}
-%
-%###############################################################################
+%########################################################################
 In this chapter we describe the governing equations for a system of species in thermochemical nonequilibrium. The total number of molecular species is $nms$ and the total number of species (atomic + molecular) is $ns$.
 %-------------------------------------------------------------------------
 \section{Conservation equations}
@@ -2775,11 +2719,9 @@ For the above, $A_\beta$ is the pre-exponential factor, $\eta_\beta$ is the temp
     S^*_{ij} = \frac{1}{2} \left ( \frac{\partial u_i}{\partial x_j} + \frac{\partial u_j}{\partial x_i} \right ) - \frac{1}{3} \frac{\partial u_k}{\partial x_k} \delta_{ij}
 \end{equation}
 
-%###############################################################################
-%
+%########################################################################
 \chapter{Aerodynamics}
-%
-%###############################################################################
+%########################################################################
 To compute total forces and moments on an aerodynamic body, integration over its surface is performed. Thus, at each point of the surface $s$, the contribution to the total force or moment due to the local stress vector $\Tvec$ is added. That is,
 \begin{itemize}
     \item total force vector
@@ -2848,11 +2790,9 @@ and the moment coefficient by
     C_M = \frac{M}{q_\infty Sl}.
 \end{equation}
 
-%###############################################################################
-%
+%########################################################################
 \chapter{Non-dimensionalization for compressible flows}
-%
-%###############################################################################
+%########################################################################
 Non-dimensionalization
 \begin{align}
 x_i = x^*_i L_0 &\qquad \qquad T = T^* T_0 \nonumber \\
@@ -2950,11 +2890,9 @@ T_0 &= \text{from }c_0 \nonumber \\
 
 We then set $\gamma = 1.4$, $R = \frac{1}{\gamma}$ and compute $\kappa$ from $Pr$.
 
-%###############################################################################
-%
+%########################################################################
 \chapter{Helmholtz Decomposition}
-%
-%###############################################################################
+%########################################################################
 \begin{equation}
     \uvec = \uvec^{(s)} + \uvec^{(d)} + \uvec^{(h)}
 \end{equation}

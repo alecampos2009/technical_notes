@@ -11,18 +11,18 @@
 \maketitle
 \tableofcontents
 
-%----------------------------------------------------------------------------------------------------------------------
+%########################################################################
 \chapter{Basics about lasers}
-%----------------------------------------------------------------------------------------------------------------------
+%########################################################################
 Consider a wave that depends on time $t$ and single spatial dimension $x$, which is orthogonal to the direction of propagation. 
 
 A wave is spatially coherent at a given time $t$, position $x$, and separation distance $L$ if the phase difference between the points $x$ and $x+L$ at time $t$ is the same as that at a later time $t+dt$. You can keep on picking larger and larger values of $L$ until this is not the case, this $L$ would be the spatial coherence length $L_c$ = $L_c(t,x)$.
 
 A wave is temporally coherent at a given time $t$, position $x$, and separation time $\tau$ if the phase difference between times $t$ and $t+\tau$ at position $x$ is the same as that between times $t+dt$ and $t+dt+\tau$. You can keep on picking larger and larger values of $\tau$ until this is no longer the case, this $\tau$ would be the temporal coherence length $\tau_c = \tau_c(t,x)$.
 
-%----------------------------------------------------------------------------------------------------------------------
+%########################################################################
 \chapter{Governing equations}
-%----------------------------------------------------------------------------------------------------------------------
+%########################################################################
 The starting point are the multi-fluid conservation laws and the Maxwell equations. We assume there are two species: electrons and ions. Additionally, we assume homentropic flow, and no sources, stresses, and collisions. Thus, the governing equations are
 \begin{equation}
     \label{eq:pwaves_ion_density}
@@ -71,9 +71,10 @@ The starting point are the multi-fluid conservation laws and the Maxwell equatio
     \rho_e = e (Z n_i - n_e) 
 \end{equation}
 
-%----------------------------------------------------------------------------------------------------------------------
+%########################################################################
 \chapter{Electron-plasma and ion-acoustic waves}
-%----------------------------------------------------------------------------------------------------------------------
+%########################################################################
+
 %-------------------------------------------------------------------------
 \section{Linearization}
 %-------------------------------------------------------------------------
@@ -282,9 +283,10 @@ where
     v_s = \sqrt{ \frac{Z \gamma_e k_B T_e + \gamma_i k_B T_i }{m_i} }.
 \end{equation}
 
-%----------------------------------------------------------------------------------------------------------------------
+%########################################################################
 \chapter{Longitudinal and transverse waves}
-%----------------------------------------------------------------------------------------------------------------------
+%########################################################################
+
 %-------------------------------------------------------------------------
 \section{Definitions}
 %-------------------------------------------------------------------------
@@ -374,9 +376,10 @@ For ion-acoustic waves, we can use \cref{eq:em_general_wave_form} to write \cref
 \end{equation}
 Since the second term on the left-hand side and the term on the right-hand side point along $\kvec_i$, $\hat{\uvec}_{i1}$ also points along $\kvec_i$, that is, $\hat{\uvec}_{i1} = \hat{\uvec}_{i1,l}$. Finally, we note that the electric field being purely longitudinal is in agreement with \cref{eq:ia_waves_E}.
 
-%----------------------------------------------------------------------------------------------------------------------
+%########################################################################
 \chapter{Electromagnetic waves in plasmas}
-%----------------------------------------------------------------------------------------------------------------------
+%########################################################################
+
 \label{sec:electromagnetic_waves_plasmas}
 In introductory electrodynamics, one typically studies electromagnetic waves in vacuum, that is, for cases where $\rho_e = \Jvec = 0$. In this section we relax both of these assumptions. Consider the electric and magnetic fields as well as the scalar and vector potentials, which satisfy
 \begin{equation}
@@ -568,9 +571,10 @@ We now use the decomposition $n_e = n_{e0} + n_{e1}$, where $n_{e0}$ is time ind
 \end{equation}
 where $w_{pe}^2 = e^2 n_{e0} / m_e \epsilon_0$.
 
-%----------------------------------------------------------------------------------------------------------------------
+%########################################################################
 \chapter{Electromagnetic waves in a stable plasma}
-%----------------------------------------------------------------------------------------------------------------------
+%########################################################################
+
 %-------------------------------------------------------------------------
 \section{The vector potential}
 %-------------------------------------------------------------------------
@@ -688,9 +692,10 @@ Thus, the curl of $\Bvec$ can be expressed as
 
 As mentioned in \cref{sec:semp_vector_potential}, for a uniform stable plasma we have $\epsilon$ equal to a constant. Thus, \cref{eq:semp_general_trans_B_complete_spec} becomes identical to \cref{eq:semp_general_trans_E_complete_spec}, that is, the wave forms of $\Evec_t$ and $\Bvec$ are the same. 
 
-%----------------------------------------------------------------------------------------------------------------------
+%########################################################################
 \chapter{Stimulated Raman and Brillouin instabilities}
-%----------------------------------------------------------------------------------------------------------------------
+%########################################################################
+
 %-------------------------------------------------------------------------
 \section{Linearization}
 %-------------------------------------------------------------------------
@@ -885,13 +890,13 @@ Since $p_{i0}/n_{i0} = k_B T_{i0}$ and $p_{e0} / n_{e0} = k_B T_{e0}$, we finall
 \end{equation}
 Thus, the scattered laser light $\Avec_s$ couples with the laser light to serve as a source for the ion-acoustic wave.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \appendix
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%----------------------------------------------------------------------------------------------------------------------
+%########################################################################
 \chapter{Light-matter interactions}
-%----------------------------------------------------------------------------------------------------------------------
+%########################################################################
 \begin{figure}[ht]
     \centering
     \includegraphics[width=15cm]{../../images/light_matter.pdf}

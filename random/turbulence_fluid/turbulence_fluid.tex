@@ -137,22 +137,12 @@
 \tableofcontents
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                                                                       %
-%                                                                       %
-%                                                                       %
-%                                                                       %
 \part{Introductory Concepts}
-%                                                                       %
-%                                                                       %
-%                                                                       %
-%                                                                       %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%###############################################################################
-%
+%########################################################################
 \chapter{Governing Equations for Fluid Dynamics}
-%
-%###############################################################################
+%########################################################################
 Before we derive the conservation equations for turbulent quantities, we first briefly summarize the conservation equations for the instantaneous fluid variables.
 \begin{itemize}
 \item Conservation of mass
@@ -238,11 +228,9 @@ From the governing equations, additional transport PDEs can be derived.
 \end{equation}
 \end{itemize}
 
-%###############################################################################
-%
+%########################################################################
 \chapter{Governing Statistical Equations for Turbulent Flows}
-%
-%###############################################################################
+%########################################################################
 
 %-------------------------------------------------------------------------------
 \section{Decompositions}
@@ -849,23 +837,12 @@ Assuming incompressible flow in \cref{eq:scalar_variance_favre}, we obtain
 \end{equation}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                                                                       %
-%                                                                       %
-%                                                                       %
-%                                                                       %
 \part{Homogeneous Turbulence}
-%
-%                                                                       %
-%                                                                       %
-%                                                                       %
-%                                                                       %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%###############################################################################
-%
+%########################################################################
 \chapter{Governing equations for incompressible flows}
-%
-%###############################################################################
+%########################################################################
 
 %-------------------------------------------------------------------------------
 \section{Evolution of the mean variables}
@@ -1047,11 +1024,9 @@ The rapid pressure-rate-of-strain term can now be written in the succinct notati
 \redi^{(r)}_{ij} = 2\frac{\partial \uavg_k}{\partial x_l} (M_{iljk} + M_{jlik}).
 \end{equation}
 
-%###############################################################################
-%
+%########################################################################
 \chapter{Spectral Analysis}
-%
-%###############################################################################
+%########################################################################
 
 %-------------------------------------------------------------------------------
 \section{Definitions}
@@ -1379,11 +1354,9 @@ $\rs_{ij}$: & $\dfrac{\partial \rs_{ij}}{\partial t}$ & $\uavg_k \dfrac{\partial
 \hline
 \end{tabular}
 
-%###############################################################################
-%
+%########################################################################
 \chapter{Rapid-distortion theory}
-%
-%###############################################################################
+%########################################################################
 \begin{itemize}
 \item Homogeneous RDT used much more (origin. Taylor, Prandt'l, 1930's)
 \item Viscous effects can be included but often neglected
@@ -1683,28 +1656,16 @@ This shows that the Reynolds stresses can be computed directly from $\tilde{\est
 %\end{equation}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                                                                       %
-%                                                                       %
-%                                                                       %
-%                                                                       %
 \part{Inhomogeneous turbulence}
-%                                                                       %
-%                                                                       %
-%                                                                       %
-%                                                                       %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%###############################################################################
-%
+%########################################################################
 \chapter{Free shear flows}
-%
-%###############################################################################
+%########################################################################
 
-%###############################################################################
-%
+%########################################################################
 \chapter{Wall-bounded flows}
-%
-%###############################################################################
+%########################################################################
 
 %-------------------------------------------------------------------------------
 \section{Fully-developed flows}
@@ -1867,22 +1828,12 @@ which is of equivalent form to that of the channel if one uses the substitution 
 %--------------------------------------------
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                                                                       %
-%                                                                       %
-%                                                                       %
-%                                                                       %
-\part{Modeling and Simulation}														             %
-%                                                                       %
-%                                                                       %
-%                                                                       %
-%                                                                       %
+\part{Modeling and Simulation}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%###############################################################################
-%
+%########################################################################
 \chapter{RANS Modeling}
-%
-%###############################################################################
+%########################################################################
 This chapter focuses on models for the Reynolds stresses themselves, without use of the Boussinesq approximation such as in Eddy-Viscosity Models (EVMs). Nonetheless a few comments are first mentioned regarding EVMs. The $k-\epsilon$ model, which was quite popular some long time ago, has the following characteristics:
 \begin{itemize}
 \item One of the first two-equation models that showed moderate success across in a variety of engineering problems.
@@ -2118,11 +2069,9 @@ Equation (\ref{implicit_rs}) is an implicit algebraic equation for the Reynolds 
 
 The method for obtaining and explicit expression for $b_{ij}$ from equation (\ref{implicit_rs}) is the following. First, the polynomial expansion (\ref{eq:poly_expansion}) is used to replace $b_{ij}$ in the implicit equation, except for the stresses that define $N$ since this variable is left as a yet undetermined function. All higher order tensors in this new equation are replaced by combinations of elements of the integrity basis using the Cayley-Hamilton theorem. By matching coefficients corresponding to the same element of the integrity basis one obtains expressions for the weights $p^{(k)}$ as a function of $N$. Finally, the polynomial expansion for $b_{ij}$ with the new  expressions for $p^{(k)}$ is used in the definition of $N$ (\ref{n_def}). This leads to a non-linear algebraic equation for N and its solution is used in the expressions for $p^{(k)}$.
 
-%###############################################################################
-%
+%########################################################################
 \chapter{Probability Density Function Methods}
-%
-%###############################################################################
+%########################################################################
 
 %-------------------------------------------------------------------------------
 \section{The Eulerian Modeling Approach}
@@ -2459,11 +2408,10 @@ g^{(h)}(\vvec;t) =  \int g_L(\vvec,\xvec;t|\yvec)dy = \int h_L(\vvec, \xvec - \y
 \end{equation}
 where we used integration by substitution for the variable $\yvec(\rvec) = \xvec - \rvec$. The last integral above constitutes the fluctuating Lagrangian PDF for $\uvec'^+(t,\yvec)$, which we label as $g_L^{(h)} = g_L^{(h)}(\vvec; t)$. Thus, for homogeneous turbulence, the PDFs for $\uvec'(t,\xvec)$ and $\uvec'^+(t,\yvec)$ are equal, that is $g^{(h)} = g_L^{(h)}$.
 
-%###############################################################################
-%
+%########################################################################
 \chapter{Large-eddy simulation}
-%
-%###############################################################################
+%########################################################################
+
 %-------------------------------------------------------------------------------
 \section{Decompositions}
 %-------------------------------------------------------------------------------
@@ -2662,11 +2610,9 @@ Assume we have used a sharp spectral filter with filter width $\Delta$ on a one-
 If we instead use a non-spectral scheme, a finer mesh spacing would be needed ...
 
 
-%###############################################################################
-%
+%########################################################################
 \chapter{Direct Numerical Simulation}
-%
-%###############################################################################
+%########################################################################
 
 %-------------------------------------------------------------------------------
 \section{Resolution requirements}
@@ -2699,19 +2645,14 @@ If we instead use a non-spectral scheme, a finer mesh spacing would be needed ..
 For the interior of the flow check that $h/\eta < 12$ where $h = (h_x h_y h_z)^{1/3}$ so that you have at least two points to resolve scales of size $24 \eta$. Those scales correspond to a wave number $0.26/\eta$, which, given isotropic turbulence and a carefully devised model spectrum, Pope (2001) shows is the value at which the maximum dissipation takes place.
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%																			                    %
-%																			                    %
-\appendix																		             %
-%																			                    %
-%																			                    %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\appendix
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%###############################################################################
-%
+%########################################################################
 \chapter{Turbulence in rotating reference frames}
-%
-%###############################################################################
+%########################################################################
+
 See appendix in my fluid dynamics notes before reading this section.
 
 %-------------------------------------------------------------------------------
@@ -2884,12 +2825,9 @@ Using the above in equation (\ref{reynolds_stress_transport_eq_noninertial}) lea
 &=  -\tilde{\rs}_{ik} (\tilde{S}_{kj} - \tilde{W}^*_{kj}) - (\tilde{S}_{ik} + \tilde{W}^*_{ik} ) \tilde{\rs}_{kj} + \tilde{\Pi}_{ij} - \tilde{\epsilon}_{ij} - \frac{\partial}{\partial \tilde{x}_k} \left ( \tilde{\mathcal{T}}^{(u)}_{kij} + \tilde{\mathcal{T}}^{(\nu)}_{kij} \right ).
 \end{align}
 
-
-%###############################################################################
-%
+%########################################################################
  \chapter{RANS equations in cylindrical coordinates}
-%
-%###############################################################################
+%########################################################################
 The continuity equation follows
 \begin{equation}
 \frac{1}{r} \frac{\partial \left ( r \langle u_r \rangle \right )}{\partial r} + \frac{1}{r} \frac{\partial \langle u_\theta \rangle}{\partial \theta} + \frac{\partial \langle u_z \rangle}{\partial z} = 0.
@@ -2911,11 +2849,9 @@ The momentum equations follow
 &- \frac{\partial \langle u_z u_r \rangle}{\partial r} - \frac{1}{r} \frac{\partial \langle u_z u_\theta \rangle}{\partial \theta} - \frac{\partial \langle u_z u_z \rangle}{\partial z} - \frac{\langle u_z u_r \rangle}{r}.
 \end{align}
 
-%###############################################################################
-%
+%########################################################################
 \chapter{Rogallo's initial condition}
-%
-%###############################################################################
+%########################################################################
 The Rogallo method \cite{rogallo1981} can be used to initialize an isotropic turbulent field---it specifies the fourier coefficients (both the magnitude and direction) of the velocity field.
 
 %-------------------------------------------------------------------------------
