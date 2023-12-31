@@ -5,7 +5,7 @@
 \usepackage{fullpage}
 
 
-\title{Marbl}
+\title{Blast}
 
 
 \begin{document}
@@ -15,16 +15,15 @@
 %------------------------------------------------------------------------
 \section{Governing equations}
 %------------------------------------------------------------------------
-We introduce the flow variables for density $\rho = \rho(\xvec,t)$, velocity $\uvec = \uvec(\xvec,t)$, internal energy $e = e(\xvec,t)$, and stress tensor $\sigmavec = \sigmavec(\xvec,t)$. These are defined within a domain $\Omega = \Omega(t)$, which can be moving. The governing equations that dictate their evolution in the laboratory reference frame are
-\begin{equation}
-    \frac{\partial \rho}{\partial t} + \uvec \cdot \nabla \rho = -\rho \nabla \cdot \uvec,
-\end{equation}
-\begin{equation}
-    \rho \left ( \frac{\partial \uvec}{\partial t} + \uvec \cdot \nabla \uvec \right ) = \nabla \cdot \sigmavec,
-\end{equation}
-\begin{equation}
-    \rho \left ( \frac{\partial e}{\partial t} + \uvec \cdot \nabla e \right ) = \sigmavec : \nabla \uvec.
-\end{equation}
+We consider Lagrangian fluid particles, for which we define the position $\xvec^+=\xvec^+(t,\yvec)$, the determinant of the Jacobian $J^+ = J^+(t,\yvec)$, density $\rho^+ = \rho^+(t,\yvec)$, velocity $\uvec^+ = \uvec^+(t,\yvec)$, and internal energy $e^+ = e^+(t,\yvec)$. The Eulerian counterparts for the density, velocity, and internal energy are, respectively, $\rho = \rho(t,\xvec)$, $\uvec = \uvec(t,\xvec)$, and $e = e(t,\xvec)$. The governing equations for the Lagrangian fluid particles are derived in my hydrodynamics notes (see section on kinematics, Lagrangian governing equations, etc.). These are shown below
+\begin{align}
+    \frac{\partial \xvec^+}{\partial t} &= \uvec^+, \\
+    \frac{\partial J^+}{\partial t} &= J^+ \left ( \nabla \cdot \uvec \right )_{\xvec = \xvec^+}, \\
+    \frac{\partial J^+ \rho^+}{\partial t} &= 0, \\
+    \rho^+ \frac{\partial \uvec^+}{\partial t} &= \left ( \nabla \cdot \sigmavec \right )_{\xvec = \xvec^+}, \\
+    \rho^+ \frac{\partial e^+}{\partial t} &= \left ( \sigmavec : \nabla \uvec \right )_{\xvec = \xvec^+}.
+\end{align}
+
 A note on notation. The products that involve a tensor $\tauvec$ can be expressed in Einstein notation as
 \begin{equation}
     \nabla \cdot \tauvec = \frac{\partial \tau_{ij}}{\partial x_j},
@@ -43,26 +42,31 @@ where $\alpha$ is a scalar and $\fvec$ a vector. In these notes we'll mostly be 
 %------------------------------------------------------------------------
 \section{Finite element expansion}
 %------------------------------------------------------------------------
-We introduce the coefficients $\hat{d}_i = \hat{d}_i(t)$, $\hat{\uvec}_i = \hat{\uvec}_i(t)$ and $\hat{e}_i = \hat{e}_i(t)$, as well as the basis functions $\phi_i = \phi_i(\xvec,t) \in L^2$, and $w_i = w_i(\xvec,t) \in H^1$. We note that $\hat{\uvec}_i$ is a vector whose components are $\hat{u}_{i,\alpha} = \hat{u}_{i,\alpha}(t)$ for $\alpha = x,y,z$. These coefficients are used in the following expansions
+We introduce the coefficients $\hat{\xvec}_i = \hat{\xvec}_i(t)$, $\hat{\uvec}_i = \hat{\uvec}_i(t)$ and $\hat{e}_i = \hat{e}_i(t)$, as well as the Lagrangian basis functions $\phi^+_i = \phi^+_i(\yvec) \in L^2$, and $w^+_i = w^+_i(\yvec) \in H^1$. We note that $\hat{\xvec}_i$ and $\hat{\uvec}_i$ are each vectors, e.g., the components of $\hat{\uvec}_i$ are $\hat{u}_{i,\alpha} = \hat{u}_{i,\alpha}(t)$ for $\alpha = x,y,z$. We also note that $\phi^+_i$ and $w^+_i$ have Eulerian counterparts $\phi_i = \phi_i(t,\xvec)$ and $w_i = w_i(t,\xvec)$, respectively (see more details in section on finite elements in my notes for numerical methods). The coefficients are used in the following expansions
 \begin{equation}
-    \rho = \sum_j^{N_\phi} \hat{d}_j \phi_j,
+    \xvec^+ = \sum_j^{N_w} \hat{\xvec}_j w^+_j,
 \end{equation}
 \begin{equation}
-    \uvec = \sum_j^{N_w} \hat{\uvec}_j w_j,
+    \uvec^+ = \sum_j^{N_w} \hat{\uvec}_j w^+_j,
 \end{equation}
 \begin{equation}
-    e = \sum_j^{N_\phi} \hat{e}_j \phi_j,
+    e^+ = \sum_j^{N_\phi} \hat{e}_j \phi^+_j.
 \end{equation}
-The basis functions are defined so that they are Lagrangian, that is,
+We note that the expansion coefficients are the same for the Lagrangian and Eulerian variables. For example, for the Eulerian velocity, we have
 \begin{equation}
-    \frac{\partial \phi_j}{\partial t} + \uvec \cdot \nabla \phi_j = 0,
-\end{equation}
-\begin{equation}
-    \frac{\partial w_j}{\partial t} + \uvec \cdot \nabla w_j = 0.
+    \uvec = \sum_j^{N_w} \hat{\uvec}_j w_j.
 \end{equation}
 
 %------------------------------------------------------------------------
-\section{Semi-discrete momentum conservation}
+\section{Semi-discrete equations for $\xvec^+$ and $\Jvec^+$}
+%------------------------------------------------------------------------
+
+%------------------------------------------------------------------------
+\section{Semi-discrete equation for $\rho^+$}
+%------------------------------------------------------------------------
+
+%------------------------------------------------------------------------
+\section{Semi-discrete equation for $\uvec^+$}
 %------------------------------------------------------------------------
 We begin by showing that
 \begin{align}
@@ -107,7 +111,7 @@ The above is the negative of the right-hand side of \cref{eq:semi_discrete_momen
 We note that since both the Lagrangian and Eulerian velocities share the same coefficients $\Uvec$, we now have a solution for both.
 
 %------------------------------------------------------------------------
-\section{Semi-discrete energy conservation}
+\section{Semi-discrete equation for $e^+$}
 %------------------------------------------------------------------------
 As with momentum conservation, we have
 \begin{align}
@@ -143,10 +147,6 @@ We now introduce the vector $\Evec$ whose components are $\hat{e}_i$. We also in
     \Mvec^{(\phi)} \frac{d\Evec}{dt} = \Fvec^T \cdot \Uvec.
 \end{equation}
 Note again that on the right-hand side above there is a matrix-vector product \textit{and} a dot product. We also note that since both the Lagrangian and Eulerian internal energies share the same coefficients $\Evec$, we now have a solution for both.
-
-%------------------------------------------------------------------------
-\section{Semi-discrete equations for $\xvec^+$, $\Jvec^+$ and $\rho^+$}
-%------------------------------------------------------------------------
 
 
 \end{document}

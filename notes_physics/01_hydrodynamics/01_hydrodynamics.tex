@@ -152,7 +152,7 @@ The evolution equation for the Jacobian matrix is derived as follows
 \frac{\partial J^+_{ij}}{\partial t} & = \frac{\partial}{\partial y_j} \left ( \frac{\partial x^+_i}{\partial t} \right ) = \frac{\partial v^+_i}{\partial y_j} = \frac{\partial v_i(t,\xvec^+)}{\partial y_j} = \frac{\partial x^+_{k}}{\partial y_j} \left ( \frac{ \partial v_i}{\partial x_k} \right )_{\xvec = \xvec^+} = J^+_{kj} \left ( \frac{ \partial v_i}{\partial x_k} \right )_{\xvec = \xvec^+} 
 \end{align}
 
-We now introduce $J^+ = J^+(t)$ as
+We now introduce $J^+ = J^+(t,\yvec)$ as
 \begin{equation}
     J^+ = \det (\Jvec^+).
 \end{equation}
