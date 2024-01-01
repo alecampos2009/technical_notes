@@ -15,13 +15,19 @@
 %------------------------------------------------------------------------
 \section{Governing equations}
 %------------------------------------------------------------------------
-We consider Lagrangian fluid particles, for which we define the position $\xvec^+=\xvec^+(t,\yvec)$, the determinant of the Jacobian $J^+ = J^+(t,\yvec)$, density $\rho^+ = \rho^+(t,\yvec)$, velocity $\uvec^+ = \uvec^+(t,\yvec)$, and internal energy $e^+ = e^+(t,\yvec)$. The Eulerian counterparts for the density, velocity, and internal energy are, respectively, $\rho = \rho(t,\xvec)$, $\uvec = \uvec(t,\xvec)$, and $e = e(t,\xvec)$. The governing equations for the Lagrangian fluid particles are derived in my hydrodynamics notes (see section on kinematics, Lagrangian governing equations, etc.). These are shown below
+We consider Lagrangian fluid particles, for which we define the position $\xvec^+=\xvec^+(t,\yvec)$, the determinant of the Jacobian $J^+ = J^+(t,\yvec)$, the density $\rho^+ = \rho^+(t,\yvec)$, the velocity $\uvec^+ = \uvec^+(t,\yvec)$, and the internal energy $e^+ = e^+(t,\yvec)$. The Eulerian counterparts for the density, velocity, and internal energy are, respectively, $\rho = \rho(t,\xvec)$, $\uvec = \uvec(t,\xvec)$, and $e = e(t,\xvec)$. Also consider the volume $\Omega_0$ as the set of all $\yvec$ vectors that make up the initial domain. The control volume $\Omega^+ = \Omega^+(t, \Omega_0)$ is then defined by
+\begin{equation}
+    \Omega^+ = \{ \xvec^+:\yvec \in \Omega_0 \}.
+\end{equation}
+Note that $\Omega^+(0,\Omega_0) = \Omega_0$.
+
+The governing equations for the Lagrangian fluid particles are derived in my hydrodynamics notes (see section on kinematics, Lagrangian governing equations, etc.). These are shown below
 \begin{align}
-    \frac{\partial \xvec^+}{\partial t} &= \uvec^+, \\
-    \frac{\partial J^+}{\partial t} &= J^+ \left ( \nabla \cdot \uvec \right )_{\xvec = \xvec^+}, \\
-    \frac{\partial J^+ \rho^+}{\partial t} &= 0, \\
-    \rho^+ \frac{\partial \uvec^+}{\partial t} &= \left ( \nabla \cdot \sigmavec \right )_{\xvec = \xvec^+}, \\
-    \rho^+ \frac{\partial e^+}{\partial t} &= \left ( \sigmavec : \nabla \uvec \right )_{\xvec = \xvec^+}.
+    \frac{\partial \xvec^+}{\partial t} &= \uvec^+, \label{eq:evol_x} \\
+    \frac{\partial J^+}{\partial t} &= J^+ \left ( \nabla \cdot \uvec \right )_{\xvec = \xvec^+}, \label{eq:evol_J} \\
+    \frac{\partial J^+ \rho^+}{\partial t} &= 0, \label{eq:evol_rho} \\
+    \rho^+ \frac{\partial \uvec^+}{\partial t} &= \left ( \nabla \cdot \sigmavec \right )_{\xvec = \xvec^+}, \label{eq:evol_u} \\
+    \rho^+ \frac{\partial e^+}{\partial t} &= \left ( \sigmavec : \nabla \uvec \right )_{\xvec = \xvec^+}. \label{eq:evol_e}
 \end{align}
 
 A note on notation. The products that involve a tensor $\tauvec$ can be expressed in Einstein notation as
@@ -68,7 +74,13 @@ We note that the expansion coefficients are the same for the Lagrangian and Eule
 %------------------------------------------------------------------------
 \section{Semi-discrete equation for $\uvec^+$}
 %------------------------------------------------------------------------
-We begin by showing that
+We begin by multiplying both sides of \cref{eq:evol_u} by the basis functions for velocity, and integrating over all space, as follows
+\begin{equation}
+    \int_{\Omega_0} \rho^+ \frac{\partial \uvec^+}{\partial t} w^+_i \, dV_y = \int_{\Omega_0} \left ( \nabla \cdot \sigmavec \right )_{\xvec = \xvec^+} w^+_i \, dV_y
+\end{equation}
+
+
+showing that
 \begin{align}
     \frac{\partial \uvec}{\partial t} + \uvec \cdot \nabla \uvec &= \sum_j^{N_w} \left ( \frac{d \hat{\uvec}_j}{d t} w_j + \hat{\uvec}_j \frac{\partial w_j}{\partial t} \right ) + \uvec \cdot \left ( \sum_j^{N_w} \hat{\uvec}_j \nabla w_j \right ) \nonumber \\
     &= \sum_j^{N_w} \left [ \frac{d \hat{\uvec}_j}{d t} w_j + \hat{\uvec}_j \left ( \frac{\partial w_j}{\partial t} + \uvec \cdot \nabla w_j \right ) \right ] \nonumber \\
