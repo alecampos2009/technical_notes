@@ -84,13 +84,13 @@ Thus, we can interpret the PDE as describing the rate of change of a particle's 
 %-------------------------------------------------------------------------
 \section{Reynolds transport theorem}
 %-------------------------------------------------------------------------
-Define the one-dimensional domain $[a_0,b_0]$. The one-dimensional domain $L^+ = L^+(t,a_0,b_0)$ is then given by 
+Define the one-dimensional domain $[a_0,b_0]$. Also define the one-dimensional domain $L^+ = L^+(t,a_0,b_0)$, which is given by 
 \begin{equation}
     L^+ = \{ x^+ : y \in [a_0,b_0] \}.
 \end{equation}
 Note that $L^+(0,a_0,b_0) = [a_0,b_0]$. The left boundary of this volume is given by $a^+ = a^+(t,a_0,b_0)$ and the right boundary by $b^+=b^+(t,a_0,b_0)$. These satisfy $a^+(0,a_0,b_0) = a_0$ and $b^+(0,a_0,b_0) = b_0$. 
 
-Also define the Lagrangian function $I^+ = I^+(t,a_0,b_0)$ and the Eulerian counterpart $I = I(t,a,b)$. These two are given by 
+We introduce the Lagrangian function $I^+ = I^+(t,a_0,b_0)$ and its Eulerian counterpart $I = I(t,a,b)$. These two are given by 
 \begin{equation}
     I(t,a,b) = \int_a^b f(t,x) \, dx,
 \end{equation}
@@ -102,7 +102,7 @@ We can then write
     \frac{dI^+}{dt} &= \left [ \frac{\partial I(t,a,b)}{\partial t} \right ]_{\scaleto{\begin{matrix} a=a^+ \\b=b^+ \end{matrix}}{15pt}} + \left [ \frac{\partial I(t,a,b)}{\partial a} \right ]_{\scaleto{\begin{matrix} a=a^+ \\b=b^+ \end{matrix}}{15pt}} \frac{d a^+}{dt} + \left [ \frac{\partial I(t,a,b)}{\partial b} \right ]_{\scaleto{\begin{matrix} a=a^+ \\b=b^+ \end{matrix}}{15pt}} \frac{db^+}{dt} \\
     &= \left [ \frac{\partial I(t,a,b)}{\partial t} \right ]_{\scaleto{\begin{matrix} a=a^+ \\b=b^+ \end{matrix}}{15pt}} + \left [ \frac{\partial I(t,a,b)}{\partial a} \right ]_{\scaleto{\begin{matrix} a=a^+ \\b=b^+ \end{matrix}}{15pt}} v(t,a^+) + \left [ \frac{\partial I(t,a,b)}{\partial b}\right ]_{\scaleto{\begin{matrix} a=a^+ \\b=b^+ \end{matrix}}{15pt}} v(t,b^+).
 \end{align}
-Due to the fundamental theorem of calculus (see appendix of my PDEs notes), we can re-write the above as
+Due to the fundamental theorem of calculus (see appendix in my PDEs notes), we can re-write the above as
 \begin{align}
     \frac{dI^+}{dt} &= \left [ \frac{\partial I(t,a,b)}{\partial t} \right ]_{\scaleto{\begin{matrix} a=a^+ \\b=b^+ \end{matrix}}{15pt}} -\left [ f(t,a) \right ]_{\scaleto{\begin{matrix} a=a^+ \\b=b^+ \end{matrix}}{15pt}} v(t,a^+) + \left [ f(t,b) \right ]_{\scaleto{\begin{matrix} a=a^+ \\b=b^+ \end{matrix}}{15pt}} v(t,b^+) \nonumber \\
     &= \int_{a^+}^{b^+} \frac{\partial f(t,x)}{\partial t} \, dx - f(t,a^+) v(t,a^+) + f(t,b^+) v(t,b^+).
@@ -112,7 +112,7 @@ The analogue in 3D for the above is typically referred to as the Reynolds transp
 \begin{equation}
     \Omega^+ = \{ \xvec^+:\yvec \in \Omega_0 \}.
 \end{equation}
-Note that $\Omega^+(0,\Omega_0) = \Omega_0$. The boundary of this volume is denoted as $\partial \Omega^+$. The velocity of the boundary is given by evaluating the Eulerian field $\vvec = \vvec(t,\xvec)$ over all $\xvec \in \partial \Omega^+$, and the unit normal by evaluating the Eulerian field $\nvec = \nvec(t,\xvec)$ over all $\xvec \in \partial \Omega^+$. For this case $I^+ = I^+(t,\Omega_0)$ and its Eulerian counterpart is $I = I(t,\Omega)$. These two are given by
+Note that $\Omega^+(0,\Omega_0) = \Omega_0$. The boundary of this volume is denoted by $\partial \Omega^+$. The velocity of the boundary at any point $\xvec \in \partial \Omega^+$ is given by the Eulerian field $\vvec = \vvec(t,\xvec)$ at such $\xvec$ value. Similarly, the unit normal to the boundary at any $\xvec \in \partial \Omega^+$ is given by the Eulerian field $\nvec = \nvec(t,\xvec)$ at such an $\xvec$. For this case $I^+ = I^+(t,\Omega_0)$ and its Eulerian counterpart is $I = I(t,\Omega)$. These two are then given by
 \begin{equation}
     I = \int_\Omega f(t,\xvec) \,dV,
 \end{equation}

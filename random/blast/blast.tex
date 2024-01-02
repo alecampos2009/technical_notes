@@ -70,40 +70,50 @@ We note that the expansion coefficients are the same for the Lagrangian and Eule
 %------------------------------------------------------------------------
 \section{Semi-discrete equation for $\rho^+$}
 %------------------------------------------------------------------------
+\Cref{eq:evol_rho} allows us to write
+\begin{equation}
+    \label{eq:evol_rho_semi_discrete}
+    \rho^+ = \frac{\rho^+_0}{J^+},
+\end{equation}
+where $\rho^+_0 = \rho^+(0,\yvec)$.
 
 %------------------------------------------------------------------------
 \section{Semi-discrete equation for $\uvec^+$}
 %------------------------------------------------------------------------
-We begin by multiplying both sides of \cref{eq:evol_u} by the basis functions for velocity, and integrating over all space, as follows
+Plugging in \cref{eq:evol_rho_semi_discrete} in \cref{eq:evol_u} we get
 \begin{equation}
-    \int_{\Omega_0} \rho^+ \frac{\partial \uvec^+}{\partial t} w^+_i \, dV_y = \int_{\Omega_0} \left ( \nabla \cdot \sigmavec \right )_{\xvec = \xvec^+} w^+_i \, dV_y
+    \rho^+_0 \frac{\partial \uvec^+}{\partial t} = \left ( \nabla \cdot \sigmavec \right )_{\xvec = \xvec^+} J^+.
 \end{equation}
-
-
-showing that
+We then multiply both sides of the above by the basis functions for velocity and integrate over all space to obtain
+\begin{equation}
+    \int_{\Omega_0} \rho^+_0 \frac{\partial \uvec^+}{\partial t} w^+_i \, dV_y = \int_{\Omega_0} \left ( \nabla \cdot \sigmavec \right )_{\xvec = \xvec^+} w^+_i J^+ \, dV_y.
+\end{equation}
+For the left-hand side we have
 \begin{align}
-    \frac{\partial \uvec}{\partial t} + \uvec \cdot \nabla \uvec &= \sum_j^{N_w} \left ( \frac{d \hat{\uvec}_j}{d t} w_j + \hat{\uvec}_j \frac{\partial w_j}{\partial t} \right ) + \uvec \cdot \left ( \sum_j^{N_w} \hat{\uvec}_j \nabla w_j \right ) \nonumber \\
-    &= \sum_j^{N_w} \left [ \frac{d \hat{\uvec}_j}{d t} w_j + \hat{\uvec}_j \left ( \frac{\partial w_j}{\partial t} + \uvec \cdot \nabla w_j \right ) \right ] \nonumber \\
-    &= \sum_j^{N_w} \frac{d \hat{\uvec}_j}{d t} w_j.
+    \int_{\Omega_0} \rho^+_0 \frac{\partial \uvec^+}{\partial t} w^+_i \, dV_y &= \int_{\Omega_0} \rho^+_0 \sum_j^{N_w} \frac{d \hat{\uvec}_j}{dt} w^+_j w^+_i \, dV_y, \nonumber \\
+    &= \sum_j^{N_w} \frac{d \hat{\uvec}_j}{dt} \int_{\Omega_0} \rho^+_0 w^+_i w^+_j \, dV_y, \nonumber \\
+    &= \sum_j^{N_w} \frac{d \hat{\uvec}_j}{dt} m_{ij}^{(w)},
 \end{align}
-The finite element formulation of the momentum equation is thus 
+where
 \begin{equation}
-    \int_\Omega \rho \sum_j^{N_w} \frac{d \hat{\uvec}_j}{d t} w_j w_i \, dV = -\int_\Omega \sigmavec \cdot \nabla w_i \, dV \qquad \text{for } i = 1,...,N_w.
+    m_{ij}^{(w)} = \int_{\Omega_0} \rho^+_0 w^+_i w^+_j \, dV_y
 \end{equation}
-The above is re-written as
+is a mass bilinear form (which is independent of time). For the right-hand side we have
+\begin{align}
+    \int_{\Omega_0} \left ( \nabla \cdot \sigmavec \right )_{\xvec = \xvec^+} w^+_i J^+ \, dV_y & = \int_{\Omega_0} \left ( \nabla \cdot \sigmavec w_i \right )_{\xvec = \xvec^+} J^+ \, dV_y \nonumber \\
+    & = \int_{\Omega^+} \nabla \cdot \sigmavec w_i \, dV_x \nonumber \\
+    & = -\int_{\Omega^+} \sigmavec \cdot \nabla w_i \, dV_x.
+\end{align}
+The second equality above follows from integration by substitution. Combining results we have
 \begin{equation}
-    \label{eq:semi_discrete_momentum_bilinear}
-    \sum_j^{N_w} \frac{d \hat{\uvec}_j}{d t} m^{(w)}_{ij} = -\int_\Omega \sigmavec \cdot \nabla w_i \, dV \qquad \text{for } i = 1,...,N_w.
-\end{equation}
-where the mass bilinear form $m^{(w)}_{ij}$ is given by 
-\begin{equation}
-    m^{(w)}_{ij} = \int_\Omega \rho w_i w_j \, dV.
+    \label{eq:evol_u_semi_discrete}
+    \sum_j^{N_w} \frac{d \hat{\uvec}_j}{d t} m^{(w)}_{ij} = -\int_{\Omega^+} \sigmavec \cdot \nabla w_i \, dV_x.
 \end{equation}
 
-We now introduce the vector $\Uvec$ whose components are $\hat{\uvec}_i$. We also introduce the matrix $\Mvec^{(w)}$ whose components are $m_{ij}^{(w)}$. Thus, the left-hand side of \cref{eq:semi_discrete_momentum_bilinear} can be written as $\Mvec^{(w)} \, d\Uvec / dt$.
+We now introduce the vector $\Uvec$ whose components are $\hat{\uvec}_i$. We also introduce the matrix $\Mvec^{(w)}$ whose components are $m_{ij}^{(w)}$. Thus, the left-hand side of \cref{eq:evol_u_semi_discrete} can be written as $\Mvec^{(w)} \, d\Uvec / dt$.
 We also introduce the vector bilinear form
 \begin{equation}
-    \fvec_{ij} = \int_\Omega \sigmavec \cdot \nabla w_i \phi_j dV.
+    \fvec_{ij} = \int_{\Omega^+} \sigmavec \cdot \nabla w_i \phi_j dV_x.
 \end{equation}
 This is a \textit{vector} bilinear form since $\fvec_{ij}$ has components $f_{ij,\alpha} = f_{ij,\alpha}(t)$, for $\alpha = x,y,z$, where $\alpha$ denotes the first index of $\sigmavec$. We introduce the matrix $\Fvec$, whose components are $\fvec_{ij}$. We also expand the field with constant value of one as follows
 \begin{equation}
@@ -111,12 +121,12 @@ This is a \textit{vector} bilinear form since $\fvec_{ij}$ has components $f_{ij
 \end{equation}
 If we define the vector $\Cvec$ as that with components $\hat{c}_i$, we can show that 
 \begin{align}
-    \Fvec \Cvec &= \sum_j^{N_\phi} \fvec_{ij} \hat{c}_j &\text{for } i = 1,...,N_w \nonumber \\
-    &= \sum_j^{N_\phi} \int_\Omega \sigmavec \cdot \nabla w_i \phi_j \, dV \hat{c}_j &\text{for } i = 1,...,N_w \nonumber \\
-    &= \int_\Omega \sigmavec \cdot \nabla w_i \left ( \sum_j^{N_\phi} \hat{c}_j \phi_j \right ) \, dV &\text{for } i = 1,...,N_w \nonumber \\
-    &= \int_\Omega \sigmavec \cdot \nabla w_i \, dV &\text{for } i = 1,...,N_w
+    \Fvec \Cvec &= \sum_j^{N_\phi} \fvec_{ij} \hat{c}_j \nonumber \\
+    &= \sum_j^{N_\phi} \int_{\Omega^+} \sigmavec \cdot \nabla w_i \phi_j \, dV_x \hat{c}_j \nonumber \\
+    &= \int_{\Omega^+} \sigmavec \cdot \nabla w_i \left ( \sum_j^{N_\phi} \hat{c}_j \phi_j \right ) \, dV_x \nonumber \\
+    &= \int_{\Omega^+} \sigmavec \cdot \nabla w_i \, dV_x.
 \end{align}
-The above is the negative of the right-hand side of \cref{eq:semi_discrete_momentum_bilinear}. Thus, combining all together we get
+The above is the negative of the right-hand side of \cref{eq:evol_u_semi_discrete}. Thus, combining all together we get
 \begin{equation}
     \Mvec^{(w)} \frac{d\Uvec}{dt} = -\Fvec \Cvec.
 \end{equation}
@@ -125,36 +135,52 @@ We note that since both the Lagrangian and Eulerian velocities share the same co
 %------------------------------------------------------------------------
 \section{Semi-discrete equation for $e^+$}
 %------------------------------------------------------------------------
-As with momentum conservation, we have
+Plugging in \cref{eq:evol_rho_semi_discrete} in \cref{eq:evol_e} we get
+\begin{equation}
+    \rho^+_0 \frac{\partial e^+}{\partial t} = \left ( \sigmavec : \nabla \uvec \right )_{\xvec = \xvec^+} J^+.
+\end{equation}
+We then multiply both sides of the above by the basis functions for energy and integrate over all space to obtain
+\begin{equation}
+    \int_{\Omega_0} \rho^+_0 \frac{\partial e^+}{\partial t} \phi_i^+ \, dV_y = \int_{\Omega_0} \left ( \sigmavec : \nabla \uvec \right )_{\xvec = \xvec^+} \phi_i^+ J^+ \, dV_y.
+\end{equation}
+For the left-hand side we have
 \begin{align}
-    \frac{\partial \evec}{\partial t} + \uvec \cdot \nabla \evec &= \sum_j^{N_\phi} \left ( \frac{d \hat{\evec}_j}{d t} \phi_j + \hat{\evec}_j \frac{\partial \phi_j}{\partial t} \right ) + \uvec \cdot \left ( \sum_j^{N_\phi} \hat{\evec}_j \nabla \phi_j \right ) \nonumber \\
-    &= \sum_j^{N_\phi} \left [ \frac{d \hat{\evec}_j}{d t} \phi_j + \hat{\evec}_j \left ( \frac{\partial \phi_j}{\partial t} + \uvec \cdot \nabla \phi_j \right ) \right ] \nonumber \\
-    &= \sum_j^{N_\phi} \frac{d \hat{\evec}_j}{d t} \phi_j.
+    \int_{\Omega_0} \rho^+_0 \frac{\partial e^+}{\partial t} \phi_i^+ \, dV_y &= \int_{\Omega_0} \rho^+_0 \sum_j^{N_\phi} \frac{d \hat{e}_j}{dt} \phi_j^+ \phi_i^+ \, dV_y , \nonumber \\
+    &= \sum_j^{N_\phi} \frac{d \hat{e}_j}{dt} \int_{\Omega_0} \rho^+_0 \phi_j^+ \phi_i^+ \, dV_y , \nonumber \\
+    &= \sum_j^{N_\phi} \frac{d \hat{e}_j}{dt} m_{ij}^{(\phi)}
 \end{align}
-For the right-hand side of the energy conservation equation, we have
+where
 \begin{equation}
-    \sigmavec : \nabla \uvec = \sigmavec : \nabla \left ( \sum_k^{N_w} \hat{\uvec}_k w_k \right ) = \sum_k^{N_w} \hat{\uvec}_k \cdot \sigmavec \cdot \nabla w_k.
+    m_{ij}^{(\phi)} = \int_{\Omega_0} \rho^+_0 \phi_j^+ \phi_i^+ \, dV_y
 \end{equation}
-The finite element formulation of the energy equation is thus 
+is a mass bilinear form (which is independent of time). For the right-hand side we have
 \begin{align}
-    \int_\Omega \rho \sum_j^{N_\phi} \frac{d \hat{\evec}_j}{d t} \phi_j \phi_i \, dV &= \int_\Omega \left ( \sum_k^{N_w} \hat{\uvec}_k \cdot \sigmavec \cdot \nabla w_k \right ) \phi_i \, dV &\text{for } i = 1,...,N_w \nonumber \\
-    &=\sum_k^{N_w} \hat{\uvec}_k \cdot \int_\Omega \sigmavec \cdot \nabla w_k \phi_i \, dV &\text{for } i = 1,...,N_w
+    \int_{\Omega_0} \left ( \sigmavec : \nabla \uvec \right )_{\xvec = \xvec^+} \phi_i^+ J^+ \, dV_y &= \int_{\Omega_0} \left ( \sigmavec : \nabla \uvec \phi_i \right )_{\xvec = \xvec^+} J^+ \, dV_y \nonumber \\
+    &= \int_{\Omega^+} \sigmavec : \nabla \uvec \phi_i \, dV_x. 
 \end{align}
-The above is re-written as
+Combining results we have
 \begin{equation}
-    \label{eq:semi_discrete_energy_bilinear}
-    \sum_j^{N_\phi} \frac{d \hat{\evec}_j}{d t} m^{(\phi)}_{ij} = \sum_k^{N_w} \hat{\uvec}_k \cdot \fvec_{ki} \qquad \text{for } i = 1,...,N_w.
+    \sum_j^{N_\phi} \frac{d \hat{e}_j}{dt} m_{ij}^{(\phi)} = \int_{\Omega^+} \sigmavec : \nabla \uvec \phi_i \, dV_x.
 \end{equation}
-where the mass bilinear form $m^{\phi}_{ij}$ is given by 
+We no show that
 \begin{equation}
-    m^{(\phi)}_{ij} = \int_\Omega \rho \phi_i \phi_j \, dV.
+    \sigmavec : \nabla \uvec = \sigmavec : \nabla \left ( \sum_k^{N_w} \hat{\uvec}_k w_k \right ) = \sum_k^{N_w} \hat{\uvec}_k \cdot \sigmavec \cdot \nabla w_k,
 \end{equation}
-Note that in \cref{eq:semi_discrete_energy_bilinear} there is a dot product in the right-hand side, that is, the right-hand side expanded out is  
+and hence the previous result is written as
+\begin{equation}
+    \sum_j^{N_\phi} \frac{d \hat{e}_j}{dt} m_{ij}^{(\phi)} = \sum_k^{N_w} \hat{\uvec}_k \cdot \int_{\Omega^+} \sigmavec \cdot \nabla w_k \phi_i \, dV_x.
+\end{equation}
+The above is finally re-written as
+\begin{equation}
+    \label{eq:evol_e_semi_discrete}
+    \sum_j^{N_\phi} \frac{d \hat{e}_j}{d t} m^{(\phi)}_{ij} = \sum_k^{N_w} \hat{\uvec}_k \cdot \fvec_{ki}.
+\end{equation}
+Note that in the above there is a dot product in the right-hand side, that is, the right-hand side expanded out is  
 \begin{equation}
     \sum_k^{N_w} \hat{\uvec}_k \cdot \fvec_{ki} = \sum_k^{N_w} \sum_{\alpha=x,y,z} \hat{u}_{k,\alpha} f_{ki,\alpha}.
 \end{equation}
 
-We now introduce the vector $\Evec$ whose components are $\hat{e}_i$. We also introduce the matrix $\Mvec^{(\phi)}$ whose components are $m_{ij}^{(\phi)}$. Thus, \cref{eq:semi_discrete_energy_bilinear} can be succinctly written as
+We now introduce the vector $\Evec$ whose components are $\hat{e}_i$. We also introduce the matrix $\Mvec^{(\phi)}$ whose components are $m_{ij}^{(\phi)}$. Thus, \cref{eq:evol_e_semi_discrete} can be succinctly written as
 \begin{equation}
     \Mvec^{(\phi)} \frac{d\Evec}{dt} = \Fvec^T \cdot \Uvec.
 \end{equation}
