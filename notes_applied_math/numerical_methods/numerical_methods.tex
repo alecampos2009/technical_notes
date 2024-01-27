@@ -868,42 +868,6 @@ we can write the linear system of equations as
 \end{equation}
 
 %---------------------------------------------------------------
-\section{Lagrangian finite elements}
-%---------------------------------------------------------------
-We introduce a Lagrangian basis function $\Phi_i^+ = \Phi_i^+(t,\yvec)$ and an Eulerian basis function $\Phi_i = \Phi_i(t,\xvec)$, such that they are related to each other as follows
-\begin{equation}
-    \label{eq:fe_lag_phi_correspondence}
-    \Phi_i^+(t,\yvec) = \Phi_i(t,\xvec_u^+(t,\yvec)).
-\end{equation}
-In the above, $\xvec_u^+ = \xvec_u^+(t,\yvec)$ is the position of a Lagrangian fluid particle, whose velocity is $\uvec^+ = \uvec^+(t,\yvec)$. We now introduce the Lagrangian variable $f^+ = f^+(t,\yvec)$ and the Eulerian counterpart $f = f(t,\xvec)$ such that they satisfy
-\begin{equation}
-    \label{eq:fe_lag_u_correspondence}
-    f^+(t,\yvec) = f(t,\xvec_u^+(t,\yvec)).
-\end{equation}
-As shown in \cref{sec:galerkin_method}, the expansion of an Eulerian variable in terms of basis functions is as follows
-\begin{equation}
-    \label{eq:fe_lag_expansion_eul}
-    f = \sum_i^n F_i \Phi_i,
-\end{equation}
-where $F_i = F_i(t)$. Plugging in $\xvec_u^+$ for $\xvec$ in the above, and using \cref{eq:fe_lag_phi_correspondence,eq:fe_lag_u_correspondence} gives
-\begin{equation}
-    \label{eq:fe_lag_expansion_lag}
-    f^+ = \sum_i^n F_i \Phi_i^+.
-\end{equation}
-We note that both the Lagrangian and Eulerian variables share the same FE coefficients $F_i$. 
-
-As shown in my fluid mechanics notes, we also have
-\begin{equation}
-    \label{eq:fe_lag_deriv_correspondence}
-    \frac{\partial \Phi_i^+}{\partial t} = \left ( \frac{\partial \Phi_i}{\partial t} + \uvec \cdot \nabla \Phi_i \right )_{\xvec = \xvec_u^+},
-\end{equation}
-where $\uvec = \uvec(t,\xvec)$ is the Eulerian counterpart to $\uvec^+$. We'll introduce the restriction that $\Phi_i^+$ is constant in time, that is $\partial \Phi_i^+/\partial t = 0$, which gives
-\begin{equation}
-    \frac{\partial \Phi_i}{\partial t} + \uvec \cdot \nabla \Phi_i = 0.
-\end{equation}
-Thus, $F_i$ in \cref{eq:fe_lag_expansion_lag} accounts for the time dependence of $F^+$, whereas $\Phi_i^+$ accounts for the dependence on $\yvec$.
-
-%---------------------------------------------------------------
 \section{The Petrov Galerkin method}
 %---------------------------------------------------------------
 

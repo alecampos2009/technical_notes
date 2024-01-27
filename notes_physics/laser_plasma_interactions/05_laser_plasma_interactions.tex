@@ -20,6 +20,35 @@ A wave is spatially coherent at a given time $t$, position $x$, and separation d
 
 A wave is temporally coherent at a given time $t$, position $x$, and separation time $\tau$ if the phase difference between times $t$ and $t+\tau$ at position $x$ is the same as that between times $t+dt$ and $t+dt+\tau$. You can keep on picking larger and larger values of $\tau$ until this is no longer the case, this $\tau$ would be the temporal coherence length $\tau_c = \tau_c(t,x)$.
 
+\begin{figure}
+    \centering
+    \includegraphics[width=.7\textwidth]{../../images/temp_cohe_1.pdf}
+    \caption{}
+    \label{fig:laser_temp_cohe}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \begin{subfigure}{.7\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{../../images/temp_cohe_2.pdf}
+      \caption{}
+      \label{fig:laser_temp_cohe_1}
+    \end{subfigure}
+    \begin{subfigure}{.7\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../../images/temp_cohe_3.pdf}
+        \caption{}
+        \label{fig:laser_temp_cohe_2}
+      \end{subfigure}
+    \caption{Depiction of temporal coherence for a light pulse.}
+    \label{fig:laser_temp_cohe_12}
+\end{figure}
+
+A depiction of temporal coherence is provided in \cref{fig:laser_temp_cohe}, which shows a light pulse as a function of time. An arbitrary time $t_*$ is chosen along the light wave, and the wave's phase at that time is $\theta_1$. At the time $t_* + \tau$ the wave has a different phase $\theta_2$, and thus the phase difference between times $t_*$ and $t_*+\tau$ is $\theta_2 - \theta_1$. This is depicted by the orange dots. The green dots are used to highlight the phase difference between times $t_*+dt$ and $t_*+dt+\tau$. In this case, the phases are respectively $\theta_1 + d\theta$ and $\theta_2 + d\theta$, and hence the phase difference is still maintained at $\theta_2 - \theta_1$.
+
+Rather than picking the time $t_*$ to be at an arbitrary location along the wave, in \cref{fig:laser_temp_cohe_1} we choose $t_*$ to be at the beginning of the wave, and also choose $\tau$ to be just a bit smaller than the entire duration of the pulse. For this case, the phase difference between $t_*$ and $t_*+\tau$ is $d\theta$, which is equal to the phase difference between $t_*+dt$ and $t_*+dt+\tau$. On the other hand, in \cref{fig:laser_temp_cohe_2} we have chosen $\tau$ to be just a bit larger so as to be equal to the duration of the wave. For this case the phase difference between $t_*$ and $t_*+\tau$ is zero, which is not the same as the phase difference between $t_*+dt$ and $t_*+dt+\tau$, namely $d\theta$. Thus, the maximum value of $\tau$ that maintains a constant phase difference has been reached, and therefore by definition this value is referred to as the temporal coherence length $\tau_c$ at time $t_*$ (other locations of $t_*$, such as that in \cref{fig:laser_temp_cohe}, have a different $\tau_c$).
+
 %########################################################################
 \chapter{Governing equations}
 %########################################################################
