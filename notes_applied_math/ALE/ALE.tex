@@ -122,10 +122,11 @@ To obtain $\Jvec^+$ we plug in \cref{eq:fe_exp_x} into its definition, that is
 \begin{equation}
     \Jvec^+ = \frac{\partial}{\partial \yvec} \sum_j^{N_w} \hat{\xvec}_j w^+_j = \sum_j^{N_w} \hat{\xvec}_j \nabla_{\yvec} w^+_j.
 \end{equation}
-Note that, for any function $\xvec^+$, whether it be an exact analytical expression or a FE expansion as given by \cref{eq:fe_exp_x}, the determinant of the Jacobian will satisfy (see derivation in fluid-mechanics notes)
+Note that for any function $\xvec^+$,whether it be an exact analytical expression or a finite-element expansion as given by \cref{eq:fe_exp_x}, the determinant of the Jacobian will satisfy
 \begin{equation}
-    \frac{\partial J^+}{\partial t} = J^+ \left ( \frac{\partial u_k}{\partial x_k} \right )_{\xvec = \xvec^+}.
+    \frac{\partial J^+}{\partial t} = J^+ \left ( \frac{\partial u_k}{\partial x_k} \right )_{\xvec = \xvec^+},
 \end{equation}
+where $\uvec$ is the Eulerian counterpart to $\uvec^+$, which is given by \cref{eq:lag_gov_evol_x}.
 
 %------------------------------------------------------------------------
 \section{Semi-discrete equation for $\rho^+$}
