@@ -1355,40 +1355,39 @@ For perfect gasses, $C_v$ and $C_p$ are constant. Thus, $e(T) - e(T_0) = C_v (T 
 %------------------------------------------------------------------------
 \section{Definitions and governing equations}
 %------------------------------------------------------------------------
-We begin with the equation for entropy derived in \cref{sec:alternate_forms_internal_energy_equation}, namely, \cref{eq:energy_form_entropy}, which is repeated below
+We begin with the equation for entropy derived in \cref{sec:alternate_forms_internal_energy_equation}, namely \cref{eq:energy_form_entropy}, which is repeated below
 \begin{equation}
 \tag{\ref{eq:energy_form_entropy}}
     \rho T \frac{Ds}{Dt} = -\frac{\partial q_j}{\partial x_j} + t_{ij} \frac{\partial u_i}{\partial x_j}.
 \end{equation}
 We re-write the following term as follows
-\begin{equation}
+\begin{equation*}
     \frac{1}{T} \frac{\partial q_j}{\partial x_j} = \frac{\partial}{\partial x_j} \left ( \frac{q_j}{T} \right ) + \frac{q_j}{T^2}\frac{\partial T}{\partial x_j},
-\end{equation}
+\end{equation*}
 to thus obtain
-\begin{equation}
+\begin{equation*}
     \rho \frac{Ds}{Dt} - \frac{\partial}{\partial x_j} \left ( \frac{q_j}{T} \right ) = \frac{q_j}{T^2}\frac{\partial T}{\partial x_j} + \frac{t_{ij}}{T} \frac{\partial u_i}{\partial x_j}.
-\end{equation}
+\end{equation*}
 Using the continuity equation this is equivalent to
-\begin{equation}
+\begin{equation*}
     \frac{\partial \rho s}{\partial t} + \frac{\partial \rho s u_j}{\partial x_j} - \frac{\partial}{\partial x_j} \left ( \frac{q_j}{T} \right ) = \frac{q_j}{T^2}\frac{\partial T}{\partial x_j} + \frac{t_{ij}}{T} \frac{\partial u_i}{\partial x_j}.
-\end{equation}
-Integrating this equation over a control volume $\Omega^+(t)$ and using the Reynolds transport theorem (\cref{eq:reynolds_transport_theorem_generic}) allows us to write
-\begin{equation}
-    \frac{d}{dt} \int_{\Omega^+(t)} \rho s \, dv - \int_{\Omega^+(t)} \frac{\partial}{\partial x_j} \left ( \frac{q_j}{T} \right ) \,dv = \int_{\Omega^+(t)} \frac{\partial}{\partial x_j} \rho s \left (v_j - u_j \right ) \, dv + \int_{\Omega^+(t)} \frac{q_j}{T^2}\frac{\partial T}{\partial x_j} + \frac{t_{ij}}{T} \frac{\partial u_i}{\partial x_j} \, dv.
-\end{equation}
+\end{equation*}
+Integrating this equation over a control volume $\Omega^+ = \Omega^+(t,\Omega_0)$ and using the Reynolds transport theorem (\cref{eq:reynolds_transport_theorem_generic}) allows us to write
+\begin{equation*}
+    \frac{d}{dt} \int_{\Omega^+} \rho s \, dv - \int_{\Omega^+} \frac{\partial}{\partial x_j} \left ( \frac{q_j}{T} \right ) \,dv = \int_{\Omega^+} \frac{\partial}{\partial x_j} \rho s \left (v_j - u_j \right ) \, dv + \int_{\Omega^+} \frac{q_j}{T^2}\frac{\partial T}{\partial x_j} + \frac{t_{ij}}{T} \frac{\partial u_i}{\partial x_j} \, dv.
+\end{equation*}
 Using Gauss's theorem this is equivalent to
-\begin{equation}
+\begin{equation*}
     \frac{d}{dt} \int_{\Omega^+(t)} \rho s \, dv - \int_{\partial \Omega^+(t)} \frac{q_j}{T} n_j \,ds = \int_{\partial \Omega^+(t)} \rho s \left (v_j - u_j \right ) n_j \, dv + \int_{\Omega^+(t)} \frac{q_j}{T^2}\frac{\partial T}{\partial x_j} + \frac{t_{ij}}{T} \frac{\partial u_i}{\partial x_j} \, dv.
-\end{equation}
-Consider now a control volume $\Omega^+_u(t)$ moving with the flow. Then
+\end{equation*}
+Consider now a control volume $\Omega^+_u=\Omega^+_u(t,\Omega_0)$ moving with the flow. Then
 \begin{equation}
-    \frac{d}{dt} \int_{\Omega^+_u(t)} \rho s \, dv - \int_{\partial \Omega^+_u(t)} \frac{q_j}{T} n_j \,ds = \int_{\Omega^+_u(t)} \frac{q_j}{T^2}\frac{\partial T}{\partial x_j} + \frac{t_{ij}}{T} \frac{\partial u_i}{\partial x_j} \, dv.
+    \frac{d}{dt} \int_{\Omega^+_u} \rho s \, dv - \int_{\partial \Omega^+_u} \frac{q_j}{T} n_j \,ds = \int_{\Omega^+_u} \frac{q_j}{T^2}\frac{\partial T}{\partial x_j} + \frac{t_{ij}}{T} \frac{\partial u_i}{\partial x_j} \, dv.
 \end{equation}
-We define an irreversible process as one for which the right-hand side above is zero. We define an adiabatic process as one for which $q_j$ is zero at the boundary, and thus the second term on the left-hand side above is zero. A reversible adiabatic process thus satisfies
+We define a reversible flow as one for which the right-hand side above is zero. We define an adiabatic flow as one for which $q_j$ is zero at the boundary, and thus the second term on the left-hand side above is zero. An isentropic flow is a reversible adiabatic flow, and thus satisfies
 \begin{equation}
-    \frac{d}{dt} \int_{\Omega^+_u(t)} \rho s \, dv = 0.
+    \frac{d}{dt} \int_{\Omega^+_u} \rho s \, dv = 0.
 \end{equation}
-This is also referred to as an isentropic flow. 
 
 An alternate definition of an isentropic flow can be given by focusing on a fluid particle, rather than a material volume. If $q_j$ and $t_{ij} \partial u_i / \partial x_j$ can be neglected, then \cref{eq:energy_form_entropy} gives $Ds/Dt = 0$. That is, the entropy is constant along a streamline. This is an isentropic flow. If \textit{in addition} the entropy is the same in all directions (i.e.\@ $\nabla s = 0$), then the flow is homentropic. 
 \begin{align}
@@ -1425,21 +1424,21 @@ where $h_t$ is the stagnation enthalpy. This definition of stagnation enthalpy h
 \section{Isentropic flow for a perfect gas}
 %------------------------------------------------------------------------
 If we compare \cref{eq:energy_form_pressure_2} (the pressure evolution equation for a perfect gas) with \cref{eq:energy_form_entropy} (the entropy evolution equation) we can write
-\begin{equation}
+\begin{equation*}
         \frac{1}{\gamma - 1} \rho^\gamma \frac{D}{D t} \left ( \frac{p}{\rho^\gamma} \right ) = \rho T \frac{Ds}{Dt}.
-\end{equation}
+\end{equation*}
 We now substitute $p = \rho R T$ on the right-hand side to obtain,
-\begin{equation}
+\begin{equation*}
     \frac{1}{\gamma - 1} \rho^\gamma \frac{D}{D t} \left ( \frac{p}{\rho^\gamma} \right ) = \frac{p}{R} \frac{Ds}{Dt}.
-\end{equation}
+\end{equation*}
 Re-arranging, we have 
-\begin{equation}
+\begin{equation*}
     \frac{\rho^\gamma}{p} \frac{D}{D t} \left ( \frac{p}{\rho^\gamma} \right ) = \frac{\gamma - 1}{R} \frac{Ds}{Dt},
-\end{equation}
+\end{equation*}
 or 
-\begin{equation}
+\begin{equation*}
     \frac{D}{D t} \ln \left ( \frac{p}{\rho^\gamma} \right ) = \frac{\gamma - 1}{R} \frac{Ds}{Dt}.
-\end{equation}
+\end{equation*}
 The solution to the PDE above is
 \begin{equation}
     \label{eq:p_rho_gamma_along_streamline}
@@ -1448,11 +1447,12 @@ The solution to the PDE above is
 where $c=c(\xvec,t)$ satisfies $Dc/Dt = 0$. One can confirm this is the solution by simply taking $D/Dt$ of both sides. 
 
 Let's assume isentropic flow, that is 
-\begin{equation}
+\begin{equation*}
 \frac{Ds}{Dt} = 0. 
-\end{equation}
+\end{equation*}
 Taking the $D/Dt$ derivative of \cref{eq:p_rho_gamma_along_streamline} gives
 \begin{equation}
+    \label{eq:p_rho_gamma_isentropic}
     \frac{D}{Dt} \left ( \frac{p}{\rho^\gamma} \right ) = 0.
 \end{equation}
 The solution to the above is $p = C \rho^\gamma$, where $C = C(\xvec,t)$ satisfies $DC/Dt = 0$. One can confirm this is the solution by simply substituting it in the equation above.
@@ -1463,13 +1463,13 @@ We now assume homentropic flow, that is
     \frac{\partial s}{\partial t} = \nabla s = 0.
 \end{equation}
 Additionally assume that flow enters through the domain boundary, and that at each point of the boundary we have
-\begin{equation}
+\begin{equation*}
     \left . \frac{\partial}{\partial t} \left ( \frac{p}{\rho^\gamma} \right ) \right |_{\partial \Omega} = \left . \nabla \left ( \frac{p}{\rho^\gamma} \right ) \right |_{\partial \Omega} = 0.
-\end{equation}
+\end{equation*}
 Using each of the two equalities above in \cref{eq:p_rho_gamma_along_streamline} we get
-\begin{equation}
+\begin{equation*}
     \left . \frac{\partial c}{\partial t} \right |_{\partial \Omega} = \left . \nabla c \right |_{\partial \Omega} = 0.
-\end{equation}
+\end{equation*}
 Since $Dc/Dt=0$, we can make the stronger statement that
 \begin{equation}
     \label{eq:homentropic_conditions_c}

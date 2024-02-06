@@ -5,7 +5,7 @@
 \usepackage{fullpage}
 
 
-\title{ALE FE hydrodynamics}
+\title{ALE finite-element hydrodynamics}
 
 
 \begin{document}
@@ -121,6 +121,10 @@ We now introduce the vectors $\Xvec$ and $\Uvec$, whose components are $\hat{\xv
 To obtain $\Jvec^+$ we plug in \cref{eq:fe_exp_x} into its definition, that is
 \begin{equation}
     \Jvec^+ = \frac{\partial}{\partial \yvec} \sum_j^{N_w} \hat{\xvec}_j w^+_j = \sum_j^{N_w} \hat{\xvec}_j \nabla_{\yvec} w^+_j.
+\end{equation}
+Note that, for any function $\xvec^+$, whether it be an exact analytical expression or a FE expansion as given by \cref{eq:fe_exp_x}, the determinant of the Jacobian will satisfy (see derivation in fluid-mechanics notes)
+\begin{equation}
+    \frac{\partial J^+}{\partial t} = J^+ \left ( \frac{\partial u_k}{\partial x_k} \right )_{\xvec = \xvec^+}.
 \end{equation}
 
 %------------------------------------------------------------------------
@@ -242,5 +246,18 @@ We now introduce the vector $\Evec$ whose components are $\hat{e}_i$. We also in
 \end{equation}
 Note again that on the right-hand side above there is a matrix-vector product \textit{and} a dot product. We also note that since both the Lagrangian and Eulerian internal energies share the same coefficients $\Evec$, we now have a solution for both.
 
+%------------------------------------------------------------------------
+\section{Momentum and energy conservation}
+%------------------------------------------------------------------------
+
+\begin{align}
+    IE(t) &= \int_{\Omega^+} \rho e \, dV_x \nonumber \\
+    &= \int_{\Omega_0} \rho^+ e^+ J^+ \, dV_y \nonumber \\
+    &= \int_{\Omega_0} \rho^+_0 e^+ \, dV_y \nonumber \\
+    &= \int_{\Omega_0} \rho_0^+ \sum_{j}^{N_\phi} \hat{e}_j \phi_j^+ \, dV_y \nonumber \\
+    &= \int_{\Omega_0} \rho_0^+ \sum_{j}^{N_\phi} \hat{e}_j \phi_j^+ \left ( \sum_{i}^{N_\phi} \hat{c}_i \phi^+_i \right ) \, dV_y \nonumber \\
+    &= \sum_i^{N_\phi} \sum_j^{N_\phi} \hat{c}_i \int_{\Omega_0} \rho_0^+ \phi_i^+ \phi_j^+ \, dV_y \hat{e}_j \nonumber \\
+    &= \Cvec \cdot \Mvec^{(\phi)} \cdot \Evec 
+\end{align}
 
 \end{document}

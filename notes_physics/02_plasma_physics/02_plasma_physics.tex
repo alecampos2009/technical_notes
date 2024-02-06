@@ -9,16 +9,24 @@
 \newcommand{\qvecdot}{\dot{\qvec}}
 \newcommand{\qdot}{\dot{q}}
 
-\title{Plasma Physics}
+\title{Laser-plasma physics}
 \author{Alejandro Campos}
 
 \begin{document}
 \maketitle
 \tableofcontents
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\part{Introduction to Plasma Physics}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 %########################################################################
-\chapter{Particle description}
+\chapter{Governing equations}
 %########################################################################
+
+%------------------------------------------------------------------------
+\section{Particle description}
+%------------------------------------------------------------------------
 \begin{table}[H]
     \renewcommand{\arraystretch}{1.5}
     \centering
@@ -35,9 +43,9 @@
      \end{tabular}
 \end{table}
     
-%------------------------------------------------------------------------
-\section{Lagrangian mechanics}
-%------------------------------------------------------------------------
+%--------------------------------------------
+\subsection{Lagrangian mechanics}
+%--------------------------------------------
     
 \begin{itemize}
     \item Define the position $\xvec = \xvec(t)$ and velocity $\vvec = \vvec(t)$ of a particle. 
@@ -80,9 +88,9 @@
     where $\Evec = \Evec(\qvec,t)$ and $\Bvec = \Bvec(\qvec,t)$.
 \end{itemize}
     
-%------------------------------------------------------------------------
-\section{Hamiltonian mechanics}
-%------------------------------------------------------------------------
+%--------------------------------------------
+\subsection{Hamiltonian mechanics}
+%--------------------------------------------
 \begin{itemize}
     \item Define the Hamiltonian as $H = H(\qvec, \pvec, t)$, where $\qvec$ and $\pvec$ are the canonical position and momentum. For all purposes here, the canonical position is the same as the generalized position.
     
@@ -147,6 +155,865 @@
     \end{equation}
     
 \end{itemize}
+
+%------------------------------------------------------------------------
+\section{Kinetic description}
+%------------------------------------------------------------------------
+We denote the distribution function for a species $\alpha$ as $f_\alpha = f_\alpha(\rvec, \vvec, t)$, where $\rvec$ and $\vvec$ are the sample space variables for position and velocity. Note that the distribution function is appropriately normalized such that
+\begin{equation}
+\int f_\alpha \, d\rvec d\vvec = N_\alpha,
+\end{equation}
+where $N_\alpha$ is the total number of particles corresponding to species $\alpha$. 
+
+The dynamics of a plasma can be characterized by the Boltzmann evolution equation for the distribution along with Maxwell's equations
+\begin{equation}
+\label{eq:kinetic_equation}
+\frac{\partial f_\alpha}{\partial t} + \vvec \cdot \nabla f_\alpha + \frac{Z_\alpha e}{m_\alpha} ( \Evec + \vvec \times \Bvec ) \cdot \nabla_v f_\alpha = C_\alpha + S_\alpha
+\end{equation}
+\begin{equation}
+\label{eq:maxwell_3}
+\nabla \cdot \Evec = \frac{\rho_e}{\epsilon_0} 
+\end{equation}
+\begin{equation}
+\label{eq:maxwell_4}
+\nabla \cdot \Bvec = 0
+\end{equation}
+\begin{equation}
+\label{eq:maxwell_1}
+\nabla \times \Evec = -\frac{ \partial \Bvec}{\partial t}
+\end{equation}
+\begin{equation}
+\label{eq:maxwell_2}
+\nabla \times \Bvec = \mu_0 \Jvec + \mu_0 \epsilon_0 \frac{\partial \Evec}{\partial t}
+\end{equation}
+\begin{equation}
+\Jvec = \sum_\alpha Z_\alpha e \int \vvec f_\alpha \, d\vvec
+\end{equation}
+\begin{equation}
+\rho_e = \sum_\alpha Z_\alpha e \int f_\alpha \, d\vvec.
+\end{equation}
+In the above, 
+\begin{itemize}
+\item $m_\alpha$ is the species mass
+\item $e$ is the charge
+\item $Z_\alpha$ the charge number
+\item $\Jvec = \Jvec(\rvec,t)$ the charge current
+\item $\rho_e = \rho_e(\rvec,t)$ the charge density
+\item $\Evec = \Evec(\rvec,t)$ the electric field
+\item $\Bvec = \Bvec(\rvec,t)$ the magnetic field.
+\end{itemize}
+The terms $C_\alpha$ and $S_\alpha$ represent collision and source terms.
+
+If we express the collision term in the usual way, that is $C_\alpha = \sum_\beta C_{\alpha \beta}$, then we can make the following statements:
+\begin{enumerate}
+\item Conservation of particles:
+\begin{equation}
+\int C_{\alpha \alpha} \, d\vvec = 0 \quad \forall \alpha \qquad \qquad
+\int C_{\alpha \beta} \,d\vvec = 0 \quad \forall \alpha, \beta | \beta \ne \alpha.
+\end{equation}
+
+\item Conservation of momentum:
+\begin{equation}
+\int m_\alpha \vvec C_{\alpha \alpha} \, d\vvec = 0 \quad \forall \alpha \qquad \qquad \sum_\alpha \sum_{\beta, \beta \ne \alpha} \int m_\alpha \vvec C_{\alpha \beta} d\vvec = 0.
+\end{equation}
+
+\item Conservation of energy:
+\begin{equation}
+\int \frac{1}{2} m_\alpha v^2 C_{\alpha \alpha} \, d\vvec = 0 \quad \forall \alpha \qquad \qquad \sum_\alpha \sum_{\beta, \beta \ne \alpha} \int \frac{1}{2} m_\alpha v^2 C_{\alpha \beta} \, d\vvec = 0.
+\end{equation}
+
+\end{enumerate}
+
+%------------------------------------------------------------------------
+\section{Fluid description}
+%------------------------------------------------------------------------
+We now define the particle density $n_\alpha = n_\alpha(\rvec,t)$, the fluid velocity $\uvec_\alpha = \uvec_\alpha(\rvec,t)$ and the fluid energy per unit mass $E_\alpha = E_\alpha(\rvec,t)$ as follows
+\begin{align}
+n_\alpha &= \int f_\alpha \, d\vvec \\
+\uvec_\alpha &= \frac{1}{n_\alpha} \int \vvec f_\alpha \, d\vvec \\
+E_\alpha &= \frac{1}{n_\alpha} \int \frac{1}{2} v^2 f_\alpha \, d\vvec.
+\end{align}
+Their evolution equations are obtained by taking the appropriate moments of the Boltzmann plasma equation. Before doing so, we re-write the Boltzmann equation as
+\begin{equation}
+\label{eq:boltz_mod}
+\frac{\partial f_\alpha}{\partial t} + \nabla \cdot (\vvec f_\alpha) + \nabla_v \cdot \left [ \frac{Z_\alpha e}{m_\alpha} ( \Evec + \vvec \times \Bvec ) f_\alpha \right ] = C_\alpha + S_\alpha
+\end{equation}
+
+%--------------------------------------------
+\subsection{Mass}
+%--------------------------------------------
+Integrating \cref{eq:boltz_mod} over all $\vvec$ we obtain
+%\begin{empheq}[box=\widefbox]{equation}
+\begin{equation}
+\frac{\partial n_\alpha}{\partial t} + \nabla \cdot \left ( n_\alpha \uvec_\alpha \right ) = \hat{S}_\alpha
+\end{equation}
+%\end{empheq}
+where 
+\begin{equation}
+\hat{S}_\alpha = \int S_\alpha \, d\vvec
+\end{equation}
+is an external source of mass.
+
+%--------------------------------------------
+\subsection{Momentum}
+%--------------------------------------------
+Multiplying \cref{eq:boltz_mod} by $\vvec$ and then integrating over all $\vvec$ leads to
+\begin{multline}
+\label{eq:mom_derv_1}
+\frac{\partial n_\alpha \uvec_\alpha}{\partial t} + \nabla \cdot \left ( \int \vvec \vvec f_\alpha \, d\vvec \right) + \int \nabla_v \cdot \left [ \vvec \frac{Z_\alpha e}{m_\alpha} ( \Evec + \vvec \times \Bvec ) f_\alpha \right ] - \nabla_v \vvec \cdot \left [ \frac{Z_\alpha e}{m_\alpha} ( \Evec + \vvec \times \Bvec ) f_\alpha \right ] \, d\vvec =\\
+\sum_{\beta, \beta \ne \alpha} \int \vvec C_{\alpha \beta} \, d\vvec + \int \vvec S_\alpha \, d\vvec.
+\end{multline}
+We note that the third term in \cref{eq:mom_derv_1} is zero since we are integrating over all space, and that $\nabla_v \vvec$ is the identity matrix. We thus have
+\begin{multline}
+\label{eq:mom_derv_2}
+\frac{\partial n_\alpha \uvec_\alpha}{\partial t} + \nabla \cdot \left ( \int \vvec \vvec f_\alpha \, d\vvec \right) - \frac{Z_\alpha e n_\alpha}{m_\alpha} ( \Evec + \uvec_\alpha \times \Bvec ) =\\
+\sum_{\beta, \beta \ne \alpha} \int \vvec C_{\alpha \beta} \, d\vvec + \int \vvec S_\alpha \, d\vvec.
+\end{multline}
+
+To proceed, we decompose $\vvec$ into a mean and a fluctuation, that is, $\vvec = \uvec_\alpha + \wvec_\alpha$. Using this decomposition 
+\begin{equation}
+\label{eq:identity_vv}
+\int \vvec \vvec f_\alpha \, d\vvec = \int ( \uvec_\alpha \uvec_\alpha + 2 \uvec_\alpha \wvec_\alpha + \wvec_\alpha \wvec_\alpha) f_\alpha \, d\vvec = n_\alpha \uvec_\alpha \uvec_\alpha + \int \wvec_\alpha \wvec_\alpha f_\alpha \, d\vvec.
+\end{equation}
+Thus, \cref{eq:mom_derv_2} becomes
+\begin{multline}
+\label{eq:mom_derv_3}
+\frac{\partial n_\alpha \uvec_\alpha}{\partial t} + \nabla \cdot \left ( n_\alpha \uvec_\alpha \uvec_\alpha \right) - \frac{Z_\alpha e n_\alpha}{m_\alpha} ( \Evec + \uvec_\alpha \times \Bvec ) = -\nabla \cdot \int \wvec_\alpha \wvec_\alpha f_\alpha d\vvec + \\
+\sum_{\beta, \beta \ne \alpha} \int \vvec C_{\alpha \beta} \, d\vvec + \int \vvec S_\alpha \, d\vvec.
+\end{multline}
+Conservation of particles is used to modify the collisional term to thus obtain
+\begin{multline}
+\label{eq:mom_derv_4}
+\frac{\partial n_\alpha \uvec_\alpha}{\partial t} + \nabla \cdot \left ( n_\alpha \uvec_\alpha \uvec_\alpha \right) - \frac{Z_\alpha e n_\alpha}{m_\alpha} ( \Evec + \uvec_\alpha \times \Bvec ) = -\nabla \cdot \int \wvec_\alpha \wvec_\alpha f_\alpha d\vvec + \\
+\sum_{\beta, \beta \ne \alpha} \int \wvec_\alpha C_{\alpha \beta} \, d\vvec + \int \vvec S_\alpha \, d\vvec.
+\end{multline}
+
+Multiplying by mass leads to the following equation
+%\begin{empheq}[box=\widefbox]{equation}
+\begin{equation}
+\label{eq:mom_derv_5}
+\frac{\partial m_\alpha n_\alpha \uvec_\alpha}{\partial t} + \nabla \cdot \left ( m_\alpha n_\alpha \uvec_\alpha \uvec_\alpha \right) - Z_\alpha e n_\alpha ( \Evec + \uvec_\alpha \times \Bvec ) = \nabla \cdot \boldsymbol{\sigma}_\alpha + \Rvec_\alpha + \hat{\Mvec}_\alpha,
+\end{equation}
+%\end{empheq}
+where the stress tensor is
+\begin{equation}
+\boldsymbol{\sigma}_\alpha = -\int m_\alpha \wvec_\alpha \wvec_\alpha f_\alpha \, d\vvec,
+\end{equation}
+the momentum transferred between unlike particles due to friction of collisions is
+\begin{equation}
+\Rvec_\alpha = \sum_{\beta, \beta \ne \alpha} \int m_\alpha \wvec_\alpha C_{\alpha \beta} \, d\vvec,
+\end{equation}
+and the external source of momentum is
+\begin{equation}
+\hat{\Mvec}_\alpha = \int m_\alpha \vvec S_\alpha \, d\vvec.
+\end{equation}
+ 
+The stress tensor is typically decomposed into isotropic $p_\alpha$ and anisotropic (shear) $\tvec_\alpha$ tensors as follows
+\begin{equation}
+\boldsymbol{\sigma}_\alpha = - p_\alpha \Ivec + \tvec_\alpha,
+\end{equation}
+where $P_\alpha$ is given by
+\begin{equation}
+p_\alpha = \frac{1}{3} \int m_\alpha (\wvec_\alpha \cdot \wvec_\alpha) f_\alpha d\vvec.
+\end{equation}
+Thus, conservation of momentum becomes
+\begin{equation}
+\label{eq:mom_derv_6}
+\frac{\partial m_\alpha n_\alpha \uvec_\alpha}{\partial t} + \nabla \cdot \left ( m_\alpha n_\alpha \uvec_\alpha \uvec_\alpha \right) - Z_\alpha e n_\alpha ( \Evec + \uvec_\alpha \times \Bvec ) = - \nabla p_\alpha + \nabla \cdot \tvec_\alpha + \Rvec_\alpha + \hat{\Mvec}_\alpha.
+\end{equation}
+
+%--------------------------------------------
+\subsection{Energy}
+%--------------------------------------------
+Multiplying \cref{eq:boltz_mod} by $\frac{1}{2} v^2$ and then integrating over all $\vvec$ leads to
+\begin{multline}
+\label{eq:energy_derv_1}
+\frac{\partial n_\alpha E_\alpha}{\partial t} + \nabla \cdot \left [ \int \frac{1}{2} (\vvec \cdot \vvec) \vvec f_\alpha \, d\vvec \right ] + \int \nabla_v \cdot \left [ \frac{1}{2} (\vvec \cdot \vvec) \frac{Z_\alpha e}{m_\alpha} ( \Evec + \vvec \times \Bvec ) f_\alpha \right ] \\
+- \nabla_v \left [ \frac{1}{2} (\vvec \cdot \vvec) \right ] \cdot \left [ \frac{Z_\alpha e}{m_\alpha} ( \Evec + \vvec \times \Bvec ) f_\alpha \right ] \, d\vvec = \sum_{\beta, \beta \ne \alpha} \int \frac{1}{2} (\vvec \cdot \vvec) C_{\alpha \beta} \, d\vvec + \int \frac{1}{2} (\vvec \cdot \vvec) S_\alpha \, d\vvec.
+\end{multline}
+We note that the third term above is zero since we are integrating over all space, and that $\nabla_v [ 1/2 (\vvec \cdot \vvec ) ] = \vvec$. Thus, we have
+\begin{multline}
+\label{eq:energy_derv_2}
+\frac{\partial n_\alpha E_\alpha}{\partial t} + \nabla \cdot \left [ \int \frac{1}{2} (\vvec \cdot \vvec) \vvec f_\alpha \, d\vvec \right ] - \frac{Z_\alpha e n_\alpha}{m_\alpha} \Evec \cdot \uvec_\alpha =\\
+\sum_{\beta, \beta \ne \alpha} \int \frac{1}{2} (\vvec \cdot \vvec) C_{\alpha \beta} \, d\vvec + \int \frac{1}{2} (\vvec \cdot \vvec) S_\alpha \, d\vvec.
+\end{multline}
+
+To proceed with the derivation we first note that
+\begin{multline}
+\int \frac{1}{2} (\vvec \cdot \vvec) \vvec f_\alpha \, d\vvec = \int \frac{1}{2} (\vvec \cdot \vvec) (\uvec_\alpha + \wvec_\alpha) f_\alpha \, d\vvec = n_\alpha E_\alpha \uvec_\alpha + \int \frac{1}{2} (\vvec \cdot \vvec ) \wvec_\alpha f_\alpha \, d\vvec
+\end{multline}
+The last term on the right-hand side above can be re-written as
+\begin{align}
+\int \frac{1}{2} ( \vvec \cdot \vvec ) \wvec_\alpha f_\alpha \, d\vvec &= \int \frac{1}{2} ( \uvec_\alpha \cdot \uvec_\alpha + 2\uvec_\alpha \cdot \wvec_\alpha + \wvec_\alpha \cdot \wvec_\alpha ) \wvec_\alpha f_\alpha \, d\vvec \\
+& =  \uvec_\alpha \cdot \int \wvec_\alpha \wvec_\alpha f_\alpha \, d\vvec + \int \frac{1}{2} ( \wvec_\alpha \cdot \wvec_\alpha ) \wvec_\alpha f_\alpha \, d\vvec.
+\end{align}
+Using the expressions above, \cref{eq:energy_derv_2} becomes
+\begin{multline}
+\label{eq:energy_derv_3}
+\frac{\partial n_\alpha E_\alpha}{\partial t} + \nabla \cdot (n_\alpha E_\alpha \uvec_\alpha ) - \frac{Z_\alpha e n_\alpha}{m_\alpha} \Evec \cdot \uvec_\alpha =  - \nabla \cdot \left ( \uvec_\alpha \cdot \int \wvec_\alpha \wvec_\alpha f_\alpha \, d\vvec \right ) - \nabla \cdot \int \frac{1}{2} ( \wvec_\alpha \cdot \wvec_\alpha ) \wvec_\alpha f_\alpha \, d\vvec\\
++ \sum_{\beta, \beta \ne \alpha} \int \frac{1}{2} (\vvec \cdot \vvec) C_{\alpha \beta} \, d\vvec + \int \frac{1}{2} (\vvec \cdot \vvec) S_\alpha \, d\vvec.
+\end{multline}
+Conservation of particles is used to modify the collisional term to thus obtain
+\begin{multline}
+\label{eq:energy_derv_4}
+\frac{\partial n_\alpha E_\alpha}{\partial t} + \nabla \cdot (n_\alpha E_\alpha \uvec_\alpha ) - \frac{Z_\alpha e n_\alpha}{m_\alpha} \Evec \cdot \uvec_\alpha = - \nabla \cdot \left ( \uvec_\alpha \cdot \int \wvec_\alpha \wvec_\alpha f_\alpha \, d\vvec  \right ) - \nabla \cdot \int \frac{1}{2} ( \wvec_\alpha \cdot \wvec_\alpha ) \wvec_\alpha f_\alpha \, d\vvec \\
++ \uvec_\alpha \cdot \sum_{\beta,\beta \ne \alpha} \int \wvec_\alpha C_{\alpha \beta} \, d\vvec + \sum_{\beta, \beta \ne \alpha} \int \frac{1}{2} (\wvec_\alpha \cdot \wvec_\alpha) C_{\alpha \beta} \, d\vvec + \int \frac{1}{2} (\vvec \cdot \vvec) S_\alpha \, d\vvec.
+\end{multline}
+
+Multiplying by mass leads to the following equation
+%\begin{empheq}[box=\widefbox]{multline}
+\begin{multline}
+\label{eq:energy_derv_5}
+\frac{\partial m_\alpha n_\alpha E_\alpha}{\partial t} + \nabla \cdot (m_\alpha n_\alpha E_\alpha \uvec_\alpha ) - Z_\alpha e n_\alpha \Evec \cdot \uvec_\alpha = \nabla \cdot ( \uvec_\alpha \cdot \boldsymbol{\sigma}_\alpha ) - \nabla \cdot \qvec_\alpha \\
++ \uvec_\alpha \cdot \Rvec_\alpha + Q_{\alpha} + \hat{Q}_\alpha, 
+\end{multline}
+%\end{empheq}
+where heat flux due to random motion is
+\begin{equation}
+\qvec_\alpha = \int \frac{1}{2} m_\alpha (\wvec_\alpha \cdot \wvec_\alpha ) \wvec_\alpha f_\alpha \, d\vvec,
+\end{equation}
+the heat generated and transferred between unlike particles due to collisional dissipation is 
+\begin{equation}
+Q_{\alpha} = \sum_{\beta,\beta \ne \alpha} \int \frac{1}{2} m_\alpha (\wvec_\alpha \cdot \wvec_\alpha) C_{\alpha \beta} \, d\vvec,
+\end{equation}
+and the external source of energy is
+\begin{equation}
+\hat{Q}_\alpha = \int \frac{1}{2} m_\alpha (\vvec \cdot \vvec) S_\alpha \, d\vvec.
+\end{equation}
+
+Using the decomposition for the stress tensor, the conservation of energy equation becomes
+\begin{multline}
+\label{eq:energy_derv_6}
+\frac{\partial m_\alpha n_\alpha E_\alpha}{\partial t} + \nabla \cdot (m_\alpha n_\alpha E_\alpha \uvec_\alpha + p_\alpha \uvec_\alpha ) - Z_\alpha e n_\alpha \Evec \cdot \uvec_\alpha = \nabla \cdot ( \uvec_\alpha \cdot \tvec_\alpha ) - \nabla \cdot \qvec_\alpha \\
++ \uvec_\alpha \cdot \Rvec_\alpha + Q_{\alpha} + \hat{Q}_\alpha, 
+\end{multline}
+We also note that the energy $m_\alpha n_\alpha E_\alpha$ can be decomposed into internal and kinetic energies. Using the trace of the decomposition shown in \cref{eq:identity_vv} one obtains
+\begin{align}
+m_\alpha n_\alpha E_\alpha & = \int \frac{1}{2} m_\alpha (\vvec \cdot \vvec) f_\alpha \, d\vvec \nonumber \\
+& = \int \frac{1}{2} m_\alpha (\wvec_\alpha \cdot \wvec_\alpha) f_\alpha \, d\vvec + \frac{1}{2} m_\alpha n_\alpha (\uvec_\alpha \cdot \uvec_\alpha) \nonumber \\
+& = \frac{3}{2} P_\alpha + \frac{1}{2} m_\alpha n_\alpha (\uvec_\alpha \cdot \uvec_\alpha) \nonumber \\
+& = \frac{3}{2} P_\alpha + m_\alpha n_\alpha K_\alpha.
+\end{align}
+where $K_\alpha = \frac{1}{2} \uvec_\alpha \cdot \uvec_\alpha$ is the kinetic energy of species $\alpha$.
+
+%--------------------------------------------
+\subsection{Kinetic and Internal Energies}
+%--------------------------------------------
+The equation for the kinetic energy is obtained by dotting \cref{eq:mom_derv_6} with $\uvec_\alpha$. For this, we first show that
+\begin{align}
+    \uvec_\alpha \cdot &\left [ \frac{\partial m_\alpha n_\alpha \uvec_\alpha}{\partial t} + \nabla \cdot \left ( m_\alpha n_\alpha \uvec_\alpha \uvec_\alpha \right) \right ] \\
+    & =\uvec_\alpha \cdot \left \{ \left [ \frac{\partial m_\alpha n_\alpha }{\partial t} + \nabla \cdot \left ( m_\alpha n_\alpha \uvec_\alpha \right) \right] \uvec_\alpha  + m_\alpha n_\alpha \left ( \frac{\partial \uvec_\alpha}{\partial t} + \uvec_\alpha \cdot \nabla \uvec_\alpha \right ) \right \}\\
+    & =\uvec_\alpha \cdot \left [ m_\alpha \hat{S}_\alpha \uvec_\alpha  + m_\alpha n_\alpha \left ( \frac{\partial \uvec_\alpha}{\partial t} + \uvec_\alpha \cdot \nabla \uvec_\alpha \right ) \right ] \\
+    & =2m_\alpha \hat{S}_\alpha K_\alpha + m_\alpha n_\alpha \left ( \frac{\partial K_\alpha}{\partial t} + \uvec_\alpha \cdot \nabla K_\alpha \right) \\
+    & =m_\alpha \hat{S}_\alpha K_\alpha + \left [ \frac{\partial m_\alpha n_\alpha}{\partial t} + \nabla \cdot \left (m_\alpha n_\alpha \uvec_\alpha \right ) \right] K_\alpha + m_\alpha n_\alpha \left ( \frac{\partial K_\alpha}{\partial t} + \uvec_\alpha \cdot \nabla K_\alpha \right) \\
+    & =m_\alpha \hat{S}_\alpha K_\alpha + \frac{\partial m_\alpha n_\alpha K_\alpha}{\partial t} + \nabla \cdot ( m_\alpha n_\alpha K \uvec_\alpha ).
+\end{align}
+Thus, the equation for the turbulent kinetic energy is
+\begin{multline}
+\frac{\partial m_\alpha n_\alpha K_\alpha}{\partial t} + \nabla \cdot ( m_\alpha n_\alpha K \uvec_\alpha ) - Z_\alpha e n_\alpha \Evec \cdot \uvec_\alpha =\\
+-\nabla \cdot ( \uvec_\alpha p_\alpha ) + \nabla \cdot (\uvec_\alpha \cdot \tvec_\alpha ) + p_\alpha \nabla \cdot \uvec_\alpha - \tvec_\alpha : \nabla \uvec_\alpha + \uvec_\alpha \cdot \Rvec_\alpha + \uvec_\alpha \cdot \hat{\Mvec}_\alpha - m_\alpha K_\alpha \hat{S}_\alpha .
+\end{multline}
+Subtracting the above equation from \cref{eq:energy_derv_6} leads to 
+\begin{equation}
+\frac{\partial}{\partial t} \left ( \frac{3}{2} p_\alpha \right ) + \nabla \cdot \left ( \frac{3}{2} p_\alpha \uvec_\alpha \right ) = -p_\alpha \nabla \cdot \uvec_\alpha + \tvec_\alpha : \nabla \uvec_\alpha - \nabla \cdot \qvec_\alpha + Q_{\alpha} + \hat{Q}_\alpha - \uvec_\alpha \cdot \hat{\Mvec}_\alpha + m_\alpha K_\alpha \hat{S}_\alpha .
+\end{equation}
+
+%--------------------------------------------
+\subsection{Summary}
+%--------------------------------------------
+To summarize, we have,
+\begin{itemize}
+    \item Particle density
+\begin{equation}
+\label{eq:cons_mass}
+    \frac{\partial n_\alpha}{\partial t} + \nabla \cdot \left ( n_\alpha \uvec_\alpha \right ) = \hat{S}_\alpha,
+\end{equation}
+
+    \item Momentum
+\begin{equation}
+\label{eq:cons_mom}
+    \frac{\partial m_\alpha n_\alpha \uvec_\alpha}{\partial t} + \nabla \cdot \left ( m_\alpha n_\alpha \uvec_\alpha \uvec_\alpha \right) - Z_\alpha e n_\alpha ( \Evec + \uvec_\alpha \times \Bvec ) = - \nabla p_\alpha + \nabla \cdot \tvec_\alpha + \Rvec_\alpha + \hat{\Mvec}_\alpha,
+\end{equation}
+
+    \item Total Energy
+\begin{multline}
+\label{eq:cons_te}
+\frac{\partial m_\alpha n_\alpha E_\alpha}{\partial t} + \nabla \cdot (m_\alpha n_\alpha E_\alpha \uvec_\alpha + p_\alpha \uvec_\alpha ) - Z_\alpha e n_\alpha \Evec \cdot \uvec_\alpha = \nabla \cdot ( \uvec_\alpha \cdot \tvec_\alpha ) - \nabla \cdot \qvec_\alpha \\
++ \uvec_\alpha \cdot \Rvec_\alpha + Q_{\alpha} + \hat{Q}_\alpha, 
+\end{multline}
+    
+    \item Kinetic Energy
+\begin{multline}
+\label{eq:cons_ke}
+\frac{\partial m_\alpha n_\alpha K_\alpha}{\partial t} + \nabla \cdot ( m_\alpha n_\alpha K \uvec_\alpha ) - Z_\alpha e n_\alpha \Evec \cdot \uvec_\alpha =\\
+-\nabla \cdot ( \uvec_\alpha p_\alpha ) + \nabla \cdot (\uvec_\alpha \cdot \tvec_\alpha ) + p_\alpha \nabla \cdot \uvec_\alpha - \tvec_\alpha : \nabla \uvec_\alpha + \uvec_\alpha \cdot \Rvec_\alpha + \uvec_\alpha \cdot \hat{\Mvec}_\alpha - m_\alpha K_\alpha \hat{S}_\alpha .
+\end{multline}    
+    
+    \item Internal Energy
+\begin{equation}
+\label{eq:cons_ie}
+    \frac{\partial}{\partial t} \left ( \frac{3}{2} p_\alpha \right ) + \nabla \cdot \left ( \frac{3}{2} p_\alpha \uvec_\alpha \right ) = -p_\alpha \nabla \cdot \uvec_\alpha + \tvec_\alpha : \nabla \uvec_\alpha - \nabla \cdot \qvec_\alpha + Q_{\alpha} + \hat{Q}_\alpha - \uvec_\alpha \cdot \hat{\Mvec}_\alpha + m_\alpha K_\alpha \hat{S}_\alpha .  
+\end{equation}
+
+\end{itemize}
+
+%########################################################################
+\chapter{Fundamental concepts}
+%########################################################################
+
+%------------------------------------------------------------------------
+\section{The two-fluid model}
+%------------------------------------------------------------------------
+
+%--------------------------------------------
+\subsection{Non-isentropic equations}
+%--------------------------------------------
+\label{sec:two_fluid_equations}
+The starting point are the multi-fluid conservation laws and the Maxwell equations. The assumptions are
+\begin{enumerate}
+    \item There are two species: ions and electrons.
+    \item No sources ($\hat{S}_\alpha$, $\hat{\Mvec}_\alpha$, $\hat{Q}_\alpha$).
+\end{enumerate}
+Thus, the governing equations are
+\begin{equation}
+\label{eq:twof_ni}
+    \frac{\partial n_i}{\partial t} + \nabla \cdot \left ( n_i \uvec_i \right ) = 0,
+\end{equation}
+\begin{equation}
+\label{eq:twof_ne}
+    \frac{\partial n_e}{\partial t} + \nabla \cdot \left ( n_e \uvec_e \right ) = 0,
+\end{equation}
+
+\begin{equation}
+\label{eq:twof_ui}
+    \frac{\partial m_i n_i \uvec_i}{\partial t} + \nabla \cdot \left ( m_i n_i \uvec_i \uvec_i \right) - Z e n_i ( \Evec + \uvec_i \times \Bvec ) = - \nabla p_i + \nabla \cdot \tvec_i + \Rvec_i,
+\end{equation}
+\begin{equation}
+\label{eq:twof_ue}
+    \frac{\partial m_e n_e \uvec_e}{\partial t} + \nabla \cdot \left ( m_e n_e \uvec_e \uvec_e \right) + e n_e ( \Evec + \uvec_e \times \Bvec ) = - \nabla p_e + \nabla \cdot \tvec_e + \Rvec_e,
+\end{equation}
+
+\begin{equation}
+\label{eq:twof_iei}
+    \frac{\partial}{\partial t} \left ( \frac{3}{2} p_i \right ) + \nabla \cdot \left ( \frac{3}{2} p_i \uvec_i \right ) = -p_i \nabla \cdot \uvec_i + \tvec_i : \nabla \uvec_i - \nabla \cdot \qvec_i + Q_i,
+\end{equation}
+\begin{equation}
+\label{eq:twof_iee}
+    \frac{\partial}{\partial t} \left ( \frac{3}{2} p_e \right ) + \nabla \cdot \left ( \frac{3}{2} p_e \uvec_e \right ) = -p_e \nabla \cdot \uvec_e + \tvec_e : \nabla \uvec_e - \nabla \cdot \qvec_e + Q_e,
+\end{equation}
+
+\begin{equation}
+\label{eq:twof_maxwell_3}
+\nabla \cdot \Evec = \frac{\rho_e}{\epsilon_0} 
+\end{equation}
+\begin{equation}
+\label{eq:twof_maxwell_4}
+\nabla \cdot \Bvec = 0.
+\end{equation}
+\begin{equation}
+\label{eq:twof_maxwell_1}
+\nabla \times \Evec = -\frac{ \partial \Bvec}{\partial t}
+\end{equation}
+\begin{equation}
+\label{eq:twof_maxwell_2}
+\nabla \times \Bvec = \mu_0 \Jvec + \mu_0 \epsilon_0 \frac{\partial \Evec}{\partial t}
+\end{equation}
+\begin{equation}
+\label{eq:twof_curr_density}
+    \Jvec = e (Z n_i \uvec_i - n_e \uvec_e)
+\end{equation}
+\begin{equation}
+\label{eq:twof_mass_density}
+    \rho_e = e (Z n_i - n_e) 
+\end{equation}
+These equations correspond to eq.\@ (2.22) in Freidberg's Ideal MHD book, but for ions that are not singly charged. For the sections below, however, we'll assume singly-charged ions.
+
+%--------------------------------------------
+\subsection{Isentropic equations}
+%--------------------------------------------
+We now add a couple of extra assumptions
+\begin{enumerate}
+    \item No stresses ($\tvec_\alpha$), heat flux ($\qvec_\alpha$), and collisions ($\Rvec_\alpha$, $Q_\alpha$). This in itself would make the flow isentropic.
+    \item The flow is not just isentropic but also homentropic. This allows for \cref{eq:pwaves_ion_pressure,eq:pwaves_electron_pressure} to hold across all space, not just along streamlines.
+\end{enumerate}
+
+Thus, the governing equations are
+\begin{equation}
+    \label{eq:pwaves_ion_density}
+    \frac{\partial n_i}{\partial t} + \nabla \cdot \left (n_i \uvec_i \right ) = 0,
+\end{equation}
+\begin{equation}
+    \label{eq:pwaves_electron_density}
+    \frac{\partial n_e}{\partial t} + \nabla \cdot \left (n_e \uvec_e \right ) = 0,
+\end{equation}
+\begin{equation}
+    \label{eq:pwaves_ion_momentum}
+    \frac{\partial m_i n_i \uvec_i}{\partial t} + \nabla \cdot \left ( m_i n_i \uvec_i \uvec_i \right ) - Ze n_i \left ( \Evec + \uvec_i \times \Bvec \right ) = -\nabla p_i,
+\end{equation}
+\begin{equation}
+    \label{eq:pwaves_electron_momentum}
+    \frac{\partial m_e n_e \uvec_e}{\partial t} + \nabla \cdot \left ( m_e n_e \uvec_e \uvec_e \right ) + e n_e \left ( \Evec + \uvec_e \times \Bvec \right ) = -\nabla p_e.
+\end{equation}
+\begin{equation}
+    \label{eq:pwaves_ion_pressure}
+    p_i = C_i n_i^{\gamma_i},
+\end{equation}
+\begin{equation}
+    \label{eq:pwaves_electron_pressure}
+    p_e = C_e n_e^{\gamma_e},
+\end{equation}
+\begin{equation}
+    \label{eq:pwaves_maxwell_3}
+    \nabla \cdot \Evec = \frac{\rho_e}{\epsilon_0} 
+\end{equation}
+\begin{equation}
+    \label{eq:p_waves_maxwell_4}
+    \nabla \cdot \Bvec = 0.
+\end{equation}
+\begin{equation}
+    \label{eq:p_waves_maxwell_1}
+    \nabla \times \Evec = -\frac{ \partial \Bvec}{\partial t}
+\end{equation}
+\begin{equation}
+    \label{eq:p_waves_maxwell_2}
+    \nabla \times \Bvec = \mu_0 \Jvec + \mu_0 \epsilon_0 \frac{\partial \Evec}{\partial t}
+\end{equation}
+\begin{equation}
+    \label{eq:p_waves_curr_density}
+    \Jvec = e (Z n_i \uvec_i - n_e \uvec_e)
+\end{equation}
+\begin{equation}
+    \label{eq:p_waves_mass_density}
+    \rho_e = e (Z n_i - n_e) 
+\end{equation}
+
+%------------------------------------------------------------------------
+\section{Electron-plasma and ion-acoustic waves}
+%------------------------------------------------------------------------
+
+%--------------------------------------------
+\subsection{Linearization}
+%--------------------------------------------
+\label{sec:p_waves_linearization}
+The following decompositions will be used in the derivation of electron-plasma and ion-acoustic waves:
+\begin{align}
+    n_i &= n_{i0} + n_{i1}, \nonumber \\
+    n_e &= n_{e0} + n_{e1}, \nonumber \\
+    p_i &= p_{i0} + p_{i1}, \nonumber \\
+    p_e &= p_{e0} + p_{e1}, \nonumber \\
+    \uvec_i &= \uvec_{i0} + \uvec_{i1}, \nonumber \\
+    \uvec_e &= \uvec_{e0} + \uvec_{e1}, \nonumber \\
+    \Evec &= \Evec_0 + \Evec_1, \nonumber \\
+    \Bvec &= \Bvec_0 + \Bvec_1.
+\end{align}
+For these decompositions, we'll assume
+\begin{enumerate}
+    \item Terms with a subscript 1 are small and thus products of two small quantities can be neglected. \label{it:p_waves_assumption_1}
+    \item $\uvec_{i0}$, $\uvec_{e0}$, $\Evec_0$, and $\Bvec_0$ are zero. \label{it:p_waves_assumption_2}
+    \item $n_{i0}$, $n_{e0}$, $p_{i0}$, and $p_{e0}$ are uniform in space and time. \label{it:p_waves_assumption_3}
+\end{enumerate}
+
+Using the variable decompositions in the evolution equation for electron density \cref{eq:pwaves_electron_density}, we have
+\begin{equation*}
+    \frac{\partial n_{e0} + n_{e1}}{\partial t} + \nabla \cdot \left [ \left ( n_{e0} + n_{e1} \right )  \left ( \uvec_{e0} + \uvec_{e1} \right ) \right ] = 0.
+\end{equation*}
+Using assumptions in \cref{it:p_waves_assumption_1,it:p_waves_assumption_2,it:p_waves_assumption_3}, the above simplifies to
+\begin{equation}
+    \label{eq:p_waves_e_den_linearized}
+    \frac{\partial n_{e1}}{\partial t} + \nabla \cdot \left (n_{e0} \uvec_{e1} \right ) = 0.
+\end{equation}
+Using the variable decompositions in the evolution equation for ion density \cref{eq:pwaves_ion_density}, we have
+\begin{equation*}
+    \frac{\partial n_{i0} + n_{i1}}{\partial t} + \nabla \cdot \left [ \left ( n_{i0} + n_{i1} \right )  \left ( \uvec_{i0} + \uvec_{i1} \right ) \right ] = 0.
+\end{equation*}
+Given the assumptions in \cref{it:p_waves_assumption_1,it:p_waves_assumption_2,it:p_waves_assumption_3}, the above simplifies to
+\begin{equation}
+    \label{eq:p_waves_i_den_linearized}
+    \frac{\partial n_{i1}}{\partial t} + \nabla \cdot \left (n_{i0} \uvec_{i1} \right ) = 0.
+\end{equation}
+
+Using the variable decompositions in the momentum equation for electrons \cref{eq:pwaves_electron_momentum}, we have 
+\begin{multline*}
+    \frac{\partial}{\partial t} \left [ m_e \left ( n_{e0} + n_{e1} \right ) \left ( \uvec_{e0} + \uvec_{e1} \right ) \right ] + \nabla \cdot \left [ m_e \left ( n_{e0} + n_{e1} \right ) \left ( \uvec_{e0} + \uvec_{e1} \right ) \left ( \uvec_{e0} + \uvec_{e1} \right ) \right ] \\
+    + e \left ( n_{e0} + n_{e1} \right ) \left [ \left ( \Evec_0 + \Evec_1 \right ) + \left ( \uvec_{e0} + \uvec_{e1} \right ) \times \left ( \Bvec_0 + \Bvec_1 \right ) \right ] = -\nabla \left ( p_{e0} + p_{e1} \right ).
+\end{multline*}
+Given the assumptions in \cref{it:p_waves_assumption_1,it:p_waves_assumption_2,it:p_waves_assumption_3}, the above simplifies to
+\begin{equation}
+    \label{eq:p_waves_e_mom_linearized}
+    \frac{\partial n_{e0} \uvec_{e1}}{\partial t} + \frac{e n_{e0}}{m_e} \Evec_1 = - \frac{1}{m_e} \nabla p_{e1} .
+\end{equation}
+Using the variable decompositions in the momentum equation for ions \cref{eq:pwaves_ion_momentum}, we have 
+\begin{multline*}
+    \frac{\partial}{\partial t} \left [ m_i \left ( n_{i0} + n_{i1} \right ) \left ( \uvec_{i0} + \uvec_{i1} \right ) \right ] + \nabla \cdot \left [ m_i \left ( n_{i0} + n_{i1} \right ) \left ( \uvec_{i0} + \uvec_{i1} \right ) \left ( \uvec_{i0} + \uvec_{i1} \right ) \right ] \\
+    - Z e \left ( n_{i0} + n_{i1} \right ) \left [ \left ( \Evec_0 + \Evec_1 \right ) + \left ( \uvec_{i0} + \uvec_{i1} \right ) \times \left ( \Bvec_0 + \Bvec_1 \right ) \right ] = -\nabla \left ( p_{i0} + p_{i1} \right ).
+\end{multline*}
+Given the assumptions in \cref{it:p_waves_assumption_1,it:p_waves_assumption_2,it:p_waves_assumption_3}, the above simplifies to
+\begin{equation}
+    \label{eq:p_waves_i_mom_linearized}
+    \frac{\partial n_{i0} \uvec_{i1}}{\partial t} - \frac{Z e n_{i0}}{m_i} \Evec_1 = - \frac{1}{m_i}\nabla p_{i1}.
+\end{equation}
+
+We'll often need to take the gradient of the ion and electron pressure. We begin by showing
+\begin{equation*}
+    \nabla p_\alpha = C_\alpha \gamma_\alpha n_\alpha^{\gamma_\alpha-1} \nabla n_\alpha = C_\alpha \gamma_\alpha \frac{n_\alpha^{\gamma_\alpha}}{n_\alpha} \nabla n_\alpha = \gamma_\alpha \frac{p_\alpha}{n_\alpha} \nabla n_\alpha,
+\end{equation*}
+or
+\begin{equation*}
+    n_\alpha \nabla p_\alpha = \gamma_\alpha p_\alpha \nabla n_\alpha,
+\end{equation*}
+where $\alpha = i,e$. Using the variable decompositions, we have
+\begin{equation*}
+    \left ( n_{\alpha 0} + n_{\alpha 1} \right ) \nabla \left ( p_{\alpha 0} + p_{\alpha 1} \right ) = \gamma_\alpha \left ( p_{\alpha 0} + p_{\alpha 1} \right ) \nabla \left ( n_{\alpha 0} + n_{\alpha 1} \right ).
+\end{equation*}
+Given the assumptions in \cref{it:p_waves_assumption_1,it:p_waves_assumption_3}, the above simplifies to
+\begin{equation}
+    \label{eq:p_waves_alpha_pressure_linearized}
+    n_{\alpha 0} \nabla p_{\alpha 1} = \gamma_\alpha p_{\alpha 0} \nabla n_{\alpha 1}.
+\end{equation}
+Thus, for electrons we have
+\begin{equation}
+    \label{eq:p_waves_e_pressure_linearized}
+    n_{e0} \nabla p_{e1} = \gamma_e p_{e0} \nabla n_{e1},
+\end{equation}
+and for ions
+\begin{equation}
+    \label{eq:p_waves_i_pressure_linearized}
+    n_{i0} \nabla p_{i1} = \gamma_i p_{i0} \nabla n_{i1}.
+\end{equation}
+
+An alternate derivation to obtain the previous results is to use an equation of state for the large pressure and density of the following form
+\begin{equation}
+    \label{eq:p_waves_eos}
+    p_{\alpha 0} = n_{\alpha 0} k_B T_\alpha,
+\end{equation}
+where $\alpha = i,e$. Note that the temperature is one whole quantity, that is, it is not split into large and small terms. Let's assume that the large quantities also satisfy isentropic flow, that is $p_{\alpha 0} = C n^{\gamma_\alpha}_{\alpha 0}$. Thus, we can show that
+\begin{align*}
+    p_{\alpha 1} &= p_{\alpha} - p_{\alpha 0} \\
+    &= C n_\alpha^{\gamma_\alpha} - p_{\alpha 0} \\
+    &= C (n_{\alpha 0} + n_{\alpha 1})^{\gamma_\alpha} - p_{\alpha 0} \\
+    &= C n_{\alpha 0}^{\gamma_\alpha} \left ( 1 + \frac{n_{\alpha 1}}{n_{\alpha 0}} \right )^{\gamma_\alpha} - p_{\alpha 0} \\
+    &= p_{\alpha 0} \left ( 1 + \frac{n_{\alpha 1}}{n_{\alpha 0}} \right )^{\gamma_\alpha} - p_{\alpha 0}.
+\end{align*} 
+Since $n_{\alpha 1} / n_{\alpha 0}$ is small, we can use the binomial series to proceed as follows
+\begin{align*}
+    p_{\alpha 1} &= p_{\alpha 0} \left ( 1 + \gamma_\alpha \frac{n_{\alpha 1}}{n_{\alpha 0}} \right ) - p_{\alpha 0} \\
+    &= \gamma_\alpha \frac{p_{\alpha 0}}{n_{\alpha 0}} n_{\alpha 1}.
+\end{align*}
+With $p_{\alpha 0}$ and $n_{\alpha 0}$ constant, this then gives \cref{eq:p_waves_alpha_pressure_linearized}. Finally, using \cref{eq:p_waves_eos} in the above we get
+\begin{equation}
+    p_{\alpha 1} = \gamma_\alpha n_{\alpha 1} k_B T_\alpha,
+\end{equation}
+which can be interpreted as the equation of state for the small quantities.
+
+%--------------------------------------------
+\subsection{Electron Plasma Waves}
+%--------------------------------------------
+On top of the assumptions in \cref{sec:p_waves_linearization}, we'll assume 
+\begin{enumerate}
+    \item Quasi-neutrality for the base flow, $Zn_{i0} = n_{e0}$.
+    \item Uniform ion density, $n_{i1} = 0$.
+\end{enumerate}
+
+Combining \Cref{eq:p_waves_e_mom_linearized} with \cref{eq:p_waves_e_pressure_linearized} gives
+\begin{equation}
+    \label{eq:ep_waves_mom_linearized}
+    \frac{\partial n_{e0} \uvec_{e1}}{\partial t} + \frac{e n_{e0}}{m_e} \Evec_1 = - \frac{\gamma_e p_{e0}}{n_{e0} m_e} \nabla n_{e1}.
+\end{equation}
+Taking the time derivative of \cref{eq:p_waves_e_den_linearized} and using \cref{eq:ep_waves_mom_linearized} leads to the the wave equation for electron density
+\begin{equation}
+    \label{eq:ep_waves_den_combined}
+    \frac{\partial^2 n_{e1}}{\partial t^2} - \frac{e n_{e0}}{m_e} \nabla \cdot \Evec_1 = \frac{\gamma_e p_{e0}}{n_{e0} m_e} \nabla^2 n_{e1}.
+\end{equation}
+For electron plasma waves, we'll assume that $n_{i}$ varies in space and time so slowly that it can be assumed to be constant. That is, we assume $n_{i1} = 0$. Thus, Gauss's law now takes the form
+\begin{equation*}
+    \nabla \cdot \Evec_1 = \frac{e}{\epsilon_0} \left ( Z n_{i0} - n_{e0} - n_{e1} \right ).
+\end{equation*}
+Using the quasi-neutrality assumption ($Zn_{i0} = n_{e0}$)
+\begin{equation}
+    \label{eq:ep_waves_efield_divergence}
+    \nabla \cdot \Evec_1 = -\frac{e}{\epsilon_0} n_{e1}.
+\end{equation}
+Plugging the above in the electron wave equation we obtain
+\begin{equation*}
+    \frac{\partial^2 n_{e1}}{\partial t^2} + \frac{e^2 n_{e0}}{m_e \epsilon_0} n_{e1} = \frac{\gamma_e p_{e0}}{n_{e0} m_e} \nabla^2 n_{e1},
+\end{equation*}
+or
+\begin{equation}
+    \frac{\partial^2 n_{e1}}{\partial t^2} + w^2_{pe} n_{e1} - \frac{\gamma_e p_{e0}}{n_{e0} m_e} \nabla^2 n_{e1} = 0.
+\end{equation}
+
+Assuming a mode of the form $n_{e1} = \hat{n}_{e1} \exp [ i \left ( \kvec_e \cdot \xvec - w t \right ) ]$, where $\kvec_e$ is the wave vector of the electron-plasma wave, gives the following dispersion relation
+\begin{equation}
+    w^2 - w^2_{pe} - \frac{\gamma_e p_{e0}}{n_{e0} m_e}  k_e^2 = 0.
+\end{equation}
+If we define the thermal velocity without the factor of two, that is, $v_{T\alpha} = \sqrt{k_BT_\alpha / m_\alpha}$, then we have
+\begin{equation}
+    w^2 - w^2_{pe} - \gamma_e k_e^2 v^2_{T_{e0}} = 0.
+\end{equation}
+
+%--------------------------------------------
+\subsection{Ion Acoustic Waves}
+%--------------------------------------------
+On top of the assumptions in \cref{sec:p_waves_linearization}, we'll assume 
+\begin{enumerate}
+    \item Quasi-neutrality for the base flow, $Zn_{i0} = n_{e0}$.
+    \item Approximate quasi-neutrality for the fluctuations, $Z n_{i1} \approx n_{e1}$.
+    \item Negligible electron mass, $m_e \to 0$.
+\end{enumerate}
+
+Combining \cref{eq:p_waves_i_mom_linearized} with \cref{eq:p_waves_i_pressure_linearized} gives
+\begin{equation}
+    \label{eq:ia_waves_mom_linearized}
+    \frac{\partial n_{i0} \uvec_{i1}}{\partial t} - \frac{Z e n_{i0}}{m_i} \Evec_1 = - \frac{\gamma_i p_{i0}}{n_{i0} m_i} \nabla n_{i1}.
+\end{equation}
+
+Taking the time derivative of \cref{eq:p_waves_i_den_linearized} and using \cref{eq:ia_waves_mom_linearized} leads to the the wave equation for ion density
+\begin{equation}
+    \label{eq:ia_waves_den_combined}
+    \frac{\partial^2 n_{i1}}{\partial t^2} + \frac{Z e n_{i0}}{m_i} \nabla \cdot \Evec_1 = \frac{\gamma_i p_{i0}}{n_{i0} m_i} \nabla^2 n_{i1}.
+\end{equation}
+For this case, we assume that the mass of the electron, which is significantly smaller than that of the ions, is negligible. Thus, \cref{eq:p_waves_e_mom_linearized} simplifies to 
+\begin{equation}
+    \label{eq:ia_waves_E}
+    e n_{e0} \Evec_1 = - \frac{\gamma_e p_{e0}}{n_{e0}} \nabla n_{e1}.
+\end{equation}
+Plugging in the above in the ion wave equation we obtain
+\begin{equation*}
+    \frac{\partial^2 n_{i1}}{\partial t^2} = \frac{Z n_{i0}}{ n_{e0}} \frac{\gamma_e p_{e0}}{n_{e0} m_i} \nabla^2 n_{e1} + \frac{\gamma_i p_{i0}}{n_{i0} m_i} \nabla^2 n_{i1}.
+\end{equation*}
+Due to quasi-neutrality, we have $Z n_{i0} = n_{e0}$ and $Z n_{i1} \approx n_{e1}$, which gives
+\begin{equation*}
+    \frac{\partial^2 n_{i1}}{\partial t^2} = \frac{1}{m_i} \left ( \frac{Z \gamma_e p_{e0}}{n_{e0}} + \frac{\gamma_i p_{i0}}{n_{i0}} \right ) \nabla^2 n_{i1}.
+\end{equation*}
+Since $p_{i0}/n_{i0} = k_B T_i$ and $p_{e0}/n_{e0} = k_B T_e$, we finally have
+\begin{equation}
+    \frac{\partial^2 n_{i1}}{\partial t^2} - \left ( \frac{Z \gamma_e k_B T_e + \gamma_i k_B T_i}{m_i} \right ) \nabla^2 n_{i1} = 0.
+\end{equation}
+
+Assuming a mode of the form $n_{i1} = \hat{n}_{i1} \exp [ i \left ( \kvec_i \cdot \xvec - w t \right ) ]$, where $\kvec_i$ is the wave vector of the ion-acoustic wave, we obtain the following dispersion relation
+\begin{equation}
+    w^2 - k_i^2 v_s^2 = 0,
+\end{equation}
+where
+\begin{equation}
+    v_s = \sqrt{ \frac{Z \gamma_e k_B T_e + \gamma_i k_B T_i }{m_i} }.
+\end{equation}
+
+%------------------------------------------------------------------------
+\section{Plasma parameters}
+%------------------------------------------------------------------------
+
+%--------------------------------------------
+\subsection{Debye length}
+%--------------------------------------------
+
+%--------------------------------------------
+\subsection{Plasma frequency}
+%--------------------------------------------
+
+%--------------------------------------------
+\subsection{The coupling parameter}
+%--------------------------------------------
+
+Coulomb interactions are those which occur when two charge particles head towards each other. We can define two types of Coulomb interactions: strong and weak. Strong Coulomb interactions are those for which the particle's Coulomb potential energy is larger than its kinetic energy, and viceversa for weak Coulomb interactions. Thus, we can also define two types of plasma regimes:
+\begin{itemize}
+    \item Strongly-coupled plasmas: plasmas where the Coulomb interactions are mostly strong and thus drive the dynamics of its evolution. Coulomb interactions tend to be strong when the inter-particle distances are small, and thus this regime would be dominated by \textit{short-range} interactions. These plasmas are also described as exhibiting \textit{collisional} behavior, since a strong Coulomb interaction essentially means a collision has occurred.
+    \item Weakly-coupled plasmas: plasmas where the Coulomb interactions are mostly weak, and as a result do not drive the dynamics of its evolution. The plasma dynamics are instead driven by \textit{long-range} effects caused by smooth electromagnetic fields that result from integrating a large number of particles. These plasmas are also described as exhibiting \textit{collective} behavior, since the long-range electromagnetic fields follow from the collective integration of many particles.
+\end{itemize}
+
+We describe an approximate Coulomb potential energy for particles in a plasma as
+\begin{equation}
+    U =  \frac{q_\alpha^2}{4 \pi \epsilon_0 a_\alpha}.
+\end{equation}
+The impact parameter that has been used above is $a_\alpha$, the sphere radius. This provides a decent measure on the average spacing between particles in a plasma. Since the volume of a single particle is $1/n_\alpha$, and if we assume that this volume is given by $4/3 \pi a_\alpha^3$, then equating these two gives the expression for the sphere radius
+\begin{equation}
+    a_\alpha = \left ( \frac{3}{4 \pi n_\alpha} \right )^{1/3}.
+\end{equation}
+The thermal velocity of a particle is given by
+\begin{equation}
+    v_{T_\alpha} = \sqrt{\frac{k_B T_\alpha}{m_\alpha}}
+\end{equation}
+A measure of the kinetic energy of a particle is given in terms of the thermal velocity as shown below
+\begin{equation}
+    K = m_\alpha v_{T_\alpha}^2 = k_B T_\alpha
+\end{equation}
+The ratio of the particle's Coulomb potential energy and its kinetic energy is referred to as the coupling parameter $\Gamma_\alpha$. That is 
+\begin{equation}
+    \Gamma_\alpha = \frac{q_\alpha^2}{4 \pi \epsilon_0 a_\alpha k_B T_\alpha}.
+\end{equation}
+$\Gamma_\alpha > 1$ denotes a strongly coupled plasma, and $\Gamma_\alpha < 1$ denotes a weakly coupled plasma. 
+
+%--------------------------------------------
+\subsection{The plasma parameter}
+%--------------------------------------------
+The standard plasma parameter $\Lambda_\alpha$ is defined as
+\begin{equation}
+    \Lambda_\alpha = \frac{4}{3} \pi \lambda_{D\alpha}^3 n_\alpha.
+\end{equation}
+
+There is a one to one relationship between the coupling parameter and the standard plasma parameter. Simple algebra shows that 
+\begin{equation}
+    \Gamma_\alpha = (1/3) \Lambda_\alpha^{-2/3}.
+\end{equation}
+Thus, the coupling and plasma parameters are inversely proportional to each other. $\Lambda_\alpha < 1$ implies strongly-coupled plasmas, and $\Lambda_\alpha > 1$ weakly-coupled plasmas. Since $\Lambda_\alpha$ represents the number of particles per Debye sphere, it is interesting to see that a large number of particles within such a sphere is needed to be in the weakly-coupled-plasma regime. However, this does not correspond to a plasma with large density, in fact, it corresponds to the opposite. The explicit $n_\alpha$ term in the definition $\Lambda_\alpha = (4/3) \pi \lambda^3_{D\alpha} n_\alpha$ is dominated by the $n_\alpha$ in the denominator of $\lambda_{D\alpha}$. In other words, low plasma densities lead to large Debye spheres, which in turn leads to many particles per Debye sphere, and hence a weakly-coupled plasma.
+
+%--------------------------------------------
+\subsection{Electron degeneracy}
+%--------------------------------------------
+
+\begin{itemize}
+    \item DeBroglie wavelength
+    \begin{equation}
+        \lambda_{B\alpha} = \dfrac{h}{\sqrt{2 \pi} m_\alpha v_{T\alpha}}
+    \end{equation}
+    \item Quantum plasma parameter
+    \begin{equation}
+        \chi_\alpha = \frac{4}{3} \pi \lambda_{B\alpha}^3 n_\alpha
+    \end{equation}
+    
+    \item Fermi energy:
+    \begin{equation}
+        E_{f\alpha} = \frac{\hbar^2}{2m_\alpha} \left ( 3 \pi^2 n_\alpha \right)^{2/3}
+    \end{equation}
+
+    \item The Fermi energy can be used to define the Fermi temperature $T_{f\alpha}$, Fermi velocity $v_{f\alpha}$, Fermi momentum $p_{f\alpha}$, and Fermi wavevector $k_{f\alpha}$
+    \begin{equation}
+        E_{f\alpha} = k_B T_{f\alpha} = \frac{1}{2} m_\alpha v_{f\alpha}^2  = \frac{p_{f\alpha}^2}{2m_\alpha} = \frac{\left ( \hbar k_{f\alpha} \right ) ^2}{2m_\alpha}
+    \end{equation}
+
+    \item Degeneracy parameter:
+    \begin{equation}
+        \Theta_\alpha = \frac{k_B T_\alpha}{E_{f\alpha}} = \left( \frac{2^{10} \pi}{3^4} \right)^{1/3} \chi_\alpha^{-2/3}
+    \end{equation}
+\end{itemize}
+
+%------------------------------------------------------------------------
+\section{Cross section}
+%------------------------------------------------------------------------
+%--------------------------------------------
+\subsection{General definition}
+%--------------------------------------------
+Two particles traveling towards each other can undergo an interaction. Types of interactions include Coulomb collisions between two charged particles, fusion reactions between ions, and photon-matter phenomena such as Compton scattering, the photoelectric effect, and pair production.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=10cm]{../../images/cross_section.pdf}
+    \caption{Interaction of incident and target particles.}
+    \label{fig:cross_many_particles}
+\end{figure}
+To define the cross section, we'll consider $I$ incident particles heading towards $J$ stationary target particles (see \cref{fig:cross_many_particles}). Not all of the incident particles will interact with the target particles, some will instead continue to travel in a uniform trajectory. The number of incident particles that do interact with the target particles is labeled as $N$. The cross section $\sigma$ is then a constant of proportionality defined by the following equation
+\begin{equation}
+    \label{eq:cross_def}
+    N = \sigma I n_A.
+\end{equation}
+In the above, $n_A$ is the areal number density, that is, $n_A = J / A = n \Delta x$, where $n$ is the volume number density.
+
+%--------------------------------------------
+\subsection{Differential cross section}
+%--------------------------------------------
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=10cm]{../../images/scattering.pdf}
+    \caption{Depiction of particle scattering.}
+    \label{fig:scattering}
+\end{figure}
+
+Consider the scattering of two particles: an incident and a target particle. If we fix the reference frame to follow the target particle, then the scattering can be depicted as shown in \cref{fig:scattering}. The displacement parameter is labelled as $b$, and the scattering angle as $\theta_s$. For three dimensional scattering, the encounter is as shown in \cref{fig:scattering_3d}. Not that in that figure the incident particle starts within the $x-z$ plane, and after scattering the particle is confined to a plane that is tilted an angle $\phi_s$ from the $x-z$ plane.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=10cm]{../../images/scattering_3d.pdf}
+    \caption{Depiction of particle scattering in 3D.}
+    \label{fig:scattering_3d}
+\end{figure}
+
+From the entire set of incident particles $N$ that interact with the target particles, one can define an infinitesimal subset $N_{\theta,\phi} d\Omega$ as the number of particles scattered into an infinitesimal solid angle $d\Omega = \sin \theta_s d\theta_s d\phi_s$, as shown in \cref{fig:scattering_3d}. We note that $N_{\theta,\phi} = N_{\theta,\phi} (\theta_s, \phi_s)$. The subset of particles $N_{\theta, \phi} d\Omega$ is now given by
+\begin{equation}
+    \label{eq:cross_def_diff}
+    N_{\theta, \phi} d\Omega = \left ( \frac{d\sigma_{\theta,\phi}}{d\Omega} d\Omega \right ) I n_A.
+\end{equation}
+In the above, 
+\begin{equation}
+    \frac{d\sigma_{\theta,\phi}}{d\Omega} = \frac{d\sigma_{\theta,\phi}}{d\Omega}(\theta_s,\phi_s)
+\end{equation}
+is the differential cross section. It is best to not think of it as a derivative (what does a derivative with respect to solid angle mean?) and instead to simply think of it as a function that depends on $\theta_s$ and $\phi_s$. Integrating over all $\theta_s$ and $\phi_s$, i.e.
+\begin{equation}
+    \int_{\theta_s = 0}^\pi \int_{\phi_s = 0}^{2\pi} N_{\theta, \phi} d\Omega = \int_{\theta_s = 0}^\pi \int_{\phi_s = 0}^{2\pi} \frac{d\sigma_{\theta,\phi}}{d\Omega}  d\Omega I n_A
+\end{equation}
+gives \cref{eq:cross_def}.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=10cm]{../../images/scattering_axi.pdf}
+    \caption{Depiction of particle scattering in for axisymmetric interactions.}
+    \label{fig:scattering_axi}
+\end{figure}
+For various cases the scattering is axisymmetric, that is, it is independent of $\phi_s$. Thus
+\begin{equation}
+    N_{\theta, \phi} \to N_\theta \qquad \frac{d\sigma_{\theta,\phi}}{d\Omega} \to \frac{d\sigma_\theta}{d\Omega},
+\end{equation}
+where 
+\begin{equation}
+    N_\theta = N_\theta (\theta_s),
+\end{equation}
+and
+\begin{equation}
+    \frac{d\sigma_\theta}{d\Omega} = \frac{d\sigma_\theta}{d\Omega} (\theta_s).
+\end{equation}
+Integrating \cref{eq:cross_def_diff} from $\phi_s = 0$ to $\phi_s = 2\pi$ gives
+\begin{equation}
+    \label{eq:cross_def_diff_axi}
+    N_\theta d\Omega_\theta = \frac{d\sigma_\theta}{d\Omega} d\Omega_\theta I n_A,
+\end{equation}
+where $d \Omega_\theta = 2\pi \sin \theta_s d\theta_s$. $N_\theta d\Omega_\theta$ thus represents the number of particles that are scattered into the infinitesimal band $d\Omega_\theta$ on a sphere, where $d\Omega_\theta$ is defined by scattering angle $\theta_s$ (see \cref{fig:scattering_axi}). We will note that there is a one-to-one correspondence between the impact parameter $b$ and the scattering angle $\theta_s$, that is, $b = b(\theta_s)$. Thus, any incident particle scattered out through the infinitesimal band $d\Omega_\theta$ would have approached the target-particle through the infinitesimal ring $dA_\theta$ that corresponds to $d\Omega_\theta$. Since there are many target particles, there are many $dA_\theta$'s that correspond to the same $d\Omega_\theta$. Thus, the total number of particles scattered through $d\Omega_\theta$ is given by all the incident particles that cross through the $dA_\theta$'s of all the target particles.
+
+The number of incident particles crossing all the infinitesimal rings $dA_\theta$ is equal to the total number of incident particles $I$ times the probability $P$ that a single incident particle will cross one of those rings. Thus, we can write
+\begin{equation*}
+    N_\theta d\Omega_\theta = I P.
+\end{equation*}
+The probability that an incident particle will cross one of those rings is simply the ratio of the surface area covered by all the rings in a section of the target material to the total area of that section. The surface area covered by all the rings in a section of area $S$ is given by $(n_A S) dA_\theta$. Thus, $P = n_A dA_\theta$ and 
+\begin{equation*}
+    N_\theta d\Omega_\theta = I n_A dA_\theta.
+\end{equation*}
+We now introduce the differential 
+\begin{equation}
+    \label{eq:cross_impact_differential}
+    db = \frac{db}{d\theta_s} d\theta_s.
+\end{equation}
+We note that by definition $d\theta_s$ is positive but $db$ can be either positive or negative depending on the sign of $db/d\theta_s$. The infinitesimal area $dA_\theta$ is then given by 
+\begin{equation}
+    \label{eq:cross_impact_area}
+    dA_\theta= 2\pi b |db| = 2 \pi b \left | \frac{db}{d\theta_s} \right | d \theta_s.
+\end{equation}
+Thus, 
+\begin{equation*}
+    N_\theta d\Omega_\theta = n_A I 2 \pi b \left | \frac{db}{d\theta_s} \right | d \theta_s.
+\end{equation*}
+Using \cref{eq:cross_def_diff_axi} in the above, we get
+\begin{equation*}
+    \frac{d\sigma_\theta}{d\Omega} d\Omega_\theta I n_A = I n_A 2 \pi b \left | \frac{db}{d\theta_s} \right | d \theta_s, 
+\end{equation*}
+or 
+\begin{equation}
+    \label{eq:cross_diff_impact_axi}
+    \frac{d\sigma_\theta}{d\Omega} = \frac{b}{\sin \theta_s} \left | \frac{db}{d\theta_s} \right |.
+\end{equation}
+
+%--------------------------------------------
+\subsection{Mean free path \& collision frequency}
+%--------------------------------------------
+The mean free path can be expressed in terms of the cross section as
+\begin{equation}
+    \lambda_m = \frac{1}{n_1 \sigma}.
+\end{equation}
+Given the particle's speed $v$, on can also define the collision time as follows
+\begin{equation}
+    \tau_m = \frac{\lambda_m}{v} = \frac{1}{n_1 \sigma v}.
+\end{equation}
+Finally, the collision frequency is simply the inverse of the collision time, that is
+\begin{equation}
+    \nu_{m} = \frac{1}{\tau_m} = n_1 \sigma v.
+\end{equation}
 
 %########################################################################
 \chapter{Guiding center theory}
@@ -804,367 +1671,8 @@ where top sign is for electrons and bottom sign is for ions, and it is assumed t
 \end{equation}
 
 %########################################################################
-\chapter{Kinetic description}
-%########################################################################
-We denote the distribution function for a species $\alpha$ as $f_\alpha = f_\alpha(\rvec, \vvec, t)$, where $\rvec$ and $\vvec$ are the sample space variables for position and velocity. Note that the distribution function is appropriately normalized such that
-\begin{equation}
-\int f_\alpha \, d\rvec d\vvec = N_\alpha,
-\end{equation}
-where $N_\alpha$ is the total number of particles corresponding to species $\alpha$. 
-
-The dynamics of a plasma can be characterized by the Boltzmann evolution equation for the distribution along with Maxwell's equations
-\begin{equation}
-\label{eq:kinetic_equation}
-\frac{\partial f_\alpha}{\partial t} + \vvec \cdot \nabla f_\alpha + \frac{Z_\alpha e}{m_\alpha} ( \Evec + \vvec \times \Bvec ) \cdot \nabla_v f_\alpha = C_\alpha + S_\alpha
-\end{equation}
-\begin{equation}
-\label{eq:maxwell_3}
-\nabla \cdot \Evec = \frac{\rho_e}{\epsilon_0} 
-\end{equation}
-\begin{equation}
-\label{eq:maxwell_4}
-\nabla \cdot \Bvec = 0
-\end{equation}
-\begin{equation}
-\label{eq:maxwell_1}
-\nabla \times \Evec = -\frac{ \partial \Bvec}{\partial t}
-\end{equation}
-\begin{equation}
-\label{eq:maxwell_2}
-\nabla \times \Bvec = \mu_0 \Jvec + \mu_0 \epsilon_0 \frac{\partial \Evec}{\partial t}
-\end{equation}
-\begin{equation}
-\Jvec = \sum_\alpha Z_\alpha e \int \vvec f_\alpha \, d\vvec
-\end{equation}
-\begin{equation}
-\rho_e = \sum_\alpha Z_\alpha e \int f_\alpha \, d\vvec.
-\end{equation}
-In the above, 
-\begin{itemize}
-\item $m_\alpha$ is the species mass
-\item $e$ is the charge
-\item $Z_\alpha$ the charge number
-\item $\Jvec = \Jvec(\rvec,t)$ the charge current
-\item $\rho_e = \rho_e(\rvec,t)$ the charge density
-\item $\Evec = \Evec(\rvec,t)$ the electric field
-\item $\Bvec = \Bvec(\rvec,t)$ the magnetic field.
-\end{itemize}
-The terms $C_\alpha$ and $S_\alpha$ represent collision and source terms.
-
-If we express the collision term in the usual way, that is $C_\alpha = \sum_\beta C_{\alpha \beta}$, then we can make the following statements:
-\begin{enumerate}
-\item Conservation of particles:
-\begin{equation}
-\int C_{\alpha \alpha} \, d\vvec = 0 \quad \forall \alpha \qquad \qquad
-\int C_{\alpha \beta} \,d\vvec = 0 \quad \forall \alpha, \beta | \beta \ne \alpha.
-\end{equation}
-
-\item Conservation of momentum:
-\begin{equation}
-\int m_\alpha \vvec C_{\alpha \alpha} \, d\vvec = 0 \quad \forall \alpha \qquad \qquad \sum_\alpha \sum_{\beta, \beta \ne \alpha} \int m_\alpha \vvec C_{\alpha \beta} d\vvec = 0.
-\end{equation}
-
-\item Conservation of energy:
-\begin{equation}
-\int \frac{1}{2} m_\alpha v^2 C_{\alpha \alpha} \, d\vvec = 0 \quad \forall \alpha \qquad \qquad \sum_\alpha \sum_{\beta, \beta \ne \alpha} \int \frac{1}{2} m_\alpha v^2 C_{\alpha \beta} \, d\vvec = 0.
-\end{equation}
-
-\end{enumerate}
-
-%########################################################################
-\chapter{Fluid description}
-%########################################################################
-We now define the particle density $n_\alpha = n_\alpha(\rvec,t)$, the fluid velocity $\uvec_\alpha = \uvec_\alpha(\rvec,t)$ and the fluid energy per unit mass $E_\alpha = E_\alpha(\rvec,t)$ as follows
-\begin{align}
-n_\alpha &= \int f_\alpha \, d\vvec \\
-\uvec_\alpha &= \frac{1}{n_\alpha} \int \vvec f_\alpha \, d\vvec \\
-E_\alpha &= \frac{1}{n_\alpha} \int \frac{1}{2} v^2 f_\alpha \, d\vvec.
-\end{align}
-Their evolution equations are obtained by taking the appropriate moments of the Boltzmann plasma equation. Before doing so, we re-write the Boltzmann equation as
-\begin{equation}
-\label{eq:boltz_mod}
-\frac{\partial f_\alpha}{\partial t} + \nabla \cdot (\vvec f_\alpha) + \nabla_v \cdot \left [ \frac{Z_\alpha e}{m_\alpha} ( \Evec + \vvec \times \Bvec ) f_\alpha \right ] = C_\alpha + S_\alpha
-\end{equation}
-
-%------------------------------------------------------------------------
-\section{Mass}
-%------------------------------------------------------------------------
-Integrating \cref{eq:boltz_mod} over all $\vvec$ we obtain
-%\begin{empheq}[box=\widefbox]{equation}
-\begin{equation}
-\frac{\partial n_\alpha}{\partial t} + \nabla \cdot \left ( n_\alpha \uvec_\alpha \right ) = \hat{S}_\alpha
-\end{equation}
-%\end{empheq}
-where 
-\begin{equation}
-\hat{S}_\alpha = \int S_\alpha \, d\vvec
-\end{equation}
-is an external source of mass.
-
-%------------------------------------------------------------------------
-\section{Momentum}
-%------------------------------------------------------------------------
-Multiplying \cref{eq:boltz_mod} by $\vvec$ and then integrating over all $\vvec$ leads to
-\begin{multline}
-\label{eq:mom_derv_1}
-\frac{\partial n_\alpha \uvec_\alpha}{\partial t} + \nabla \cdot \left ( \int \vvec \vvec f_\alpha \, d\vvec \right) + \int \nabla_v \cdot \left [ \vvec \frac{Z_\alpha e}{m_\alpha} ( \Evec + \vvec \times \Bvec ) f_\alpha \right ] - \nabla_v \vvec \cdot \left [ \frac{Z_\alpha e}{m_\alpha} ( \Evec + \vvec \times \Bvec ) f_\alpha \right ] \, d\vvec =\\
-\sum_{\beta, \beta \ne \alpha} \int \vvec C_{\alpha \beta} \, d\vvec + \int \vvec S_\alpha \, d\vvec.
-\end{multline}
-We note that the third term in \cref{eq:mom_derv_1} is zero since we are integrating over all space, and that $\nabla_v \vvec$ is the identity matrix. We thus have
-\begin{multline}
-\label{eq:mom_derv_2}
-\frac{\partial n_\alpha \uvec_\alpha}{\partial t} + \nabla \cdot \left ( \int \vvec \vvec f_\alpha \, d\vvec \right) - \frac{Z_\alpha e n_\alpha}{m_\alpha} ( \Evec + \uvec_\alpha \times \Bvec ) =\\
-\sum_{\beta, \beta \ne \alpha} \int \vvec C_{\alpha \beta} \, d\vvec + \int \vvec S_\alpha \, d\vvec.
-\end{multline}
-
-To proceed, we decompose $\vvec$ into a mean and a fluctuation, that is, $\vvec = \uvec_\alpha + \wvec_\alpha$. Using this decomposition 
-\begin{equation}
-\label{eq:identity_vv}
-\int \vvec \vvec f_\alpha \, d\vvec = \int ( \uvec_\alpha \uvec_\alpha + 2 \uvec_\alpha \wvec_\alpha + \wvec_\alpha \wvec_\alpha) f_\alpha \, d\vvec = n_\alpha \uvec_\alpha \uvec_\alpha + \int \wvec_\alpha \wvec_\alpha f_\alpha \, d\vvec.
-\end{equation}
-Thus, \cref{eq:mom_derv_2} becomes
-\begin{multline}
-\label{eq:mom_derv_3}
-\frac{\partial n_\alpha \uvec_\alpha}{\partial t} + \nabla \cdot \left ( n_\alpha \uvec_\alpha \uvec_\alpha \right) - \frac{Z_\alpha e n_\alpha}{m_\alpha} ( \Evec + \uvec_\alpha \times \Bvec ) = -\nabla \cdot \int \wvec_\alpha \wvec_\alpha f_\alpha d\vvec + \\
-\sum_{\beta, \beta \ne \alpha} \int \vvec C_{\alpha \beta} \, d\vvec + \int \vvec S_\alpha \, d\vvec.
-\end{multline}
-Conservation of particles is used to modify the collisional term to thus obtain
-\begin{multline}
-\label{eq:mom_derv_4}
-\frac{\partial n_\alpha \uvec_\alpha}{\partial t} + \nabla \cdot \left ( n_\alpha \uvec_\alpha \uvec_\alpha \right) - \frac{Z_\alpha e n_\alpha}{m_\alpha} ( \Evec + \uvec_\alpha \times \Bvec ) = -\nabla \cdot \int \wvec_\alpha \wvec_\alpha f_\alpha d\vvec + \\
-\sum_{\beta, \beta \ne \alpha} \int \wvec_\alpha C_{\alpha \beta} \, d\vvec + \int \vvec S_\alpha \, d\vvec.
-\end{multline}
-
-Multiplying by mass leads to the following equation
-%\begin{empheq}[box=\widefbox]{equation}
-\begin{equation}
-\label{eq:mom_derv_5}
-\frac{\partial m_\alpha n_\alpha \uvec_\alpha}{\partial t} + \nabla \cdot \left ( m_\alpha n_\alpha \uvec_\alpha \uvec_\alpha \right) - Z_\alpha e n_\alpha ( \Evec + \uvec_\alpha \times \Bvec ) = \nabla \cdot \boldsymbol{\sigma}_\alpha + \Rvec_\alpha + \hat{\Mvec}_\alpha,
-\end{equation}
-%\end{empheq}
-where the stress tensor is
-\begin{equation}
-\boldsymbol{\sigma}_\alpha = -\int m_\alpha \wvec_\alpha \wvec_\alpha f_\alpha \, d\vvec,
-\end{equation}
-the momentum transferred between unlike particles due to friction of collisions is
-\begin{equation}
-\Rvec_\alpha = \sum_{\beta, \beta \ne \alpha} \int m_\alpha \wvec_\alpha C_{\alpha \beta} \, d\vvec,
-\end{equation}
-and the external source of momentum is
-\begin{equation}
-\hat{\Mvec}_\alpha = \int m_\alpha \vvec S_\alpha \, d\vvec.
-\end{equation}
- 
-
-The stress tensor is typically decomposed into isotropic $p_\alpha$ and anisotropic (shear) $\tvec_\alpha$ tensors as follows
-\begin{equation}
-\boldsymbol{\sigma}_\alpha = - p_\alpha \Ivec + \tvec_\alpha,
-\end{equation}
-where $P_\alpha$ is given by
-\begin{equation}
-p_\alpha = \frac{1}{3} \int m_\alpha (\wvec_\alpha \cdot \wvec_\alpha) f_\alpha d\vvec.
-\end{equation}
-Thus, conservation of momentum becomes
-\begin{equation}
-\label{eq:mom_derv_6}
-\frac{\partial m_\alpha n_\alpha \uvec_\alpha}{\partial t} + \nabla \cdot \left ( m_\alpha n_\alpha \uvec_\alpha \uvec_\alpha \right) - Z_\alpha e n_\alpha ( \Evec + \uvec_\alpha \times \Bvec ) = - \nabla p_\alpha + \nabla \cdot \tvec_\alpha + \Rvec_\alpha + \hat{\Mvec}_\alpha.
-\end{equation}
-
-%------------------------------------------------------------------------
-\section{Energy}
-%------------------------------------------------------------------------
-Multiplying \cref{eq:boltz_mod} by $\frac{1}{2} v^2$ and then integrating over all $\vvec$ leads to
-\begin{multline}
-\label{eq:energy_derv_1}
-\frac{\partial n_\alpha E_\alpha}{\partial t} + \nabla \cdot \left [ \int \frac{1}{2} (\vvec \cdot \vvec) \vvec f_\alpha \, d\vvec \right ] + \int \nabla_v \cdot \left [ \frac{1}{2} (\vvec \cdot \vvec) \frac{Z_\alpha e}{m_\alpha} ( \Evec + \vvec \times \Bvec ) f_\alpha \right ] \\
-- \nabla_v \left [ \frac{1}{2} (\vvec \cdot \vvec) \right ] \cdot \left [ \frac{Z_\alpha e}{m_\alpha} ( \Evec + \vvec \times \Bvec ) f_\alpha \right ] \, d\vvec = \sum_{\beta, \beta \ne \alpha} \int \frac{1}{2} (\vvec \cdot \vvec) C_{\alpha \beta} \, d\vvec + \int \frac{1}{2} (\vvec \cdot \vvec) S_\alpha \, d\vvec.
-\end{multline}
-We note that the third term above is zero since we are integrating over all space, and that $\nabla_v [ 1/2 (\vvec \cdot \vvec ) ] = \vvec$. Thus, we have
-\begin{multline}
-\label{eq:energy_derv_2}
-\frac{\partial n_\alpha E_\alpha}{\partial t} + \nabla \cdot \left [ \int \frac{1}{2} (\vvec \cdot \vvec) \vvec f_\alpha \, d\vvec \right ] - \frac{Z_\alpha e n_\alpha}{m_\alpha} \Evec \cdot \uvec_\alpha =\\
-\sum_{\beta, \beta \ne \alpha} \int \frac{1}{2} (\vvec \cdot \vvec) C_{\alpha \beta} \, d\vvec + \int \frac{1}{2} (\vvec \cdot \vvec) S_\alpha \, d\vvec.
-\end{multline}
-
-To proceed with the derivation we first note that
-\begin{multline}
-\int \frac{1}{2} (\vvec \cdot \vvec) \vvec f_\alpha \, d\vvec = \int \frac{1}{2} (\vvec \cdot \vvec) (\uvec_\alpha + \wvec_\alpha) f_\alpha \, d\vvec = n_\alpha E_\alpha \uvec_\alpha + \int \frac{1}{2} (\vvec \cdot \vvec ) \wvec_\alpha f_\alpha \, d\vvec
-\end{multline}
-The last term on the right-hand side above can be re-written as
-\begin{align}
-\int \frac{1}{2} ( \vvec \cdot \vvec ) \wvec_\alpha f_\alpha \, d\vvec &= \int \frac{1}{2} ( \uvec_\alpha \cdot \uvec_\alpha + 2\uvec_\alpha \cdot \wvec_\alpha + \wvec_\alpha \cdot \wvec_\alpha ) \wvec_\alpha f_\alpha \, d\vvec \\
-& =  \uvec_\alpha \cdot \int \wvec_\alpha \wvec_\alpha f_\alpha \, d\vvec + \int \frac{1}{2} ( \wvec_\alpha \cdot \wvec_\alpha ) \wvec_\alpha f_\alpha \, d\vvec.
-\end{align}
-Using the expressions above, \cref{eq:energy_derv_2} becomes
-\begin{multline}
-\label{eq:energy_derv_3}
-\frac{\partial n_\alpha E_\alpha}{\partial t} + \nabla \cdot (n_\alpha E_\alpha \uvec_\alpha ) - \frac{Z_\alpha e n_\alpha}{m_\alpha} \Evec \cdot \uvec_\alpha =  - \nabla \cdot \left ( \uvec_\alpha \cdot \int \wvec_\alpha \wvec_\alpha f_\alpha \, d\vvec \right ) - \nabla \cdot \int \frac{1}{2} ( \wvec_\alpha \cdot \wvec_\alpha ) \wvec_\alpha f_\alpha \, d\vvec\\
-+ \sum_{\beta, \beta \ne \alpha} \int \frac{1}{2} (\vvec \cdot \vvec) C_{\alpha \beta} \, d\vvec + \int \frac{1}{2} (\vvec \cdot \vvec) S_\alpha \, d\vvec.
-\end{multline}
-Conservation of particles is used to modify the collisional term to thus obtain
-\begin{multline}
-\label{eq:energy_derv_4}
-\frac{\partial n_\alpha E_\alpha}{\partial t} + \nabla \cdot (n_\alpha E_\alpha \uvec_\alpha ) - \frac{Z_\alpha e n_\alpha}{m_\alpha} \Evec \cdot \uvec_\alpha = - \nabla \cdot \left ( \uvec_\alpha \cdot \int \wvec_\alpha \wvec_\alpha f_\alpha \, d\vvec  \right ) - \nabla \cdot \int \frac{1}{2} ( \wvec_\alpha \cdot \wvec_\alpha ) \wvec_\alpha f_\alpha \, d\vvec \\
-+ \uvec_\alpha \cdot \sum_{\beta,\beta \ne \alpha} \int \wvec_\alpha C_{\alpha \beta} \, d\vvec + \sum_{\beta, \beta \ne \alpha} \int \frac{1}{2} (\wvec_\alpha \cdot \wvec_\alpha) C_{\alpha \beta} \, d\vvec + \int \frac{1}{2} (\vvec \cdot \vvec) S_\alpha \, d\vvec.
-\end{multline}
-
-Multiplying by mass leads to the following equation
-%\begin{empheq}[box=\widefbox]{multline}
-\begin{multline}
-\label{eq:energy_derv_5}
-\frac{\partial m_\alpha n_\alpha E_\alpha}{\partial t} + \nabla \cdot (m_\alpha n_\alpha E_\alpha \uvec_\alpha ) - Z_\alpha e n_\alpha \Evec \cdot \uvec_\alpha = \nabla \cdot ( \uvec_\alpha \cdot \boldsymbol{\sigma}_\alpha ) - \nabla \cdot \qvec_\alpha \\
-+ \uvec_\alpha \cdot \Rvec_\alpha + Q_{\alpha} + \hat{Q}_\alpha, 
-\end{multline}
-%\end{empheq}
-where heat flux due to random motion is
-\begin{equation}
-\qvec_\alpha = \int \frac{1}{2} m_\alpha (\wvec_\alpha \cdot \wvec_\alpha ) \wvec_\alpha f_\alpha \, d\vvec,
-\end{equation}
-the heat generated and transferred between unlike particles due to collisional dissipation is 
-\begin{equation}
-Q_{\alpha} = \sum_{\beta,\beta \ne \alpha} \int \frac{1}{2} m_\alpha (\wvec_\alpha \cdot \wvec_\alpha) C_{\alpha \beta} \, d\vvec,
-\end{equation}
-and the external source of energy is
-\begin{equation}
-\hat{Q}_\alpha = \int \frac{1}{2} m_\alpha (\vvec \cdot \vvec) S_\alpha \, d\vvec.
-\end{equation}
-
-Using the decomposition for the stress tensor, the conservation of energy equation becomes
-\begin{multline}
-\label{eq:energy_derv_6}
-\frac{\partial m_\alpha n_\alpha E_\alpha}{\partial t} + \nabla \cdot (m_\alpha n_\alpha E_\alpha \uvec_\alpha + p_\alpha \uvec_\alpha ) - Z_\alpha e n_\alpha \Evec \cdot \uvec_\alpha = \nabla \cdot ( \uvec_\alpha \cdot \tvec_\alpha ) - \nabla \cdot \qvec_\alpha \\
-+ \uvec_\alpha \cdot \Rvec_\alpha + Q_{\alpha} + \hat{Q}_\alpha, 
-\end{multline}
-We also note that the energy $m_\alpha n_\alpha E_\alpha$ can be decomposed into internal and kinetic energies. Using the trace of the decomposition shown in \cref{eq:identity_vv} one obtains
-\begin{align}
-m_\alpha n_\alpha E_\alpha & = \int \frac{1}{2} m_\alpha (\vvec \cdot \vvec) f_\alpha \, d\vvec \nonumber \\
-& = \int \frac{1}{2} m_\alpha (\wvec_\alpha \cdot \wvec_\alpha) f_\alpha \, d\vvec + \frac{1}{2} m_\alpha n_\alpha (\uvec_\alpha \cdot \uvec_\alpha) \nonumber \\
-& = \frac{3}{2} P_\alpha + \frac{1}{2} m_\alpha n_\alpha (\uvec_\alpha \cdot \uvec_\alpha) \nonumber \\
-& = \frac{3}{2} P_\alpha + m_\alpha n_\alpha K_\alpha.
-\end{align}
-where $K_\alpha = \frac{1}{2} \uvec_\alpha \cdot \uvec_\alpha$ is the kinetic energy of species $\alpha$.
-
-%------------------------------------------------------------------------
-\section{Kinetic and Internal Energies}
-%------------------------------------------------------------------------
-The equation for the kinetic energy is obtained by dotting \cref{eq:mom_derv_6} with $\uvec_\alpha$. For this, we first show that
-\begin{align}
-    \uvec_\alpha \cdot &\left [ \frac{\partial m_\alpha n_\alpha \uvec_\alpha}{\partial t} + \nabla \cdot \left ( m_\alpha n_\alpha \uvec_\alpha \uvec_\alpha \right) \right ] \\
-    & =\uvec_\alpha \cdot \left \{ \left [ \frac{\partial m_\alpha n_\alpha }{\partial t} + \nabla \cdot \left ( m_\alpha n_\alpha \uvec_\alpha \right) \right] \uvec_\alpha  + m_\alpha n_\alpha \left ( \frac{\partial \uvec_\alpha}{\partial t} + \uvec_\alpha \cdot \nabla \uvec_\alpha \right ) \right \}\\
-    & =\uvec_\alpha \cdot \left [ m_\alpha \hat{S}_\alpha \uvec_\alpha  + m_\alpha n_\alpha \left ( \frac{\partial \uvec_\alpha}{\partial t} + \uvec_\alpha \cdot \nabla \uvec_\alpha \right ) \right ] \\
-    & =2m_\alpha \hat{S}_\alpha K_\alpha + m_\alpha n_\alpha \left ( \frac{\partial K_\alpha}{\partial t} + \uvec_\alpha \cdot \nabla K_\alpha \right) \\
-    & =m_\alpha \hat{S}_\alpha K_\alpha + \left [ \frac{\partial m_\alpha n_\alpha}{\partial t} + \nabla \cdot \left (m_\alpha n_\alpha \uvec_\alpha \right ) \right] K_\alpha + m_\alpha n_\alpha \left ( \frac{\partial K_\alpha}{\partial t} + \uvec_\alpha \cdot \nabla K_\alpha \right) \\
-    & =m_\alpha \hat{S}_\alpha K_\alpha + \frac{\partial m_\alpha n_\alpha K_\alpha}{\partial t} + \nabla \cdot ( m_\alpha n_\alpha K \uvec_\alpha ).
-\end{align}
-Thus, the equation for the turbulent kinetic energy is
-\begin{multline}
-\frac{\partial m_\alpha n_\alpha K_\alpha}{\partial t} + \nabla \cdot ( m_\alpha n_\alpha K \uvec_\alpha ) - Z_\alpha e n_\alpha \Evec \cdot \uvec_\alpha =\\
--\nabla \cdot ( \uvec_\alpha p_\alpha ) + \nabla \cdot (\uvec_\alpha \cdot \tvec_\alpha ) + p_\alpha \nabla \cdot \uvec_\alpha - \tvec_\alpha : \nabla \uvec_\alpha + \uvec_\alpha \cdot \Rvec_\alpha + \uvec_\alpha \cdot \hat{\Mvec}_\alpha - m_\alpha K_\alpha \hat{S}_\alpha .
-\end{multline}
-Subtracting the above equation from \cref{eq:energy_derv_6} leads to 
-\begin{equation}
-\frac{\partial}{\partial t} \left ( \frac{3}{2} p_\alpha \right ) + \nabla \cdot \left ( \frac{3}{2} p_\alpha \uvec_\alpha \right ) = -p_\alpha \nabla \cdot \uvec_\alpha + \tvec_\alpha : \nabla \uvec_\alpha - \nabla \cdot \qvec_\alpha + Q_{\alpha} + \hat{Q}_\alpha - \uvec_\alpha \cdot \hat{\Mvec}_\alpha + m_\alpha K_\alpha \hat{S}_\alpha .
-\end{equation}
-
-%------------------------------------------------------------------------
-\section{Summary}
-%------------------------------------------------------------------------
-To summarize, we have,
-\begin{itemize}
-    \item Particle density
-\begin{equation}
-\label{eq:cons_mass}
-    \frac{\partial n_\alpha}{\partial t} + \nabla \cdot \left ( n_\alpha \uvec_\alpha \right ) = \hat{S}_\alpha,
-\end{equation}
-
-    \item Momentum
-\begin{equation}
-\label{eq:cons_mom}
-    \frac{\partial m_\alpha n_\alpha \uvec_\alpha}{\partial t} + \nabla \cdot \left ( m_\alpha n_\alpha \uvec_\alpha \uvec_\alpha \right) - Z_\alpha e n_\alpha ( \Evec + \uvec_\alpha \times \Bvec ) = - \nabla p_\alpha + \nabla \cdot \tvec_\alpha + \Rvec_\alpha + \hat{\Mvec}_\alpha,
-\end{equation}
-
-    \item Total Energy
-\begin{multline}
-\label{eq:cons_te}
-\frac{\partial m_\alpha n_\alpha E_\alpha}{\partial t} + \nabla \cdot (m_\alpha n_\alpha E_\alpha \uvec_\alpha + p_\alpha \uvec_\alpha ) - Z_\alpha e n_\alpha \Evec \cdot \uvec_\alpha = \nabla \cdot ( \uvec_\alpha \cdot \tvec_\alpha ) - \nabla \cdot \qvec_\alpha \\
-+ \uvec_\alpha \cdot \Rvec_\alpha + Q_{\alpha} + \hat{Q}_\alpha, 
-\end{multline}
-    
-    \item Kinetic Energy
-\begin{multline}
-\label{eq:cons_ke}
-\frac{\partial m_\alpha n_\alpha K_\alpha}{\partial t} + \nabla \cdot ( m_\alpha n_\alpha K \uvec_\alpha ) - Z_\alpha e n_\alpha \Evec \cdot \uvec_\alpha =\\
--\nabla \cdot ( \uvec_\alpha p_\alpha ) + \nabla \cdot (\uvec_\alpha \cdot \tvec_\alpha ) + p_\alpha \nabla \cdot \uvec_\alpha - \tvec_\alpha : \nabla \uvec_\alpha + \uvec_\alpha \cdot \Rvec_\alpha + \uvec_\alpha \cdot \hat{\Mvec}_\alpha - m_\alpha K_\alpha \hat{S}_\alpha .
-\end{multline}    
-    
-    \item Internal Energy
-\begin{equation}
-\label{eq:cons_ie}
-    \frac{\partial}{\partial t} \left ( \frac{3}{2} p_\alpha \right ) + \nabla \cdot \left ( \frac{3}{2} p_\alpha \uvec_\alpha \right ) = -p_\alpha \nabla \cdot \uvec_\alpha + \tvec_\alpha : \nabla \uvec_\alpha - \nabla \cdot \qvec_\alpha + Q_{\alpha} + \hat{Q}_\alpha - \uvec_\alpha \cdot \hat{\Mvec}_\alpha + m_\alpha K_\alpha \hat{S}_\alpha .  
-\end{equation}
-
-\end{itemize}
-
-%########################################################################
 \chapter{Magnetohydrodynamics}
 %########################################################################
-%------------------------------------------------------------------------
-\section{Two-fluid equations}
-%------------------------------------------------------------------------
-\label{sec:two_fluid_equations}
-The starting point are the multi-fluid conservation laws and the Maxwell equations. We assume there are two species: electrons and ions. Additionally, we assume no sources. Thus, the starting governing equations are
-\begin{equation}
-\label{eq:twof_ni}
-    \frac{\partial n_i}{\partial t} + \nabla \cdot \left ( n_i \uvec_i \right ) = 0,
-\end{equation}
-\begin{equation}
-\label{eq:twof_ne}
-    \frac{\partial n_e}{\partial t} + \nabla \cdot \left ( n_e \uvec_e \right ) = 0,
-\end{equation}
-
-\begin{equation}
-\label{eq:twof_ui}
-    \frac{\partial m_i n_i \uvec_i}{\partial t} + \nabla \cdot \left ( m_i n_i \uvec_i \uvec_i \right) - Z e n_i ( \Evec + \uvec_i \times \Bvec ) = - \nabla p_i + \nabla \cdot \tvec_i + \Rvec_i,
-\end{equation}
-\begin{equation}
-\label{eq:twof_ue}
-    \frac{\partial m_e n_e \uvec_e}{\partial t} + \nabla \cdot \left ( m_e n_e \uvec_e \uvec_e \right) + e n_e ( \Evec + \uvec_e \times \Bvec ) = - \nabla p_e + \nabla \cdot \tvec_e + \Rvec_e,
-\end{equation}
-
-\begin{equation}
-\label{eq:twof_iei}
-    \frac{\partial}{\partial t} \left ( \frac{3}{2} p_i \right ) + \nabla \cdot \left ( \frac{3}{2} p_i \uvec_i \right ) = -p_i \nabla \cdot \uvec_i + \tvec_i : \nabla \uvec_i - \nabla \cdot \qvec_i + Q_i,
-\end{equation}
-\begin{equation}
-\label{eq:twof_iee}
-    \frac{\partial}{\partial t} \left ( \frac{3}{2} p_e \right ) + \nabla \cdot \left ( \frac{3}{2} p_e \uvec_e \right ) = -p_e \nabla \cdot \uvec_e + \tvec_e : \nabla \uvec_e - \nabla \cdot \qvec_e + Q_e,
-\end{equation}
-
-\begin{equation}
-\label{eq:twof_maxwell_3}
-\nabla \cdot \Evec = \frac{\rho_e}{\epsilon_0} 
-\end{equation}
-\begin{equation}
-\label{eq:twof_maxwell_4}
-\nabla \cdot \Bvec = 0.
-\end{equation}
-\begin{equation}
-\label{eq:twof_maxwell_1}
-\nabla \times \Evec = -\frac{ \partial \Bvec}{\partial t}
-\end{equation}
-\begin{equation}
-\label{eq:twof_maxwell_2}
-\nabla \times \Bvec = \mu_0 \Jvec + \mu_0 \epsilon_0 \frac{\partial \Evec}{\partial t}
-\end{equation}
-\begin{equation}
-\label{eq:twof_curr_density}
-    \Jvec = e (Z n_i \uvec_i - n_e \uvec_e)
-\end{equation}
-\begin{equation}
-\label{eq:twof_mass_density}
-    \rho_e = e (Z n_i - n_e) 
-\end{equation}
-These equations correspond to eq.\@ (2.22) in Freidberg's Ideal MHD book, but for ions that are not singly charged. For the sections below, however, we'll assume singly-charged ions.
 
 %------------------------------------------------------------------------
 \section{Low-frequency, long-wavelength, asymptotic expansions}
@@ -1383,219 +1891,6 @@ If we assume incompressibility, then the above simplifies to
 \end{equation}
 \begin{equation}
     \frac{\partial \Bvec}{\partial t} + \left ( \vvec \cdot \nabla \right ) \Bvec = \left ( \Bvec \cdot \nabla \right ) \vvec
-\end{equation}
-
-%########################################################################
-\chapter{Plasma parameters}
-%########################################################################
-
-%------------------------------------------------------------------------
-\section{Debye length}
-%------------------------------------------------------------------------
-
-%------------------------------------------------------------------------
-\section{Plasma frequency}
-%------------------------------------------------------------------------
-
-%------------------------------------------------------------------------
-\section{The coupling parameter}
-%------------------------------------------------------------------------
-
-Coulomb interactions are those which occur when two charge particles head towards each other. We can define two types of Coulomb interactions: strong and weak. Strong Coulomb interactions are those for which the particle's Coulomb potential energy is larger than its kinetic energy, and viceversa for weak Coulomb interactions. Thus, we can also define two types of plasma regimes:
-\begin{itemize}
-    \item Strongly-coupled plasmas: plasmas where the Coulomb interactions are mostly strong and thus drive the dynamics of its evolution. Coulomb interactions tend to be strong when the inter-particle distances are small, and thus this regime would be dominated by \textit{short-range} interactions. These plasmas are also described as exhibiting \textit{collisional} behavior, since a strong Coulomb interaction essentially means a collision has occurred.
-    \item Weakly-coupled plasmas: plasmas where the Coulomb interactions are mostly weak, and as a result do not drive the dynamics of its evolution. The plasma dynamics are instead driven by \textit{long-range} effects caused by smooth electromagnetic fields that result from integrating a large number of particles. These plasmas are also described as exhibiting \textit{collective} behavior, since the long-range electromagnetic fields follow from the collective integration of many particles.
-\end{itemize}
-
-We describe an approximate Coulomb potential energy for particles in a plasma as
-\begin{equation}
-    U =  \frac{q_\alpha^2}{4 \pi \epsilon_0 a_\alpha}.
-\end{equation}
-The impact parameter that has been used above is $a_\alpha$, the sphere radius. This provides a decent measure on the average spacing between particles in a plasma. Since the volume of a single particle is $1/n_\alpha$, and if we assume that this volume is given by $4/3 \pi a_\alpha^3$, then equating these two gives the expression for the sphere radius
-\begin{equation}
-    a_\alpha = \left ( \frac{3}{4 \pi n_\alpha} \right )^{1/3}.
-\end{equation}
-The thermal velocity of a particle is given by
-\begin{equation}
-    v_{T_\alpha} = \sqrt{\frac{k_B T_\alpha}{m_\alpha}}
-\end{equation}
-A measure of the kinetic energy of a particle is given in terms of the thermal velocity as shown below
-\begin{equation}
-    K = m_\alpha v_{T_\alpha}^2 = k_B T_\alpha
-\end{equation}
-The ratio of the particle's Coulomb potential energy and its kinetic energy is referred to as the coupling parameter $\Gamma_\alpha$. That is 
-\begin{equation}
-    \Gamma_\alpha = \frac{q_\alpha^2}{4 \pi \epsilon_0 a_\alpha k_B T_\alpha}.
-\end{equation}
-$\Gamma_\alpha > 1$ denotes a strongly coupled plasma, and $\Gamma_\alpha < 1$ denotes a weakly coupled plasma. 
-
-%------------------------------------------------------------------------
-\section{The plasma parameter}
-%------------------------------------------------------------------------
-The standard plasma parameter $\Lambda_\alpha$ is defined as
-\begin{equation}
-    \Lambda_\alpha = \frac{4}{3} \pi \lambda_{D\alpha}^3 n_\alpha.
-\end{equation}
-
-There is a one to one relationship between the coupling parameter and the standard plasma parameter. Simple algebra shows that 
-\begin{equation}
-    \Gamma_\alpha = (1/3) \Lambda_\alpha^{-2/3}.
-\end{equation}
-Thus, the coupling and plasma parameters are inversely proportional to each other. $\Lambda_\alpha < 1$ implies strongly-coupled plasmas, and $\Lambda_\alpha > 1$ weakly-coupled plasmas. Since $\Lambda_\alpha$ represents the number of particles per Debye sphere, it is interesting to see that a large number of particles within such a sphere is needed to be in the weakly-coupled-plasma regime. However, this does not correspond to a plasma with large density, in fact, it corresponds to the opposite. The explicit $n_\alpha$ term in the definition $\Lambda_\alpha = (4/3) \pi \lambda^3_{D\alpha} n_\alpha$ is dominated by the $n_\alpha$ in the denominator of $\lambda_{D\alpha}$. In other words, low plasma densities lead to large Debye spheres, which in turn leads to many particles per Debye sphere, and hence a weakly-coupled plasma.
-
-%------------------------------------------------------------------------
-\section{Electron degeneracy}
-%------------------------------------------------------------------------
-
-\begin{itemize}
-    \item DeBroglie wavelength
-    \begin{equation}
-        \lambda_{B\alpha} = \dfrac{h}{\sqrt{2 \pi} m_\alpha v_{T\alpha}}
-    \end{equation}
-    \item Quantum plasma parameter
-    \begin{equation}
-        \chi_\alpha = \frac{4}{3} \pi \lambda_{B\alpha}^3 n_\alpha
-    \end{equation}
-    
-    \item Fermi energy:
-    \begin{equation}
-        E_{f\alpha} = \frac{\hbar^2}{2m_\alpha} \left ( 3 \pi^2 n_\alpha \right)^{2/3}
-    \end{equation}
-
-    \item The Fermi energy can be used to define the Fermi temperature $T_{f\alpha}$, Fermi velocity $v_{f\alpha}$, Fermi momentum $p_{f\alpha}$, and Fermi wavevector $k_{f\alpha}$
-    \begin{equation}
-        E_{f\alpha} = k_B T_{f\alpha} = \frac{1}{2} m_\alpha v_{f\alpha}^2  = \frac{p_{f\alpha}^2}{2m_\alpha} = \frac{\left ( \hbar k_{f\alpha} \right ) ^2}{2m_\alpha}
-    \end{equation}
-
-    \item Degeneracy parameter:
-    \begin{equation}
-        \Theta_\alpha = \frac{k_B T_\alpha}{E_{f\alpha}} = \left( \frac{2^{10} \pi}{3^4} \right)^{1/3} \chi_\alpha^{-2/3}
-    \end{equation}
-\end{itemize}
-
-%------------------------------------------------------------------------
-\section{Cross section}
-%------------------------------------------------------------------------
-Two particles traveling towards each other can undergo an interaction. Types of interactions include Coulomb collisions between two charged particles, fusion reactions between ions, and photon-matter phenomena such as Compton scattering, the photoelectric effect, and pair production.
-
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=10cm]{../../images/cross_section.pdf}
-    \caption{Interaction of incident and target particles.}
-    \label{fig:cross_many_particles}
-\end{figure}
-To define the cross section, we'll consider $I$ incident particles heading towards $J$ stationary target particles (see \cref{fig:cross_many_particles}). Not all of the incident particles will interact with the target particles, some will instead continue to travel in a uniform trajectory. The number of incident particles that do interact with the target particles is labeled as $N$. The cross section $\sigma$ is then a constant of proportionality defined by the following equation
-\begin{equation}
-    \label{eq:cross_def}
-    N = \sigma I n_A.
-\end{equation}
-In the above, $n_A$ is the areal number density, that is, $n_A = J / A = n \Delta x$, where $n$ is the volume number density.
-
-%------------------------------------------------------------------------
-\section{Differential cross section}
-%------------------------------------------------------------------------
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=10cm]{../../images/scattering.pdf}
-    \caption{Depiction of particle scattering.}
-    \label{fig:scattering}
-\end{figure}
-
-Consider the scattering of two particles: an incident and a target particle. If we fix the reference frame to follow the target particle, then the scattering can be depicted as shown in \cref{fig:scattering}. The displacement parameter is labelled as $b$, and the scattering angle as $\theta_s$. For three dimensional scattering, the encounter is as shown in \cref{fig:scattering_3d}. Not that in that figure the incident particle starts within the $x-z$ plane, and after scattering the particle is confined to a plane that is tilted an angle $\phi_s$ from the $x-z$ plane.
-
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=10cm]{../../images/scattering_3d.pdf}
-    \caption{Depiction of particle scattering in 3D.}
-    \label{fig:scattering_3d}
-\end{figure}
-
-From the entire set of incident particles $N$ that interact with the target particles, one can define an infinitesimal subset $N_{\theta,\phi} d\Omega$ as the number of particles scattered into an infinitesimal solid angle $d\Omega = \sin \theta_s d\theta_s d\phi_s$, as shown in \cref{fig:scattering_3d}. We note that $N_{\theta,\phi} = N_{\theta,\phi} (\theta_s, \phi_s)$. The subset of particles $N_{\theta, \phi} d\Omega$ is now given by
-\begin{equation}
-    \label{eq:cross_def_diff}
-    N_{\theta, \phi} d\Omega = \left ( \frac{d\sigma_{\theta,\phi}}{d\Omega} d\Omega \right ) I n_A.
-\end{equation}
-In the above, 
-\begin{equation}
-    \frac{d\sigma_{\theta,\phi}}{d\Omega} = \frac{d\sigma_{\theta,\phi}}{d\Omega}(\theta_s,\phi_s)
-\end{equation}
-is the differential cross section. It is best to not think of it as a derivative (what does a derivative with respect to solid angle mean?) and instead to simply think of it as a function that depends on $\theta_s$ and $\phi_s$. Integrating over all $\theta_s$ and $\phi_s$, i.e.
-\begin{equation}
-    \int_{\theta_s = 0}^\pi \int_{\phi_s = 0}^{2\pi} N_{\theta, \phi} d\Omega = \int_{\theta_s = 0}^\pi \int_{\phi_s = 0}^{2\pi} \frac{d\sigma_{\theta,\phi}}{d\Omega}  d\Omega I n_A
-\end{equation}
-gives \cref{eq:cross_def}.
-
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=10cm]{../../images/scattering_axi.pdf}
-    \caption{Depiction of particle scattering in for axisymmetric interactions.}
-    \label{fig:scattering_axi}
-\end{figure}
-For various cases the scattering is axisymmetric, that is, it is independent of $\phi_s$. Thus
-\begin{equation}
-    N_{\theta, \phi} \to N_\theta \qquad \frac{d\sigma_{\theta,\phi}}{d\Omega} \to \frac{d\sigma_\theta}{d\Omega},
-\end{equation}
-where 
-\begin{equation}
-    N_\theta = N_\theta (\theta_s),
-\end{equation}
-and
-\begin{equation}
-    \frac{d\sigma_\theta}{d\Omega} = \frac{d\sigma_\theta}{d\Omega} (\theta_s).
-\end{equation}
-Integrating \cref{eq:cross_def_diff} from $\phi_s = 0$ to $\phi_s = 2\pi$ gives
-\begin{equation}
-    \label{eq:cross_def_diff_axi}
-    N_\theta d\Omega_\theta = \frac{d\sigma_\theta}{d\Omega} d\Omega_\theta I n_A,
-\end{equation}
-where $d \Omega_\theta = 2\pi \sin \theta_s d\theta_s$. $N_\theta d\Omega_\theta$ thus represents the number of particles that are scattered into the infinitesimal band $d\Omega_\theta$ on a sphere, where $d\Omega_\theta$ is defined by scattering angle $\theta_s$ (see \cref{fig:scattering_axi}). We will note that there is a one-to-one correspondence between the impact parameter $b$ and the scattering angle $\theta_s$, that is, $b = b(\theta_s)$. Thus, any incident particle scattered out through the infinitesimal band $d\Omega_\theta$ would have approached the target-particle through the infinitesimal ring $dA_\theta$ that corresponds to $d\Omega_\theta$. Since there are many target particles, there are many $dA_\theta$'s that correspond to the same $d\Omega_\theta$. Thus, the total number of particles scattered through $d\Omega_\theta$ is given by all the incident particles that cross through the $dA_\theta$'s of all the target particles.
-
-The number of incident particles crossing all the infinitesimal rings $dA_\theta$ is equal to the total number of incident particles $I$ times the probability $P$ that a single incident particle will cross one of those rings. Thus, we can write
-\begin{equation*}
-    N_\theta d\Omega_\theta = I P.
-\end{equation*}
-The probability that an incident particle will cross one of those rings is simply the ratio of the surface area covered by all the rings in a section of the target material to the total area of that section. The surface area covered by all the rings in a section of area $S$ is given by $(n_A S) dA_\theta$. Thus, $P = n_A dA_\theta$ and 
-\begin{equation*}
-    N_\theta d\Omega_\theta = I n_A dA_\theta.
-\end{equation*}
-We now introduce the differential 
-\begin{equation}
-    \label{eq:cross_impact_differential}
-    db = \frac{db}{d\theta_s} d\theta_s.
-\end{equation}
-We note that by definition $d\theta_s$ is positive but $db$ can be either positive or negative depending on the sign of $db/d\theta_s$. The infinitesimal area $dA_\theta$ is then given by 
-\begin{equation}
-    \label{eq:cross_impact_area}
-    dA_\theta= 2\pi b |db| = 2 \pi b \left | \frac{db}{d\theta_s} \right | d \theta_s.
-\end{equation}
-Thus, 
-\begin{equation*}
-    N_\theta d\Omega_\theta = n_A I 2 \pi b \left | \frac{db}{d\theta_s} \right | d \theta_s.
-\end{equation*}
-Using \cref{eq:cross_def_diff_axi} in the above, we get
-\begin{equation*}
-    \frac{d\sigma_\theta}{d\Omega} d\Omega_\theta I n_A = I n_A 2 \pi b \left | \frac{db}{d\theta_s} \right | d \theta_s, 
-\end{equation*}
-or 
-\begin{equation}
-    \label{eq:cross_diff_impact_axi}
-    \frac{d\sigma_\theta}{d\Omega} = \frac{b}{\sin \theta_s} \left | \frac{db}{d\theta_s} \right |.
-\end{equation}
-
-%------------------------------------------------------------------------
-\section{Mean free path \& collision frequency}
-%------------------------------------------------------------------------
-The mean free path can be expressed in terms of the cross section as
-\begin{equation}
-    \lambda_m = \frac{1}{n_1 \sigma}.
-\end{equation}
-Given the particle's speed $v$, on can also define the collision time as follows
-\begin{equation}
-    \tau_m = \frac{\lambda_m}{v} = \frac{1}{n_1 \sigma v}.
-\end{equation}
-Finally, the collision frequency is simply the inverse of the collision time, that is
-\begin{equation}
-    \nu_{m} = \frac{1}{\tau_m} = n_1 \sigma v.
 \end{equation}
 
 %########################################################################
@@ -1893,9 +2188,9 @@ and using the trig identity $\cot (\theta/2) = (\cos \theta + 1) / \sin \theta$,
 \subsection{The differential cross section}
 %--------------------------------------------
 
-The differential cross section for Coulomb scattering can be computed by making use of a formula derived in my introductory notes, namely
+The differential cross section for Coulomb scattering can be computed by making use of \cref{eq:cross_diff_impact_axi}, which is repeated below
 \begin{equation}
-    \label{eq:cross_diff_impact_axi}
+    \tag{\ref{eq:cross_diff_impact_axi}}
     \frac{d\sigma_\theta}{d\Omega} = \frac{b}{\sin \theta_s} \left | \frac{db}{d\theta_s} \right |.
 \end{equation}
 From \cref{eq:coul_scattering_angle} we get,
@@ -1959,6 +2254,617 @@ We note that $\mathcal{F}^{(lk)}_{\alpha \beta} = 4 \mathcal{K}_{lk}(g_{\alpha \
 %--------------------------------------------
 \subsection{Electron-ion thermal coupling $w_{ei}$}
 %--------------------------------------------
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\part{Laser-plasma Physics}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%########################################################################
+\chapter{Longitudinal and transverse waves}
+%########################################################################
+
+%------------------------------------------------------------------------
+\section{Definitions}
+%------------------------------------------------------------------------
+The Helmholtz decomposition for a function $\Fvec = \Fvec(\xvec,t)$ is of the following form
+\begin{equation}
+    \Fvec = \Fvec_l + \Fvec_t,
+\end{equation}
+where $\Fvec_l = \Fvec_l(\xvec,t)$ is the longitudinal component and $\Fvec_t = \Fvec_t(\xvec,t)$ the transverse component. These are defined by
+\begin{align}
+    \nabla \times \Fvec_l &= 0, \label{eq:ltw_plasma_long_def}\\
+    \nabla \cdot \Fvec_t &= 0. \label{eq:ltw_plasma_tran_def}
+\end{align}
+We'll assume that any vector function $\Gvec = \Gvec(\xvec,t)$ can be expressed as the real component of
+\begin{equation}
+    \label{eq:em_more_general_wave_form}
+    \Gvec = \hat{\Gvec} \exp \left [ i \left ( \int_0^x k_x(x') \, dx' + \int_0^y k_y(y') \, dy' + \int_0^z k_z(z') \, dz'  - wt \right ) \right ].
+\end{equation}
+For the above, $w$ a frequency constant in time and space, and $k_x = k_x(x)$, $k_y = k_y(y)$, and $k_z = k_z(z)$ form the wave vector $\kvec = [k_x, k_y, k_z]$. $\hat{\Gvec} = \hat{\Gvec}(\xvec,t)$ is a complex vector where the real and complex components point in the same direction. Additionally, we enforce the constraint that if $\nabla \times \Gvec = 0$, then $\nabla \times \hat{\Gvec} = 0$, and similarly, if $\nabla \cdot \Gvec = 0$, then $\nabla \cdot \hat{\Gvec} = 0$. We'll often use a different subscript in the wave vectors and frequencies of different waves. For example, we'll use $\kvec_e$ for electron-plasma waves, $\kvec_i$ for ion-acoustic waves, $\kvec_L$ for laser waves, and $\kvec_s$ for scattered waves. Similarly for the frequencies $w_e$, $w_i$, $w_L$, $w_s$.
+
+We note that
+\begin{multline}
+    \nabla \exp \left [ i \left ( \int_0^x k_x(x') \, dx' + \int_0^y k_y(y') \, dy' + \int_0^z k_z(z') \, dz'  - wt \right ) \right ] \\
+    = i \kvec \exp \left [ i \left ( \int_0^x k_x(x') \, dx' + \int_0^y k_y(y') \, dy' + \int_0^z k_z(z') \, dz'  - wt \right ) \right ]
+\end{multline}
+Given the identity $\nabla \times (\Avec f) = (\nabla \times \Avec ) f - \Avec \times (\nabla f)$, we can show that
+\begin{align}
+    \label{eq:ltw_no_curl}
+    \nabla \times \Gvec &= \nabla \times \left [ \hat{\Gvec} \exp (...) \right ] \nonumber \\
+    &= \left ( \nabla \times \hat{\Gvec} \right ) \exp (...) - \hat{\Gvec} \times \left [ \nabla \exp (...) \right ] \nonumber \\
+    &= \left ( \nabla \times \hat{\Gvec} \right ) \exp (...) - \hat{\Gvec} \times \left [ i\kvec \exp (...) \right ] \nonumber \\
+    &= \left ( \nabla \times \hat{\Gvec} \right ) \exp (...) + i \kvec \times \Gvec.
+\end{align}
+Given the identity $\nabla \cdot (\Avec f) = ( \nabla \cdot \Avec) f + \Avec \cdot (\nabla f)$, we can show that
+\begin{align}
+    \label{eq:ltw_no_div}
+    \nabla \cdot \Gvec &= \nabla \cdot \left [ \hat{\Gvec} \exp (...) \right ] \nonumber \\
+    &= \left ( \nabla \cdot \hat{\Gvec} \right ) \exp (...) + \hat{\Gvec} \cdot \left [ \nabla \exp (...) \right ] \nonumber \\
+    &= \left ( \nabla \cdot \hat{\Gvec} \right ) \exp (...) + \hat{\Gvec} \cdot \left [ i \kvec \exp (...) \right ] \nonumber \\
+    &= \left ( \nabla \cdot \hat{\Gvec} \right ) \exp (...) + i \kvec \cdot \Gvec.
+\end{align}
+By definition, $\Fvec_l$ has no curl and $\Fvec_t$ has no divergence. As mentioned earlier, we then require $\hat{\Fvec}_l$ to have no curl and $\hat{\Fvec}_t$ to have no divergence. Using this in \cref{eq:ltw_no_curl,eq:ltw_no_div} allow us to write
+\begin{align}
+    \kvec \times \Fvec_l = 0 \label{eq:ltw_plasma_long_wavevector} \\
+    \kvec \cdot \Fvec_t = 0 \label{eq:ltw_plasma_trans_wavevector}.
+\end{align}
+
+The first expression above says $\Fvec_l$ is parallel to $\kvec$ and the second says $\Fvec_t$ is orthogonal to $\kvec$. Thus, $\Fvec_l \cdot \Fvec_t = 0$. We will often have situations where $\nabla \times \Fvec = \nabla \cdot \Fvec = 0$, which by its own does not imply $\Fvec = 0$. However, using \cref{eq:ltw_no_curl,eq:ltw_no_div}, this translates to to $\kvec \times \Fvec = \kvec \cdot \Fvec =  0$. The latter equality states that $\kvec$ and $\Fvec$ are orthogonal, that is, the angle between them is $90^\circ$. The former equality leads to $|\Fvec| \sin(90^\circ) = 0$, which in turn means $\Fvec = 0$. To summarize,
+\begin{equation}
+    \label{eq:ltw_general_null_vector}
+    \nabla \times \Fvec = \nabla \cdot \Fvec = 0 \to \Fvec = 0.
+\end{equation}
+
+For some cases we'll further restrict $\hat{\Gvec}$ in \cref{eq:em_more_general_wave_form} such that $\hat{\Gvec} = \hat{\Gvec} (\xvec)$, that is, the time dependence of the wave is fully captured by the $\exp(-iwt)$ term. For this case, we'll often re-write the expression for $\Gvec$ as
+\begin{equation}
+    \label{eq:em_semi_general_wave_form}
+    \Gvec = \tilde{\Gvec} \exp (-iwt),
+\end{equation}
+where $\tilde{\Gvec} = \tilde{\Gvec}(\xvec)$ is given by
+\begin{equation}
+    \tilde{\Gvec} = \hat{\Gvec} \exp \left [ i \left ( \int_0^x k_x(x') \, dx' + \int_0^y k_y(y') \, dy' + \int_0^z k_z(z') \, dz' \right ) \right ].
+\end{equation}
+Finally, a further simplification occurs when $\kvec$ and $\hat{\Gvec}$ are assumed to be constant in space. For this case, the expression for $\Gvec$ becomes
+\begin{equation}
+    \label{eq:em_general_wave_form}
+    \Gvec = \hat{\Gvec} \exp \left [i\left ( \kvec \cdot \xvec - wt \right ) \right ].
+\end{equation}
+These are the so-called plane waves. We end with the cautionary note that the second gradients of $\Gvec$ in \cref{eq:em_more_general_wave_form} are not necessarily the same as those of $\Gvec$ in \cref{eq:em_general_wave_form}.
+
+%------------------------------------------------------------------------
+\section{Electron-plasma and ion-acoustic waves}
+%------------------------------------------------------------------------
+For both electron-plasma and ion-acoustic waves we can assume the magnetic field does not change. Thus, Faraday's law gives
+\begin{equation}
+    \nabla \times \Evec = \nabla \times \Evec_t = 0.
+\end{equation}
+By definition, $\nabla \cdot \Evec_t = 0$. Thus, using \cref{eq:ltw_general_null_vector} we get $\Evec_t = 0$, that is, $\Evec = \Evec_l$. 
+
+For electron-plasma waves, we can use \cref{eq:em_general_wave_form} to write \cref{eq:ep_waves_mom_linearized} in spectral form and thus obtain
+\begin{equation}
+-i w n_{e0} \hat{\uvec}_{e1} + \frac{e n_{e0}}{m_e} \hat{\Evec}_{1,l} = -\kvec_e \frac{\gamma_e p_{e0}}{n_{e0} m_e} \hat{n}_{e1}. 
+\end{equation}
+Since the second term on the left-hand side and the term on the right-hand side point along $\kvec_e$, $\hat{\uvec}_{e1}$ also points along $\kvec_e$, that is, $\hat{\uvec}_{e1} = \hat{\uvec}_{e1,l}$.
+
+For ion-acoustic waves, we can use \cref{eq:em_general_wave_form} to write \cref{eq:ia_waves_mom_linearized} in spectral form and thus obtain
+\begin{equation}
+-i w n_{i0} \hat{\uvec}_{i1} - \frac{Z e n_{i0}}{m_i} \hat{\Evec}_{1,l} = -\kvec_i \frac{\gamma_i p_{i0}}{n_{i0} m_i} \hat{n}_{i1}. 
+\end{equation}
+Since the second term on the left-hand side and the term on the right-hand side point along $\kvec_i$, $\hat{\uvec}_{i1}$ also points along $\kvec_i$, that is, $\hat{\uvec}_{i1} = \hat{\uvec}_{i1,l}$. Finally, we note that the electric field being purely longitudinal is in agreement with \cref{eq:ia_waves_E}.
+
+%########################################################################
+\chapter{Electromagnetic waves in plasmas}
+%########################################################################
+
+\label{sec:electromagnetic_waves_plasmas}
+In introductory electrodynamics, one typically studies electromagnetic waves in vacuum, that is, for cases where $\rho_e = \Jvec = 0$. In this section we relax both of these assumptions. Consider the electric and magnetic fields as well as the scalar and vector potentials, which satisfy
+\begin{equation}
+    \label{eq:emp_general_E_potential}
+    \Evec = -\nabla \phi - \frac{\partial \Avec}{\partial t},
+\end{equation}
+\begin{equation}
+    \label{eq:emp_general_B_potential}
+    \Bvec = \nabla \times \Avec.
+\end{equation}
+For the above, we choose $\nabla \cdot \Avec = 0$. Using the fact that the magnetic field is solenoidal, we have
+\begin{equation*}
+    \nabla \cdot \Bvec = \nabla \cdot \Bvec_l + \nabla \cdot \Bvec_t = \nabla \cdot \Bvec_l = 0.
+\end{equation*}
+However, by definition, $\nabla \times \Bvec_l = 0$ as well. Thus, using \cref{eq:ltw_general_null_vector}, we have $\Bvec_l = 0$. The same argument applies to the vector potential, and thus $\Avec_l = 0$. For the electric field, we have
+\begin{equation*}
+    \nabla \cdot \Evec = \nabla \cdot \Evec_l + \nabla \cdot \Evec_t = \nabla \cdot \Evec_l .
+\end{equation*}
+Taking the divergence of \cref{eq:emp_general_E_potential}, we get
+\begin{equation}
+    \nabla \cdot \Evec = \nabla \cdot \left ( -\nabla \phi \right ).
+\end{equation}
+Combining the last two equations gives
+\begin{equation*}
+    \nabla \cdot \left ( \Evec_l + \nabla \phi \right ) = 0.
+\end{equation*}
+By definition, we also have
+\begin{equation*}
+    \nabla \times \left ( \Evec_l + \nabla \phi \right ) = 0.
+\end{equation*}
+Thus, using \cref{eq:ltw_general_null_vector}, we have $\Evec_l = -\nabla \phi$. A similar argument can be used to show $\Evec_t = -\partial \Avec / \partial t$. Our goal in this section will be to determine equations for $\Evec_l$, $\Evec_t$ and $\Bvec$.
+
+We'll begin with the conservation of charge equation
+\begin{equation*}
+    \frac{\partial \rho_e}{\partial t} + \nabla \cdot \Jvec = 0,
+\end{equation*}
+which we re-write as
+\begin{equation*}
+    \frac{\partial \rho_e}{\partial t} + \nabla \cdot \Jvec_l = 0,
+\end{equation*}
+Using Poisson's equation $\nabla^2\phi = -\rho_e / \epsilon_0$ in the above, we get
+\begin{equation*}
+    \frac{\partial}{\partial t} \left ( -\epsilon_0 \nabla^2 \phi \right ) + \nabla \cdot \Jvec_l = 0,
+\end{equation*}
+or
+\begin{equation*}
+    \nabla \cdot \left ( \frac{\partial \nabla \phi}{\partial t} - \frac{1}{\epsilon_0} \Jvec_l \right ) = 0.
+\end{equation*}
+However, by definition, we also have
+\begin{equation*}
+    \nabla \times \left ( \frac{\partial \nabla \phi}{\partial t} - \frac{1}{\epsilon_0} \Jvec_l \right ) = 0.
+\end{equation*}
+Using \cref{eq:ltw_general_null_vector}, we conclude
+\begin{equation}
+    \label{eq:emp_general_longitudinal_J}
+    \frac{\partial \nabla \phi}{\partial t} = \frac{1}{\epsilon_0} \Jvec_l.
+\end{equation}
+This gives the equation for $\Evec_l$, namely,
+\begin{equation}
+    \label{eq:emp_general_long_E}
+    \frac{\partial^2 \Evec_l}{\partial t^2} + \frac{1}{\epsilon_0} \frac{\partial \Jvec_l}{\partial t} = 0.
+\end{equation}
+
+Both $\Evec_t$ and $\Bvec$ can be extracted from $\Avec$, so now we proceed to find an equation for the transverse vector potential. Ampere's law with Maxwell's correction gives
+\begin{equation*}
+    \nabla \times \left ( \nabla \times \Avec \right ) = \mu_0 \Jvec + \mu_0 \epsilon_0 \frac{\partial \Evec}{\partial t}.
+\end{equation*}
+The above is re-written as
+\begin{equation*}
+    \nabla \left ( \nabla \cdot \Avec \right ) - \nabla^2 \Avec = \mu_0 \Jvec + \mu_0 \epsilon_0 \left ( -\frac{\partial \nabla \phi}{\partial t} - \frac{\partial^2 \Avec}{\partial t^2} \right ),
+\end{equation*}
+which gives
+\begin{equation*}
+    \frac{\partial^2 \Avec}{\partial t} - \frac{1}{\mu_0 \epsilon_0} \nabla^2 \Avec = \frac{1}{\epsilon_0} \Jvec - \frac{\partial \nabla \phi}{\partial t},
+\end{equation*}
+or
+\begin{equation*}
+    \frac{\partial^2 \Avec}{\partial t} - c_0^2 \nabla^2 \Avec = \frac{1}{\epsilon_0} \Jvec - \frac{\partial \nabla \phi}{\partial t},
+\end{equation*}
+where $c_0 = 1/\sqrt{\mu_0 \epsilon_0}$. Expanding the current density as $\Jvec = \Jvec_l + \Jvec_t$, and using \cref{eq:emp_general_longitudinal_J}, we get
+\begin{equation}
+    \label{eq:emp_general_trans_vec_pot}
+    \frac{\partial^2 \Avec}{\partial t} - c_0^2 \nabla^2 \Avec = \frac{1}{\epsilon_0} \Jvec_t.
+\end{equation}
+Using the functional form in \cref{eq:em_general_wave_form} for $\Avec$ and $\Jvec_t$ gives
+\begin{equation}
+    -w^2 \hat{\Avec} + k^2 c_0^2 \hat{\Avec}= \frac{1}{\epsilon_0} \hat{\Jvec}_t.
+\end{equation}
+That is, $\Avec$ and $\Jvec_t$ point in the same direction.
+
+Taking the time derivative of \cref{eq:emp_general_trans_vec_pot} gives the equation for $\Evec_t$, that is
+\begin{equation}
+    \label{eq:emp_general_trans_E}
+    \frac{\partial^2 \Evec_t}{\partial t^2} - c_0^2 \nabla^2 \Evec_t + \frac{1}{\epsilon_0} \frac{\partial \Jvec_t}{\partial t} = 0.
+\end{equation}
+Taking the curl of \cref{eq:emp_general_trans_vec_pot} gives the equation for $\Bvec$, that is
+\begin{equation}
+    \label{eq:emp_general_trans_B}
+    \frac{\partial^2 \Bvec}{\partial t^2} - c_0^2 \nabla^2 \Bvec - \frac{1}{\epsilon_0} \nabla \times \Jvec_t = 0.
+\end{equation}
+Using the functional form in \cref{eq:em_general_wave_form} for $\Evec_t$, $\Bvec$ and $\Jvec_t$ gives
+\begin{equation}
+    -w^2 \hat{\Evec}_t + k^2 c_0^2 \hat{\Evec}_t - \frac{iw}{\epsilon_0} \hat{\Jvec}_t = 0,
+\end{equation}
+\begin{equation}
+    -w^2 \Bvec + k^2 c_0^2 \Bvec - \frac{i}{\epsilon_0} \kvec \times \Jvec_t = 0.
+\end{equation}
+That is, $\Evec_t$ points in the same direction as $\Jvec_t$, which as shown before points in the same direction as $\Avec$. Additionally, $\Bvec$ points in the direction of $\kvec \times \Jvec_t$, that is, it is orthogonal to $\Evec_t$.
+
+We briefly note that taking the curl of \cref{eq:p_waves_maxwell_1}, and using \cref{eq:p_waves_maxwell_2}, gives the wave equation for the total electric field $\Evec$, that is 
+\begin{equation}
+    \frac{\partial^2 \Evec}{\partial t^2} - c_0^2 \nabla^2 \Evec + c_0^2 \nabla (\nabla \cdot \Evec) + \frac{1}{\epsilon_0} \frac{\partial \Jvec}{\partial t} = 0.
+\end{equation}
+The above can be considered as the sum of the following three equations
+\begin{align*}
+    \frac{\partial^2 \Evec_l}{\partial t^2} + \frac{1}{\epsilon_0} \frac{\partial \Jvec_l}{\partial t} &= 0, \\
+    \frac{\partial^2 \Evec_t}{\partial t^2} - c_0^2 \nabla^2 \Evec_t + \frac{1}{\epsilon_0} \frac{\partial \Jvec_t}{\partial t} &= 0, \\
+    -c_0^2 \nabla^2 \Evec_l + c_0^2 \nabla (\nabla \cdot \Evec_l) &= 0.
+\end{align*}
+The first is the equation for the longitudinal electric field, that is \cref{eq:emp_general_long_E}. The second is the equation for the transverse electric field, that is \cref{eq:emp_general_trans_E}. The third equation above follows from the vector identity $\nabla \times (\nabla \times \Fvec) = -\nabla^2 \Fvec + \nabla ( \nabla \cdot \Fvec )$ and the fact that $\nabla \times \Evec_l = 0$.
+
+It will often be the case that transverse waves will oscillate at such a fast rate that the ions, which have a large inertia, will be unable to react quickly enough. Thus, we can assume $\uvec_{i,t} = 0$. Given the definition of the current density in \cref{eq:p_waves_curr_density}, the transverse current density is expressed as $\Jvec_t = e \left (Z n_i \uvec_{i,t} - n_e \uvec_{e,t} \right )$, which now simplifies to 
+\begin{equation}
+    \label{eq:emp_transverse_current}
+    \Jvec_t = -e n_e \uvec_{e,t}.
+\end{equation}
+Thus, the transverse electron velocity $\uvec_{e,t}$ points in the same direction as $\Jvec_t$, which is the same direction as $\Evec_t$ and $\Avec$. The next section focuses on deriving an expression for $\uvec_{e,t}$. 
+
+We begin with \cref{eq:pwaves_electron_momentum}, the electron momentum equation, which, due to the electron continuity equation, can be written as
+\begin{equation*}
+    m_e n_e \frac{\partial\uvec_e}{\partial t} + m_e n_e \uvec_e \cdot \nabla \uvec_e + e n_e \left ( \Evec + \uvec_e \times \Bvec \right ) = -\nabla p_e,
+\end{equation*}
+or
+\begin{equation*}
+    \frac{\partial\uvec_e}{\partial t} + \uvec_e \cdot \nabla \uvec_e + \frac{e}{m_e} \left ( \Evec + \uvec_e \times \Bvec \right ) = -\frac{1}{n_e m_e}\nabla p_e,
+\end{equation*}
+Using the scalar and vector potentials we have
+\begin{equation*}
+    \frac{\partial\uvec_e}{\partial t} + \uvec_e \cdot \nabla \uvec_e +\frac{e}{m_e} \left [ -\nabla \phi - \frac{\partial \Avec}{\partial t} + \uvec_e \times \left ( \nabla \times \Avec \right ) \right ] = -\frac{1}{n_e m_e} \nabla p_e.
+\end{equation*}
+Using the vector identity $\nabla \left ( F^2 / 2 \right ) = \Fvec \times \left ( \nabla \times \Fvec \right ) + \Fvec \cdot \nabla \Fvec$, we write the above as
+\begin{equation}
+    \frac{\partial\uvec_e}{\partial t} - \uvec_e \times \left ( \nabla \times \uvec_e \right ) + \nabla \left (\frac{u_e^2}{2} \right ) + \frac{e}{m_e} \left [ -\nabla \phi - \frac{\partial \Avec}{\partial t} + \uvec_e \times \left ( \nabla \times \Avec \right ) \right ] = -\frac{1}{n_e m_e} \nabla p_e,
+\end{equation}
+which is equivalent to 
+\begin{equation}
+    \label{eq:emp_electron_momentum}
+    \frac{\partial\uvec_e}{\partial t} - \uvec_e \times \left ( \nabla \times \uvec_{e,t} \right ) + \nabla \left (\frac{u_e^2}{2} \right ) + \frac{e}{m_e} \left [ -\nabla \phi - \frac{\partial \Avec}{\partial t} + \uvec_e \times \left ( \nabla \times \Avec \right ) \right ] = -\frac{1}{n_e m_e} \nabla p_e.
+\end{equation}
+We'll now introduce a more specific coordinate system. We'll be dealing with at most three waves at a time: a laser wave, a scattered wave, and a plasma wave (either electron-plasma or ion-acoustic wave). We'll assume all three of these waves lie on a so-called base plane. That is, $\kvec_e$ (or $\kvec_i$), $\kvec_L$, and $\kvec_s$ all point along this plane. We now choose the main transverse direction, that is, the direction of $\uvec_{e,t}$, $\Jvec_t$, $\Evec_t$, and $\Avec$ to be the direction orthogonal to this plane, so that these vectors are orthogonal to any $\kvec$. As an aside, we note that the longitudinal and transverse components of the electron velocity can belong to different waves. That is
+\begin{align}
+    \uvec_{e,l} &= \hat{\uvec}_{e,l} \exp \left [ i (\kvec_p \cdot \xvec - w_pt) \right ] \\
+    \uvec_{e,t} &= \hat{\uvec}_{e,t} \exp \left [ i (\kvec_q \cdot \xvec - w_qt) \right ].
+\end{align}
+The vectors $\nabla \left ( u_e^2 / 2 \right )$, $\nabla \phi$ and $\nabla p_e$ are all by definition longitudinal. As \cref{eq:ltw_plasma_long_wavevector} states, longitudinal vectors point along their wave vectors. Since we chose all wave vectors to be confined to the base plane, $\nabla \left ( u_e^2 / 2 \right )$, $\nabla \phi$ and $\nabla p_e$ do not have a component along the main transverse direction. As a result, the component of \cref{eq:emp_electron_momentum} along the main transverse direction simplifies to
+\begin{equation}
+    \label{eq:emp_electron_momentum_transverse}
+    \frac{\partial\uvec_{e,t}}{\partial t} - \uvec_{e,l} \times \left ( \nabla \times \uvec_{e,t} \right ) + \frac{e}{m_e} \left [ - \frac{\partial \Avec}{\partial t} + \uvec_{e,l} \times \left ( \nabla \times \Avec \right ) \right ] = 0.
+\end{equation}
+Using $c = w/k$, we show the following scalings 
+\begin{align}
+    \frac{1}{c^2} \frac{\partial \uvec_{e,t}}{\partial t} &= -\frac{iw \uvec_{e,t}}{c^2} \sim i \frac{\uvec_{e,t}}{c} k , \nonumber \\
+    \frac{1}{c^2} \uvec_{e,l} \times \left (\nabla \times \uvec_{e,t} \right ) & = \frac{i \uvec_{e,l} \times \left ( \kvec \times \uvec_{e,t} \right ) }{c^2} \sim i \frac{\uvec_{e,l}}{c} \frac{\uvec_{e,t}}{c} k , \nonumber \\
+    \frac{1}{c^2} \frac{\partial \Avec}{\partial t} &= -\frac{iw \Avec}{c^2} \sim i \frac{\Avec}{c} k , \nonumber \\
+    \frac{1}{c^2} \uvec_{e,l} \times \left ( \nabla \times \Avec \right ) &= \frac{i \uvec_{e,l} \times \left ( \kvec \times \Avec \right )}{c^2} \sim i \frac{\uvec_{e,l}}{c} \frac{\Avec}{c} k .
+\end{align}
+Thus, assuming $\uvec_{e,l} \ll c$, the terms involving the double cross product are smaller than those involving the time derivative. As a result, \cref{eq:emp_electron_momentum_transverse} becomes
+\begin{equation}
+    \frac{\partial\uvec_{e,t}}{\partial t} - \frac{e}{m_e} \frac{\partial \Avec}{\partial t} = 0.
+\end{equation}
+Using \cref{eq:em_semi_general_wave_form}, the above is equivalent to 
+\begin{equation}
+    -i w \uvec_{e,t} +i w \frac{e \Avec}{m_e} = 0,
+\end{equation}
+which upon re-arranging gives
+\begin{equation}
+    \label{eq:emp_transverse_velocity}
+    \uvec_{e,t} = \frac{e\Avec}{m_e}.
+\end{equation}
+
+Using both the transverse current given by \cref{eq:emp_transverse_current} and the transverse velocity given by \cref{eq:emp_transverse_velocity}, \cref{eq:emp_general_trans_vec_pot} can be re-written as
+\begin{equation*}
+    \frac{\partial^2 \Avec}{\partial t} - c_0^2 \nabla^2 \Avec = -\frac{e n_e}{\epsilon_0} \uvec_{e,t} = -\frac{e^2 n_e}{\epsilon_0 m_e} \Avec.
+\end{equation*}
+We now use the decomposition $n_e = n_{e0} + n_{e1}$, where $n_{e0}$ is time independent. The above becomes
+\begin{equation}
+    \label{eq:emp_general_trans_vec_pot_complete}
+    \frac{\partial^2 \Avec}{\partial t} + w_{pe}^2 \Avec - c_0^2 \nabla^2 \Avec = -\frac{e^2 n_{e1}}{\epsilon_0 m_e} \Avec,
+\end{equation}
+where $w_{pe}^2 = e^2 n_{e0} / m_e \epsilon_0$.
+
+%########################################################################
+\chapter{Electromagnetic waves in a stable plasma}
+%########################################################################
+
+%------------------------------------------------------------------------
+\section{The vector potential}
+%------------------------------------------------------------------------
+\label{sec:semp_vector_potential}
+We start with \cref{eq:emp_general_trans_vec_pot_complete}, but focus on the stable-plasma case, that is, $n_{e1} = 0$. Thus, we have
+\begin{equation}
+    \label{eq:semp_general_trans_vec_pot_complete}
+    \frac{\partial^2 \Avec}{\partial t} + w_{pe}^2 \Avec - c_0^2 \nabla^2 \Avec = 0.
+\end{equation}
+We note that $n_{e0}$ is only time independent, that is, it is still allowed to vary across space. As a result, $w_{pe}^2$ is also allowed to vary across space. Using \cref{eq:em_semi_general_wave_form} for the vector potential, \cref{eq:semp_general_trans_vec_pot_complete} becomes
+\begin{equation*}
+    -w^2 \Avec + w_{pe}^2 \Avec - c_0^2 \nabla^2 \Avec = 0.
+\end{equation*}
+We re-write the above as
+\begin{equation*}
+    \frac{w^2}{c_0^2} \Avec - \frac{w^2}{c_0^2} \frac{w_{pe}^2}{w^2} \Avec + \nabla^2 \Avec = 0.
+\end{equation*}
+Defining $\epsilon = 1 - w_{pe}^2 / w^2$, we ultimately get
+\begin{equation}
+    \label{eq:semp_general_trans_vec_pot_complete_spec}
+    \frac{w^2}{c_0^2} \epsilon \Avec + \nabla^2 \Avec = 0.
+\end{equation}
+
+We now consider the case of a \textit{uniform} stable plasma, that is, a plasma where $n_{e0}$ is uniform across space, and thus $w_{pe}$ and $\epsilon$ are also uniform across space. Using the standard plane-wave expression $\Avec = \hat{\Avec} \exp[i (\kvec \cdot \xvec - wt)]$ in \cref{eq:semp_general_trans_vec_pot_complete_spec} gives the following dispersion relation
+\begin{equation}
+    \label{eq:semp_uniform_dispersion_relation}
+    \frac{w^2}{c_0^2} \epsilon = k^2.
+\end{equation}
+We expand the above to obtain
+\begin{equation*}
+    w^2 - w_{pe}^2 = c_0^2 k^2.
+\end{equation*}
+Taking the derivative $\partial / \partial k$ on both sides we get
+\begin{equation*}
+    2w \frac{\partial w}{\partial k} = 2 c_0^2 k,
+\end{equation*}
+which in turn gives the following expressions for the group velocity $v_g$
+\begin{equation}
+    v_g = \frac{c_0^2 k}{w}.
+\end{equation}
+Using \cref{eq:semp_uniform_dispersion_relation}, we can also write the above as
+\begin{equation}
+    v_g = \frac{c_0^2 k}{w} = c_0^2 \frac{\sqrt{\epsilon}}{c_0} = c_0 \sqrt{\epsilon}.
+\end{equation}
+
+%------------------------------------------------------------------------
+\section{The electric field}
+%------------------------------------------------------------------------
+Taking the time derivative of \cref{eq:semp_general_trans_vec_pot_complete} gives the equation for $\Evec_t$, that is
+\begin{equation}
+    \label{eq:semp_general_trans_E_complete}
+    \frac{\partial^2 \Evec_t}{\partial t^2} + w_{pe}^2 \Evec_t - c_0^2 \nabla^2 \Evec_t = 0.
+\end{equation}
+Using \cref{eq:em_semi_general_wave_form} for the electric field, the time derivative in \cref{eq:semp_general_trans_E_complete} evaluates such that 
+\begin{equation*}
+    -w^2 \Evec_t + w_{pe}^2 \Evec_t - c_0^2 \nabla^2 \Evec_t = 0.
+\end{equation*}
+We re-write the above as 
+\begin{equation*}
+    \frac{w^2}{c_0^2} \Evec_t - \frac{w^2}{c_0^2} \frac{w_{pe}^2}{w^2} \Evec_t + \nabla^2 \Evec_t = 0,
+\end{equation*}
+which becomes
+\begin{equation}
+    \label{eq:semp_general_trans_E_complete_spec}
+    \frac{w^2}{c_0^2} \epsilon \Evec_t + \nabla^2 \Evec_t = 0.
+\end{equation}
+
+%------------------------------------------------------------------------
+\section{The magnetic field}
+%------------------------------------------------------------------------
+Taking the curl of \cref{eq:semp_general_trans_vec_pot_complete} gives the equation for $\Bvec$, that is
+\begin{equation}
+    \label{eq:semp_general_trans_B_complete}
+    \frac{\partial^2 \Bvec}{\partial t^2} + w_{pe}^2 \Bvec - c_0^2 \nabla^2 \Bvec + \nabla w_{pe}^2 \times \Avec = 0.
+\end{equation}
+Using \cref{eq:em_semi_general_wave_form} for the magnetic field, the time derivative in \cref{eq:semp_general_trans_B_complete} evaluates such that 
+\begin{equation*}
+    -w^2 \Bvec + w_{pe}^2 \Bvec - c_0^2 \nabla^2 \Bvec + \nabla w_{pe}^2 \times \Avec = 0.
+\end{equation*}
+We re-write the above as
+\begin{equation*}
+    \frac{w^2}{c_0^2} \Bvec - \frac{w^2}{c_0^2} \frac{w_{pe}^2}{w^2} \Bvec + \nabla^2 \Bvec - \frac{w^2}{c_0^2} \nabla \left ( \frac{w_{pe}^2}{w^2} \right ) \times \Avec = 0,
+\end{equation*}
+which becomes
+\begin{equation*}
+    \frac{w^2}{c_0^2} \epsilon \Bvec + \nabla^2 \Bvec + \frac{w^2}{c_0^2} \nabla \epsilon \times \Avec = 0.
+\end{equation*}
+Using \cref{eq:semp_general_trans_vec_pot_complete_spec} we get 
+\begin{equation*}
+    \frac{w^2}{c_0^2} \epsilon \Bvec + \nabla^2 \Bvec - \frac{1}{\epsilon} \nabla \epsilon \times \nabla^2 \Avec = 0.
+\end{equation*}
+The vector identity $\nabla \times \left ( \nabla \times \Fvec \right ) = \nabla \left ( \nabla \cdot \Fvec \right ) - \nabla^2 \Fvec$ gives $\nabla \times \left ( \nabla \times \Avec \right ) = -\nabla^2 \Avec $, or
+\begin{equation}
+    \label{eq:semp_b_to_a_vec_identity}
+    \nabla \times \Bvec = -\nabla^2 \Avec.
+\end{equation}
+Thus, we finally get
+\begin{equation}
+    \label{eq:semp_general_trans_B_complete_spec}
+    \frac{w^2}{c_0^2} \epsilon \Bvec + \nabla^2 \Bvec + \frac{1}{\epsilon} \nabla \epsilon \times \left ( \nabla \times \Bvec \right ) = 0.
+\end{equation}
+
+As a side note, we can use the expressions above to write Ampere's law in a new form. We combine the vector identity \cref{eq:semp_b_to_a_vec_identity} with \cref{eq:semp_general_trans_vec_pot_complete_spec} to obtain
+\begin{equation*}
+    \nabla \times \Bvec = \frac{w^2}{c_0^2} \epsilon \Avec.
+\end{equation*}
+Using \cref{eq:em_semi_general_wave_form} for the vector potential, the expression $\Evec_t = -\partial \Avec / \partial t$ gives
+\begin{equation*}
+    \Evec_t = iw \Avec.
+\end{equation*}
+Thus, the curl of $\Bvec$ can be expressed as
+\begin{equation}
+    \nabla \times \Bvec = -i \frac{w}{c_0^2} \epsilon \Evec_t.
+\end{equation}
+
+As mentioned in \cref{sec:semp_vector_potential}, for a uniform stable plasma we have $\epsilon$ equal to a constant. Thus, \cref{eq:semp_general_trans_B_complete_spec} becomes identical to \cref{eq:semp_general_trans_E_complete_spec}, that is, the wave forms of $\Evec_t$ and $\Bvec$ are the same. 
+
+%########################################################################
+\chapter{Stimulated Raman and Brillouin instabilities}
+%########################################################################
+
+%------------------------------------------------------------------------
+\section{Linearization}
+%------------------------------------------------------------------------
+The following decompositions will be used in the derivation of stimulated Raman and Brillouin instabilities:
+\begin{align}
+    n_i &= n_{i0} + n_{i1}, \nonumber \\
+    n_e &= n_{e0} + n_{e1}, \nonumber \\
+    p_i &= p_{i0} + p_{i1}, \nonumber \\
+    p_e &= p_{e0} + p_{e1}, \nonumber \\
+    \uvec_{i,l} &= \uvec_{i0,l} + \uvec_{i1,l}, \nonumber \\
+    \uvec_{e,l} &= \uvec_{e0,l} + \uvec_{e1,l}, \nonumber \\
+    \Evec_l &= \Evec_{0,l} + \Evec_{1,l}, \nonumber \\
+    \Avec &= \Avec_L + \Avec_s.
+\end{align}
+For these decompositions, we'll assume
+\begin{enumerate}
+    \item Terms with a subscript 1 are small and thus products of two small quantities can be neglected. \label{it:p_instabilities_assumption_1}
+    \item $\uvec_{i0,l}$, $\uvec_{e0,l}$, and $\Evec_{0,l}$,are zero. \label{it:p_instabilities_assumption_2}
+    \item $n_{i0}$, $n_{e0}$, $p_{i0}$, and $p_{e0}$ are uniform in space and time. \label{it:p_instabilities_assumption_3}
+\end{enumerate}
+
+Thus, unlike the previous section, we do not assume the plasma is stable, that is, we assume fluctuations such as $n_{e1}$ are small but non zero. $\Avec_L$ is the vector potential associated with the laser light, and $\Avec_s$ is the potential associated with the scattered light. For linearization purposes, we'll assume $\Avec_s$ is small. 
+
+Using the decomposition for $\Avec$, \cref{eq:emp_general_trans_vec_pot_complete} is written as 
+\begin{equation}
+    \frac{\partial^2 \Avec_L}{\partial t} + \frac{\partial^2 \Avec_s}{\partial t} + w_{pe}^2 \Avec_L + w_{pe}^2 \Avec_s - c_0^2 \nabla^2 \Avec_L - c_0^2 \nabla^2 \Avec_s = -\frac{e^2 n_{e1}}{\epsilon_0 m_e} \Avec_L -\frac{e^2 n_{e1}}{\epsilon_0 m_e} \Avec_s,
+\end{equation}
+Dropping products of small quantities we have
+\begin{equation}
+    \label{eq:srs_temp1}
+    \frac{\partial^2 \Avec_L}{\partial t} + \frac{\partial^2 \Avec_s}{\partial t} + w_{pe}^2 \Avec_L + w_{pe}^2 \Avec_s - c_0^2 \nabla^2 \Avec_L - c_0^2 \nabla^2 \Avec_s = -\frac{e^2 n_{e1}}{\epsilon_0 m_e} \Avec_L.
+\end{equation}
+We'll assume the laser light is stable, that is, it satisfies \cref{eq:semp_general_trans_vec_pot_complete}, which we re-write below
+\begin{equation}
+    \label{eq:srs_temp2}
+    \frac{\partial^2 \Avec_L}{\partial t} + w_{pe}^2 \Avec_L - c_0^2 \nabla^2 \Avec_L = 0.
+\end{equation}
+Thus, \cref{eq:srs_temp1} becomes
+\begin{equation}
+    \frac{\partial^2 \Avec_s}{\partial t} + w_{pe}^2 \Avec_s - c_0^2 \nabla^2 \Avec_s = -\frac{e^2 n_{e1}}{\epsilon_0 m_e} \Avec_L.
+\end{equation}
+The above shows that the fluctuating $n_{e1}$ couples with the laser light to serve as a source for the scattered light.
+
+The electron density equation is now written as
+\begin{equation*}
+    \frac{\partial n_{e0} + n_{e1}}{\partial t } + \nabla \cdot \left [ \left ( n_{e0} + n_{e1} \right )\left ( \uvec_{e,t} + \uvec_{e0,l} + \uvec_{e1,l} \right ) \right ] = 0,
+\end{equation*}
+which, since $\uvec_{e,t}$ is transverse, can be written as
+\begin{equation*}
+    \frac{\partial n_{e0} + n_{e1}}{\partial t } + \uvec_{e,t} \cdot \nabla \left (n_{e0} + n_{e1} \right ) + \nabla \cdot \left [ \left ( n_{e0} + n_{e1} \right )\left ( \uvec_{e0,l} + \uvec_{e1,l} \right ) \right ] = 0.
+\end{equation*}
+Given the assumptions in \cref{it:p_instabilities_assumption_1,it:p_instabilities_assumption_2,it:p_instabilities_assumption_3}, the above simplifies to
+\begin{equation*}
+    \frac{\partial n_{e1}}{\partial t } + \uvec_{e,t} \cdot \nabla n_{e1} + \nabla \cdot \left ( n_{e0} \uvec_{e1,l} \right ) = 0.
+\end{equation*}
+Since $\uvec_{e,t}$ and $\nabla n_{e1}$ are orthogonal, we finally have
+\begin{equation}
+    \label{eq:p_instabilities_e_den_linearized}
+    \frac{\partial n_{e1}}{\partial t} + \nabla \cdot \left ( n_{e0} \uvec_{e1,l} \right ) = 0.
+\end{equation}
+
+The ion density equation is now written as
+\begin{equation*}
+    \frac{\partial n_{i0} + n_{i1}}{\partial t } + \nabla \cdot \left [ \left ( n_{i0} + n_{i1} \right )\left ( \uvec_{i,t} + \uvec_{i0,l} + \uvec_{i1,l} \right ) \right ] = 0,
+\end{equation*}
+As stated in \cref{sec:electromagnetic_waves_plasmas}, it is often the case that transverse waves oscillate at such a fast rate that the ions, which have large inertia, are unable to react on comparable time scales. Thus, we can assume $\uvec_{i,t} = 0$,
+\begin{equation*}
+    \frac{\partial n_{i0} + n_{i1}}{\partial t } + \nabla \cdot \left [ \left ( n_{i0} + n_{i1} \right )\left ( \uvec_{i0,l} + \uvec_{i1,l} \right ) \right ] = 0.
+\end{equation*}
+Given the assumptions in \cref{it:p_instabilities_assumption_1,it:p_instabilities_assumption_2,it:p_instabilities_assumption_3}, the above simplifies to
+\begin{equation}
+    \label{eq:p_instabilities_i_den_linearized}
+    \frac{\partial n_{i1}}{\partial t } + \nabla \cdot \left ( n_{i0} \uvec_{i1,l} \right ) = 0.
+\end{equation}
+
+Consider the electron momentum equation. Subtracting \cref{eq:emp_electron_momentum_transverse} from \cref{eq:emp_electron_momentum} gives
+\begin{equation}
+    \label{eq:emp_electron_momentum_longitudinal}
+    \frac{\partial\uvec_{e,l}}{\partial t} - \uvec_{e,t} \times \left ( \nabla \times \uvec_{e,t} \right ) + \nabla \left (\frac{u_e^2}{2} \right ) + \frac{e}{m_e} \left [ -\nabla \phi +\uvec_{e,t} \times \left ( \nabla \times \Avec \right ) \right ] = -\frac{1}{n_e m_e} \nabla p_e.
+\end{equation}
+Since $\uvec_{e,t} = e \Avec / m_e$, the above simplifies to
+\begin{equation*}
+    \frac{\partial\uvec_{e,l}}{\partial t} + \nabla \left (\frac{u_e^2}{2} \right ) - \frac{e}{m_e} \nabla \phi = -\frac{1}{n_e m_e} \nabla p_e,
+\end{equation*}
+or 
+\begin{equation*}
+    \frac{\partial\uvec_{e,l}}{\partial t} + \nabla \left (\frac{u_e^2}{2} \right ) + \frac{e}{m_e} \Evec_l = -\frac{1}{n_e m_e} \nabla p_e.
+\end{equation*}
+Since $\uvec_{e,l}$ and $\uvec_{e,t}$ are orthogonal $u_e^2 = \uvec_e \cdot \uvec_e = u_{e,l}^2 + u_{e,t}^2$. The electron momentum equation is then 
+\begin{equation*}
+    \frac{\partial\uvec_{e,l}}{\partial t} + \nabla \left (\frac{u_{e,l}^2 + u_{e,t}^2}{2} \right ) + \frac{e}{m_e} \Evec_l = -\frac{1}{n_e m_e} \nabla p_e.
+\end{equation*}
+Given the assumptions in \cref{it:p_instabilities_assumption_1,it:p_instabilities_assumption_2,it:p_instabilities_assumption_3}, the above simplifies to
+\begin{equation*}
+    \frac{\partial n_{e0} \uvec_{e1,l}}{\partial t} + n_{e0} \nabla \left (\frac{u_{e,t}^2}{2} \right ) + \frac{e n_{e0}}{m_e} \Evec_{1,l} = -\frac{1}{m_e} \nabla p_{e1} .
+\end{equation*}
+For the transverse electron velocity we have
+\begin{equation*}
+    u_{e,t}^2 = \left ( \frac{e \Avec}{m_e} \right ) \cdot \left ( \frac{e \Avec}{m_e} \right ) = \frac{e^2}{m_e^2} \left ( \Avec_L \cdot \Avec_ L + 2 \Avec_L \cdot \Avec_s + \Avec_s \cdot \Avec_s \right ).
+\end{equation*}
+Since the product of small quantities can be neglected, the $\Avec_s \cdot \Avec_s$ term is dropped. We'll also ignore the $\Avec_L \cdot \Avec_L$ term, given that $\Avec_L$ is stable and thus its magnitude does not play a critical role in the growth of the instabilities. Thus, the electron momentum equation becomes
+\begin{equation}
+    \label{eq:p_instabilities_e_mom_linearized}
+    \frac{\partial n_{e0} \uvec_{e1,l}}{\partial t} + \frac{e^2 n_{e0}}{m_e^2} \nabla \left (\Avec_L \cdot \Avec_s \right ) + \frac{e n_{e0}}{m_e} \Evec_{1,l} = -\frac{1}{m_e} \nabla p_{e1}.
+\end{equation}
+
+Consider now the ion momentum equation, given by \cref{eq:pwaves_ion_momentum}, which we re-write below as 
+\begin{equation*}
+    \frac{\partial n_i \uvec_i}{\partial t} + \nabla \cdot \left ( n_i \uvec_i \uvec_i \right ) - \frac{Ze n_i}{m_i} \left ( \Evec + \uvec_i \times \Bvec \right ) = -\frac{1}{m_i} \nabla p_i,
+\end{equation*}
+The longitudinal component of the above is
+\begin{equation*}
+    \frac{\partial n_i \uvec_{i,l}}{\partial t} + \left [ \nabla \cdot \left (n_i \uvec_i \uvec_i \right ) \right ]_l - \frac{Z e n_i}{m_i} \left ( \Evec_l + \uvec_{i,t} \times \Bvec \right ) = -\frac{1}{m_i} \nabla p_i,
+\end{equation*}
+where $[\cdot]_l$ denotes longitudinal component. Since $\uvec_{i,t} = 0$, we have
+\begin{equation*}
+    \frac{\partial n_i \uvec_{i,l}}{\partial t} + \left [ \nabla \cdot \left (n_i \uvec_i \uvec_i \right ) \right ]_l - \frac{Z e n_i}{m_i} \Evec_l = -\frac{1}{m_i} \nabla p_i.
+\end{equation*}
+Using the variable decompositions, we have
+\begin{multline*}
+    \frac{\partial}{\partial t} \left [ \left ( n_{i0} + n_{i1} \right ) \left ( \uvec_{i0,l} + \uvec_{i1,l} \right ) \right ] \\
+    + \left \{ \nabla \cdot \left [ \left (n_{i0} + n_{i1} \right ) \left ( \uvec_{i,t} + \uvec_{i0,l} + \uvec_{i1,l} \right ) \left ( \uvec_{i,t} + \uvec_{i0,l} + \uvec_{i1,l} \right ) \right ] \right \}_l \\
+    - \frac{Z e}{m_i} \left ( n_{i0} + n_{i1} \right ) \left ( \Evec_{0,l} + \Evec_{1,l} \right ) = - \frac{1}{m_i} \nabla \left ( p_{i0} + p_{i1} \right ).
+\end{multline*}
+Given the assumptions in \cref{it:p_instabilities_assumption_1,it:p_instabilities_assumption_2,it:p_instabilities_assumption_3}, the above simplifies to
+\begin{equation}
+    \label{eq:p_instabilities_i_mom_linearized}
+    \frac{\partial n_{i0} \uvec_{i1,l}}{\partial t} - \frac{Z e n_{i0}}{m_i} \Evec_{1,l} = - \frac{1}{m_i} \nabla p_{i1}.
+\end{equation}
+
+%------------------------------------------------------------------------
+\section{Stimulated Raman Scattering}
+%------------------------------------------------------------------------
+We employ the same assumptions as for the electron-plasma waves, that is 
+\begin{enumerate}
+    \item Quasi-neutrality for the base flow, $Zn_{i0} = n_{e0}$.
+    \item Uniform ion density, $n_{i1} = 0$.
+\end{enumerate}
+
+Combining \cref{eq:p_instabilities_e_mom_linearized} with \cref{eq:p_waves_e_pressure_linearized} gives 
+\begin{equation}
+    \label{eq:srs_mom_linearized}
+    \frac{\partial n_{e0} \uvec_{e1,l}}{\partial t} + \frac{e^2 n_{e0}}{m_e^2} \nabla \left (\Avec_L \cdot \Avec_s \right ) + \frac{e n_{e0}}{m_e} \Evec_{1,l} = -\frac{\gamma_e p_{e0}}{n_{e0} m_e} \nabla n_{e1}.
+\end{equation}
+Taking the time derivative of \cref{eq:p_instabilities_e_den_linearized} and using \cref{eq:srs_mom_linearized} leads to the wave equation for electron density
+\begin{equation*}
+    \frac{\partial^2 n_{e1}}{\partial t^2} - \frac{e^2 n_{e0}}{m_e^2} \nabla^2 \left (\Avec_L \cdot \Avec_s \right ) - \frac{e n_{e0}}{m_e} \nabla \cdot \Evec_{1,l} = \frac{\gamma_e p_{e0}}{n_{e0} m_e} \nabla^2 n_{e1}.
+\end{equation*}
+As before, using \cref{eq:ep_waves_efield_divergence} we obtain
+\begin{equation*}
+    \frac{\partial^2 n_{e1}}{\partial t^2} - \frac{e^2 n_{e0}}{m_e^2} \nabla^2 \left (\Avec_L \cdot \Avec_s \right ) + \frac{e^2 n_{e0}}{m_e \epsilon_0} n_{e1} = \frac{\gamma_e p_{e0}}{n_{e0} m_e} \nabla^2 n_{e1}.
+\end{equation*}
+or
+\begin{equation}
+    \frac{\partial^2 n_{e1}}{\partial t^2} + w_{pe}^2 n_{e1} - \frac{\gamma_e p_{e0}}{n_{e0} m_e} \nabla^2 n_{e1} =   \frac{e^2 n_{e0}}{m_e^2} \nabla^2 \left (\Avec_L \cdot \Avec_s \right ).
+\end{equation}
+Thus, the scattered laser light $\Avec_s$ couples with the laser light to serve as a source for the electron-plasma wave.
+
+%------------------------------------------------------------------------
+\section{Stimulated Brillouin Scattering}
+%------------------------------------------------------------------------
+We employ the same assumptions as for the ion-acoustic waves, that is
+\begin{enumerate}
+    \item Quasi-neutrality for the base flow, $Zn_{i0} = n_{e0}$.
+    \item Approximate quasi-neutrality for the fluctuations, $Z n_{i1} \approx n_{e1}$.
+    \item Negligible electron mass, $m_e \to 0$.
+\end{enumerate}
+Combining \cref{eq:p_instabilities_i_mom_linearized} with \cref{eq:p_waves_i_pressure_linearized} gives
+\begin{equation}
+    \label{eq:sbs_mom_linearized}
+    \frac{\partial n_{i0} \uvec_{i1,l}}{\partial t} - \frac{Z e n_{i0}}{m_i} \Evec_{1,l} = - \frac{\gamma_i p_{i0}}{n_{i0} m_i} \nabla n_{i1}.
+\end{equation}
+Taking the time derivative of \cref{eq:p_instabilities_i_den_linearized} and using \cref{eq:sbs_mom_linearized} leads to the wave equation for ion density
+\begin{equation}
+    \frac{\partial^2 n_{i1}}{\partial t^2} + \frac{Z e n_{i0}}{m_i} \nabla \cdot \Evec_{1,l} = \frac{\gamma_i p_{i0}}{n_{i0} m_i} \nabla^2 n_{i1}.
+\end{equation}
+For this case, we assume that the mass of the electron, which is significantly smaller than that of the ions, is negligible. Thus, \cref{eq:p_instabilities_e_mom_linearized} simplifies to 
+\begin{equation}
+    \frac{e^2 n_{e0}}{m_e} \nabla \left (\Avec_L \cdot \Avec_s \right ) + e n_{e0} \Evec_{1,l} = -\frac{\gamma_e p_{e0}}{n_{e0}} \nabla n_{e1}.
+\end{equation}
+Plugging in the above in the ion wave equation we obtain
+\begin{equation}
+    \frac{\partial^2 n_{i1}}{\partial t^2} = \frac{Z n_{i0}}{n_{e0}} \frac{\gamma_e p_{e0}}{n_{e0} m_i} \nabla^2 n_{e1} + \frac{\gamma_i p_{i0}}{n_{i0} m_i} \nabla^2 n_{i1} + \frac{Z e^2 n_{i0}}{m_i m_e} \nabla^2 \left (\Avec_L \cdot \Avec_s \right ).
+\end{equation}
+Due to quasi-neutrality, we have $Zn_{i0} = n_{e0}$ and $Zn_{i1} \approx n_{e1}$, which gives
+\begin{equation}
+    \frac{\partial^2 n_{i1}}{\partial t^2} = \frac{1}{m_i} \left ( \frac{Z \gamma_e p_{e0}}{n_{e0}} + \frac{\gamma_i p_{i0}}{n_{i0}} \right ) \nabla^2 n_{i1} + \frac{Z e^2 n_{i0}}{m_i m_e} \nabla^2 \left (\Avec_L \cdot \Avec_s \right ).
+\end{equation}
+Since $p_{i0}/n_{i0} = k_B T_{i0}$ and $p_{e0} / n_{e0} = k_B T_{e0}$, we finally have
+\begin{equation}
+    \frac{\partial^2 n_{i1}}{\partial t^2} - \left ( \frac{Z \gamma_e k_B T_{e0} + \gamma_i k_B T_{i0}}{m_i} \right ) \nabla^2 n_{i1} = \frac{Z e^2 n_{i0}}{m_i m_e} \nabla^2 \left (\Avec_L \cdot \Avec_s \right ).
+\end{equation}
+Thus, the scattered laser light $\Avec_s$ couples with the laser light to serve as a source for the ion-acoustic wave.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \appendix
@@ -2058,6 +2964,44 @@ A summary of all of the relations derived thus far is given by the following gra
 %------------------------------------------------------------------------
 \section{Evolution equation for fine-grained Lagrangian PDF}
 %------------------------------------------------------------------------
+
+%########################################################################
+\chapter{Lasers}
+%########################################################################
+Consider a wave that depends on time $t$ and single spatial dimension $x$, which is orthogonal to the direction of propagation. 
+
+A wave is spatially coherent at a given time $t$, position $x$, and separation distance $L$ if the phase difference between the points $x$ and $x+L$ at time $t$ is the same as that at a later time $t+dt$. You can keep on picking larger and larger values of $L$ until this is not the case, this $L$ would be the spatial coherence length $L_c$ = $L_c(t,x)$.
+
+A wave is temporally coherent at a given time $t$, position $x$, and separation time $\tau$ if the phase difference between times $t$ and $t+\tau$ at position $x$ is the same as that between times $t+dt$ and $t+dt+\tau$. You can keep on picking larger and larger values of $\tau$ until this is no longer the case, this $\tau$ would be the temporal coherence length $\tau_c = \tau_c(t,x)$.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=.7\textwidth]{../../images/temp_cohe_1.pdf}
+    \caption{}
+    \label{fig:laser_temp_cohe}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \begin{subfigure}{.7\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{../../images/temp_cohe_2.pdf}
+      \caption{}
+      \label{fig:laser_temp_cohe_1}
+    \end{subfigure}
+    \begin{subfigure}{.7\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../../images/temp_cohe_3.pdf}
+        \caption{}
+        \label{fig:laser_temp_cohe_2}
+      \end{subfigure}
+    \caption{Depiction of temporal coherence for a light pulse.}
+    \label{fig:laser_temp_cohe_12}
+\end{figure}
+
+A depiction of temporal coherence is provided in \cref{fig:laser_temp_cohe}, which shows a light pulse as a function of time. An arbitrary time $t_*$ is chosen along the light wave, and the wave's phase at that time is $\theta_1$. At the time $t_* + \tau$ the wave has a different phase $\theta_2$, and thus the phase difference between times $t_*$ and $t_*+\tau$ is $\theta_2 - \theta_1$. This is depicted by the orange dots. The green dots are used to highlight the phase difference between times $t_*+dt$ and $t_*+dt+\tau$. In this case, the phases are respectively $\theta_1 + d\theta$ and $\theta_2 + d\theta$, and hence the phase difference is still maintained at $\theta_2 - \theta_1$.
+
+Rather than picking the time $t_*$ to be at an arbitrary location along the wave, in \cref{fig:laser_temp_cohe_1} we choose $t_*$ to be at the beginning of the wave, and also choose $\tau$ to be just a bit smaller than the entire duration of the pulse. For this case, the phase difference between $t_*$ and $t_*+\tau$ is $d\theta$, which is equal to the phase difference between $t_*+dt$ and $t_*+dt+\tau$. On the other hand, in \cref{fig:laser_temp_cohe_2} we have chosen $\tau$ to be just a bit larger so as to be equal to the duration of the wave. For this case the phase difference between $t_*$ and $t_*+\tau$ is zero, which is not the same as the phase difference between $t_*+dt$ and $t_*+dt+\tau$, namely $d\theta$. Thus, the maximum value of $\tau$ that maintains a constant phase difference has been reached, and therefore by definition this value is referred to as the temporal coherence length $\tau_c$ at time $t_*$ (other locations of $t_*$, such as that in \cref{fig:laser_temp_cohe}, have a different $\tau_c$).
 
 %########################################################################
 \chapter{Nuclear Fusion}
