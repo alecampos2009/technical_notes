@@ -17,7 +17,7 @@
 \tableofcontents
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\part{Introduction to Plasma Physics}
+\part{Basics of Plasma Physics}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %########################################################################
@@ -391,8 +391,8 @@ We also note that the energy $m_\alpha n_\alpha E_\alpha$ can be decomposed into
 \begin{align}
 m_\alpha n_\alpha E_\alpha & = \int \frac{1}{2} m_\alpha (\vvec \cdot \vvec) f_\alpha \, d\vvec \nonumber \\
 & = \int \frac{1}{2} m_\alpha (\wvec_\alpha \cdot \wvec_\alpha) f_\alpha \, d\vvec + \frac{1}{2} m_\alpha n_\alpha (\uvec_\alpha \cdot \uvec_\alpha) \nonumber \\
-& = \frac{3}{2} P_\alpha + \frac{1}{2} m_\alpha n_\alpha (\uvec_\alpha \cdot \uvec_\alpha) \nonumber \\
-& = \frac{3}{2} P_\alpha + m_\alpha n_\alpha K_\alpha.
+& = \frac{3}{2} p_\alpha + \frac{1}{2} m_\alpha n_\alpha (\uvec_\alpha \cdot \uvec_\alpha) \nonumber \\
+& = \frac{3}{2} p_\alpha + m_\alpha n_\alpha K_\alpha.
 \end{align}
 where $K_\alpha = \frac{1}{2} \uvec_\alpha \cdot \uvec_\alpha$ is the kinetic energy of species $\alpha$.
 
@@ -464,9 +464,10 @@ To summarize, we have,
 %------------------------------------------------------------------------
 \section{The two-fluid model}
 %------------------------------------------------------------------------
+This section focuses on a fluid model for plasmas that consist of electrons and a single species of ions.
 
 %--------------------------------------------
-\subsection{Non-isentropic equations}
+\subsection{General equations}
 %--------------------------------------------
 \label{sec:two_fluid_equations}
 The starting point are the multi-fluid conservation laws and the Maxwell equations. The assumptions are
@@ -476,64 +477,70 @@ The starting point are the multi-fluid conservation laws and the Maxwell equatio
 \end{enumerate}
 Thus, the governing equations are
 \begin{equation}
-\label{eq:twof_ni}
+    \label{eq:twof_ni}
     \frac{\partial n_i}{\partial t} + \nabla \cdot \left ( n_i \uvec_i \right ) = 0,
 \end{equation}
 \begin{equation}
-\label{eq:twof_ne}
+    \label{eq:twof_ne}
     \frac{\partial n_e}{\partial t} + \nabla \cdot \left ( n_e \uvec_e \right ) = 0,
 \end{equation}
-
 \begin{equation}
-\label{eq:twof_ui}
+    \label{eq:twof_ui}
     \frac{\partial m_i n_i \uvec_i}{\partial t} + \nabla \cdot \left ( m_i n_i \uvec_i \uvec_i \right) - Z e n_i ( \Evec + \uvec_i \times \Bvec ) = - \nabla p_i + \nabla \cdot \tvec_i + \Rvec_i,
 \end{equation}
 \begin{equation}
-\label{eq:twof_ue}
+    \label{eq:twof_ue}
     \frac{\partial m_e n_e \uvec_e}{\partial t} + \nabla \cdot \left ( m_e n_e \uvec_e \uvec_e \right) + e n_e ( \Evec + \uvec_e \times \Bvec ) = - \nabla p_e + \nabla \cdot \tvec_e + \Rvec_e,
 \end{equation}
-
 \begin{equation}
-\label{eq:twof_iei}
+    \label{eq:twof_iei}
     \frac{\partial}{\partial t} \left ( \frac{3}{2} p_i \right ) + \nabla \cdot \left ( \frac{3}{2} p_i \uvec_i \right ) = -p_i \nabla \cdot \uvec_i + \tvec_i : \nabla \uvec_i - \nabla \cdot \qvec_i + Q_i,
 \end{equation}
 \begin{equation}
-\label{eq:twof_iee}
+    \label{eq:twof_iee}
     \frac{\partial}{\partial t} \left ( \frac{3}{2} p_e \right ) + \nabla \cdot \left ( \frac{3}{2} p_e \uvec_e \right ) = -p_e \nabla \cdot \uvec_e + \tvec_e : \nabla \uvec_e - \nabla \cdot \qvec_e + Q_e,
 \end{equation}
-
 \begin{equation}
-\label{eq:twof_maxwell_3}
-\nabla \cdot \Evec = \frac{\rho_e}{\epsilon_0} 
+    \label{eq:twof_maxwell_3}
+    \nabla \cdot \Evec = \frac{\rho_e}{\epsilon_0},
 \end{equation}
 \begin{equation}
-\label{eq:twof_maxwell_4}
-\nabla \cdot \Bvec = 0.
+    \label{eq:twof_maxwell_4}
+    \nabla \cdot \Bvec = 0,
 \end{equation}
 \begin{equation}
-\label{eq:twof_maxwell_1}
-\nabla \times \Evec = -\frac{ \partial \Bvec}{\partial t}
+    \label{eq:twof_maxwell_1}
+    \nabla \times \Evec = -\frac{ \partial \Bvec}{\partial t},
 \end{equation}
 \begin{equation}
-\label{eq:twof_maxwell_2}
-\nabla \times \Bvec = \mu_0 \Jvec + \mu_0 \epsilon_0 \frac{\partial \Evec}{\partial t}
+    \label{eq:twof_maxwell_2}
+    \nabla \times \Bvec = \mu_0 \Jvec + \mu_0 \epsilon_0 \frac{\partial \Evec}{\partial t},
 \end{equation}
 \begin{equation}
-\label{eq:twof_curr_density}
-    \Jvec = e (Z n_i \uvec_i - n_e \uvec_e)
+    \label{eq:twof_curr_density}
+    \Jvec = e (Z n_i \uvec_i - n_e \uvec_e),
 \end{equation}
 \begin{equation}
-\label{eq:twof_mass_density}
-    \rho_e = e (Z n_i - n_e) 
+    \label{eq:twof_mass_density}
+    \rho_e = e (Z n_i - n_e).
 \end{equation}
-These equations correspond to eq.\@ (2.22) in Freidberg's Ideal MHD book, but for ions that are not singly charged. For the sections below, however, we'll assume singly-charged ions.
+We'll also introduce the following simple equations of state
+\begin{equation}
+    \label{eq:twof_eos_ion}
+    p_i = n_i k_B T_i,
+\end{equation}
+\begin{equation}
+    \label{eq:twof_eos_elec}
+    p_e = n_e k_B T_e.
+\end{equation}
+These equations correspond to eq.\@ (2.22) in Freidberg's Ideal MHD book, but for ions that are not singly charged.
 
 %--------------------------------------------
-\subsection{Isentropic equations}
+\subsection{Simplification for isentropic plasmas}
 %--------------------------------------------
 We now add a couple of extra assumptions
 \begin{enumerate}
-    \item No stresses ($\tvec_\alpha$), heat flux ($\qvec_\alpha$), and collisions ($\Rvec_\alpha$, $Q_\alpha$). This in itself would make the flow isentropic.
+    \item No stresses $\tvec_\alpha$, heat flux $\qvec_\alpha$, and collisions $\Rvec_\alpha$, $Q_\alpha$. This in itself would make the flow isentropic.
     \item The flow is not just isentropic but also homentropic. This allows for \cref{eq:pwaves_ion_pressure,eq:pwaves_electron_pressure} to hold across all space, not just along streamlines.
 \end{enumerate}
 
@@ -552,7 +559,7 @@ Thus, the governing equations are
 \end{equation}
 \begin{equation}
     \label{eq:pwaves_electron_momentum}
-    \frac{\partial m_e n_e \uvec_e}{\partial t} + \nabla \cdot \left ( m_e n_e \uvec_e \uvec_e \right ) + e n_e \left ( \Evec + \uvec_e \times \Bvec \right ) = -\nabla p_e.
+    \frac{\partial m_e n_e \uvec_e}{\partial t} + \nabla \cdot \left ( m_e n_e \uvec_e \uvec_e \right ) + e n_e \left ( \Evec + \uvec_e \times \Bvec \right ) = -\nabla p_e,
 \end{equation}
 \begin{equation}
     \label{eq:pwaves_ion_pressure}
@@ -564,27 +571,33 @@ Thus, the governing equations are
 \end{equation}
 \begin{equation}
     \label{eq:pwaves_maxwell_3}
-    \nabla \cdot \Evec = \frac{\rho_e}{\epsilon_0} 
+    \nabla \cdot \Evec = \frac{\rho_e}{\epsilon_0},
 \end{equation}
 \begin{equation}
     \label{eq:p_waves_maxwell_4}
-    \nabla \cdot \Bvec = 0.
+    \nabla \cdot \Bvec = 0,
 \end{equation}
 \begin{equation}
     \label{eq:p_waves_maxwell_1}
-    \nabla \times \Evec = -\frac{ \partial \Bvec}{\partial t}
+    \nabla \times \Evec = -\frac{ \partial \Bvec}{\partial t},
 \end{equation}
 \begin{equation}
     \label{eq:p_waves_maxwell_2}
-    \nabla \times \Bvec = \mu_0 \Jvec + \mu_0 \epsilon_0 \frac{\partial \Evec}{\partial t}
+    \nabla \times \Bvec = \mu_0 \Jvec + \mu_0 \epsilon_0 \frac{\partial \Evec}{\partial t},
 \end{equation}
 \begin{equation}
     \label{eq:p_waves_curr_density}
-    \Jvec = e (Z n_i \uvec_i - n_e \uvec_e)
+    \Jvec = e (Z n_i \uvec_i - n_e \uvec_e),
 \end{equation}
 \begin{equation}
     \label{eq:p_waves_mass_density}
-    \rho_e = e (Z n_i - n_e) 
+    \rho_e = e (Z n_i - n_e),
+\end{equation}
+\begin{equation}
+    p_i = n_i k_B T_i,
+\end{equation}
+\begin{equation}
+    p_e = n_e k_B T_e.
 \end{equation}
 
 %------------------------------------------------------------------------
@@ -708,6 +721,7 @@ which can be interpreted as the equation of state for the small quantities.
 %--------------------------------------------
 \subsection{Electron Plasma Waves}
 %--------------------------------------------
+\label{sec:ep_waves}
 On top of the assumptions in \cref{sec:p_waves_linearization}, we'll assume 
 \begin{enumerate}
     \item Quasi-neutrality for the base flow, $Zn_{i0} = n_{e0}$.
@@ -735,25 +749,40 @@ Using the quasi-neutrality assumption ($Zn_{i0} = n_{e0}$)
 \end{equation}
 Plugging the above in the electron wave equation we obtain
 \begin{equation*}
-    \frac{\partial^2 n_{e1}}{\partial t^2} + \frac{e^2 n_{e0}}{m_e \epsilon_0} n_{e1} = \frac{\gamma_e p_{e0}}{n_{e0} m_e} \nabla^2 n_{e1},
+    \frac{\partial^2 n_{e1}}{\partial t^2} + \frac{e^2 n_{e0}}{m_e \epsilon_0} n_{e1} = \frac{\gamma_e p_{e0}}{n_{e0} m_e}. \nabla^2 n_{e1},
 \end{equation*}
-or
+We now introduce the electron plasma frequency
 \begin{equation}
-    \frac{\partial^2 n_{e1}}{\partial t^2} + w^2_{pe} n_{e1} - \frac{\gamma_e p_{e0}}{n_{e0} m_e} \nabla^2 n_{e1} = 0.
+    \label{eq:ep_waves_frequenccy}
+    w_{pe} = \left ( \frac{n_{e0} e^2}{m_e \epsilon_0} \right )^{1/2},
+\end{equation}
+and the thermal velocity
+\begin{equation}
+    \label{eq:ep_waves_thermal_vel}
+    v_{T\alpha} = \sqrt{ \frac{k_B T_\alpha}{m_\alpha}}.
+\end{equation}
+These two allow us to write the equation for $n_{e1}$ as
+\begin{equation}
+    \label{eq:ep_waves_fluc_density}
+    \frac{\partial^2 n_{e1}}{\partial t^2} + w^2_{pe} n_{e1} - \gamma_e v_{Te}^2 \nabla^2 n_{e1} = 0.
 \end{equation}
 
-Assuming a mode of the form $n_{e1} = \hat{n}_{e1} \exp [ i \left ( \kvec_e \cdot \xvec - w t \right ) ]$, where $\kvec_e$ is the wave vector of the electron-plasma wave, gives the following dispersion relation
+Assuming a mode of the form $n_{e1} = \tilde{n}_{e1} \exp (-i w t)$, where $\tilde{n}_{e1} = \tilde{n}_{e1}(\xvec)$, gives the following
 \begin{equation}
-    w^2 - w^2_{pe} - \frac{\gamma_e p_{e0}}{n_{e0} m_e}  k_e^2 = 0.
+    \label{eq:ep_waves_pre_dispersion}
+    \left ( w^2 - w_{pe}^2 \right ) n_{e1} + \gamma_e v_{Te}^2 \nabla^2 n_{e1} = 0.
 \end{equation}
-If we define the thermal velocity without the factor of two, that is, $v_{T\alpha} = \sqrt{k_BT_\alpha / m_\alpha}$, then we have
+If we assume $w_{pe} < w$, then $\tilde{n}_{e1} = \hat{n}_{e1} \exp ( i \kvec_e \cdot \xvec )$ is a solution to \cref{eq:ep_waves_pre_dispersion}. Plugging in this expression for $\tilde{n}_{e1}$ in \cref{eq:ep_waves_pre_dispersion} finally gives
 \begin{equation}
-    w^2 - w^2_{pe} - \gamma_e k_e^2 v^2_{T_{e0}} = 0.
+    \label{eq:ep_waves_dispersion}
+    w^2 - w_{pe}^2 - \gamma_e v_{Te}^2 k_e^2 = 0.
 \end{equation}
+The above is the dispersion relation for electron plasma waves.
 
 %--------------------------------------------
 \subsection{Ion Acoustic Waves}
 %--------------------------------------------
+\label{sec:io_waves}
 On top of the assumptions in \cref{sec:p_waves_linearization}, we'll assume 
 \begin{enumerate}
     \item Quasi-neutrality for the base flow, $Zn_{i0} = n_{e0}$.
@@ -785,19 +814,29 @@ Due to quasi-neutrality, we have $Z n_{i0} = n_{e0}$ and $Z n_{i1} \approx n_{e1
 \begin{equation*}
     \frac{\partial^2 n_{i1}}{\partial t^2} = \frac{1}{m_i} \left ( \frac{Z \gamma_e p_{e0}}{n_{e0}} + \frac{\gamma_i p_{i0}}{n_{i0}} \right ) \nabla^2 n_{i1}.
 \end{equation*}
-Since $p_{i0}/n_{i0} = k_B T_i$ and $p_{e0}/n_{e0} = k_B T_e$, we finally have
+Since $p_{i0}/n_{i0} = k_B T_i$ and $p_{e0}/n_{e0} = k_B T_e$, we have
 \begin{equation}
     \frac{\partial^2 n_{i1}}{\partial t^2} - \left ( \frac{Z \gamma_e k_B T_e + \gamma_i k_B T_i}{m_i} \right ) \nabla^2 n_{i1} = 0.
 \end{equation}
+We now introduce the following velocity
+\begin{equation}
+    v_s = \sqrt{ \frac{Z \gamma_e k_B T_e + \gamma_i k_B T_i }{m_i} },
+\end{equation}
+which allows us to write the equation for $n_{i1}$ as
+\begin{equation}
+    \frac{\partial^2 n_{i1}}{\partial t^2} - v_s^2 \nabla^2 n_{i1} = 0.
+\end{equation}
 
-Assuming a mode of the form $n_{i1} = \hat{n}_{i1} \exp [ i \left ( \kvec_i \cdot \xvec - w t \right ) ]$, where $\kvec_i$ is the wave vector of the ion-acoustic wave, we obtain the following dispersion relation
+Assuming a mode of the form $n_{i1} = \tilde{n}_{i1} \exp (-iwt)$, where $\tilde{n}_{i1} = \tilde{n}_{i1}(\xvec)$, gives the following
 \begin{equation}
-    w^2 - k_i^2 v_s^2 = 0,
+    \label{eq:ia_waves_pre_dispersion}
+    w^2 n_{i1} + v_s^2 \nabla^2 n_{i1} = 0.
 \end{equation}
-where
+Since $w^2$ is always positive, $\tilde{n}_{i1} = \hat{n}_{i1} \exp (i \kvec_i \cdot \xvec)$ is a solution to \cref{eq:ia_waves_pre_dispersion}. Plugging in this expression for $\tilde{n}_{i1}$ in \cref{eq:ia_waves_pre_dispersion} finally gives
 \begin{equation}
-    v_s = \sqrt{ \frac{Z \gamma_e k_B T_e + \gamma_i k_B T_i }{m_i} }.
+    w^2 - k_i^2 v_s^2 = 0.
 \end{equation}
+The above is the dispersion relation for ion-acoustic waves.
 
 %------------------------------------------------------------------------
 \section{Plasma parameters}
@@ -806,10 +845,70 @@ where
 %--------------------------------------------
 \subsection{Debye length}
 %--------------------------------------------
+To describe the Debye length we'll use the governing equations from \cref{sec:two_fluid_equations} as well as the following assumptions
+\begin{enumerate}
+    \item Stationary plasma $\uvec_i = \uvec_e = 0$.
+    \item No shear stresses $\tvec_\alpha$, heat flux $\qvec_\alpha$, and collisions $\Rvec_\alpha$, $Q_\alpha$.
+    \item Effects of magnetic fields can be neglected, i.e. $\Bvec=0$.
+    \item Constant temperatures $T_i$, $T_e$.
+\end{enumerate}
+Thus we have
+\begin{equation*}
+    -Zen_i\Evec = -\nabla p_i,
+\end{equation*}
+\begin{equation*}
+    en_e\Evec = -\nabla p_e,
+\end{equation*}
+\begin{equation*}
+    \nabla \cdot \Evec = \frac{\rho_e}{\epsilon_0},
+\end{equation*}
+\begin{equation*}
+    \nabla \times \Evec = 0,
+\end{equation*}
+\begin{equation*}
+    \rho_e = e(Zn_i - n_e),
+\end{equation*}
+\begin{equation*}
+    p_i = n_i k_B T_i,
+\end{equation*}
+\begin{equation*}
+    p_e = n_e k_B T_e.
+\end{equation*}
+We can simplify the above to obtain
+\begin{equation}
+    Zen_i \nabla \phi = -k_B T_i \nabla n_i,
+\end{equation}
+\begin{equation}
+    -en_e \nabla \phi = -k_B T_e \nabla n_e,
+\end{equation}
+\begin{equation}
+    -\nabla^2 \phi = \frac{e}{\epsilon_0} (Zn_i - n_e).
+\end{equation}
+
+The physical domain will be one dimensional with length $L$, that is, $[-L/2,L/2]$. A voltage $V$ is applied across this domain and thus the boundary condition for the electric potential becomes $\phi(-L/2) - \phi(L/2) = V$. We'll also enforce the condition $\phi(0) = 0$ to fix the arbitrary constant of the potential. 
+
+The simplest case to consider is the one for which the one-dimensional domain is empty. Gauss's law then gives
+\begin{equation*}
+    \frac{d^2 \phi}{dx^2} = 0,
+\end{equation*}
+which, upon applying the boundary conditions gives the trivial solution $\phi = -(V/L) x$ and a constant electric field $E=V/L$ pointing from left to right.
+
+Now let's fill up the physical space with a plasma consisting of electrons and ions. The equations for this case are
+
+\begin{equation}
+    \label{eq:debye_def}
+    \lambda_{D\alpha} = \left ( \frac{\epsilon_0 k_B T_\alpha}{n_{\alpha0} e^2} \right )^{1/2}
+\end{equation}
+
+We note that $\lambda_{De}$,  $w_{pe}$, and $v_{Te}$ are all related to each other as shown below
+\begin{equation}
+    \lambda_{De} w_{pe} = \left ( \frac{\epsilon_0 k_B T_e}{n_{e0} e^2} \right )^{1/2} \left ( \frac{n_{e0} e^2}{m_e \epsilon_0} \right )^{1/2} = \left ( \frac{k_B T_e}{m_e} \right )^{1/2} = v_{Te}.
+\end{equation}
 
 %--------------------------------------------
 \subsection{Plasma frequency}
 %--------------------------------------------
+In \cref{sec:ep_waves} we assumed $w_{pe} < w$ in \cref{eq:ep_waves_pre_dispersion} to obtain a dispersion relation for electron-plasma waves. We now consider the cases $w_{pe} > w$ and $w_{pe} = w$ to better understand the role played by the plasma frequency $w_{pe}$.
 
 %--------------------------------------------
 \subsection{The coupling parameter}
@@ -927,19 +1026,19 @@ Consider the scattering of two particles: an incident and a target particle. If 
     \label{fig:scattering_3d}
 \end{figure}
 
-From the entire set of incident particles $N$ that interact with the target particles, one can define an infinitesimal subset $N_{\theta,\phi} d\Omega$ as the number of particles scattered into an infinitesimal solid angle $d\Omega = \sin \theta_s d\theta_s d\phi_s$, as shown in \cref{fig:scattering_3d}. We note that $N_{\theta,\phi} = N_{\theta,\phi} (\theta_s, \phi_s)$. The subset of particles $N_{\theta, \phi} d\Omega$ is now given by
+From the entire set of incident particles $N$ that interact with the target particles, one can define an infinitesimal subset $N_{\theta,\phi} d\Omega$ as the number of particles scattered into an infinitesimal solid angle $d\Omega = \sin \theta_s d\theta_s d\phi_s$, as shown in \cref{fig:scattering_3d}. We note that $N_{\theta,\phi} = N_{\theta,\phi} (\theta_s, \phi_s)$. We introduce the differential cross section
+\begin{equation}
+    \frac{d\sigma_{\theta,\phi}}{d\Omega} = \frac{d\sigma_{\theta,\phi}}{d\Omega}(\theta_s,\phi_s),
+\end{equation}
+which is defined by the following expression in an analogous manner to \cref{eq:cross_def},
 \begin{equation}
     \label{eq:cross_def_diff}
     N_{\theta, \phi} d\Omega = \left ( \frac{d\sigma_{\theta,\phi}}{d\Omega} d\Omega \right ) I n_A.
 \end{equation}
-In the above, 
-\begin{equation}
-    \frac{d\sigma_{\theta,\phi}}{d\Omega} = \frac{d\sigma_{\theta,\phi}}{d\Omega}(\theta_s,\phi_s)
-\end{equation}
-is the differential cross section. It is best to not think of it as a derivative (what does a derivative with respect to solid angle mean?) and instead to simply think of it as a function that depends on $\theta_s$ and $\phi_s$. Integrating over all $\theta_s$ and $\phi_s$, i.e.
-\begin{equation}
+It is best to not think of it as a derivative (what does a derivative with respect to solid angle mean?) and instead to simply think of it as a function that depends on $\theta_s$ and $\phi_s$. Integrating over all $\theta_s$ and $\phi_s$, i.e.
+\begin{equation*}
     \int_{\theta_s = 0}^\pi \int_{\phi_s = 0}^{2\pi} N_{\theta, \phi} d\Omega = \int_{\theta_s = 0}^\pi \int_{\phi_s = 0}^{2\pi} \frac{d\sigma_{\theta,\phi}}{d\Omega}  d\Omega I n_A
-\end{equation}
+\end{equation*}
 gives \cref{eq:cross_def}.
 
 \begin{figure}[ht]
@@ -949,25 +1048,25 @@ gives \cref{eq:cross_def}.
     \label{fig:scattering_axi}
 \end{figure}
 For various cases the scattering is axisymmetric, that is, it is independent of $\phi_s$. Thus
-\begin{equation}
+\begin{equation*}
     N_{\theta, \phi} \to N_\theta \qquad \frac{d\sigma_{\theta,\phi}}{d\Omega} \to \frac{d\sigma_\theta}{d\Omega},
-\end{equation}
+\end{equation*}
 where 
-\begin{equation}
+\begin{equation*}
     N_\theta = N_\theta (\theta_s),
-\end{equation}
+\end{equation*}
 and
-\begin{equation}
+\begin{equation*}
     \frac{d\sigma_\theta}{d\Omega} = \frac{d\sigma_\theta}{d\Omega} (\theta_s).
-\end{equation}
+\end{equation*}
 Integrating \cref{eq:cross_def_diff} from $\phi_s = 0$ to $\phi_s = 2\pi$ gives
 \begin{equation}
     \label{eq:cross_def_diff_axi}
     N_\theta d\Omega_\theta = \frac{d\sigma_\theta}{d\Omega} d\Omega_\theta I n_A,
 \end{equation}
-where $d \Omega_\theta = 2\pi \sin \theta_s d\theta_s$. $N_\theta d\Omega_\theta$ thus represents the number of particles that are scattered into the infinitesimal band $d\Omega_\theta$ on a sphere, where $d\Omega_\theta$ is defined by scattering angle $\theta_s$ (see \cref{fig:scattering_axi}). We will note that there is a one-to-one correspondence between the impact parameter $b$ and the scattering angle $\theta_s$, that is, $b = b(\theta_s)$. Thus, any incident particle scattered out through the infinitesimal band $d\Omega_\theta$ would have approached the target-particle through the infinitesimal ring $dA_\theta$ that corresponds to $d\Omega_\theta$. Since there are many target particles, there are many $dA_\theta$'s that correspond to the same $d\Omega_\theta$. Thus, the total number of particles scattered through $d\Omega_\theta$ is given by all the incident particles that cross through the $dA_\theta$'s of all the target particles.
+where $d \Omega_\theta = 2\pi \sin \theta_s d\theta_s$. $N_\theta d\Omega_\theta$ thus represents the number of particles that are scattered into the infinitesimal band $d\Omega_\theta$ on a sphere, where $d\Omega_\theta$ is defined by scattering angle $\theta_s$ (see \cref{fig:scattering_axi}). We will note that there is a one-to-one correspondence between the impact parameter $b$ and the scattering angle $\theta_s$, that is, $b = b(\theta_s)$. In other words, any incident particle scattered out through the infinitesimal band $d\Omega_\theta$ would have approached the target-particle through the infinitesimal ring $dA_\theta$ that corresponds to $d\Omega_\theta$. Since there are many target particles, there are many $dA_\theta$'s that correspond to the same $d\Omega_\theta$. Thus, the total number of particles scattered through $d\Omega_\theta$ is given by all the incident particles that cross through the $dA_\theta$'s of all the target particles.
 
-The number of incident particles crossing all the infinitesimal rings $dA_\theta$ is equal to the total number of incident particles $I$ times the probability $P$ that a single incident particle will cross one of those rings. Thus, we can write
+The number of incident particles crossing all the infinitesimal rings $dA_\theta$ is equal to the total number of incident particles $I$ times the probability $P$ that any single incident particle will cross one of those rings. Thus, we can write
 \begin{equation*}
     N_\theta d\Omega_\theta = I P.
 \end{equation*}

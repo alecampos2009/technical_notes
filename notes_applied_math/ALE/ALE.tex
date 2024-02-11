@@ -250,15 +250,37 @@ Note again that on the right-hand side above there is a matrix-vector product \t
 %------------------------------------------------------------------------
 \section{Momentum and energy conservation}
 %------------------------------------------------------------------------
-
+We'll now define the internal energy $IE=IE(t)$, the kinetic energy $KE=KE(t)$, and the momentum $P_\nvec=P_\nvec(t)$ along a constant $\nvec$ direction.
 \begin{align}
-    IE(t) &= \int_{\Omega^+} \rho e \, dV_x \nonumber \\
+    IE &= \int_{\Omega^+} \rho e \, dV_x \nonumber \\
     &= \int_{\Omega_0} \rho^+ e^+ J^+ \, dV_y \nonumber \\
     &= \int_{\Omega_0} \rho^+_0 e^+ \, dV_y \nonumber \\
     &= \int_{\Omega_0} \rho_0^+ \sum_{j}^{N_\phi} \hat{e}_j \phi_j^+ \, dV_y \nonumber \\
     &= \int_{\Omega_0} \rho_0^+ \sum_{j}^{N_\phi} \hat{e}_j \phi_j^+ \left ( \sum_{i}^{N_\phi} \hat{c}_i \phi^+_i \right ) \, dV_y \nonumber \\
     &= \sum_i^{N_\phi} \sum_j^{N_\phi} \hat{c}_i \int_{\Omega_0} \rho_0^+ \phi_i^+ \phi_j^+ \, dV_y \hat{e}_j \nonumber \\
-    &= \Cvec \cdot \Mvec^{(\phi)} \cdot \Evec 
+    &= \sum_i^{N_\phi} \sum_j^{N_\phi} \hat{c}_i m_{ij}^{(\phi)} \hat{e}_j \nonumber \\
+    &= \Cvec \Mvec^{(\phi)} \Evec 
 \end{align}
+
+\begin{align}
+    KE &= \int_{\Omega^+} \frac{1}{2} \rho \uvec \cdot \uvec \, dV_x \nonumber \\
+    &= \int_{\Omega_0} \frac{1}{2} \rho^+ \uvec^+ \cdot \uvec^+ J^+ \, dV_y \nonumber \\
+    &= \int_{\Omega_0} \frac{1}{2} \rho_0^+ \uvec^+ \cdot \uvec^+ \, dV_y \nonumber \\
+    &= \int_{\Omega_0} \frac{1}{2} \rho_0^+ \left ( \sum_i^{N_w} \hat{\uvec}_i w_i^+ \right ) \cdot \left ( \sum_j^{N_w} \hat{\uvec}_j w_j^+ \right ) \, dV_y \nonumber \\
+    &= \sum_i^{N_w} \sum_j^{N_w} \frac{1}{2} \hat{\uvec}_i \cdot \int_{\Omega_0}\rho_0^+ w_i^+ w_j^+ \, dV_y \hat{\uvec}_j \nonumber \\
+    &= \sum_i^{N_w} \sum_j^{N_w} \frac{1}{2} \hat{\uvec}_i \cdot m_{ij}^{(w)} \hat{\uvec}_j \nonumber \\
+    &= \frac{1}{2} \Uvec \cdot \Mvec^{(w)} \Uvec.
+\end{align}
+
+\begin{align}
+    P_\nvec &= \int_{\Omega^+} \rho \uvec \cdot \nvec \, dV_x \nonumber \\
+    &= \int_{\Omega_0} \rho^+ \uvec^+ \cdot \nvec J^+ \, dV_y \nonumber \\
+    &= \int_{\Omega_0} \rho^+_0 \uvec^+ \cdot \nvec \, dV_y \nonumber \\
+    &= \int_{\Omega_0} \rho^+_0 \left ( \sum_j^{N_w} \hat{\uvec}_j w^+_j \right ) \cdot \left ( \sum_i^{N_w} \hat{\nvec}_i w_i^+ \right ) \, dV_y \nonumber \\
+    &= \sum_i^{N_w} \sum_j^{N_w} \hat{\nvec}_i \cdot \int_{\Omega_0} \rho_0^+ w_i^+ w_j^+ \, dV_y \hat{\uvec}_j \nonumber \\
+    &= \sum_i^{N_w} \sum_j^{N_w} \hat{\nvec}_i \cdot m_{ij}^{(w)} \hat{\uvec}_j \nonumber \\
+    &= \Nvec \cdot \Mvec^{(w)} \Uvec.
+\end{align}
+Each of these quantities is conserved, as shown below.
 
 \end{document}
