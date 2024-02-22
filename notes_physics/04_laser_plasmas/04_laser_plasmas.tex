@@ -536,7 +536,7 @@ We'll also introduce the following simple equations of state
 These equations correspond to eq.\@ (2.22) in Freidberg's Ideal MHD book, but for ions that are not singly charged.
 
 %--------------------------------------------
-\subsection{Simplification for isentropic plasmas}
+\subsection{Isentropic plasmas}
 %--------------------------------------------
 We now add a couple of extra assumptions
 \begin{enumerate}
@@ -666,57 +666,19 @@ Given the assumptions in \cref{it:p_waves_assumption_1,it:p_waves_assumption_2,i
     \frac{\partial n_{i0} \uvec_{i1}}{\partial t} - \frac{Z e n_{i0}}{m_i} \Evec_1 = - \frac{1}{m_i}\nabla p_{i1}.
 \end{equation}
 
-We'll often need to take the gradient of the ion and electron pressure. We begin by showing
+We'll often need to take the gradient of the ion and electron pressure. Given $p_\alpha = C_\alpha n_\alpha^{\gamma_\alpha}$, where $\alpha = i,e$, we have 
 \begin{equation*}
     \nabla p_\alpha = C_\alpha \gamma_\alpha n_\alpha^{\gamma_\alpha-1} \nabla n_\alpha = C_\alpha \gamma_\alpha \frac{n_\alpha^{\gamma_\alpha}}{n_\alpha} \nabla n_\alpha = \gamma_\alpha \frac{p_\alpha}{n_\alpha} \nabla n_\alpha,
 \end{equation*}
-or
-\begin{equation*}
-    n_\alpha \nabla p_\alpha = \gamma_\alpha p_\alpha \nabla n_\alpha,
-\end{equation*}
-where $\alpha = i,e$. Using the variable decompositions, we have
-\begin{equation*}
-    \left ( n_{\alpha 0} + n_{\alpha 1} \right ) \nabla \left ( p_{\alpha 0} + p_{\alpha 1} \right ) = \gamma_\alpha \left ( p_{\alpha 0} + p_{\alpha 1} \right ) \nabla \left ( n_{\alpha 0} + n_{\alpha 1} \right ).
-\end{equation*}
-Given the assumptions in \cref{it:p_waves_assumption_1,it:p_waves_assumption_3}, the above simplifies to
+Using the equation of state $p_\alpha = n_\alpha k_B T_\alpha$, the above becomes
 \begin{equation}
-    \label{eq:p_waves_alpha_pressure_linearized}
-    n_{\alpha 0} \nabla p_{\alpha 1} = \gamma_\alpha p_{\alpha 0} \nabla n_{\alpha 1}.
+    \nabla p_\alpha = \gamma_\alpha k_B T_\alpha \nabla n_\alpha.
 \end{equation}
-Thus, for electrons we have
+Given assumption \cref{it:p_waves_assumption_3}, the above simplifies to
 \begin{equation}
-    \label{eq:p_waves_e_pressure_linearized}
-    n_{e0} \nabla p_{e1} = \gamma_e p_{e0} \nabla n_{e1},
+    \label{eq:p_waves_pressure_gradient}
+    \nabla p_{\alpha 1} = \gamma_\alpha k_B T_\alpha \nabla n_{\alpha 1}.
 \end{equation}
-and for ions
-\begin{equation}
-    \label{eq:p_waves_i_pressure_linearized}
-    n_{i0} \nabla p_{i1} = \gamma_i p_{i0} \nabla n_{i1}.
-\end{equation}
-
-An alternate derivation to obtain the previous results is to use an equation of state for the large pressure and density of the following form
-\begin{equation}
-    \label{eq:p_waves_eos}
-    p_{\alpha 0} = n_{\alpha 0} k_B T_\alpha,
-\end{equation}
-where $\alpha = i,e$. Note that the temperature is one whole quantity, that is, it is not split into large and small terms. Let's assume that the large quantities also satisfy isentropic flow, that is $p_{\alpha 0} = C n^{\gamma_\alpha}_{\alpha 0}$. Thus, we can show that
-\begin{align*}
-    p_{\alpha 1} &= p_{\alpha} - p_{\alpha 0} \\
-    &= C n_\alpha^{\gamma_\alpha} - p_{\alpha 0} \\
-    &= C (n_{\alpha 0} + n_{\alpha 1})^{\gamma_\alpha} - p_{\alpha 0} \\
-    &= C n_{\alpha 0}^{\gamma_\alpha} \left ( 1 + \frac{n_{\alpha 1}}{n_{\alpha 0}} \right )^{\gamma_\alpha} - p_{\alpha 0} \\
-    &= p_{\alpha 0} \left ( 1 + \frac{n_{\alpha 1}}{n_{\alpha 0}} \right )^{\gamma_\alpha} - p_{\alpha 0}.
-\end{align*} 
-Since $n_{\alpha 1} / n_{\alpha 0}$ is small, we can use the binomial series to proceed as follows
-\begin{align*}
-    p_{\alpha 1} &= p_{\alpha 0} \left ( 1 + \gamma_\alpha \frac{n_{\alpha 1}}{n_{\alpha 0}} \right ) - p_{\alpha 0} \\
-    &= \gamma_\alpha \frac{p_{\alpha 0}}{n_{\alpha 0}} n_{\alpha 1}.
-\end{align*}
-With $p_{\alpha 0}$ and $n_{\alpha 0}$ constant, this then gives \cref{eq:p_waves_alpha_pressure_linearized}. Finally, using \cref{eq:p_waves_eos} in the above we get
-\begin{equation}
-    p_{\alpha 1} = \gamma_\alpha n_{\alpha 1} k_B T_\alpha,
-\end{equation}
-which can be interpreted as the equation of state for the small quantities.
 
 %--------------------------------------------
 \subsection{Electron Plasma Waves}
@@ -728,15 +690,15 @@ On top of the assumptions in \cref{sec:p_waves_linearization}, we'll assume
     \item Uniform ion density, $n_{i1} = 0$.
 \end{enumerate}
 
-Combining \Cref{eq:p_waves_e_mom_linearized} with \cref{eq:p_waves_e_pressure_linearized} gives
+Combining \Cref{eq:p_waves_e_mom_linearized} with \cref{eq:p_waves_pressure_gradient} gives
 \begin{equation}
     \label{eq:ep_waves_mom_linearized}
-    \frac{\partial n_{e0} \uvec_{e1}}{\partial t} + \frac{e n_{e0}}{m_e} \Evec_1 = - \frac{\gamma_e p_{e0}}{n_{e0} m_e} \nabla n_{e1}.
+    \frac{\partial n_{e0} \uvec_{e1}}{\partial t} + \frac{e n_{e0}}{m_e} \Evec_1 = - \frac{\gamma_e k_B T_e}{m_e} \nabla n_{e1}.
 \end{equation}
 Taking the time derivative of \cref{eq:p_waves_e_den_linearized} and using \cref{eq:ep_waves_mom_linearized} leads to the the wave equation for electron density
 \begin{equation}
     \label{eq:ep_waves_den_combined}
-    \frac{\partial^2 n_{e1}}{\partial t^2} - \frac{e n_{e0}}{m_e} \nabla \cdot \Evec_1 = \frac{\gamma_e p_{e0}}{n_{e0} m_e} \nabla^2 n_{e1}.
+    \frac{\partial^2 n_{e1}}{\partial t^2} - \frac{e n_{e0}}{m_e} \nabla \cdot \Evec_1 = \frac{\gamma_e k_B T_e}{m_e} \nabla^2 n_{e1}.
 \end{equation}
 For electron plasma waves, we'll assume that $n_{i}$ varies in space and time so slowly that it can be assumed to be constant. That is, we assume $n_{i1} = 0$. Thus, Gauss's law now takes the form
 \begin{equation*}
@@ -749,7 +711,7 @@ Using the quasi-neutrality assumption ($Zn_{i0} = n_{e0}$)
 \end{equation}
 Plugging the above in the electron wave equation we obtain
 \begin{equation*}
-    \frac{\partial^2 n_{e1}}{\partial t^2} + \frac{e^2 n_{e0}}{m_e \epsilon_0} n_{e1} = \frac{\gamma_e p_{e0}}{n_{e0} m_e}. \nabla^2 n_{e1},
+    \frac{\partial^2 n_{e1}}{\partial t^2} + \frac{e^2 n_{e0}}{m_e \epsilon_0} n_{e1} = \frac{\gamma_e k_B T_e}{m_e}. \nabla^2 n_{e1},
 \end{equation*}
 We now introduce the electron plasma frequency
 \begin{equation}
@@ -790,31 +752,31 @@ On top of the assumptions in \cref{sec:p_waves_linearization}, we'll assume
     \item Negligible electron mass, $m_e \to 0$.
 \end{enumerate}
 
-Combining \cref{eq:p_waves_i_mom_linearized} with \cref{eq:p_waves_i_pressure_linearized} gives
+Combining \cref{eq:p_waves_i_mom_linearized} with \cref{eq:p_waves_pressure_gradient} gives
 \begin{equation}
     \label{eq:ia_waves_mom_linearized}
-    \frac{\partial n_{i0} \uvec_{i1}}{\partial t} - \frac{Z e n_{i0}}{m_i} \Evec_1 = - \frac{\gamma_i p_{i0}}{n_{i0} m_i} \nabla n_{i1}.
+    \frac{\partial n_{i0} \uvec_{i1}}{\partial t} - \frac{Z e n_{i0}}{m_i} \Evec_1 = - \frac{\gamma_i k_B T_i}{m_i} \nabla n_{i1}.
 \end{equation}
 
 Taking the time derivative of \cref{eq:p_waves_i_den_linearized} and using \cref{eq:ia_waves_mom_linearized} leads to the the wave equation for ion density
 \begin{equation}
     \label{eq:ia_waves_den_combined}
-    \frac{\partial^2 n_{i1}}{\partial t^2} + \frac{Z e n_{i0}}{m_i} \nabla \cdot \Evec_1 = \frac{\gamma_i p_{i0}}{n_{i0} m_i} \nabla^2 n_{i1}.
+    \frac{\partial^2 n_{i1}}{\partial t^2} + \frac{Z e n_{i0}}{m_i} \nabla \cdot \Evec_1 = \frac{\gamma_i k_B T_i}{m_i} \nabla^2 n_{i1}.
 \end{equation}
 For this case, we assume that the mass of the electron, which is significantly smaller than that of the ions, is negligible. Thus, \cref{eq:p_waves_e_mom_linearized} simplifies to 
 \begin{equation}
     \label{eq:ia_waves_E}
-    e n_{e0} \Evec_1 = - \frac{\gamma_e p_{e0}}{n_{e0}} \nabla n_{e1}.
+    e n_{e0} \Evec_1 = -\gamma_e k_B T_e \nabla n_{e1}.
 \end{equation}
-Plugging in the above in the ion wave equation we obtain
+Using the above in the ion wave equation we obtain
 \begin{equation*}
-    \frac{\partial^2 n_{i1}}{\partial t^2} = \frac{Z n_{i0}}{ n_{e0}} \frac{\gamma_e p_{e0}}{n_{e0} m_i} \nabla^2 n_{e1} + \frac{\gamma_i p_{i0}}{n_{i0} m_i} \nabla^2 n_{i1}.
+    \frac{\partial^2 n_{i1}}{\partial t^2} = \frac{Z n_{i0}}{ n_{e0}} \frac{\gamma_e k_B T_e}{m_i} \nabla^2 n_{e1} + \frac{\gamma_i k_B T_i}{m_i} \nabla^2 n_{i1}.
 \end{equation*}
 Due to quasi-neutrality, we have $Z n_{i0} = n_{e0}$ and $Z n_{i1} \approx n_{e1}$, which gives
 \begin{equation*}
-    \frac{\partial^2 n_{i1}}{\partial t^2} = \frac{1}{m_i} \left ( \frac{Z \gamma_e p_{e0}}{n_{e0}} + \frac{\gamma_i p_{i0}}{n_{i0}} \right ) \nabla^2 n_{i1}.
+    \frac{\partial^2 n_{i1}}{\partial t^2} = \left ( \frac{Z \gamma_e k_B T_e}{m_i} + \frac{\gamma_i k_B T_i}{m_i} \right ) \nabla^2 n_{i1}.
 \end{equation*}
-Since $p_{i0}/n_{i0} = k_B T_i$ and $p_{e0}/n_{e0} = k_B T_e$, we have
+which we re-write as
 \begin{equation}
     \frac{\partial^2 n_{i1}}{\partial t^2} - \left ( \frac{Z \gamma_e k_B T_e + \gamma_i k_B T_i}{m_i} \right ) \nabla^2 n_{i1} = 0.
 \end{equation}
@@ -948,6 +910,7 @@ The solution to the above that also conforms to the boundary conditions is...
 
 We note that $\lambda_{De}$,  $w_{pe}$, and $v_{Te}$ are all related to each other as shown below
 \begin{equation}
+    \label{eq:debye_3vars}
     \lambda_{De} w_{pe} = \left ( \frac{\epsilon_0 k_B T_e}{n_{e0} e^2} \right )^{1/2} \left ( \frac{n_{e0} e^2}{m_e \epsilon_0} \right )^{1/2} = \left ( \frac{k_B T_e}{m_e} \right )^{1/2} = v_{Te}.
 \end{equation}
 
@@ -955,6 +918,41 @@ We note that $\lambda_{De}$,  $w_{pe}$, and $v_{Te}$ are all related to each oth
 \subsection{Plasma frequency}
 %--------------------------------------------
 In \cref{sec:ep_waves} we assumed $w_{pe} < w$ in \cref{eq:ep_waves_pre_dispersion} to obtain a dispersion relation for electron-plasma waves. We now consider the cases $w_{pe} > w$ and $w_{pe} = w$ to better understand the role played by the plasma frequency $w_{pe}$.
+
+We first consider the case of $w_{pe} > w$. Plugging in \cref{eq:ep_waves_efield_divergence} in \cref{eq:ep_waves_pre_dispersion} and using the definition of the electric potential, we have 
+\begin{equation}
+    \label{eq:plasma_freq_quartic}
+    (w^2 - w_{pe}^2) \nabla^2 \phi_1 + \gamma_e v_{Te}^2 \nabla^4 \phi_1 = 0.
+\end{equation}
+We'll use the same setting as that for the derivation of the Debye length. The only difference is that the potential drop across the domain now oscillates with a frequency of $w$, that is $\phi_1(-L/2) - \phi_1(L/2) = V \exp (-iwt)$. Simplifying due to the one-dimensional domain and re-arranging, \cref{eq:plasma_freq_quartic} becomes
+\begin{equation*}
+     \frac{d^4 \phi_1}{dx^4} - \frac{w_{pe}^2 - w^2}{\gamma_e v_{Te}^2} \frac{d^2 \phi_1}{dx^2} = 0.
+\end{equation*}
+Using \cref{eq:debye_3vars} the above becomes
+\begin{equation*}
+    \frac{d^4 \phi_1}{dx^4} - \frac{1}{\gamma_e \lambda_{De}^2} \left ( 1 - \frac{w^2}{w_{pe}^2} \right ) \frac{d^2 \phi_1}{dx^2} = 0,
+\end{equation*}
+which we re-write as
+\begin{equation*}
+    \frac{d^4 \phi_1}{dx^4} - \frac{1}{\hat{\lambda}^2_{De}} \frac{d^2 \phi_1}{dx^2} = 0,
+\end{equation*}
+where 
+\begin{equation*}
+    \hat{\lambda}_{De}^2 = \gamma_e \lambda_{De}^2 \left ( 1 - \frac{w^2}{w_{pe}^2} \right )^{-1}.
+\end{equation*}  
+Integrating the fourth-order PDE above twice, we get
+\begin{equation*}
+    \frac{d^2 \phi_1}{dx^2} - \frac{1}{\hat{\lambda}^2_{De}} \phi_1 + C_1 x + C_2= 0
+\end{equation*}
+Since to obtain \cref{eq:ep_waves_pre_dispersion} we assumed $n_{e1} = \tilde{n}_{e1} \exp(-iwt)$, where $\tilde{n}_{e1} = \tilde{n}_{e1}(\xvec)$, we'll also assume $\phi_1 = \tilde{\phi}_1 \exp(-iwt)$, where $\tilde{\phi}_1 = \tilde{\phi}_1(\xvec)$. Plugging this into the ODE above we get
+\begin{equation*}
+     \left (\frac{d^2 \tilde{\phi}_1}{dx^2} - \frac{1}{\hat{\lambda}^2_{De}} \tilde{\phi}_1 \right ) + \left ( \frac{C_1 x + C_2}{\exp(-iwt)} \right )= 0
+\end{equation*}
+Note that the first term in parenthesis above does not depend on time, and thus the second term in parenthesis should not do so either. This can only be accomplished if we set $C_1 = C_2 = 0$. Thus we finally have
+\begin{equation}
+    \frac{d^2 \tilde{\phi}_1}{dx^2} - \frac{1}{\hat{\lambda}^2_{De}} \tilde{\phi}_1 = 0.
+\end{equation}
+The solution to the above that also conforms to the boundary conditions is ...
 
 It is often important to know the plasma density at which the electron plasma frequency $w_{pe}$ equals the external frequency $w$. This density is referred to as the critical density $n_{cr}$. Equating the electron plasma frequency with the external frequency we get
 \begin{equation*}
