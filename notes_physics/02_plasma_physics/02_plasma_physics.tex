@@ -753,7 +753,7 @@ Plugging the above in the electron wave equation we obtain
 \end{equation*}
 We now introduce the electron plasma frequency
 \begin{equation}
-    \label{eq:ep_waves_frequenccy}
+    \label{eq:ep_waves_frequency}
     w_{pe} = \left ( \frac{n_{e0} e^2}{m_e \epsilon_0} \right )^{1/2},
 \end{equation}
 and the thermal velocity
@@ -875,17 +875,30 @@ Thus we have
     p_e = n_e k_B T_e.
 \end{equation*}
 We can simplify the above to obtain
-\begin{equation}
+\begin{equation*}
     Zen_i \nabla \phi = -k_B T_i \nabla n_i,
-\end{equation}
-\begin{equation}
+\end{equation*}
+\begin{equation*}
     -en_e \nabla \phi = -k_B T_e \nabla n_e,
+\end{equation*}
+\begin{equation*}
+    -\nabla^2 \phi = \frac{e}{\epsilon_0} (Zn_i - n_e).
+\end{equation*}
+The physical domain will be one dimensional with length $L$, namely, $[-L/2,L/2]$. Thus, we have
+\begin{equation}
+    \label{eq:debye_ode_ni}
+    Zen_i \frac{d\phi}{dx} = -k_B T_i \frac{dn_i}{dx},
 \end{equation}
 \begin{equation}
-    -\nabla^2 \phi = \frac{e}{\epsilon_0} (Zn_i - n_e).
+    \label{eq:debye_ode_ne}
+    -en_e \frac{d\phi}{dx} = -k_B T_e \frac{dn_e}{dx},
+\end{equation}
+\begin{equation}
+    \label{eq:debye_ode_phi}
+    -\frac{d^2\phi}{dx} = \frac{e}{\epsilon_0} (Zn_i - n_e).
 \end{equation}
 
-The physical domain will be one dimensional with length $L$, that is, $[-L/2,L/2]$. A voltage $V$ is applied across this domain and thus the boundary condition for the electric potential becomes $\phi(-L/2) - \phi(L/2) = V$. We'll also enforce the condition $\phi(0) = 0$ to fix the arbitrary constant of the potential. 
+A voltage $V$ is applied across this domain and thus the boundary condition for the electric potential becomes $\phi(-L/2) - \phi(L/2) = V$. We'll also enforce the condition $\phi(0) = 0$ to fix the arbitrary constant of the potential. 
 
 The simplest case to consider is the one for which the one-dimensional domain is empty. Gauss's law then gives
 \begin{equation*}
@@ -893,12 +906,45 @@ The simplest case to consider is the one for which the one-dimensional domain is
 \end{equation*}
 which, upon applying the boundary conditions gives the trivial solution $\phi = -(V/L) x$ and a constant electric field $E=V/L$ pointing from left to right.
 
-Now let's fill up the physical space with a plasma consisting of electrons and ions. The equations for this case are
-
+Now let's fill up the physical space with a plasma consisting of electrons and ions. Integrating \cref{eq:debye_ode_ni,eq:debye_ode_ne} we obtain
+\begin{align*}
+    \ln n_i &= -\frac{Z e}{k_B T_i} \phi + C_1, \\
+    \ln n_e &= \frac{e}{k_B T_e} \phi + C_2,
+\end{align*}
+which we re-write as
+\begin{align*}
+    n_i &= D_1 \exp \left ( -\frac{Ze\phi}{k_B T_i} \right ), \\
+    n_e &= D_2 \exp \left ( \frac{e\phi}{k_B T_e} \right ).
+\end{align*}
+We introduce $n_{i0}$ and $n_{e0}$ as the densities at $x=0$. Since $\phi = 0$ at $x=0$, we have 
+\begin{align*}
+    n_i &= n_{i0} \exp \left ( -\frac{Ze\phi}{k_B T_i} \right ), \\
+    n_e &= n_{e0} \exp \left ( \frac{e\phi}{k_B T_e} \right ).
+\end{align*}
+A condition for the densities at the center is that they satisfy quasi-neutrality, that is, $Zn_{i0} = n_{e0}$. Note that this does not mean $Zn_i = n_e$. We'll assume the terms inside the exponential are small, so that we can use $\exp \alpha = 1 + \alpha$. Thus we have
+\begin{align*}
+    n_i &= n_{i0} - \frac{n_{i0}Ze\phi}{k_B T_i}, \\
+    n_e &= n_{e0} + \frac{n_{e0} e\phi}{k_B T_e}.
+\end{align*}
+Plugin this into \cref{eq:debye_ode_phi} gives
+\begin{equation}
+    \label{eq:debye_ode_phi_2}
+    \frac{d^2\phi}{dx^2} - \left ( \frac{n_{i0}Z^2 e^2}{\epsilon_0 k_B T_i} + \frac{n_{e0}e^2}{\epsilon_0 k_B T_e}\right ) \phi = 0.
+\end{equation}
+We now introduce the Debye length for a particular species $\alpha$ as
 \begin{equation}
     \label{eq:debye_def}
-    \lambda_{D\alpha} = \left ( \frac{\epsilon_0 k_B T_\alpha}{n_{\alpha0} e^2} \right )^{1/2}
+    \lambda_{D\alpha} = \left ( \frac{\epsilon_0 k_B T_\alpha}{n_{\alpha0} Z^2 e^2} \right )^{1/2},
 \end{equation}
+and the total Debye length $\lambda_D$ as
+\begin{equation}
+    \frac{1}{\lambda_D} = \sum_\alpha \frac{1}{\lambda_{D\alpha}}.
+\end{equation}
+Using this, we can re-write \cref{eq:debye_ode_phi_2} simply as
+\begin{equation}
+    \frac{d^2 \phi}{dx^2} - \frac{1}{\lambda_D^2} \phi = 0.
+\end{equation}
+The solution to the above that also conforms to the boundary conditions is...
 
 We note that $\lambda_{De}$,  $w_{pe}$, and $v_{Te}$ are all related to each other as shown below
 \begin{equation}
@@ -909,6 +955,21 @@ We note that $\lambda_{De}$,  $w_{pe}$, and $v_{Te}$ are all related to each oth
 \subsection{Plasma frequency}
 %--------------------------------------------
 In \cref{sec:ep_waves} we assumed $w_{pe} < w$ in \cref{eq:ep_waves_pre_dispersion} to obtain a dispersion relation for electron-plasma waves. We now consider the cases $w_{pe} > w$ and $w_{pe} = w$ to better understand the role played by the plasma frequency $w_{pe}$.
+
+It is often important to know the plasma density at which the electron plasma frequency $w_{pe}$ equals the external frequency $w$. This density is referred to as the critical density $n_{cr}$. Equating the electron plasma frequency with the external frequency we get
+\begin{equation*}
+    \frac{n_{cr} e^2}{m_e \epsilon_0} = w^2,
+\end{equation*}
+which leads to
+\begin{equation}
+    \label{eq:plas_freq_crit_den}
+    n_{cr} = \frac{m_e \epsilon_0 w^2}{e^2}
+\end{equation}
+The above can be re-written as
+\begin{equation*}
+    n_{cr} = \frac{m_e \epsilon_0 (2 \pi \nu)^2}{e^2} = \frac{4 \pi^2 m_e \epsilon_0 c^2}{e^2} \frac{1}{\lambda^2} = 1.115 \times 10^{27} \frac{1}{\lambda_{\mu m}^2},
+\end{equation*}
+where $\lambda_{\mu m}$ is in units of microns and $n_{cr}$ in units of \#/m\textsuperscript{3}.
 
 %--------------------------------------------
 \subsection{The coupling parameter}
