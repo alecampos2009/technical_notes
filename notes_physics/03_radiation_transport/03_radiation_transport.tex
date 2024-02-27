@@ -1,4 +1,4 @@
-\documentclass[a4paper,11pt]{report}
+\documentclass[a4paper,11pt]{article}
 \usepackage{fullpage}
 
 \usepackage{"../../info/packages"}
@@ -10,10 +10,6 @@
 \begin{document}
 \maketitle
 \tableofcontents
-
-%########################################################################
-\chapter{Introduction}
-%########################################################################
 
 %------------------------------------------------------------------------
 \section{Definitions}
@@ -71,7 +67,7 @@ $I_\nu$ is referred to as the spectral radiance, or spectral specific intensity.
         \hline
         
         \begin{tabular}{c} One-sided \\ spectral radiant \\ energy flux \end{tabular} 
-        & $ \displaystyle S_\nu^{\Avec} = \int_{\Omegavec \cdot \Avec > 0} I_\nu (\Omegavec \cdot \Avec) \, d\Omega $ 
+        & $ \displaystyle S_\nu^{\Avec} = \int_{\Omegavec \cdot \Avec > 0} I_\nu \Omegavec \cdot \Avec \, d\Omega $ 
         & $ \left [ \frac{\text{J}}{\text{s$\cdot$m\textsuperscript{2}$\cdot$Hz}} \right ]$ \\
 
         \hline
@@ -86,9 +82,9 @@ Any quantity dependent on $\nu$ can be integrated over all frequencies to obtain
 \end{equation}
 In the above, $I = I(\xvec, t, \Omegavec)$ is the radiance, or specific intensity. 
 
-%########################################################################
-\chapter{Thermal radiation}
-%########################################################################
+%------------------------------------------------------------------------
+\section{Thermal radiation}
+%------------------------------------------------------------------------
 For blackbody radiation we have
 \begin{equation}
     I_\nu = \frac{2h\nu^3}{c^2} \frac{1}{\exp(h\nu/kT) - 1}.
@@ -141,9 +137,9 @@ Similarly as before, integrating over all frequencies leads to $S^{\hat{\zvec}} 
     \label{tab:blackbody_quantities}
 \end{table}
 
-%########################################################################
-\chapter{Opacities}
-%########################################################################
+%------------------------------------------------------------------------
+\section{Opacities}
+%------------------------------------------------------------------------
 There are multiple processes that control the behavior of photons:
 \begin{itemize}
     \item Absorption 

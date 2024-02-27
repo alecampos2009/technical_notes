@@ -674,7 +674,7 @@ Using the equation of state $p_\alpha = n_\alpha k_B T_\alpha$, the above become
 \begin{equation}
     \nabla p_\alpha = \gamma_\alpha k_B T_\alpha \nabla n_\alpha.
 \end{equation}
-Given assumption \cref{it:p_waves_assumption_3}, the above simplifies to
+Given the assumption in \cref{it:p_waves_assumption_3}, the above simplifies to
 \begin{equation}
     \label{eq:p_waves_pressure_gradient}
     \nabla p_{\alpha 1} = \gamma_\alpha k_B T_\alpha \nabla n_{\alpha 1}.
@@ -906,7 +906,28 @@ Using this, we can re-write \cref{eq:debye_ode_phi_2} simply as
 \begin{equation}
     \frac{d^2 \phi}{dx^2} - \frac{1}{\lambda_D^2} \phi = 0.
 \end{equation}
-The solution to the above that also conforms to the boundary conditions is...
+The solution to the above that also conforms to the boundary conditions is
+\begin{equation}
+    \phi = -\frac{V}{2} \frac{\sinh \left (\frac{x}{\lambda_D} \right )}{\sinh \left ( \frac{L}{2\lambda_D} \right )}.
+\end{equation}
+A plot of $\phi$ and the corresponding $E$ is shown in \cref{fig:debye_phi_elec} for various values of $\lambda_D/L$. As the figure shows, the presence of a plasma shields out the electric field, in contrast to the vacuum case where a constant electric field is present across the domain. Given a fixed domain size $L$, varying the parameter $\lambda_D$ determines how well the plasma shields away the electric field. 
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../../images/debye_phi.pdf}
+        \caption{}
+        \label{fig:debye_phi}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../../images/debye_elec.pdf}
+        \caption{}
+        \label{fig:debye_elec}
+    \end{subfigure}
+    \caption{Electric potential and field for various values of $\lambda_D/L$.}
+    \label{fig:debye_phi_elec}
+\end{figure}
 
 We note that $\lambda_{De}$,  $w_{pe}$, and $v_{Te}$ are all related to each other as shown below
 \begin{equation}
@@ -917,7 +938,7 @@ We note that $\lambda_{De}$,  $w_{pe}$, and $v_{Te}$ are all related to each oth
 %--------------------------------------------
 \subsection{Plasma frequency}
 %--------------------------------------------
-In \cref{sec:ep_waves} we assumed $w_{pe} < w$ in \cref{eq:ep_waves_pre_dispersion} to obtain a dispersion relation for electron-plasma waves. We now consider the cases $w_{pe} > w$ and $w_{pe} = w$ to better understand the role played by the plasma frequency $w_{pe}$.
+At the end of \cref{sec:ep_waves} we assumed $w_{pe} < w$ in \cref{eq:ep_waves_pre_dispersion} to obtain a dispersion relation for electron-plasma waves. We now consider the cases $w_{pe} > w$ and $w_{pe} = w$ to better understand the role played by the plasma frequency $w_{pe}$.
 
 We first consider the case of $w_{pe} > w$. Plugging in \cref{eq:ep_waves_efield_divergence} in \cref{eq:ep_waves_pre_dispersion} and using the definition of the electric potential, we have 
 \begin{equation}
