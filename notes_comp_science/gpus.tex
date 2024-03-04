@@ -1,7 +1,9 @@
 \documentclass[a4paper,11pt]{article}
+
 \usepackage{fullpage}
 \usepackage{listings}
 \usepackage{xcolor}
+\usepackage{hhline}
 
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
@@ -77,18 +79,41 @@ If the data is currently residing on device memory, one can bring it back to hos
 
     rho.HostReadWrite();
 \end{lstlisting}
-You can then continue to use the \texttt{rho} object on the CPU as you would normally do.
-
-Let's say you had data on the device, and altered its value. You now want to access this data on the host but forget to do a \texttt{HostRead()} or a \texttt{HostReadWrite()}. How would you catch this faux pas? You can compile MFEM in debug mode and then run the code. This will lead to a runtime error and a stack trace since the host is now possibly out-of-sync with the device. On the other hand, there are no checks for the reverse, that is, to ensure the device memory is valid after modified on the host. This is because you are using raw pointers on the device and not getting the pointer indirectly though a trackable object as is done on the host. That being said, as long as you use a ``fresh'' device pointer every single time you want to modify data on the GPU, then you should be good. In other words, always use a \texttt{Read()}, \texttt{Write()}, or \texttt{ReadWrite()} if you aren't sure the device pointer you'll be working with is valid.
-
-Finally, you can also explicitly grab pointers to access data on the host, in a similar manner to the pointers for device data:
+ The \texttt{rho} object can then be used on the CPU again as one would normally do. On the other hand, one can also generate explicit pointers to access data on the host, in a similar manner to the pointers for device data:
 \begin{lstlisting}
-    double* h_rho = density.HostRead();
+    double* h_rho = rho.HostRead();
 
-    double* h_rho = density.HostWrite();
+    double* h_rho = rho.HostWrite();
 
-    double* h_rho = density.HostReadWrite();
+    double* h_rho = rho.HostReadWrite();
 \end{lstlisting}
+
+MFEM objects (array, vector, dense matrix, dense tensor) have two member variables used to determine its state, these are \texttt{VALID\_HOST} and \texttt{VALID\_DEVICE}. When one first creates an object, MFEM will set \texttt{VALID\_HOST} to true and \texttt{VALID\_DEVICE} to false. After that, if you call any of the memory-movement functions (e.g. \texttt{Read()}, \texttt{HostWrite()}), then \texttt{VALID\_HOST} and \texttt{VALID\_DEVICE} would be updates as shown on the table below.
+\begin{center}
+    \begin{tabular}{c | c | c}
+        %\hline
+        & \texttt{VALID\_HOST} & \texttt{VALID\_DEVICE} \\
+        \hhline{=|=|=}
+        \texttt{Read()} & does nothing & true \\ 
+        %\hline
+        \texttt{Write()} & false & true \\
+        %\hline
+        \texttt{ReadWrite()} & false & true \\
+        %\hline
+        \texttt{HostRead()} & true & does nothing \\ 
+        %\hline
+        \texttt{HostWrite()} & true & false \\
+        %\hline
+        \texttt{HostReadWrite()} & true & false \\
+        %\hline
+    \end{tabular}
+\end{center}
+Let's now consider a few specific cases:
+\begin{itemize}
+    \item You create an object, then call \texttt{Write()} or \texttt{ReadWrite()} to modify its value on the device. At this point \texttt{VALID\_HOST} would be false and \texttt{VALID\_DEVICE} would be true. You now read this data on the host but forget beforehand to do \texttt{HostRead()} or a \texttt{HostReadWrite()}. To catch this mistake, you can compile MFEM in debug mode and then run the code. This will lead to a runtime error and a stack trace since the host is now possibly out-of-sync with the device. 
+    
+    \item You create an object, then call \texttt{Read()} to read its value on the device. At this point \texttt{VALID\_HOST} is still true and \texttt{VALID\_DEVICE} is also true. Let's say that on the host you now want to only read the entries of the object using the \texttt{()} operator, e.g\@ \texttt{double new\_var = 2 + rho(i)}. This is perfectly reasonable since the device has not modified the entries of the object. When using the parenthesis operator, however, MFEM doesn't automatically know that you are going to only read this entry, rather than modify it, e.g\@ i.e.\@ \texttt{rho(i)=new\_value}. If you were to modify it, its value on the device would no longer be valid and hence the status of the flag \texttt{VALID\_DEVICE}, which was left as true by the \texttt{()} operator, is no longer correct. MFEM thus provides two versions of the \texttt{()} operator, one that is used for reading entries only and another that is used for reading and modifying entries. The one used for reading entries can be used when \texttt{VALID\_HOST} and \texttt{VALID\_DEVICE} are both true, whereas the one for modifying entries requires the object to previously have \texttt{VALID\_DEVICE} set to true and \texttt{VALID\_DEVICE} to false. To use the former, you use the \texttt{mfem::AsConst()} function, as in \texttt{mfem::AsConst(rho)(i)}. To use the latter, you just use the \texttt{()} operator as usual.
+\end{itemize}    
 
 %------------------------------------------------------------------------
 \section{Kernel execution}
@@ -98,7 +123,7 @@ A kernel is a basic unit of code to be executed on the GPU (e.g. a loop, functio
 \begin{lstlisting}
     mfem::forall(N, [=] MFEM_HOST_DEVICE (int i) \{\dots \} )
 \end{lstlisting}
-The second argument above, i.e. \texttt{[=] MFEM\_HOST\_DEVICE (int i) \{\dots \}}, is a lambda expression, which is essentially a small function without a name. The body of the lambda expression, i.e. the code to be executed, is depicted by the dots \dots. The first argument of the lambda expression, i.e. \texttt{[=]}, is the capture clause. It is used to indicate how variables in the enclosing scope should be used, or ``captured'', within the for loop. For example
+The second argument above, i.e. \texttt{[=] MFEM\_HOST\_DEVICE (int i) \{ \dots \}}, is a lambda expression, which is essentially a small function without a name. The body of the lambda expression, i.e. the code to be executed, is depicted by the dots \dots. The first argument of the lambda expression, i.e. \texttt{[=]}, is the capture clause. It is used to indicate how variables in the enclosing scope should be used, or ``captured'', within the for loop. For example
 \begin{itemize}
     \item \texttt{[=]} capture variables by value
     \item \texttt{[\&]} capture variables by reference
@@ -126,7 +151,7 @@ Re-writing the above using the mfem macro would look like this
         d_rho[i] = 1.234;
     });
 \end{lstlisting}
-For the above, the GPU will launch multiple blocks, each consisting of various threads. Each thread in a block takes care of a single instance of the for loop. That is, one thread will execute the contents within the for-loop for value \texttt{i=0}, a second thread will execute the same code for \texttt{i=1} and so on till one last thread takes care of \texttt{i=rho.Size()-1}.
+For the above, the GPU will launch multiple thread blocks, which are collections of threads. Each thread in a block takes care of a single instance of the for loop. That is, one thread will execute the contents within the for-loop for value \texttt{i=0}, a second thread will execute the same code for \texttt{i=1} and so on till one last thread takes care of \texttt{i=rho.Size()-1}.
 
 Since lambda expressions can capture variables from the enclosing scope only, a lambda expression defined within a member function of a class cannot capture a member variable of that same class. For this scenario, one needs to use a local version of that variable, as shown below
 \begin{lstlisting}
@@ -179,6 +204,62 @@ That is, we use \texttt{return} rather than \texttt{continue}. The reason for th
 Thus, what you want to do is ``return'' from \texttt{lambda(iter)} so that the \texttt{iter} iterator can go on to its next value. 
 
 %------------------------------------------------------------------------
+\section{Memory spaces}
+%------------------------------------------------------------------------
+\begin{itemize}
+    \item Global: GPU memory that is typically dynamically allocated (with malloc/free or something similar) and is accessible by all threads, from all thread blocks. This means that a thread can read and write any value in global memory.
+    \item Local: GPU memory that is typically statically allocated from within a kernel. It is only visible, and therefore accessible, by the thread allocating it. All threads executing a kernel will have their own privately allocated local memory.
+    \item Unified/Managed: unified memory (same as managed memory) is a single global memory buffer that can be accessed and used in multiple memory spaces (e.g. host and device). The memory will automatically migrate or stay in sync if it is not where it needs to be. Unified memory is allocated with special routines, e.g. \texttt{cudaMallocManaged()} or \texttt{hipMallocManaged()}. It can also be a lower type of memory because the memory copy won't happen until one of the spaces ``faults'' on the memory address.
+    \item Temporary
+    \item Shared
+\end{itemize}
+
+%------------------------------------------------------------------------
+\section{Hierarchical parallelism}
+%------------------------------------------------------------------------
+Let's say one has loops within loops, and wants to execute all of them on the GPU. One way to do so is as following
+\begin{lstlisting}
+    Vector rho;
+    rho.UseDevice(true);
+
+    const int size_1 = ...;
+    const int size_2 = ...;
+    const int size_3 = ...;
+    const int size_4 = ...;
+
+    auto d_rho = Reshape(rho.Write(), size_1, size_2, size_3, size_4);
+
+    mfem::forall(size_4, [=] MFEM_HOST_DEVICE (int l) 
+    {
+        for (int k = 0; k < size_3; k++)
+           for (int j = 0; j < size_2; j++)
+              for (int i = 0; i < size_1; i++)
+                 d_rho(i,j,k,l) = ...;
+    });
+\end{lstlisting}
+For this case, the GPU will launch \texttt{size\_4} threads, and each will execute all of the \texttt{i}, \texttt{j}, and \texttt{k} instances for a single value of \texttt{l}. One can expose a higher level of parallelism by launching more threads, namely \texttt{size\_1 x size\_2 x size\_ 3 x size\_4}, so that each thread has to execute only a single combination of the \texttt{i}, \texttt{j}, \texttt{k}, and \texttt{l} indices. One can do this as follows
+\begin{lstlisting}
+    Vector rho;
+    rho.UseDevice(true);
+
+    const int size_1 = ...;
+    const int size_2 = ...;
+    const int size_3 = ...;
+    const int size_4 = ...;
+
+    auto d_rho = Reshape(rho.Write(), size_1, size_2, size_3, size_4);
+
+    mfem::forall_3D(size_4, size_1, size_2, size_3, [=] MFEM_HOST_DEVICE (int l) 
+    {
+        MFEM_FOREACH_THREAD(k, thread_id_3, size_3)
+           MFEM_FOREACH_THREAD(j, thread_id_2, size_2)
+              MFEM_FOREACH_THREAD(i, thread_id_1, size_1)
+                 d_rho(i,j,k,l) = ...;
+    });
+\end{lstlisting}
+In the first example above the GPU launches \texttt{size\_4} / \texttt{MFEM\_CUDA\_BLOCKS} thread blocks, each with \texttt{MFEM\_CUDA\_BLOCKS} threads, for a total of \texttt{size\_4} threads. On the second example, the GPU launches \texttt{size\_4} thread blocks, each with \texttt{size\_1 x size\_2 x size\_ 3} threads, for a total of \texttt{size\_1 x size\_2 x size\_ 3 x size\_4}. 
+
+%------------------------------------------------------------------------
 \section{Software vs hardware}
 %------------------------------------------------------------------------
 First we'll focus on the software side. A thread executes an instance of the kernel. By this we mean the thread can execute an instance of a for-loop (note that this for-loop can have sub for-loops or not). A thread block is a set of concurrently executing threads that can cooperate among themselves through barrier synchronization and shared memory. A thread has a thread ID within its thread block. A grid is an array of thread blocks that execute the same kernel, read inputs from global memory, write results to global memory, and synchronize between dependent kernel calls. A thread block has a block ID within its grid.
@@ -191,7 +272,7 @@ and CUDA cores and other execution units in the SM execute threads.'' A summary 
     \begin{tabular}{c | c }
         %\hline
         Software & Hardware \\
-        \hline
+        \hhline{=|=}
         thread & core \\ 
         %\hline
         thread block & SM/CP \\
@@ -202,25 +283,62 @@ and CUDA cores and other execution units in the SM execute threads.'' A summary 
 \end{center}
 
 %------------------------------------------------------------------------
-\section{Memory spaces}
-%------------------------------------------------------------------------
-\begin{itemize}
-    \item Global
-    \item Local
-    \item Unified/Managed
-    \item Temporary
-    \item Shared
-\end{itemize}
-%------------------------------------------------------------------------
-\section{Hierarchical parallelism}
-%------------------------------------------------------------------------
-
-%------------------------------------------------------------------------
 \section{Debugging}
 %------------------------------------------------------------------------
+
+%---------------------------------
+\subsection{Nvidia/CUDA}
+%---------------------------------
+
+\texttt{cuda-memcheck} and \texttt{compute-sanitizer} are two debugging tools for CUDA, which are essentially the same, with the latter being a newer version of the former. Each tool is essentially four tools, which can be chosen at runtime. The four options are
+\begin{itemize}
+    \item \texttt{memcheck}
+    \item \texttt{syncheck}
+    \item \texttt{racecheck}
+    \item \texttt{initcheck}
+\end{itemize}
+
+%---------------------------------
+\subsection{AMD/HIP}
+%---------------------------------
 
 %------------------------------------------------------------------------
 \section{Profiling}
 %------------------------------------------------------------------------
+
+NOTE : For both NVIDIA/CUDA and AMD/HIP, don't forget to limit the number of cycles in the simulations that you want to profile (e.g.\@ by setting the number of time cycles to a sufficiently small number, such as ten or twenty). The more cycles you run, the more cumbersome profilers for both architectures can become, and might not even be able to display the needed results.
+
+%---------------------------------
+\subsection{Nvidia/CUDA}
+%---------------------------------
+
+We recommend you use \texttt{nsys} (CLI tool) for profiling and \texttt{nsys-ui} (GUI tool) to look at the results but you can use the deprecated nvprof and nvvp tools if you experience issues with \texttt{nsys}. There are two main types of profiling when it comes to CUDA, the timeline profile and the performance counters profile.
+
+\texttt{nsys-ui} supports kernel renaming and can be toggled from the GUI: Tools/Options.../Report Behavior/Rename CUDA Kernels by NVTX.
+
+To use \texttt{nsys} make sure the executable is in your path. If it is not, you can add it by doing \texttt{module load nsight-systems/<some version of nsight-systems>}. An example on how to launch your simulation with \texttt{nsys} is shown below.
+
+\begin{verbatim}
+lrun -n 1 \texttt{nsys} profile --output=profile.%q{OMPI_COMM_WORLD_RANK} \
+    my_executable my_input_file --caliper nvtx
+\end{verbatim}
+
+To visualize the output, launch \texttt{nsys-ui}, click on File in the top left corner, and open up the output file generated from the sample launch command above.
+
+%---------------------------------
+\subsection{AMD/HIP}
+%---------------------------------
+
+For El Capitan you can use \texttt{rocprof}. Like \texttt{nsys}, \texttt{rocprof} can generate timeline profiles and performance counter profiles.
+
+\texttt{rocprof} supports kernel renaming for timeline profiles with \texttt{ROCP\_RENAME\_KERNEL=1}---either export it or prepend it to your profiling command line.
+
+To use \texttt{rocprof} make sure the executable is in your path. If it is not, you can add it by doing \texttt{module load rocm/<version of rocm used with your code>}. An example on how to launch your simulation with \texttt{rocprof} is shown below.
+\begin{verbatim}
+ROCP_RENAME_KERNEL=1 flux run -n 1 rocprof --hip-trace --roctx-trace -o profile.csv \
+    my_executable my_input_file --caliper roctx
+\end{verbatim}
+
+Unlike \texttt{nsys} there is no vendor-provided time viewer so you must use either chrome://tracing in Google Chrome or Perfetto to visualize the output of rocprof. To launch Google Chrome from a terminal simply type \texttt{google-chrome}. Then, type chrome://tracing in the address bar, click on Load in the top left corner, and open up the file profile.json generated from the sample launch command above.
 
 \end{document}
