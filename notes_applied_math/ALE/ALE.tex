@@ -15,7 +15,8 @@
 %------------------------------------------------------------------------
 \section{Lagrangian governing equations}
 %------------------------------------------------------------------------
-We consider Lagrangian fluid particles, for which we define the position $\xvec^+=\xvec^+(t,\yvec)$, the density $\rho^+ = \rho^+(t,\yvec)$, the velocity $\uvec^+ = \uvec^+(t,\yvec)$, and the internal energy $e^+ = e^+(t,\yvec)$. The Eulerian counterparts for the density, velocity, and internal energy are, respectively, $\rho = \rho(t,\xvec)$, $\uvec = \uvec(t,\xvec)$, and $e = e(t,\xvec)$. Also consider the volume $\Omega_0$ as the set of all $\yvec$ vectors that make up the initial domain. The control volume $\Omega^+ = \Omega^+(t, \Omega_0)$ is then defined by
+We consider Lagrangian fluid particles, for which we define the position $\xvec^+=\xvec^+(t,\yvec)$, the density $\rho^+ = \rho^+(t,\yvec)$, the velocity $\uvec^+ = \uvec^+(t,\yvec)$, and the internal energy $e^+ = e^+(t,\yvec)$, where $
+\yvec$ is the location of each fluid particle at time zero. The Eulerian counterparts for the density, velocity, and internal energy are, respectively, $\rho = \rho(t,\xvec)$, $\uvec = \uvec(t,\xvec)$, and $e = e(t,\xvec)$. Also consider the volume $\Omega_0$ as the set of all $\yvec$ vectors that make up the initial domain. The control volume $\Omega^+ = \Omega^+(t, \Omega_0)$ is then defined by
 \begin{equation}
     \Omega^+ = \{ \xvec^+:\yvec \in \Omega_0 \}.
 \end{equation}
@@ -28,7 +29,7 @@ The governing equations for the Lagrangian fluid particles are derived in my flu
     \rho^+ \frac{\partial \uvec^+}{\partial t} &= \left ( \nabla \cdot \sigmavec \right )_{\xvec = \xvec^+}, \label{eq:lag_gov_evol_u} \\
     \rho^+ \frac{\partial e^+}{\partial t} &= \left ( \sigmavec : \nabla \uvec \right )_{\xvec = \xvec^+}. \label{eq:lag_gov_evol_e}
 \end{align}
-In the above, $\sigmavec = \sigmavec(t,\xvec)$ is the stress tensor, and $J^+ = J^+(t,\yvec)$ is the determinant of the Jacobian matrix $\Jvec^+ = \Jvec^+(t,\yvec)$, which is given by $\Jvec^+ =  \partial \xvec^+ / \partial \yvec$. 
+In the above, $\sigmavec = \sigmavec(t,\xvec)$ is the stress tensor, and $J^+ = J^+(t,\yvec)$ is the determinant of the Jacobian matrix $\Jvec^+ = \Jvec^+(t,\yvec)$, which itself is defined as $\Jvec^+ =  \partial \xvec^+ / \partial \yvec$. 
 
 A note on notation. The products that involve a tensor $\tauvec$ can be expressed in Einstein notation as
 \begin{equation}
@@ -48,12 +49,13 @@ where $\alpha$ is a scalar and $\fvec$ a vector. In these notes we'll mostly be 
 %---------------------------------------------------------------
 \section{Lagrangian finite elements}
 %---------------------------------------------------------------
-We introduce a Lagrangian basis function $\Phi_i^+ = \Phi_i^+(t,\yvec)$ and an Eulerian basis function $\Phi_i = \Phi_i(t,\xvec)$, such that they are related to each other as follows
+\label{sec:lag_fin_elem}
+We introduce a Lagrangian basis function $\Phi_i^+ = \Phi_i^+(t,\yvec)$ and an Eulerian basis function $\Phi_i = \Phi_i(t,\xvec)$. These are related to each other as any other Lagrangian-Eulerian pair, namely 
 \begin{equation}
     \label{eq:lag_fe_phi_correspondence}
     \Phi_i^+(t,\yvec) = \Phi_i(t,\xvec^+(t,\yvec)).
 \end{equation}
-In the above, $\xvec^+ = \xvec^+(t,\yvec)$ is the position of a Lagrangian fluid particle, whose velocity is $\uvec^+ = \uvec^+(t,\yvec)$. We now introduce the Lagrangian variable $f^+ = f^+(t,\yvec)$ and the Eulerian counterpart $f = f(t,\xvec)$ such that they satisfy
+We now introduce the Lagrangian variable $f^+ = f^+(t,\yvec)$ and the Eulerian counterpart $f = f(t,\xvec)$, and they also satisfy
 \begin{equation}
     \label{eq:lag_fe_u_correspondence}
     f^+(t,\yvec) = f(t,\xvec^+(t,\yvec)).
@@ -68,7 +70,7 @@ where $F_i = F_i(t)$. Plugging in $\xvec^+$ for $\xvec$ in the above, and using 
     \label{eq:fe_lag_expansion_lag}
     f^+ = \sum_i^n F_i \Phi_i^+.
 \end{equation}
-We note that both the Lagrangian and Eulerian variables share the same FE coefficients $F_i$. 
+Thus, both the Lagrangian and Eulerian variables share the same finite-element coefficients $F_i$. 
 
 As shown in my fluid mechanics notes, we also have
 \begin{equation}
@@ -84,7 +86,7 @@ Thus, $F_i$ in \cref{eq:fe_lag_expansion_lag} accounts for the time dependence o
 %------------------------------------------------------------------------
 \section{Finite element expansion}
 %------------------------------------------------------------------------
-We introduce the coefficients $\hat{\xvec}_i = \hat{\xvec}_i(t)$, $\hat{\uvec}_i = \hat{\uvec}_i(t)$ and $\hat{e}_i = \hat{e}_i(t)$, as well as the Lagrangian basis functions $\phi^+_i = \phi^+_i(\yvec) \in L^2$, and $w^+_i = w^+_i(\yvec) \in H^1$. We note that $\hat{\xvec}_i$ and $\hat{\uvec}_i$ are each vectors, e.g., the components of $\hat{\uvec}_i$ are $\hat{u}_{i,\alpha} = \hat{u}_{i,\alpha}(t)$ for $\alpha = x,y,z$. We also note that $\phi^+_i$ and $w^+_i$ have Eulerian counterparts $\phi_i = \phi_i(t,\xvec)$ and $w_i = w_i(t,\xvec)$, respectively (see more details in section on finite elements in my notes for numerical methods). The coefficients are used in the following expansions
+We introduce the coefficients $\hat{\xvec}_i = \hat{\xvec}_i(t)$, $\hat{\uvec}_i = \hat{\uvec}_i(t)$ and $\hat{e}_i = \hat{e}_i(t)$, as well as the Lagrangian basis functions $\phi^+_i = \phi^+_i(\yvec) \in L^2$, and $w^+_i = w^+_i(\yvec) \in H^1$. We note that $\hat{\xvec}_i$ and $\hat{\uvec}_i$ are each vectors, e.g., the components of $\hat{\uvec}_i$ are $\hat{u}_{i,\alpha} = \hat{u}_{i,\alpha}(t)$ for $\alpha = x,y,z$. We also note that $\phi^+_i$ and $w^+_i$ have Eulerian counterparts $\phi_i = \phi_i(t,\xvec)$ and $w_i = w_i(t,\xvec)$, respectively. The coefficients are used in the following expansions
 \begin{equation}
     \label{eq:fe_exp_x}
     \xvec^+ = \sum_j^{N_w} \hat{\xvec}_j w^+_j,
@@ -97,14 +99,17 @@ We introduce the coefficients $\hat{\xvec}_i = \hat{\xvec}_i(t)$, $\hat{\uvec}_i
     \label{eq:fe_exp_e}
     e^+ = \sum_j^{N_\phi} \hat{e}_j \phi^+_j.
 \end{equation}
-We note that the expansion coefficients are the same for the Lagrangian and Eulerian variables. For example, for the Eulerian velocity, we have
+We note that the expansion coefficients are the same for the Lagrangian and Eulerian variables, as shown in \cref{sec:lag_fin_elem}. For example, for the Eulerian velocity, we have
 \begin{equation}
     \uvec = \sum_j^{N_w} \hat{\uvec}_j w_j.
 \end{equation}
 
 %------------------------------------------------------------------------
-\section{Semi-discrete equations for $\xvec^+$ and $\Jvec^+$}
+\section{Semi-discrete Lagrangian governing equations}
 %------------------------------------------------------------------------
+%---------------------------------
+\subsection{Position and Jacobian}
+%---------------------------------
 Plugging in \cref{eq:fe_exp_x,eq:fe_exp_u} in \cref{eq:lag_gov_evol_x} gives
 \begin{equation}
     \sum_{j}^{N_w} \frac{d \hat{\xvec}_j}{dt} w^+_j = \sum_{j}^{N_w} \hat{\uvec}_j w^+_j.
@@ -122,15 +127,15 @@ To obtain $\Jvec^+$ we plug in \cref{eq:fe_exp_x} into its definition, that is
 \begin{equation}
     \Jvec^+ = \frac{\partial}{\partial \yvec} \sum_j^{N_w} \hat{\xvec}_j w^+_j = \sum_j^{N_w} \hat{\xvec}_j \nabla_{\yvec} w^+_j.
 \end{equation}
-Note that for any function $\xvec^+$,whether it be an exact analytical expression or a finite-element expansion as given by \cref{eq:fe_exp_x}, the determinant of the Jacobian will satisfy
+Note that for any function $\xvec^+$, whether it be an exact analytical expression or a finite-element expansion as given by \cref{eq:fe_exp_x}, one can derive the following equation for the determinant of the Jacobian 
 \begin{equation}
     \frac{\partial J^+}{\partial t} = J^+ \left ( \frac{\partial u_k}{\partial x_k} \right )_{\xvec = \xvec^+},
 \end{equation}
-where $\uvec$ is the Eulerian counterpart to $\uvec^+$, which is given by \cref{eq:lag_gov_evol_x}.
+In the above $\uvec$ is the Eulerian counterpart to $\uvec^+$, which is given by \cref{eq:lag_gov_evol_x}.
 
-%------------------------------------------------------------------------
-\section{Semi-discrete equation for $\rho^+$}
-%------------------------------------------------------------------------
+%---------------------------------
+\subsection{Density}
+%---------------------------------
 \Cref{eq:lag_gov_evol_rho} allows us to write
 \begin{equation}
     \label{eq:evol_rho_semi_discrete}
@@ -138,9 +143,9 @@ where $\uvec$ is the Eulerian counterpart to $\uvec^+$, which is given by \cref{
 \end{equation}
 where $\rho^+_0 = \rho^+(0,\yvec)$.
 
-%------------------------------------------------------------------------
-\section{Semi-discrete equation for $\uvec^+$}
-%------------------------------------------------------------------------
+%---------------------------------
+\section{Velocity}
+%---------------------------------
 Plugging in \cref{eq:evol_rho_semi_discrete} in \cref{eq:lag_gov_evol_u} we get
 \begin{equation}
     \rho^+_0 \frac{\partial \uvec^+}{\partial t} = \left ( \nabla \cdot \sigmavec \right )_{\xvec = \xvec^+} J^+.
@@ -193,9 +198,9 @@ The above is the negative of the right-hand side of \cref{eq:evol_u_semi_discret
 \end{equation}
 We note that since both the Lagrangian and Eulerian velocities share the same coefficients $\Uvec$, we now have a solution for both.
 
-%------------------------------------------------------------------------
-\section{Semi-discrete equation for $e^+$}
-%------------------------------------------------------------------------
+%---------------------------------
+\section{Energy}
+%---------------------------------
 Plugging in \cref{eq:evol_rho_semi_discrete} in \cref{eq:lag_gov_evol_e} we get
 \begin{equation}
     \rho^+_0 \frac{\partial e^+}{\partial t} = \left ( \sigmavec : \nabla \uvec \right )_{\xvec = \xvec^+} J^+.
@@ -281,6 +286,21 @@ We'll now define the internal energy $IE=IE(t)$, the kinetic energy $KE=KE(t)$, 
     &= \sum_i^{N_w} \sum_j^{N_w} \hat{\nvec}_i \cdot m_{ij}^{(w)} \hat{\uvec}_j \nonumber \\
     &= \Nvec \cdot \Mvec^{(w)} \Uvec.
 \end{align}
-Each of these quantities is conserved, as shown below.
+
+The total energy is conserved, as shown below
+\begin{align}
+    \frac{d}{dt} (IE + KE) &= \Cvec \Mvec^{(\phi)} \frac{d\Evec}{dt} + \Uvec \cdot \Mvec^{(w)} \frac{d\Uvec}{dt} \nonumber \\
+    &= \Cvec \Fvec^T \cdot \Uvec - \Uvec \cdot \Fvec \Cvec \nonumber \\
+    &= 0.
+\end{align}
+The momentum along a constant direction is conserved, as shown below
+\begin{align}
+    \frac{d P_\nvec}{dt} &= \Nvec \cdot \Mvec^{(w)} \frac{d \Uvec}{dt} \nonumber \\
+    &= -\Nvec \cdot \Fvec \Cvec \nonumber \\
+    &= -\sum_i^{N_w} \sum_j^{N_\phi} \hat{\nvec}_i \cdot \fvec_{ij} \hat{c}_j \nonumber \\
+    &= -\sum_i^{N_w} \sum_j^{N_\phi} \hat{\nvec}_i \cdot \int_{\Omega^+} \sigmavec \cdot \nabla w_i \phi_j \, dV_x \hat{c}_j \nonumber \\
+    &= -\int_{\Omega^+} \sigmavec : \nabla \nvec \, dV_x \nonumber \\
+    &= 0.
+\end{align}
 
 \end{document}

@@ -45,6 +45,31 @@ Note: the adiv energy unit is called the Jerk, whereas in cgs units it is called
     \end{tabular}
 \end{center}
 
+The Stefan-Boltzman law is
+\begin{equation}
+    I = \frac{1}{\pi} \sigma T^4,
+\end{equation} 
+where 
+\begin{equation}
+    \sigma = \frac{2 \pi^5 k_B^4 }{15 c^2 h^3}.
+\end{equation}
+If we introduce 
+\begin{equation}
+    \eta = \frac{2 \pi^5 }{15 c^2 h^3},
+\end{equation}
+then we can re-write the Stefan-Boltzman law as
+\begin{equation}
+    I = \frac{1}{\pi} \eta (k_B T)^4.
+\end{equation}
+The value of $\eta$ in adive units can be be derived as follows
+\begin{align}
+    \eta &= 1.5605532983363822 \times 10^{84} \frac{1}{\text{s} \cdot \text{m}^2 \cdot \text{J}^3} \nonumber \\
+    &= 1.5605532983363822 \times 10^{84} \frac{\text{J}}{\text{s} \cdot \text{m}^2 \cdot \text{J}^4} \left | \frac{1.602176634 \times 10^{-16} \text{J}}{1\text{keV}} \right |^4 \left | \frac{1\text{m}}{10^2 \text{cm}} \right |^2 \nonumber \\
+    &= 1.028300817017691 \times 10^{17} \frac{\text{J}}{\text{s} \cdot \text{cm}^2 \cdot \text{keV}^4} \nonumber \\
+    &= 1.028300817017691 \times 10^{17} \frac{\text{W}}{\text{cm}^2 \cdot \text{keV}^4} \nonumber \\
+    &= 1.028300817017691 \frac{\text{g}}{\text{sh}^3 \cdot \text{keV}^4}.
+\end{align}
+
 \section{bdiv}
 
 \begin{center}
