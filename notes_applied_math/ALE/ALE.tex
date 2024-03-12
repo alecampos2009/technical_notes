@@ -306,34 +306,46 @@ The momentum along a constant direction is conserved, as shown below
 %------------------------------------------------------------------------
 \section{The reference element}
 %------------------------------------------------------------------------
-\begin{table}
-    \centering
-    \begin{tabular}{c|c}
-          full domain & element's domain \\
-          \hhline{=|=}
-          $\Omega_0$ & $\Omega_{0,e}$ \\
-          $\Omega^+$ & $\Omega^+_e$ \\
-          $\xvec^+$ & $\xvec^+_e$ \\
-          $J^+$ & $J^+_e$
-    \end{tabular}
-    \caption{Mapping within an element}
-    \label{tab:map_element}
-\end{table}
-We consider a subset of $\Omega_0$, namely $\Omega_{0,e}$, which consists of a single element in the mesh at time zero. At some later time, the domain of this single element could have changed, and it is then given by $\Omega^+_e = \Omega^+_e(t,\Omega_{0,e})$. Whereas $\xvec^+$ maps from $\Omega_0$ to $\Omega^+$, the variable $\xvec^+_e$ maps from $\Omega_{0,e}$ to $\Omega^+_e$. The corresponding determinant of the Jacobian is $J^+_e$. A summary of these new variables is given in \cref{tab:map_element}.
-
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.7\textwidth]{../../images/three_spaces.pdf}
-    \caption{Schematic of the three domains $\Omega_{0,e}$, $\Omega^+_e$, $\Omega_z$.}
+    \caption{Schematic of the three domains $\Omega_z$, $\Omega^e$, $\Omega^e_0$.}
     \label{fig:three_spaces}
  \end{figure}
-We also introduce the reference element as the unit square in 2D or the unit sphere in 3D. This element is labelled as $\Omega_z$ and it doesn't change with time. We introduce the mapping function $\Phivec_e = \Phivec_e(t,\zvec)$, which maps from points $\zvec$ in $\Omega_z$ to points in $\Omega^+_e$. A depiction of these domains and their mappings is shown in \cref{fig:three_spaces}. A condition satisfied by $\Phivec_e$ is
+We introduce the reference element as the unit square in 2D or the unit cube in 3D. The domain of this reference element is labelled as $\Omega_z$ and it doesn't change with time. We introduce the function $\xvec^e = \xvec^e(t,\zvec)$, which maps from points $\zvec$ in $\Omega_z$ to points in the finite element $e$ of the mesh. The domain of the finite element $e$ is labelled as $\Omega^e = \Omega^e(t,\Omega_z)$. We also introduce $\Omega^e_0$ as the initial domain of the finite element $e$, that is, $\Omega^e_0 = \Omega^e(0,\Omega_z)$. A depiction of these domains and their mappings is shown in \cref{fig:three_spaces}. $\xvec^e$ is related to $\xvec^+$ as follows
 \begin{equation}
-    \Phivec_e(t,\zvec) = \xvec^+_e(t, \Phivec_e(0,\zvec)).
+    \label{eq:ref_elem_z_map}
+    \xvec^e(t,\zvec) = \xvec^+(t, \xvec^e(0,\zvec)).
 \end{equation}
-We can also define the Jacobian $\Jvec_z = \Jvec_z(t,\zvec)$ as $\Jvec_z = \partial \Phivec_e / \partial \zvec$, and label its determinant as $J_z = J_z(t,\zvec)$. Thus, the volume of a single element can now be computed using either of the three integrals below
+We now introduce reference-element functions for density $\rho^e = \rho^e(t,\zvec)$, velocity $\uvec^e(t,\zvec)$, and internal energy $e^e(t,\zvec)$. These satisfy the following expressions
+\begin{align}
+    \rho^e(t,\zvec) &= \rho^+(t,\xvec^e(0,\zvec)), \nonumber \\
+    \uvec^e(t,\zvec) &= \uvec^+(t,\xvec^e(0,\zvec)), \nonumber \\
+    e^e(t,\zvec) &= e^+(t,\xvec^e(0,\zvec)).
+\end{align}
+We finally define the Jacobian $\Jvec^e = \Jvec^e(t,\zvec)$ as $\Jvec^e = \partial \xvec^e / \partial \zvec$, and label its determinant as $J^e = J^e(t,\zvec)$. Using \cref{eq:ref_elem_z_map} in the definition of $\Jvec^e$ we get
+\begin{align}
+    \Jvec^e &= \left ( \frac{\partial \xvec^+}{\partial \yvec} \right )_{\yvec = \xvec^e(0,\zvec)} \frac{\partial \xvec^e(0,\zvec)}{\partial \zvec} \nonumber \\
+    &= \left ( \Jvec^+ \right )_{\yvec = \xvec^e(0,\zvec)} \Jvec^e_0,
+\end{align}
+where $\Jvec^e_0 = \Jvec^e(0,\zvec)$.
+Taking the determinant of the above gives
 \begin{equation}
-    \text{vol}_e = \int_{\Omega^+_e} dV_x = \int_{\Omega_{0,e}} J^+_e \, dV_y = \int_{\Omega_z} J_z \, dV_z.
+    \label{eq:ref_elem_det_J}
+    J^e = \left ( J^+ \right )_{\yvec = \xvec^e(0,\zvec)} J^e_0,
+\end{equation}
+where $J^e_0 = J^e(0,\zvec)$.
+
+We now show the following
+\begin{align}
+    \int_{\Omega_z} \rho^e J^e \, dV_z &= \int_{\Omega_z}  \rho^+(t,\xvec^e(0,\zvec)) J^e \, dV_z \nonumber \\
+    &= \int_{\Omega_z} \rho(t, \xvec^+(t,\xvec^e(0,\zvec))) J^e \, dV_z \nonumber \\
+    &= \int_{\Omega_z} \rho(t, \xvec^e(t,\zvec)) J^e \, dV_z \nonumber \\
+    &= \int_{\Omega^e} \rho dV_x.
+\end{align}
+Additionally, we can evaluate \cref{eq:evol_rho_semi_discrete} at $\yvec = \xvec^e(0,\zvec)$ to obtain
+\begin{equation}
+    \rho^e = \frac{\rho^e_0 J^e_0}{J^e}.
 \end{equation}
 
 \end{document}
