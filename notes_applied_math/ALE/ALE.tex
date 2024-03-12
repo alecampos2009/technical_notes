@@ -144,7 +144,7 @@ In the above $\uvec$ is the Eulerian counterpart to $\uvec^+$, which is given by
 where $\rho^+_0 = \rho^+(0,\yvec)$.
 
 %---------------------------------
-\section{Velocity}
+\subsection{Velocity}
 %---------------------------------
 Plugging in \cref{eq:evol_rho_semi_discrete} in \cref{eq:lag_gov_evol_u} we get
 \begin{equation}
@@ -199,7 +199,7 @@ The above is the negative of the right-hand side of \cref{eq:evol_u_semi_discret
 We note that since both the Lagrangian and Eulerian velocities share the same coefficients $\Uvec$, we now have a solution for both.
 
 %---------------------------------
-\section{Energy}
+\subsection{Energy}
 %---------------------------------
 Plugging in \cref{eq:evol_rho_semi_discrete} in \cref{eq:lag_gov_evol_e} we get
 \begin{equation}
@@ -302,5 +302,38 @@ The momentum along a constant direction is conserved, as shown below
     &= -\int_{\Omega^+} \sigmavec : \nabla \nvec \, dV_x \nonumber \\
     &= 0.
 \end{align}
+
+%------------------------------------------------------------------------
+\section{The reference element}
+%------------------------------------------------------------------------
+\begin{table}
+    \centering
+    \begin{tabular}{c|c}
+          full domain & element's domain \\
+          \hhline{=|=}
+          $\Omega_0$ & $\Omega_{0,e}$ \\
+          $\Omega^+$ & $\Omega^+_e$ \\
+          $\xvec^+$ & $\xvec^+_e$ \\
+          $J^+$ & $J^+_e$
+    \end{tabular}
+    \caption{Mapping within an element}
+    \label{tab:map_element}
+\end{table}
+We consider a subset of $\Omega_0$, namely $\Omega_{0,e}$, which consists of a single element in the mesh at time zero. At some later time, the domain of this single element could have changed, and it is then given by $\Omega^+_e = \Omega^+_e(t,\Omega_{0,e})$. Whereas $\xvec^+$ maps from $\Omega_0$ to $\Omega^+$, the variable $\xvec^+_e$ maps from $\Omega_{0,e}$ to $\Omega^+_e$. The corresponding determinant of the Jacobian is $J^+_e$. A summary of these new variables is given in \cref{tab:map_element}.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.7\textwidth]{../../images/three_spaces.pdf}
+    \caption{Schematic of the three domains $\Omega_{0,e}$, $\Omega^+_e$, $\Omega_z$.}
+    \label{fig:three_spaces}
+ \end{figure}
+We also introduce the reference element as the unit square in 2D or the unit sphere in 3D. This element is labelled as $\Omega_z$ and it doesn't change with time. We introduce the mapping function $\Phivec_e = \Phivec_e(t,\zvec)$, which maps from points $\zvec$ in $\Omega_z$ to points in $\Omega^+_e$. A depiction of these domains and their mappings is shown in \cref{fig:three_spaces}. A condition satisfied by $\Phivec_e$ is
+\begin{equation}
+    \Phivec_e(t,\zvec) = \xvec^+_e(t, \Phivec_e(0,\zvec)).
+\end{equation}
+We can also define the Jacobian $\Jvec_z = \Jvec_z(t,\zvec)$ as $\Jvec_z = \partial \Phivec_e / \partial \zvec$, and label its determinant as $J_z = J_z(t,\zvec)$. Thus, the volume of a single element can now be computed using either of the three integrals below
+\begin{equation}
+    \text{vol}_e = \int_{\Omega^+_e} dV_x = \int_{\Omega_{0,e}} J^+_e \, dV_y = \int_{\Omega_z} J_z \, dV_z.
+\end{equation}
 
 \end{document}
