@@ -36,15 +36,15 @@ A note on notation. The products that involve a tensor $\tauvec$ can be expresse
     \nabla \cdot \tauvec = \frac{\partial \tau_{ij}}{\partial x_j},
 \end{equation}
 \begin{equation}
-    \tauvec \cdot \nabla \alpha = \tau_{ij} \frac{\partial \alpha}{\partial x_j},
+    \tauvec \cdot \nabla f = \tau_{ij} \frac{\partial f}{\partial x_j},
 \end{equation}
 \begin{equation}
-    \fvec \cdot \tauvec \cdot \nabla \alpha = f_i \tau_{ij} \frac{\partial \alpha}{\partial x_j},
+    \gvec \cdot \tauvec \cdot \nabla f = g_i \tau_{ij} \frac{\partial f}{\partial x_j},
 \end{equation}
 \begin{equation}
-    \tauvec : \nabla \fvec = \tau_{ij} \frac{\partial f_i}{\partial x_j}.
+    \tauvec : \nabla \gvec = \tau_{ij} \frac{\partial g_i}{\partial x_j}.
 \end{equation}
-where $\alpha$ is a scalar and $\fvec$ a vector. In these notes we'll mostly be using indices $i$ and $j$ for FE expansions, rather than for Einstein notation.
+where $f$ is a scalar and $\gvec$ a vector. In these notes we'll mostly be using indices $i$ and $j$ for FE expansions, rather than for Einstein notation.
 
 %---------------------------------------------------------------
 \section{Lagrangian finite elements}
@@ -181,7 +181,7 @@ We also introduce the vector bilinear form
 \begin{equation}
     \fvec_{ij} = \int_{\Omega^+} \sigmavec \cdot \nabla w_i \phi_j \, dV_x.
 \end{equation}
-This is a \textit{vector} bilinear form since $\fvec_{ij}$ has components $f_{ij,\alpha} = f_{ij,\alpha}(t)$, for $\alpha = x,y,z$, where $\alpha$ denotes the first index of $\sigmavec$. We introduce the matrix $\Fvec$, whose components are $\fvec_{ij}$. We also expand the field with constant value of one as follows
+This is a \textit{vector} bilinear form since $\fvec_{ij}$ has components $f_{ij,\alpha} = f_{ij,\alpha}(t)$, for $\alpha = x,y,z$, where $\alpha$ denotes the first index of $\sigmavec$. We introduce the force matrix $\Fvec$, whose components are $\fvec_{ij}$. We also expand the field with constant value of one as follows
 \begin{equation}
     1 = \sum_i^{N_\phi} \hat{c}_i \phi_i.
 \end{equation}
@@ -320,13 +320,7 @@ The mapping functions $\xvec^{(e)}$ and $\xvec^+$ are related to each other as f
     \label{eq:ref_elem_z_map}
     \xvec^{(e)}(t,\zvec) = \xvec^+(t, \xvec^{(e)}(0,\zvec)).
 \end{equation}
-We now introduce reference-element functions for density $\rho^{(e)} = \rho^{(e)}(t,\zvec)$, velocity $\uvec^{(e)}(t,\zvec)$, and internal energy $e^{(e)}(t,\zvec)$. These satisfy the following expressions
-\begin{align}
-    \rho^{(e)}(t,\zvec) &= \rho^+(t,\xvec^{(e)}(0,\zvec)), \nonumber \\
-    \uvec^{(e)}(t,\zvec) &= \uvec^+(t,\xvec^{(e)}(0,\zvec)), \nonumber \\
-    e^{(e)}(t,\zvec) &= e^+(t,\xvec^{(e)}(0,\zvec)).
-\end{align}
-We finally define the Jacobian $\Jvec^{(e)} = \Jvec^{(e)}(t,\zvec)$ as $\Jvec^{(e)} = \partial \xvec^{(e)} / \partial \zvec$, and label its determinant as $J^{(e)} = J^{(e)}(t,\zvec)$. Using \cref{eq:ref_elem_z_map} in the definition of $\Jvec^{(e)}$ we get
+The Jacobian $\Jvec^{(e)} = \Jvec^{(e)}(t,\zvec)$ is defined as $\Jvec^{(e)} = \partial \xvec^{(e)} / \partial \zvec$, and label its determinant as $J^{(e)} = J^{(e)}(t,\zvec)$. Using \cref{eq:ref_elem_z_map} in the definition of $\Jvec^{(e)}$ we get
 \begin{align}
     \Jvec^{(e)} &= \left ( \frac{\partial \xvec^+}{\partial \yvec} \right )_{\yvec = \xvec^{(e)}(0,\zvec)} \frac{\partial \xvec^{(e)}(0,\zvec)}{\partial \zvec} \nonumber \\
     &= \left ( \Jvec^+ \right )_{\yvec = \xvec^{(e)}(0,\zvec)} \Jvec^{(e)}_0,
@@ -339,14 +333,50 @@ Taking the determinant of the above gives
 \end{equation}
 where $J^{(e)}_0 = J^{(e)}(0,\zvec)$.
 
-We now show the following
+A Lagrangian variable $f^+=f^+(t,\yvec)$ has a corresponding reference-element function $f^{(e)} = f^{(e)}(t,\zvec)$, which satisfies
+\begin{equation}
+    \label{eq:ref_elem_to_lag}
+    f^{(e)}(t,\zvec) = f^+(t,\xvec^{(e)}(0,\zvec)).
+\end{equation}
+Now, $f^+(t,\xvec^{(e)}(0,\zvec)) = f(t,\xvec^+(t,\xvec^{(e)}(0,\zvec)))$. Using \cref{eq:ref_elem_z_map}, we also get
+\begin{equation}
+    \label{eq:ref_elem_to_eul}
+    f^{(e)}(t,\zvec) = f(t,\xvec^{(e)}(t,\zvec))
+\end{equation}
+Examples of these reference-element functions include those for density $\rho^{(e)} = \rho^{(e)}(t,\zvec)$, velocity $\uvec^{(e)} = \uvec^{(e)}(t,\zvec)$, and internal energy $e^{(e)} = e^{(e)}(t,\zvec)$. Using integration by substitution and then \cref{eq:ref_elem_to_eul} we show 
 \begin{align}
-    \int_{\Omega_z} \rho^{(e)} J^{(e)} \, dV_z &= \int_{\Omega_z}  \rho^+(t,\xvec^{(e)}(0,\zvec)) J^{(e)} \, dV_z \nonumber \\
-    &= \int_{\Omega_z} \rho(t, \xvec^+(t,\xvec^{(e)}(0,\zvec))) J^{(e)} \, dV_z \nonumber \\
-    &= \int_{\Omega_z} \rho(t, \xvec^{(e)}(t,\zvec)) J^{(e)} \, dV_z \nonumber \\
-    &= \int_{\Omega^{(e)}} \rho dV_x.
+    \int_{\Omega^{(e)}} f dV_x &= \int_{\Omega_z} f(t, \xvec^{(e)}(t,\zvec)) J^{(e)} \, dV_z \nonumber \\
+    &= \int_{\Omega_z} f^{(e)} J^{(e)} \, dV_z.
 \end{align}
-Additionally, we can evaluate \cref{eq:evol_rho_semi_discrete} at $\yvec = \xvec^{(e)}(0,\zvec)$ to obtain
+In other words, integrals over elements at any time can be computed as integrals over the reference space. 
+
+If the integrand contains a derivative, a bit of extra care is required. To show this, we'll use index notation for the sake of clarity. Consider as an example a term of the form
+\begin{equation}
+    \left ( \sigmavec \cdot \nabla f \right )_{\xvec=\xvec^{(e)}}= \left ( \sigma_{ij} \frac{\partial f}{\partial x_j} \right )_{\xvec = \xvec^{(e)}}= \sigma_{ij}^{(e)} \left ( \frac{\partial f}{\partial x_j} \right )_{\xvec = \xvec^{(e)}}.
+\end{equation}
+We first note that
+\begin{equation}
+    \frac{\partial f^{(e)}}{\partial z_k} = \left ( \frac{\partial f}{\partial x_i} \right )_{\xvec = \xvec^{(e)}} \frac{\partial x^{(e)}_i}{\partial z_k} = \left ( \frac{\partial f}{\partial x_i} \right )_{\xvec = \xvec^{(e)}} J^{(e)}_{ik}.
+\end{equation}
+Upon multiplying both sides by the inverse of $\Jvec^{(e)}$, we get
+\begin{equation}
+    \left ( \frac{\partial f}{\partial x_j} \right )_{\xvec = \xvec^{(e)}} = \frac{\partial f^{(e)}}{\partial z_k} \left( J^{(e)} \right)^{-1}_{kj}.
+\end{equation}
+Thus, we now have
+\begin{equation}
+    \left ( \sigmavec \cdot \nabla f \right )_{\xvec=\xvec^{(e)}} = \sigma^{(e)}_{ij}\frac{\partial f^{(e)}}{\partial z_k} \left( J^{(e)} \right)^{-1}_{kj} = \sigma^{(e)}_{ij} \left[ \left( J^{(e)} \right)^{-1} \right]^T_{jk} \frac{\partial f^{(e)}}{\partial z_k}.
+\end{equation}
+In tensor notation, the above is written as
+\begin{equation}
+    \left ( \sigmavec \cdot \nabla f \right )_{\xvec=\xvec^{(e)}} = \sigmavec^{(e)} \cdot \left[ \left( \Jvec^{(e)} \right)^{-1} \right]^T \cdot \nabla_\zvec f^{(e)}.
+\end{equation}
+Thus, for the force matrix $\fvec_{ij}$ we can now write
+\begin{align}
+    \int_{\Omega^{(e)}} \sigmavec \cdot \nabla w_i \phi_j \, dV_x &= \int_{\Omega_\zvec} \left ( \sigmavec \cdot \nabla w_i \phi_j \right )_{\xvec=\xvec^{(e)}} J^{(e)} \, dV_z \nonumber \\
+    &= \int_{\Omega_\zvec} \sigmavec^{(e)} \cdot \left[ \left( \Jvec^{(e)} \right)^{-1} \right]^T  \cdot \nabla_\zvec w^{(e)}_i \phi^{(e)}_j J^{(e)} \, dV_z.
+\end{align}
+
+Finally, we note that we can evaluate \cref{eq:evol_rho_semi_discrete} at $\yvec = \xvec^{(e)}(0,\zvec)$ to obtain
 \begin{equation}
     \rho^{(e)} = \frac{\rho^{(e)}_0 J^{(e)}_0}{J^{(e)}}.
 \end{equation}
