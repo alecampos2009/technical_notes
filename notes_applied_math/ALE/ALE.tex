@@ -1,4 +1,4 @@
-\documentclass[11pt]{article}
+\documentclass[11pt]{report}
 
 \usepackage{"../../info/packages"}
 \usepackage{"../../info/nomenclature"}
@@ -12,11 +12,13 @@
 
 \maketitle
 
+%########################################################################
+\chapter{The Lagrangian Step}
+%########################################################################
 %------------------------------------------------------------------------
 \section{Lagrangian governing equations}
 %------------------------------------------------------------------------
-We consider Lagrangian fluid particles, for which we define the position $\xvec^+=\xvec^+(t,\yvec)$, the density $\rho^+ = \rho^+(t,\yvec)$, the velocity $\uvec^+ = \uvec^+(t,\yvec)$, and the internal energy $e^+ = e^+(t,\yvec)$, where $
-\yvec$ is the location of each fluid particle at time zero. The Eulerian counterparts for the density, velocity, and internal energy are, respectively, $\rho = \rho(t,\xvec)$, $\uvec = \uvec(t,\xvec)$, and $e = e(t,\xvec)$. Also consider the volume $\Omega_0$ as the set of all $\yvec$ vectors that make up the initial domain. The control volume $\Omega^+ = \Omega^+(t, \Omega_0)$ is then defined by
+We consider Lagrangian fluid particles, for which we define their position $\xvec^+=\xvec^+(t,\yvec)$, density $\rho^+ = \rho^+(t,\yvec)$, velocity $\uvec^+ = \uvec^+(t,\yvec)$, and internal energy $e^+ = e^+(t,\yvec)$. The vector $\yvec$ is the location of each fluid particle at time zero and is used to differentiate between the different particles. The Eulerian counterparts for the density, velocity, and internal energy are, respectively, $\rho = \rho(t,\xvec)$, $\uvec = \uvec(t,\xvec)$, and $e = e(t,\xvec)$. The vector $\xvec$ is a location in Eulerian space. Also consider the volume $\Omega_0$ as the set of all $\yvec$ vectors that make up the initial domain. The control volume $\Omega^+ = \Omega^+(t, \Omega_0)$ is then defined by
 \begin{equation}
     \Omega^+ = \{ \xvec^+:\yvec \in \Omega_0 \}.
 \end{equation}
@@ -309,76 +311,152 @@ The momentum along a constant direction is conserved, as shown below
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.7\textwidth]{../../images/three_spaces.pdf}
-    \caption{Schematic of the three domains $\Omega_z$, $\Omega^{(e)}(t,\Omega_z)$, $\Omega^{(e)}(0,\Omega_z)$.}
+    \caption{Schematic of the three domains $\Omega_r$, $\Omega^{(e_p)}(t,\Omega_r)$, $\Omega^{(e_p)}(0,\Omega_r)$.}
     \label{fig:three_spaces}
  \end{figure}
-We introduce the reference element as the unit square in 2D or the unit cube in 3D. The domain of this reference element is labelled as $\Omega_z$ and it doesn't change with time. We introduce the function $\xvec^{(e)} = \xvec^{(e)}(t,\zvec)$, which maps from points $\zvec$ in $\Omega_z$ to points in the finite element $e$ of the mesh. The evolving domain of the finite element $e$ is giving  by the function $\Omega^{(e)} = \Omega^{(e)}(t,\Omega_z)$. A depiction of these domains and their mappings is shown in \cref{fig:three_spaces}. Whereas for $\Omega^+$ we had $\Omega^+(0,\Omega_0)=\Omega_0$, for $\Omega^{(e)}$ the analogue does not hold, that is, $\Omega^{(e)}(0,\Omega_z) \ne \Omega_z$.
+We introduce the reference element as the unit square in 2D or the unit cube in 3D. The domain of this reference element is labelled as $\Omega_r$ and it doesn't change with time. We introduce the function $\xvec^{(e_p)} = \xvec^{(e_p)}(t,\rvec)$, which maps from points $\rvec$ in $\Omega_r$ to points in the finite element $e_p$ of the physical space. The evolving domain of the finite element $e_p$ is giving  by the function $\Omega^{(e_p)} = \Omega^{(e_p)}(t,\Omega_r)$. A depiction of these domains and their mappings is shown in \cref{fig:three_spaces}. Whereas for $\Omega^+$ we had $\Omega^+(0,\Omega_0)=\Omega_0$, for $\Omega^{(e_p)}$ the analogue does not hold, that is, $\Omega^{(e_p)}(0,\Omega_r) \ne \Omega_r$.
 
 
-The mapping functions $\xvec^{(e)}$ and $\xvec^+$ are related to each other as follows
+The mapping functions $\xvec^{(e_p)}$ and $\xvec^+$ are related to each other as follows
 \begin{equation}
-    \label{eq:ref_elem_z_map}
-    \xvec^{(e)}(t,\zvec) = \xvec^+(t, \xvec^{(e)}(0,\zvec)).
+    \label{eq:ref_elem_r_map}
+    \xvec^{(e_p)}(t,\rvec) = \xvec^+(t, \xvec^{(e_p)}(0,\rvec)).
 \end{equation}
-The Jacobian $\Jvec^{(e)} = \Jvec^{(e)}(t,\zvec)$ is defined as $\Jvec^{(e)} = \partial \xvec^{(e)} / \partial \zvec$, and label its determinant as $J^{(e)} = J^{(e)}(t,\zvec)$. Using \cref{eq:ref_elem_z_map} in the definition of $\Jvec^{(e)}$ we get
+The Jacobian $\Jvec^{(e_p)} = \Jvec^{(e_p)}(t,\rvec)$ is defined as 
+\begin{equation}
+    \Jvec^{(e_p)} = \frac{ \partial \xvec^{(e_p)} }{ \partial \rvec },
+\end{equation}
+with its determinant labeled as $J^{(e_p)} = J^{(e_p)}(t,\rvec)$. Using \cref{eq:ref_elem_r_map} in the definition of $\Jvec^{(e_p)}$ we get
 \begin{align}
-    \Jvec^{(e)} &= \left ( \frac{\partial \xvec^+}{\partial \yvec} \right )_{\yvec = \xvec^{(e)}(0,\zvec)} \frac{\partial \xvec^{(e)}(0,\zvec)}{\partial \zvec} \nonumber \\
-    &= \left ( \Jvec^+ \right )_{\yvec = \xvec^{(e)}(0,\zvec)} \Jvec^{(e)}_0,
+    \Jvec^{(e_p)} &= \left ( \frac{\partial \xvec^+}{\partial \yvec} \right )_{\yvec = \xvec^{(e_p)}(0,\rvec)} \frac{\partial \xvec^{(e_p)}(0,\rvec)}{\partial \rvec} \nonumber \\
+    &= \left ( \Jvec^+ \right )_{\yvec = \xvec^{(e_p)}(0,\rvec)} \Jvec^{(e_p)}_0,
 \end{align}
-where $\Jvec^{(e)}_0 = \Jvec^{(e)}(0,\zvec)$.
+where $\Jvec^{(e_p)}_0 = \Jvec^{(e_p)}(0,\rvec)$.
 Taking the determinant of the above gives
 \begin{equation}
     \label{eq:ref_elem_det_J}
-    J^{(e)} = \left ( J^+ \right )_{\yvec = \xvec^{(e)}(0,\zvec)} J^{(e)}_0,
+    J^{(e_p)} = \left ( J^+ \right )_{\yvec = \xvec^{(e_p)}(0,\rvec)} J^{(e_p)}_0,
 \end{equation}
-where $J^{(e)}_0 = J^{(e)}(0,\zvec)$.
+where $J^{(e_p)}_0 = J^{(e_p)}(0,\rvec)$.
 
-A Lagrangian variable $f^+=f^+(t,\yvec)$ has a corresponding reference-element function $f^{(e)} = f^{(e)}(t,\zvec)$, which satisfies
+A Lagrangian variable $f^+=f^+(t,\yvec)$ is related to $f=f(t,\xvec)$ according to the following
 \begin{equation}
-    \label{eq:ref_elem_to_lag}
-    f^{(e)}(t,\zvec) = f^+(t,\xvec^{(e)}(0,\zvec)).
+    f^+(t,\yvec) = f(t,\xvec^+(t,\yvec)).
 \end{equation}
-Now, $f^+(t,\xvec^{(e)}(0,\zvec)) = f(t,\xvec^+(t,\xvec^{(e)}(0,\zvec)))$. Using \cref{eq:ref_elem_z_map}, we also get
+In an analogous manner, $f^{(e_p)}=f^{(e_p)}(t,\rvec)$ is related to $f=f(t,\xvec)$ according to
 \begin{equation}
     \label{eq:ref_elem_to_eul}
-    f^{(e)}(t,\zvec) = f(t,\xvec^{(e)}(t,\zvec))
+    f^{(e_p)}(t,\rvec) = f(t,\xvec^{(e_p)}(t,\rvec)).
 \end{equation}
-Examples of these reference-element functions include those for density $\rho^{(e)} = \rho^{(e)}(t,\zvec)$, velocity $\uvec^{(e)} = \uvec^{(e)}(t,\zvec)$, and internal energy $e^{(e)} = e^{(e)}(t,\zvec)$. Using integration by substitution and then \cref{eq:ref_elem_to_eul} we show 
+Examples of these reference-element functions include those for density $\rho^{(e_p)} = \rho^{(e_p)}(t,\rvec)$, velocity $\uvec^{(e_p)} = \uvec^{(e_p)}(t,\rvec)$, and internal energy $e^{(e_p)} = e^{(e_p)}(t,\rvec)$. Using integration by substitution and then \cref{eq:ref_elem_to_eul} we show 
 \begin{align}
-    \int_{\Omega^{(e)}} f dV_x &= \int_{\Omega_z} f(t, \xvec^{(e)}(t,\zvec)) J^{(e)} \, dV_z \nonumber \\
-    &= \int_{\Omega_z} f^{(e)} J^{(e)} \, dV_z.
+    \int_{\Omega^{(e_p)}} f dV_x &= \int_{\Omega_r} f(t, \xvec^{(e_p)}(t,\rvec)) J^{(e_p)} \, dV_r \nonumber \\
+    &= \int_{\Omega_r} f^{(e_p)} J^{(e_p)} \, dV_r.
 \end{align}
 In other words, integrals over elements at any time can be computed as integrals over the reference space. 
 
 If the integrand contains a derivative, a bit of extra care is required. To show this, we'll use index notation for the sake of clarity. Consider as an example a term of the form
 \begin{equation}
-    \left ( \sigmavec \cdot \nabla f \right )_{\xvec=\xvec^{(e)}}= \left ( \sigma_{ij} \frac{\partial f}{\partial x_j} \right )_{\xvec = \xvec^{(e)}}= \sigma_{ij}^{(e)} \left ( \frac{\partial f}{\partial x_j} \right )_{\xvec = \xvec^{(e)}}.
+    \left ( \sigmavec \cdot \nabla f \right )_{\xvec=\xvec^{(e_p)}}= \left ( \sigma_{ij} \frac{\partial f}{\partial x_j} \right )_{\xvec = \xvec^{(e_p)}}= \sigma_{ij}^{(e_p)} \left ( \frac{\partial f}{\partial x_j} \right )_{\xvec = \xvec^{(e_p)}}.
 \end{equation}
 We first note that
 \begin{equation}
-    \frac{\partial f^{(e)}}{\partial z_k} = \left ( \frac{\partial f}{\partial x_i} \right )_{\xvec = \xvec^{(e)}} \frac{\partial x^{(e)}_i}{\partial z_k} = \left ( \frac{\partial f}{\partial x_i} \right )_{\xvec = \xvec^{(e)}} J^{(e)}_{ik}.
+    \frac{\partial f^{(e_p)}}{\partial r_k} = \left ( \frac{\partial f}{\partial x_i} \right )_{\xvec = \xvec^{(e_p)}} \frac{\partial x^{(e_p)}_i}{\partial r_k} = \left ( \frac{\partial f}{\partial x_i} \right )_{\xvec = \xvec^{(e_p)}} J^{(e_p)}_{ik}.
 \end{equation}
-Upon multiplying both sides by the inverse of $\Jvec^{(e)}$, we get
+Upon multiplying both sides by the inverse of $\Jvec^{(e_p)}$, we get
 \begin{equation}
-    \left ( \frac{\partial f}{\partial x_j} \right )_{\xvec = \xvec^{(e)}} = \frac{\partial f^{(e)}}{\partial z_k} \left( J^{(e)} \right)^{-1}_{kj}.
+    \left ( \frac{\partial f}{\partial x_j} \right )_{\xvec = \xvec^{(e_p)}} = \frac{\partial f^{(e_p)}}{\partial r_k} \left( J^{(e_p)} \right)^{-1}_{kj}.
 \end{equation}
 Thus, we now have
 \begin{equation}
-    \left ( \sigmavec \cdot \nabla f \right )_{\xvec=\xvec^{(e)}} = \sigma^{(e)}_{ij}\frac{\partial f^{(e)}}{\partial z_k} \left( J^{(e)} \right)^{-1}_{kj} = \sigma^{(e)}_{ij} \left[ \left( J^{(e)} \right)^{-1} \right]^T_{jk} \frac{\partial f^{(e)}}{\partial z_k}.
+    \left ( \sigmavec \cdot \nabla f \right )_{\xvec=\xvec^{(e_p)}} = \sigma^{(e_p)}_{ij}\frac{\partial f^{(e_p)}}{\partial r_k} \left( J^{(e_p)} \right)^{-1}_{kj} = \sigma^{(e_p)}_{ij} \left[ \left( J^{(e_p)} \right)^{-1} \right]^T_{jk} \frac{\partial f^{(e_p)}}{\partial r_k}.
 \end{equation}
 In tensor notation, the above is written as
 \begin{equation}
-    \left ( \sigmavec \cdot \nabla f \right )_{\xvec=\xvec^{(e)}} = \sigmavec^{(e)} \cdot \left[ \left( \Jvec^{(e)} \right)^{-1} \right]^T \cdot \nabla_\zvec f^{(e)}.
+    \left ( \sigmavec \cdot \nabla f \right )_{\xvec=\xvec^{(e_p)}} = \sigmavec^{(e_p)} \cdot \left[ \left( \Jvec^{(e_p)} \right)^{-1} \right]^T \cdot \nabla_\rvec f^{(e_p)}.
 \end{equation}
 Thus, for the force matrix $\fvec_{ij}$ we can now write
 \begin{align}
-    \int_{\Omega^{(e)}} \sigmavec \cdot \nabla w_i \phi_j \, dV_x &= \int_{\Omega_\zvec} \left ( \sigmavec \cdot \nabla w_i \phi_j \right )_{\xvec=\xvec^{(e)}} J^{(e)} \, dV_z \nonumber \\
-    &= \int_{\Omega_\zvec} \sigmavec^{(e)} \cdot \left[ \left( \Jvec^{(e)} \right)^{-1} \right]^T  \cdot \nabla_\zvec w^{(e)}_i \phi^{(e)}_j J^{(e)} \, dV_z.
+    \int_{\Omega^{(e_p)}} \sigmavec \cdot \nabla w_i \phi_j \, dV_x &= \int_{\Omega_\rvec} \left ( \sigmavec \cdot \nabla w_i \phi_j \right )_{\xvec=\xvec^{(e_p)}} J^{(e_p)} \, dV_r \nonumber \\
+    &= \int_{\Omega_\rvec} \sigmavec^{(e_p)} \cdot \left[ \left( \Jvec^{(e_p)} \right)^{-1} \right]^T  \cdot \nabla_\rvec w^{(e_p)}_i \phi^{(e_p)}_j J^{(e_p)} \, dV_r.
 \end{align}
 
-Finally, we note that we can evaluate \cref{eq:evol_rho_semi_discrete} at $\yvec = \xvec^{(e)}(0,\zvec)$ to obtain
+We also note that we can evaluate \cref{eq:evol_rho_semi_discrete} at $\yvec = \xvec^{(e_p)}(0,\rvec)$ to obtain
 \begin{equation}
-    \rho^{(e)} = \frac{\rho^{(e)}_0 J^{(e)}_0}{J^{(e)}}.
+    \rho^{(e_p)} = \frac{\rho^{(e_p)}_0 J^{(e_p)}_0}{J^{(e_p)}}.
 \end{equation}
+
+As with the other variables, we can define a reference basis function $w^{(e_p)}$ so that it satisfies
+\begin{equation}
+    w_j^{(e_p)}(t,\rvec) = w_j^+(t,\xvec^{(e_p)}(0,\rvec)).
+\end{equation}
+Now, as mentioned earlier, the Lagrangian basis functions are independent of time, and as a result the reference basis functions are so as well. That is, $w^{(e_p)} = w^{(e_p)}(\rvec)$. Consider the expansion in \cref{eq:fe_exp_x}. Plugging in $\xvec^{(e_p)}(0,\rvec)$ for $\yvec$ gives
+\begin{equation}
+    \label{eq:re_exp_x}
+    \xvec^{(e_p)} = \sum_j^{N_w} \hat{\xvec}_j w^{(e_p)}_j.
+\end{equation}
+Thus, both the Lagrangian and reference variables share the same finite-element coefficients.
+
+%########################################################################
+\chapter{The Re-mesh Step}
+%########################################################################
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.7\textwidth]{../../images/four_spaces.pdf}
+    \caption{Schematic of the four domains $\Omega_r$, $\Omega^{(e_p)}(t,\Omega_r)$, $\Omega^{(e_p)}(0,\Omega_r)$, $\Omega^{(e_t)}(t,\Omega_r)$.}
+    \label{fig:four_spaces}
+ \end{figure}
+We introduce a new space, the target space, which is divided into target elements, where each corresponds to a physical element $e_p$. Consider a mapping $\xvec^{(e_t)}=\xvec^{(e_t)}(t,\rvec)$ from a point $\rvec$ in the reference element to a point in the target element. Also consider the mapping $\xvec^- = \xvec^-(t,\zvec)$ from a point $\zvec$ in the target space to a point in the physical space. Note that $\xvec^{(e_p)}$, $\xvec^{(e_t)}$, and $\xvec^-$ are related to each other according to
+\begin{equation}
+    \label{eq:ref_elem_z_map}
+    \xvec^{(e_p)}(t,\rvec) = \xvec^-(t,\xvec^{(e_t)}(t,\rvec)).
+\end{equation}
+
+We define the Jacobeans as follows
+\begin{equation}
+    \Jvec^{(e_t)} = \frac{\partial \xvec^{(e_t)}}{\partial \rvec},
+\end{equation}
+\begin{equation}
+    \Jvec^- = \frac{\partial \xvec^-}{\partial \zvec}.
+\end{equation}
+where $\Jvec^{(e_t)} = \Jvec^{(e_t)}(t,\rvec)$ and $\Jvec^-=\Jvec^-(t,\zvec)$. Taking the derivative of \cref{eq:ref_elem_z_map} we get
+\begin{equation}
+    \frac{\partial \xvec^{(e_p)}}{\partial \rvec} = \left( \frac{ \partial \xvec^-}{\partial \zvec} \right)_{\zvec=\xvec^{(e_t)}} \frac{ \partial \xvec^{(e_t)} }{ \partial \rvec},
+\end{equation}
+which we write as
+\begin{equation}
+    \Jvec^{(e_p)} = \left( \Jvec^- \right)_{\zvec=\xvec^{(e_t)}} \Jvec^{(e_t)}.
+\end{equation}
+Multiplying both sides by the inverse of $\Jvec^{(e_t)}$ we finally get
+\begin{equation}
+    \left( \Jvec^- \right)_{\zvec=\xvec^{(e_t)}} = \Jvec^{(e_p)} \left( \Jvec^{(e_t)} \right)^{-1}.
+\end{equation}
+
+Combining \cref{eq:ref_elem_r_map} and \cref{eq:ref_elem_z_map} we get
+\begin{equation}
+    \xvec^-(t,\xvec^{(e_t)}(t,\rvec)) = \xvec^+(t, \xvec^{(e_p)}(0,\rvec)).
+\end{equation}
+We also define a target basis function $w^{(e_t)} = w^{(e_t)}(t,\zvec)$ so that it satisfies
+\begin{equation}
+    w^-(t,\xvec^{(e_t)}(t,\rvec)) = w^+(t, \xvec^{(e_p)}(0,\rvec)).
+\end{equation}
+Consider the expansion in \cref{eq:fe_exp_x}. Plugging in $\xvec^{(e_p)}(0,\rvec)$ for $\yvec$ gives
+\begin{equation}
+    \xvec^-(t,\xvec^{(e_t)}(t,\rvec)) = \sum_j^{N_w} \hat{\xvec} w^-(t,\xvec^{(e_t)}(t,\rvec)).
+\end{equation}
+Assuming this holds for any $\xvec^{(e_t)}$ we get
+\begin{equation}
+    \xvec^- = \sum_j^{N_w} \hat{\xvec} w^-.
+\end{equation}
+Thus, both the Lagrangian and the target variables share the same finite-element coefficients.
+
+To obtain the relaxed mesh, one minimizes the following function
+\begin{equation}
+    F(\Xvec) = \sum_{e_t \in \mathcal{M}_t} \int_{\Omega^{(e_t)}} \mu( \Jvec^- ) \, dV_z
+\end{equation}
+
+%########################################################################
+\chapter{The Re-map Step}
+%########################################################################
 
 \end{document}
