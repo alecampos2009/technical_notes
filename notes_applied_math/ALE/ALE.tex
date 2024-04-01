@@ -5,12 +5,13 @@
 \usepackage{fullpage}
 
 
-\title{ALE finite-element hydrodynamics}
-
+\title{Arbitrary-Lagrangian-Eulerian Finite-Element Hydrodynamics}
+\author{Alejandro Campos}
 
 \begin{document}
 
 \maketitle
+\tableofcontents
 
 %########################################################################
 \chapter{The Lagrangian Step}
@@ -18,7 +19,7 @@
 %------------------------------------------------------------------------
 \section{Lagrangian governing equations}
 %------------------------------------------------------------------------
-We consider Lagrangian fluid particles, for which we define their position $\xvec^+=\xvec^+(t,\yvec)$, density $\rho^+ = \rho^+(t,\yvec)$, velocity $\uvec^+ = \uvec^+(t,\yvec)$, and internal energy $e^+ = e^+(t,\yvec)$. The vector $\yvec$ is the location of each fluid particle at time zero and is used to differentiate between the different particles. The Eulerian counterparts for the density, velocity, and internal energy are, respectively, $\rho = \rho(t,\xvec)$, $\uvec = \uvec(t,\xvec)$, and $e = e(t,\xvec)$. The vector $\xvec$ is a location in Eulerian space. Also consider the volume $\Omega_0$ as the set of all $\yvec$ vectors that make up the initial domain. The control volume $\Omega^+ = \Omega^+(t, \Omega_0)$ is then defined by
+We consider Lagrangian fluid particles, for which we define their position $\xvec^+=\xvec^+(t,\yvec)$, density $\rho^+ = \rho^+(t,\yvec)$, velocity $\uvec^+ = \uvec^+(t,\yvec)$, and internal energy $e^+ = e^+(t,\yvec)$. The vector $\yvec$ is the location of each fluid particle at time zero and thus serves to differentiate between the different particles. The Eulerian counterparts for the density, velocity, and internal energy are, respectively, $\rho = \rho(t,\xvec)$, $\uvec = \uvec(t,\xvec)$, and $e = e(t,\xvec)$. The vector $\xvec$ is a location in Eulerian space. Also consider the volume $\Omega_0$ as the set of all $\yvec$ vectors that make up the initial domain. The control volume $\Omega^+ = \Omega^+(t, \Omega_0)$ is then defined by
 \begin{equation}
     \Omega^+ = \{ \xvec^+:\yvec \in \Omega_0 \}.
 \end{equation}
@@ -122,6 +123,7 @@ To satisfy the equation above, we'll require
 \end{equation}
 We now introduce the vectors $\Xvec$ and $\Uvec$, whose components are $\hat{\xvec}_i$ and $\hat{\uvec}_i$, respectively. Thus, the above is written as
 \begin{equation}
+    \label{eq:evol_x_semi_discrete}
     \frac{d\Xvec}{dt} = \Uvec.
 \end{equation}
 
@@ -196,6 +198,7 @@ If we define the vector $\Cvec$ as that with components $\hat{c}_i$, we can show
 \end{align}
 The above is the negative of the right-hand side of \cref{eq:evol_u_semi_discrete}. Thus, combining all together we get
 \begin{equation}
+    \label{eq:evol_vel_semi_discrete}
     \Mvec^{(w)} \frac{d\Uvec}{dt} = -\Fvec \Cvec.
 \end{equation}
 We note that since both the Lagrangian and Eulerian velocities share the same coefficients $\Uvec$, we now have a solution for both.
@@ -250,6 +253,7 @@ Note that in the above there is a dot product in the right-hand side, that is, t
 
 We now introduce the vector $\Evec$ whose components are $\hat{e}_i$. We also introduce the matrix $\Mvec^{(\phi)}$ whose components are $m_{ij}^{(\phi)}$. Thus, \cref{eq:evol_e_semi_discrete} can be succinctly written as
 \begin{equation}
+    \label{eq:evol_energy_semi_discrete}
     \Mvec^{(\phi)} \frac{d\Evec}{dt} = \Fvec^T \cdot \Uvec.
 \end{equation}
 Note again that on the right-hand side above there is a matrix-vector product \textit{and} a dot product. We also note that since both the Lagrangian and Eulerian internal energies share the same coefficients $\Evec$, we now have a solution for both.
@@ -266,7 +270,7 @@ We'll now define the internal energy $IE=IE(t)$, the kinetic energy $KE=KE(t)$, 
     &= \int_{\Omega_0} \rho_0^+ \sum_{j}^{N_\phi} \hat{e}_j \phi_j^+ \left ( \sum_{i}^{N_\phi} \hat{c}_i \phi^+_i \right ) \, dV_y \nonumber \\
     &= \sum_i^{N_\phi} \sum_j^{N_\phi} \hat{c}_i \int_{\Omega_0} \rho_0^+ \phi_i^+ \phi_j^+ \, dV_y \hat{e}_j \nonumber \\
     &= \sum_i^{N_\phi} \sum_j^{N_\phi} \hat{c}_i m_{ij}^{(\phi)} \hat{e}_j \nonumber \\
-    &= \Cvec \Mvec^{(\phi)} \Evec 
+    &= \Cvec^T \Mvec^{(\phi)} \Evec 
 \end{align}
 
 \begin{align}
@@ -276,7 +280,7 @@ We'll now define the internal energy $IE=IE(t)$, the kinetic energy $KE=KE(t)$, 
     &= \int_{\Omega_0} \frac{1}{2} \rho_0^+ \left ( \sum_i^{N_w} \hat{\uvec}_i w_i^+ \right ) \cdot \left ( \sum_j^{N_w} \hat{\uvec}_j w_j^+ \right ) \, dV_y \nonumber \\
     &= \sum_i^{N_w} \sum_j^{N_w} \frac{1}{2} \hat{\uvec}_i \cdot \int_{\Omega_0}\rho_0^+ w_i^+ w_j^+ \, dV_y \hat{\uvec}_j \nonumber \\
     &= \sum_i^{N_w} \sum_j^{N_w} \frac{1}{2} \hat{\uvec}_i \cdot m_{ij}^{(w)} \hat{\uvec}_j \nonumber \\
-    &= \frac{1}{2} \Uvec \cdot \Mvec^{(w)} \Uvec.
+    &= \frac{1}{2} \Uvec^T \cdot \Mvec^{(w)} \Uvec.
 \end{align}
 
 \begin{align}
@@ -286,19 +290,19 @@ We'll now define the internal energy $IE=IE(t)$, the kinetic energy $KE=KE(t)$, 
     &= \int_{\Omega_0} \rho^+_0 \left ( \sum_j^{N_w} \hat{\uvec}_j w^+_j \right ) \cdot \left ( \sum_i^{N_w} \hat{\nvec}_i w_i^+ \right ) \, dV_y \nonumber \\
     &= \sum_i^{N_w} \sum_j^{N_w} \hat{\nvec}_i \cdot \int_{\Omega_0} \rho_0^+ w_i^+ w_j^+ \, dV_y \hat{\uvec}_j \nonumber \\
     &= \sum_i^{N_w} \sum_j^{N_w} \hat{\nvec}_i \cdot m_{ij}^{(w)} \hat{\uvec}_j \nonumber \\
-    &= \Nvec \cdot \Mvec^{(w)} \Uvec.
+    &= \Nvec^T \cdot \Mvec^{(w)} \Uvec.
 \end{align}
 
 The total energy is conserved, as shown below
 \begin{align}
-    \frac{d}{dt} (IE + KE) &= \Cvec \Mvec^{(\phi)} \frac{d\Evec}{dt} + \Uvec \cdot \Mvec^{(w)} \frac{d\Uvec}{dt} \nonumber \\
-    &= \Cvec \Fvec^T \cdot \Uvec - \Uvec \cdot \Fvec \Cvec \nonumber \\
+    \frac{d}{dt} (IE + KE) &= \Cvec^T \Mvec^{(\phi)} \frac{d\Evec}{dt} + \Uvec^T \cdot \Mvec^{(w)} \frac{d\Uvec}{dt} \nonumber \\
+    &= \Cvec^T \Fvec^T \cdot \Uvec - \Uvec^T \cdot \Fvec \Cvec \nonumber \\
     &= 0.
 \end{align}
 The momentum along a constant direction is conserved, as shown below
 \begin{align}
-    \frac{d P_\nvec}{dt} &= \Nvec \cdot \Mvec^{(w)} \frac{d \Uvec}{dt} \nonumber \\
-    &= -\Nvec \cdot \Fvec \Cvec \nonumber \\
+    \frac{d P_\nvec}{dt} &= \Nvec^T \cdot \Mvec^{(w)} \frac{d \Uvec}{dt} \nonumber \\
+    &= -\Nvec^T \cdot \Fvec \Cvec \nonumber \\
     &= -\sum_i^{N_w} \sum_j^{N_\phi} \hat{\nvec}_i \cdot \fvec_{ij} \hat{c}_j \nonumber \\
     &= -\sum_i^{N_w} \sum_j^{N_\phi} \hat{\nvec}_i \cdot \int_{\Omega^+} \sigmavec \cdot \nabla w_i \phi_j \, dV_x \hat{c}_j \nonumber \\
     &= -\int_{\Omega^+} \sigmavec : \nabla \nvec \, dV_x \nonumber \\
@@ -397,6 +401,55 @@ Now, as mentioned earlier, the Lagrangian basis functions are independent of tim
 \end{equation}
 Thus, both the Lagrangian and reference variables share the same finite-element coefficients.
 
+%------------------------------------------------------------------------
+\section{Temporal integration}
+%------------------------------------------------------------------------
+We now integrate forward in time the semi-discrete \cref{eq:evol_x_semi_discrete,eq:evol_vel_semi_discrete,eq:evol_energy_semi_discrete}, which we repeat below for convenience
+\begin{equation}
+    \tag{\ref{eq:evol_vel_semi_discrete}}
+    \Mvec^{(w)} \frac{d\Uvec}{dt} = -\Fvec \Cvec.
+\end{equation}
+\begin{equation}
+    \tag{\ref{eq:evol_energy_semi_discrete}}
+    \Mvec^{(\phi)} \frac{d\Evec}{dt} = \Fvec^T \cdot \Uvec.
+\end{equation}
+\begin{equation}
+    \tag{\ref{eq:evol_x_semi_discrete}}
+    \frac{d\Xvec}{dt} = \Uvec.
+\end{equation}
+The equations are integrated using the RK2-average scheme of \cite{dobrev2012}, which consists of the following for the first stage
+\begin{align}
+    \Uvec^{n+1/2} &= \Uvec^n - \frac{\Delta t}{2} \left( \Mvec^{(w)} \right)^{-1} \Fvec^n \Cvec, \nonumber \\
+    \Evec^{n+1/2} &= \Evec^n + \frac{\Delta t}{2} \left( \Mvec^{(\phi)} \right)^{-1} \left( \Fvec^n \right)^T \cdot \Uvec^{n+1/2}, \nonumber \\
+    \Xvec^{n+1/2} &= \Xvec^n + \frac{\Delta t}{2} \Uvec^{n+1/2},
+\end{align}
+and the following for the second stage
+\begin{align}
+    \Uvec^{n+1} &= \Uvec^n - \Delta t \left( \Mvec^{(w)} \right)^{-1} \Fvec^{n+1/2} \Cvec, \nonumber \\
+    \Evec^{n+1} &= \Evec^n + \Delta t \left( \Mvec^{(\phi)} \right)^{-1} \left( \Fvec^{n+1/2} \right)^T \cdot \bar{\Uvec}^{n+1/2}, \nonumber \\
+    \Xvec^{n+1} &= \Xvec^n + \Delta t \bar{\Uvec}^{n+1/2}.
+\end{align}
+In the above, $\bar{\Uvec}^{n+1/2} = \left( \Uvec^n + \Uvec^{n+1} \right)/2$. In particular, this scheme is used since it conserves total energy, that is, $(IE + KE)^{n+1} - (IE + KE)^n = 0$. To prove this we first show that for the internal energy we have
+\begin{align}
+    \label{eq:temp_ie_change}
+    IE^{n+1} - IE^n &= \Cvec^T \Mvec^{(\phi)} \left( \Evec^{n+1} - \Evec^n \right) \nonumber \\
+    &= \Delta t \Cvec^T \left( \Fvec^{n+1/2} \right)^T \cdot \bar{\Uvec}^{n+1/2}
+\end{align}
+For the kinetic energy we have
+\begin{align}
+    \label{eq:temp_ke_change}
+    KE^{n+1} - KE^n &= \frac{1}{2} \left[ \left( \Uvec^{n+1} \right)^T \cdot \Mvec^{(w)} \Uvec^{n+1} - \left( \Uvec^n \right)^T \cdot \Mvec^{(w)} \Uvec^n \right] \nonumber \\
+    &= \frac{1}{2} \left[ \left( \Uvec^{n+1} \right)^T \Mvec^{(w)} \cdot \Uvec^{n+1} - \left( \Uvec^n \right)^T \Mvec^{(w)} \cdot \Uvec^n \right] \nonumber \\
+    &= \frac{1}{2} \left( \Uvec^{n+1} - \Uvec^n \right)^T \Mvec^{(w)} \cdot \left( \Uvec^{n+1} + \Uvec^n \right) \nonumber \\ 
+    &= \left( \Uvec^{n+1} - \Uvec^n \right)^T \Mvec^{(w)} \cdot \bar{\Uvec}^{n+1/2} \nonumber \\
+    &= \left[ - \Delta t \left( \Mvec^{(w)} \right)^{-1} \Fvec^{n+1/2} \Cvec \right]^T \Mvec^{(w)} \cdot \bar{\Uvec}^{n+1/2} \nonumber \\
+    &= -\Delta t \Cvec^T \left( \Fvec^{n+1/2} \right)^T \left[ \left( \Mvec^{(w)} \right)^{-1} \right]^T \Mvec^{(w)} \cdot \bar{\Uvec}^{n+1/2} \nonumber \\
+    &= -\Delta t \Cvec^T \left( \Fvec^{n+1/2} \right)^T \left[ \left( \Mvec^{(w)} \right)^T \right]^{-1} \Mvec^{(w)} \cdot \bar{\Uvec}^{n+1/2} \nonumber \\
+    &= -\Delta t \Cvec^T \left( \Fvec^{n+1/2} \right)^T \left( \Mvec^{(w)} \right)^{-1} \Mvec^{(w)} \cdot \bar{\Uvec}^{n+1/2} \nonumber \\
+    &= -\Delta t \Cvec^T \left( \Fvec^{n+1/2} \right)^T \cdot \bar{\Uvec}^{n+1/2}.
+\end{align}
+Thus, adding \cref{eq:temp_ie_change} and \cref{eq:temp_ke_change} leads to total energy conservation.
+
 %########################################################################
 \chapter{The Re-mesh Step}
 %########################################################################
@@ -459,4 +512,6 @@ To obtain the relaxed mesh, one minimizes the following function
 \chapter{The Re-map Step}
 %########################################################################
 
+\bibliographystyle{plainnat}
+\bibliography{library}
 \end{document}
