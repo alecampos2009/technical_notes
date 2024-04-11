@@ -2,6 +2,8 @@
 
 \begin{document}
 
+\tableofcontents
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \part{Hydrodynamics}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -243,25 +245,6 @@ Plugging the proposed solution for $l_i^+$ into its ODE, and using equation (\re
 = f_j J^+_{kj} \left ( \frac{\partial u_i}{\partial x_k} \right )_{\xvec=\xvec^+_u} 
 = l_k^+ \left ( \frac{\partial u_i}{\partial x_k} \right )_{\xvec = \xvec^+_u}.
 \end{equation}
-
-
-%Consider the Lagrangian function $i(t)$, which corresponds to the integral of a function over a specific time dependent volume. The Lagrangian function can be expressed in terms of its eulerian counterpart $I(t,v)=\int_v F(t,\bold{x})\,dv$:
-%\[i(t)=I(t,v(t))=\int_{v(t)}F(t,\bold{x})\,dv\]
-
-%The material derivative then becomes,
-%\begin{eqnarray*}
-%\frac{d i(t)}{d} &=&\frac{d}{d t}I(t,v(t))\\
-%&=&\left(\frac{\partial}{\partial t}I(t,v)\right)_{v=v(t)}+\frac{d v(t)}{d t}\left(\frac{\partial I(t,v)}{\partial v}\right)_{v=v(t)}\\
-%&=&\left(\frac{\partial}{\partial t}\int_v F(t,\bold{x})\,dv\right)_{v=v(t)}+\lim_{\delta t \to 0}\frac{v(t+\delta t)-v(t)}{\delta t}\frac{\int_{v(t+\delta t)-v(t)}F(t,\bold{x})\,dv}{v(t+\delta t)-v(t)}\\
-%&=&\left(\int_v\frac{\partial}{\partial t}F(t,\bold{x})\,dv\right)_{v=v(t)}+\lim_{\delta t \to 0}\frac{1}{\delta t}\int_{s(t)}F(t,\bold{x})\bold{b}(t,\bold{x})  \cdot \bold{n} \delta t\,ds\\
-%&=&\left(\int_v\frac{\partial}{\partial t}F(t,\bold{x})\,dv\right)_{v=v(t)}+\int_{s(t)}F(t,\bold{x})\bold{b}(t,\bold{x}) \cdot \bold{n}\,ds\\
-%&=&\left(\int_v\frac{\partial}{\partial t}F(t,\bold{x})\,dv+\int_sF(t,\bold{x})\bold{b}(t,\bold{x})\cdot \bold{n}\,ds\right)_{v=v(t),s=s(t)}\\
-%&=&\left(\frac{D}{Dt}\int_v F(t,\bold{x})\,dv\right)_{v=v(t)}
-%\end{eqnarray*}
-%It is important to note that $\bold{b}(t,\bold{x})$ is the velocity characteristic of the control volume, which may not necessarily match the fluid velocity.
-
-%If we let $\bold{b}(t,\bold{x})=\bold{U}(t,\bold{x})$, that is, be the same as the velocity of the flow, and then apply Gauss's theorem, we obtain the Reynolds transport theorem,
-%\[\frac{D}{Dt}\int_{v} F\,dV=\int_{v} \frac{\partial F}{\partial t}+\nabla\cdot(F\mathbf{U})\,dv\]
 
 %########################################################################
 \chapter{Conservation laws}
@@ -670,79 +653,74 @@ Combining the relationships above we get $U = \frac{1}{\gamma - 1} P$, which is 
 
 
 %------------------------------------------------------------------------
-\section{Summary of Navier-Stokes equations for ideal gas}
+\section{Summary of governing equations}
 %------------------------------------------------------------------------
-We summarize the governing equations below.
 
-%---------------------------------
-\subsection{Conservation equations}
-%---------------------------------
-\begin{equation}
+\paragraph{Conservation equations}
+
+\begin{equation*}
     \frac{\partial \rho}{\partial t} + \frac{\partial \rho u_i}{\partial x_i} = 0
-\end{equation}
+\end{equation*}
 
-\begin{equation}
-\frac{\partial \rho u_i}{\partial t} + \frac{\partial \rho u_i u_j}{\partial x_j} = - \frac{\partial p}{\partial x_i} + \frac{\partial t_{ij}}{\partial x_j} + \rho f_i
-\end{equation}
-
-\begin{equation}
-\frac{\partial \rho E}{\partial t} + \frac{\partial}{\partial x_i} \left [ \rho \left ( E + \frac{p}{\rho} \right ) u_i \right ] = \frac{\partial u_i t_{ij}}{\partial x_j} + \rho f_i u_i -  \frac{\partial q_i}{\partial x_i}
-\end{equation}
-
-\begin{equation}
+\begin{equation*}
     \frac{\partial\rho Y}{\partial t}+\frac{\partial \rho Y u_i}{\partial x_i} = -\frac{\partial J_i}{\partial x_i} + w
-\end{equation}
+\end{equation*}
 
-%---------------------------------
-\subsection{Transport models}
-%---------------------------------
-Shear stress, heat flux, diffusive scalar flux:
-\begin{equation}
+\begin{equation*}
+\frac{\partial \rho u_i}{\partial t} + \frac{\partial \rho u_i u_j}{\partial x_j} = - \frac{\partial p}{\partial x_i} + \frac{\partial t_{ij}}{\partial x_j} + \rho f_i
+\end{equation*}
+
+\begin{equation*}
+\frac{\partial \rho E}{\partial t} + \frac{\partial}{\partial x_i} \left [ \rho \left ( E + \frac{p}{\rho} \right ) u_i \right ] = \frac{\partial u_i t_{ij}}{\partial x_j} + \rho f_i u_i -  \frac{\partial q_i}{\partial x_i}
+\end{equation*}
+
+\paragraph{Transport models} 
+
+\begin{equation*}
     t_{ij} = 2\mu S_{ij}^*
-\end{equation}
-\begin{equation}
+\end{equation*}
+\begin{equation*}
     q_i = -\kappa \frac{\partial T}{\partial x_i}
-\end{equation}
-\begin{equation}
+\end{equation*}
+\begin{equation*}
     J_i = -\rho D \frac{\partial Y}{\partial x_i}
-\end{equation}
+\end{equation*}
 
-Transport coefficients:
-\begin{equation}
+\paragraph{Transport coefficients}
+
+\begin{equation*}
     \mu = \mu_0 \left ( \frac{T}{T_0} \right )^n
-\end{equation}
-\begin{equation}
+\end{equation*}
+\begin{equation*}
     \kappa = \frac{\mu C_p}{Pr}
-\end{equation}
-\begin{equation}
+\end{equation*}
+\begin{equation*}
     D = \frac{\mu}{\rho Sc}
-\end{equation}
+\end{equation*}
 
-%---------------------------------
-\subsection{Equation of state}
-%---------------------------------
-\begin{equation}
+\paragraph{Equations of state}
+
+\begin{equation*}
     p = \rho R T
-\end{equation}
-\begin{equation}
+\end{equation*}
+\begin{equation*}
     R = \frac{R_u}{M}
-\end{equation}
-\begin{equation}
+\end{equation*}
+\begin{equation*}
     e = C_v T
-\end{equation}
+\end{equation*}
 
-%---------------------------------
-\subsection{Additional relations}
-%---------------------------------
-\begin{equation}
+\paragraph{Additional relations}
+
+\begin{equation*}
     E = e + K
-\end{equation}
-\begin{equation}
+\end{equation*}
+\begin{equation*}
     K = \frac{1}{2} u_i u_i
-\end{equation}
-\begin{equation}
+\end{equation*}
+\begin{equation*}
     S^*_{ij} = \frac{1}{2} \left ( \frac{\partial u_i}{\partial x_j} + \frac{\partial u_j}{\partial x_i} \right ) - \frac{1}{3} \frac{\partial u_k}{\partial x_k} \delta_{ij}
-\end{equation}
+\end{equation*}
 
 %########################################################################
 \chapter{Alternate forms of the fluid equations}
@@ -1110,6 +1088,296 @@ Using \cref{eq:ale_integral_energy} and the divergence theorem, this can be writ
     \frac{d}{dt} \int_{\Omega^+(t)} \rho E \, dv + \int_{\partial \Omega^+(t)} \rho E (\uvec - \vvec) \cdot \nvec \, ds = \\
     \int_{\partial \Omega^+(t)} -(p\uvec + \uvec \cdot \tvec) \cdot \nvec \, ds + \int_{\Omega^+(t)} \rho \fvec \cdot \uvec \, ds - \int_{\partial \Omega^+(t)} \qvec \cdot \nvec \, ds.
 \end{multline}
+
+%------------------------------------------------------------------------
+\section{Multi-species hydrodynamics}
+%------------------------------------------------------------------------
+Multi-species fluid flows are governed by the multi-species Navier-Stokes equations. These consist of the traditional Navier-Stokes equations augmented with multiple scalars, where each scalar is the mass fraction of a species in the system. The mass fraction of species $\alpha$ is given by $Y_\alpha = m_\alpha/m$, where $m_\alpha = m_\alpha(t,\xvec)$ is the mass of the $\alpha$ component, and $m = m(t,\xvec)$ is the total mass. The species mass fractions are no longer passive scalars. For ideal gases, for example, they affect the value of $R$, which in turns affects the pressure, density, and temperature of the whole mixture. They also affect the enthalpy diffusion, which then alters the heat flux and internal energy. 
+
+%---------------------------------
+\subsection{Relevant fractions}
+%---------------------------------
+\begin{itemize}
+    \item Mole fraction ($X_\alpha$): number of moles $o_\alpha$ of the $\alpha$ species over the total number of moles $o$.
+    \begin{equation}
+        X_\alpha = \frac{o_\alpha}{o}.
+    \end{equation}
+    \item Mass fraction ($Y_\alpha$): mass $m_\alpha$ of the $\alpha$ species over the total mass $m$. 
+    \begin{equation}
+        Y_\alpha = \frac{m_\alpha}{m}.
+    \end{equation}
+    Using $m_\alpha = o_\alpha M_\alpha$, where $M_\alpha$ is the molar mass of species $\alpha$, we can introduce two relationships between $X_\alpha$ and $Y_\alpha$:
+    \begin{equation}
+    \label{eq:y_intermsof_x}
+        Y_\alpha = \frac{o_\alpha M_\alpha}{\sum_\beta o_\beta M_\beta} = \frac{X_\alpha M_\alpha}{\sum_\beta X_\beta M_\beta}
+    \end{equation}
+    \begin{equation}
+    \label{eq:x_intermsof_y}
+        X_\alpha = \frac{m_\alpha / M_\alpha}{\sum_\beta m_\beta / M_\beta} = \frac{Y_\alpha / M_\alpha}{ \sum_\beta Y_\beta / M_\beta}
+    \end{equation}
+    \item Volume fraction ($\eta_\alpha$): volume $v^{(\alpha)}$ of the $\alpha$ species over the total volume $v$.
+    \begin{equation}
+        \eta_\alpha = \frac{v_\alpha}{v}.
+    \end{equation}
+    If we define the species density as $\rho_\alpha = m_\alpha/v_\alpha$, then
+    \begin{equation}
+    \label{eq:relation_volume_density_mass}
+        \eta_\alpha = \frac{v_\alpha}{v} \frac{m}{m} \frac{m_\alpha}{m_\alpha} = \frac{\rho Y_\alpha}{\rho_\alpha}.
+    \end{equation}
+\end{itemize}
+
+%---------------------------------
+\subsection{Equations of state}
+%---------------------------------
+The thermodynamic variables that we'll be solving for are $\rho_\alpha$, $e_\alpha$, $p_\alpha$, and $T_\alpha$, for a total of $4N$ variables, where $N$ is the number of species.
+
+The thermal equation of state is expressed as
+\begin{equation}
+    p_\alpha = \phi_\alpha (\rho_\alpha, T_\alpha)
+\end{equation}
+and the caloric equation of state as
+\begin{equation}
+    e_\alpha = \psi_\alpha (\rho_\alpha, T_\alpha)
+\end{equation}
+We now assume an equilibrium state in which all of the species have the same pressure and temperature. Thus, the total number of unknowns is reduced to $2N+2$. The thermal and caloric equations of state take the form
+\begin{equation}
+\label{eq:eos_thermal_multicomponent}
+    p = \phi_\alpha (\rho_\alpha, T),
+\end{equation}
+\begin{equation}
+\label{eq:eos_caloric_multicomponent}
+    e_\alpha = \psi_\alpha (\rho_\alpha, T).
+\end{equation}
+We need two more equations to provide closure. These are
+\begin{equation}
+\label{eq:from_rho_alpha_to_rho}
+   \frac{1}{\rho} = \sum_\alpha \frac{Y_\alpha}{\rho_\alpha},
+\end{equation}
+and
+\begin{equation}
+\label{eq:from_e_alpha_to_e}
+    e = \sum_\alpha Y_\alpha e_\alpha.
+\end{equation}
+For the above, $\rho$, $Y_\alpha$, and $e$ are known variables provided by the fluid transport equations, and hence they are the inputs to the equilibration algorithm. \Cref{eq:eos_thermal_multicomponent,eq:eos_caloric_multicomponent,eq:from_rho_alpha_to_rho,eq:from_e_alpha_to_e} constitute $2N+2$ equations for the $2N+2$ unknowns $\rho_\alpha$, $e_\alpha$, $p$, and $T$. Note that, after solving the system of equations above, one can compute $\eta_\alpha$ using \cref{eq:relation_volume_density_mass}.
+
+\Cref{eq:from_rho_alpha_to_rho} is derived as follows
+\begin{equation*}
+    \frac{1}{\rho} = \frac{v}{m} = \sum_\alpha \frac{v_\alpha}{m} = \sum_\alpha \frac{m_\alpha / m}{m_\alpha / v_\alpha} = \sum_\alpha \frac{Y_\alpha}{\rho_\alpha}.
+\end{equation*}
+Additionally, \cref{eq:from_e_alpha_to_e} follows from the fact that the total internal energy $m e$ is simply the sum of the internal energies $m_\alpha e_\alpha$ of all the species. 
+
+An additional thermodynamic variable, the species enthalpy $h_\alpha$, is simply defined in terms of the others according to 
+\begin{equation}
+\label{eq:species_enthalpy}
+    h_\alpha = e_\alpha + p / \rho_\alpha.
+\end{equation}
+For the entire system, we can show that
+\begin{equation}
+\label{eq:from_h_alpha_to_h}
+     h = e + \frac{p}{\rho} = \sum Y_\alpha e_\alpha + \frac{Y_\alpha}{\rho_\alpha} p = \sum_\alpha Y_\alpha h_\alpha.
+\end{equation}
+
+In the absence of chemical reactions, condensation, or other processes, $Y_i$ is independent of temperature. For these cases, differentiating \cref{eq:from_e_alpha_to_e} and \cref{eq:from_h_alpha_to_h} gives
+\begin{equation}
+    C_v = \sum_\alpha Y_\alpha C_{v,\alpha},
+\end{equation}
+\begin{equation}
+    C_p = \sum_\alpha Y_\alpha C_{p,\alpha}.
+\end{equation}
+
+\subsubsection{Perfect gasses}
+For an ideal gas, \cref{eq:eos_thermal_multicomponent} and \cref{eq:eos_caloric_multicomponent} are given by
+\begin{equation}
+\label{eq:eos_thermal_multicomponent_ideal}
+p = \rho_\alpha R_\alpha T,
+\end{equation}
+and
+\begin{equation} 
+\label{eq:eos_caloric_multicomponent_ideal}
+e_\alpha = C_{v,\alpha} T .
+\end{equation}
+In the above, $R_\alpha = R_u / M_u$ is the ideal gas constant of each species and $C_{v,\alpha}$ is the specific heat at constant temperature for each species. For the species enthalpy 
+\begin{equation}
+    h_\alpha = e_\alpha + \frac{p}{\rho_\alpha} = e_\alpha + R_\alpha T = C_{v,\alpha} T + \left ( C_{p,\alpha} - C_{v,\alpha} \right ) T = C_{p,\alpha} T.
+\end{equation}
+
+The thermal equation of state for the entire mixture can be derived from the thermal equation of state for each species. We first multiply \cref{eq:eos_thermal_multicomponent_ideal} by $Y_\alpha$, divide by $\rho_\alpha$, and sum over all $\alpha$. That is
+\begin{equation}
+\sum_\alpha p \frac{Y_\alpha}{\rho_\alpha}= \sum_\alpha Y_\alpha R_\alpha T.
+\end{equation}
+The above can be expressed as
+\begin{equation}
+p = \rho \sum_\alpha \frac{Y_\alpha}{M_\alpha} R_u T.
+\end{equation}
+We now define the the average molar mass of the mixture as $M = \sum_\alpha X_\alpha M_\alpha$. Using \cref{eq:y_intermsof_x}, this can be rewritten as 
+\begin{equation}
+    \frac{1}{M} = \sum_\alpha \frac{Y_\alpha}{M_\alpha}
+\end{equation}
+Thus, the thermal equation of state for the entire mixture can be expressed as
+\begin{equation}
+    p = \rho R T
+\end{equation}
+where
+\begin{equation}
+R = \frac{R_u}{M}
+\end{equation}
+Using the above, we can easily show that
+\begin{equation}
+    R = \sum_\alpha Y_\alpha \frac{R_u}{M_\alpha} = \sum_\alpha Y_\alpha R_\alpha = \sum_\alpha Y_\alpha \left ( C_{p,\alpha} - C_{v,\alpha} \right ) = C_p - C_v.
+\end{equation}
+
+%---------------------------------
+\subsection{Summary of governing equations}
+%---------------------------------
+\label{sec:multi_species_eqs}
+
+\paragraph{Conservation equations}
+
+\begin{equation}
+\frac{\partial \rho}{\partial t} + \frac{\partial \rho u_i}{\partial x_i} = 0
+\end{equation}
+
+\begin{equation}
+    \frac{\partial\rho Y_\alpha}{\partial t}+\frac{\partial \rho Y_\alpha u_i}{\partial x_i} = -\frac{\partial J_{\alpha,i}}{\partial x_i} + w_\alpha
+\end{equation}
+
+\begin{equation}
+\frac{\partial \rho u_i}{\partial t} + \frac{\partial \rho u_i u_j}{\partial x_j} = - \frac{\partial p}{\partial x_i} + \frac{\partial t_{ij}}{\partial x_j} + \rho f_i
+\end{equation}
+
+\begin{equation}
+\frac{\partial \rho E}{\partial t} + \frac{\partial}{\partial x_i} \left [ \rho \left ( E + \frac{p}{\rho} \right ) u_i \right ] = \frac{\partial u_i t_{ij}}{\partial x_j} + \rho f_i u_i -  \frac{\partial q_i}{\partial x_i}
+\end{equation}
+
+
+\paragraph{Transport models}
+
+\begin{equation}
+t_{ij} = 2\mu S_{ij}^*
+\end{equation}
+
+\begin{equation}
+q_i = -\kappa \frac{\partial T}{\partial x_i}  + \sum_{\alpha=1} h_\alpha J_{\alpha,i}
+\end{equation}
+
+\begin{equation}
+J_{\alpha,i} = -\rho \left ( D_\alpha \frac{\partial Y_\alpha}{\partial x_i} - Y_\alpha \sum_\beta D_\beta \frac{\partial Y_\beta}{\partial x_i} \right )
+\end{equation}
+
+\paragraph{Transport coefficients}
+
+\begin{equation}
+\mu = \mu_0 \left ( \frac{T}{T_0} \right )^n
+\end{equation}
+
+\begin{equation}
+\kappa = \frac{\mu C_p}{Pr}
+\end{equation}
+
+\begin{equation}
+D_\alpha = \frac{\mu}{\rho Sc_\alpha}
+\end{equation}
+
+\paragraph{Equations of state}
+
+\begin{equation}
+    p = \rho R T 
+\end{equation}
+
+\begin{equation}
+    R = \frac{R_u}{M}
+\end{equation}
+
+\begin{equation}
+    \frac{1}{M} = \sum_\alpha \frac{Y_\alpha}{M_\alpha}
+\end{equation}
+
+\begin{equation}
+    e = C_v T
+\end{equation}
+
+\begin{equation}
+    h_\alpha = C_{p,\alpha} T
+\end{equation}
+
+\begin{equation}
+    C_v = \sum_\alpha Y_\alpha C_{v,\alpha}
+\end{equation}
+
+\begin{equation}
+    C_p = \sum_\alpha Y_\alpha C_{p,\alpha}
+\end{equation}
+
+\paragraph{Additional relations}
+
+\begin{equation}
+    E = e + K
+\end{equation}
+
+\begin{equation}
+    K = \frac{1}{2} u_i u_i
+\end{equation}
+
+\begin{equation}
+    S^*_{ij} = \frac{1}{2} \left ( \frac{\partial u_i}{\partial x_j} + \frac{\partial u_j}{\partial x_i} \right ) - \frac{1}{3} \frac{\partial u_k}{\partial x_k} \delta_{ij}
+\end{equation}
+
+%---------------------------------
+\subsection{Mass-fraction equations}
+%---------------------------------
+There are two methods that are often used to compute the total density $\rho$ and the mass fractions $Y_\alpha$. These two methods are equivalent in paper, as will be shown below, but when implemented numerically can lead to different behavior. Since $\rho$ and $Y_\alpha$ constitute $1+N$ unknowns, $1+N$ equations are required.
+
+\subsubsection{Method 1}
+This is the method shown in \cref{sec:multi_species_eqs}, that is, one first solves for $\rho$ and $\rho Y_\alpha$ using 
+\begin{equation*}
+    \frac{\partial \rho}{\partial t} + \frac{\partial \rho u_i}{\partial x_i} = 0,
+\end{equation*}
+and    
+\begin{equation*}
+    \frac{\partial\rho Y_\alpha}{\partial t}+\frac{\partial \rho Y_\alpha u_i}{\partial x_i} = -\frac{\partial J_{\alpha,i}}{\partial x_i} + w_\alpha.
+\end{equation*}
+The mass fractions then follow from $Y_\alpha = \rho Y_\alpha / \rho$. We can write
+\begin{align*}
+    \frac{\partial Y_\alpha}{\partial t} + u_i \frac{\partial Y_\alpha}{\partial x_i} &= \frac{1}{\rho^2} \left( \frac{\partial \rho Y_\alpha}{\partial t} \rho - \frac{\partial \rho}{\partial t} \rho Y_\alpha \right) + u_i \frac{1}{\rho^2} \left( \frac{\partial \rho Y_\alpha}{\partial x_i} \rho - \frac{\partial \rho}{\partial x_i} \rho Y_\alpha \right)\\
+    &= \frac{1}{\rho} \left[ \left( \frac{\partial \rho Y_\alpha}{\partial t} + u_i \frac{\partial \rho Y_\alpha}{\partial x_i} \right) - Y_\alpha \left( \frac{\partial \rho}{\partial t} + u_i \frac{\partial \rho}{\partial x_i} \right) \right] \\
+    &= \frac{1}{\rho} \left( \frac{\partial \rho Y_\alpha}{\partial t} + u_i \frac{\partial \rho Y_\alpha}{\partial x_i} + \rho Y_\alpha \frac{\partial u_i}{\partial x_i} \right) \\
+    &= \frac{1}{\rho} \left( -\frac{\partial J_{\alpha,i}}{\partial x_i} + w_\alpha \right).
+\end{align*}
+If we assume $\sum_\alpha J_{\alpha,i} = 0$ and $\sum_\alpha w_\alpha = 0$, then we have
+\begin{equation}
+    \frac{\partial}{\partial t} \sum_\alpha Y_\alpha + u_i \frac{\partial}{\partial x_i} \sum_\alpha Y_\alpha = 0.
+\end{equation} 
+That is, $\sum_\alpha Y_\alpha$ is conserved along a streamline. If the initial and boundary conditions satisfy $\sum_\alpha Y_\alpha=1$, then this equality holds for all time and space.
+
+\subsubsection{Method 2}
+For this method one first solves for $\rho Y_\alpha$ using
+\begin{equation*}
+    \frac{\partial\rho Y_\alpha}{\partial t}+\frac{\partial \rho Y_\alpha u_i}{\partial x_i} = -\frac{\partial J_{\alpha,i}}{\partial x_i} + w_\alpha.\,
+\end{equation*}
+and assumes the following constraint
+\begin{equation*}
+    \sum_\alpha Y_\alpha = 1.
+\end{equation*}
+The densities then follow from $\rho = \sum_\alpha \rho Y_\alpha$ and the mass fractions from $Y_\alpha = \rho Y_\alpha / \rho$. We can then write
+\begin{align*}
+    \frac{\partial \rho}{\partial t} + \frac{\partial \rho u_i}{\partial x_i} &= \frac{\partial}{\partial t} \sum_\alpha \rho Y_\alpha + \frac{\partial}{\partial x_i} \sum_\alpha \rho Y_\alpha u_i \\
+    &= \sum_\alpha \left( \frac{\partial \rho Y_\alpha}{\partial t} + \frac{\partial \rho Y_\alpha u_i}{\partial x_i} \right) \\
+    &= \sum_\alpha \left( -\frac{\partial J_{\alpha,i}}{\partial x_i} + w_\alpha \right).
+\end{align*}
+Again, assuming $\sum_\alpha J_{\alpha,i} = 0$ and $\sum_\alpha w_\alpha = 0$, we have
+\begin{equation*}
+    \frac{\partial \rho}{\partial t} + \frac{\partial \rho u_i}{\partial x_i} = 0.
+\end{equation*}
+
+%------------------------------------------------------------------------
+\section{Multi-material hydrodynamics}
+%------------------------------------------------------------------------
+The main difference between multi-material and multi-species hydrodynamics is that for multi-material hydrodynamics we solve a PDE for the energy of each species, rather than a single PDE for the energy of all species. Additionally, we refer to the constituent elements as materials rather than species.  The energy of each material is denoted as $e_\alpha$. For the multi-species approach we solved for one single energy $e$ and used the pressure-temperature equilibration algorithm to obtain the energy of the various species $e_\alpha$. In this case, since we are already solving a PDE for each $e_\alpha$, a different approach is needed.
+
+The governing equations are as follows
+\begin{equation}
+    \frac{\partial \eta_\alpha}{\partial t} + u_i \frac{\partial \eta_\alpha}{\partial x_i} = C_\alpha
+\end{equation}
 
 %########################################################################
 \chapter{Thermodynamics of fluid flows}
@@ -1494,9 +1762,9 @@ Using \cref{eq:isentropic_relation_perfect_gas_2,eq:isentropic_relation_perfect_
     \frac{\rho_t}{\rho} = \left ( 1 + \frac{\gamma -1}{2} M^2 \right)^{1 / (\gamma - 1)}.
 \end{equation}
 
-%------------------------------------------------------------------------
-\section{Acousitc waves}
-%------------------------------------------------------------------------
+%---------------------------------
+\subsection{Acousitc waves}
+%---------------------------------
 
 Express the density, pressure, and velocity as 
 \begin{equation}

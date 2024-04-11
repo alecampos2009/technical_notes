@@ -35,18 +35,18 @@ The governing equations for the Lagrangian fluid particles are derived in my flu
 In the above, $\sigmavec = \sigmavec(t,\xvec)$ is the stress tensor.
 
 A note on notation. The products that involve a tensor $\tauvec$ can be expressed in Einstein notation as
-\begin{equation}
+\begin{equation*}
     \nabla \cdot \tauvec = \frac{\partial \tau_{ij}}{\partial x_j},
-\end{equation}
-\begin{equation}
+\end{equation*}
+\begin{equation*}
     \tauvec \cdot \nabla f = \tau_{ij} \frac{\partial f}{\partial x_j},
-\end{equation}
-\begin{equation}
+\end{equation*}
+\begin{equation*}
     \gvec \cdot \tauvec \cdot \nabla f = g_i \tau_{ij} \frac{\partial f}{\partial x_j},
-\end{equation}
-\begin{equation}
+\end{equation*}
+\begin{equation*}
     \tauvec : \nabla \gvec = \tau_{ij} \frac{\partial g_i}{\partial x_j}.
-\end{equation}
+\end{equation*}
 where $f$ is a scalar and $\gvec$ a vector. In these notes we'll mostly be using indices $i$ and $j$ for FE expansions, rather than for Einstein notation.
 
 %---------------------------------------------------------------
@@ -114,13 +114,13 @@ We note that the expansion coefficients are the same for the Lagrangian and Eule
 \subsection{Position and Jacobian}
 %---------------------------------
 Plugging in \cref{eq:fe_exp_x,eq:fe_exp_u} in \cref{eq:lag_gov_evol_x} gives
-\begin{equation}
+\begin{equation*}
     \sum_{j}^{N_w} \frac{d \hat{\xvec}_j}{dt} w^+_j = \sum_{j}^{N_w} \hat{\uvec}_j w^+_j.
-\end{equation}
+\end{equation*}
 To satisfy the equation above, we'll require
-\begin{equation}
+\begin{equation*}
     \frac{d \hat{\xvec}^+_j}{dt} = \hat{\uvec}_j.
-\end{equation}
+\end{equation*}
 We now introduce the vectors $\Xvec$ and $\Uvec$, whose components are $\hat{\xvec}_i$ and $\hat{\uvec}_i$, respectively. Thus, the above is written as
 \begin{equation}
     \label{eq:evol_x_semi_discrete}
@@ -140,9 +140,9 @@ It's determinant is denoted by $J^+ = J^+(t,\yvec)$, and it satisfies the follow
     \frac{\partial J^+}{\partial t} = J^+ \left( \nabla \cdot \uvec \right)_{\xvec = \xvec^+}.
 \end{equation}
 Thus, \Cref{eq:lag_gov_evol_rho} can be re-written as
-\begin{equation}
+\begin{equation*}
     \frac{1}{\rho^+} \frac{\partial \rho^+}{\partial t} = -\frac{1}{J^+} \frac{\partial J^+}{\partial t},
-\end{equation}
+\end{equation*}
 or
 \begin{equation}
     \label{eq:lag_gov_evol_rho_2}
@@ -156,38 +156,38 @@ Since $J^+ = 1$ at the initial time, we obtain the density according to
 where $\rho^+_0 = \rho^+(0,\yvec)$.
 
 To compute $J^+$, we first plug in \cref{eq:fe_exp_x} in the definition of the Jacobian matrix, which gives
-\begin{equation}
+\begin{equation*}
     \Jvec^+ = \frac{\partial}{\partial \yvec} \sum_j^{N_w} \hat{\xvec}_j w^+_j = \sum_j^{N_w} \hat{\xvec}_j \nabla_{\yvec} w^+_j.
-\end{equation}
+\end{equation*}
 We then simply compute the determinant of the above to obtain $J^+$. Note that for any function $\xvec^+$ and its corresponding $\uvec^+$, whether it be an exact analytical expression or a finite-element expansion as given by \cref{eq:fe_exp_x}, one obtains \cref{eq:evol_det_jacob}. Thus, the derivation of \cref{eq:lag_gov_evol_rho_2} from \cref{eq:lag_gov_evol_rho} still holds whether one plans to represent $J^+$ using an analytical expression or a finite-element expansion. 
 
 %---------------------------------
 \subsection{Velocity}
 %---------------------------------
 Plugging in \cref{eq:evol_rho_semi_discrete} in \cref{eq:lag_gov_evol_u} we get
-\begin{equation}
+\begin{equation*}
     \rho^+_0 \frac{\partial \uvec^+}{\partial t} = \left ( \nabla \cdot \sigmavec \right )_{\xvec = \xvec^+} J^+.
-\end{equation}
+\end{equation*}
 We then multiply both sides of the above by the basis functions for velocity and integrate over all space to obtain
-\begin{equation}
+\begin{equation*}
     \int_{\Omega_0} \rho^+_0 \frac{\partial \uvec^+}{\partial t} w^+_i \, dV_y = \int_{\Omega_0} \left ( \nabla \cdot \sigmavec \right )_{\xvec = \xvec^+} w^+_i J^+ \, dV_y.
-\end{equation}
+\end{equation*}
 For the left-hand side we have
-\begin{align}
+\begin{align*}
     \int_{\Omega_0} \rho^+_0 \frac{\partial \uvec^+}{\partial t} w^+_i \, dV_y &= \int_{\Omega_0} \rho^+_0 \sum_j^{N_w} \frac{d \hat{\uvec}_j}{dt} w^+_j w^+_i \, dV_y, \nonumber \\
     &= \sum_j^{N_w} \frac{d \hat{\uvec}_j}{dt} \int_{\Omega_0} \rho^+_0 w^+_i w^+_j \, dV_y, \nonumber \\
     &= \sum_j^{N_w} \frac{d \hat{\uvec}_j}{dt} m_{\mathcal{V},ij},
-\end{align}
+\end{align*}
 where
 \begin{equation}
     m_{\mathcal{V},ij} = \int_{\Omega_0} \rho^+_0 w^+_i w^+_j \, dV_y
 \end{equation}
 is a mass bilinear form (which is independent of time). For the right-hand side we have
-\begin{align}
+\begin{align*}
     \int_{\Omega_0} \left ( \nabla \cdot \sigmavec \right )_{\xvec = \xvec^+} w^+_i J^+ \, dV_y & = \int_{\Omega_0} \left ( \nabla \cdot \sigmavec w_i \right )_{\xvec = \xvec^+} J^+ \, dV_y \nonumber \\
     & = \int_{\Omega^+} \nabla \cdot \sigmavec w_i \, dV_x \nonumber \\
     & = -\int_{\Omega^+} \sigmavec \cdot \nabla w_i \, dV_x.
-\end{align}
+\end{align*}
 The second equality above follows from integration by substitution. Combining results we have
 \begin{equation}
     \label{eq:evol_u_semi_discrete}
@@ -200,16 +200,16 @@ We also introduce the vector bilinear form
     \fvec_{ij} = \int_{\Omega^+} \sigmavec \cdot \nabla w_i \phi_j \, dV_x.
 \end{equation}
 This is a \textit{vector} bilinear form since $\fvec_{ij}$ has components $f_{ij,\alpha} = f_{ij,\alpha}(t)$, for $\alpha = x,y,z$, where $\alpha$ denotes the first index of $\sigmavec$. We introduce the force matrix $\Fvec$, whose components are $\fvec_{ij}$. We also expand the field with constant value of one as follows
-\begin{equation}
+\begin{equation*}
     1 = \sum_i^{N_\phi} \hat{1}_i \phi_i.
-\end{equation}
+\end{equation*}
 If we define the vector $\hat{\mathbf{1}}$ as that with components $\hat{1}_i$, we can show that 
-\begin{align}
+\begin{align*}
     \Fvec \hat{\mathbf{1}} &= \sum_j^{N_\phi} \fvec_{ij} \hat{1}_j \nonumber \\
     &= \sum_j^{N_\phi} \int_{\Omega^+} \sigmavec \cdot \nabla w_i \phi_j \, dV_x \hat{1}_j \nonumber \\
     &= \int_{\Omega^+} \sigmavec \cdot \nabla w_i \left ( \sum_j^{N_\phi} \hat{1}_j \phi_j \right ) \, dV_x \nonumber \\
     &= \int_{\Omega^+} \sigmavec \cdot \nabla w_i \, dV_x.
-\end{align}
+\end{align*}
 The above is the negative of the right-hand side of \cref{eq:evol_u_semi_discrete}. Thus, combining all together we get
 \begin{equation}
     \label{eq:evol_vel_semi_discrete}
@@ -221,49 +221,49 @@ We note that since both the Lagrangian and Eulerian velocities share the same co
 \subsection{Energy}
 %---------------------------------
 Plugging in \cref{eq:evol_rho_semi_discrete} in \cref{eq:lag_gov_evol_e} we get
-\begin{equation}
+\begin{equation*}
     \rho^+_0 \frac{\partial e^+}{\partial t} = \left ( \sigmavec : \nabla \uvec \right )_{\xvec = \xvec^+} J^+.
-\end{equation}
+\end{equation*}
 We then multiply both sides of the above by the basis functions for energy and integrate over all space to obtain
-\begin{equation}
+\begin{equation*}
     \int_{\Omega_0} \rho^+_0 \frac{\partial e^+}{\partial t} \phi_i^+ \, dV_y = \int_{\Omega_0} \left ( \sigmavec : \nabla \uvec \right )_{\xvec = \xvec^+} \phi_i^+ J^+ \, dV_y.
-\end{equation}
+\end{equation*}
 For the left-hand side we have
-\begin{align}
+\begin{align*}
     \int_{\Omega_0} \rho^+_0 \frac{\partial e^+}{\partial t} \phi_i^+ \, dV_y &= \int_{\Omega_0} \rho^+_0 \sum_j^{N_\phi} \frac{d \hat{e}_j}{dt} \phi_j^+ \phi_i^+ \, dV_y , \nonumber \\
     &= \sum_j^{N_\phi} \frac{d \hat{e}_j}{dt} \int_{\Omega_0} \rho^+_0 \phi_j^+ \phi_i^+ \, dV_y , \nonumber \\
     &= \sum_j^{N_\phi} \frac{d \hat{e}_j}{dt} m_{\mathcal{E},ij}
-\end{align}
+\end{align*}
 where
 \begin{equation}
     m_{\mathcal{E},ij} = \int_{\Omega_0} \rho^+_0 \phi_j^+ \phi_i^+ \, dV_y
 \end{equation}
 is a mass bilinear form (which is independent of time). For the right-hand side we have
-\begin{align}
+\begin{align*}
     \int_{\Omega_0} \left ( \sigmavec : \nabla \uvec \right )_{\xvec = \xvec^+} \phi_i^+ J^+ \, dV_y &= \int_{\Omega_0} \left ( \sigmavec : \nabla \uvec \phi_i \right )_{\xvec = \xvec^+} J^+ \, dV_y \nonumber \\
     &= \int_{\Omega^+} \sigmavec : \nabla \uvec \phi_i \, dV_x. 
-\end{align}
+\end{align*}
 Combining results we have
-\begin{equation}
+\begin{equation*}
     \sum_j^{N_\phi} \frac{d \hat{e}_j}{dt} m_{\mathcal{E},ij} = \int_{\Omega^+} \sigmavec : \nabla \uvec \phi_i \, dV_x.
-\end{equation}
+\end{equation*}
 We no show that
-\begin{equation}
+\begin{equation*}
     \sigmavec : \nabla \uvec = \sigmavec : \nabla \left ( \sum_k^{N_w} \hat{\uvec}_k w_k \right ) = \sum_k^{N_w} \hat{\uvec}_k \cdot \sigmavec \cdot \nabla w_k,
-\end{equation}
+\end{equation*}
 and hence the previous result is written as
-\begin{equation}
+\begin{equation*}
     \sum_j^{N_\phi} \frac{d \hat{e}_j}{dt} m_{\mathcal{E},ij} = \sum_k^{N_w} \hat{\uvec}_k \cdot \int_{\Omega^+} \sigmavec \cdot \nabla w_k \phi_i \, dV_x.
-\end{equation}
+\end{equation*}
 The above is finally re-written as
 \begin{equation}
     \label{eq:evol_e_semi_discrete}
     \sum_j^{N_\phi} \frac{d \hat{e}_j}{d t} m_{\mathcal{E},ij} = \sum_k^{N_w} \hat{\uvec}_k \cdot \fvec_{ki}.
 \end{equation}
 Note that in the above there is a dot product in the right-hand side, that is, the right-hand side expanded out is  
-\begin{equation}
+\begin{equation*}
     \sum_k^{N_w} \hat{\uvec}_k \cdot \fvec_{ki} = \sum_k^{N_w} \sum_{\alpha=x,y,z} \hat{u}_{k,\alpha} f_{ki,\alpha}.
-\end{equation}
+\end{equation*}
 
 We now introduce the vector $\Evec$ whose components are $\hat{e}_i$. We also introduce the matrix $\Mvec_\mathcal{E}$ whose components are $m_{\mathcal{E},ij}$. Thus, \cref{eq:evol_e_semi_discrete} can be succinctly written as
 \begin{equation}
@@ -345,10 +345,10 @@ The Jacobian $\Jvec^{(e_p)} = \Jvec^{(e_p)}(t,\rvec)$ is defined as
     \Jvec^{(e_p)} = \frac{ \partial \Phivec^{(e_p)} }{ \partial \rvec },
 \end{equation}
 with its determinant labeled as $J^{(e_p)} = J^{(e_p)}(t,\rvec)$. Using \cref{eq:ref_elem_r_map} in the definition of $\Jvec^{(e_p)}$ we get
-\begin{align}
+\begin{align*}
     \Jvec^{(e_p)} &= \left ( \frac{\partial \xvec^+}{\partial \yvec} \right )_{\yvec = \Phivec^{(e_p)}(0,\rvec)} \frac{\partial \Phivec^{(e_p)}(0,\rvec)}{\partial \rvec} \nonumber \\
     &= \left ( \Jvec^+ \right )_{\yvec = \Phivec^{(e_p)}(0,\rvec)} \Jvec^{(e_p)}_0,
-\end{align}
+\end{align*}
 where $\Jvec^{(e_p)}_0 = \Jvec^{(e_p)}(0,\rvec)$.
 Taking the determinant of the above gives
 \begin{equation}
@@ -357,47 +357,47 @@ Taking the determinant of the above gives
 \end{equation}
 where $J^{(e_p)}_0 = J^{(e_p)}(0,\rvec)$.
 
-A Lagrangian variable $f^+=f^+(t,\yvec)$ is related to $f=f(t,\xvec)$ according to the following
-\begin{equation}
+As a reminder, a Lagrangian variable $f^+=f^+(t,\yvec)$ is related to $f=f(t,\xvec)$ according to 
+\begin{equation*}
     f^+(t,\yvec) = f(t,\xvec^+(t,\yvec)).
-\end{equation}
+\end{equation*}
 In an analogous manner, $f^{(e_p)}=f^{(e_p)}(t,\rvec)$ is related to $f=f(t,\xvec)$ according to
 \begin{equation}
     \label{eq:ref_elem_to_eul}
     f^{(e_p)}(t,\rvec) = f(t,\Phivec^{(e_p)}(t,\rvec)).
 \end{equation}
 Examples of these reference-element functions include those for density $\rho^{(e_p)} = \rho^{(e_p)}(t,\rvec)$, velocity $\uvec^{(e_p)} = \uvec^{(e_p)}(t,\rvec)$, and internal energy $e^{(e_p)} = e^{(e_p)}(t,\rvec)$. Using integration by substitution and then \cref{eq:ref_elem_to_eul} we show 
-\begin{align}
+\begin{align*}
     \int_{\Omega^{(e_p)}} f dV_x &= \int_{\Omega_r} f(t, \Phivec^{(e_p)}(t,\rvec)) J^{(e_p)} \, dV_r \nonumber \\
     &= \int_{\Omega_r} f^{(e_p)} J^{(e_p)} \, dV_r.
-\end{align}
+\end{align*}
 In other words, integrals over elements at any time can be computed as integrals over the reference space. 
 
 If the integrand contains a derivative, a bit of extra care is required. To show this, we'll use index notation for the sake of clarity. Consider as an example a term of the form
-\begin{equation}
+\begin{equation*}
     \left ( \sigmavec \cdot \nabla f \right )_{\xvec=\Phivec^{(e_p)}}= \left ( \sigma_{ij} \frac{\partial f}{\partial x_j} \right )_{\xvec = \Phivec^{(e_p)}}= \sigma_{ij}^{(e_p)} \left ( \frac{\partial f}{\partial x_j} \right )_{\xvec = \Phivec^{(e_p)}}.
-\end{equation}
+\end{equation*}
 We first note that
-\begin{equation}
+\begin{equation*}
     \frac{\partial f^{(e_p)}}{\partial r_k} = \left ( \frac{\partial f}{\partial x_i} \right )_{\xvec = \Phivec^{(e_p)}} \frac{\partial x^{(e_p)}_i}{\partial r_k} = \left ( \frac{\partial f}{\partial x_i} \right )_{\xvec = \Phivec^{(e_p)}} J^{(e_p)}_{ik}.
-\end{equation}
+\end{equation*}
 Upon multiplying both sides by the inverse of $\Jvec^{(e_p)}$, we get
-\begin{equation}
+\begin{equation*}
     \left ( \frac{\partial f}{\partial x_j} \right )_{\xvec = \Phivec^{(e_p)}} = \frac{\partial f^{(e_p)}}{\partial r_k} \left( J^{(e_p)} \right)^{-1}_{kj}.
-\end{equation}
+\end{equation*}
 Thus, we now have
-\begin{equation}
+\begin{equation*}
     \left ( \sigmavec \cdot \nabla f \right )_{\xvec=\Phivec^{(e_p)}} = \sigma^{(e_p)}_{ij}\frac{\partial f^{(e_p)}}{\partial r_k} \left( J^{(e_p)} \right)^{-1}_{kj} = \sigma^{(e_p)}_{ij} \left[ \left( J^{(e_p)} \right)^{-1} \right]^T_{jk} \frac{\partial f^{(e_p)}}{\partial r_k}.
-\end{equation}
-In tensor notation, the above is written as
-\begin{equation}
+\end{equation*}
+In vector/tensor notation, the above is written as
+\begin{equation*}
     \left ( \sigmavec \cdot \nabla f \right )_{\xvec=\Phivec^{(e_p)}} = \sigmavec^{(e_p)} \cdot \left[ \left( \Jvec^{(e_p)} \right)^{-1} \right]^T \cdot \nabla_\rvec f^{(e_p)}.
-\end{equation}
+\end{equation*}
 Thus, for the force matrix $\fvec_{ij}$ we can now write
-\begin{align}
+\begin{align*}
     \int_{\Omega^{(e_p)}} \sigmavec \cdot \nabla w_i \phi_j \, dV_x &= \int_{\Omega_\rvec} \left ( \sigmavec \cdot \nabla w_i \phi_j \right )_{\xvec=\Phivec^{(e_p)}} J^{(e_p)} \, dV_r \nonumber \\
     &= \int_{\Omega_\rvec} \sigmavec^{(e_p)} \cdot \left[ \left( \Jvec^{(e_p)} \right)^{-1} \right]^T  \cdot \nabla_\rvec w^{(e_p)}_i \phi^{(e_p)}_j J^{(e_p)} \, dV_r.
-\end{align}
+\end{align*}
 
 We also note that we can evaluate \cref{eq:evol_rho_semi_discrete} at $\yvec = \Phivec^{(e_p)}(0,\rvec)$ to obtain
 \begin{equation}
@@ -411,7 +411,7 @@ As with the other variables, we can define a reference basis function $w^{(e_p)}
 Now, as mentioned earlier, the Lagrangian basis functions are independent of time, and as a result the reference basis functions are so as well. That is, $w^{(e_p)} = w^{(e_p)}(\rvec)$. Consider the expansion in \cref{eq:fe_exp_x}. Plugging in $\Phivec^{(e_p)}(0,\rvec)$ for $\yvec$ gives
 \begin{equation}
     \label{eq:re_exp_x}
-    \Phivec^{(e_p)} = \sum_j^{N_w} \hat{\Phivec}_j w^{(e_p)}_j.
+    \Phivec^{(e_p)} = \sum_j^{N_w} \hat{\xvec}_j w^{(e_p)}_j.
 \end{equation}
 Thus, both the Lagrangian and reference variables share the same finite-element coefficients.
 
@@ -487,13 +487,13 @@ We define the Jacobeans as follows
     \Jvec^- = \frac{\partial \xvec^-}{\partial \zvec}.
 \end{equation}
 where $\Jvec^{(e_t)} = \Jvec^{(e_t)}(t,\rvec)$ and $\Jvec^-=\Jvec^-(t,\zvec)$. Taking the derivative of \cref{eq:ref_elem_z_map} we get
-\begin{equation}
+\begin{equation*}
     \frac{\partial \Phivec^{(e_p)}}{\partial \rvec} = \left( \frac{ \partial \xvec^-}{\partial \zvec} \right)_{\zvec=\Phivec^{(e_t)}} \frac{ \partial \Phivec^{(e_t)} }{ \partial \rvec},
-\end{equation}
+\end{equation*}
 which we write as
-\begin{equation}
+\begin{equation*}
     \Jvec^{(e_p)} = \left( \Jvec^- \right)_{\zvec=\Phivec^{(e_t)}} \Jvec^{(e_t)}.
-\end{equation}
+\end{equation*}
 Multiplying both sides by the inverse of $\Jvec^{(e_t)}$ we finally get
 \begin{equation}
     \left( \Jvec^- \right)_{\zvec=\Phivec^{(e_t)}} = \Jvec^{(e_p)} \left( \Jvec^{(e_t)} \right)^{-1}.
@@ -508,9 +508,9 @@ We also define a target basis function $w^{(e_t)} = w^{(e_t)}(t,\zvec)$ so that 
     w^-(t,\Phivec^{(e_t)}(t,\rvec)) = w^+(t, \Phivec^{(e_p)}(0,\rvec)).
 \end{equation}
 Consider the expansion in \cref{eq:fe_exp_x}. Plugging in $\Phivec^{(e_p)}(0,\rvec)$ for $\yvec$ gives
-\begin{equation}
+\begin{equation*}
     \xvec^-(t,\Phivec^{(e_t)}(t,\rvec)) = \sum_j^{N_w} \hat{\xvec} w^-(t,\Phivec^{(e_t)}(t,\rvec)).
-\end{equation}
+\end{equation*}
 Assuming this holds for any $\Phivec^{(e_t)}$ we get
 \begin{equation}
     \xvec^- = \sum_j^{N_w} \hat{\xvec} w^-.
