@@ -1,14 +1,20 @@
-\documentclass[../hedp.tex]{subfiles}
+\documentclass[a4paper,11pt]{article}
+\usepackage{fullpage}
+
+\usepackage{"../../info/packages"}
+\usepackage{"../../info/nomenclature"}
+
+\title{Radiation Physics}
+\author{Alejandro Campos}
 
 \begin{document}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\part{Radiation Transfer}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\maketitle
+\tableofcontents
 
-%########################################################################
-\chapter{Definitions}
-%########################################################################
+%------------------------------------------------------------------------
+\section{Basic definitions}
+%------------------------------------------------------------------------
 
 \begin{table}[ht]
     \centering
@@ -63,9 +69,9 @@ In the above, $I = I(\xvec, t, \Omegavec)$ is the radiance, or specific intensit
 
 Various additional radiation quantities can be defined in terms of $I_\nu$, as shown in \cref{tab:definitions}.
 
-%########################################################################
-\chapter{Blackbody radiation}
-%########################################################################
+%------------------------------------------------------------------------
+\section{Blackbody radiation}
+%------------------------------------------------------------------------
 
 \begin{table}
     \centering
@@ -117,7 +123,7 @@ The above relationships and others are shown in \cref{tab:blackbody_quantities}.
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=5cm]{../images/spherical_coords_wiki.png}
+    \includegraphics[width=5cm]{../../images/spherical_coords_wiki.png}
     \caption{Spherical coordinates from Wikipedia.}
     \label{fig:spherical_coordinates}
 \end{figure}

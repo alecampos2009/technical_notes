@@ -1,0 +1,60 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage{fullpage}
+
+\usepackage{"../../info/packages"}
+\usepackage{"../../info/nomenclature"}
+
+\title{Atomic Physics}
+\author{Alejandro Campos}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+%------------------------------------------------------------------------
+\section{Equation of state}
+%------------------------------------------------------------------------
+
+%------------------------------------------------------------------------
+\section{Opacities}
+%------------------------------------------------------------------------
+There are multiple processes that control the behavior of photons:
+\begin{itemize}
+    \item Absorption 
+    \begin{itemize}
+        \item Bound-bound excitation (\textbf{stimulated absorption})
+        \item Bound-free ionization (\textbf{photoionization})
+        \item Free-free photo-absorption (\textbf{inverse breemstrahlung})
+    \end{itemize}
+    \item Emission 
+    \begin{itemize}
+        \item Bound-bound de-excitation (\textbf{stimulated emission}, \textbf{spontaneous emission})
+        \item Free-bound recombination
+        \item Free-free photo-emission (\textbf{breemstrahlung})
+    \end{itemize}
+    \item Scattering
+    \begin{itemize}
+        \item \textbf{Rayleigh scattering}: elastic scattering of a photon from an atom or molecule whose size is less than that of the wavelength of the photon. 
+        \item \textbf{Mie scattering}: same as Rayleigh scattering but for cases where the sizes of the atoms or molecules are comparable to the wavelength of the incoming photon.
+        \item \textbf{Raman scattering}: inelastic scattering of a photon from a molecule. The interaction changes the molecule's vibrational, rotational, or electron energy.
+        \item \textbf{Brillouin scattering}: inelastic scattering of a photon caused by its interaction with material waves in a medium (i.e. mass oscillation modes, charge displacement modes, magnetic spin oscillation modes). 
+        \item \textbf{Compton scattering}: inelastic scattering of a photon from a charged particle. 
+        \item \textbf{Thomson scattering}: low-energy limit of Compton scattering. The photon energy and the particle's kinetic energy do not change as a result of the scattering. Can be explained with classical electrodynamics.
+    \end{itemize}
+    \item Reflection
+    \item Transmission (nothing happens)
+    \item \textbf{Pair production/annihilation}
+\end{itemize}
+
+Each of the above would alter the beam of photons passing through the material (except for transmission). The cross-sections of each process, which would depend on the incoming photon frequency $\nu$, can be added up to obtain a total cross section $\sigma = \sigma(\nu)$. From the definition of a cross section, $\sigma$ can be used to determine how many photons keep their course as they traverse through the material and how many do not. Consider the material under consideration to have the shape of a thick slab, which starts at $x=0$ and continues on for a definite length along $x>0$. We want to know how $I(x)$, the number of photons crossing the slab at any location $x$, decreases as we travel along the $x$ direction. Let's focus on an infinitesimal thin lamina within the slab, of width $dx$ and located at some arbitrary location $x$. The number of target particles in that lamina will be $n dx$, where $n$ is the number volume density of particles in the target material. Then, the number of incident photons after crossing the lamina would be
+\begin{equation}
+    I(x+dx) = I(x) -\sigma I(x) n dx.
+\end{equation}
+This leads to the ODE $dI(x)/dx = -\sigma I(x) n$, which has as solution
+\begin{equation}
+    I(x) = I(0) \exp(-\sigma n x).
+\end{equation}
+The attenuation coefficient is defined as $\sigma n$ [1/cm]. The mass attenuation coefficient, also referred to as opacity, is then given by $\kappa = \sigma n / \rho$ [cm\textsuperscript{2}/g]. $\Lambda = 1 / \sigma n$ is referred to as the attenuation length. 
+
+\end{document}
