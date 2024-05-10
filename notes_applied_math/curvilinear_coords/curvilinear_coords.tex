@@ -9,7 +9,7 @@
 \newcommand{\uhat}{\hat{u}}
 \newcommand{\xhat}{\hat{x}}
 
-\title{Coordinate system for Tokamaks}
+\title{Curvilinear coordinates}
 
 
 \begin{document}
@@ -17,23 +17,24 @@
 \maketitle
 
 \section{Basic definitions}
-\subsection{Eulerian coordinates}
-Consider our traditional Eucledian coordinate system given by coordinates $(x^1,x^2,x^3)$ and unit vectors $\xvec_1, \xvec_2, \xvec_2$. The position vector is $\xvec = x^1 \xvec_1 + x^2 \xvec_2 + x^3 \xvec_3$.
+\subsection{Cartesian coordinates}
+Consider Euclidean space, which is represented by cartesian coordinates. We denote the coordinates as $(x^1,x^2,x^3)$ and the basis unit vectors as $\xvec_1, \xvec_2, \xvec_2$. The position vector is $\xvec = x^1 \xvec_1 + x^2 \xvec_2 + x^3 \xvec_3$. 
+
+Notice that the components were denoted with upper scripts and the unit vectors with lower scripts. For cartesian coordinates it doesn't matter if we use upper or lower scripts, that is, $x^i = x_i$ and $\xvec_i=\xvec^i$. For other coordinate systems, as we'll see in the sections below, upper scripts and lower scripts have different meanings.
 
 \subsection{Curvilinear Coordinates}
-We will now define a new coordinate system, a curvilinear coordinate system, in relation to the standard Eucledian coordinates. To do so we first define the transformation 
-\begin{equation}
-\uhat^i = \uhat^i(x^1, x^2, x^3) .
-\end{equation}
-and we label its inverse as
-\begin{equation}
-\xhat^i = \xhat^i(u^1,u^2,u^3)
-\end{equation}
-Thus, we can write 
+We will now define a new coordinate system, a curvilinear coordinate system, in relation to the standard cartesian coordinates. The coordinates of this curvilinear system are denoted as $(u^1, u^2, u^3)$. We introduce the following two sets of functions
+\begin{align}
+\uhat^i &= \uhat^i(x^1, x^2, x^3), \\
+\xhat^i &= \xhat^i(u^1,u^2,u^3),
+\end{align}
+such that they satisfy
 \begin{align}
     \xhat^i(\uhat^1, \uhat^2, \uhat^3) &= x^i \label{eq:trans1}\\
-    \uhat^i(\xhat^1, \xhat^2, \xhat^3) &= u^i \label{eq:trans2}
+    \uhat^i(\xhat^1, \xhat^2, \xhat^3) &= u^i \label{eq:trans2},
 \end{align}
+for $i=1,2,3$. In other words, $\hat{u}^i$ and $\hat{x}^i$ are functions that map between coordinates in the cartesian and curvilinear systems. 
+
 We can now take the derivative of either \cref{eq:trans1} or \cref{eq:trans2}. For example, the derivative $d/du^j$ of \cref{eq:trans2} gives
 \begin{equation}
     \left ( \frac{\partial \uhat^i}{\partial x^k} \right)_{x^i = \xhat^i} \frac{\partial \xhat^k}{\partial u^j} = \delta^i_j.
@@ -58,7 +59,7 @@ The dot product of these two vectors is given by
 \end{equation}
 The two coordinate bases are not necessarily constant, orthogonal, of unit length, or dimensionless.
 
-\textbf{At the end, one way to think about it is that for every point $[x^1,x^2,x^3]$ in the Eucledian coordiante system, there is a coresponding coordinate given by $[\uhat^1,\uhat^2,\uhat^3]$, and that at every point of these new coordinates, there are two coordinate bases, given by \cref{eq:basis_sub} and \cref{eq:basis_sup}.} The latter basis is typically expresses as $\nabla \uhat^1$,$\nabla \uhat^2$, and $\nabla \uhat^3$.
+\textbf{At the end, one way to think about it is that for every point $[x^1,x^2,x^3]$ in the cartesian coordinate system, there is a corresponding coordinate given by $[\uhat^1,\uhat^2,\uhat^3]$, and that at every point of these new coordinates, there are two coordinate bases, given by \cref{eq:basis_sub} and \cref{eq:basis_sup}.} The latter basis is typically expresses as $\nabla \uhat^1$,$\nabla \uhat^2$, and $\nabla \uhat^3$.
 
 \subsection{Vectors}
 Since there are two coordinate bases, one can define two types of vectors at every point in the domain. One is a vector in terms of contravariant components $v^i$ 
@@ -161,7 +162,7 @@ The curl is given by
 \end{equation}
 
 \section{Flux coordinates}
-Imagine that Eucledian space is permeated by a set of surfaces, which we call flux surfaces. Each of those surfaces is labeled with a different value of the variable $\psi$. We also note that the flux surfaces are not stationary, they can move around as time progresses.
+Imagine that Euclidean space is permeated by a set of surfaces, which we call flux surfaces. Each of those surfaces is labeled with a different value of the variable $\psi$. We also note that the flux surfaces are not stationary, they can move around as time progresses.
 
 We now introduce the function $\hat{\psi} = \hat{\psi}(t,x^1,x^2,x^3)$. This function is defined in such a way that for all values $x^1,x^2,x^3$ that are part of a given flux surface at a specific time $t$, then $\hat{\psi}$ will evaluate to the value of $\psi$ corresponding to that flux surface. The velocity of the flux surfaces is given by $\Vvec_\psi = \Vvec_\psi(t,x^1,x^2,x^3)$. Thus, by definition
 \begin{equation}

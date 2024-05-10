@@ -1261,7 +1261,6 @@ Using the above, we can easily show that
 \frac{\partial \rho E}{\partial t} + \frac{\partial}{\partial x_i} \left [ \rho \left ( E + \frac{p}{\rho} \right ) u_i \right ] = \frac{\partial u_i t_{ij}}{\partial x_j} + \rho f_i u_i -  \frac{\partial q_i}{\partial x_i}
 \end{equation}
 
-
 \paragraph{Transport models}
 
 \begin{equation}
@@ -1384,12 +1383,18 @@ Again, assuming $\sum_\alpha J_{\alpha,i} = 0$ and $\sum_\alpha w_\alpha = 0$, w
 %------------------------------------------------------------------------
 \section{Multi-material hydrodynamics}
 %------------------------------------------------------------------------
-The main difference between multi-material and multi-species hydrodynamics is that for multi-material hydrodynamics we solve a PDE for the energy of each species, rather than a single PDE for the energy of all species. Additionally, we refer to the constituent elements as materials rather than species.  The energy of each material is denoted as $e_\alpha$. For the multi-species approach we solved for one single energy $e$ and used the pressure-temperature equilibration algorithm to obtain the energy of the various species $e_\alpha$. In this case, since we are already solving a PDE for each $e_\alpha$, a different approach is needed.
 
-The governing equations are as follows
+In the previous section we presented a system that constituted of $N$ PDEs for density, one PDE for the velocity vector and one PDE for the energy, where $N$ is the number of species. In this section, we expand on the previous model by solving $N$ energy PDEs, rather than just one. Rather than referring to the constituent elements as species, we'll call them materials.
+
+The $N$ energy PDE's are as follow
 \begin{equation}
-    \frac{\partial \eta_\alpha}{\partial t} + u_i \frac{\partial \eta_\alpha}{\partial x_i} = C_\alpha
+    \frac{\partial \rho Y_\alpha e_\alpha}{\partial t} + ...
 \end{equation}
+
+%---------------------------------
+\subsection{Summary of governing equations}
+%---------------------------------
+\label{sec:multi_material_eqs}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \part{Inviscid Incompressible Flow}
