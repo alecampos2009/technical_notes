@@ -826,12 +826,13 @@ If using the expression for the stress tensor, we get
 \label{sec:alternate_forms_internal_energy_equation}
 The internal energy is defined as $e = C_v T$. To derive its transport equation, we subtract the kinetic energy \cref{eq:kinetic_energy} from the total energy \cref{eq:energy_conservation_tensor} to obtain
 \begin{equation}
-    \frac{ \partial \rho e}{\partial t} + \frac{\partial \rho e u_j}{\partial x_j} = -\frac{\partial q_j}{\partial x_j} + \sigma_{ij} \frac{\partial u_i}{\partial x_j}.
+    \label{eq:internal_energy_sigma}
+    \frac{ \partial \rho e}{\partial t} + \frac{\partial \rho e u_j}{\partial x_j} = \sigma_{ij} \frac{\partial u_i}{\partial x_j} - \frac{\partial q_j}{\partial x_j}.
 \end{equation}
 If using the expression for the stress tensor, we get
 \begin{equation}
     \label{eq:internal_energy}
-    \frac{ \partial \rho e}{\partial t} + \frac{\partial \rho e u_j}{\partial x_j} = -\frac{\partial q_j}{\partial x_j} - p \frac{\partial u_i}{\partial x_i} + t_{ij} \frac{\partial u_i}{\partial x_j}.
+    \frac{ \partial \rho e}{\partial t} + \frac{\partial \rho e u_j}{\partial x_j} = - p \frac{\partial u_i}{\partial x_i} + t_{ij} \frac{\partial u_i}{\partial x_j} - \frac{\partial q_j}{\partial x_j}.
 \end{equation}
 The last two terms are referred to as the dissipative terms, since they represent a transfer of energy away from $K$ towards $e$.
 
@@ -845,12 +846,12 @@ We begin with the equation for internal energy, \cref{eq:internal_energy}, but e
 \end{equation}
 Thus, the internal energy \cref{eq:internal_energy} becomes
 \begin{equation}
-\frac{ \partial}{\partial t} \left ( \frac{1}{\gamma - 1} p \right ) + \frac{\partial}{\partial x_j} \left ( \frac{1}{\gamma - 1} p u_j \right ) = -\frac{\partial q_j}{\partial x_j} - p \frac{\partial u_i}{\partial x_i} + t_{ij} \frac{\partial u_i}{\partial x_j}.
+\frac{ \partial}{\partial t} \left ( \frac{1}{\gamma - 1} p \right ) + \frac{\partial}{\partial x_j} \left ( \frac{1}{\gamma - 1} p u_j \right ) = - p \frac{\partial u_i}{\partial x_i} + t_{ij} \frac{\partial u_i}{\partial x_j} - \frac{\partial q_j}{\partial x_j}.
 \end{equation}
 which we re-write as
 \begin{equation}
 \label{eq:energy_form_pressure}
-\frac{1}{\gamma - 1} \left ( \frac{ \partial p}{\partial t}  + u_j\frac{\partial p}{\partial x_j} + \gamma p \frac{\partial u_i}{\partial x_i} \right ) = -\frac{\partial q_j}{\partial x_j} + t_{ij} \frac{\partial u_i}{\partial x_j}.
+\frac{1}{\gamma - 1} \left ( \frac{ \partial p}{\partial t}  + u_j\frac{\partial p}{\partial x_j} + \gamma p \frac{\partial u_i}{\partial x_i} \right ) =  t_{ij} \frac{\partial u_i}{\partial x_j} - \frac{\partial q_j}{\partial x_j}.
 \end{equation}
 
 We will now re-write the left-hand side of the pressure equation above into a more convenient form. Using \cref{eq:mass_conservation_noncons}, we first show that
@@ -870,7 +871,7 @@ Using the above, one can then write
 Thus, the equation for pressure is re-written as
 \begin{equation}
 \label{eq:energy_form_pressure_2}
-    \frac{1}{\gamma - 1} \rho^\gamma \left [ \frac{\partial}{\partial t} \left ( \frac{p}{\rho^\gamma} \right) + u_j \frac{\partial}{\partial x_j} \left (\frac{p}{\rho^\gamma} \right ) \right ] = -\frac{\partial q_j}{\partial x_j} + t_{ij} \frac{\partial u_i}{\partial x_j}.
+    \frac{1}{\gamma - 1} \rho^\gamma \left [ \frac{\partial}{\partial t} \left ( \frac{p}{\rho^\gamma} \right) + u_j \frac{\partial}{\partial x_j} \left (\frac{p}{\rho^\gamma} \right ) \right ] = t_{ij} \frac{\partial u_i}{\partial x_j} - \frac{\partial q_j}{\partial x_j}.
 \end{equation}
 %---------------------------------
 \subsection{Enthalpy equation} 
@@ -1152,11 +1153,13 @@ The thermodynamic variables that we'll be solving for are $\rho_\alpha$, $e_\alp
 
 The thermal equation of state is expressed as
 \begin{equation}
-    p_\alpha = \phi_\alpha (\rho_\alpha, T_\alpha)
+    \label{eq:multi_species_thermal_eos}
+    p_\alpha = \phi_\alpha (\rho_\alpha, T_\alpha),
 \end{equation}
 and the caloric equation of state as
 \begin{equation}
-    e_\alpha = \psi_\alpha (\rho_\alpha, T_\alpha)
+    \label{eq:multi_species_caloric_eos}
+    e_\alpha = \psi_\alpha (\rho_\alpha, T_\alpha).
 \end{equation}
 We now assume an equilibrium state in which all of the species have the same pressure and temperature. Thus, the total number of unknowns is reduced to $2N+2$. The thermal and caloric equations of state take the form
 \begin{equation}
@@ -1340,6 +1343,7 @@ D_\alpha = \frac{\mu}{\rho Sc_\alpha}
 %---------------------------------
 \subsection{Mass-fraction equations}
 %---------------------------------
+\label{sec:mass_frac_methods}
 There are two methods that are often used to compute the total density $\rho$ and the mass fractions $Y_\alpha$. These two methods are equivalent in paper, as will be shown below, but when implemented numerically can lead to different behavior. Since $\rho$ and $Y_\alpha$ constitute $1+N$ unknowns, $1+N$ equations are required.
 
 \subsubsection{Method 1}
@@ -1390,12 +1394,47 @@ Again, assuming $\sum_\alpha J_{\alpha,i} = 0$ and $\sum_\alpha w_\alpha = 0$, w
 \label{sec:multi_mat_hydro}
 Note: in this section we'll refer to species as materials.
 
-In \cref{sec:multi_species_hydro} we presented a system that consisted of $N$ PDEs for density, one PDE for the velocity vector, and one PDE for the total energy, where $N$ is the number of materials. One can combine the PDE for the velocity vector and the PDE for the total energy to obtain the PDE for the internal energy $e$, as shown in \cref{sec:alternate_forms_internal_energy_equation}. The PT equilibration algorithm can then be used to compute the internal energies $e_\alpha$ of each of the $N$ materials. In this section we introduce an extended model that instead solves $N$ PDEs for each of the material internal energies.
-
-The $N$ PDE's for the material internal energies are as follows
+In the multi-species model, one essentially solves a single PDE for the internal energy $e$. In the multi-material model, one instead solves a different PDE for each material energy $e_\alpha$. These equations are as follows
 \begin{equation}
-    \frac{\partial \rho Y_\alpha e_\alpha}{\partial t} + \frac{\partial \rho Y_\alpha e_\alpha u_i}{\partial x_i} = 
+    \label{eq:multi_mat_hydro_species_energy}
+    \frac{\partial \rho Y_\alpha e_\alpha}{\partial t} + \frac{\partial \rho Y_\alpha e_\alpha u_j}{\partial x_j} = \eta_\alpha \sigma_{\alpha,ij} \frac{\partial u_i}{\partial x_j} - \bar{p} \alpha_\alpha - \frac{\partial q_{\alpha,j}}{\partial x_j}.
 \end{equation}
+In the above $\sigma_\alpha$ is the stress tensor of each material, $\bar{p}$ is a common pressure across all materials, and $\alpha_\alpha$ is the closure model of each material, and $q_\alpha$ is the heat flux, again dependent of each material. Another new aspect of the multi-material model is that it includes PDE's for the material volume fractions, 
+\begin{equation}
+    \label{eq:multi_mat_hydro_vol_fractions}
+    \frac{\partial \eta_\alpha}{\partial t} + u_j \frac{\partial \eta_\alpha}{\partial x_j} = \alpha_\alpha.
+\end{equation}
+\Cref{tab:multi_species_vs_multi_material} shows which equations or methods are used to solve for all of the thermodynamic variables using either the multi-species or multi-material approaches.
+
+\begin{table}
+    \centering
+    \caption{Variables for multi-species and multi-material hydrodynamics.}
+    \label{tab:multi_species_vs_multi_material}
+    \def\arraystretch{1.5}
+    \begin{tabular}{ c | c | c }
+        Variable  & M-S solution & M-M solution \\
+        \hhline{=|=|=}
+        $\rho$ & method 1 or 2 from \cref{sec:mass_frac_methods} &  method 1 or 2 from \cref{sec:mass_frac_methods} \\
+        \hline
+        $Y_\alpha$ & method 1 or 2 from \cref{sec:mass_frac_methods} & method 1 or 2 from \cref{sec:mass_frac_methods} \\
+        \hline
+        $e$ & PDE given by \cref{eq:internal_energy_sigma} & from $Y_\alpha$ and $e_\alpha$ using \cref{eq:from_e_alpha_to_e}\\
+        \hline
+        $p_\alpha$ & equal to $p$ & thermal eos, \cref{eq:multi_species_thermal_eos} \\
+        \hline
+        $T_\alpha$ & equal to $T$ & caloric eos, \cref{eq:multi_species_caloric_eos} \\
+        \hline
+        $p$ & PT-equilibration algorithm & n/a \\
+        \hline
+        $T$ & PT-equilibration algorithm & n/a \\
+        \hline
+        $\rho_\alpha$ & PT-equilibration algorithm & algebraic relation given by \cref{eq:relation_volume_density_mass} \\
+        \hline
+        $e_\alpha$ & PT-equilibration algorithm & PDE given by \cref{eq:multi_mat_hydro_species_energy} \\
+        \hline
+        $\eta_\alpha$ & algebraic relation given by \cref{eq:relation_volume_density_mass} & PDE given by \cref{eq:multi_mat_hydro_vol_fractions} \\
+    \end{tabular}
+\end{table}
 
 %---------------------------------
 \subsection{Summary of governing equations}
