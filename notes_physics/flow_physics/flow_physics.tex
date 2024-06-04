@@ -25,9 +25,11 @@
 %########################################################################
 
 %------------------------------------------------------------------------
-\section{Eulerian \& Lagrangian reference frames}
+\section{Eulerian and Lagrangian reference frames}
 %------------------------------------------------------------------------
-There are two types of frameworks used to described properties of fluids: Eulerian and Lagrangian. The Eulerian framework is used to describe fields, for which fluid properties are of the form $\fvec = \fvec(t,\xvec)$, where $t$ and $\xvec$ denote time and position. Lagrangian fields are used to describe moving particles, for which fluid properties are of the form $\fvec^+ = \fvec^+(t,\yvec)$, where $t$ denotes time and $\yvec$ the location of the particle at an initial time. Eulerian and Lagrangian properties are related to each other according to 
+The Eulerian description of a fluid is that for which fluid properties are of the form $\fvec = \fvec(t,\xvec)$, where $t$ and $\xvec$ denote time and position. Examples of this include density $\rho = \rho(t,\xvec)$, velocity $\vvec = \vvec(t,\xvec)$, and specific internal energy $e = e(t, \xvec)$. 
+
+Lagrangian fields are used to describe moving particles, for which fluid properties are of the form $\fvec^+ = \fvec^+(t,\yvec)$, where $t$ denotes time and $\yvec$ the location of the particle at an initial time. Eulerian and Lagrangian properties are related to each other according to 
 \begin{equation}
 \fvec^+(t,\yvec)=\fvec(t,\xvec^+(t,\yvec)).
 \end{equation}
@@ -278,6 +280,41 @@ Passive scalar & $\rho Y$ \\
 \end{tabular}
 \end{center}
 When each of these densities is multiplied by $\uvec \cdot \nvec$, then the resulting terms are referred to as convective fluxes.
+
+%------------------------------------------------------------------------
+\section{Atomistic representation}
+%------------------------------------------------------------------------
+\label{sec:atomistic_representation}
+
+The flow variables are defined at every point $\xvec$ within the fluid. We thus ignore the microscopic distribution of the fluid's atoms and molecules, which are not necessarily present at every point $\xvec$. That being said, we can establish a correlation between the fluid variables and the underlying macroscopic structure. For example, consider the total mass $m^{(U)}$ in some subdomain $U$. This mass can be computed by summing up the masses $m^{(i)}$ of the atoms or molecules in this subdomain, or by using the Eulerian field variable for density, as shown below
+\begin{equation}
+   m^{(U)} = \sum_{i \in U} m^{(i)} = \int_{U} \rho \, d\xvec.
+\end{equation} 
+In the above, $i \in U$ denotes the atoms or molecules within the subdomain $U$. Now consider the total momentum $P^{(U)}$ in some subdomain $U$. This momentum can be computed by summing up the momentum $m^{(i)} \uvec^{(i)}$ of the atoms or molecules in this subdomain, or by using the Eulerian field variable for velocity, as shown below
+\begin{equation}
+    P^{(U)} = \sum_{i \in U} m^{(i)} \uvec^{(i)} = \int_{U} \rho \uvec \, d\xvec.
+\end{equation}
+Finally, consider the internal energy $IE^{(U)}$ in some subdomain $U$. This internal energy can be computed by summing up the internal energies $e^{(i)}$ of the atoms or molecules in this subdomain, or by using the Eulerian field variable for the specific internal energy, as shown below
+\begin{equation}
+    IE^{(U)} = \sum_{i \in U} e^{(i)} = \int_{U} \rho e \, d\xvec.
+\end{equation}
+
+We can now write
+\begin{equation}
+    \rho = \lim_{U \to \epsilon} \frac{1}{|U|} \int_U \rho \, d\xvec = \lim_{U \to \epsilon} \frac{1}{|U|} \sum_{i \in U} m^{(i)} = \lim_{U \to \epsilon} \frac{m^{(U)}}{|U|},
+\end{equation}
+where $|U|$ is the volume of the subdomain $U$. Thus, the density is the mass contained in a small domain divided by the volume of that small domain as the domain becomes sufficiently small. Similarly for velocity, we have
+\begin{equation}
+    \uvec = \frac{\rho\vvec}{\rho} = \lim_{U \to \epsilon} \frac{\frac{1}{|U|} \int_U \rho \uvec \, dx}{\frac{1}{|U|} \int_U \rho \, dx} = \lim_{U \to \epsilon} \frac{ \sum_{i \in U} m^{(i)} v^{(i)} }{ \sum_{i \in U} m^{(i)} } = \lim_{U \to \epsilon} \frac{ P^{(U)} }{ m^{(U)} }.
+\end{equation}
+That is, the velocity is the the momentum contained in a small domain divided by the mass contained in that small domain as the domain becomes sufficiently small. Finally, for energy we have
+\begin{equation}
+    e = \frac{\rho e}{\rho} = \lim_{U \to \epsilon} \frac{ \frac{1}{|U|} \int_U \rho e \, d\xvec}{ \frac{1}{|U|} \int_U \rho \, d\xvec} = \lim_{U \to \epsilon} \frac{ \sum_{i \in U} e^{(i)} }{ \sum_{i \in U} m^{(i)} } = \lim_{U \to \epsilon} \frac{ IE^{(U)} }{ m^{(U)} }.
+\end{equation}
+That is, the specific internal energy is the internal energy contained in a small subdomain divided by the mass contained in that small subdomain as the subdomain becomes sufficiently small.
+
+In the above, a sufficiently small subdomain is one that is small compared to the smallest length scale in the flow field but large enough that it contains a sufficiently large number of atoms or molecules.
+
 
 %------------------------------------------------------------------------
 \section{Mass}
@@ -738,7 +775,7 @@ Combining the relationships above we get $U = \frac{1}{\gamma - 1} P$, which is 
 \end{equation*}
 
 %########################################################################
-\chapter{Alternate forms of the fluid equations}
+\chapter{Additional fluid equations}
 %########################################################################
 
 %------------------------------------------------------------------------
@@ -1108,43 +1145,71 @@ Using \cref{eq:ale_integral_energy} and the divergence theorem, this can be writ
     \int_{\partial \Omega^+(t)} \uvec \cdot \sigmavec \cdot \nvec \, ds + \int_{\Omega^+(t)} \rho \fvec \cdot \uvec \, ds - \int_{\partial \Omega^+(t)} \qvec \cdot \nvec \, ds.
 \end{multline}
 
+%########################################################################
+\chapter{Mixtures}
+%########################################################################
+In this chapter we focus on fluids that consist of mixtures of elements, which we sometimes refer to as species and other times as materials. There are two approaches that we'll consider, multi-species hydrodynamics, where the constituent elements in the mixture are referred to as species, and multi-material hydrodynamics, which is a higher-fidelity extension of multi-species hydrodynamics and where we refer to the constituent elements of the mixture as materials. 
+
+%------------------------------------------------------------------------
+\section{Additional fluid variables}
+%------------------------------------------------------------------------
+Consider the volume $|U|_\alpha$ occupied by element $\alpha$ in some subdomain $U$. This can be computed by using the volume fraction $\eta_\alpha = \eta_\alpha(t,\xvec)$ as shown below
+\begin{equation}
+    |U|_\alpha = \int_U \eta_\alpha \, d\xvec.
+\end{equation}
+Now consider the mass $m_\alpha^{(U)}$ of element $\alpha$ in some subdomain $U$. This can be computed by summing up the masses $m^{(i)}$ of the atoms or molecules of element $\alpha$ in this subdomain, or by using the mass fraction $Y_\alpha = Y_\alpha(t,\xvec)$, as shown below 
+\begin{equation}
+    m_\alpha^{(U)} = \sum_{i \in U, i \in \alpha} m^{(i)} = \int_U \rho Y_\alpha \, d\xvec.
+\end{equation}
+In the above $i \in U, i \in \alpha$ denotes the atoms or molecules of element $\alpha$ located in the subdomain $U$. Finally, consider the internal energy $IE_\alpha^{(U)}$ of element $\alpha$ in some subdomain $U$. This internal energy can be computed by summing up the internal energies $e^{(i)}$ of the atoms or molecules of element $\alpha$ in this subdomain, or by using the specific internal energy $e_\alpha=e_\alpha(t,\xvec)$, as shown below
+\begin{equation}
+    IE_\alpha^{(U)} = \sum_{i \in U, i \in \alpha} e^{(i)} = \int_U \rho Y_\alpha e_\alpha \, d\xvec.
+\end{equation}
+
+We can now write 
+\begin{equation}
+    \eta_\alpha = \lim_{U \to \epsilon} \frac{1}{|U|} \int_U \eta_\alpha \, d\xvec = \lim_{U \to \epsilon} \frac{|U|_\alpha}{|U|}.
+\end{equation}
+That is, the volume fraction is the volume occupied by element $\alpha$ within a small domain divided by the volume of that small domain as the domain becomes sufficiently small (see \cref{sec:atomistic_representation} for what constitutes sufficiently small).
+For mass fraction, we have
+\begin{equation}
+    Y_\alpha = \frac{\rho Y_\alpha}{\rho} = \lim_{U \to \epsilon} \frac{ \frac{1}{|U|} \int_U \rho Y_\alpha \, d\xvec }{ \frac{1}{|U|} \int_U \rho \, d\xvec } = \lim_{U \to \epsilon} \frac{ \sum_{i \in U, i \in \alpha} m^{(i)} }{ \sum_{i \in U} m^{(i)} } = \lim_{U \to \epsilon} \frac{ m_\alpha^{(U)} }{ m^{(U)} }.
+\end{equation}
+That is, the mass fraction is the mass of element $\alpha$ contained in a small domain divided by the mass contained in that small domain as the domain becomes sufficiently small. Similarly for specific internal energy of an element, we have
+\begin{equation}
+    e_\alpha = \frac{\rho Y_\alpha e_\alpha}{\rho Y_\alpha } = \lim_{U \to \epsilon} \frac{ \frac{1}{|U|} \int_U \rho Y_\alpha e_\alpha \, d\xvec }{ \frac{1}{|U|} \int_U \rho Y_\alpha \, d\xvec } = \lim_{U \to \epsilon} \frac{ \sum_{i \in U, i \in \alpha} e^{(i)} }{ \sum_{i \in U, i \in \alpha} m^{(i)} } = \lim_{U \to \epsilon} \frac{ e_\alpha^{(U)} }{ m_\alpha^{(U)} }.
+\end{equation}
+That is, the specific internal energy of an element is the internal energy of element $\alpha$ contained in a small domain divided by the mass of element $\alpha$ in that small domain as the domain becomes sufficiently small.
+
+We introduce an additional fraction, the mole fraction $X_\alpha = X_\alpha(t,\xvec)$, as shown below
+\begin{equation}
+    X_\alpha = \lim_{U \to \epsilon} \frac{o_\alpha^{(U)}}{o^{(U)}},
+\end{equation}
+where $o_\alpha^{(U)}$ is the number of moles of element $\alpha$ in the subdomain $U$, and $o^{(U)}$ is the number of moles in the subdomain $U$. Since $m_\alpha^{(U)} = o_\alpha^{(U)} M_\alpha$, where $M_\alpha$ is the molar mass of element $\alpha$, we can introduce two relationships between $X_\alpha$ and $Y_\alpha$:
+\begin{equation}
+\label{eq:y_intermsof_x}
+    Y_\alpha = \lim_{U \to \epsilon} \frac{o_\alpha^{(U)} M_\alpha}{\sum_\beta o_\beta^{(U)} M_\beta} = \lim_{U \to \epsilon} \frac{X_\alpha M_\alpha}{\sum_\beta X_\beta M_\beta}
+\end{equation}
+\begin{equation}
+\label{eq:x_intermsof_y}
+    X_\alpha = \lim_{U \to \epsilon} \frac{m_\alpha^{(U)} / M_\alpha}{\sum_\beta m_\beta^{(U)} / M_\beta} = \lim_{U \to \epsilon} \frac{Y_\alpha / M_\alpha}{ \sum_\beta Y_\beta / M_\beta}
+\end{equation}
+
+A new density is now introduced, namely $\rho_\alpha = \rho_\alpha(t,\xvec)$. This is defined as 
+\begin{equation}
+    \rho_\alpha = \lim_{U \to \epsilon} \frac{ m_\alpha^{(U)} }{ |U|_\alpha }.
+\end{equation}
+This density can be expressed in terms of the other variables defined above as shown below
+\begin{equation}
+    \label{eq:relation_volume_density_mass}
+    \rho_\alpha = \lim_{U \to \epsilon} \frac{m^{(U)}}{|U|} \frac{ m_\alpha^{(U)} / m^{(U)} }{ |U|_\alpha / |U| } = \rho \frac{Y_\alpha}{\eta_\alpha}.
+\end{equation}
+
 %------------------------------------------------------------------------
 \section{Multi-species hydrodynamics}
 %------------------------------------------------------------------------
 \label{sec:multi_species_hydro}
 Multi-species fluid flows are governed by the multi-species Navier-Stokes equations. These consist of the traditional Navier-Stokes equations augmented with multiple scalars, where each scalar is the mass fraction of a species in the system. The mass fraction of species $\alpha$ is given by $Y_\alpha = m_\alpha/m$, where $m_\alpha = m_\alpha(t,\xvec)$ is the mass of the $\alpha$ component, and $m = m(t,\xvec)$ is the total mass. The species mass fractions are no longer passive scalars. For ideal gases, for example, they affect the value of $R$, which in turns affects the pressure, density, and temperature of the whole mixture. They also affect the enthalpy diffusion, which then alters the heat flux and internal energy. 
-
-%---------------------------------
-\subsection{Relevant fractions}
-%---------------------------------
-\begin{itemize}
-    \item Mole fraction ($X_\alpha$): number of moles $o_\alpha$ of the $\alpha$ species over the total number of moles $o$.
-    \begin{equation}
-        X_\alpha = \frac{o_\alpha}{o}.
-    \end{equation}
-    \item Mass fraction ($Y_\alpha$): mass $m_\alpha$ of the $\alpha$ species over the total mass $m$. 
-    \begin{equation}
-        Y_\alpha = \frac{m_\alpha}{m}.
-    \end{equation}
-    Using $m_\alpha = o_\alpha M_\alpha$, where $M_\alpha$ is the molar mass of species $\alpha$, we can introduce two relationships between $X_\alpha$ and $Y_\alpha$:
-    \begin{equation}
-    \label{eq:y_intermsof_x}
-        Y_\alpha = \frac{o_\alpha M_\alpha}{\sum_\beta o_\beta M_\beta} = \frac{X_\alpha M_\alpha}{\sum_\beta X_\beta M_\beta}
-    \end{equation}
-    \begin{equation}
-    \label{eq:x_intermsof_y}
-        X_\alpha = \frac{m_\alpha / M_\alpha}{\sum_\beta m_\beta / M_\beta} = \frac{Y_\alpha / M_\alpha}{ \sum_\beta Y_\beta / M_\beta}
-    \end{equation}
-    \item Volume fraction ($\eta_\alpha$): volume $v^{(\alpha)}$ of the $\alpha$ species over the total volume $v$.
-    \begin{equation}
-        \eta_\alpha = \frac{v_\alpha}{v}.
-    \end{equation}
-    If we define the species density as $\rho_\alpha = m_\alpha/v_\alpha$, then
-    \begin{equation}
-    \label{eq:relation_volume_density_mass}
-        \eta_\alpha = \frac{v_\alpha}{v} \frac{m}{m} \frac{m_\alpha}{m_\alpha} = \frac{\rho Y_\alpha}{\rho_\alpha}.
-    \end{equation}
-\end{itemize}
 
 %---------------------------------
 \subsection{Equations of state}
