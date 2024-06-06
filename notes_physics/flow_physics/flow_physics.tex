@@ -21,13 +21,84 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %########################################################################
+\chapter{Atomistic representation}
+%########################################################################
+
+%------------------------------------------------------------------------
+\section{Atomistic vs.\@ fluid variables}
+%------------------------------------------------------------------------
+\label{sec:atomistic_and_fluid}
+We'll describe fluids using variables such as $\rho=\rho(t,\xvec)$ for the fluid density, $\uvec = \uvec(t,\xvec)$ for the fluid velocity, and $e=e(t,\xvec)$ for the fluid specific internal energy, where $t$ is time and $\xvec$ is a location in space. Fluid variables are defined at every point $\xvec$ within the domain containing the fluid. Thus, in the fluid approach we do not account for the microscopic distribution of the fluid's atoms and molecules, which are not necessarily present at every point $\xvec$. That being said, we can establish a correlation between the fluid variables and atomistic variables, which define the underlying microscopic structure. Examples of these atomistic variables include $m^{(i)}$, $\uvec^{(i)}$, and $e^{(i)}$, which are the mass, velocity, and internal energy of the $i$\textsuperscript{th} atom or molecule in the system.
+
+Consider the total mass $m_\Omega$ in some subdomain $\Omega$. This mass can be computed by summing up the masses $m^{(i)}$ of the atoms or molecules in this subdomain, or by using the Eulerian field variable for density, as shown below
+\begin{equation}
+   m_\Omega = \sum_{i \in \Omega} m^{(i)} = \int_{\Omega} \rho \, d\xvec.
+\end{equation} 
+In the above, $i \in \Omega$ denotes the atoms or molecules within the subdomain $\Omega$. Now consider the total momentum $P_\Omega$ in some subdomain $\Omega$. This momentum can be computed by summing up the momentum $m^{(i)} \uvec^{(i)}$ of the atoms or molecules in this subdomain, or by using the Eulerian field variable for velocity, as shown below
+\begin{equation}
+    P_\Omega = \sum_{i \in \Omega} m^{(i)} \uvec^{(i)} = \int_\Omega \rho \uvec \, d\xvec.
+\end{equation}
+Finally, consider the internal energy $IE_\Omega$ in some subdomain $\Omega$. This internal energy can be computed by summing up the internal energies $e^{(i)}$ of the atoms or molecules in this subdomain, or by using the Eulerian field variable for the specific internal energy, as shown below
+\begin{equation}
+    IE_\Omega = \sum_{i \in \Omega} e^{(i)} = \int_\Omega \rho e \, d\xvec.
+\end{equation}
+
+%------------------------------------------------------------------------
+\section{Interpretation of fluid variables}
+%------------------------------------------------------------------------
+\label{sec:atomistic_representation}
+Denote the volume of domain $\Omega$ as $V_\Omega$, which is given by
+\begin{equation}
+    V_\Omega = \int_\Omega d\xvec.
+\end{equation}
+We can now write
+\begin{equation}
+    \label{eq:atomistic_rho}
+    \rho = \lim_{\Omega \to \epsilon} \frac{1}{V_\Omega} \int_\Omega \rho \, d\xvec = \lim_{\Omega \to \epsilon} \frac{1}{V_\Omega} \sum_{i \in \Omega} m^{(i)} = \lim_{\Omega \to \epsilon} \frac{m_\Omega}{V_\Omega}.
+\end{equation}
+Thus, the density is the mass contained in a small domain divided by the volume of that small domain as the domain becomes sufficiently small. Similarly for velocity, we have
+\begin{equation}
+    \label{eq:atomistic_u}
+    \uvec = \frac{\rho\vvec}{\rho} = \lim_{\Omega \to \epsilon} \frac{\frac{1}{V_\Omega} \int_\Omega \rho \uvec \, dx}{\frac{1}{V_\Omega} \int_\Omega \rho \, dx} = \lim_{\Omega \to \epsilon} \frac{ \sum_{i \in \Omega} m^{(i)} v^{(i)} }{ \sum_{i \in \Omega} m^{(i)} } = \lim_{\Omega \to \epsilon} \frac{ P_\Omega }{ m_\Omega }.
+\end{equation}
+That is, the velocity is the the momentum contained in a small domain divided by the mass contained in that small domain as the domain becomes sufficiently small. Finally, for energy we have
+\begin{equation}
+    \label{eq:atomistic_e}
+    e = \frac{\rho e}{\rho} = \lim_{\Omega \to \epsilon} \frac{ \frac{1}{V_\Omega} \int_\Omega \rho e \, d\xvec}{ \frac{1}{V_\Omega} \int_\Omega \rho \, d\xvec} = \lim_{\Omega \to \epsilon} \frac{ \sum_{i \in \Omega} e^{(i)} }{ \sum_{i \in \Omega} m^{(i)} } = \lim_{
+        \Omega \to \epsilon} \frac{ IE_\Omega }{ m_\Omega }.
+\end{equation}
+That is, the specific internal energy is the internal energy contained in a small subdomain divided by the mass contained in that small subdomain as the subdomain becomes sufficiently small.
+
+In the above, a sufficiently small subdomain is one that is small compared to the smallest length scale in the flow field but large enough that it contains a sufficiently large number of atoms or molecules.
+
+%------------------------------------------------------------------------
+\section{Additional atomistic variables}
+%------------------------------------------------------------------------
+We denote the number of atoms or molecules in some subdomain $\Omega$ as $N_\Omega$. Additionally, we denote the number of moles in some subdomain $\Omega$ as $o_\Omega$. Avogadro's number $N_a$ can thus be used to write 
+\begin{equation}
+    \label{eq:atomistic_particles_moles}
+    N_\Omega = N_a o_\Omega.
+\end{equation}
+Similarly, with $M$ as the molar mass, we have
+\begin{equation}
+    \label{eq:atomistic_mass_moles}
+    m_\Omega = M o_\Omega.
+\end{equation}
+
+Finally, we denote the number density as $n = n(t,\xvec)$, which is defined as
+\begin{equation}
+    \label{eq:atomistic_number_density}
+    n = \lim_{\Omega \to \infty} \frac{N_\Omega}{V_\Omega}.
+\end{equation}
+
+%########################################################################
 \chapter{Kinematics of fluid motion}
 %########################################################################
 
 %------------------------------------------------------------------------
 \section{Eulerian and Lagrangian reference frames}
 %------------------------------------------------------------------------
-The Eulerian description of a fluid is that for which fluid properties are of the form $\fvec = \fvec(t,\xvec)$, where $t$ and $\xvec$ denote time and position. Examples of this include density $\rho = \rho(t,\xvec)$, velocity $\vvec = \vvec(t,\xvec)$, and specific internal energy $e = e(t, \xvec)$. 
+The Eulerian description of a fluid is that for which fluid properties are of the form $\fvec = \fvec(t,\xvec)$, where $t$ and $\xvec$ denote time and position. Examples of these include density $\rho = \rho(t,\xvec)$, fluid velocity $\uvec = \uvec(t,\xvec)$, and specific internal energy $e = e(t, \xvec)$, first mentioned in \cref{sec:atomistic_and_fluid}.
 
 Lagrangian fields are used to describe moving particles, for which fluid properties are of the form $\fvec^+ = \fvec^+(t,\yvec)$, where $t$ denotes time and $\yvec$ the location of the particle at an initial time. Eulerian and Lagrangian properties are related to each other according to 
 \begin{equation}
@@ -519,56 +590,56 @@ where $Pr$ is the Prandtl number. We note here that the thermal diffusivity $d$ 
 %------------------------------------------------------------------------
 
 \paragraph{Lagrangian C.V. Approach:}
-Define $Y$ as some passive scalar per unit mass. The total amount of this passive scalar within a Lagrangian C.V. can change due to diffusion through the borders of the C.V., or due to sources and sinks within. Thus
+Define $\phi$ as some passive scalar per unit mass. The total amount of this passive scalar within a Lagrangian C.V. can change due to diffusion through the borders of the C.V., or due to sources and sinks within. Thus
 \begin{equation}
-\frac{d}{dt}\int_{\Omega^+_u(t)} \rho Y \,dv = -\int_{\partial \Omega^+_u(t)} \Jvec \cdot \nvec \, ds + \int_{\Omega^+_u(t)} w \, dv.
+\frac{d}{dt}\int_{\Omega^+_u(t)} \rho \phi \,dv = -\int_{\partial \Omega^+_u(t)} \Jvec \cdot \nvec \, ds + \int_{\Omega^+_u(t)} w \, dv.
 \end{equation}
 $\Jvec$ is the diffusive mass flux and $w$ a volumetric source/sink. Using Gauss's theorem, the above is rewritten as 
 \begin{equation}
-\frac{d}{dt}\int_{\Omega^+_u(t)} \rho Y \,dv = -\int_{\Omega^+_u(t)} \nabla \cdot \Jvec \, dv + \int_{\Omega^+_u(t)} w \, dv.
+\frac{d}{dt}\int_{\Omega^+_u(t)} \rho \phi \,dv = -\int_{\Omega^+_u(t)} \nabla \cdot \Jvec \, dv + \int_{\Omega^+_u(t)} w \, dv.
 \end{equation}
 
 Using the identity in \cref{eq:reynolds_transport_theorem_fluid}, we obtain
 \begin{equation}
-\left(\int_\Omega \frac{\partial\rho}{\partial t} + \nabla \cdot (\rho \uvec) \, dv \right)_{\Omega = \Omega^+_u(t)}= -\int_{\Omega^+_u(t)} \nabla \cdot \Jvec \, dv  + \int_{\Omega^+_u(t)} w \, dv
+\left(\int_\Omega \frac{\partial\rho \phi}{\partial t} + \nabla \cdot (\rho \phi \uvec) \, dv \right)_{\Omega = \Omega^+_u(t)}= -\int_{\Omega^+_u(t)} \nabla \cdot \Jvec \, dv  + \int_{\Omega^+_u(t)} w \, dv
 \end{equation}
 which gives
 \begin{equation}
-\boxed{\frac{\partial\rho Y}{\partial t}+\nabla \cdot (\rho Y \uvec) = -\nabla \cdot \Jvec + w.}
+\boxed{\frac{\partial\rho \phi}{\partial t}+\nabla \cdot (\rho \phi \uvec) = -\nabla \cdot \Jvec + w.}
 \end{equation}
 
 \paragraph{Eulerian C.V. Approach:}
 The change in the amount of a passive scalar in an Eulerian C.V. is equal to: (1) the convected amount of the passive scalar through the borders of the C.V., \textit{plus} (2) the diffusion of the scalar through the borders of the C.V., \textit{plus} (3) the creation or destruction of the scalar within the C.V. 
 \begin{equation}
-\frac{d}{dt}\int_\Omega \rho Y \,dv = -\int_{\partial \Omega} \rho Y \uvec \cdot \nvec \,ds - \int_{\partial \Omega} \Jvec \cdot \nvec \, ds + \int_{\Omega} w \, dv.
+\frac{d}{dt}\int_\Omega \rho \phi \,dv = -\int_{\partial \Omega} \rho \phi \uvec \cdot \nvec \,ds - \int_{\partial \Omega} \Jvec \cdot \nvec \, ds + \int_{\Omega} w \, dv.
 \end{equation}
 Since this volume is stationary, we move the derivative inside the integral for the first term on the LHS, and use Gauss's theorem for the second term in the LHS
 \begin{equation}
-\int_v \frac{\partial \rho Y}{\partial t}\,dv+\int_s \rho Y \uvec \cdot \nvec \,ds = -\int_v \nabla \cdot \Jvec \, dv  + \int_v w \, dv.
+\int_v \frac{\partial \rho \phi}{\partial t}\,dv+\int_s \rho \phi \uvec \cdot \nvec \,ds = -\int_v \nabla \cdot \Jvec \, dv  + \int_v w \, dv.
 \end{equation}
 Thus,
 \begin{equation}
 \label{eq:scalar_conservation_vector}
-\boxed{\frac{\partial \rho Y}{\partial t} + \nabla \cdot (\rho Y \uvec) = -\nabla \cdot \Jvec + w .}
+\boxed{\frac{\partial \rho \phi}{\partial t} + \nabla \cdot (\rho \phi \uvec) = -\nabla \cdot \Jvec + w .}
 \end{equation}
 
 \paragraph{Einstein Notation:}
 \begin{equation}
 \label{eq:scalar_conservation_tensor}
-\boxed{\frac{\partial\rho Y}{\partial t}+\frac{\partial \rho Y u_i}{\partial x_i} = -\frac{\partial J_i}{\partial x_i} + w .}
+\boxed{\frac{\partial\rho \phi}{\partial t}+\frac{\partial \rho \phi u_i}{\partial x_i} = -\frac{\partial J_i}{\partial x_i} + w .}
 \end{equation}
 
 \paragraph{Alternate Form:}
 Expanding the second term above, the conservation of scalar equation can be written as
 \begin{equation}
 \label{eq:scalar_conservation_noncons}
-\rho \frac{DY}{Dt} =  -\frac{\partial J_i}{\partial x_i} + W.
+\rho \frac{D\phi}{Dt} =  -\frac{\partial J_i}{\partial x_i} + W.
 \end{equation}
 
 \paragraph{Diffusive mass flux:}
 According to Fick's law of diffusion, the diffusive mass flux is given by
 \begin{equation}
-J_i = -\rho D \frac{\partial Y}{\partial x_i},
+J_i = -\rho D \frac{\partial \phi}{\partial x_i},
 \end{equation}
 where $D$ is the diffusivity. It is obtained from
 \begin{equation}
@@ -613,6 +684,17 @@ Using \cref{eq:caloric_eq_of_state_prelim,eq:specific_heat_const_vol_prelim}, we
 \end{equation}
 Using \cref{eq:thermal_eq_of_state_prelim} in the above we get $U = \frac{1}{\gamma - 1} P$, which is the same as $P = \rho (\gamma -1) e$.
 
+Finally, we mention that the universal gas constant can be written as $R_u = k_B N_a$, where $k_B$ is the Boltzman constant. Using \cref{eq:atomistic_rho,eq:atomistic_number_density,eq:atomistic_particles_moles,eq:atomistic_mass_moles}, we show that
+\begin{equation}
+    \rho R = \lim_{\Omega \to \infty} \frac{m_\Omega}{V_\Omega} \frac{R_u}{M} = \lim_{\Omega \to \infty} \frac{o_\Omega}{V_\Omega} k_B N_a = \lim_{\Omega \to \infty} \frac{N_\Omega}{V_\Omega} k_B = n k_B,
+\end{equation}
+Thus, we can make the following equivalences
+\begin{equation}
+    p = \rho R T \quad \longleftrightarrow \quad p = nk_B T,
+\end{equation}
+\begin{equation}
+    U = \frac{1}{\gamma - 1} \rho R T \quad \longleftrightarrow \quad U = \frac{1}{\gamma - 1} n k_B T.
+\end{equation}
 %------------------------------------------------------------------------
 \section{Summary of governing equations}
 %------------------------------------------------------------------------
@@ -624,15 +706,15 @@ Using \cref{eq:thermal_eq_of_state_prelim} in the above we get $U = \frac{1}{\ga
 \end{equation*}
 
 \begin{equation*}
-    \frac{\partial\rho Y}{\partial t}+\frac{\partial \rho Y u_i}{\partial x_i} = -\frac{\partial J_i}{\partial x_i} + w
-\end{equation*}
-
-\begin{equation*}
 \frac{\partial \rho u_i}{\partial t} + \frac{\partial \rho u_i u_j}{\partial x_j} = \frac{\partial \sigma_{ij}}{\partial x_j} + \rho f_i
 \end{equation*}
 
 \begin{equation*}
 \frac{\partial \rho E}{\partial t} + \frac{\partial \rho E u_i}{\partial x_i} = \frac{\partial u_i \sigma_{ij}}{\partial x_j} + \rho f_i u_i -  \frac{\partial q_i}{\partial x_i}
+\end{equation*}
+
+\begin{equation*}
+    \frac{\partial\rho \phi}{\partial t}+\frac{\partial \rho \phi u_i}{\partial x_i} = -\frac{\partial J_i}{\partial x_i} + w
 \end{equation*}
 
 \paragraph{Transport models} 
@@ -644,7 +726,7 @@ Using \cref{eq:thermal_eq_of_state_prelim} in the above we get $U = \frac{1}{\ga
     q_i = -\kappa \frac{\partial T}{\partial x_i}
 \end{equation*}
 \begin{equation*}
-    J_i = -\rho D \frac{\partial Y}{\partial x_i}
+    J_i = -\rho D \frac{\partial \phi}{\partial x_i}
 \end{equation*}
 
 \paragraph{Transport coefficients}
@@ -682,85 +764,6 @@ Using \cref{eq:thermal_eq_of_state_prelim} in the above we get $U = \frac{1}{\ga
 \begin{equation*}
     S^*_{ij} = \frac{1}{2} \left ( \frac{\partial u_i}{\partial x_j} + \frac{\partial u_j}{\partial x_i} \right ) - \frac{1}{3} \frac{\partial u_k}{\partial x_k} \delta_{ij}
 \end{equation*}
-
-%########################################################################
-\chapter{Atomistic representation}
-%########################################################################
-
-%------------------------------------------------------------------------
-\section{Atomistic vs.\@ fluid variables}
-%------------------------------------------------------------------------
-
-The flow variables are defined at every point $\xvec$ within the fluid. Thus, in the fluid approach, we do not account for the microscopic distribution of the fluid's atoms and molecules, which are not necessarily present at every point $\xvec$. That being said, we can establish a correlation between the fluid variables and atomistic variables, which define the underlying microscopic structure. Examples of these include $m^{(i)}$, $\uvec^{(i)}$, and $e^{(i)}$, which are the mass, velocity, and internal energy of the $i$\textsuperscript{th} atom or molecule in the system.
-
-Consider the total mass $m_\Omega$ in some subdomain $\Omega$. This mass can be computed by summing up the masses $m^{(i)}$ of the atoms or molecules in this subdomain, or by using the Eulerian field variable for density, as shown below
-\begin{equation}
-   m_\Omega = \sum_{i \in \Omega} m^{(i)} = \int_{\Omega} \rho \, d\xvec.
-\end{equation} 
-In the above, $i \in \Omega$ denotes the atoms or molecules within the subdomain $\Omega$. Now consider the total momentum $P_\Omega$ in some subdomain $\Omega$. This momentum can be computed by summing up the momentum $m^{(i)} \uvec^{(i)}$ of the atoms or molecules in this subdomain, or by using the Eulerian field variable for velocity, as shown below
-\begin{equation}
-    P_\Omega = \sum_{i \in \Omega} m^{(i)} \uvec^{(i)} = \int_\Omega \rho \uvec \, d\xvec.
-\end{equation}
-Finally, consider the internal energy $IE_\Omega$ in some subdomain $\Omega$. This internal energy can be computed by summing up the internal energies $e^{(i)}$ of the atoms or molecules in this subdomain, or by using the Eulerian field variable for the specific internal energy, as shown below
-\begin{equation}
-    IE_\Omega = \sum_{i \in \Omega} e^{(i)} = \int_\Omega \rho e \, d\xvec.
-\end{equation}
-
-%------------------------------------------------------------------------
-\section{Interpretation of fluid variables}
-%------------------------------------------------------------------------
-\label{sec:atomistic_representation}
-Denote the volume of domain $\Omega$ as $V_\Omega$, which is given by
-\begin{equation}
-    V_\Omega = \int_\Omega d\xvec.
-\end{equation}
-We can now write
-\begin{equation}
-    \label{eq:atomistic_rho}
-    \rho = \lim_{\Omega \to \epsilon} \frac{1}{V_\Omega} \int_\Omega \rho \, d\xvec = \lim_{\Omega \to \epsilon} \frac{1}{V_\Omega} \sum_{i \in \Omega} m^{(i)} = \lim_{\Omega \to \epsilon} \frac{m_\Omega}{V_\Omega}.
-\end{equation}
-Thus, the density is the mass contained in a small domain divided by the volume of that small domain as the domain becomes sufficiently small. Similarly for velocity, we have
-\begin{equation}
-    \label{eq:atomistic_u}
-    \uvec = \frac{\rho\vvec}{\rho} = \lim_{\Omega \to \epsilon} \frac{\frac{1}{V_\Omega} \int_\Omega \rho \uvec \, dx}{\frac{1}{V_\Omega} \int_\Omega \rho \, dx} = \lim_{\Omega \to \epsilon} \frac{ \sum_{i \in \Omega} m^{(i)} v^{(i)} }{ \sum_{i \in \Omega} m^{(i)} } = \lim_{\Omega \to \epsilon} \frac{ P_\Omega }{ m_\Omega }.
-\end{equation}
-That is, the velocity is the the momentum contained in a small domain divided by the mass contained in that small domain as the domain becomes sufficiently small. Finally, for energy we have
-\begin{equation}
-    \label{eq:atomistic_e}
-    e = \frac{\rho e}{\rho} = \lim_{\Omega \to \epsilon} \frac{ \frac{1}{V_\Omega} \int_\Omega \rho e \, d\xvec}{ \frac{1}{V_\Omega} \int_\Omega \rho \, d\xvec} = \lim_{\Omega \to \epsilon} \frac{ \sum_{i \in \Omega} e^{(i)} }{ \sum_{i \in \Omega} m^{(i)} } = \lim_{
-        \Omega \to \epsilon} \frac{ IE_\Omega }{ m_\Omega }.
-\end{equation}
-That is, the specific internal energy is the internal energy contained in a small subdomain divided by the mass contained in that small subdomain as the subdomain becomes sufficiently small.
-
-In the above, a sufficiently small subdomain is one that is small compared to the smallest length scale in the flow field but large enough that it contains a sufficiently large number of atoms or molecules.
-
-%------------------------------------------------------------------------
-\section{The atomic and fluid equations of state}
-%------------------------------------------------------------------------
-We denote as $o_\Omega$ the number of moles in some subdomain $\Omega$. Additionally, $N_\Omega$ is the number of atoms or molecules in some subdomain $\Omega$. Avogadro's number $N_a$ can thus be used to write the following
-\begin{equation}
-    N_\Omega = N_a o_\Omega.
-\end{equation}
-Similarly, with $M$ as the molar mass, we have
-\begin{equation}
-    m_\Omega = M o_\Omega.
-\end{equation}
-Finally, we mention that the universal gas constant can be written as $R_u = k_B N_a$, where $k_B$ is the Boltzman constant. Using the expressions above, we show that
-\begin{equation}
-    \rho R = \lim_{\Omega \to \infty} \frac{m_\Omega}{V_\Omega} \frac{R_u}{M} = \lim_{\Omega \to \infty} \frac{o_\Omega}{V_\Omega} k_B N_a = \lim_{\Omega \to \infty} \frac{N_\Omega}{V_\Omega} k_B = n k_B,
-\end{equation}
-where 
-\begin{equation}
-    n = \lim_{\Omega \to \infty} \frac{N_\Omega}{V_\Omega}.
-\end{equation}
-is the number density.
-Thus, we can make the following equivalences
-\begin{equation}
-    p = \rho R T \quad \longleftrightarrow \quad p = nk_B T,
-\end{equation}
-\begin{equation}
-    U = \frac{1}{\gamma - 1} \rho R T \quad \longleftrightarrow \quad U = \frac{1}{\gamma - 1} n k_B T.
-\end{equation}
 
 %########################################################################
 \chapter{Additional fluid equations}
@@ -1327,17 +1330,179 @@ Using the above, we can easily show that
 \paragraph{Conservation equations}
 
 \begin{equation*}
-\frac{\partial \rho}{\partial t} + \frac{\partial \rho u_i}{\partial x_i} = 0
+    \frac{\partial\rho Y_\alpha}{\partial t}+\frac{\partial \rho Y_\alpha u_i}{\partial x_i} = -\frac{\partial J_{\alpha,i}}{\partial x_i} + w_\alpha
 \end{equation*}
+\begin{equation*}
+    \frac{\partial \rho u_i}{\partial t} + \frac{\partial \rho u_i u_j}{\partial x_j} = \frac{\partial \sigma_{ij}}{\partial x_j} + \rho f_i
+\end{equation*}
+\begin{equation*}
+    \frac{ \partial \rho e}{\partial t} + \frac{\partial \rho e u_j}{\partial x_j} = \sigma_{ij} \frac{\partial u_i}{\partial x_j} - \frac{\partial q_j}{\partial x_j}.
+\end{equation*}
+
+\paragraph{Transport models}
+
+\begin{equation*}
+t_{ij} = 2\mu S_{ij}^*
+\end{equation*}
+\begin{equation*}
+q_i = -\kappa \frac{\partial T}{\partial x_i}  + \sum_{\alpha=1} h_\alpha J_{\alpha,i}
+\end{equation*}
+\begin{equation*}
+J_{\alpha,i} = -\rho \left ( D_\alpha \frac{\partial Y_\alpha}{\partial x_i} - Y_\alpha \sum_\beta D_\beta \frac{\partial Y_\beta}{\partial x_i} \right )
+\end{equation*}
+
+\paragraph{Transport coefficients}
+
+\begin{equation*}
+\mu = \mu_0 \left ( \frac{T}{T_0} \right )^n
+\end{equation*}
+\begin{equation*}
+\kappa = \frac{\mu C_p}{Pr}
+\end{equation*}
+\begin{equation*}
+D_\alpha = \frac{\mu}{\rho Sc_\alpha}
+\end{equation*}
+
+\paragraph{Equations of state}
+
+\begin{equation*}
+    p = \phi_\alpha (\rho_\alpha, T),
+\end{equation*}
+\begin{equation*}
+    e_\alpha = \psi_\alpha (\rho_\alpha, T).
+\end{equation*}
+\begin{equation*}
+    \frac{1}{\rho} = \sum_\alpha \frac{Y_\alpha}{\rho_\alpha},
+\end{equation*}
+\begin{equation*}
+    e = \sum_\alpha Y_\alpha e_\alpha.
+\end{equation*}
+
+\paragraph{Additional relations}
+
+\begin{equation*}
+    \sigma_{ij} = -p \delta_{ij} + t_{ij}
+\end{equation*}
+\begin{equation*}
+    S^*_{ij} = \frac{1}{2} \left ( \frac{\partial u_i}{\partial x_j} + \frac{\partial u_j}{\partial x_i} \right ) - \frac{1}{3} \frac{\partial u_k}{\partial x_k} \delta_{ij}
+\end{equation*}
+\begin{equation*}
+    h_\alpha = e_\alpha + \frac{p}{\rho_\alpha}
+\end{equation*}
+\begin{equation}
+    1 = \sum_\alpha Y_\alpha 
+\end{equation}
+
+%---------------------------------
+\subsection{Mass-fraction equations}
+%---------------------------------
+\label{sec:mass_frac_methods}
+There are two methods that are often used to compute the total density $\rho$ and the mass fractions $Y_\alpha$. These two methods are equivalent in paper, as will be shown below, but when implemented numerically can lead to different behavior. Since $\rho$ and $Y_\alpha$ constitute $1+N$ unknowns, $1+N$ equations are required.
+
+\subsubsection{Method 1}
+This is the method shown in \cref{sec:multi_species_eqs}, that is, one first solves for $\rho Y_\alpha$ using
+\begin{equation*}
+    \frac{\partial\rho Y_\alpha}{\partial t}+\frac{\partial \rho Y_\alpha u_i}{\partial x_i} = -\frac{\partial J_{\alpha,i}}{\partial x_i} + w_\alpha.\,
+\end{equation*}
+and assumes the following constraint
+\begin{equation*}
+    \sum_\alpha Y_\alpha = 1.
+\end{equation*}
+The densities then follow from $\rho = \sum_\alpha \rho Y_\alpha$ and the mass fractions from $Y_\alpha = \rho Y_\alpha / \rho$. We can then write
+\begin{align*}
+    \frac{\partial \rho}{\partial t} + \frac{\partial \rho u_i}{\partial x_i} &= \frac{\partial}{\partial t} \sum_\alpha \rho Y_\alpha + \frac{\partial}{\partial x_i} \sum_\alpha \rho Y_\alpha u_i \\
+    &= \sum_\alpha \left( \frac{\partial \rho Y_\alpha}{\partial t} + \frac{\partial \rho Y_\alpha u_i}{\partial x_i} \right) \\
+    &= \sum_\alpha \left( -\frac{\partial J_{\alpha,i}}{\partial x_i} + w_\alpha \right).
+\end{align*}
+Assuming $\sum_\alpha J_{\alpha,i} = 0$ and $\sum_\alpha w_\alpha = 0$, we have
+\begin{equation*}
+    \frac{\partial \rho}{\partial t} + \frac{\partial \rho u_i}{\partial x_i} = 0.
+\end{equation*}
+
+\subsubsection{Method 2}
+In this method one first solves for $\rho$ and $\rho Y_\alpha$ using 
+\begin{equation*}
+    \frac{\partial \rho}{\partial t} + \frac{\partial \rho u_i}{\partial x_i} = 0,
+\end{equation*}
+and    
+\begin{equation*}
+    \frac{\partial\rho Y_\alpha}{\partial t}+\frac{\partial \rho Y_\alpha u_i}{\partial x_i} = -\frac{\partial J_{\alpha,i}}{\partial x_i} + w_\alpha.
+\end{equation*}
+The mass fractions then follow from $Y_\alpha = \rho Y_\alpha / \rho$. We can write
+\begin{align*}
+    \frac{\partial Y_\alpha}{\partial t} + u_i \frac{\partial Y_\alpha}{\partial x_i} &= \frac{1}{\rho^2} \left( \frac{\partial \rho Y_\alpha}{\partial t} \rho - \frac{\partial \rho}{\partial t} \rho Y_\alpha \right) + u_i \frac{1}{\rho^2} \left( \frac{\partial \rho Y_\alpha}{\partial x_i} \rho - \frac{\partial \rho}{\partial x_i} \rho Y_\alpha \right)\\
+    &= \frac{1}{\rho} \left[ \left( \frac{\partial \rho Y_\alpha}{\partial t} + u_i \frac{\partial \rho Y_\alpha}{\partial x_i} \right) - Y_\alpha \left( \frac{\partial \rho}{\partial t} + u_i \frac{\partial \rho}{\partial x_i} \right) \right] \\
+    &= \frac{1}{\rho} \left( \frac{\partial \rho Y_\alpha}{\partial t} + u_i \frac{\partial \rho Y_\alpha}{\partial x_i} + \rho Y_\alpha \frac{\partial u_i}{\partial x_i} \right) \\
+    &= \frac{1}{\rho} \left( -\frac{\partial J_{\alpha,i}}{\partial x_i} + w_\alpha \right).
+\end{align*}
+If we assume $\sum_\alpha J_{\alpha,i} = 0$ and $\sum_\alpha w_\alpha = 0$, then we have
+\begin{equation}
+    \frac{\partial}{\partial t} \sum_\alpha Y_\alpha + u_i \frac{\partial}{\partial x_i} \sum_\alpha Y_\alpha = 0.
+\end{equation} 
+That is, $\sum_\alpha Y_\alpha$ is conserved along a streamline. If the initial and boundary conditions satisfy $\sum_\alpha Y_\alpha=1$, then this equality holds for all time and space.
+
+%------------------------------------------------------------------------
+\section{Multi-material hydrodynamics}
+%------------------------------------------------------------------------
+\label{sec:multi_mat_hydro}
+In the multi-species model, one solves a single PDE for the internal energy $e$. In the multi-material model, one instead solves a different PDE for each material energy $e_\alpha$. These equations are as follows
+\begin{equation}
+    \label{eq:multi_mat_hydro_species_energy}
+    \frac{\partial \rho Y_\alpha e_\alpha}{\partial t} + \frac{\partial \rho Y_\alpha e_\alpha u_j}{\partial x_j} = \eta_\alpha \sigma_{\alpha,ij} \frac{\partial u_i}{\partial x_j} - \bar{p} \alpha_\alpha - \frac{\partial q_{\alpha,j}}{\partial x_j}.
+\end{equation}
+In the above $\sigma_\alpha$ is the stress tensor of each material, $\bar{p}$ is a common pressure across all materials, $\alpha_\alpha$ is the closure model of each material, and $q_\alpha$ is the heat flux, again dependent of each material. Another new aspect of the multi-material model is that it includes PDE's for the material volume fractions, 
+\begin{equation}
+    \label{eq:multi_mat_hydro_vol_fractions}
+    \frac{\partial \eta_\alpha}{\partial t} + u_j \frac{\partial \eta_\alpha}{\partial x_j} = \alpha_\alpha.
+\end{equation}
+\Cref{tab:multi_species_vs_multi_material} shows which equations or methods are used to solve for all of the thermodynamic variables with either the multi-species or multi-material approach.
+
+\begin{table}
+    \centering
+    \caption{Variables for multi-species and multi-material hydrodynamics.}
+    \label{tab:multi_species_vs_multi_material}
+    \def\arraystretch{1.5}
+    \begin{tabular}{ c | c | c }
+        Variable  & M-S solution & M-M solution \\
+        \hhline{=|=|=}
+        $\rho$ & method 1 or 2 from \cref{sec:mass_frac_methods} &  method 1 or 2 from \cref{sec:mass_frac_methods} \\
+        \hline
+        $Y_\alpha$ & method 1 or 2 from \cref{sec:mass_frac_methods} & method 1 or 2 from \cref{sec:mass_frac_methods} \\
+        \hline
+        $e$ & PDE given by \cref{eq:internal_energy_sigma} & from $Y_\alpha$ and $e_\alpha$ using \cref{eq:from_e_alpha_to_e}\\
+        \hline
+        $p_\alpha$ & equal to $p$ & thermal eos, \cref{eq:multi_species_thermal_eos} \\
+        \hline
+        $T_\alpha$ & equal to $T$ & caloric eos, \cref{eq:multi_species_caloric_eos} \\
+        \hline
+        $p$ & PT-equilibration algorithm & n/a \\
+        \hline
+        $T$ & PT-equilibration algorithm & n/a \\
+        \hline
+        $\rho_\alpha$ & PT-equilibration algorithm & algebraic relation given by \cref{eq:relation_volume_density_mass} \\
+        \hline
+        $e_\alpha$ & PT-equilibration algorithm & PDE given by \cref{eq:multi_mat_hydro_species_energy} \\
+        \hline
+        $\eta_\alpha$ & algebraic relation given by \cref{eq:relation_volume_density_mass} & PDE given by \cref{eq:multi_mat_hydro_vol_fractions} \\
+    \end{tabular}
+\end{table}
+
+%---------------------------------
+\subsection{Summary of governing equations}
+%---------------------------------
+\label{sec:multi_material_eqs}
+
+\paragraph{Conservation equations}
+
 \begin{equation*}
     \frac{\partial\rho Y_\alpha}{\partial t}+\frac{\partial \rho Y_\alpha u_i}{\partial x_i} = -\frac{\partial J_{\alpha,i}}{\partial x_i} + w_\alpha
 \end{equation*}
 \begin{equation*}
-\frac{\partial \rho u_i}{\partial t} + \frac{\partial \rho u_i u_j}{\partial x_j} = \frac{\partial \sigma_{ij}}{\partial x_j} + \rho f_i
+    \frac{\partial \rho u_i}{\partial t} + \frac{\partial \rho u_i u_j}{\partial x_j} = \frac{\partial \sigma_{ij}}{\partial x_j} + \rho f_i
 \end{equation*}
-\begin{equation*}
-\frac{\partial \rho E}{\partial t} + \frac{\partial \rho E u_i}{\partial x_i} = \frac{\partial u_i \sigma_{ij}}{\partial x_j} + \rho f_i u_i -  \frac{\partial q_i}{\partial x_i}
-\end{equation*}
+\begin{equation}
+    \frac{\partial \rho Y_\alpha e_\alpha}{\partial t} + \frac{\partial \rho Y_\alpha e_\alpha u_j}{\partial x_j} = \eta_\alpha \sigma_{\alpha,ij} \frac{\partial u_i}{\partial x_j} - \bar{p} \alpha_\alpha - \frac{\partial q_{\alpha,j}}{\partial x_j}.
+\end{equation}
 
 \paragraph{Transport models}
 
@@ -1395,107 +1560,6 @@ D_\alpha = \frac{\mu}{\rho Sc_\alpha}
 \begin{equation*}
     h_\alpha = e_\alpha + \frac{p}{\rho_\alpha}
 \end{equation*}
-
-%---------------------------------
-\subsection{Mass-fraction equations}
-%---------------------------------
-\label{sec:mass_frac_methods}
-There are two methods that are often used to compute the total density $\rho$ and the mass fractions $Y_\alpha$. These two methods are equivalent in paper, as will be shown below, but when implemented numerically can lead to different behavior. Since $\rho$ and $Y_\alpha$ constitute $1+N$ unknowns, $1+N$ equations are required.
-
-\subsubsection{Method 1}
-This is the method shown in \cref{sec:multi_species_eqs}, that is, one first solves for $\rho$ and $\rho Y_\alpha$ using 
-\begin{equation*}
-    \frac{\partial \rho}{\partial t} + \frac{\partial \rho u_i}{\partial x_i} = 0,
-\end{equation*}
-and    
-\begin{equation*}
-    \frac{\partial\rho Y_\alpha}{\partial t}+\frac{\partial \rho Y_\alpha u_i}{\partial x_i} = -\frac{\partial J_{\alpha,i}}{\partial x_i} + w_\alpha.
-\end{equation*}
-The mass fractions then follow from $Y_\alpha = \rho Y_\alpha / \rho$. We can write
-\begin{align*}
-    \frac{\partial Y_\alpha}{\partial t} + u_i \frac{\partial Y_\alpha}{\partial x_i} &= \frac{1}{\rho^2} \left( \frac{\partial \rho Y_\alpha}{\partial t} \rho - \frac{\partial \rho}{\partial t} \rho Y_\alpha \right) + u_i \frac{1}{\rho^2} \left( \frac{\partial \rho Y_\alpha}{\partial x_i} \rho - \frac{\partial \rho}{\partial x_i} \rho Y_\alpha \right)\\
-    &= \frac{1}{\rho} \left[ \left( \frac{\partial \rho Y_\alpha}{\partial t} + u_i \frac{\partial \rho Y_\alpha}{\partial x_i} \right) - Y_\alpha \left( \frac{\partial \rho}{\partial t} + u_i \frac{\partial \rho}{\partial x_i} \right) \right] \\
-    &= \frac{1}{\rho} \left( \frac{\partial \rho Y_\alpha}{\partial t} + u_i \frac{\partial \rho Y_\alpha}{\partial x_i} + \rho Y_\alpha \frac{\partial u_i}{\partial x_i} \right) \\
-    &= \frac{1}{\rho} \left( -\frac{\partial J_{\alpha,i}}{\partial x_i} + w_\alpha \right).
-\end{align*}
-If we assume $\sum_\alpha J_{\alpha,i} = 0$ and $\sum_\alpha w_\alpha = 0$, then we have
-\begin{equation}
-    \frac{\partial}{\partial t} \sum_\alpha Y_\alpha + u_i \frac{\partial}{\partial x_i} \sum_\alpha Y_\alpha = 0.
-\end{equation} 
-That is, $\sum_\alpha Y_\alpha$ is conserved along a streamline. If the initial and boundary conditions satisfy $\sum_\alpha Y_\alpha=1$, then this equality holds for all time and space.
-
-\subsubsection{Method 2}
-For this method one first solves for $\rho Y_\alpha$ using
-\begin{equation*}
-    \frac{\partial\rho Y_\alpha}{\partial t}+\frac{\partial \rho Y_\alpha u_i}{\partial x_i} = -\frac{\partial J_{\alpha,i}}{\partial x_i} + w_\alpha.\,
-\end{equation*}
-and assumes the following constraint
-\begin{equation*}
-    \sum_\alpha Y_\alpha = 1.
-\end{equation*}
-The densities then follow from $\rho = \sum_\alpha \rho Y_\alpha$ and the mass fractions from $Y_\alpha = \rho Y_\alpha / \rho$. We can then write
-\begin{align*}
-    \frac{\partial \rho}{\partial t} + \frac{\partial \rho u_i}{\partial x_i} &= \frac{\partial}{\partial t} \sum_\alpha \rho Y_\alpha + \frac{\partial}{\partial x_i} \sum_\alpha \rho Y_\alpha u_i \\
-    &= \sum_\alpha \left( \frac{\partial \rho Y_\alpha}{\partial t} + \frac{\partial \rho Y_\alpha u_i}{\partial x_i} \right) \\
-    &= \sum_\alpha \left( -\frac{\partial J_{\alpha,i}}{\partial x_i} + w_\alpha \right).
-\end{align*}
-Again, assuming $\sum_\alpha J_{\alpha,i} = 0$ and $\sum_\alpha w_\alpha = 0$, we have
-\begin{equation*}
-    \frac{\partial \rho}{\partial t} + \frac{\partial \rho u_i}{\partial x_i} = 0.
-\end{equation*}
-
-%------------------------------------------------------------------------
-\section{Multi-material hydrodynamics}
-%------------------------------------------------------------------------
-\label{sec:multi_mat_hydro}
-Note: in this section we'll refer to species as materials.
-
-In the multi-species model, one essentially solves a single PDE for the internal energy $e$. In the multi-material model, one instead solves a different PDE for each material energy $e_\alpha$. These equations are as follows
-\begin{equation}
-    \label{eq:multi_mat_hydro_species_energy}
-    \frac{\partial \rho Y_\alpha e_\alpha}{\partial t} + \frac{\partial \rho Y_\alpha e_\alpha u_j}{\partial x_j} = \eta_\alpha \sigma_{\alpha,ij} \frac{\partial u_i}{\partial x_j} - \bar{p} \alpha_\alpha - \frac{\partial q_{\alpha,j}}{\partial x_j}.
-\end{equation}
-In the above $\sigma_\alpha$ is the stress tensor of each material, $\bar{p}$ is a common pressure across all materials, and $\alpha_\alpha$ is the closure model of each material, and $q_\alpha$ is the heat flux, again dependent of each material. Another new aspect of the multi-material model is that it includes PDE's for the material volume fractions, 
-\begin{equation}
-    \label{eq:multi_mat_hydro_vol_fractions}
-    \frac{\partial \eta_\alpha}{\partial t} + u_j \frac{\partial \eta_\alpha}{\partial x_j} = \alpha_\alpha.
-\end{equation}
-\Cref{tab:multi_species_vs_multi_material} shows which equations or methods are used to solve for all of the thermodynamic variables using either the multi-species or multi-material approaches.
-
-\begin{table}
-    \centering
-    \caption{Variables for multi-species and multi-material hydrodynamics.}
-    \label{tab:multi_species_vs_multi_material}
-    \def\arraystretch{1.5}
-    \begin{tabular}{ c | c | c }
-        Variable  & M-S solution & M-M solution \\
-        \hhline{=|=|=}
-        $\rho$ & method 1 or 2 from \cref{sec:mass_frac_methods} &  method 1 or 2 from \cref{sec:mass_frac_methods} \\
-        \hline
-        $Y_\alpha$ & method 1 or 2 from \cref{sec:mass_frac_methods} & method 1 or 2 from \cref{sec:mass_frac_methods} \\
-        \hline
-        $e$ & PDE given by \cref{eq:internal_energy_sigma} & from $Y_\alpha$ and $e_\alpha$ using \cref{eq:from_e_alpha_to_e}\\
-        \hline
-        $p_\alpha$ & equal to $p$ & thermal eos, \cref{eq:multi_species_thermal_eos} \\
-        \hline
-        $T_\alpha$ & equal to $T$ & caloric eos, \cref{eq:multi_species_caloric_eos} \\
-        \hline
-        $p$ & PT-equilibration algorithm & n/a \\
-        \hline
-        $T$ & PT-equilibration algorithm & n/a \\
-        \hline
-        $\rho_\alpha$ & PT-equilibration algorithm & algebraic relation given by \cref{eq:relation_volume_density_mass} \\
-        \hline
-        $e_\alpha$ & PT-equilibration algorithm & PDE given by \cref{eq:multi_mat_hydro_species_energy} \\
-        \hline
-        $\eta_\alpha$ & algebraic relation given by \cref{eq:relation_volume_density_mass} & PDE given by \cref{eq:multi_mat_hydro_vol_fractions} \\
-    \end{tabular}
-\end{table}
-
-%---------------------------------
-\subsection{Summary of governing equations}
-%---------------------------------
-\label{sec:multi_material_eqs}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \part{Inviscid Incompressible Flow}
