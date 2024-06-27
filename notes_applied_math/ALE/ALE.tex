@@ -25,14 +25,28 @@ We consider Lagrangian fluid particles, for which we define their position $\xve
 \end{equation}
 Note that $\Omega^+(0,\Omega_0) = \Omega_0$.
 
-The governing equations for the Lagrangian fluid particles are derived in my fluid-mechanics notes (see section on kinematics, Lagrangian governing equations, etc.). These are shown below
-\begin{align}
-    \frac{\partial \xvec^+}{\partial t} &= \uvec^+, \label{eq:lag_gov_evol_x} \\
-    \frac{\partial \rho^+}{\partial t} &= -\rho^+ \left( \nabla \cdot \uvec \right)_{\xvec = \xvec^+}, \label{eq:lag_gov_evol_rho} \\
-    \rho^+ \frac{\partial \uvec^+}{\partial t} &= \left ( \nabla \cdot \sigmavec \right )_{\xvec = \xvec^+}, \label{eq:lag_gov_evol_u} \\
-    \rho^+ \frac{\partial e^+}{\partial t} &= \left ( \sigmavec : \nabla \uvec \right )_{\xvec = \xvec^+}. \label{eq:lag_gov_evol_e}
-\end{align}
-In the above, $\sigmavec = \sigmavec(t,\xvec)$ is the stress tensor.
+The governing equations for the Lagrangian fluid particles are derived in my flow-physics notes. These are shown below
+\begin{equation}
+    \label{eq:lag_gov_evol_x}
+    \frac{\partial \xvec^+}{\partial t} = \uvec^+,
+\end{equation}
+\begin{equation}
+    \label{eq:lag_gov_evol_eta}
+    \frac{\partial \eta^+_\alpha}{\partial t} = \alpha^+,
+\end{equation}
+\begin{equation}
+    \label{eq:lag_gov_evol_rho}
+    \frac{\partial \eta^+_\alpha \rho^+_\alpha}{\partial t} = -\eta^+_\alpha \rho^+_\alpha \left( \nabla \cdot \uvec \right)_{\xvec = \xvec^+},
+\end{equation}
+\begin{equation}
+    \label{eq:lag_gov_evol_u}
+    \rho^+ \frac{\partial \uvec^+}{\partial t} = \left ( \nabla \cdot \sum_\alpha \eta_\alpha \sigmavec_\alpha \right )_{\xvec = \xvec^+},
+\end{equation}
+\begin{equation}
+    \label{eq:lag_gov_evol_e}
+    \eta^+_\alpha \rho^+_\alpha \frac{\partial e^+_\alpha}{\partial t} = \left ( \eta_\alpha \sigmavec_\alpha : \nabla \uvec \right )_{\xvec = \xvec^+} - \left( \bar{p} \alpha_\alpha \right)_{\xvec = \xvec^+}. 
+\end{equation}
+In the above, $\eta_\alpha$, $\alpha_\alpha$, and $\sigmavec_\alpha = \sigmavec(t,\xvec)_\alpha$ are the volume fraction, closure model, and the stress tensor of material $\alpha$. The term $\bar{p}$ is the common pressure across all materials.
 
 A note on notation. The products that involve a tensor $\tauvec$ can be expressed in Einstein notation as
 \begin{equation*}
@@ -100,7 +114,7 @@ We introduce the coefficients $\hat{\xvec}_i = \hat{\xvec}_i(t)$, $\hat{\uvec}_i
 \end{equation}
 \begin{equation}
     \label{eq:fe_exp_e}
-    e^+ = \sum_j^{N_\phi} \hat{e}_j \phi^+_j.
+    e^+_\alpha = \sum_j^{N_\phi} \hat{e}_{\alpha,j} \phi^+_j.
 \end{equation}
 We note that the expansion coefficients are the same for the Lagrangian and Eulerian variables, as shown in \cref{sec:lag_fin_elem}. For example, for the Eulerian velocity, we have
 \begin{equation}
@@ -141,19 +155,23 @@ It's determinant is denoted by $J^+ = J^+(t,\yvec)$, and it satisfies the follow
 \end{equation}
 Thus, \Cref{eq:lag_gov_evol_rho} can be re-written as
 \begin{equation*}
-    \frac{1}{\rho^+} \frac{\partial \rho^+}{\partial t} = -\frac{1}{J^+} \frac{\partial J^+}{\partial t},
+    \frac{1}{\eta^+_\alpha \rho^+_\alpha} \frac{\partial \eta^+_\alpha \rho^+_\alpha}{\partial t} = -\frac{1}{J^+} \frac{\partial J^+}{\partial t},
 \end{equation*}
 or
 \begin{equation}
     \label{eq:lag_gov_evol_rho_2}
-    \frac{\partial J^+ \rho^+}{\partial t} = 0.
+    \frac{\partial \eta^+_\alpha \rho^+_\alpha J^+_\alpha}{\partial t} = 0.
 \end{equation}
 Since $J^+ = 1$ at the initial time, we obtain the density according to
 \begin{equation}
     \label{eq:evol_rho_semi_discrete}
-    \rho^+ = \frac{\rho^+_0}{J^+},
+    \eta^+_\alpha \rho^+_\alpha = \frac{\eta^+_{\alpha,0}\rho^+_{\alpha,0}}{J^+},
 \end{equation}
-where $\rho^+_0 = \rho^+(0,\yvec)$.
+where $\rho^+_0 = \rho^+(0,\yvec)$. Note that summing over all $\alpha$ gives
+\begin{equation}
+    \label{eq:evol_total_rho_semi_discrete}
+    \rho^+ = \frac{\rho^+_0}{J^+}.
+\end{equation}
 
 To compute $J^+$, we first plug in \cref{eq:fe_exp_x} in the definition of the Jacobian matrix, which gives
 \begin{equation*}
@@ -164,13 +182,13 @@ We then simply compute the determinant of the above to obtain $J^+$. Note that f
 %---------------------------------
 \subsection{Velocity}
 %---------------------------------
-Plugging in \cref{eq:evol_rho_semi_discrete} in \cref{eq:lag_gov_evol_u} we get
+Plugging in \cref{eq:evol_total_rho_semi_discrete} in \cref{eq:lag_gov_evol_u} we get
 \begin{equation*}
-    \rho^+_0 \frac{\partial \uvec^+}{\partial t} = \left ( \nabla \cdot \sigmavec \right )_{\xvec = \xvec^+} J^+.
+    \rho^+_0 \frac{\partial \uvec^+}{\partial t} = \left ( \nabla \cdot \sum_\alpha \eta_\alpha \sigmavec_\alpha \right )_{\xvec = \xvec^+} J^+.
 \end{equation*}
 We then multiply both sides of the above by the basis functions for velocity and integrate over all space to obtain
 \begin{equation*}
-    \int_{\Omega_0} \rho^+_0 \frac{\partial \uvec^+}{\partial t} w^+_i \, dV_y = \int_{\Omega_0} \left ( \nabla \cdot \sigmavec \right )_{\xvec = \xvec^+} w^+_i J^+ \, dV_y.
+    \int_{\Omega_0} \rho^+_0 \frac{\partial \uvec^+}{\partial t} w^+_i \, dV_y = \int_{\Omega_0} \left ( \nabla \cdot \sum_\alpha \eta_\alpha \sigmavec_\alpha \right )_{\xvec = \xvec^+} w^+_i J^+ \, dV_y.
 \end{equation*}
 For the left-hand side we have
 \begin{align*}
@@ -184,36 +202,36 @@ where
 \end{equation}
 is a mass bilinear form (which is independent of time). For the right-hand side we have
 \begin{align*}
-    \int_{\Omega_0} \left ( \nabla \cdot \sigmavec \right )_{\xvec = \xvec^+} w^+_i J^+ \, dV_y & = \int_{\Omega_0} \left ( \nabla \cdot \sigmavec w_i \right )_{\xvec = \xvec^+} J^+ \, dV_y \nonumber \\
-    & = \int_{\Omega^+} \nabla \cdot \sigmavec w_i \, dV_x \nonumber \\
-    & = -\int_{\Omega^+} \sigmavec \cdot \nabla w_i \, dV_x.
+    \int_{\Omega_0} \left ( \nabla \cdot \sum_\alpha \eta_\alpha \sigmavec_\alpha \right )_{\xvec = \xvec^+} w^+_i J^+ \, dV_y & = \int_{\Omega_0} \left[ \nabla \cdot \left( \sum_\alpha \eta_\alpha \sigmavec_\alpha \right) w_i \right]_{\xvec = \xvec^+} J^+ \, dV_y \nonumber \\
+    & = \int_{\Omega^+} \nabla \cdot \left( \sum_\alpha \eta_\alpha \sigmavec_\alpha \right) w_i \, dV_x \nonumber \\
+    & = -\int_{\Omega^+} \sum_\alpha \eta_\alpha \sigmavec_\alpha \cdot \nabla w_i \, dV_x.
 \end{align*}
 The second equality above follows from integration by substitution. Combining results we have
 \begin{equation}
     \label{eq:evol_u_semi_discrete}
-    \sum_j^{N_w} \frac{d \hat{\uvec}_j}{d t} m_{\mathcal{V},ij} = -\int_{\Omega^+} \sigmavec \cdot \nabla w_i \, dV_x.
+    \sum_j^{N_w} \frac{d \hat{\uvec}_j}{d t} m_{\mathcal{V},ij} = -\int_{\Omega^+} \sum_\alpha \eta_\alpha \sigmavec_\alpha \cdot \nabla w_i \, dV_x.
 \end{equation}
 
 We introduce the matrix $\Mvec_\mathcal{V}$, whose components are $m_{\mathcal{V},ij}$. Thus, the left-hand side of \cref{eq:evol_u_semi_discrete} can be written as $\Mvec_\mathcal{V} \, d\Uvec / dt$.
 We also introduce the vector bilinear form
 \begin{equation}
-    \fvec_{ij} = \int_{\Omega^+} \sigmavec \cdot \nabla w_i \phi_j \, dV_x.
+    \fvec_{ij,\alpha} = \int_{\Omega^+} \eta_\alpha \sigmavec_\alpha \cdot \nabla w_i \phi_j \, dV_x.
 \end{equation}
-This is a \textit{vector} bilinear form since $\fvec_{ij}$ has components $f_{ij,\alpha} = f_{ij,\alpha}(t)$, for $\alpha = x,y,z$, where $\alpha$ denotes the first index of $\sigmavec$. We introduce the force matrix $\Fvec$, whose components are $\fvec_{ij}$. We also expand the field with constant value of one as follows
+This is a \textit{vector} bilinear form since $\fvec_{ij,\alpha}$ has components $f_{ij,\alpha,a} = f_{ij,\alpha,a}(t)$, for $a = x,y,z$, where $a$ denotes the first index of $\sigmavec_\alpha$. We introduce the force matrix $\Fvec_\alpha$, whose components are $\fvec_{ij,\alpha}$. We also expand the field with constant value of one as follows
 \begin{equation*}
     1 = \sum_i^{N_\phi} \hat{1}_i \phi_i.
 \end{equation*}
 If we define the vector $\hat{\mathbf{1}}$ as that with components $\hat{1}_i$, we can show that 
 \begin{align*}
-    \Fvec \hat{\mathbf{1}} &= \sum_j^{N_\phi} \fvec_{ij} \hat{1}_j \nonumber \\
-    &= \sum_j^{N_\phi} \int_{\Omega^+} \sigmavec \cdot \nabla w_i \phi_j \, dV_x \hat{1}_j \nonumber \\
-    &= \int_{\Omega^+} \sigmavec \cdot \nabla w_i \left ( \sum_j^{N_\phi} \hat{1}_j \phi_j \right ) \, dV_x \nonumber \\
-    &= \int_{\Omega^+} \sigmavec \cdot \nabla w_i \, dV_x.
+    \Fvec_\alpha \hat{\mathbf{1}} &= \sum_j^{N_\phi} \fvec_{ij,\alpha} \hat{1}_j \nonumber \\
+    &= \sum_j^{N_\phi} \int_{\Omega^+} \eta_\alpha \sigmavec_\alpha \cdot \nabla w_i \phi_j \, dV_x \hat{1}_j \nonumber \\
+    &= \int_{\Omega^+} \eta_\alpha \sigmavec_\alpha \cdot \nabla w_i \left ( \sum_j^{N_\phi} \hat{1}_j \phi_j \right ) \, dV_x \nonumber \\
+    &= \int_{\Omega^+} \eta_\alpha \sigmavec_\alpha \cdot \nabla w_i \, dV_x.
 \end{align*}
-The above is the negative of the right-hand side of \cref{eq:evol_u_semi_discrete}. Thus, combining all together we get
+Thus, \cref{eq:evol_u_semi_discrete} can now be written as
 \begin{equation}
     \label{eq:evol_vel_semi_discrete}
-    \Mvec_\mathcal{V} \frac{d\Uvec}{dt} = -\Fvec \hat{\mathbf{1}}.
+    \Mvec_\mathcal{V} \frac{d\Uvec}{dt} = -\sum_\alpha \Fvec_\alpha \hat{\mathbf{1}}.
 \end{equation}
 We note that since both the Lagrangian and Eulerian velocities share the same coefficients $\Uvec$, we now have a solution for both.
 
@@ -222,55 +240,64 @@ We note that since both the Lagrangian and Eulerian velocities share the same co
 %---------------------------------
 Plugging in \cref{eq:evol_rho_semi_discrete} in \cref{eq:lag_gov_evol_e} we get
 \begin{equation*}
-    \rho^+_0 \frac{\partial e^+}{\partial t} = \left ( \sigmavec : \nabla \uvec \right )_{\xvec = \xvec^+} J^+.
+    \eta^+_{\alpha,0} \rho^+_{\alpha,0} \frac{\partial e^+_\alpha}{\partial t} = \left ( \eta_\alpha \sigmavec_\alpha : \nabla \uvec \right )_{\xvec = \xvec^+} J^+ - \left( \bar{p} \alpha_\alpha \right)_{\xvec=\xvec^+} J^+.
 \end{equation*}
 We then multiply both sides of the above by the basis functions for energy and integrate over all space to obtain
 \begin{equation*}
-    \int_{\Omega_0} \rho^+_0 \frac{\partial e^+}{\partial t} \phi_i^+ \, dV_y = \int_{\Omega_0} \left ( \sigmavec : \nabla \uvec \right )_{\xvec = \xvec^+} \phi_i^+ J^+ \, dV_y.
+    \int_{\Omega_0} \eta^+_{\alpha,0} \rho^+_{\alpha,0} \frac{\partial e^+_\alpha}{\partial t} \phi_i^+ \, dV_y = \int_{\Omega_0} \left ( \eta_\alpha \sigmavec_\alpha : \nabla \uvec \right )_{\xvec = \xvec^+} \phi_i^+ J^+ \, dV_y - \int_{\Omega_0} \left( \bar{p} \alpha_\alpha \right)_{\xvec=\xvec^+} \phi^+_i J^+ \, dV_y.
 \end{equation*}
 For the left-hand side we have
 \begin{align*}
-    \int_{\Omega_0} \rho^+_0 \frac{\partial e^+}{\partial t} \phi_i^+ \, dV_y &= \int_{\Omega_0} \rho^+_0 \sum_j^{N_\phi} \frac{d \hat{e}_j}{dt} \phi_j^+ \phi_i^+ \, dV_y , \nonumber \\
-    &= \sum_j^{N_\phi} \frac{d \hat{e}_j}{dt} \int_{\Omega_0} \rho^+_0 \phi_j^+ \phi_i^+ \, dV_y , \nonumber \\
-    &= \sum_j^{N_\phi} \frac{d \hat{e}_j}{dt} m_{\mathcal{E},ij}
+    \int_{\Omega_0} \eta^+_{\alpha,0} \rho^+_{\alpha,0} \frac{\partial e^+_\alpha}{\partial t} \phi_i^+ \, dV_y &= \int_{\Omega_0} \eta^+_{\alpha,0} \rho^+_{\alpha,0} \sum_j^{N_\phi} \frac{d \hat{e}_{\alpha,j}}{dt} \phi_j^+ \phi_i^+ \, dV_y , \nonumber \\
+    &= \sum_j^{N_\phi} \frac{d \hat{e}_{\alpha,j}}{dt} \int_{\Omega_0} \eta^+_{\alpha,0} \rho^+_{\alpha,0} \phi_j^+ \phi_i^+ \, dV_y , \nonumber \\
+    &= \sum_j^{N_\phi} \frac{d \hat{e}_{\alpha,j}}{dt} m_{\mathcal{E},ij,\alpha}
 \end{align*}
 where
 \begin{equation}
-    m_{\mathcal{E},ij} = \int_{\Omega_0} \rho^+_0 \phi_j^+ \phi_i^+ \, dV_y
+    m_{\mathcal{E},ij,\alpha} = \int_{\Omega_0} \eta^+_{\alpha,0} \rho^+_{\alpha,0} \phi_j^+ \phi_i^+ \, dV_y
 \end{equation}
-is a mass bilinear form (which is independent of time). For the right-hand side we have
+is a mass bilinear form (which is independent of time). For the first term on right-hand side we have
 \begin{align*}
-    \int_{\Omega_0} \left ( \sigmavec : \nabla \uvec \right )_{\xvec = \xvec^+} \phi_i^+ J^+ \, dV_y &= \int_{\Omega_0} \left ( \sigmavec : \nabla \uvec \phi_i \right )_{\xvec = \xvec^+} J^+ \, dV_y \nonumber \\
-    &= \int_{\Omega^+} \sigmavec : \nabla \uvec \phi_i \, dV_x. 
+    \int_{\Omega_0} \left ( \eta_\alpha \sigmavec_\alpha : \nabla \uvec \right )_{\xvec = \xvec^+} \phi_i^+ J^+ \, dV_y &= \int_{\Omega_0} \left ( \eta_\alpha \sigmavec_\alpha : \nabla \uvec \phi_i \right )_{\xvec = \xvec^+} J^+ \, dV_y \nonumber \\
+    &= \int_{\Omega^+} \eta_\alpha \sigmavec_\alpha : \nabla \uvec \phi_i \, dV_x. 
+\end{align*}
+For the second term on the right hand side we have
+\begin{align*}
+    \int_{\Omega_0} \left( \bar{p} \alpha_\alpha \right)_{\xvec = \xvec^+} \phi_i^+ J^+ \, dV_y &= \int_{\Omega_0} \left( \bar{p} \alpha_\alpha \phi_i \right)_{\xvec = \xvec^+} J^+ \, dV_y \nonumber \\
+    &= \int_{\Omega^+} \bar{p} \alpha_\alpha \phi_i \, dV_x. 
 \end{align*}
 Combining results we have
 \begin{equation*}
-    \sum_j^{N_\phi} \frac{d \hat{e}_j}{dt} m_{\mathcal{E},ij} = \int_{\Omega^+} \sigmavec : \nabla \uvec \phi_i \, dV_x.
+    \sum_j^{N_\phi} \frac{d \hat{e}_{\alpha,j}}{dt} m_{\mathcal{E},ij} = \int_{\Omega^+} \eta_\alpha \sigmavec_\alpha : \nabla \uvec \phi_i \, dV_x - \int_{\Omega^+} \bar{p} \alpha_\alpha \phi_i \, dV_x.
 \end{equation*}
 We no show that
 \begin{equation*}
-    \sigmavec : \nabla \uvec = \sigmavec : \nabla \left ( \sum_k^{N_w} \hat{\uvec}_k w_k \right ) = \sum_k^{N_w} \hat{\uvec}_k \cdot \sigmavec \cdot \nabla w_k,
+    \eta_\alpha \sigmavec_\alpha : \nabla \uvec = \eta_\alpha \sigmavec_\alpha : \nabla \left ( \sum_k^{N_w} \hat{\uvec}_k w_k \right ) = \sum_k^{N_w} \hat{\uvec}_k \cdot \eta_\alpha \sigmavec_\alpha \cdot \nabla w_k,
 \end{equation*}
 and hence the previous result is written as
 \begin{equation*}
-    \sum_j^{N_\phi} \frac{d \hat{e}_j}{dt} m_{\mathcal{E},ij} = \sum_k^{N_w} \hat{\uvec}_k \cdot \int_{\Omega^+} \sigmavec \cdot \nabla w_k \phi_i \, dV_x.
+    \sum_j^{N_\phi} \frac{d \hat{e}_{\alpha,j}}{dt} m_{\mathcal{E},ij} = \sum_k^{N_w} \hat{\uvec}_k \cdot \int_{\Omega^+} \eta_\alpha \sigmavec_\alpha \cdot \nabla w_k \phi_i \, dV_x - \int_{\Omega^+} \bar{p} \alpha_\alpha \phi_i \, dV_x.
 \end{equation*}
 The above is finally re-written as
 \begin{equation}
     \label{eq:evol_e_semi_discrete}
-    \sum_j^{N_\phi} \frac{d \hat{e}_j}{d t} m_{\mathcal{E},ij} = \sum_k^{N_w} \hat{\uvec}_k \cdot \fvec_{ki}.
+    \sum_j^{N_\phi} \frac{d \hat{e}_{\alpha,j}}{d t} m_{\mathcal{E},ij} = \sum_k^{N_w} \hat{\uvec}_k \cdot \fvec_{ki,\alpha} - c_{\alpha,i},
 \end{equation}
-Note that in the above there is a dot product in the right-hand side, that is, the right-hand side expanded out is  
+where
+\begin{equation}
+    c_{\alpha,i} = \int_{\Omega^+} \bar{p} \alpha_\alpha \phi_i \, dV_x
+\end{equation}
+Note that in \cref{eq:evol_e_semi_discrete} there is a dot product in first term of the right-hand side. To see this, we expand this term as follows 
 \begin{equation*}
-    \sum_k^{N_w} \hat{\uvec}_k \cdot \fvec_{ki} = \sum_k^{N_w} \sum_{\alpha=x,y,z} \hat{u}_{k,\alpha} f_{ki,\alpha}.
+    \sum_k^{N_w} \hat{\uvec}_k \cdot \fvec_{ki,\alpha} = \sum_k^{N_w} \sum_{a=x,y,z} \hat{u}_{k,a} f_{ki,\alpha,a}.
 \end{equation*}
 
-We now introduce the vector $\Evec$ whose components are $\hat{e}_i$. We also introduce the matrix $\Mvec_\mathcal{E}$ whose components are $m_{\mathcal{E},ij}$. Thus, \cref{eq:evol_e_semi_discrete} can be succinctly written as
+We now introduce the vector $\Evec_\alpha$ whose components are $\hat{e}_{\alpha,i}$, the matrix $\Mvec_{\mathcal{E},\alpha}$ whose components are $m_{\mathcal{E},ij,\alpha}$, and the vector $\Cvec_\alpha$ whose components are $c_{\alpha,i}$. Thus, \cref{eq:evol_e_semi_discrete} can be succinctly written as
 \begin{equation}
     \label{eq:evol_energy_semi_discrete}
-    \Mvec_\mathcal{E} \frac{d\Evec}{dt} = \Fvec^T \cdot \Uvec.
+    \Mvec_{\mathcal{E},\alpha} \frac{d\Evec_\alpha}{dt} = \Fvec^T_\alpha \cdot \Uvec - \Cvec_\alpha.
 \end{equation}
-Note again that on the right-hand side above there is a matrix-vector product \textit{and} a dot product. We also note that since both the Lagrangian and Eulerian internal energies share the same coefficients $\Evec$, we now have a solution for both.
+Note again that the first term on the right-hand side above has a matrix-vector product \textit{and} a dot product. We also note that since both the Lagrangian and Eulerian internal energies share the same coefficients $\Evec_\alpha$, we now have a solution for both.
 
 %------------------------------------------------------------------------
 \section{Momentum and energy conservation}

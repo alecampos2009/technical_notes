@@ -1345,7 +1345,7 @@ Using the above, we can easily show that
 t_{ij} = 2\mu S_{ij}^*
 \end{equation*}
 \begin{equation*}
-q_i = -\kappa \frac{\partial T}{\partial x_i}  + \sum_{\alpha=1} h_\alpha J_{\alpha,i}
+q_i = -\kappa \frac{\partial T}{\partial x_i}  + \sum_\alpha=1 h_\alpha J_{\alpha,i}
 \end{equation*}
 \begin{equation*}
 J_{\alpha,i} = -\rho \left ( D_\alpha \frac{\partial Y_\alpha}{\partial x_i} - Y_\alpha \sum_\beta D_\beta \frac{\partial Y_\beta}{\partial x_i} \right )
@@ -1389,9 +1389,9 @@ D_\alpha = \frac{\mu}{\rho Sc_\alpha}
 \begin{equation*}
     h_\alpha = e_\alpha + \frac{p}{\rho_\alpha}
 \end{equation*}
-\begin{equation}
+\begin{equation*}
     1 = \sum_\alpha Y_\alpha 
-\end{equation}
+\end{equation*}
 
 %---------------------------------
 \subsection{Mass-fraction equations}
@@ -1498,7 +1498,7 @@ In the above $\sigma_\alpha$ is the stress tensor of each material, $\bar{p}$ is
     \frac{\partial\rho Y_\alpha}{\partial t}+\frac{\partial \rho Y_\alpha u_i}{\partial x_i} = -\frac{\partial J_{\alpha,i}}{\partial x_i} + w_\alpha
 \end{equation*}
 \begin{equation*}
-    \frac{\partial \rho u_i}{\partial t} + \frac{\partial \rho u_i u_j}{\partial x_j} = \frac{\partial \sigma_{ij}}{\partial x_j} + \rho f_i
+    \frac{\partial \rho u_i}{\partial t} + \frac{\partial \rho u_i u_j}{\partial x_j} = \frac{\partial}{\partial x_j} \sum_\alpha \eta_\alpha \sigma_{\alpha,ij} + \rho f_i
 \end{equation*}
 \begin{equation}
     \frac{\partial \rho Y_\alpha e_\alpha}{\partial t} + \frac{\partial \rho Y_\alpha e_\alpha u_j}{\partial x_j} = \eta_\alpha \sigma_{\alpha,ij} \frac{\partial u_i}{\partial x_j} - \bar{p} \alpha_\alpha - \frac{\partial q_{\alpha,j}}{\partial x_j}.
@@ -1507,10 +1507,10 @@ In the above $\sigma_\alpha$ is the stress tensor of each material, $\bar{p}$ is
 \paragraph{Transport models}
 
 \begin{equation*}
-t_{ij} = 2\mu S_{ij}^*
+t_{\alpha,ij} = 2\mu_\alpha S_{ij}^*
 \end{equation*}
 \begin{equation*}
-q_i = -\kappa \frac{\partial T}{\partial x_i}  + \sum_{\alpha=1} h_\alpha J_{\alpha,i}
+q_{\alpha,i} = -\kappa_\alpha \frac{\partial T_\alpha}{\partial x_i}  + \sum_\alpha h_\alpha J_{\alpha,i}
 \end{equation*}
 \begin{equation*}
 J_{\alpha,i} = -\rho \left ( D_\alpha \frac{\partial Y_\alpha}{\partial x_i} - Y_\alpha \sum_\beta D_\beta \frac{\partial Y_\beta}{\partial x_i} \right )
@@ -1519,46 +1519,53 @@ J_{\alpha,i} = -\rho \left ( D_\alpha \frac{\partial Y_\alpha}{\partial x_i} - Y
 \paragraph{Transport coefficients}
 
 \begin{equation*}
-\mu = \mu_0 \left ( \frac{T}{T_0} \right )^n
+\mu_\alpha = \mu_{0,\alpha} \left ( \frac{T_\alpha}{T_{\alpha,0}} \right )^n
 \end{equation*}
 \begin{equation*}
-\kappa = \frac{\mu C_p}{Pr}
+\kappa_\alpha = \frac{\mu_\alpha C_{p,\alpha}}{Pr_\alpha}
 \end{equation*}
 \begin{equation*}
-D_\alpha = \frac{\mu}{\rho Sc_\alpha}
+D_\alpha = \frac{\mu_\alpha}{\rho Sc_\alpha}
 \end{equation*}
 
 \paragraph{Equations of state}
 
 \begin{equation*}
-    p = \phi_\alpha (\rho_\alpha, T),
+    p_\alpha = \phi_\alpha (\rho_\alpha, T_\alpha),
 \end{equation*}
 \begin{equation*}
-    e_\alpha = \psi_\alpha (\rho_\alpha, T).
+    e_\alpha = \psi_\alpha (\rho_\alpha, T_\alpha).
 \end{equation*}
+
+\paragraph{Multi-material models}
+\begin{equation}
+    \frac{\partial \eta_\alpha}{\partial t} + u_j \frac{\partial \eta_\alpha}{\partial x_j} = \alpha_\alpha.
+\end{equation}
+
 \begin{equation*}
-    \frac{1}{\rho} = \sum_\alpha \frac{Y_\alpha}{\rho_\alpha},
+    \alpha_\alpha = f(\dots)
 \end{equation*}
+
 \begin{equation*}
-    e = \sum_\alpha Y_\alpha e_\alpha.
+    \bar{p} = g(\dots)
 \end{equation*}
 
 \paragraph{Additional relations}
 
 \begin{equation*}
-    E = e + K
-\end{equation*}
-\begin{equation*}
-    K = \frac{1}{2} u_i u_i
-\end{equation*}
-\begin{equation*}
-    \sigma_{ij} = -p \delta_{ij} + t_{ij}
+    \sigma_{\alpha,ij} = -p_\alpha \delta_{ij} + t_{\alpha,ij}
 \end{equation*}
 \begin{equation*}
     S^*_{ij} = \frac{1}{2} \left ( \frac{\partial u_i}{\partial x_j} + \frac{\partial u_j}{\partial x_i} \right ) - \frac{1}{3} \frac{\partial u_k}{\partial x_k} \delta_{ij}
 \end{equation*}
 \begin{equation*}
     h_\alpha = e_\alpha + \frac{p}{\rho_\alpha}
+\end{equation*}
+\begin{equation*}
+    1 = \sum_\alpha Y_\alpha 
+\end{equation*}
+\begin{equation*}
+    \rho_\alpha = \rho \frac{Y_\alpha}{\eta_\alpha}
 \end{equation*}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
