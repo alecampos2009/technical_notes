@@ -32,7 +32,7 @@ The governing equations for the Lagrangian fluid particles are derived in my flo
 \end{equation}
 \begin{equation}
     \label{eq:lag_gov_evol_eta}
-    \frac{\partial \eta^+_\alpha}{\partial t} = \alpha^+,
+    \frac{\partial \eta^+_\alpha}{\partial t} = \alpha^+_\alpha,
 \end{equation}
 \begin{equation}
     \label{eq:lag_gov_evol_rho}
@@ -217,7 +217,7 @@ We also introduce the vector bilinear form
 \begin{equation}
     \fvec_{ij,\alpha} = \int_{\Omega^+} \eta_\alpha \sigmavec_\alpha \cdot \nabla w_i \phi_j \, dV_x.
 \end{equation}
-This is a \textit{vector} bilinear form since $\fvec_{ij,\alpha}$ has components $f_{ij,\alpha,a} = f_{ij,\alpha,a}(t)$, for $a = x,y,z$, where $a$ denotes the first index of $\sigmavec_\alpha$. We introduce the force matrix $\Fvec_\alpha$, whose components are $\fvec_{ij,\alpha}$. We also expand the field with constant value of one as follows
+This is a \textit{vector} bilinear form since $\fvec_{ij,\alpha}$ has components $f_{ij,\alpha,\nu} = f_{ij,\alpha,\nu}(t)$, for $\nu = x,y,z$, where $\nu$ denotes the first index of $\sigmavec_\alpha$. We introduce the force matrix $\Fvec_\alpha$, whose components are $\fvec_{ij,\alpha}$. We also expand the field with constant value of one as follows
 \begin{equation*}
     1 = \sum_i^{N_\phi} \hat{1}_i \phi_i.
 \end{equation*}
@@ -302,16 +302,16 @@ Note again that the first term on the right-hand side above has a matrix-vector 
 %------------------------------------------------------------------------
 \section{Momentum and energy conservation}
 %------------------------------------------------------------------------
-We'll now define the internal energy $IE=IE(t)$, the kinetic energy $KE=KE(t)$, and the momentum $P_\nvec=P_\nvec(t)$ along a constant $\nvec$ direction.
+We first define the material internal energy $IE_\alpha=IE_\alpha(t)$, the kinetic energy $KE=KE(t)$, and the momentum $P_\nvec=P_\nvec(t)$ along a constant $\nvec$ direction.
 \begin{align}
-    IE &= \int_{\Omega^+} \rho e \, dV_x \nonumber \\
-    &= \int_{\Omega_0} \rho^+ e^+ J^+ \, dV_y \nonumber \\
-    &= \int_{\Omega_0} \rho^+_0 e^+ \, dV_y \nonumber \\
-    &= \int_{\Omega_0} \rho_0^+ \sum_{j}^{N_\phi} \hat{e}_j \phi_j^+ \, dV_y \nonumber \\
-    &= \int_{\Omega_0} \rho_0^+ \sum_{j}^{N_\phi} \hat{e}_j \phi_j^+ \left ( \sum_{i}^{N_\phi} \hat{1}_i \phi^+_i \right ) \, dV_y \nonumber \\
-    &= \sum_i^{N_\phi} \sum_j^{N_\phi} \hat{1}_i \int_{\Omega_0} \rho_0^+ \phi_i^+ \phi_j^+ \, dV_y \hat{e}_j \nonumber \\
-    &= \sum_i^{N_\phi} \sum_j^{N_\phi} \hat{1}_i m_{\mathcal{E},ij} \hat{e}_j \nonumber \\
-    &= \hat{\mathbf{1}}^T \Mvec_\mathcal{E} \Evec 
+    IE_\alpha &= \int_{\Omega^+} \eta_\alpha \rho_\alpha e_\alpha \, dV_x \nonumber \\
+    &= \int_{\Omega_0} \eta^+_\alpha \rho^+_\alpha e^+_\alpha J^+ \, dV_y \nonumber \\
+    &= \int_{\Omega_0} \eta^+_{\alpha,0} \rho^+_{\alpha,0} e^+_\alpha \, dV_y \nonumber \\
+    &= \int_{\Omega_0} \eta^+_{\alpha,0} \rho_{\alpha,0}^+ \sum_{j}^{N_\phi} \hat{e}_{\alpha,j} \phi_j^+ \, dV_y \nonumber \\
+    &= \int_{\Omega_0} \eta^+_{\alpha,0}  \rho_{\alpha,0}^+ \sum_{j}^{N_\phi} \hat{e}_{\alpha,j} \phi_j^+ \left ( \sum_{i}^{N_\phi} \hat{1}_i \phi^+_i \right ) \, dV_y \nonumber \\
+    &= \sum_i^{N_\phi} \sum_j^{N_\phi} \hat{1}_i \int_{\Omega_0} \eta^+_{\alpha,0}  \rho_{\alpha,0}^+ \phi_i^+ \phi_j^+ \, dV_y \hat{e}_{\alpha,j} \nonumber \\
+    &= \sum_i^{N_\phi} \sum_j^{N_\phi} \hat{1}_i m_{\mathcal{E},ij,\alpha} \hat{e}_{\alpha,j} \nonumber \\
+    &= \hat{\mathbf{1}}^T \Mvec_{\mathcal{E},\alpha} \Evec_\alpha 
 \end{align}
 
 \begin{align}
@@ -336,17 +336,21 @@ We'll now define the internal energy $IE=IE(t)$, the kinetic energy $KE=KE(t)$, 
 
 The total energy is conserved, as shown below
 \begin{align}
-    \frac{d}{dt} (IE + KE) &= \hat{\mathbf{1}}^T \Mvec_\mathcal{E} \frac{d\Evec}{dt} + \Uvec^T \cdot \Mvec_\mathcal{V} \frac{d\Uvec}{dt} \nonumber \\
-    &= \hat{\mathbf{1}}^T \Fvec^T \cdot \Uvec - \Uvec^T \cdot \Fvec \hat{\mathbf{1}} \nonumber \\
+    \frac{d}{dt} \left( \sum_\alpha IE_\alpha + KE \right) &= \sum_\alpha \hat{\mathbf{1}}^T \Mvec_{\mathcal{E},\alpha} \frac{d\Evec_\alpha}{dt} + \Uvec^T \cdot \Mvec_\mathcal{V} \frac{d\Uvec}{dt} \nonumber \\
+    &= \sum_\alpha \hat{\mathbf{1}}^T \left( \Fvec^T_\alpha \cdot \Uvec - \Cvec_\alpha \right) - \Uvec^T \cdot \sum_\alpha \Fvec_\alpha \hat{\mathbf{1}} \nonumber \\
+    &= \hat{\mathbf{1}}^T \left( \sum_\alpha \Fvec^T_\alpha \right) \cdot \Uvec - \Uvec^T \cdot \left( \sum_\alpha \Fvec_\alpha \right) \hat{\mathbf{1}} \nonumber \\
+    &= \hat{\mathbf{1}}^T \left( \sum_\alpha \Fvec_\alpha \right)^T \cdot \Uvec - \Uvec^T \cdot \left( \sum_\alpha \Fvec_\alpha \right) \hat{\mathbf{1}} \nonumber \\
     &= 0.
 \end{align}
-The momentum along a constant direction is conserved, as shown below
+In the above, we used $\sum_\alpha C_\alpha = 0$ since $\sum_\alpha \alpha_\alpha = 0$. The momentum along a constant direction is conserved, as shown below
 \begin{align}
     \frac{d P_\nvec}{dt} &= \Nvec^T \cdot \Mvec_\mathcal{V} \frac{d \Uvec}{dt} \nonumber \\
-    &= -\Nvec^T \cdot \Fvec \hat{\mathbf{1}} \nonumber \\
-    &= -\sum_i^{N_w} \sum_j^{N_\phi} \hat{\nvec}_i \cdot \fvec_{ij} \hat{1}_j \nonumber \\
-    &= -\sum_i^{N_w} \sum_j^{N_\phi} \hat{\nvec}_i \cdot \int_{\Omega^+} \sigmavec \cdot \nabla w_i \phi_j \, dV_x \hat{1}_j \nonumber \\
-    &= -\int_{\Omega^+} \sigmavec : \nabla \nvec \, dV_x \nonumber \\
+    &= -\Nvec^T \cdot \sum_\alpha \Fvec_\alpha \hat{\mathbf{1}} \nonumber \\
+    &= -\sum_i^{N_w} \sum_j^{N_\phi} \sum_\alpha \hat{\nvec}_i \cdot \fvec_{ij,\alpha} \hat{1}_j \nonumber \\
+    &= -\sum_i^{N_w} \sum_j^{N_\phi} \sum_\alpha \hat{\nvec}_i \cdot \int_{\Omega^+} \eta_\alpha \sigmavec_\alpha \cdot \nabla w_i \phi_j \, dV_x \hat{1}_j \nonumber \\
+    &= -\sum_i^{N_w} \sum_\alpha \hat{\nvec}_i \cdot \int_{\Omega^+} \eta_\alpha \sigmavec_\alpha \cdot \nabla w_i \, dV_x \nonumber \\
+    &= - \sum_\alpha \int_{\Omega^+} \eta_\alpha \sigmavec_\alpha : \nabla \left( \sum_i^{N_w} \hat{\nvec}_i w_i \right) \, dV_x \nonumber \\
+    &= -\sum_\alpha \int_{\Omega^+} \eta_\alpha \sigmavec_\alpha : \nabla \nvec \, dV_x \nonumber \\
     &= 0.
 \end{align}
 
@@ -359,7 +363,7 @@ The momentum along a constant direction is conserved, as shown below
     \caption{Schematic of the three domains $\Omega_r$, $\Omega^{(e_p)}(t,\Omega_r)$, $\Omega^{(e_p)}(0,\Omega_r)$.}
     \label{fig:three_spaces}
  \end{figure}
-We introduce the reference element as the unit square in 2D or the unit cube in 3D. The domain of this reference element is labelled as $\Omega_r$ and it doesn't change with time. We introduce the function $\Phivec^{(e_p)} = \Phivec^{(e_p)}(t,\rvec)$, which maps from points $\rvec$ in $\Omega_r$ to points in the finite element $e_p$ of the physical space. The evolving domain of the finite element $e_p$ is giving  by the function $\Omega^{(e_p)} = \Omega^{(e_p)}(t,\Omega_r)$. A depiction of these domains and their mappings is shown in \cref{fig:three_spaces}. Whereas for $\Omega^+$ we had $\Omega^+(0,\Omega_0)=\Omega_0$, for $\Omega^{(e_p)}$ the analogue does not hold, that is, $\Omega^{(e_p)}(0,\Omega_r) \ne \Omega_r$.
+We have generally been operating in physical space, where the domain of interest is labelled as $\Omega^+$, which changes in time according to the evolution of the flow. This domain has been discretized into finite elements, and in this section we'll denote a finite element using the variable $e_p$. We now introduce the reference element as the unit square in 2D or the unit cube in 3D, which is constant in time, and label its domain as $\Omega_r$. The function $\Phivec^{(e_p)} = \Phivec^{(e_p)}(t,\rvec)$ maps from points $\rvec$ in $\Omega_r$ to points in the finite element $e_p$ of the physical space. The evolving domain of the finite element $e_p$ is given  by the function $\Omega^{(e_p)} = \Omega^{(e_p)}(t,\Omega_r)$. A depiction of these domains and their mappings is shown in \cref{fig:three_spaces}. One caveat to highlight: whereas for $\Omega^+$ we had $\Omega^+(0,\Omega_0)=\Omega_0$, for $\Omega^{(e_p)}$ the analogue does not hold, that is, $\Omega^{(e_p)}(0,\Omega_r) \ne \Omega_r$.
 
 
 The mapping functions $\Phivec^{(e_p)}$ and $\xvec^+$ are related to each other as follows
@@ -385,15 +389,21 @@ Taking the determinant of the above gives
 where $J^{(e_p)}_0 = J^{(e_p)}(0,\rvec)$.
 
 As a reminder, a Lagrangian variable $f^+=f^+(t,\yvec)$ is related to $f=f(t,\xvec)$ according to 
-\begin{equation*}
+\begin{equation}
+    \label{eq:ref_elem_lag_duplicae}
     f^+(t,\yvec) = f(t,\xvec^+(t,\yvec)).
-\end{equation*}
-In an analogous manner, $f^{(e_p)}=f^{(e_p)}(t,\rvec)$ is related to $f=f(t,\xvec)$ according to
+\end{equation}
+In an analogous manner, a function $f^{(e_p)}=f^{(e_p)}(t,\rvec)$ for finite element $e_p$ is defined as follows
 \begin{equation}
     \label{eq:ref_elem_to_eul}
     f^{(e_p)}(t,\rvec) = f(t,\Phivec^{(e_p)}(t,\rvec)).
 \end{equation}
-Examples of these reference-element functions include those for density $\rho^{(e_p)} = \rho^{(e_p)}(t,\rvec)$, velocity $\uvec^{(e_p)} = \uvec^{(e_p)}(t,\rvec)$, and internal energy $e^{(e_p)} = e^{(e_p)}(t,\rvec)$. Using integration by substitution and then \cref{eq:ref_elem_to_eul} we show 
+We can also use \cref{eq:ref_elem_r_map} to combine \cref{eq:ref_elem_lag_duplicae,eq:ref_elem_to_eul} and thus obtain
+\begin{equation}
+    \label{eq:ref_elem_to_lag}
+    f^{(e_p)}(t,\rvec) = f(t,\Phivec^{(e_p)}(t,\rvec)) = f(t,\xvec^+(t, \Phivec^{(e_p)}(0,\rvec))) = f^+(t,\Phivec^{(e_p)}(0,\rvec)).
+\end{equation}
+Examples of these reference-element functions include those for material density $\rho^{(e_p)}_\alpha = \rho^{(e_p)}_\alpha(t,\rvec)$, velocity $\uvec^{(e_p)} = \uvec^{(e_p)}(t,\rvec)$, and material internal energy $e^{(e_p)}_\alpha = e^{(e_p)}_\alpha(t,\rvec)$. Using integration by substitution and then \cref{eq:ref_elem_to_eul} we show that
 \begin{align*}
     \int_{\Omega^{(e_p)}} f dV_x &= \int_{\Omega_r} f(t, \Phivec^{(e_p)}(t,\rvec)) J^{(e_p)} \, dV_r \nonumber \\
     &= \int_{\Omega_r} f^{(e_p)} J^{(e_p)} \, dV_r.
@@ -406,7 +416,7 @@ If the integrand contains a derivative, a bit of extra care is required. To show
 \end{equation*}
 We first note that
 \begin{equation*}
-    \frac{\partial f^{(e_p)}}{\partial r_k} = \left ( \frac{\partial f}{\partial x_i} \right )_{\xvec = \Phivec^{(e_p)}} \frac{\partial x^{(e_p)}_i}{\partial r_k} = \left ( \frac{\partial f}{\partial x_i} \right )_{\xvec = \Phivec^{(e_p)}} J^{(e_p)}_{ik}.
+    \frac{\partial f^{(e_p)}}{\partial r_k} = \left( \frac{\partial f}{\partial x_i} \right)_{\xvec = \Phivec^{(e_p)}} \frac{\partial \Phi^{(e_p)}_i}{\partial r_k} = \left ( \frac{\partial f}{\partial x_i} \right )_{\xvec = \Phivec^{(e_p)}} J^{(e_p)}_{ik}.
 \end{equation*}
 Upon multiplying both sides by the inverse of $\Jvec^{(e_p)}$, we get
 \begin{equation*}
@@ -426,10 +436,14 @@ Thus, for the force matrix $\fvec_{ij}$ we can now write
     &= \int_{\Omega_\rvec} \sigmavec^{(e_p)} \cdot \left[ \left( \Jvec^{(e_p)} \right)^{-1} \right]^T  \cdot \nabla_\rvec w^{(e_p)}_i \phi^{(e_p)}_j J^{(e_p)} \, dV_r.
 \end{align*}
 
-We also note that we can evaluate \cref{eq:evol_rho_semi_discrete} at $\yvec = \Phivec^{(e_p)}(0,\rvec)$ to obtain
-\begin{equation}
-    \rho^{(e_p)} = \frac{\rho^{(e_p)}_0 J^{(e_p)}_0}{J^{(e_p)}}.
-\end{equation}
+We also note that we can evaluate \cref{eq:evol_rho_semi_discrete} at $\yvec = \Phivec^{(e_p)}(0,\rvec)$ and use \cref{eq:ref_elem_to_lag} to obtain
+\begin{equation*}
+    \eta^{(e_p)}_\alpha \rho^{(e_p)}_\alpha = \frac{\eta^{(e_p)}_{\alpha,0} \rho^{(e_p)}_{\alpha,0}}{ \left( J^+ \right)_{\yvec=\Phivec^{(e_p)}(0,\rvec)} }.
+\end{equation*}
+Using \cref{eq:ref_elem_det_J} the above becomes
+\begin{equation*}
+    \eta^{(e_p)}_\alpha \rho^{(e_p)}_\alpha = \frac{\eta^{(e_p)}_{\alpha,0} \rho^{(e_p)}_{\alpha,0} J^{(e_p)}_0}{J^{(e_p)}}.
+\end{equation*}
 
 As with the other variables, we can define a reference basis function $w^{(e_p)}$ so that it satisfies
 \begin{equation}
@@ -448,11 +462,11 @@ Thus, both the Lagrangian and reference variables share the same finite-element 
 We now integrate forward in time the semi-discrete \cref{eq:evol_x_semi_discrete,eq:evol_vel_semi_discrete,eq:evol_energy_semi_discrete}, which we repeat below for convenience
 \begin{equation}
     \tag{\ref{eq:evol_vel_semi_discrete}}
-    \Mvec_\mathcal{V} \frac{d\Uvec}{dt} = -\Fvec \hat{\mathbf{1}}.
+    \Mvec_\mathcal{V} \frac{d\Uvec}{dt} = -\sum_\alpha \Fvec_\alpha \hat{\mathbf{1}}.
 \end{equation}
 \begin{equation}
     \tag{\ref{eq:evol_energy_semi_discrete}}
-    \Mvec_\mathcal{E} \frac{d\Evec}{dt} = \Fvec^T \cdot \Uvec.
+    \Mvec_{\mathcal{E},\alpha} \frac{d\Evec_\alpha}{dt} = \Fvec^T_\alpha \cdot \Uvec - \Cvec_\alpha.
 \end{equation}
 \begin{equation}
     \tag{\ref{eq:evol_x_semi_discrete}}
@@ -460,22 +474,26 @@ We now integrate forward in time the semi-discrete \cref{eq:evol_x_semi_discrete
 \end{equation}
 The equations are integrated using the RK2-average scheme of \cite{dobrev2012}, which consists of the following for the first stage
 \begin{align}
-    \Uvec^{n+1/2} &= \Uvec^n - \frac{\Delta t}{2} \left( \Mvec_\mathcal{V} \right)^{-1} \Fvec^n \hat{\mathbf{1}}, \nonumber \\
-    \Evec^{n+1/2} &= \Evec^n + \frac{\Delta t}{2} \left( \Mvec_\mathcal{E} \right)^{-1} \left( \Fvec^n \right)^T \cdot \Uvec^{n+1/2}, \nonumber \\
+    \Uvec^{n+1/2} &= \Uvec^n - \frac{\Delta t}{2} \left( \Mvec_\mathcal{V} \right)^{-1} \sum_\alpha \Fvec^n_\alpha \hat{\mathbf{1}}, \nonumber \\
+    \Evec^{n+1/2}_\alpha &= \Evec^n_\alpha + \frac{\Delta t}{2} \left( \Mvec_{\mathcal{E},\alpha} \right)^{-1} \left[ \left( \Fvec^n_\alpha \right)^T \cdot \Uvec^{n+1/2} -\Cvec^n_\alpha \right], \nonumber \\
     \Xvec^{n+1/2} &= \Xvec^n + \frac{\Delta t}{2} \Uvec^{n+1/2},
 \end{align}
 and the following for the second stage
 \begin{align}
-    \Uvec^{n+1} &= \Uvec^n - \Delta t \left( \Mvec_\mathcal{V} \right)^{-1} \Fvec^{n+1/2} \hat{\mathbf{1}}, \nonumber \\
-    \Evec^{n+1} &= \Evec^n + \Delta t \left( \Mvec_\mathcal{E} \right)^{-1} \left( \Fvec^{n+1/2} \right)^T \cdot \bar{\Uvec}^{n+1/2}, \nonumber \\
+    \Uvec^{n+1} &= \Uvec^n - \Delta t \left( \Mvec_\mathcal{V} \right)^{-1} \sum_\alpha \Fvec^{n+1/2}_\alpha \hat{\mathbf{1}}, \nonumber \\
+    \Evec^{n+1}_\alpha &= \Evec^n_\alpha + \Delta t \left( \Mvec_{\mathcal{E},\alpha} \right)^{-1} \left[ \left( \Fvec^{n+1/2}_\alpha \right)^T \cdot \bar{\Uvec}^{n+1/2} - \Cvec^{n+1/2}_\alpha \right], \nonumber \\
     \Xvec^{n+1} &= \Xvec^n + \Delta t \bar{\Uvec}^{n+1/2}.
 \end{align}
-In the above, $\bar{\Uvec}^{n+1/2} = \left( \Uvec^n + \Uvec^{n+1} \right)/2$. In particular, this scheme is used since it conserves total energy, that is, $(IE + KE)^{n+1} - (IE + KE)^n = 0$. To prove this we first show that for the internal energy we have
-\begin{align}
+In the above, $\bar{\Uvec}^{n+1/2} = \left( \Uvec^n + \Uvec^{n+1} \right)/2$. In particular, this scheme is used since it conserves total energy, that is, $(\sum_\alpha IE_\alpha + KE)^{n+1} - (\sum_\alpha IE_\alpha + KE)^n = 0$. To prove this we first show that for the internal energy we have
+\begin{align*}
+    IE^{n+1}_\alpha - IE^n_\alpha &= \hat{\mathbf{1}}^T \Mvec_{\mathcal{E},\alpha} \left( \Evec^{n+1}_\alpha - \Evec^n_\alpha \right) \nonumber \\
+    &= \Delta t \hat{\mathbf{1}}^T \left[ \left( \Fvec^{n+1/2}_\alpha \right)^T \cdot \bar{\Uvec}^{n+1/2} - \Cvec^{n+1/2}_\alpha \right].
+\end{align*}
+Summing over all alpha gives
+\begin{equation}
     \label{eq:temp_ie_change}
-    IE^{n+1} - IE^n &= \hat{\mathbf{1}}^T \Mvec_\mathcal{E} \left( \Evec^{n+1} - \Evec^n \right) \nonumber \\
-    &= \Delta t \hat{\mathbf{1}}^T \left( \Fvec^{n+1/2} \right)^T \cdot \bar{\Uvec}^{n+1/2}
-\end{align}
+    \sum_\alpha IE^{n+1}_\alpha - \sum_\alpha IE^n_\alpha = \Delta t \hat{\mathbf{1}}^T \left( \sum_\alpha \Fvec^{n+1/2}_\alpha \right)^T \cdot \bar{\Uvec}^{n+1/2}.
+\end{equation}
 For the kinetic energy we have
 \begin{align}
     \label{eq:temp_ke_change}
@@ -483,11 +501,11 @@ For the kinetic energy we have
     &= \frac{1}{2} \left[ \left( \Uvec^{n+1} \right)^T \Mvec_\mathcal{V} \cdot \Uvec^{n+1} - \left( \Uvec^n \right)^T \Mvec_\mathcal{V} \cdot \Uvec^n \right] \nonumber \\
     &= \frac{1}{2} \left( \Uvec^{n+1} - \Uvec^n \right)^T \Mvec_\mathcal{V} \cdot \left( \Uvec^{n+1} + \Uvec^n \right) \nonumber \\ 
     &= \left( \Uvec^{n+1} - \Uvec^n \right)^T \Mvec_\mathcal{V} \cdot \bar{\Uvec}^{n+1/2} \nonumber \\
-    &= \left[ - \Delta t \left( \Mvec_\mathcal{V} \right)^{-1} \Fvec^{n+1/2} \hat{\mathbf{1}} \right]^T \Mvec_\mathcal{V} \cdot \bar{\Uvec}^{n+1/2} \nonumber \\
-    &= -\Delta t \hat{\mathbf{1}}^T \left( \Fvec^{n+1/2} \right)^T \left[ \left( \Mvec_\mathcal{V} \right)^{-1} \right]^T \Mvec_\mathcal{V} \cdot \bar{\Uvec}^{n+1/2} \nonumber \\
-    &= -\Delta t \hat{\mathbf{1}}^T \left( \Fvec^{n+1/2} \right)^T \left[ \left( \Mvec_\mathcal{V} \right)^T \right]^{-1} \Mvec_\mathcal{V} \cdot \bar{\Uvec}^{n+1/2} \nonumber \\
-    &= -\Delta t \hat{\mathbf{1}}^T \left( \Fvec^{n+1/2} \right)^T \left( \Mvec_\mathcal{V} \right)^{-1} \Mvec_\mathcal{V} \cdot \bar{\Uvec}^{n+1/2} \nonumber \\
-    &= -\Delta t \hat{\mathbf{1}}^T \left( \Fvec^{n+1/2} \right)^T \cdot \bar{\Uvec}^{n+1/2}.
+    &= \left[ - \Delta t \left( \Mvec_\mathcal{V} \right)^{-1} \sum_\alpha \Fvec^{n+1/2}_\alpha \hat{\mathbf{1}} \right]^T \Mvec_\mathcal{V} \cdot \bar{\Uvec}^{n+1/2} \nonumber \\
+    &= -\Delta t \hat{\mathbf{1}}^T \left( \sum_\alpha \Fvec^{n+1/2}_\alpha \right)^T \left[ \left( \Mvec_\mathcal{V} \right)^{-1} \right]^T \Mvec_\mathcal{V} \cdot \bar{\Uvec}^{n+1/2} \nonumber \\
+    &= -\Delta t \hat{\mathbf{1}}^T \left( \sum_\alpha \Fvec^{n+1/2}_\alpha \right)^T \left[ \left( \Mvec_\mathcal{V} \right)^T \right]^{-1} \Mvec_\mathcal{V} \cdot \bar{\Uvec}^{n+1/2} \nonumber \\
+    &= -\Delta t \hat{\mathbf{1}}^T \left( \sum_\alpha \Fvec^{n+1/2}_\alpha \right)^T \left( \Mvec_\mathcal{V} \right)^{-1} \Mvec_\mathcal{V} \cdot \bar{\Uvec}^{n+1/2} \nonumber \\
+    &= -\Delta t \hat{\mathbf{1}}^T \left( \sum_\alpha \Fvec^{n+1/2}_\alpha \right)^T \cdot \bar{\Uvec}^{n+1/2}.
 \end{align}
 Thus, adding \cref{eq:temp_ie_change} and \cref{eq:temp_ke_change} leads to total energy conservation.
 
@@ -506,7 +524,7 @@ We introduce a new space, the target space, which is divided into target element
     \Phivec^{(e_p)}(t,\rvec) = \xvec^-(t,\Phivec^{(e_t)}(t,\rvec)).
 \end{equation}
 
-We define the Jacobeans as follows
+We define the Jacobians as follows
 \begin{equation}
     \Jvec^{(e_t)} = \frac{\partial \Phivec^{(e_t)}}{\partial \rvec},
 \end{equation}
