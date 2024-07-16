@@ -334,23 +334,26 @@ Plugging the proposed solution for $l_i^+$ into its ODE, and using equation (\re
 %########################################################################
 \chapter{Conservation laws}
 %########################################################################
-Conservation laws describe changes in mass, momentum, energy and passive scalars. The densities of these four variables are shown below 
-\begin{center}
-\begin{tabular}{|c|c|}
-\hline
-Property & Density  \\
-\hline
-Mass & $\rho$  \\
-\hline
-Momentum & $\rho \uvec$ \\ 
-\hline
-Energy & $\rho (e+\frac{1}{2}\uvec \cdot \uvec )$ \\
-\hline
-Passive scalar & $\rho Y$ \\
-\hline
-\end{tabular}
-\end{center}
-When each of these densities is multiplied by $\uvec \cdot \nvec$, then the resulting terms are referred to as convective fluxes.
+\begin{table}
+    \centering
+    \caption{Densities of various fluid properties}
+    \label{tab:property_densities}
+    \def\arraystretch{1.5}
+    \begin{tabular}{|c|c|}
+        \hline
+        Property & Corresponding density  \\
+        \hline
+        Mass & $\rho$  \\
+        \hline
+        Momentum & $\rho \uvec$ \\ 
+        \hline
+        Energy & $\rho (e+\frac{1}{2}\uvec \cdot \uvec )$ \\
+        \hline
+        Passive scalar & $\rho Y$ \\
+        \hline
+    \end{tabular}
+\end{table}
+Conservation laws describe changes in mass, momentum, energy, and passive scalars. The densities of these four variables are shown in \cref{tab:property_densities}. When each of these densities is multiplied by $\uvec \cdot \nvec$, then the resulting terms are referred to as convective fluxes.
 
 %------------------------------------------------------------------------
 \section{Mass}
@@ -496,81 +499,81 @@ If the flow is incompressible, we obtain:
 %------------------------------------------------------------------------
 
 \paragraph{Lagrangian C.V. Approach:}
-The total energy per unit mass $E$ is defined as $E = e + K$, where $e$ and $K$ are the internal energy per unit mass and the kinetic energy per unit mass, respectively. These are defined as $e = C_vT$ and $K = \frac{1}{2} U_i U_i$, where $C_v$ is the specific heat at constant volume and $T$ the temperature. The total change of $E$ is equal to work done by forces on the C.V and heat transferred to the C.V.
+The total energy per unit mass is $e + K$, where $e$ is the internal energy per unit mass and $K$ the kinetic energy per unit mass. These energies are defined as $e = C_vT$ and $K = \frac{1}{2} u_i u_i$, where $C_v$ is the specific heat at constant volume and $T$ the temperature. The total change of $e + K$ is equal to work done by forces on the C.V and heat transferred to the C.V.
 \begin{equation}
-\frac{d}{dt}\int_{\Omega^+_u(t)} \rho E\,dv = \int_{\partial \Omega^+_u(t)} \Tvec \cdot \uvec \,ds + \int_{\Omega^+_u(t)} \rho \fvec \cdot \uvec \,dv - \int_{\partial \Omega^+_u(t)} \mathbf{q} \cdot \mathbf{n} \, ds.
+\frac{d}{dt}\int_{\Omega^+_u(t)} \rho (e + K)\,dv = \int_{\partial \Omega^+_u(t)} \Tvec \cdot \uvec \,ds + \int_{\Omega^+_u(t)} \rho \fvec \cdot \uvec \,dv - \int_{\partial \Omega^+_u(t)} \mathbf{q} \cdot \mathbf{n} \, ds.
 \end{equation}
 The first and second terms on the RHS are work done by the surface and body forces, respectively, and the third term is the heat transfer away from the body. Since $\Tvec \cdot \uvec = (\boldsymbol{\sigma} \cdot \nvec) \cdot \uvec = (\uvec \cdot \boldsymbol{\sigma}) \cdot \nvec$, application of Gauss's law gives
 \begin{equation}
-\frac{d}{dt}\int_{\Omega^+_u(t)} \rho E\,dv = \int_{\Omega^+_u(t)} \nabla \cdot (\uvec \cdot \boldsymbol{\sigma}) \,dv + \int_{\Omega^+_u(t)} \rho \fvec \cdot \uvec \,dv - \int_{\Omega^+_u(t)} \nabla \cdot \qvec \, dv.
+\frac{d}{dt}\int_{\Omega^+_u(t)} \rho (e + K)\,dv = \int_{\Omega^+_u(t)} \nabla \cdot (\uvec \cdot \boldsymbol{\sigma}) \,dv + \int_{\Omega^+_u(t)} \rho \fvec \cdot \uvec \,dv - \int_{\Omega^+_u(t)} \nabla \cdot \qvec \, dv.
 \end{equation}
 
 Using the identity in \cref{eq:reynolds_transport_theorem_fluid} we obtain,
 \begin{multline}
-\left(\int_{\Omega} \frac{\partial \rho E}{\partial t} +\nabla \cdot (\rho E \uvec) \,dv \right)_{\Omega = \Omega^+_u(t)} =\\ 
+\left(\int_{\Omega} \frac{\partial \rho (e + K)}{\partial t} +\nabla \cdot [\rho (e + K) \uvec] \,dv \right)_{\Omega = \Omega^+_u(t)} =\\ 
 \int_{\Omega^+_u(t)}\nabla\cdot(\uvec \cdot \boldsymbol{\sigma} )\,dv
 + \int_{\Omega^+_u(t)} \rho \fvec \cdot \uvec \,dv
 - \int_{\Omega^+_u(t)} \nabla\cdot\mathbf{q}\,dv,
 \end{multline}
 which gives,
 \begin{equation}
-    \boxed{\frac{\partial \rho E}{\partial t} +\nabla \cdot (\rho E \uvec ) = \nabla\cdot(\uvec \cdot \boldsymbol{\sigma} ) + \rho \fvec \cdot \uvec - \nabla \cdot \qvec.}
+    \boxed{\frac{\partial \rho (e + K)}{\partial t} +\nabla \cdot [\rho (e + K) \uvec ] = \nabla\cdot(\uvec \cdot \boldsymbol{\sigma} ) + \rho \fvec \cdot \uvec - \nabla \cdot \qvec.}
 \end{equation}
 
 \paragraph{Eulerian C.V. Approach:}
 Change of energy over fixed volume is equal to: (1) convected energy through the borders of the C.V., \textit{plus} (2) energy transfer due to work done by forces acting on the volume \textit{plus}, (3) heat transfer away from the C.V.
 \begin{equation}
-\frac{d}{dt}\int_\Omega \rho E \,dv=-\int_{\partial \Omega} \rho E \uvec \cdot \mathbf{n} \, ds + \int_{\Omega} \nabla \cdot (\uvec \cdot \boldsymbol{\sigma}) \,dv + \int_{\Omega} \rho \fvec \cdot \uvec \,dv - \int_{\Omega} \nabla \cdot \qvec \, dv.
+\frac{d}{dt}\int_\Omega \rho (e + K) \,dv=-\int_{\partial \Omega} \rho (e + K) \uvec \cdot \mathbf{n} \, ds + \int_{\Omega} \nabla \cdot (\uvec \cdot \boldsymbol{\sigma}) \,dv + \int_{\Omega} \rho \fvec \cdot \uvec \,dv - \int_{\Omega} \nabla \cdot \qvec \, dv.
 \end{equation}
 Since this volume is stationary, we move the derivative inside the integral for the first term on the LHS and use Gauss's theorem for the first term on the RHS,
 \begin{equation}
-\int_\Omega \frac{\partial \rho E}{\partial t}\,dv + \int_\Omega \nabla \cdot (\rho E \uvec) \,dv = \int_\Omega \nabla \cdot ( \uvec \cdot \boldsymbol{\sigma} ) \,dv + \int_\Omega \rho \fvec \cdot \uvec \,dv - \int_\Omega \nabla \cdot \mathbf{q}\,dv.
+\int_\Omega \frac{\partial \rho (e + K)}{\partial t}\,dv + \int_\Omega \nabla \cdot [\rho (e + K) \uvec] \,dv = \int_\Omega \nabla \cdot ( \uvec \cdot \boldsymbol{\sigma} ) \,dv + \int_\Omega \rho \fvec \cdot \uvec \,dv - \int_\Omega \nabla \cdot \mathbf{q}\,dv.
 \end{equation}
 Thus,
 \begin{equation}
     \label{eq:energy_conservation_vector}
-    \boxed{\frac{\partial \rho E}{\partial t} + \nabla \cdot (\rho E \uvec ) = \nabla\cdot(\uvec \cdot \boldsymbol{\sigma}) + \rho \fvec \cdot \uvec - \nabla\cdot\mathbf{q}.}
+    \boxed{\frac{\partial \rho (e + K)}{\partial t} + \nabla \cdot [\rho (e + K) \uvec ] = \nabla\cdot(\uvec \cdot \boldsymbol{\sigma}) + \rho \fvec \cdot \uvec - \nabla\cdot\mathbf{q}.}
 \end{equation}
 
 \paragraph{Einstein Notation:}
 \begin{equation}
     \label{eq:energy_conservation_tensor}
-    \boxed{\frac{\partial \rho E}{\partial t} + \frac{\partial \rho E u_j}{\partial x_j} = \frac{\partial u_i\sigma_{ij}}{\partial x_j} + \rho f_j u_j - \frac{\partial q_j}{\partial x_j}.}
+    \boxed{\frac{\partial \rho (e + K)}{\partial t} + \frac{\partial \rho (e + K) u_j}{\partial x_j} = \frac{\partial u_i\sigma_{ij}}{\partial x_j} + \rho f_j u_j - \frac{\partial q_j}{\partial x_j}.}
 \end{equation}
 
 \paragraph{Stress tensor:}
 As for the momentum case, we separate the stress tensor into its isotropic and deviatoric components, and thus express the conservation of energy equation as 
 \begin{equation}
-    \frac{\partial \rho E}{\partial t} + \nabla \cdot \left [\rho \left ( E  + \frac{p}{\rho} \right ) \uvec \right] = \nabla\cdot(\uvec \cdot \tvec ) + \rho \fvec \cdot \uvec - \nabla \cdot \qvec
+    \frac{\partial \rho (e + K)}{\partial t} + \nabla \cdot \left [\rho \left ( e + K  + \frac{p}{\rho} \right ) \uvec \right] = \nabla\cdot(\uvec \cdot \tvec ) + \rho \fvec \cdot \uvec - \nabla \cdot \qvec
 \end{equation}
 in vector notation, or 
 \begin{equation}
-    \frac{\partial \rho E}{\partial t} + \frac{\partial}{\partial x_j} \left [ \rho \left ( E + \frac{p}{\rho} \right ) u_j \right ] = \frac{\partial u_i t_{ij}}{\partial x_j} + \rho f_j u_j - \frac{\partial q_j}{\partial x_j}
+    \frac{\partial \rho (e + K)}{\partial t} + \frac{\partial}{\partial x_j} \left [ \rho \left ( e + K + \frac{p}{\rho} \right ) u_j \right ] = \frac{\partial u_i t_{ij}}{\partial x_j} + \rho f_j u_j - \frac{\partial q_j}{\partial x_j}
 \end{equation}
 in tensor notation.
 
 \paragraph{Alternate Forms:}
 The definition of the enthalpy is 
 \begin{equation}
-h = e + \frac{p}{\rho}
+    h = e + \frac{p}{\rho}
 \end{equation}
 and the definition of the total enthalpy is
 \begin{equation}
     H = h + K.
 \end{equation}
-Thus, since $E = e + K$, the energy equation can be re-expressed as
+Thus, the energy equation can be re-expressed as
 \begin{equation}
-\frac{\partial \rho E}{\partial t} + \frac{\partial}{\partial x_j} \left ( \rho H u_j \right ) = \frac{\partial u_i t_{ij}}{\partial x_j} + \rho f_j u_j - \frac{\partial q_j}{\partial x_j}
+\frac{\partial \rho (e + K)}{\partial t} + \frac{\partial}{\partial x_j} \left ( \rho H u_j \right ) = \frac{\partial u_i t_{ij}}{\partial x_j} + \rho f_j u_j - \frac{\partial q_j}{\partial x_j}
 \end{equation}
 
-Moving the pressure back to the right hand side, and using the product rule on the terms on the left, where $\rho E u_j$ is the product of $\rho u_j$ and $E$, we get
+Using the product rule for the terms on the left of \cref{eq:energy_conservation_tensor}, where $\rho (e + K) u_j$ is the product of $\rho u_j$ and $(e + K)$, we get
 \begin{equation}
-\frac{\partial \rho}{\partial t}E + \rho\frac{\partial E}{\partial t} + \rho u_j\frac{\partial E}{\partial x_j}+\frac{\partial \rho u_j}{\partial x_j}E = -\frac{\partial u_j p}{\partial x_j} +  \frac{\partial u_i t_{ij}}{\partial x_j} + \rho f_j u_j - \frac{\partial q_j}{\partial x_j}.
+\frac{\partial \rho}{\partial t}(e + K) + \rho\frac{\partial (e + K)}{\partial t} + \rho u_j\frac{\partial (e + K)}{\partial x_j}+\frac{\partial \rho u_j}{\partial x_j}(e + K) = \frac{\partial u_i \sigma_{ij}}{\partial x_j} + \rho f_j u_j - \frac{\partial q_j}{\partial x_j}.
 \end{equation}
-The first and fourth terms on the left side vanish due to continuity, and the second and third terms amount to $\rho$ times the material derivative of $E$. Thus, the alternate form of the conservation of energy is:
+The first and fourth terms on the left side vanish due to continuity, and the second and third terms amount to $\rho$ times the material derivative of $e + K$. Thus, the alternate form of the conservation of energy is:
 \begin{equation}
 \label{eq:diff_cons_energy}
-\rho\frac{DE}{Dt} = -\frac{\partial u_j p}{\partial x_j} + \frac{\partial u_i t_{ij}}{\partial x_j} + \rho f_j u_j - \frac{\partial q_j}{\partial x_j}.
+\rho\frac{D(e + K)}{Dt} = \frac{\partial u_i \sigma_{ij}}{\partial x_j} + \rho f_j u_j - \frac{\partial q_j}{\partial x_j}.
 \end{equation}
 
 \paragraph{Heat conduction:}
@@ -650,7 +653,7 @@ where $Sc$ is the Schmidt number.
 %------------------------------------------------------------------------
 \section{Additional relations}
 %------------------------------------------------------------------------
-So far we have five conservation equations, one for $\rho$, three for the three components of $\uvec$ and one for $E$. However, we have additional unknowns, such as $p$, $T$, $\mu$ and $\kappa$. Thus, additional equations are required to close the system. Some of these are the thermal equation of state and the caloric equation of state. As an example, for perfect gasses these two take the following forms, respectively
+So far we have five conservation equations, one for $\rho$, three for the three components of $\uvec$ and one for $e + K$. However, we have additional unknowns, such as $p$, $T$, $\mu$ and $\kappa$. Thus, additional equations are required to close the system. Some of these are the thermal equation of state and the caloric equation of state. As an example, for perfect gasses these two take the following forms, respectively
 \begin{equation}
 \label{eq:thermal_eq_of_state_prelim}
     p = \rho R T,
@@ -710,7 +713,7 @@ Thus, we can make the following equivalences
 \end{equation*}
 
 \begin{equation*}
-\frac{\partial \rho E}{\partial t} + \frac{\partial \rho E u_i}{\partial x_i} = \frac{\partial u_i \sigma_{ij}}{\partial x_j} + \rho f_i u_i -  \frac{\partial q_i}{\partial x_i}
+\frac{\partial \rho (e + K)}{\partial t} + \frac{\partial \rho (e + K) u_i}{\partial x_i} = \frac{\partial u_i \sigma_{ij}}{\partial x_j} + \rho f_i u_i -  \frac{\partial q_i}{\partial x_i}
 \end{equation*}
 
 \begin{equation*}
@@ -752,9 +755,6 @@ Thus, we can make the following equivalences
 
 \paragraph{Additional relations}
 
-\begin{equation*}
-    E = e + K
-\end{equation*}
 \begin{equation*}
     K = \frac{1}{2} u_i u_i
 \end{equation*}
@@ -978,9 +978,9 @@ The above is equivalent to
 \end{equation}
 This equation is referred to as the Bernoulli equation.
 
-A similar result can be obtain if one focuses on the energy equation instead of the momentum equation. If the flow is steady, inviscid, and the volume force is conservative, the energy \cref{eq:diff_cons_energy} in vector notation becomes
+A similar result can be obtain if one focuses on the energy equation instead of the momentum equation. If the flow is steady, inviscid, and the volume force is conservative, the energy equation simplifies to
 \begin{equation}
-    \uvec \cdot \nabla E = - \frac{1}{\rho} \nabla \cdot (\uvec p) + \nabla G \cdot \uvec.
+    \uvec \cdot \nabla (e + K) = - \frac{1}{\rho} \nabla \cdot (\uvec p) + \nabla G \cdot \uvec.
 \end{equation}
 For the first term on the right-hand side, we can write
 \begin{equation}
@@ -988,16 +988,16 @@ For the first term on the right-hand side, we can write
 \end{equation}
 where we have used conservation of mass for the last equality. Thus, we now have
 \begin{equation}
-     \uvec \cdot \nabla \left ( E + \frac{p}{\rho} -G \right ) = 0,
+     \uvec \cdot \nabla \left ( e + K + \frac{p}{\rho} -G \right ) = 0,
 \end{equation}
 or in terms of enthalpy
 \begin{equation}
-     \uvec \cdot \nabla \left ( h + \frac{1}{2} \uvec \cdot \uvec -G \right ) = 0,
+     \uvec \cdot \nabla \left ( h + K - G \right ) = 0,
 \end{equation}
 The above is equivalent to 
 \begin{equation}
 \label{eq:bernoulli_enthalpy}
-    h + \frac{1}{2} \uvec \cdot \uvec -G = \text{constant along a streamline}.
+    h + K - G = \text{constant along a streamline}.
 \end{equation}
 
 %------------------------------------------------------------------------
@@ -1063,29 +1063,34 @@ Multiplying by $J^+$ we finally obtain
 We now follow the previous procedure but for the energy equation. Using \cref{eq:material_derivative_generic}, we have
 \begin{equation}
 \label{eq:ale_transformation_differential_energy}
-    \frac{\partial \rho^+ E^+}{\partial t} = \left ( \frac{\partial \rho E}{\partial t} \right )_{\xvec = \xvec^+} + \left(\vvec \cdot \nabla \rho E \right)_{\xvec = \xvec +}.
+    \frac{\partial \rho^+ (e^+ + K^+)}{\partial t} = \left[ \frac{\partial \rho (e + K)}{\partial t} \right]_{\xvec = \xvec^+} + \left\{ \vvec \cdot \nabla \left[ \rho (e + K) \right] \right\}_{\xvec = \xvec +}.
 \end{equation}
 We evaluate \cref{eq:energy_conservation_vector} at the particle's location, which we express as
-\begin{equation*}
-\left ( \frac{\partial \rho E}{\partial t} \right )_{\xvec = \xvec^+} + \left [ \uvec \cdot \nabla (\rho E) \right]_{\xvec = \xvec^+} + (\rho E \nabla \cdot \uvec)_{\xvec = \xvec^+} = \left [ \nabla \cdot (\uvec \cdot \sigmavec) + \rho \fvec \cdot \uvec - \nabla \cdot \qvec \right ]_{\xvec = \xvec^+}.
-\end{equation*}
+\begin{multline*}
+\left[ \frac{\partial \rho (e + K)}{\partial t} \right]_{\xvec = \xvec^+} + \left\{ \uvec \cdot \nabla \left[ \rho (e + K) \right] \right\}_{\xvec = \xvec^+} + \left[ \rho (e + K) \nabla \cdot \uvec \right]_{\xvec = \xvec^+} = \\
+\left [ \nabla \cdot (\uvec \cdot \sigmavec) + \rho \fvec \cdot \uvec - \nabla \cdot \qvec \right ]_{\xvec = \xvec^+}.
+\end{multline*}
 Using \cref{eq:ale_transformation_differential_energy}, this can be written as
-\begin{equation*}
-\frac{\partial \rho^+ E^+}{\partial t} + \left [ (\uvec - \vvec) \cdot \nabla (\rho E) \right]_{\xvec = \xvec^+} + (\rho E \nabla \cdot \uvec)_{\xvec = \xvec^+} = \left [ \nabla \cdot (\uvec \cdot \sigmavec) + \rho \fvec \cdot \uvec - \nabla \cdot \qvec \right ]_{\xvec = \xvec^+}.
-\end{equation*}
+\begin{multline*}
+\frac{\partial \rho^+ (e^+ + K^+)}{\partial t} + \left\{ (\uvec - \vvec) \cdot \nabla \left[ \rho (e + K) \right] \right\}_{\xvec = \xvec^+} + \left[ \rho (e + K) \nabla \cdot \uvec \right]_{\xvec = \xvec^+} = \\
+\left [ \nabla \cdot (\uvec \cdot \sigmavec) + \rho \fvec \cdot \uvec - \nabla \cdot \qvec \right ]_{\xvec = \xvec^+}.
+\end{multline*}
 Manipulating, we have
-\begin{equation*}
-\frac{\partial \rho^+ E^+}{\partial t} + \left \{ \nabla \cdot [ (\rho E) (\uvec - \vvec) ] \right \}_{\xvec = \xvec^+} + (\rho E \nabla \cdot \vvec)_{\xvec = \xvec^+} = \left [ \nabla \cdot (\uvec \cdot \sigmavec) + \rho \fvec \cdot \uvec - \nabla \cdot \qvec \right ]_{\xvec = \xvec^+}.
-\end{equation*}
+\begin{multline*}
+\frac{\partial \rho^+ (e^+ + K^+)}{\partial t} + \left \{ \nabla \cdot [ \rho (e + K) (\uvec - \vvec) ] \right \}_{\xvec = \xvec^+} + \left[ \rho (e + K) \nabla \cdot \vvec \right]_{\xvec = \xvec^+} = \\
+\left [ \nabla \cdot (\uvec \cdot \sigmavec) + \rho \fvec \cdot \uvec - \nabla \cdot \qvec \right ]_{\xvec = \xvec^+}.
+\end{multline*}
 Using \cref{eq:kinematic_evolution_J}, the above becomes
-\begin{equation*}
-\frac{\partial \rho^+ E^+}{\partial t} + \left \{ \nabla \cdot [ (\rho E) (\uvec - \vvec) ] \right \}_{\xvec = \xvec^+} + \rho^+ E^+ \frac{1}{J^+} \frac{\partial J^+}{\partial t} = \left [ \nabla \cdot (\uvec \cdot \sigmavec) + \rho \fvec \cdot \uvec - \nabla \cdot \qvec \right ]_{\xvec = \xvec^+}.
-\end{equation*}
+\begin{multline*}
+\frac{\partial \rho^+ (e^+ + K^+)}{\partial t} + \left \{ \nabla \cdot [ \rho (e + K) (\uvec - \vvec) ] \right \}_{\xvec = \xvec^+} + \rho^+ (e^+ + K^+) \frac{1}{J^+} \frac{\partial J^+}{\partial t} = \\
+\left [ \nabla \cdot (\uvec \cdot \sigmavec) + \rho \fvec \cdot \uvec - \nabla \cdot \qvec \right ]_{\xvec = \xvec^+}.
+\end{multline*}
 Multiplying by $J^+$ we finally obtain
-\begin{equation}
+\begin{multline}
     \label{eq:ale_differential_energy_conservation}
-\frac{\partial J^+ \rho^+ E^+}{\partial t} + J^+ \left \{ \nabla \cdot [ (\rho E) (\uvec - \vvec) ] \right \}_{\xvec = \xvec^+} = J^+ \left [ \nabla \cdot (\uvec \cdot \sigmavec) + \rho \fvec \cdot \uvec - \nabla \cdot \qvec \right ]_{\xvec = \xvec^+}.
-\end{equation}
+    \frac{\partial J^+ \rho^+ (e^+ + K^+)}{\partial t} + J^+ \left \{ \nabla \cdot [ \rho (e + K) (\uvec - \vvec) ] \right \}_{\xvec = \xvec^+} = \\
+    J^+ \left [ \nabla \cdot (\uvec \cdot \sigmavec) + \rho \fvec \cdot \uvec - \nabla \cdot \qvec \right ]_{\xvec = \xvec^+}.
+\end{multline}
 
 %---------------------------------
 \subsection{Integral form} 
@@ -1123,16 +1128,16 @@ Using \cref{eq:ale_integral_momentum} and the divergence theorem, this can be wr
 We repeat the same procedure as above but for the energy equation. Using \cref{eq:reynolds_transport_theorem_generic} for energy we have
 \begin{equation}
 \label{eq:ale_integral_energy}
-    \frac{d}{dt} \int_{\Omega^+(t)} \rho E \, dv = \int_{\Omega^+(t)} \frac{\partial \rho E}{\partial t} \, dv + \int_{\Omega^+(t)} \nabla \cdot (\rho E \vvec) \, dv.
+    \frac{d}{dt} \int_{\Omega^+(t)} \rho (e + K) \, dv = \int_{\Omega^+(t)} \frac{\partial \rho (e + K)}{\partial t} \, dv + \int_{\Omega^+(t)} \nabla \cdot [\rho (e + K) \vvec ] \, dv.
 \end{equation}
 We integrate \cref{eq:energy_conservation_vector} over the volume $\Omega^+(t)$, which we express as
 \begin{equation*}
-    \int_{\Omega^+(t)} \frac{\partial \rho E}{\partial t} \, dv + \int_{\Omega^+(t)} \nabla \cdot (\rho \uvec E) \, dv = \int_{\Omega^+(t)} \nabla \cdot (\uvec \cdot \sigmavec) + \rho \fvec \cdot \uvec - \nabla \cdot \qvec \, dv.
+    \int_{\Omega^+(t)} \frac{\partial \rho (e + K)}{\partial t} \, dv + \int_{\Omega^+(t)} \nabla \cdot [\rho \uvec (e + K)] \, dv = \int_{\Omega^+(t)} \nabla \cdot (\uvec \cdot \sigmavec) + \rho \fvec \cdot \uvec - \nabla \cdot \qvec \, dv.
 \end{equation*}
 Using \cref{eq:ale_integral_energy} and the divergence theorem, this can be written as
 \begin{multline}
     \label{eq:ale_integral_energy_conservation}
-    \frac{d}{dt} \int_{\Omega^+(t)} \rho E \, dv + \int_{\partial \Omega^+(t)} \rho E (\uvec - \vvec) \cdot \nvec \, ds = \\
+    \frac{d}{dt} \int_{\Omega^+(t)} \rho (e + K) \, dv + \int_{\partial \Omega^+(t)} \rho (e + K) (\uvec - \vvec) \cdot \nvec \, ds = \\
     \int_{\partial \Omega^+(t)} \uvec \cdot \sigmavec \cdot \nvec \, ds + \int_{\Omega^+(t)} \rho \fvec \cdot \uvec \, ds - \int_{\partial \Omega^+(t)} \qvec \cdot \nvec \, ds.
 \end{multline}
 
@@ -1500,9 +1505,9 @@ In the above $\sigma_\alpha$ is the stress tensor of each material, $\bar{p}$ is
 \begin{equation*}
     \frac{\partial \rho u_i}{\partial t} + \frac{\partial \rho u_i u_j}{\partial x_j} = \frac{\partial}{\partial x_j} \sum_\alpha \eta_\alpha \sigma_{\alpha,ij} + \rho f_i
 \end{equation*}
-\begin{equation}
+\begin{equation*}
     \frac{\partial \rho Y_\alpha e_\alpha}{\partial t} + \frac{\partial \rho Y_\alpha e_\alpha u_j}{\partial x_j} = \eta_\alpha \sigma_{\alpha,ij} \frac{\partial u_i}{\partial x_j} - \bar{p} \alpha_\alpha - \frac{\partial q_{\alpha,j}}{\partial x_j}.
-\end{equation}
+\end{equation*}
 
 \paragraph{Transport models}
 
@@ -2759,7 +2764,7 @@ The conservation equations that govern the dynamics of a compressible gas in the
 \frac{\partial \rho u_i}{\partial t} + \frac{\partial \rho u_i u_j}{\partial x_j} = - \frac{\partial p}{\partial x_i} + \frac{\partial t_{ij}}{\partial x_j} + \rho f_i
 \end{equation}
 \begin{equation}
-\frac{\partial \rho E}{\partial t} + \frac{\partial}{\partial x_i} \left [ \rho \left ( E + \frac{p}{\rho} \right ) u_i \right ] = \frac{\partial u_i t_{ij}}{\partial x_j} + \rho f_i u_i -  \frac{\partial q_i}{\partial x_i}
+\frac{\partial \rho (e + K)}{\partial t} + \frac{\partial}{\partial x_i} \left [ \rho \left ( e + K \right ) u_i \right ] = \frac{\partial u_i \sigma_{ij}}{\partial x_j} + \rho f_i u_i -  \frac{\partial q_i}{\partial x_i}
 \end{equation}
 \begin{equation}
 \frac{\partial \rho e^{(v)}}{\partial t} + \frac{\partial \rho e^{(v)} u_i}{\partial x_i}  = -  \frac{\partial q_i^{(v)}}{\partial x_i} + Q^{(v)}
@@ -2850,9 +2855,9 @@ R = \frac{R_u}{M}
 %------------------------------------------ 
 \subsection{Energy definitions}
 %------------------------------------------ 
-The total energy of the system $E$ is expressed as follows
+The total internal energy of the system $E=e$ is expressed as follows
 \begin{equation}
-E = e^{(t)} + e^{(r)} + e^{(v)} + e^{(el)} + e^{(e)} + \sum_{\alpha =1}^{ns} Y_\alpha h_\alpha^o + \frac{1}{2}u_i u_i .
+e = e^{(t)} + e^{(r)} + e^{(v)} + e^{(el)} + e^{(e)} + \sum_{\alpha =1}^{ns} Y_\alpha h_\alpha^o .
 \end{equation}
 In the above, $e^{(t)}$ is the translation energy, $e^{(v)}$ the vibration energy, $e^{(el)}$ the electronic energy, and $e^{(e)}$ the electron energy. $h_\alpha^o$ denotes the heat of formation for each species. Each of the energies can be computed in terms of its single-species counterpart, as follows
 \begin{align}
@@ -2875,10 +2880,10 @@ e^{(v)}_\alpha = \sum_{\beta = 1}^{nvm} g_{\alpha,\beta}R_\alpha \frac{\theta^{(
 \end{equation}
 In the above, $nvm$ is the number of vibrational modes, $g_{\alpha,\beta}$ is the degeneracy of each vibrational mode, and $\theta^{(v)}_{\alpha,\beta}$ is the characteristic vibrational temperature of each vibrational mode. The characteristic temperatures for $N_2$, $O_2$, and $NO$ can be found in \cite{park1990}, for $C_3$ in \cite{dolton1968}, and for $CO_2$, $C_2$, $CO$, and $CN$ in \cite{mcbride1963}. For our current purposes, both the electronic and electron energy are not accounted for, i.e.,
 \begin{equation}
-e_{el,\alpha} = 0  \quad \alpha \in [1,nms],
+e^{(el)}_\alpha = 0  \quad \alpha \in [1,nms],
 \end{equation}
 \begin{equation}
-e_e = 0.
+e^{(e)} = 0.
 \end{equation}
 
 %------------------------------------------ 
@@ -2948,6 +2953,9 @@ For the above, $A_\beta$ is the pre-exponential factor, $\eta_\beta$ is the temp
 %------------------------------------------------------------------------
 \section{Additional relations}
 %------------------------------------------------------------------------
+\begin{equation}
+    \sigma_{ij} = -p \delta_{ij} + t_{ij}
+\end{equation}
 \begin{equation}
     S^*_{ij} = \frac{1}{2} \left ( \frac{\partial u_i}{\partial x_j} + \frac{\partial u_j}{\partial x_i} \right ) - \frac{1}{3} \frac{\partial u_k}{\partial x_k} \delta_{ij}
 \end{equation}
@@ -3057,7 +3065,7 @@ Dimensional Navier-Stokes
 \frac{\partial \rho u_i}{\partial t} + \frac{\partial \rho u_i u_j}{\partial x_j} = -\frac{\partial p}{\partial x_i} + \frac{\partial \tau_{ij}}{\partial x_j}
 \end{equation}
 \begin{equation}
-\frac{\partial \rho E}{\partial t} + \frac{\partial \rho E u_j}{\partial x_j} = -\frac{\partial u_j p}{\partial x_j} + \frac{\partial u_i \tau_{ij}}{\partial x_j} - \frac{\partial q_j}{\partial x_j}
+\frac{\partial \rho (e + K)}{\partial t} + \frac{\partial \rho (e + K) u_j}{\partial x_j} = -\frac{\partial u_j p}{\partial x_j} + \frac{\partial u_i \tau_{ij}}{\partial x_j} - \frac{\partial q_j}{\partial x_j}
 \end{equation}
 \begin{equation}
 \tau_{ij} = 2 \mu \left (S_{ij} - \frac{1}{3} S_{kk} \delta_{ij} \right )
@@ -3069,7 +3077,7 @@ p = \rho R T
 e = c_v T
 \end{equation}
 \begin{equation}
-E = e + \frac{1}{2} u_i u_i
+K = \frac{1}{2} u_i u_i
 \end{equation}
 \begin{equation}
 q_j = -\kappa \frac{\partial T}{\partial x_j}
@@ -3083,7 +3091,7 @@ Non-dimensional Navier-Stokes
 \frac{\partial \rho^* u^*_i}{\partial t^*} + \frac{\partial^* \rho^* u^*_i u^*_j}{\partial x^*_j} = -\frac{\partial p^*}{\partial x_i} + \frac{\partial \tau^*_{ij}}{\partial x^*_j}
 \end{equation}
 \begin{equation}
-\frac{\partial \rho^* E^*}{\partial t^*} + \frac{\partial \rho^* E^* u^*_j}{\partial x^*_j} = -\frac{\partial u^*_j p^*}{\partial x^*_j} + \frac{\partial u^*_i \tau^*_{ij}}{\partial x^*_j} - \frac{\partial q^*_j}{\partial x^*_j}
+\frac{\partial \rho^* (e^* + K^*)}{\partial t^*} + \frac{\partial \rho^* (e^* + K^*) u^*_j}{\partial x^*_j} = -\frac{\partial u^*_j p^*}{\partial x^*_j} + \frac{\partial u^*_i \tau^*_{ij}}{\partial x^*_j} - \frac{\partial q^*_j}{\partial x^*_j}
 \end{equation}
 \begin{equation}
 \tau^*_{ij} = 2 \frac{\mu^*}{Re_0} \left (S^*_{ij} - \frac{1}{3} S^*_{kk} \delta_{ij} \right )
@@ -3095,7 +3103,7 @@ p^* = \frac{\rho^* T^*}{\gamma M_0^2}
 e^* = \frac{1}{\gamma (\gamma - 1) M_0^2} T^*
 \end{equation}
 \begin{equation}
-E^* = e^* + \frac{1}{2} u_i^* u_i^*
+K^* = e^* + \frac{1}{2} u_i^* u_i^*
 \end{equation}
 \begin{equation}
 q_i^* = - \frac{\kappa^*}{(\gamma - 1) Pr_0 Re_0 M_0^2} \frac{ \partial T^*}{\partial x_i^*}
