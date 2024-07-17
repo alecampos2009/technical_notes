@@ -145,13 +145,13 @@ The above relationships and others are shown in \cref{tab:blackbody_quantities}.
     \frac{\partial\rho Y_\alpha}{\partial t}+\frac{\partial \rho Y_\alpha u_i}{\partial x_i} = -\frac{\partial J_{\alpha,i}}{\partial x_i} + w_\alpha
 \end{equation*}
 \begin{equation*}
-    \frac{\partial \rho u_i}{\partial t} + \frac{\partial \rho u_i u_j}{\partial x_j} = \frac{\partial}{\partial x_j} \sum_\alpha \eta_\alpha \sigma_{\alpha,ij} - \frac{\partial}{\partial x_i} \sum_g \frac{E_g}{3} + \rho f_i
+    \frac{\partial \rho u_i}{\partial t} + \frac{\partial \rho u_i u_j}{\partial x_j} = \frac{\partial}{\partial x_j} \sum_\alpha \eta_\alpha \sigma_{\alpha,ij} - \frac{\partial}{\partial x_i} \sum_g \frac{E_{r,g}}{3} + \rho f_i
 \end{equation*}
 \begin{equation*}
-    \frac{\partial \rho Y_\alpha e_\alpha}{\partial t} + \frac{\partial \rho Y_\alpha e_\alpha u_j}{\partial x_j} = \eta_\alpha \sigma_{\alpha,ij} \frac{\partial u_i}{\partial x_j} - \bar{p} \alpha_\alpha - c \eta_\alpha \sum_g \sigma_{p,g,\alpha} \left[ B_g(T_\alpha) - E_g \right] - \frac{\partial q_{\alpha,j}}{\partial x_j}.
+    \frac{\partial \rho Y_\alpha e_\alpha}{\partial t} + \frac{\partial \rho Y_\alpha e_\alpha u_j}{\partial x_j} = \eta_\alpha \sigma_{\alpha,ij} \frac{\partial u_i}{\partial x_j} - \bar{p} \alpha_\alpha - c \eta_\alpha \sum_g \sigma_{p,g,\alpha} \left[ B_g(T_\alpha) - E_{r,g} \right] - \frac{\partial q_{\alpha,j}}{\partial x_j}.
 \end{equation*}
 \begin{equation*}
-    \frac{\partial E_g}{\partial t} + \frac{\partial E_g u_j}{\partial x_j} + \frac{\partial F_{g,i}}{\partial x_j} = \sum_\alpha c \eta_\alpha \sigma_{p,g,\alpha} \left[ B_g(T_\alpha) - E_g \right] - \frac{E_g}{3} \frac{\partial u_j}{\partial x_j}
+    \frac{\partial E_{r,g}}{\partial t} + \frac{\partial E_{r,g} u_j}{\partial x_j} + \frac{\partial F_{g,i}}{\partial x_j} = \sum_\alpha c \eta_\alpha \sigma_{p,g,\alpha} \left[ B_g(T_\alpha) - E_{r,g} \right] - \frac{E_{r,g}}{3} \frac{\partial u_j}{\partial x_j}
 \end{equation*}
 
 \paragraph{Transport models}
