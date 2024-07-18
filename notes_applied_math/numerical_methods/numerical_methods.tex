@@ -168,12 +168,12 @@ Split the right-hand side of \cref{eq:ode_generic} as follows
     \label{eq:ode_generic_split}
     \frac{du}{dt} = f_f(t,u) + f_s(t,u) \qquad \text{in } (0,\infty),
 \end{equation}
-where $f_f(t,u)$ is the fast source and $f_s(t,u)$ the slow source. Also introduce fast and slow functions $u_f=u_f(t)$ and $u_s=u_s(t)$ that satisfy the following two expressions
+where $f_f(t,u)$ is the fast source and $f_s(t,u)$ the slow source. Also introduce fast and slow functions $u_f=u_f(t)$ and $u_s=u_s(t)$ that satisfy 
 \begin{align}
     \frac{du_f}{dt} = f_f(t, u), \nonumber \\
     \frac{du_s}{dt}= f_s(t, u).
 \end{align}
-Plugging in the above two in \cref{eq:ode_generic_split} leads to $u = u_f + u_s$. For the sake of clarity, we'll explicitly denote the fast and slow functional arguments in the sources. Thus, the equations are written as
+Plugging the above two in \cref{eq:ode_generic_split} leads to $u = u_f + u_s$. For the sake of clarity, we'll explicitly denote the fast and slow functional arguments in the sources. Thus, the equations are written as
 \begin{align}
     \frac{du_f}{dt} = f_f(t,u_f, u_s), \nonumber \\
     \frac{du_s}{dt}= f_s(t,u_f,u_s).
@@ -195,7 +195,7 @@ Introduce the auxiliary variable $v=v(\theta)$ which is also split into fast and
     \end{equation}
     \Cref{eq:ode_mr_v_fast} is solved using an explicit Runge-Kutta scheme.
     \item Set $u^{n+1}_f = v_f(\Delta t)$.
-    \item Solve for $u^n_s$ using a non-linear solver to solve the implicit trapezoidal equation below
+    \item Obtain $u^{n+1}_s$ by solving the implicit trapezoidal equation below
     \begin{equation}
         u^{n+1}_s = u^n_s + \frac{\Delta t}{2} \left[ f_s(t_n, u^n_f, u^n_s) + f_s(t_{n+1}, u^{n+1}_f, u^{n+1}_s) \right].
     \end{equation}

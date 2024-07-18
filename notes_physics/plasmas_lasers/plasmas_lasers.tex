@@ -180,7 +180,7 @@ The dynamics of a plasma can be characterized by the Boltzmann evolution equatio
 \end{equation}
 \begin{equation}
 \label{eq:maxwell_3}
-\nabla \cdot \Evec = \frac{\rho_e}{\epsilon_0} 
+\nabla \cdot \Evec = \frac{\rho_q}{\epsilon_0} 
 \end{equation}
 \begin{equation}
 \label{eq:maxwell_4}
@@ -198,7 +198,7 @@ The dynamics of a plasma can be characterized by the Boltzmann evolution equatio
 \Jvec = \sum_\alpha Z_\alpha e \int \vvec f_\alpha \, d\vvec
 \end{equation}
 \begin{equation}
-\rho_e = \sum_\alpha Z_\alpha e \int f_\alpha \, d\vvec.
+\rho_q = \sum_\alpha Z_\alpha e \int f_\alpha \, d\vvec.
 \end{equation}
 In the above, 
 \begin{itemize}
@@ -206,7 +206,7 @@ In the above,
 \item $e$ is the charge
 \item $Z_\alpha$ the charge number
 \item $\Jvec = \Jvec(\rvec,t)$ the charge current
-\item $\rho_e = \rho_e(\rvec,t)$ the charge density
+\item $\rho_q = \rho_q(\rvec,t)$ the charge density
 \item $\Evec = \Evec(\rvec,t)$ the electric field
 \item $\Bvec = \Bvec(\rvec,t)$ the magnetic field.
 \end{itemize}
@@ -470,40 +470,43 @@ To summarize, we have,
 %########################################################################
 
 %------------------------------------------------------------------------
-\section{Multi-fluid multi-species formulation}
+\section{Multi-fluid formulation}
 %------------------------------------------------------------------------
+%--------------------------------------------
+\subsection{Multiple species}
+%--------------------------------------------
 \begin{enumerate}
-    \item Species are separated into two categories: ions and electrons.
+    \item Species $\alpha$ are separated into two categories: ions ($\alpha_i$) and electrons ($\alpha_e$).
     \item No sources ($\hat{S}_\alpha$, $\hat{\Mvec}_\alpha$, $\hat{Q}_\alpha$).
 \end{enumerate}
 Thus, the governing equations are
 \begin{equation}
     \label{eq:mf_ms_ni}
-    \frac{\partial n_{i,\alpha}}{\partial t} + \nabla \cdot \left ( n_{i,\alpha} \uvec_{i,\alpha} \right ) = 0,
+    \frac{\partial n_{\alpha_i}}{\partial t} + \nabla \cdot \left ( n_{\alpha_i} \uvec_{\alpha_i} \right ) = 0,
 \end{equation}
 \begin{equation}
     \label{eq:mf_ms_ne}
-    \frac{\partial n_{e,\alpha}}{\partial t} + \nabla \cdot \left ( n_{e,\alpha} \uvec_{e,\alpha} \right ) = 0,
+    \frac{\partial n_{\alpha_e}}{\partial t} + \nabla \cdot \left ( n_{\alpha_e} \uvec_{\alpha_e} \right ) = 0,
 \end{equation}
 \begin{equation}
     \label{eq:mf_ms_ui}
-    \frac{\partial m_{i,\alpha} n_{i,\alpha} \uvec_{i,\alpha}}{\partial t} + \nabla \cdot \left( m_{i,\alpha} n_{i,\alpha} \uvec_{i,\alpha} \uvec_{i,\alpha} \right) - Z_{i,\alpha} e n_{i,\alpha} ( \Evec + \uvec_{i,\alpha} \times \Bvec ) = \nabla \cdot \sigmavec_{i,\alpha} + \Rvec_{i,\alpha},
+    \frac{\partial m_{\alpha_i} n_{\alpha_i} \uvec_{\alpha_i}}{\partial t} + \nabla \cdot \left( m_{\alpha_i} n_{\alpha_i} \uvec_{\alpha_i} \uvec_{\alpha_i} \right) - Z_{\alpha_i} e n_{\alpha_i} ( \Evec + \uvec_{\alpha_i} \times \Bvec ) = \nabla \cdot \sigmavec_{\alpha_i} + \Rvec_{\alpha_i},
 \end{equation}
 \begin{equation}
     \label{eq:mf_ms_ue}
-    \frac{\partial m_e n_e \uvec_e}{\partial t} + \nabla \cdot \left ( m_e n_e \uvec_e \uvec_e \right) + e n_e ( \Evec + \uvec_e \times \Bvec ) = \nabla \cdot \sigmavec_e + \Rvec_e,
+    \frac{\partial m_e n_{\alpha_e} \uvec_{\alpha_e}}{\partial t} + \nabla \cdot \left ( m_e n_{\alpha_e} \uvec_{\alpha_e} \uvec_{\alpha_e} \right) + e n_{\alpha_e} ( \Evec + \uvec_{\alpha_e} \times \Bvec ) = \nabla \cdot \sigmavec_{\alpha_e} + \Rvec_{\alpha_e},
 \end{equation}
 \begin{equation}
     \label{eq:mf_ms_iei}
-    \frac{\partial}{\partial t} \left ( \frac{3}{2} p_i \right ) + \nabla \cdot \left ( \frac{3}{2} p_i \uvec_i \right ) = \sigmavec_i : \nabla \uvec_i - \nabla \cdot \qvec_i + Q_i,
+    \frac{\partial}{\partial t} \left ( \frac{3}{2} p_{\alpha_i} \right ) + \nabla \cdot \left ( \frac{3}{2} p_{\alpha_i} \uvec_{\alpha_i} \right ) = \sigmavec_{\alpha_i} : \nabla \uvec_{\alpha_i} - \nabla \cdot \qvec_{\alpha_i} + Q_{\alpha_i},
 \end{equation}
 \begin{equation}
     \label{eq:mf_ms_iee}
-    \frac{\partial}{\partial t} \left ( \frac{3}{2} p_e \right ) + \nabla \cdot \left ( \frac{3}{2} p_e \uvec_e \right ) = \sigmavec_e : \nabla \uvec_e - \nabla \cdot \qvec_e + Q_e,
+    \frac{\partial}{\partial t} \left ( \frac{3}{2} p_{\alpha_e} \right ) + \nabla \cdot \left ( \frac{3}{2} p_{\alpha_e} \uvec_{\alpha_e} \right ) = \sigmavec_{\alpha_e} : \nabla \uvec_{\alpha_e} - \nabla \cdot \qvec_{\alpha_e} + Q_{\alpha_e},
 \end{equation}
 \begin{equation}
     \label{eq:mf_ms_maxwell_3}
-    \nabla \cdot \Evec = \frac{\rho_e}{\epsilon_0},
+    \nabla \cdot \Evec = \frac{\rho_q}{\epsilon_0},
 \end{equation}
 \begin{equation}
     \label{eq:mf_ms_maxwell_4}
@@ -519,28 +522,36 @@ Thus, the governing equations are
 \end{equation}
 \begin{equation}
     \label{eq:mf_ms_curr_density}
-    \Jvec = e (Z n_i \uvec_i - n_e \uvec_e),
+    \Jvec_\alpha = \sum_\alpha e (Z_{\alpha_i} n_{\alpha_i} \uvec_{\alpha_i} - n_{\alpha_e} \uvec_{\alpha_e}),
 \end{equation}
 \begin{equation}
     \label{eq:mf_ms_mass_density}
-    \rho_e = e (Z n_i - n_e).
+    \rho_{q,\alpha} = \sum_\alpha e (Z_{\alpha_i} n_{\alpha_i} - n_{\alpha_e}),
+\end{equation}
+\begin{equation}
+    \label{eq:mf_ms_curr_density_total}
+    \Jvec = \sum_\alpha \Jvec_\alpha,
+\end{equation}
+\begin{equation}
+    \label{eq:mf_ms_mass_density_total}
+    \rho_q = \sum_\alpha \rho_{q,\alpha}.
 \end{equation}
 We'll also introduce the following simple equations of state
 \begin{equation}
     \label{eq:mf_ms_eos_ion}
-    p_i = n_i k_B T_i,
+    p_{\alpha_i} = n_{\alpha_i} k_B T_{\alpha_i},
 \end{equation}
 \begin{equation}
     \label{eq:mf_ms_eos_elec}
-    p_e = n_e k_B T_e.
+    p_{\alpha_e} = n_{\alpha_e} k_B T_{\alpha_e}.
 \end{equation}
 
-%------------------------------------------------------------------------
-\section{Multi-fluid single-species formulation}
-%------------------------------------------------------------------------
+%--------------------------------------------
+\subsection{Two species}
+%--------------------------------------------
 
 \label{sec:mf_ss_equations}
-In this section we simplify the approach to consider a single ion species and a single electron species. Thus, the governing equations are
+In this section we simplify the approach by considering a single ion species and a single electron species. Thus, the governing equations become
 \begin{equation}
     \label{eq:mf_ss_ni}
     \frac{\partial n_i}{\partial t} + \nabla \cdot \left ( n_i \uvec_i \right ) = 0,
@@ -567,7 +578,7 @@ In this section we simplify the approach to consider a single ion species and a 
 \end{equation}
 \begin{equation}
     \label{eq:mf_ss_maxwell_3}
-    \nabla \cdot \Evec = \frac{\rho_e}{\epsilon_0},
+    \nabla \cdot \Evec = \frac{\rho_q}{\epsilon_0},
 \end{equation}
 \begin{equation}
     \label{eq:mf_ss_maxwell_4}
@@ -587,7 +598,7 @@ In this section we simplify the approach to consider a single ion species and a 
 \end{equation}
 \begin{equation}
     \label{eq:mf_ss_mass_density}
-    \rho_e = e (Z n_i - n_e).
+    \rho_q = e (Z n_i - n_e).
 \end{equation}
 We'll also introduce the following simple equations of state
 \begin{equation}
@@ -600,17 +611,10 @@ We'll also introduce the following simple equations of state
 \end{equation}
 These equations correspond to eq.\@ (2.22) in Freidberg's Ideal MHD book, but for ions that are not singly charged.
 
-%------------------------------------------------------------------------
-\section{Single-fluid multi-species formulation}
-%------------------------------------------------------------------------
+%--------------------------------------------
+\subsection{Isentropic plasmas}
+%--------------------------------------------
 
-%------------------------------------------------------------------------
-\section{Single-fluid single-species formulation}
-%------------------------------------------------------------------------
-
-%------------------------------------------------------------------------
-\section{Isentropic plasmas}
-%------------------------------------------------------------------------
 We now add a couple of extra assumptions
 \begin{enumerate}
     \item No stresses $\tvec_\alpha$, heat flux $\qvec_\alpha$, and collisions $\Rvec_\alpha$, $Q_\alpha$. This in itself would make the flow isentropic.
@@ -644,7 +648,7 @@ Thus, the governing equations are
 \end{equation}
 \begin{equation}
     \label{eq:pwaves_maxwell_3}
-    \nabla \cdot \Evec = \frac{\rho_e}{\epsilon_0},
+    \nabla \cdot \Evec = \frac{\rho_q}{\epsilon_0},
 \end{equation}
 \begin{equation}
     \label{eq:p_waves_maxwell_4}
@@ -664,13 +668,47 @@ Thus, the governing equations are
 \end{equation}
 \begin{equation}
     \label{eq:p_waves_mass_density}
-    \rho_e = e (Z n_i - n_e),
+    \rho_q = e (Z n_i - n_e),
 \end{equation}
 \begin{equation}
     p_i = n_i k_B T_i,
 \end{equation}
 \begin{equation}
     p_e = n_e k_B T_e.
+\end{equation}
+
+%------------------------------------------------------------------------
+\section{Single-fluid formulation}
+%------------------------------------------------------------------------
+Define the density of an ion species $\rho_{\alpha_i}$ as
+\begin{equation}
+    \rho_{\alpha_i} = m_{\alpha_i} n_{\alpha_i}.
+\end{equation}
+Additionally, define the total velocity $\uvec$ as
+\begin{equation}
+    \uvec = \sum_\alpha \frac{m_{\alpha_i} n_{\alpha_i} u_{\alpha_i} + m_{\alpha_e} n_{\alpha_e} u_{\alpha_e}}{m_{\alpha_e} n_{\alpha_e} + m_{\alpha_e} n_{\alpha_e}} = \sum_{\alpha_i} \frac{m_{\alpha_i} n_{\alpha_i} u_{\alpha_i}}{m_{\alpha_i} n_{\alpha_i}}.
+\end{equation}
+In the above, we assumed $m_{\alpha_e} \ll m_{\alpha_i}$ and thus simplify the sum to only those species that are ions.
+
+Multiplying \cref{eq:mf_ms_ni} by $m_{\alpha_i}$ gives
+\begin{equation*}
+    \frac{\partial \rho_{\alpha_i}}{\partial t} + \nabla \cdot \left( \rho_{\alpha_i} \uvec_{\alpha_i} \right) = 0.
+\end{equation*}
+We introduce the ion species diffusion vector $\jvec_{\alpha_i} = \rho_{\alpha_i} \left( \uvec_{\alpha_i} - \uvec \right)$ and thus write the above as
+\begin{equation}
+    \frac{\partial \rho_{\alpha_i}}{\partial t} + \nabla \cdot \left( \rho_{\alpha_i} \uvec \right) = -\nabla \cdot \jvec_{\alpha_i}.
+\end{equation}
+We'll also assume quasi-neutrality for each ion-electron species pair, that is, $\rho_{q,\alpha} = 0$, which leads to
+\begin{equation}
+    Z_{\alpha_i} n_{\alpha_i} = n_{\alpha,e}.
+\end{equation}
+Multiplying \cref{eq:mf_ms_ni} by $Z_{\alpha_i}$ and then subtracting from it \cref{eq:mf_ms_ne} gives
+\begin{equation*}
+    \nabla \cdot \left( Z_{\alpha_i} n_{\alpha_i} \uvec_{\alpha_i} - n_{\alpha_e} \uvec_{\alpha_e} \right) = 0.
+\end{equation*}
+Multiplying by $e$ gives
+\begin{equation}
+    \nabla \cdot \Jvec_\alpha = 0.
 \end{equation}
 
 %########################################################################
@@ -896,13 +934,13 @@ Thus we have
     en_e\Evec = -\nabla p_e,
 \end{equation*}
 \begin{equation*}
-    \nabla \cdot \Evec = \frac{\rho_e}{\epsilon_0},
+    \nabla \cdot \Evec = \frac{\rho_q}{\epsilon_0},
 \end{equation*}
 \begin{equation*}
     \nabla \times \Evec = 0,
 \end{equation*}
 \begin{equation*}
-    \rho_e = e(Zn_i - n_e),
+    \rho_q = e(Zn_i - n_e),
 \end{equation*}
 \begin{equation*}
     p_i = n_i k_B T_i,
@@ -2632,7 +2670,7 @@ Since the second term on the left-hand side and the term on the right-hand side 
 %########################################################################
 
 \label{sec:electromagnetic_waves_plasmas}
-In introductory electrodynamics, one typically studies electromagnetic waves in vacuum, that is, for cases where $\rho_e = \Jvec = 0$. In this section we relax both of these assumptions. Consider the electric and magnetic fields as well as the scalar and vector potentials, which satisfy
+In introductory electrodynamics, one typically studies electromagnetic waves in vacuum, that is, for cases where $\rho_q = \Jvec = 0$. In this section we relax both of these assumptions. Consider the electric and magnetic fields as well as the scalar and vector potentials, which satisfy
 \begin{equation}
     \label{eq:emp_general_E_potential}
     \Evec = -\nabla \phi - \frac{\partial \Avec}{\partial t},
@@ -2665,13 +2703,13 @@ Thus, using \cref{eq:ltw_general_null_vector}, we have $\Evec_l = -\nabla \phi$.
 
 We'll begin with the conservation of charge equation
 \begin{equation*}
-    \frac{\partial \rho_e}{\partial t} + \nabla \cdot \Jvec = 0,
+    \frac{\partial \rho_q}{\partial t} + \nabla \cdot \Jvec = 0,
 \end{equation*}
 which we re-write as
 \begin{equation*}
-    \frac{\partial \rho_e}{\partial t} + \nabla \cdot \Jvec_l = 0,
+    \frac{\partial \rho_q}{\partial t} + \nabla \cdot \Jvec_l = 0,
 \end{equation*}
-Using Poisson's equation $\nabla^2\phi = -\rho_e / \epsilon_0$ in the above, we get
+Using Poisson's equation $\nabla^2\phi = -\rho_q / \epsilon_0$ in the above, we get
 \begin{equation*}
     \frac{\partial}{\partial t} \left ( -\epsilon_0 \nabla^2 \phi \right ) + \nabla \cdot \Jvec_l = 0,
 \end{equation*}
