@@ -173,7 +173,7 @@ We denote the distribution function for a species $\alpha$ as $f_\alpha = f_\alp
 \end{equation}
 where $N_\alpha$ is the total number of particles corresponding to species $\alpha$. 
 
-The dynamics of a plasma can be characterized by the Boltzmann evolution equation for the distribution along with Maxwell's equations
+The dynamics of a plasma can be characterized by the Boltzmann evolution equation for the distribution function of $M$ species along with Maxwell's equations
 \begin{equation}
 \label{eq:kinetic_equation}
 \frac{\partial f_\alpha}{\partial t} + \vvec \cdot \nabla f_\alpha + \frac{Z_\alpha e}{m_\alpha} ( \Evec + \vvec \times \Bvec ) \cdot \nabla_v f_\alpha = C_\alpha + S_\alpha
@@ -195,10 +195,10 @@ The dynamics of a plasma can be characterized by the Boltzmann evolution equatio
 \nabla \times \Bvec = \mu_0 \Jvec + \mu_0 \epsilon_0 \frac{\partial \Evec}{\partial t}
 \end{equation}
 \begin{equation}
-\Jvec = \sum_\alpha Z_\alpha e \int \vvec f_\alpha \, d\vvec
+\Jvec = \sum_\alpha^M Z_\alpha e \int \vvec f_\alpha \, d\vvec
 \end{equation}
 \begin{equation}
-\rho_q = \sum_\alpha Z_\alpha e \int f_\alpha \, d\vvec.
+\rho_q = \sum_\alpha^M Z_\alpha e \int f_\alpha \, d\vvec.
 \end{equation}
 In the above, 
 \begin{itemize}
@@ -212,22 +212,25 @@ In the above,
 \end{itemize}
 The terms $C_\alpha$ and $S_\alpha$ represent collision and source terms.
 
-If we express the collision term in the usual way, that is $C_\alpha = \sum_\beta C_{\alpha \beta}$, then we can make the following statements:
+If we express the collision term in the usual way, that is $C_\alpha = \sum_\beta^M C_{\alpha \beta}$, then we can make the following statements:
 \begin{enumerate}
 \item Conservation of particles:
 \begin{equation}
-\int C_{\alpha \alpha} \, d\vvec = 0 \quad \forall \alpha \qquad \qquad
+    \label{eq:coll_cons_particles}
+    \int C_{\alpha \alpha} \, d\vvec = 0 \quad \forall \alpha \qquad \qquad
 \int C_{\alpha \beta} \,d\vvec = 0 \quad \forall \alpha, \beta | \beta \ne \alpha.
 \end{equation}
 
 \item Conservation of momentum:
 \begin{equation}
-\int m_\alpha \vvec C_{\alpha \alpha} \, d\vvec = 0 \quad \forall \alpha \qquad \qquad \sum_\alpha \sum_{\beta, \beta \ne \alpha} \int m_\alpha \vvec C_{\alpha \beta} d\vvec = 0.
+    \label{eq:coll_cons_momentum}
+    \int m_\alpha \vvec C_{\alpha \alpha} \, d\vvec = 0 \quad \forall \alpha \qquad \qquad \sum_\alpha^M \sum_{\beta, \beta \ne \alpha}^M \int m_\alpha \vvec C_{\alpha \beta} d\vvec = 0.
 \end{equation}
 
 \item Conservation of energy:
 \begin{equation}
-\int \frac{1}{2} m_\alpha v^2 C_{\alpha \alpha} \, d\vvec = 0 \quad \forall \alpha \qquad \qquad \sum_\alpha \sum_{\beta, \beta \ne \alpha} \int \frac{1}{2} m_\alpha v^2 C_{\alpha \beta} \, d\vvec = 0.
+    \label{eq:coll_cons_energy}
+    \int \frac{1}{2} m_\alpha v^2 C_{\alpha \alpha} \, d\vvec = 0 \quad \forall \alpha \qquad \qquad \sum_\alpha^M \sum_{\beta, \beta \ne \alpha}^M \int \frac{1}{2} m_\alpha v^2 C_{\alpha \beta} \, d\vvec = 0.
 \end{equation}
 
 \end{enumerate}
@@ -269,13 +272,13 @@ Multiplying \cref{eq:boltz_mod} by $\vvec$ and then integrating over all $\vvec$
 \begin{multline}
 \label{eq:mom_derv_1}
 \frac{\partial n_\alpha \uvec_\alpha}{\partial t} + \nabla \cdot \left ( \int \vvec \vvec f_\alpha \, d\vvec \right) + \int \nabla_v \cdot \left [ \vvec \frac{Z_\alpha e}{m_\alpha} ( \Evec + \vvec \times \Bvec ) f_\alpha \right ] - \nabla_v \vvec \cdot \left [ \frac{Z_\alpha e}{m_\alpha} ( \Evec + \vvec \times \Bvec ) f_\alpha \right ] \, d\vvec =\\
-\sum_{\beta, \beta \ne \alpha} \int \vvec C_{\alpha \beta} \, d\vvec + \int \vvec S_\alpha \, d\vvec.
+\sum_{\beta, \beta \ne \alpha}^M \int \vvec C_{\alpha \beta} \, d\vvec + \int \vvec S_\alpha \, d\vvec.
 \end{multline}
 We note that the third term in \cref{eq:mom_derv_1} is zero since we are integrating over all space, and that $\nabla_v \vvec$ is the identity matrix. We thus have
 \begin{multline}
 \label{eq:mom_derv_2}
 \frac{\partial n_\alpha \uvec_\alpha}{\partial t} + \nabla \cdot \left ( \int \vvec \vvec f_\alpha \, d\vvec \right) - \frac{Z_\alpha e n_\alpha}{m_\alpha} ( \Evec + \uvec_\alpha \times \Bvec ) =\\
-\sum_{\beta, \beta \ne \alpha} \int \vvec C_{\alpha \beta} \, d\vvec + \int \vvec S_\alpha \, d\vvec.
+\sum_{\beta, \beta \ne \alpha}^M \int \vvec C_{\alpha \beta} \, d\vvec + \int \vvec S_\alpha \, d\vvec.
 \end{multline}
 
 To proceed, we decompose $\vvec$ into a mean and a fluctuation, that is, $\vvec = \uvec_\alpha + \wvec_\alpha$. Using this decomposition 
@@ -287,13 +290,13 @@ Thus, \cref{eq:mom_derv_2} becomes
 \begin{multline}
 \label{eq:mom_derv_3}
 \frac{\partial n_\alpha \uvec_\alpha}{\partial t} + \nabla \cdot \left ( n_\alpha \uvec_\alpha \uvec_\alpha \right) - \frac{Z_\alpha e n_\alpha}{m_\alpha} ( \Evec + \uvec_\alpha \times \Bvec ) = -\nabla \cdot \int \wvec_\alpha \wvec_\alpha f_\alpha d\vvec + \\
-\sum_{\beta, \beta \ne \alpha} \int \vvec C_{\alpha \beta} \, d\vvec + \int \vvec S_\alpha \, d\vvec.
+\sum_{\beta, \beta \ne \alpha}^M \int \vvec C_{\alpha \beta} \, d\vvec + \int \vvec S_\alpha \, d\vvec.
 \end{multline}
 Conservation of particles is used to modify the collisional term to thus obtain
 \begin{multline}
 \label{eq:mom_derv_4}
 \frac{\partial n_\alpha \uvec_\alpha}{\partial t} + \nabla \cdot \left ( n_\alpha \uvec_\alpha \uvec_\alpha \right) - \frac{Z_\alpha e n_\alpha}{m_\alpha} ( \Evec + \uvec_\alpha \times \Bvec ) = -\nabla \cdot \int \wvec_\alpha \wvec_\alpha f_\alpha d\vvec + \\
-\sum_{\beta, \beta \ne \alpha} \int \wvec_\alpha C_{\alpha \beta} \, d\vvec + \int \vvec S_\alpha \, d\vvec.
+\sum_{\beta, \beta \ne \alpha}^M \int \wvec_\alpha C_{\alpha \beta} \, d\vvec + \int \vvec S_\alpha \, d\vvec.
 \end{multline}
 
 Multiplying by mass leads to the following equation
@@ -309,7 +312,7 @@ where the stress tensor is
 \end{equation}
 the momentum transferred between unlike particles due to friction of collisions is
 \begin{equation}
-\Rvec_\alpha = \sum_{\beta, \beta \ne \alpha} \int m_\alpha \wvec_\alpha C_{\alpha \beta} \, d\vvec,
+\Rvec_\alpha = \sum_{\beta, \beta \ne \alpha}^M \int m_\alpha \wvec_\alpha C_{\alpha \beta} \, d\vvec,
 \end{equation}
 and the external source of momentum is
 \begin{equation}
@@ -337,13 +340,13 @@ Multiplying \cref{eq:boltz_mod} by $\frac{1}{2} v^2$ and then integrating over a
 \begin{multline}
 \label{eq:energy_derv_1}
 \frac{\partial n_\alpha E_\alpha}{\partial t} + \nabla \cdot \left [ \int \frac{1}{2} (\vvec \cdot \vvec) \vvec f_\alpha \, d\vvec \right ] + \int \nabla_v \cdot \left [ \frac{1}{2} (\vvec \cdot \vvec) \frac{Z_\alpha e}{m_\alpha} ( \Evec + \vvec \times \Bvec ) f_\alpha \right ] \\
-- \nabla_v \left [ \frac{1}{2} (\vvec \cdot \vvec) \right ] \cdot \left [ \frac{Z_\alpha e}{m_\alpha} ( \Evec + \vvec \times \Bvec ) f_\alpha \right ] \, d\vvec = \sum_{\beta, \beta \ne \alpha} \int \frac{1}{2} (\vvec \cdot \vvec) C_{\alpha \beta} \, d\vvec + \int \frac{1}{2} (\vvec \cdot \vvec) S_\alpha \, d\vvec.
+- \nabla_v \left [ \frac{1}{2} (\vvec \cdot \vvec) \right ] \cdot \left [ \frac{Z_\alpha e}{m_\alpha} ( \Evec + \vvec \times \Bvec ) f_\alpha \right ] \, d\vvec = \sum_{\beta, \beta \ne \alpha}^M \int \frac{1}{2} (\vvec \cdot \vvec) C_{\alpha \beta} \, d\vvec + \int \frac{1}{2} (\vvec \cdot \vvec) S_\alpha \, d\vvec.
 \end{multline}
 We note that the third term above is zero since we are integrating over all space, and that $\nabla_v [ 1/2 (\vvec \cdot \vvec ) ] = \vvec$. Thus, we have
 \begin{multline}
 \label{eq:energy_derv_2}
 \frac{\partial n_\alpha E_\alpha}{\partial t} + \nabla \cdot \left [ \int \frac{1}{2} (\vvec \cdot \vvec) \vvec f_\alpha \, d\vvec \right ] - \frac{Z_\alpha e n_\alpha}{m_\alpha} \Evec \cdot \uvec_\alpha =\\
-\sum_{\beta, \beta \ne \alpha} \int \frac{1}{2} (\vvec \cdot \vvec) C_{\alpha \beta} \, d\vvec + \int \frac{1}{2} (\vvec \cdot \vvec) S_\alpha \, d\vvec.
+\sum_{\beta, \beta \ne \alpha}^M \int \frac{1}{2} (\vvec \cdot \vvec) C_{\alpha \beta} \, d\vvec + \int \frac{1}{2} (\vvec \cdot \vvec) S_\alpha \, d\vvec.
 \end{multline}
 
 To proceed with the derivation we first note that
@@ -359,13 +362,13 @@ Using the expressions above, \cref{eq:energy_derv_2} becomes
 \begin{multline}
 \label{eq:energy_derv_3}
 \frac{\partial n_\alpha E_\alpha}{\partial t} + \nabla \cdot (n_\alpha E_\alpha \uvec_\alpha ) - \frac{Z_\alpha e n_\alpha}{m_\alpha} \Evec \cdot \uvec_\alpha =  - \nabla \cdot \left ( \uvec_\alpha \cdot \int \wvec_\alpha \wvec_\alpha f_\alpha \, d\vvec \right ) - \nabla \cdot \int \frac{1}{2} ( \wvec_\alpha \cdot \wvec_\alpha ) \wvec_\alpha f_\alpha \, d\vvec\\
-+ \sum_{\beta, \beta \ne \alpha} \int \frac{1}{2} (\vvec \cdot \vvec) C_{\alpha \beta} \, d\vvec + \int \frac{1}{2} (\vvec \cdot \vvec) S_\alpha \, d\vvec.
++ \sum_{\beta, \beta \ne \alpha}^M \int \frac{1}{2} (\vvec \cdot \vvec) C_{\alpha \beta} \, d\vvec + \int \frac{1}{2} (\vvec \cdot \vvec) S_\alpha \, d\vvec.
 \end{multline}
 Conservation of particles is used to modify the collisional term to thus obtain
 \begin{multline}
 \label{eq:energy_derv_4}
 \frac{\partial n_\alpha E_\alpha}{\partial t} + \nabla \cdot (n_\alpha E_\alpha \uvec_\alpha ) - \frac{Z_\alpha e n_\alpha}{m_\alpha} \Evec \cdot \uvec_\alpha = - \nabla \cdot \left ( \uvec_\alpha \cdot \int \wvec_\alpha \wvec_\alpha f_\alpha \, d\vvec  \right ) - \nabla \cdot \int \frac{1}{2} ( \wvec_\alpha \cdot \wvec_\alpha ) \wvec_\alpha f_\alpha \, d\vvec \\
-+ \uvec_\alpha \cdot \sum_{\beta,\beta \ne \alpha} \int \wvec_\alpha C_{\alpha \beta} \, d\vvec + \sum_{\beta, \beta \ne \alpha} \int \frac{1}{2} (\wvec_\alpha \cdot \wvec_\alpha) C_{\alpha \beta} \, d\vvec + \int \frac{1}{2} (\vvec \cdot \vvec) S_\alpha \, d\vvec.
++ \uvec_\alpha \cdot \sum_{\beta,\beta \ne \alpha}^M \int \wvec_\alpha C_{\alpha \beta} \, d\vvec + \sum_{\beta, \beta \ne \alpha}^M \int \frac{1}{2} (\wvec_\alpha \cdot \wvec_\alpha) C_{\alpha \beta} \, d\vvec + \int \frac{1}{2} (\vvec \cdot \vvec) S_\alpha \, d\vvec.
 \end{multline}
 
 Multiplying by mass leads to the following equation
@@ -473,155 +476,140 @@ To summarize, we have,
 \section{Multi-fluid formulation}
 %------------------------------------------------------------------------
 %--------------------------------------------
-\subsection{Multiple species}
+\subsection{$N+1$ fluids}
 %--------------------------------------------
+\label{sec:mf_np1fluid_equations}
+We consider $N$ ion species plus one electron species. A particular ion species is denoted using the $\alpha$ subscript, and the electron species with the $e$ subscript. Additionally, we assume 
 \begin{enumerate}
-    \item Species $\alpha$ are separated into two categories: ions ($\alpha_i$) and electrons ($\alpha_e$).
-    \item No sources ($\hat{S}_\alpha$, $\hat{\Mvec}_\alpha$, $\hat{Q}_\alpha$).
+    \item No sources for ions ($\hat{S}_\alpha = \hat{\Mvec}_\alpha = \hat{Q}_\alpha = 0$ for all $\alpha$) and electrons ($\hat{S}_e = \hat{\Mvec}_e = \hat{Q}_e = 0$).
 \end{enumerate}
 Thus, the governing equations are
 \begin{equation}
-    \label{eq:mf_ms_ni}
-    \frac{\partial n_{\alpha_i}}{\partial t} + \nabla \cdot \left ( n_{\alpha_i} \uvec_{\alpha_i} \right ) = 0,
+    \label{eq:mf_np1fluid_ni}
+    \frac{\partial n_\alpha}{\partial t} + \nabla \cdot \left ( n_\alpha \uvec_\alpha \right ) = 0,
 \end{equation}
 \begin{equation}
-    \label{eq:mf_ms_ne}
-    \frac{\partial n_{\alpha_e}}{\partial t} + \nabla \cdot \left ( n_{\alpha_e} \uvec_{\alpha_e} \right ) = 0,
-\end{equation}
-\begin{equation}
-    \label{eq:mf_ms_ui}
-    \frac{\partial m_{\alpha_i} n_{\alpha_i} \uvec_{\alpha_i}}{\partial t} + \nabla \cdot \left( m_{\alpha_i} n_{\alpha_i} \uvec_{\alpha_i} \uvec_{\alpha_i} \right) - Z_{\alpha_i} e n_{\alpha_i} ( \Evec + \uvec_{\alpha_i} \times \Bvec ) = \nabla \cdot \sigmavec_{\alpha_i} + \Rvec_{\alpha_i},
-\end{equation}
-\begin{equation}
-    \label{eq:mf_ms_ue}
-    \frac{\partial m_e n_{\alpha_e} \uvec_{\alpha_e}}{\partial t} + \nabla \cdot \left ( m_e n_{\alpha_e} \uvec_{\alpha_e} \uvec_{\alpha_e} \right) + e n_{\alpha_e} ( \Evec + \uvec_{\alpha_e} \times \Bvec ) = \nabla \cdot \sigmavec_{\alpha_e} + \Rvec_{\alpha_e},
-\end{equation}
-\begin{equation}
-    \label{eq:mf_ms_iei}
-    \frac{\partial}{\partial t} \left ( \frac{3}{2} p_{\alpha_i} \right ) + \nabla \cdot \left ( \frac{3}{2} p_{\alpha_i} \uvec_{\alpha_i} \right ) = \sigmavec_{\alpha_i} : \nabla \uvec_{\alpha_i} - \nabla \cdot \qvec_{\alpha_i} + Q_{\alpha_i},
-\end{equation}
-\begin{equation}
-    \label{eq:mf_ms_iee}
-    \frac{\partial}{\partial t} \left ( \frac{3}{2} p_{\alpha_e} \right ) + \nabla \cdot \left ( \frac{3}{2} p_{\alpha_e} \uvec_{\alpha_e} \right ) = \sigmavec_{\alpha_e} : \nabla \uvec_{\alpha_e} - \nabla \cdot \qvec_{\alpha_e} + Q_{\alpha_e},
-\end{equation}
-\begin{equation}
-    \label{eq:mf_ms_maxwell_3}
-    \nabla \cdot \Evec = \frac{\rho_q}{\epsilon_0},
-\end{equation}
-\begin{equation}
-    \label{eq:mf_ms_maxwell_4}
-    \nabla \cdot \Bvec = 0,
-\end{equation}
-\begin{equation}
-    \label{eq:mf_ms_maxwell_1}
-    \nabla \times \Evec = -\frac{ \partial \Bvec}{\partial t},
-\end{equation}
-\begin{equation}
-    \label{eq:mf_ms_maxwell_2}
-    \nabla \times \Bvec = \mu_0 \Jvec + \mu_0 \epsilon_0 \frac{\partial \Evec}{\partial t},
-\end{equation}
-\begin{equation}
-    \label{eq:mf_ms_curr_density}
-    \Jvec_\alpha = \sum_\alpha e (Z_{\alpha_i} n_{\alpha_i} \uvec_{\alpha_i} - n_{\alpha_e} \uvec_{\alpha_e}),
-\end{equation}
-\begin{equation}
-    \label{eq:mf_ms_mass_density}
-    \rho_{q,\alpha} = \sum_\alpha e (Z_{\alpha_i} n_{\alpha_i} - n_{\alpha_e}),
-\end{equation}
-\begin{equation}
-    \label{eq:mf_ms_curr_density_total}
-    \Jvec = \sum_\alpha \Jvec_\alpha,
-\end{equation}
-\begin{equation}
-    \label{eq:mf_ms_mass_density_total}
-    \rho_q = \sum_\alpha \rho_{q,\alpha}.
-\end{equation}
-We'll also introduce the following simple equations of state
-\begin{equation}
-    \label{eq:mf_ms_eos_ion}
-    p_{\alpha_i} = n_{\alpha_i} k_B T_{\alpha_i},
-\end{equation}
-\begin{equation}
-    \label{eq:mf_ms_eos_elec}
-    p_{\alpha_e} = n_{\alpha_e} k_B T_{\alpha_e}.
-\end{equation}
-
-%--------------------------------------------
-\subsection{Two species}
-%--------------------------------------------
-
-\label{sec:mf_ss_equations}
-In this section we simplify the approach by considering a single ion species and a single electron species. Thus, the governing equations become
-\begin{equation}
-    \label{eq:mf_ss_ni}
-    \frac{\partial n_i}{\partial t} + \nabla \cdot \left ( n_i \uvec_i \right ) = 0,
-\end{equation}
-\begin{equation}
-    \label{eq:mf_ss_ne}
+    \label{eq:mf_np1fluid_ne}
     \frac{\partial n_e}{\partial t} + \nabla \cdot \left ( n_e \uvec_e \right ) = 0,
 \end{equation}
 \begin{equation}
-    \label{eq:mf_ss_ui}
-    \frac{\partial m_i n_i \uvec_i}{\partial t} + \nabla \cdot \left ( m_i n_i \uvec_i \uvec_i \right) - Z e n_i ( \Evec + \uvec_i \times \Bvec ) = \nabla \cdot \sigmavec_i + \Rvec_i,
+    \label{eq:mf_np1fluid_ui}
+    \frac{\partial m_\alpha n_\alpha \uvec_\alpha}{\partial t} + \nabla \cdot \left( m_\alpha n_\alpha \uvec_\alpha \uvec_\alpha \right) - Z_\alpha e n_\alpha ( \Evec + \uvec_\alpha \times \Bvec ) = \nabla \cdot \sigmavec_\alpha + \Rvec_\alpha,
 \end{equation}
 \begin{equation}
-    \label{eq:mf_ss_ue}
+    \label{eq:mf_np1fluid_ue}
     \frac{\partial m_e n_e \uvec_e}{\partial t} + \nabla \cdot \left ( m_e n_e \uvec_e \uvec_e \right) + e n_e ( \Evec + \uvec_e \times \Bvec ) = \nabla \cdot \sigmavec_e + \Rvec_e,
 \end{equation}
 \begin{equation}
-    \label{eq:mf_ss_iei}
-    \frac{\partial}{\partial t} \left ( \frac{3}{2} p_i \right ) + \nabla \cdot \left ( \frac{3}{2} p_i \uvec_i \right ) = \sigmavec_i : \nabla \uvec_i - \nabla \cdot \qvec_i + Q_i,
+    \label{eq:mf_np1fluid_iei}
+    \frac{\partial}{\partial t} \left ( \frac{3}{2} p_\alpha \right ) + \nabla \cdot \left ( \frac{3}{2} p_\alpha \uvec_\alpha \right ) = \sigmavec_\alpha : \nabla \uvec_\alpha - \nabla \cdot \qvec_\alpha + Q_\alpha,
 \end{equation}
 \begin{equation}
-    \label{eq:mf_ss_iee}
+    \label{eq:mf_np1fluid_iee}
     \frac{\partial}{\partial t} \left ( \frac{3}{2} p_e \right ) + \nabla \cdot \left ( \frac{3}{2} p_e \uvec_e \right ) = \sigmavec_e : \nabla \uvec_e - \nabla \cdot \qvec_e + Q_e,
 \end{equation}
 \begin{equation}
-    \label{eq:mf_ss_maxwell_3}
+    \label{eq:mf_np1fluid_maxwell_3}
     \nabla \cdot \Evec = \frac{\rho_q}{\epsilon_0},
 \end{equation}
 \begin{equation}
-    \label{eq:mf_ss_maxwell_4}
+    \label{eq:mf_np1fluid_maxwell_4}
     \nabla \cdot \Bvec = 0,
 \end{equation}
 \begin{equation}
-    \label{eq:mf_ss_maxwell_1}
+    \label{eq:mf_np1fluid_maxwell_1}
     \nabla \times \Evec = -\frac{ \partial \Bvec}{\partial t},
 \end{equation}
 \begin{equation}
-    \label{eq:mf_ss_maxwell_2}
+    \label{eq:mf_np1fluid_maxwell_2}
     \nabla \times \Bvec = \mu_0 \Jvec + \mu_0 \epsilon_0 \frac{\partial \Evec}{\partial t},
 \end{equation}
 \begin{equation}
-    \label{eq:mf_ss_curr_density}
+    \label{eq:mf_np1fluid_curr_density}
+    \Jvec = e \left(\sum_\alpha^N Z_\alpha n_\alpha \uvec_\alpha - n_e \uvec_e \right),
+\end{equation}
+\begin{equation}
+    \label{eq:mf_np1fluid_mass_density}
+    \rho_q = e \left( \sum_\alpha^N Z_\alpha n_\alpha - n_e \right),
+\end{equation}
+\begin{equation}
+    \label{eq:mf_np1fluid_eos_ion}
+    p_\alpha = n_\alpha k_B T_\alpha,
+\end{equation}
+\begin{equation}
+    \label{eq:mf_np1fluid_eos_elec}
+    p_e = n_e k_B T_e.
+\end{equation}
+
+%--------------------------------------------
+\subsection{Two fluids}
+%--------------------------------------------
+If there is only one ion species, then we have the two-fluid model
+\label{sec:mf_2fluid_equations}
+\begin{equation}
+    \label{eq:mf_2fluid_ni}
+    \frac{\partial n_i}{\partial t} + \nabla \cdot \left ( n_i \uvec_i \right ) = 0,
+\end{equation}
+\begin{equation}
+    \label{eq:mf_2fluid_ne}
+    \frac{\partial n_e}{\partial t} + \nabla \cdot \left ( n_e \uvec_e \right ) = 0,
+\end{equation}
+\begin{equation}
+    \label{eq:mf_2fluid_ui}
+    \frac{\partial m_i n_i \uvec_i}{\partial t} + \nabla \cdot \left ( m_i n_i \uvec_i \uvec_i \right) - Z e n_i ( \Evec + \uvec_i \times \Bvec ) = \nabla \cdot \sigmavec_i + \Rvec_i,
+\end{equation}
+\begin{equation}
+    \label{eq:mf_2fluid_ue}
+    \frac{\partial m_e n_e \uvec_e}{\partial t} + \nabla \cdot \left ( m_e n_e \uvec_e \uvec_e \right) + e n_e ( \Evec + \uvec_e \times \Bvec ) = \nabla \cdot \sigmavec_e + \Rvec_e,
+\end{equation}
+\begin{equation}
+    \label{eq:mf_2fluid_iei}
+    \frac{\partial}{\partial t} \left ( \frac{3}{2} p_i \right ) + \nabla \cdot \left ( \frac{3}{2} p_i \uvec_i \right ) = \sigmavec_i : \nabla \uvec_i - \nabla \cdot \qvec_i + Q_i,
+\end{equation}
+\begin{equation}
+    \label{eq:mf_2fluid_iee}
+    \frac{\partial}{\partial t} \left ( \frac{3}{2} p_e \right ) + \nabla \cdot \left ( \frac{3}{2} p_e \uvec_e \right ) = \sigmavec_e : \nabla \uvec_e - \nabla \cdot \qvec_e + Q_e,
+\end{equation}
+\begin{equation}
+    \label{eq:mf_2fluid_maxwell_3}
+    \nabla \cdot \Evec = \frac{\rho_q}{\epsilon_0},
+\end{equation}
+\begin{equation}
+    \label{eq:mf_2fluid_maxwell_4}
+    \nabla \cdot \Bvec = 0,
+\end{equation}
+\begin{equation}
+    \label{eq:mf_2fluid_maxwell_1}
+    \nabla \times \Evec = -\frac{ \partial \Bvec}{\partial t},
+\end{equation}
+\begin{equation}
+    \label{eq:mf_2fluid_maxwell_2}
+    \nabla \times \Bvec = \mu_0 \Jvec + \mu_0 \epsilon_0 \frac{\partial \Evec}{\partial t},
+\end{equation}
+\begin{equation}
+    \label{eq:mf_2fluid_curr_density}
     \Jvec = e (Z n_i \uvec_i - n_e \uvec_e),
 \end{equation}
 \begin{equation}
-    \label{eq:mf_ss_mass_density}
+    \label{eq:mf_2fluid_mass_density}
     \rho_q = e (Z n_i - n_e).
 \end{equation}
-We'll also introduce the following simple equations of state
 \begin{equation}
-    \label{eq:mf_ss_eos_ion}
+    \label{eq:mf_2fluid_eos_ion}
     p_i = n_i k_B T_i,
 \end{equation}
 \begin{equation}
-    \label{eq:mf_ss_eos_elec}
+    \label{eq:mf_2fluid_eos_elec}
     p_e = n_e k_B T_e.
 \end{equation}
 These equations correspond to eq.\@ (2.22) in Freidberg's Ideal MHD book, but for ions that are not singly charged.
 
-%--------------------------------------------
-\subsection{Isentropic plasmas}
-%--------------------------------------------
-
-We now add a couple of extra assumptions
+We can also introduce the following extra assumptions
 \begin{enumerate}
     \item No stresses $\tvec_\alpha$, heat flux $\qvec_\alpha$, and collisions $\Rvec_\alpha$, $Q_\alpha$. This in itself would make the flow isentropic.
     \item The flow is not just isentropic but also homentropic. This allows for \cref{eq:pwaves_ion_pressure,eq:pwaves_electron_pressure} to hold across all space, not just along streamlines.
 \end{enumerate}
-
-Thus, the governing equations are
+With these, the governing equations become
 \begin{equation}
     \label{eq:pwaves_ion_density}
     \frac{\partial n_i}{\partial t} + \nabla \cdot \left (n_i \uvec_i \right ) = 0,
@@ -680,35 +668,98 @@ Thus, the governing equations are
 %------------------------------------------------------------------------
 \section{Single-fluid formulation}
 %------------------------------------------------------------------------
-Define the density of an ion species $\rho_{\alpha_i}$ as
-\begin{equation}
-    \rho_{\alpha_i} = m_{\alpha_i} n_{\alpha_i}.
-\end{equation}
-Additionally, define the total velocity $\uvec$ as
-\begin{equation}
-    \uvec = \sum_\alpha \frac{m_{\alpha_i} n_{\alpha_i} u_{\alpha_i} + m_{\alpha_e} n_{\alpha_e} u_{\alpha_e}}{m_{\alpha_e} n_{\alpha_e} + m_{\alpha_e} n_{\alpha_e}} = \sum_{\alpha_i} \frac{m_{\alpha_i} n_{\alpha_i} u_{\alpha_i}}{m_{\alpha_i} n_{\alpha_i}}.
-\end{equation}
-In the above, we assumed $m_{\alpha_e} \ll m_{\alpha_i}$ and thus simplify the sum to only those species that are ions.
+The starting point are the $N+1$ fluid equations of \cref{sec:mf_np1fluid_equations}. For the single-fluid formulation, we'll use the following assumptions
+\begin{enumerate}
+    \item $m_e \approx 0$ since $m_e \ll m_\alpha$. \label{eq:sf_no_e_mass} 
+    \item Quasi-neutrality, i.e.\@ $\sum_\alpha^N Z_\alpha n_\alpha = n_e$. \label{eq:sf_quasi_neutrality}
+\end{enumerate}
 
-Multiplying \cref{eq:mf_ms_ni} by $m_{\alpha_i}$ gives
-\begin{equation*}
-    \frac{\partial \rho_{\alpha_i}}{\partial t} + \nabla \cdot \left( \rho_{\alpha_i} \uvec_{\alpha_i} \right) = 0.
-\end{equation*}
-We introduce the ion species diffusion vector $\jvec_{\alpha_i} = \rho_{\alpha_i} \left( \uvec_{\alpha_i} - \uvec \right)$ and thus write the above as
+We define the density of an ion species $\rho_\alpha$ as
 \begin{equation}
-    \frac{\partial \rho_{\alpha_i}}{\partial t} + \nabla \cdot \left( \rho_{\alpha_i} \uvec \right) = -\nabla \cdot \jvec_{\alpha_i}.
+    \rho_\alpha = m_\alpha n_\alpha.
 \end{equation}
-We'll also assume quasi-neutrality for each ion-electron species pair, that is, $\rho_{q,\alpha} = 0$, which leads to
+and the total density $\rho$ as
 \begin{equation}
-    Z_{\alpha_i} n_{\alpha_i} = n_{\alpha,e}.
+    \rho = \sum_{\alpha}^N \rho_\alpha.
 \end{equation}
-Multiplying \cref{eq:mf_ms_ni} by $Z_{\alpha_i}$ and then subtracting from it \cref{eq:mf_ms_ne} gives
-\begin{equation*}
-    \nabla \cdot \left( Z_{\alpha_i} n_{\alpha_i} \uvec_{\alpha_i} - n_{\alpha_e} \uvec_{\alpha_e} \right) = 0.
-\end{equation*}
-Multiplying by $e$ gives
+The total velocity $\uvec$ is given by
 \begin{equation}
-    \nabla \cdot \Jvec_\alpha = 0.
+    \uvec = \frac{\sum_{\alpha}^N \rho_\alpha \uvec_\alpha}{\sum_{\alpha}^N \rho_\alpha}.
+\end{equation}
+
+\subsubsection{Mass conservation}
+Multiplying \cref{eq:mf_np1fluid_ni} by $m_\alpha$ gives
+\begin{equation*}
+    \frac{\partial \rho_\alpha}{\partial t} + \nabla \cdot \left( \rho_\alpha \uvec_\alpha \right) = 0.
+\end{equation*}
+We introduce the ion species diffusion vector $\jvec_\alpha = \rho_\alpha \left( \uvec_\alpha - \uvec \right)$ and thus write the above as
+\begin{equation}
+    \frac{\partial \rho_\alpha}{\partial t} + \nabla \cdot \left( \rho_\alpha \uvec \right) = -\nabla \cdot \jvec_\alpha.
+\end{equation}
+Multiplying \cref{eq:mf_np1fluid_ni} by $Z_\alpha$ and summing over all $\alpha$ gives
+\begin{equation*}
+    \frac{\partial}{\partial t} \sum_\alpha^N Z_\alpha n_\alpha + \nabla \cdot \left( \sum_\alpha^N Z_\alpha n_\alpha \uvec_\alpha \right) = 0.
+\end{equation*}
+Subtracting \cref{eq:mf_np1fluid_ne} from the above gives
+\begin{equation*}
+    \nabla \cdot \left( \sum_\alpha^N Z_\alpha n_\alpha \uvec_\alpha - n_e \uvec_e \right) = 0,
+\end{equation*}
+which is equivalent to
+\begin{equation}
+    \nabla \cdot \Jvec = 0.
+\end{equation}
+
+\subsubsection{Momentum conservation}
+We now add \cref{eq:mf_np1fluid_ui,eq:mf_np1fluid_ue} and use \cref{eq:sf_no_e_mass} to obtain
+\begin{multline*}
+    \frac{\partial \rho_\alpha \uvec_\alpha}{\partial t} + \nabla \cdot \left( \rho_\alpha \uvec_\alpha \uvec_\alpha \right) -e \left( Z_\alpha n_\alpha - n_e \right) \Evec - e \left( Z_\alpha n_\alpha \uvec_\alpha - n_e \uvec_e \right) \times \Bvec = \\ \nabla \cdot \left( \sigmavec_\alpha + \sigmavec_e \right) + \Rvec_\alpha + \Rvec_e.
+\end{multline*}
+Summing over all $\alpha$ gives
+\begin{multline*}
+    \frac{\partial}{\partial t} \sum_\alpha^N \rho_\alpha \uvec_\alpha + \nabla \cdot \sum_\alpha^N \rho_\alpha \uvec_\alpha \uvec_\alpha -e \left( \sum_\alpha^N Z_\alpha n_\alpha - n_e \right) \Evec - e \left( \sum_\alpha^N Z_\alpha n_\alpha \uvec_\alpha - n_e \uvec_e \right) \times \Bvec = \\ \nabla \cdot \left( \sum_\alpha^N \sigmavec_\alpha + \sigmavec_e \right) + \sum_\alpha^N \Rvec_\alpha + \Rvec_e.
+\end{multline*}
+Due to \cref{eq:sf_quasi_neutrality} and the definition of the current in \cref{eq:mf_np1fluid_curr_density} the above simplifies to
+\begin{equation*}
+    \frac{\partial}{\partial t} \sum_\alpha^N \rho_\alpha \uvec_\alpha + \nabla \cdot \sum_\alpha^N \rho_\alpha \uvec_\alpha \uvec_\alpha - \Jvec \times \Bvec = \nabla \cdot \left( \sum_\alpha^N \sigmavec_\alpha + \sigmavec_{\alpha_e} \right) + \sum_\alpha^N \Rvec_\alpha + \Rvec_e.
+\end{equation*}
+Due to \cref{eq:coll_cons_particles,eq:coll_cons_momentum} we have
+\begin{equation}
+    \sum_\alpha^N \Rvec_\alpha + \Rvec_e = 0.
+\end{equation}
+We now write the momentum equation as
+\begin{equation*}
+    \frac{\partial}{\partial t} \sum_\alpha^N \rho_\alpha \uvec_\alpha + \nabla \cdot \sum_\alpha^N \left[ \rho_\alpha \uvec_\alpha \uvec + \rho_\alpha \uvec_\alpha \left( \uvec_\alpha - \uvec \right) \right] - \Jvec \times \Bvec = \nabla \cdot \left( \sum_\alpha^N \sigmavec_\alpha + \sigmavec_{\alpha_e} \right).
+\end{equation*}
+Using the definitions of $\rho$, $\uvec$, and $\jvec_\alpha$ the above becomes
+\begin{equation}
+    \frac{\partial \rho \uvec}{\partial t} + \nabla \cdot \left( \rho \uvec \uvec \right) - \Jvec \times \Bvec = \nabla \cdot \left( \sum_\alpha^N \sigmavec_\alpha + \sigmavec_{\alpha_e} \right) - \nabla \cdot \sum_\alpha^N \jvec_\alpha \uvec_\alpha.
+\end{equation}
+Given \cref{eq:sf_no_e_mass}, \cref{eq:mf_np1fluid_ue} for electron momentum becomes
+\begin{equation*}
+    e n_e ( \Evec + \uvec_e \times \Bvec ) = \nabla \cdot \sigmavec_e + \Rvec_e,
+\end{equation*}
+Using the definition of the current in \cref{eq:mf_np1fluid_curr_density}, the left-hand side can be re-written as
+\begin{equation*}
+    e n_e ( \Evec + \uvec_e \times \Bvec ) = e n_e \Evec + e n_e \uvec_e \times \Bvec = e n_e \Evec + \left( e \sum_\alpha^N Z_\alpha n_\alpha \uvec_\alpha - \Jvec \right) \times \Bvec,
+\end{equation*}
+and thus the electron momentum equation becomes
+\begin{equation*}
+    e n_e \Evec + e \sum_\alpha^N Z_\alpha n_\alpha \uvec_\alpha \times \Bvec = \Jvec \times \Bvec + \nabla \cdot \sigmavec_e + \Rvec_e,
+\end{equation*}
+Using the definition of $\jvec_\alpha$, the left-hand side can be written as
+\begin{align*}
+    e n_e \Evec + e \sum_\alpha^N Z_\alpha n_\alpha \uvec_\alpha \times \Bvec &= e n_e \Evec + e \sum_\alpha^N \left[ Z_\alpha n_\alpha \uvec + Z_\alpha n_\alpha \left( \uvec_\alpha - \uvec \right) \right] \times \Bvec \\
+    &= e n_e \Evec + e \sum_\alpha^N \left( Z_\alpha n_\alpha \uvec + \frac{Z_\alpha \jvec_\alpha}{m_\alpha} \right) \times \Bvec \\
+    &= e n_e \Evec + e \sum_\alpha^N Z_\alpha n_\alpha \uvec \times \Bvec + e \sum_\alpha^N \frac{Z_\alpha \jvec_\alpha}{m_\alpha} \times \Bvec \\
+    &= e n_e \left( \Evec + \uvec \times \Bvec \right) + e \sum_\alpha^N \frac{Z_\alpha \jvec_\alpha}{m_\alpha} \times \Bvec.
+\end{align*}
+Thus, the electron momentum equation finally becomes
+\begin{equation*}
+    e n_e \left( \Evec + \uvec \times \Bvec \right) = \Jvec \times \Bvec + \nabla \cdot \sigmavec_e + \Rvec_e - e \sum_\alpha^N \frac{Z_\alpha \jvec_\alpha}{m_\alpha} \times \Bvec,
+\end{equation*}
+or
+\begin{equation}
+    \Evec + \uvec \times \Bvec = \frac{1}{e n_e} \left( \Jvec \times \Bvec + \nabla \cdot \sigmavec_e + \Rvec_e \right) - \sum_\alpha^N \frac{Z_\alpha \jvec_\alpha}{n_e m_\alpha} \times \Bvec.
 \end{equation}
 
 %########################################################################
@@ -919,7 +970,7 @@ The above is the dispersion relation for ion-acoustic waves.
 %--------------------------------------------
 \subsection{Debye length}
 %--------------------------------------------
-To describe the Debye length we'll use the governing equations from \cref{sec:mf_ss_equations} as well as the following assumptions
+To describe the Debye length we'll use the governing equations from \cref{sec:mf_2fluid_equations} (without assuming isentropic/homentropic flow) as well as the following assumptions
 \begin{enumerate}
     \item Stationary plasma $\uvec_i = \uvec_e = 0$.
     \item No shear stresses $\tvec_\alpha$, heat flux $\qvec_\alpha$, and collisions $\Rvec_\alpha$, $Q_\alpha$.
@@ -2322,7 +2373,7 @@ For this to be achieved it is required that $w \ll w_{pe}$ and $a \gg \lambda_{D
 \item Neglect electron inertia in the electron momentum equations. Formally achieved with $m_e \to 0$.
 \end{enumerate}
 
-Due to the first assumption, the Maxwell equations \cref{eq:mf_ss_maxwell_1,eq:mf_ss_maxwell_2,eq:mf_ss_maxwell_3,eq:mf_ss_maxwell_4,eq:mf_ss_curr_density,eq:mf_ss_mass_density} are now written as
+Due to the first assumption, the Maxwell equations \cref{eq:mf_2fluid_maxwell_1,eq:mf_2fluid_maxwell_2,eq:mf_2fluid_maxwell_3,eq:mf_2fluid_maxwell_4,eq:mf_2fluid_curr_density,eq:mf_2fluid_mass_density} are now written as
 \begin{equation}
 \label{eq:preMax_gauss}
 n_i - n_e = 0
@@ -2357,7 +2408,7 @@ We define single-fluid variables as
     T = \frac{T_i + T_e}{2}.
 \end{equation}
 
-The two conservation of mass equations \cref{eq:mf_ss_ni,eq:mf_ss_ne} will lead to two single-fluid equations. The first is obtained by multiplying \cref{eq:mf_ss_ni} by $m_i$, and the second is obtained by multiplying the ion and electron mass equations by $e$ and then subtracting. The results are
+The two conservation of mass equations \cref{eq:mf_2fluid_ni,eq:mf_2fluid_ne} will lead to two single-fluid equations. The first is obtained by multiplying \cref{eq:mf_2fluid_ni} by $m_i$, and the second is obtained by multiplying the ion and electron mass equations by $e$ and then subtracting. The results are
 \begin{equation}
     \frac{\partial \rho}{\partial t} + \nabla \cdot (\rho \vvec) = 0,
 \end{equation}
@@ -2375,7 +2426,7 @@ For the second equation, we use $m_e \to 0$ and quasi-neutrality in the electron
 \begin{equation}
     e n ( \Evec + \uvec_e \times \Bvec ) = - \nabla p_e + \nabla \cdot \tvec_e + \Rvec_e,
 \end{equation}
-Assuming quasi-neutrality, the definition of the current given in \cref{eq:mf_ss_curr_density} is now
+Assuming quasi-neutrality, the definition of the current given in \cref{eq:mf_2fluid_curr_density} is now
 \begin{equation}
 \label{eq:current_def_quasineutral}
     \Jvec = e n (\uvec_i - \uvec_e),
@@ -2390,7 +2441,7 @@ Using the above in the electron continuity equation gives
     \Evec + \vvec \times \Bvec = \frac{1}{en} ( \Jvec \times \Bvec - \nabla p_e + \nabla \cdot \tvec_e + \Rvec_e).
 \end{equation}
 
-The two conservation of energy equations will also lead to two single-fluid equations. Each is evaluated using the single-fluid variables. As part of this derivation, we first rewrite the ion and electron internal energy \cref{eq:mf_ss_iei,eq:mf_ss_iee} as
+The two conservation of energy equations will also lead to two single-fluid equations. Each is evaluated using the single-fluid variables. As part of this derivation, we first rewrite the ion and electron internal energy \cref{eq:mf_2fluid_iei,eq:mf_2fluid_iee} as
 \begin{equation}
 \label{eq:twof_ie}
     \frac{1}{\gamma-1} \left ( \frac{\partial p_i}{\partial t} + \uvec_i \cdot \nabla p_i + \gamma p_i \nabla \cdot \uvec_i \right ) = \tvec_i : \nabla \uvec_i - \nabla \cdot \qvec_i + Q_i,
