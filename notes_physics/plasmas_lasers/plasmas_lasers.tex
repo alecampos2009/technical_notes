@@ -668,39 +668,59 @@ With these, the governing equations become
 %------------------------------------------------------------------------
 \section{Single-fluid formulation}
 %------------------------------------------------------------------------
-The starting point are the $N+1$ fluid equations of \cref{sec:mf_np1fluid_equations}. For the single-fluid formulation, we'll use the following assumptions
+The starting point are the $N+1$ fluid equations of \cref{sec:mf_np1fluid_equations}. Before that, however, we introduce the following variables. $V$ is the volume occupied by all ion species at a single point, and $m$ is the mass occupied by all ion species at a single point. Similarly $V_\alpha$ and $m_\alpha$ are the volume and mass, respectively, occupied by the $\alpha$ ion species at a single point. Finally, $V_e$ and $m_e$ are the volume and mass, respectively, occupied by the electrons at a single point.
+
+For the single-fluid formulation, we'll use the following assumptions
 \begin{enumerate}
     \item $m_e \approx 0$ since $m_e \ll m_\alpha$. \label{eq:sf_no_e_mass} 
+    \item $V_e \approx 0$ since $V_e \ll V_\alpha$. \label{eq:sf_no_e_vol}
     \item Quasi-neutrality, i.e.\@ $\sum_\alpha^N Z_\alpha n_\alpha = n_e$. \label{eq:sf_quasi_neutrality}
 \end{enumerate}
 
-We define the density of an ion species $\rho_\alpha$ as
+The total density $\rho$ is defined as
 \begin{equation}
-    \rho_\alpha = m_\alpha n_\alpha.
+    \rho = m/V.
 \end{equation}
-and the total density $\rho$ as
+The volume fraction $\eta_\alpha$ and mass fraction $Y_\alpha$ are defined as
 \begin{equation}
-    \rho = \sum_{\alpha}^N \rho_\alpha.
+    \eta_\alpha = \frac{V_\alpha}{V},
 \end{equation}
-The total velocity $\uvec$ is given by
 \begin{equation}
-    \uvec = \frac{\sum_{\alpha}^N \rho_\alpha \uvec_\alpha}{\sum_{\alpha}^N \rho_\alpha}.
+    Y_\alpha = \frac{m_\alpha}{m}.
+\end{equation}
+Note that both $\eta_\alpha$ and $Y_\alpha$ sum up to one over all $\alpha$. A new density is also introduced, namely $\rho_\alpha$ which is defined as
+\begin{equation}
+    \rho_s = \frac{m_\alpha}{V_\alpha}.
+\end{equation}
+This can be expressed in terms of the other variables defined above by
+\begin{equation}
+    \rho_\alpha = \rho \frac{Y_\alpha}{\eta_\alpha}.
+\end{equation}
+
+In terms of the number densities $n_\alpha$, we have
+\begin{equation}
+    \label{eq:sf_mass_number_densities}
+    \rho Y_\alpha = M_\alpha n_\alpha.
+\end{equation}
+where $M_\alpha$ is the atomic weight of species $\alpha$. The total velocity $\uvec$ is given by
+\begin{equation}
+    \uvec = \sum_\alpha^N Y_\alpha \uvec_\alpha.
 \end{equation}
 
 \subsubsection{Mass conservation}
-Multiplying \cref{eq:mf_np1fluid_ni} by $m_\alpha$ gives
+Multiplying \cref{eq:mf_np1fluid_ni} by $M_\alpha$ gives
 \begin{equation*}
-    \frac{\partial \rho_\alpha}{\partial t} + \nabla \cdot \left( \rho_\alpha \uvec_\alpha \right) = 0.
+    \frac{\partial \rho Y_\alpha}{\partial t} + \nabla \cdot \left( \rho Y_\alpha \uvec_\alpha \right) = 0.
 \end{equation*}
-We introduce the ion species diffusion vector $\jvec_\alpha = \rho_\alpha \left( \uvec_\alpha - \uvec \right)$ and thus write the above as
+We introduce the ion species diffusion vector $\jvec_\alpha = \rho Y_\alpha \left( \uvec_\alpha - \uvec \right)$ and thus write the above as
 \begin{equation}
-    \frac{\partial \rho_\alpha}{\partial t} + \nabla \cdot \left( \rho_\alpha \uvec \right) = -\nabla \cdot \jvec_\alpha.
+    \frac{\partial \rho Y_\alpha}{\partial t} + \nabla \cdot \left( \rho Y_\alpha \uvec \right) = -\nabla \cdot \jvec_\alpha.
 \end{equation}
 Multiplying \cref{eq:mf_np1fluid_ni} by $Z_\alpha$ and summing over all $\alpha$ gives
 \begin{equation*}
     \frac{\partial}{\partial t} \sum_\alpha^N Z_\alpha n_\alpha + \nabla \cdot \left( \sum_\alpha^N Z_\alpha n_\alpha \uvec_\alpha \right) = 0.
 \end{equation*}
-Subtracting \cref{eq:mf_np1fluid_ne} from the above gives
+Subtracting \cref{eq:mf_np1fluid_ne} from the above and using the assumption of quasi-neutrality in \cref{eq:sf_quasi_neutrality} gives
 \begin{equation*}
     \nabla \cdot \left( \sum_\alpha^N Z_\alpha n_\alpha \uvec_\alpha - n_e \uvec_e \right) = 0,
 \end{equation*}
@@ -712,15 +732,15 @@ which is equivalent to
 \subsubsection{Momentum conservation}
 We now add \cref{eq:mf_np1fluid_ui,eq:mf_np1fluid_ue} and use \cref{eq:sf_no_e_mass} to obtain
 \begin{multline*}
-    \frac{\partial \rho_\alpha \uvec_\alpha}{\partial t} + \nabla \cdot \left( \rho_\alpha \uvec_\alpha \uvec_\alpha \right) -e \left( Z_\alpha n_\alpha - n_e \right) \Evec - e \left( Z_\alpha n_\alpha \uvec_\alpha - n_e \uvec_e \right) \times \Bvec = \\ \nabla \cdot \left( \sigmavec_\alpha + \sigmavec_e \right) + \Rvec_\alpha + \Rvec_e.
+    \frac{\partial \rho Y_\alpha \uvec_\alpha}{\partial t} + \nabla \cdot \left( \rho Y_\alpha \uvec_\alpha \uvec_\alpha \right) -e \left( Z_\alpha n_\alpha - n_e \right) \Evec - e \left( Z_\alpha n_\alpha \uvec_\alpha - n_e \uvec_e \right) \times \Bvec = \\ \nabla \cdot \left( \sigmavec_\alpha + \sigmavec_e \right) + \Rvec_\alpha + \Rvec_e.
 \end{multline*}
 Summing over all $\alpha$ gives
 \begin{multline*}
-    \frac{\partial}{\partial t} \sum_\alpha^N \rho_\alpha \uvec_\alpha + \nabla \cdot \sum_\alpha^N \rho_\alpha \uvec_\alpha \uvec_\alpha -e \left( \sum_\alpha^N Z_\alpha n_\alpha - n_e \right) \Evec - e \left( \sum_\alpha^N Z_\alpha n_\alpha \uvec_\alpha - n_e \uvec_e \right) \times \Bvec = \\ \nabla \cdot \left( \sum_\alpha^N \sigmavec_\alpha + \sigmavec_e \right) + \sum_\alpha^N \Rvec_\alpha + \Rvec_e.
+    \frac{\partial}{\partial t} \sum_\alpha^N \rho Y_\alpha \uvec_\alpha + \nabla \cdot \sum_\alpha^N \rho Y_\alpha \uvec_\alpha \uvec_\alpha -e \left( \sum_\alpha^N Z_\alpha n_\alpha - n_e \right) \Evec - e \left( \sum_\alpha^N Z_\alpha n_\alpha \uvec_\alpha - n_e \uvec_e \right) \times \Bvec = \\ \nabla \cdot \left( \sum_\alpha^N \sigmavec_\alpha + \sigmavec_e \right) + \sum_\alpha^N \Rvec_\alpha + \Rvec_e.
 \end{multline*}
 Due to \cref{eq:sf_quasi_neutrality} and the definition of the current in \cref{eq:mf_np1fluid_curr_density} the above simplifies to
 \begin{equation*}
-    \frac{\partial}{\partial t} \sum_\alpha^N \rho_\alpha \uvec_\alpha + \nabla \cdot \sum_\alpha^N \rho_\alpha \uvec_\alpha \uvec_\alpha - \Jvec \times \Bvec = \nabla \cdot \left( \sum_\alpha^N \sigmavec_\alpha + \sigmavec_{\alpha_e} \right) + \sum_\alpha^N \Rvec_\alpha + \Rvec_e.
+    \frac{\partial}{\partial t} \sum_\alpha^N \rho Y_\alpha \uvec_\alpha + \nabla \cdot \sum_\alpha^N \rho Y_\alpha \uvec_\alpha \uvec_\alpha - \Jvec \times \Bvec = \nabla \cdot \left( \sum_\alpha^N \sigmavec_\alpha + \sigmavec_{\alpha_e} \right) + \sum_\alpha^N \Rvec_\alpha + \Rvec_e.
 \end{equation*}
 Due to \cref{eq:coll_cons_particles,eq:coll_cons_momentum} we have
 \begin{equation}
@@ -728,9 +748,9 @@ Due to \cref{eq:coll_cons_particles,eq:coll_cons_momentum} we have
 \end{equation}
 We now write the momentum equation as
 \begin{equation*}
-    \frac{\partial}{\partial t} \sum_\alpha^N \rho_\alpha \uvec_\alpha + \nabla \cdot \sum_\alpha^N \left[ \rho_\alpha \uvec_\alpha \uvec + \rho_\alpha \uvec_\alpha \left( \uvec_\alpha - \uvec \right) \right] - \Jvec \times \Bvec = \nabla \cdot \left( \sum_\alpha^N \sigmavec_\alpha + \sigmavec_{\alpha_e} \right).
+    \frac{\partial}{\partial t} \sum_\alpha^N \rho Y_\alpha \uvec_\alpha + \nabla \cdot \sum_\alpha^N \left[ \rho Y_\alpha \uvec_\alpha \uvec + \rho Y_\alpha \uvec_\alpha \left( \uvec_\alpha - \uvec \right) \right] - \Jvec \times \Bvec = \nabla \cdot \left( \sum_\alpha^N \sigmavec_\alpha + \sigmavec_{\alpha_e} \right).
 \end{equation*}
-Using the definitions of $\rho$, $\uvec$, and $\jvec_\alpha$ the above becomes
+Using the definitions of $\uvec$, and $\jvec_\alpha$ the above becomes
 \begin{equation}
     \frac{\partial \rho \uvec}{\partial t} + \nabla \cdot \left( \rho \uvec \uvec \right) - \Jvec \times \Bvec = \nabla \cdot \left( \sum_\alpha^N \sigmavec_\alpha + \sigmavec_{\alpha_e} \right) - \nabla \cdot \sum_\alpha^N \jvec_\alpha \uvec_\alpha.
 \end{equation}
@@ -746,20 +766,20 @@ and thus the electron momentum equation becomes
 \begin{equation*}
     e n_e \Evec + e \sum_\alpha^N Z_\alpha n_\alpha \uvec_\alpha \times \Bvec = \Jvec \times \Bvec + \nabla \cdot \sigmavec_e + \Rvec_e,
 \end{equation*}
-Using the definition of $\jvec_\alpha$, the left-hand side can be written as
+Using \cref{eq:sf_mass_number_densities} and the definition of $\jvec_\alpha$, the left-hand side can be written as
 \begin{align*}
     e n_e \Evec + e \sum_\alpha^N Z_\alpha n_\alpha \uvec_\alpha \times \Bvec &= e n_e \Evec + e \sum_\alpha^N \left[ Z_\alpha n_\alpha \uvec + Z_\alpha n_\alpha \left( \uvec_\alpha - \uvec \right) \right] \times \Bvec \\
-    &= e n_e \Evec + e \sum_\alpha^N \left( Z_\alpha n_\alpha \uvec + \frac{Z_\alpha \jvec_\alpha}{m_\alpha} \right) \times \Bvec \\
-    &= e n_e \Evec + e \sum_\alpha^N Z_\alpha n_\alpha \uvec \times \Bvec + e \sum_\alpha^N \frac{Z_\alpha \jvec_\alpha}{m_\alpha} \times \Bvec \\
-    &= e n_e \left( \Evec + \uvec \times \Bvec \right) + e \sum_\alpha^N \frac{Z_\alpha \jvec_\alpha}{m_\alpha} \times \Bvec.
+    &= e n_e \Evec + e \sum_\alpha^N \left( Z_\alpha n_\alpha \uvec + \frac{Z_\alpha \jvec_\alpha}{M_\alpha} \right) \times \Bvec \\
+    &= e n_e \Evec + e \sum_\alpha^N Z_\alpha n_\alpha \uvec \times \Bvec + e \sum_\alpha^N \frac{Z_\alpha \jvec_\alpha}{M_\alpha} \times \Bvec \\
+    &= e n_e \left( \Evec + \uvec \times \Bvec \right) + e \sum_\alpha^N \frac{Z_\alpha \jvec_\alpha}{M_\alpha} \times \Bvec.
 \end{align*}
 Thus, the electron momentum equation finally becomes
 \begin{equation*}
-    e n_e \left( \Evec + \uvec \times \Bvec \right) = \Jvec \times \Bvec + \nabla \cdot \sigmavec_e + \Rvec_e - e \sum_\alpha^N \frac{Z_\alpha \jvec_\alpha}{m_\alpha} \times \Bvec,
+    e n_e \left( \Evec + \uvec \times \Bvec \right) = \Jvec \times \Bvec + \nabla \cdot \sigmavec_e + \Rvec_e - e \sum_\alpha^N \frac{Z_\alpha \jvec_\alpha}{M_\alpha} \times \Bvec,
 \end{equation*}
 or
 \begin{equation}
-    \Evec + \uvec \times \Bvec = \frac{1}{e n_e} \left( \Jvec \times \Bvec + \nabla \cdot \sigmavec_e + \Rvec_e \right) - \sum_\alpha^N \frac{Z_\alpha \jvec_\alpha}{n_e m_\alpha} \times \Bvec.
+    \Evec + \uvec \times \Bvec = \frac{1}{e n_e} \left( \Jvec \times \Bvec + \nabla \cdot \sigmavec_e + \Rvec_e \right) - \sum_\alpha^N \frac{Z_\alpha \jvec_\alpha}{n_e M_\alpha} \times \Bvec.
 \end{equation}
 
 %########################################################################
