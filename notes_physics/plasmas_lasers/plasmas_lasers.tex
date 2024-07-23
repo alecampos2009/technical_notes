@@ -292,7 +292,14 @@ Thus, \cref{eq:mom_derv_2} becomes
 \frac{\partial n_\alpha \uvec_\alpha}{\partial t} + \nabla \cdot \left ( n_\alpha \uvec_\alpha \uvec_\alpha \right) - \frac{Z_\alpha e n_\alpha}{m_\alpha} ( \Evec + \uvec_\alpha \times \Bvec ) = -\nabla \cdot \int \wvec_\alpha \wvec_\alpha f_\alpha d\vvec + \\
 \sum_{\beta, \beta \ne \alpha}^M \int \vvec C_{\alpha \beta} \, d\vvec + \int \vvec S_\alpha \, d\vvec.
 \end{multline}
-Conservation of particles is used to modify the collisional term to thus obtain
+Conservation of particles is used to modify the collisional term as follows
+\begin{align}
+    \label{eq:mom_collision_expansion}
+    \sum_{\beta,\beta \ne \alpha}^M \int \vvec C_{\alpha \beta} \, d\vvec 
+    &= \sum_{\beta,\beta \ne \alpha}^M \int (\uvec_\alpha + \wvec_\alpha) C_{\alpha \beta} \, d\vvec \nonumber \\
+    &= \sum_{\beta,\beta \ne \alpha}^M \int \wvec_\alpha C_{\alpha \beta} \, d\vvec 
+\end{align}
+Thus, we now have
 \begin{multline}
 \label{eq:mom_derv_4}
 \frac{\partial n_\alpha \uvec_\alpha}{\partial t} + \nabla \cdot \left ( n_\alpha \uvec_\alpha \uvec_\alpha \right) - \frac{Z_\alpha e n_\alpha}{m_\alpha} ( \Evec + \uvec_\alpha \times \Bvec ) = -\nabla \cdot \int \wvec_\alpha \wvec_\alpha f_\alpha d\vvec + \\
@@ -364,7 +371,14 @@ Using the expressions above, \cref{eq:energy_derv_2} becomes
 \frac{\partial n_\alpha E_\alpha}{\partial t} + \nabla \cdot (n_\alpha E_\alpha \uvec_\alpha ) - \frac{Z_\alpha e n_\alpha}{m_\alpha} \Evec \cdot \uvec_\alpha =  - \nabla \cdot \left ( \uvec_\alpha \cdot \int \wvec_\alpha \wvec_\alpha f_\alpha \, d\vvec \right ) - \nabla \cdot \int \frac{1}{2} ( \wvec_\alpha \cdot \wvec_\alpha ) \wvec_\alpha f_\alpha \, d\vvec\\
 + \sum_{\beta, \beta \ne \alpha}^M \int \frac{1}{2} (\vvec \cdot \vvec) C_{\alpha \beta} \, d\vvec + \int \frac{1}{2} (\vvec \cdot \vvec) S_\alpha \, d\vvec.
 \end{multline}
-Conservation of particles is used to modify the collisional term to thus obtain
+Conservation of particles is used to modify the collisional term as follows
+\begin{align}
+    \label{eq:energy_collision_expansion}
+    \sum_{\beta,\beta \ne \alpha}^M \int \frac{1}{2} (\vvec \cdot \vvec) C_{\alpha \beta} \, d\vvec 
+    &= \sum_{\beta,\beta \ne \alpha}^M \int \frac{1}{2} [ (\uvec_\alpha + \wvec_\alpha) \cdot (\uvec_\alpha + \wvec_\alpha)] C_{\alpha \beta} \, d\vvec \nonumber \\
+    &= \uvec_\alpha \cdot  \sum_{\beta,\beta \ne \alpha}^M \int \wvec_\alpha C_{\alpha \beta} \, d\vvec + \sum_{\beta,\beta \ne \alpha}^M \int \frac{1}{2} (\wvec_\alpha \cdot \wvec_\alpha) C_{\alpha \beta} \, d\vvec 
+\end{align}
+Thus, we now have
 \begin{multline}
 \label{eq:energy_derv_4}
 \frac{\partial n_\alpha E_\alpha}{\partial t} + \nabla \cdot (n_\alpha E_\alpha \uvec_\alpha ) - \frac{Z_\alpha e n_\alpha}{m_\alpha} \Evec \cdot \uvec_\alpha = - \nabla \cdot \left ( \uvec_\alpha \cdot \int \wvec_\alpha \wvec_\alpha f_\alpha \, d\vvec  \right ) - \nabla \cdot \int \frac{1}{2} ( \wvec_\alpha \cdot \wvec_\alpha ) \wvec_\alpha f_\alpha \, d\vvec \\
@@ -385,7 +399,7 @@ where heat flux due to random motion is
 \end{equation}
 the heat generated and transferred between unlike particles due to collisional dissipation is 
 \begin{equation}
-Q_{\alpha} = \sum_{\beta,\beta \ne \alpha} \int \frac{1}{2} m_\alpha (\wvec_\alpha \cdot \wvec_\alpha) C_{\alpha \beta} \, d\vvec,
+Q_{\alpha} = \sum_{\beta,\beta \ne \alpha}^M \int \frac{1}{2} m_\alpha (\wvec_\alpha \cdot \wvec_\alpha) C_{\alpha \beta} \, d\vvec,
 \end{equation}
 and the external source of energy is
 \begin{equation}
@@ -668,12 +682,16 @@ With these, the governing equations become
 %------------------------------------------------------------------------
 \section{Single-fluid formulation}
 %------------------------------------------------------------------------
-The starting point are the $N+1$ fluid equations of \cref{sec:mf_np1fluid_equations}. Before that, however, we introduce the following variables. $V$ is the volume occupied by all ion species at a single point, and $m$ is the mass occupied by all ion species at a single point. Similarly $V_\alpha$ and $m_\alpha$ are the volume and mass, respectively, occupied by the $\alpha$ ion species at a single point. Finally, $V_e$ and $m_e$ are the volume and mass, respectively, occupied by the electrons at a single point.
+We'll combine the $N+1$ fluid equations of \cref{sec:mf_np1fluid_equations} to derive a system of equations for a single fluid, that is, a single velocity vector.
+
+%--------------------------------------------
+\subsection{Single-fluid variables}
+%--------------------------------------------
+ The volume occupied by all ion species at a single point is denoted as $V$, and the mass occupied by all ion species at a single point as $m$. Similarly $V_\alpha$ and $m_\alpha$ are the volume and mass, respectively, occupied by the $\alpha$ ion species at a single point. Finally, $V_e$ and $m_e$ are the volume and mass, respectively, occupied by the electrons at a single point.
 
 For the single-fluid formulation, we'll use the following assumptions
 \begin{enumerate}
     \item $m_e \approx 0$ since $m_e \ll m_\alpha$. \label{eq:sf_no_e_mass} 
-    \item $V_e \approx 0$ since $V_e \ll V_\alpha$. \label{eq:sf_no_e_vol}
     \item Quasi-neutrality, i.e.\@ $\sum_\alpha^N Z_\alpha n_\alpha = n_e$. \label{eq:sf_quasi_neutrality}
 \end{enumerate}
 
@@ -707,15 +725,46 @@ where $M_\alpha$ is the atomic weight of species $\alpha$. The total velocity $\
     \uvec = \sum_\alpha^N Y_\alpha \uvec_\alpha.
 \end{equation}
 
-\subsubsection{Mass conservation}
+%--------------------------------------------
+\subsection{Total sum of collisional terms}
+%--------------------------------------------
+In this section we derive the total sum across all species of the collisional terms $\Rvec_\alpha$ and $Q_\alpha$. Use \cref{eq:mom_collision_expansion} to re-write $\Rvec_\alpha$ as
+\begin{equation*}
+    \Rvec_\alpha = \sum_{\beta,\beta \ne \alpha}^M \int m_\alpha \wvec_\alpha C_{\alpha \beta} \, d\vvec = \sum^M_{\beta,\beta \ne \alpha} \int m_\alpha \vvec C_{\alpha \beta} \, d\vvec,
+\end{equation*}
+where $M$ is the total number of species, that is, $M=N+1$. Summing over all species and using \cref{eq:coll_cons_momentum} leads to
+\begin{equation}
+    \label{eq:sf_sum_mom_collisions}
+    \sum_\alpha^M \Rvec_\alpha = 0.
+\end{equation}
+Use \cref{eq:energy_collision_expansion} to re-write $Q_\alpha$ as
+\begin{align*}
+    Q_\alpha &= \sum_{\beta,\beta \ne \alpha}^M \int \frac{1}{2} m_\alpha (\wvec_\alpha \cdot \wvec_\alpha) C_{\alpha \beta} \, d\vvec \\
+    &= \sum_{\beta,\beta \ne \alpha}^M \int \frac{1}{2} m_\alpha \left( \vvec \cdot \vvec \right) C_{\alpha\beta} \, d\vvec - \uvec_\alpha \cdot \sum_{\beta,\beta \ne \alpha}^M \int m_\alpha \wvec_\alpha C_{\alpha \beta} \, d\vvec
+\end{align*}
+Summing over all species and using \cref{eq:coll_cons_energy} leads to
+\begin{equation}
+    \label{eq:sf_sum_energy_collisions}
+    \sum_\alpha^M Q_\alpha = - \sum_\alpha^M \uvec_\alpha \cdot \Rvec_\alpha.
+\end{equation}
+
+%--------------------------------------------
+\subsection{Mass conservation}
+%--------------------------------------------
 Multiplying \cref{eq:mf_np1fluid_ni} by $M_\alpha$ gives
 \begin{equation*}
     \frac{\partial \rho Y_\alpha}{\partial t} + \nabla \cdot \left( \rho Y_\alpha \uvec_\alpha \right) = 0.
 \end{equation*}
-We introduce the ion species diffusion vector $\jvec_\alpha = \rho Y_\alpha \left( \uvec_\alpha - \uvec \right)$ and thus write the above as
+We introduce the ion species diffusion vector
+\begin{equation}
+    \label{eq:sf_species_diffusion_vector}
+    \jvec_\alpha = \rho Y_\alpha \left( \uvec_\alpha - \uvec \right).
+\end{equation}
+The mass-conservation equation is then written as
 \begin{equation}
     \frac{\partial \rho Y_\alpha}{\partial t} + \nabla \cdot \left( \rho Y_\alpha \uvec \right) = -\nabla \cdot \jvec_\alpha.
 \end{equation}
+
 Multiplying \cref{eq:mf_np1fluid_ni} by $Z_\alpha$ and summing over all $\alpha$ gives
 \begin{equation*}
     \frac{\partial}{\partial t} \sum_\alpha^N Z_\alpha n_\alpha + \nabla \cdot \left( \sum_\alpha^N Z_\alpha n_\alpha \uvec_\alpha \right) = 0.
@@ -729,7 +778,9 @@ which is equivalent to
     \nabla \cdot \Jvec = 0.
 \end{equation}
 
-\subsubsection{Momentum conservation}
+%--------------------------------------------
+\subsection{Momentum conservation}
+%--------------------------------------------
 We now add \cref{eq:mf_np1fluid_ui,eq:mf_np1fluid_ue} and use \cref{eq:sf_no_e_mass} to obtain
 \begin{multline*}
     \frac{\partial \rho Y_\alpha \uvec_\alpha}{\partial t} + \nabla \cdot \left( \rho Y_\alpha \uvec_\alpha \uvec_\alpha \right) -e \left( Z_\alpha n_\alpha - n_e \right) \Evec - e \left( Z_\alpha n_\alpha \uvec_\alpha - n_e \uvec_e \right) \times \Bvec = \\ \nabla \cdot \left( \sigmavec_\alpha + \sigmavec_e \right) + \Rvec_\alpha + \Rvec_e.
@@ -740,20 +791,21 @@ Summing over all $\alpha$ gives
 \end{multline*}
 Due to \cref{eq:sf_quasi_neutrality} and the definition of the current in \cref{eq:mf_np1fluid_curr_density} the above simplifies to
 \begin{equation*}
-    \frac{\partial}{\partial t} \sum_\alpha^N \rho Y_\alpha \uvec_\alpha + \nabla \cdot \sum_\alpha^N \rho Y_\alpha \uvec_\alpha \uvec_\alpha - \Jvec \times \Bvec = \nabla \cdot \left( \sum_\alpha^N \sigmavec_\alpha + \sigmavec_{\alpha_e} \right) + \sum_\alpha^N \Rvec_\alpha + \Rvec_e.
+    \frac{\partial}{\partial t} \sum_\alpha^N \rho Y_\alpha \uvec_\alpha + \nabla \cdot \sum_\alpha^N \rho Y_\alpha \uvec_\alpha \uvec_\alpha - \Jvec \times \Bvec = \nabla \cdot \left( \sum_\alpha^N \sigmavec_\alpha + \sigmavec_e \right) + \sum_\alpha^N \Rvec_\alpha + \Rvec_e.
 \end{equation*}
-Due to \cref{eq:coll_cons_particles,eq:coll_cons_momentum} we have
+Using \cref{eq:sf_sum_mom_collisions} we have
 \begin{equation}
     \sum_\alpha^N \Rvec_\alpha + \Rvec_e = 0.
 \end{equation}
 We now write the momentum equation as
 \begin{equation*}
-    \frac{\partial}{\partial t} \sum_\alpha^N \rho Y_\alpha \uvec_\alpha + \nabla \cdot \sum_\alpha^N \left[ \rho Y_\alpha \uvec_\alpha \uvec + \rho Y_\alpha \uvec_\alpha \left( \uvec_\alpha - \uvec \right) \right] - \Jvec \times \Bvec = \nabla \cdot \left( \sum_\alpha^N \sigmavec_\alpha + \sigmavec_{\alpha_e} \right).
+    \frac{\partial}{\partial t} \sum_\alpha^N \rho Y_\alpha \uvec_\alpha + \nabla \cdot \sum_\alpha^N \left[ \rho Y_\alpha \uvec_\alpha \uvec + \rho Y_\alpha \uvec_\alpha \left( \uvec_\alpha - \uvec \right) \right] - \Jvec \times \Bvec = \nabla \cdot \left( \sum_\alpha^N \sigmavec_\alpha + \sigmavec_e \right).
 \end{equation*}
 Using the definitions of $\uvec$, and $\jvec_\alpha$ the above becomes
 \begin{equation}
-    \frac{\partial \rho \uvec}{\partial t} + \nabla \cdot \left( \rho \uvec \uvec \right) - \Jvec \times \Bvec = \nabla \cdot \left( \sum_\alpha^N \sigmavec_\alpha + \sigmavec_{\alpha_e} \right) - \nabla \cdot \sum_\alpha^N \jvec_\alpha \uvec_\alpha.
+    \frac{\partial \rho \uvec}{\partial t} + \nabla \cdot \left( \rho \uvec \uvec \right) - \Jvec \times \Bvec = \nabla \cdot \left( \sum_\alpha^N \sigmavec_\alpha + \sigmavec_e \right) - \nabla \cdot \sum_\alpha^N \jvec_\alpha \uvec_\alpha.
 \end{equation}
+
 Given \cref{eq:sf_no_e_mass}, \cref{eq:mf_np1fluid_ue} for electron momentum becomes
 \begin{equation*}
     e n_e ( \Evec + \uvec_e \times \Bvec ) = \nabla \cdot \sigmavec_e + \Rvec_e,
@@ -781,6 +833,119 @@ or
 \begin{equation}
     \Evec + \uvec \times \Bvec = \frac{1}{e n_e} \left( \Jvec \times \Bvec + \nabla \cdot \sigmavec_e + \Rvec_e \right) - \sum_\alpha^N \frac{Z_\alpha \jvec_\alpha}{n_e M_\alpha} \times \Bvec.
 \end{equation}
+
+%--------------------------------------------
+\subsection{Energy conservation}
+%--------------------------------------------
+Use the definition of the species diffusion $\jvec_\alpha$ to re-write \cref{eq:mf_np1fluid_iei} as follows
+\begin{equation*}
+    \frac{\partial}{\partial t} \left( \frac{3}{2} p_\alpha \right) + \nabla \cdot \left( \frac{3}{2} p_\alpha \uvec \right) = \sigmavec_\alpha : \nabla \uvec - \nabla \cdot \qvec_\alpha + Q_\alpha - \nabla \cdot \left( \frac{3}{2} \frac{p_\alpha}{\rho Y_\alpha} \jvec_\alpha \right) + \sigmavec_\alpha : \nabla \left( \frac{1}{\rho Y_\alpha} \jvec_\alpha \right).
+\end{equation*}
+We re-write the above as
+\begin{equation*}
+    \frac{\partial}{\partial t} \left( \frac{3}{2} p_\alpha \right) + \nabla \cdot \left( \frac{3}{2} p_\alpha \uvec \right) = \sigmavec_\alpha : \nabla \uvec - \nabla \cdot \qvec_\alpha + Q_\alpha - \nabla \cdot \left( \frac{3}{2} \frac{p_\alpha}{\rho Y_\alpha} \jvec_\alpha \right) + \nabla \left( \frac{\sigmavec_\alpha \cdot \jvec_\alpha}{\rho Y_\alpha} \right) - \frac{\jvec_\alpha}{\rho Y_\alpha} \cdot \nabla \sigmavec_\alpha.
+\end{equation*}
+or
+\begin{equation}
+    \frac{\partial}{\partial t} \left( \frac{3}{2} p_\alpha \right) + \nabla \cdot \left( \frac{3}{2} p_\alpha \uvec \right) = \sigmavec_\alpha : \nabla \uvec - \nabla \cdot \qvec_\alpha + Q_\alpha - \nabla \cdot \left[ \left( \frac{3}{2} p_\alpha \Ivec - \sigmavec_\alpha \right) \cdot \frac{\jvec_\alpha}{\rho Y_\alpha}  \right] - \frac{\jvec_\alpha}{\rho Y_\alpha} \cdot \nabla \sigmavec_\alpha.
+\end{equation}
+The analogous for the electron energy equation is
+\begin{equation}
+    \frac{\partial}{\partial t} \left( \frac{3}{2} p_e \right) + \nabla \cdot \left( \frac{3}{2} p_e \uvec \right) = \sigmavec_e : \nabla \uvec - \nabla \cdot \qvec_e + Q_e - \nabla \cdot \left[ \left( \frac{3}{2} p_e \Ivec - \sigmavec_e \right) \cdot \frac{\jvec_e}{\rho Y_e}  \right] - \frac{\jvec_e}{\rho Y_e} \cdot \nabla \sigmavec_e.
+\end{equation}
+
+%--------------------------------------------
+\subsection{Summary of single-fluid equations}
+%--------------------------------------------
+\label{sec:sf_summary}
+\begin{equation}
+    \label{eq:sf_np1fluid_ni}
+    \frac{\partial \rho Y_\alpha}{\partial t} + \nabla \cdot \left( \rho Y_\alpha \uvec \right) = -\nabla \cdot \jvec_\alpha.
+\end{equation}
+\begin{equation}
+    \label{eq:sf_np1fluid_ne}
+    \nabla \cdot \Jvec = 0.
+\end{equation}
+\begin{equation}
+    \label{eq:sf_np1fluid_ui}
+    \frac{\partial \rho \uvec}{\partial t} + \nabla \cdot \left( \rho \uvec \uvec \right) - \Jvec \times \Bvec = \nabla \cdot \left( \sum_\alpha^N \sigmavec_\alpha + \sigmavec_e \right) - \nabla \cdot \sum_\alpha^N \jvec_\alpha \uvec_\alpha.
+\end{equation}
+\begin{equation}
+    \label{eq:sf_np1fluid_ue}
+    \Evec + \uvec \times \Bvec = \frac{1}{e n_e} \left( \Jvec \times \Bvec + \nabla \cdot \sigmavec_e + \Rvec_e \right) - \sum_\alpha^N \frac{Z_\alpha \jvec_\alpha}{n_e M_\alpha} \times \Bvec.
+\end{equation}
+\begin{equation}
+    \label{eq:sf_np1fluid_iei}
+    \frac{\partial}{\partial t} \left( \frac{3}{2} p_\alpha \right) + \nabla \cdot \left( \frac{3}{2} p_\alpha \uvec \right) = \sigmavec_\alpha : \nabla \uvec - \nabla \cdot \qvec_\alpha + Q_\alpha - \nabla \cdot \left[ \left( \frac{3}{2} p_\alpha \Ivec - \sigmavec_\alpha \right) \cdot \frac{\jvec_\alpha}{\rho Y_\alpha}  \right] - \frac{\jvec_\alpha}{\rho Y_\alpha} \cdot \nabla \sigmavec_\alpha.
+\end{equation}
+\begin{equation}
+    \label{eq:sf_np1fluid_iee}
+    \frac{\partial}{\partial t} \left( \frac{3}{2} p_e \right) + \nabla \cdot \left( \frac{3}{2} p_e \uvec \right) = \sigmavec_e : \nabla \uvec - \nabla \cdot \qvec_e + Q_e - \nabla \cdot \left[ \left( \frac{3}{2} p_e \Ivec - \sigmavec_e \right) \cdot \frac{\jvec_e}{\rho Y_e}  \right] - \frac{\jvec_e}{\rho Y_e} \cdot \nabla \sigmavec_e.
+\end{equation}
+\begin{equation}
+    \label{eq:sf_np1fluid_maxwell_3}
+    \nabla \cdot \Evec = 0,
+\end{equation}
+\begin{equation}
+    \label{eq:sf_np1fluid_maxwell_4}
+    \nabla \cdot \Bvec = 0,
+\end{equation}
+\begin{equation}
+    \label{eq:sf_np1fluid_maxwell_1}
+    \nabla \times \Evec = -\frac{ \partial \Bvec}{\partial t},
+\end{equation}
+\begin{equation}
+    \label{eq:sf_np1fluid_maxwell_2}
+    \nabla \times \Bvec = \mu_0 \Jvec + \mu_0 \epsilon_0 \frac{\partial \Evec}{\partial t},
+\end{equation}
+\begin{equation}
+    \label{eq:sf_np1fluid_curr_density}
+    \Jvec = e \left(\sum_\alpha^N Z_\alpha n_\alpha \uvec_\alpha - n_e \uvec_e \right),
+\end{equation}
+\begin{equation}
+    \label{eq:sf_np1fluid_mass_density}
+    \rho_q = 0,
+\end{equation}
+\begin{equation}
+    \label{eq:sf_np1fluid_eos_ion}
+    p_\alpha = n_\alpha k_B T_\alpha,
+\end{equation}
+\begin{equation}
+    \label{eq:sf_np1fluid_eos_elec}
+    p_e = n_e k_B T_e.
+\end{equation}
+
+%--------------------------------------------
+\subsection{Alternate forms of the energy equations}
+%--------------------------------------------
+
+Thus far we've been working with plasmas that behave as ideal gasses with three degrees of freedom (the three translational degrees of freedom). For ideal gasses we also have $p_\alpha = (\gamma - 1) \rho Y_\alpha e_\alpha$, where $e_\alpha$ is the internal energy of the any species, either ions or electrons. Thus, the internal energy equations become
+\begin{equation*}
+    \frac{\partial \rho Y_\alpha e_\alpha}{\partial t} + \nabla \cdot \left( \rho Y_\alpha e_\alpha \uvec \right) = \sigmavec_\alpha : \nabla \uvec - \nabla \cdot \qvec_\alpha + Q_\alpha - \nabla \cdot \left[ \left( \rho Y_\alpha e_\alpha \Ivec - \sigmavec_\alpha \right) \cdot \frac{\jvec_\alpha}{\rho Y_\alpha}  \right] - \frac{\jvec_\alpha}{\rho Y_\alpha} \cdot \nabla \sigmavec_\alpha.
+\end{equation*}
+\begin{equation*}
+    \frac{\partial \rho Y_e e_e}{\partial t} + \nabla \cdot \left( \rho Y_e e_e \uvec \right) = \sigmavec_e : \nabla \uvec - \nabla \cdot \qvec_e + Q_e - \nabla \cdot \left[ \left( \rho Y_e e_e \Ivec - \sigmavec_e \right) \cdot \frac{\jvec_e}{\rho Y_e}  \right] - \frac{\jvec_e}{\rho Y_e} \cdot \nabla \sigmavec_e.
+\end{equation*}
+
+We can also use the expressions for the stress tensors, that is $\sigmavec_\alpha = -p_\alpha \Ivec + \tvec_\alpha$ and $\sigmavec_e = -p_e \Ivec + \tvec_e$, to obtain
+\begin{equation*}
+    \frac{\partial \rho Y_\alpha e_\alpha}{\partial t} + \nabla \cdot \left( \rho Y_\alpha e_\alpha \uvec \right) = \sigmavec_\alpha : \nabla \uvec - \nabla \cdot \qvec_\alpha + Q_\alpha -\nabla \cdot \left[ \left( e_\alpha + \frac{p_\alpha}{\rho Y_\alpha} \right) \jvec_\alpha \right] - \nabla \cdot \left( \tvec_\alpha \cdot \frac{\jvec_\alpha}{\rho Y_\alpha} \right) - \frac{\jvec_\alpha}{\rho Y_\alpha} \cdot \nabla \sigmavec_\alpha.
+\end{equation*}
+\begin{equation*}
+    \frac{\partial \rho Y_e e_e}{\partial t} + \nabla \cdot \left( \rho Y_e e_e \uvec \right) = \sigmavec_e : \nabla \uvec - \nabla \cdot \qvec_e + Q_e -\nabla \cdot \left[ \left( e_e + \frac{p_e}{\rho Y_e} \right) \jvec_e \right] - \nabla \cdot \left( \tvec_e \cdot \frac{\jvec_e}{\rho Y_e}  \right) - \frac{\jvec_e}{\rho Y_e} \cdot \nabla \sigmavec_e.
+\end{equation*}
+Since
+\begin{equation*}
+    \frac{p_\alpha}{\rho Y_\alpha} = \frac{\eta_\alpha \hat{p}_\alpha}{\rho Y_\alpha} = \frac{\hat{p}}{\rho_\alpha},
+\end{equation*}
+and $h_\alpha = e_\alpha + \hat{p}_\alpha / \rho_\alpha$ we have for the ions
+\begin{equation*}
+    \frac{\partial \rho Y_\alpha e_\alpha}{\partial t} + \nabla \cdot \left( \rho Y_\alpha e_\alpha \uvec \right) = \sigmavec_\alpha : \nabla \uvec - \nabla \cdot \qvec_\alpha + Q_\alpha -\nabla \cdot \left( h_\alpha \jvec_\alpha \right) - \nabla \cdot \left( \tvec_\alpha \cdot \frac{\jvec_\alpha}{\rho Y_\alpha} \right) - \frac{\jvec_\alpha}{\rho Y_\alpha} \cdot \nabla \sigmavec_\alpha.
+\end{equation*}
+The analogue for the electrons is
+\begin{equation*}
+    \frac{\partial \rho Y_e e_e}{\partial t} + \nabla \cdot \left( \rho Y_e e_e \uvec \right) = \sigmavec_e : \nabla \uvec - \nabla \cdot \qvec_e + Q_e -\nabla \cdot \left( h_e \jvec_e \right) - \nabla \cdot \left( \tvec_e \cdot \frac{\jvec_e}{\rho Y_e}  \right) - \frac{\jvec_e}{\rho Y_e} \cdot \nabla \sigmavec_e.
+\end{equation*}
 
 %########################################################################
 \chapter{Basic waves and parameters}
@@ -2377,6 +2542,284 @@ where top sign is for electrons and bottom sign is for ions, and it is assumed t
 %########################################################################
 \chapter{Magnetohydrodynamics}
 %########################################################################
+%------------------------------------------------------------------------
+\section{Single-fluid equations}
+%------------------------------------------------------------------------
+The starting point are the single-fluid equations of \cref{sec:sf_summary}. We'll also assume all ions move with a single velocity $\uvec_i$. Thus, 
+\begin{equation}
+    \uvec = \sum_\alpha^N Y_\alpha \uvec_\alpha = \uvec_i
+\end{equation}
+where $N$ is the number of ions. As a result, we have
+\begin{equation}
+    \jvec_\alpha = \rho Y_\alpha \left( \uvec_\alpha - \uvec \right) = 0
+\end{equation}
+for all ions (though not for electrons). The governing equations can then be written as
+\begin{equation*}
+    \frac{\partial \rho Y_\alpha}{\partial t} + \nabla \cdot \left( \rho Y_\alpha \uvec \right) = 0.
+\end{equation*}
+\begin{equation*}
+    \nabla \cdot \Jvec = 0.
+\end{equation*}
+\begin{equation*}
+    \frac{\partial \rho \uvec}{\partial t} + \nabla \cdot \left( \rho \uvec \uvec \right) - \Jvec \times \Bvec = \nabla \cdot \left( \sum_\alpha^N \sigmavec_\alpha + \sigmavec_e \right).
+\end{equation*}
+\begin{equation*}
+    \Evec + \uvec \times \Bvec = \frac{1}{e n_e} \left( \Jvec \times \Bvec + \nabla \cdot \sigmavec_e + \Rvec_e \right).
+\end{equation*}
+\begin{equation*}
+    \frac{\partial}{\partial t} \left( \frac{3}{2} p_\alpha \right) + \nabla \cdot \left( \frac{3}{2} p_\alpha \uvec \right) = \sigmavec_\alpha : \nabla \uvec - \nabla \cdot \qvec_\alpha + Q_\alpha.
+\end{equation*}
+\begin{equation*}
+    \frac{\partial}{\partial t} \left( \frac{3}{2} p_e \right) + \nabla \cdot \left( \frac{3}{2} p_e \uvec \right) = \sigmavec_e : \nabla \uvec - \nabla \cdot \qvec_e + Q_e - \nabla \cdot \left[ \left( \frac{3}{2} p_e \Ivec - \sigmavec_e \right) \cdot \frac{\jvec_e}{\rho Y_e}  \right] - \frac{\jvec_e}{\rho Y_e} \cdot \nabla \sigmavec_e.
+\end{equation*}
+\begin{equation*}
+    \nabla \cdot \Evec = 0,
+\end{equation*}
+\begin{equation*}
+    \nabla \cdot \Bvec = 0,
+\end{equation*}
+\begin{equation*}
+    \nabla \times \Evec = -\frac{ \partial \Bvec}{\partial t},
+\end{equation*}
+\begin{equation*}
+    \nabla \times \Bvec = \mu_0 \Jvec + \mu_0 \epsilon_0 \frac{\partial \Evec}{\partial t},
+\end{equation*}
+\begin{equation*}
+    \Jvec = e n_e \left(\uvec - \uvec_e \right),
+\end{equation*}
+\begin{equation*}
+    \rho_q = 0,
+\end{equation*}
+\begin{equation*}
+    p_\alpha = n_\alpha k_B T_\alpha,
+\end{equation*}
+\begin{equation*}
+    p_e = n_e k_B T_e.
+\end{equation*}
+
+In addition, we define the ion pressure $p_i$, the ion stress tensor $\sigmavec_i$, the ion heat flux $q_i$, and the ion collision term $Q_i$ as
+\begin{equation*}
+    p_i = \sum_\alpha^N p_\alpha,
+\qquad
+    n_i = \sum_\alpha^N n_\alpha,
+\qquad
+    \sigmavec_i = \sum_\alpha^N \sigmavec_\alpha,
+\qquad
+    \qvec_i = \sum_\alpha^N \qvec_\alpha,
+\qquad
+    Q_i = \sum_\alpha^N Q_\alpha.
+\end{equation*}
+
+%--------------------------------------------
+\subsection{Mass equation}
+%--------------------------------------------
+
+Summing the species mass density over all ions gives
+\begin{equation}
+    \frac{\partial \rho}{\partial t} + \nabla \cdot \left( \rho \uvec \right) = 0.
+\end{equation}
+We then note that
+\begin{equation*}
+    \nabla \cdot \uvec = -\frac{1}{\rho} \frac{\partial \rho}{\partial t} - \frac{1}{\rho} \nabla \rho \cdot \uvec = - \frac{\partial \ln{\rho} }{\partial t} -  \nabla \ln{\rho} \cdot \uvec,
+\end{equation*}
+and thus
+\begin{equation}
+    \label{eq:mhd_div_trick}
+    \gamma \nabla \cdot \uvec = -\frac{1}{\rho^\gamma} \frac{\partial \rho^\gamma}{\partial t} - \frac{1}{\rho^\gamma} \nabla \rho^\gamma \cdot \uvec.
+\end{equation}
+
+%--------------------------------------------
+\subsection{Momentum equation}
+%--------------------------------------------
+
+The momentum equation can thus be written as
+\begin{equation*}
+    \frac{\partial \rho \uvec}{\partial t} + \nabla \cdot \left( \rho \uvec \uvec \right) - \Jvec \times \Bvec = \nabla \cdot \left(  \sigmavec_i + \sigmavec_e \right),
+\end{equation*}
+or, after using the expressions for $\sigmavec_i$ and $\sigmavec_e$,
+\begin{equation*}
+    \frac{\partial \rho \uvec}{\partial t} + \nabla \cdot \left( \rho \uvec \uvec \right) - \Jvec \times \Bvec = -\nabla \left(  p_i + p_e \right) + \nabla \cdot \left(  \tvec_i + \tvec_e \right),
+\end{equation*}
+If we define the total pressure $p$ as $p = p_i + p_e$ we get
+\begin{equation*}
+    \frac{\partial \rho \uvec}{\partial t} + \nabla \cdot \left( \rho \uvec \uvec \right) - \Jvec \times \Bvec = -\nabla p + \nabla \cdot \left(  \tvec_i + \tvec_e \right),
+\end{equation*}
+
+%--------------------------------------------
+\subsection{Ion internal energy equation}
+%--------------------------------------------
+
+Summing the ion internal energy equation over all ions gives
+\begin{equation*}
+    \frac{\partial}{\partial t} \left( \frac{3}{2} p_i \right) + \nabla \cdot \left( \frac{3}{2} p_i \uvec \right) = \sigmavec_i : \nabla \uvec - \nabla \cdot \qvec_i + Q_i.
+\end{equation*}
+The second term on the left-hand side of the ion internal energy equation is expanded to obtain
+\begin{equation*}
+    \frac{\partial}{\partial t} \left( \frac{3}{2} p_i \right) + \uvec \cdot \nabla \left( \frac{3}{2} p_i \right) + \frac{3}{2}p_i \nabla \cdot \uvec = \sigmavec_i : \nabla \uvec - \nabla \cdot \qvec_i + Q_i,
+\end{equation*}
+Expanding the stress tensor we get
+\begin{equation*}
+    \frac{\partial}{\partial t} \left( \frac{3}{2} p_i \right) + \uvec \cdot \nabla \left( \frac{3}{2} p_i \right) + \frac{5}{2} p_i \nabla \cdot \uvec = \tvec_i : \nabla \uvec - \nabla \cdot \qvec_i + Q_i,
+\end{equation*}
+Since for a plasma with three translational degrees of freedom $\gamma = 5/3$, we re-write the above as
+\begin{equation*}
+    \frac{1}{\gamma - 1} \left( \frac{\partial p_i}{\partial t} + \uvec \cdot \nabla p_i + \gamma p_i \nabla \cdot \uvec \right) = \tvec_i : \nabla \uvec - \nabla \cdot \qvec_i + Q_i.
+\end{equation*}
+Using \cref{eq:mhd_div_trick} we can show that
+\begin{align*}
+    \frac{\partial p_i}{\partial t} + \uvec \cdot \nabla p_i + \gamma p_i \nabla \cdot \uvec 
+    &=  \frac{\partial p_i}{\partial t} - p_i \frac{1}{\rho^\gamma} \frac{\partial \rho^\gamma}{\partial t} + \uvec \cdot \nabla p_i - p_i \frac{1}{\rho^\gamma} \nabla \rho^\gamma \cdot \uvec \nonumber \\
+    & = \rho^\gamma \left [ \frac{\partial}{\partial t} \left( \frac{p_i}{\rho^\gamma} \right) + \uvec \cdot \nabla \left(\frac{p_i}{\rho^\gamma} \right) \right ].
+\end{align*}
+Thus, the ion internal energy equation can finally be written as
+\begin{equation*}
+    \frac{\partial}{\partial t} \left( \frac{p_i}{\rho^\gamma} \right) + \uvec \cdot \nabla \left(\frac{p_i}{\rho^\gamma} \right) = \frac{\gamma - 1}{\rho^\gamma} \left( \tvec_i : \nabla \uvec - \nabla \cdot \qvec_i + Q_i \right).
+\end{equation*}
+
+%--------------------------------------------
+\subsection{Electron internal energy equation}
+%--------------------------------------------
+
+Using the equation for current we obtain
+\begin{equation*}
+    \Jvec 
+    = e n_e \left( \uvec - \uvec_e \right)
+    = -e n_e \left( \uvec_e - \uvec \right)
+    = -e n_e \frac{\jvec_e}{\rho Y_e},
+\end{equation*}
+or
+\begin{equation}
+    \label{eq:mhd_from_J_to_j}
+    \frac{\jvec_e}{\rho Y_e} = -\frac{\Jvec}{e n_e}.
+\end{equation}
+We re-write the last two terms of the electron energy equation as 
+\begin{align*}
+    -\nabla \cdot \left[ \left( \frac{3}{2} p_e \Ivec - \sigmavec_e \right) \cdot \frac{\jvec_e}{\rho Y_e} \right] - \frac{\jvec_e}{\rho Y_e} \cdot \nabla \sigmavec_e &= -\nabla \cdot \left( \frac{3}{2} \frac{p_e}{\rho Y_e} \jvec_e \right) + \nabla \left( \frac{\sigmavec_e \cdot \jvec_e}{\rho Y_e} \right) - \frac{\jvec_e}{\rho Y_e} \cdot \nabla \sigmavec_e \\
+    &= - \nabla \cdot \left( \frac{3}{2} \frac{p_e}{\rho Y_e} \jvec_e \right) + \sigmavec_e : \nabla \left( \frac{1}{\rho Y_e} \jvec_e \right).
+\end{align*}
+Using the above and \cref{eq:mhd_from_J_to_j} we can write the electron internal energy equation as
+\begin{equation*}
+    \frac{\partial}{\partial t} \left( \frac{3}{2} p_e \right) + \nabla \cdot \left( \frac{3}{2} p_e \uvec \right) = \sigmavec_e : \nabla \uvec - \nabla \cdot \qvec_e + Q_e + \nabla \cdot \left( \frac{3}{2} p_e \frac{\Jvec}{e n_e} \right) - \sigmavec_e : \nabla \left( \frac{\Jvec}{e n_e} \right).
+\end{equation*}
+
+The second term on the left-hand side of the electron internal energy equation is expanded to obtain
+\begin{equation*}
+    \frac{\partial}{\partial t} \left( \frac{3}{2} p_e \right) + \uvec \cdot \nabla \left( \frac{3}{2} p_e \right) + \frac{3}{2}p_e \nabla \cdot \uvec = \sigmavec_e : \nabla \uvec - \nabla \cdot \qvec_e + Q_e + \nabla \cdot \left( \frac{3}{2} p_e \frac{\Jvec}{e n_e} \right) - \sigmavec_e : \nabla \left( \frac{\Jvec}{e n_e} \right).
+\end{equation*}
+And expanding the stress tensor we get
+\begin{multline*}
+    \frac{\partial}{\partial t} \left( \frac{3}{2} p_e \right) + \uvec \cdot \nabla \left( \frac{3}{2} p_e \right) + \frac{5}{2} p_e \nabla \cdot \uvec = \\
+    \tvec_e : \nabla \left( \uvec - \frac{\Jvec}{e n_e} \right) - \nabla \cdot \qvec_e + Q_e + \nabla \cdot \left( \frac{3}{2} p_e \frac{\Jvec}{e n_e} \right) + p_e \nabla \cdot \left( \frac{\Jvec}{e n_e} \right).
+\end{multline*}
+The last two terms above can be re-written as
+\begin{align*}
+    \nabla \cdot \left( \frac{3}{2} p_e \frac{\Jvec}{en_e} \right) + p_e \nabla \cdot \left( \frac{\Jvec}{e n_e} \right) &= \frac{\Jvec}{e n_e} \cdot \nabla \left( \frac{3}{2} p_e \right) + \frac{3}{2} p_e \nabla \cdot \left( \frac{\Jvec}{en_e} \right) + p_e \nabla \cdot \left( \frac{\Jvec}{e n_e} \right) \\ 
+    &= \frac{\Jvec}{e n_e} \cdot \nabla \left( \frac{3}{2} p_e \right) + \frac{5}{2} p_e \nabla \cdot \left( \frac{\Jvec}{en_e} \right) \\
+    &= \frac{\Jvec}{e n_e} \cdot \nabla \left( \frac{3}{2} p_e \right) + \frac{5}{2} p_e \left( \frac{\nabla \cdot \Jvec}{e n_e} - \frac{\Jvec}{(e n_e)^2} \cdot \nabla (e n_e) \right) \\
+    &= \frac{\Jvec}{e n_e} \cdot \nabla \left( \frac{3}{2} p_e \right) - \frac{5}{2} p_e \frac{\Jvec}{(e n_e)^2} \cdot \nabla (e n_e) \\
+    &= \frac{\Jvec}{e n_e} \cdot \left[ \nabla \left( \frac{3}{2} p_e \right) - \frac{5}{2} p_e \frac{1}{n_e} \nabla n_e \right].
+\end{align*}
+Since for a plasma with three translational degrees of freedom we have $\gamma = 5/3$, we re-write the electron internal energy equation as
+\begin{multline*}
+    \frac{1}{\gamma - 1} \left( \frac{\partial p_e}{\partial t} + \uvec \cdot \nabla p_e + \gamma p_e \nabla \cdot \uvec \right) = \\
+    \tvec_e : \nabla \left( \uvec - \frac{\Jvec}{e n_e} \right) - \nabla \cdot \qvec_e + Q_e + \frac{1}{\gamma - 1} \frac{\Jvec}{e n_e} \cdot \left[ \nabla p_e - \gamma p_e \frac{1}{n_e} \nabla n_e \right],
+\end{multline*}
+or
+\begin{equation*}
+    \frac{\partial p_e}{\partial t} + \uvec \cdot \nabla p_e + \gamma p_e \nabla \cdot \uvec = (\gamma - 1) \left[ \tvec_e : \nabla \left( \uvec - \frac{\Jvec}{en_e} \right) - \nabla \cdot \qvec_e + Q_e \right] + \frac{\Jvec}{e n_e} \cdot \left[ \nabla p_e - \gamma p_e \frac{1}{n_e} \nabla n_e \right],
+\end{equation*} 
+The last term above can be written as
+\begin{align*}
+    \frac{\Jvec}{e n_e} \cdot \left[ \nabla p_e - \gamma p_e \frac{1}{n_e} \nabla n_e \right] &= \frac{\Jvec}{e n_e} \cdot \left[ \nabla p_e - p_e \nabla \gamma \ln (n_e) \right] \\
+    &= \frac{\Jvec}{e n_e} \cdot \left[ \nabla p_e - p_e \nabla \ln (n_e^\gamma) \right] \\
+    &= \frac{\Jvec}{e n_e} \cdot \left[ \nabla p_e - \frac{p_e}{n_e^\gamma} \nabla n_e^\gamma \right] \\
+    &= n_e^\gamma \frac{\Jvec}{e n_e} \cdot \nabla \left( \frac{p_e}{n_e^\gamma} \right).
+\end{align*}
+Also, using \cref{eq:mhd_div_trick} we can show that
+\begin{align*}
+    \frac{\partial p_e}{\partial t} + \uvec \cdot \nabla p_e + \gamma p_e \nabla \cdot \uvec 
+    &=  \frac{\partial p_e}{\partial t} - p_e \frac{1}{\rho^\gamma} \frac{\partial \rho^\gamma}{\partial t} + \uvec \cdot \nabla p_e - p_e \frac{1}{\rho^\gamma} \nabla \rho^\gamma \cdot \uvec \nonumber \\
+    & = \rho^\gamma \left [ \frac{\partial}{\partial t} \left( \frac{p_e}{\rho^\gamma} \right) + \uvec \cdot \nabla \left(\frac{p_e}{\rho^\gamma} \right) \right ].
+\end{align*}
+Thus, the electron internal energy equation can finally be written as
+\begin{equation*}
+    \frac{\partial}{\partial t} \left( \frac{p_e}{\rho^\gamma} \right) + \uvec \cdot \nabla \left(\frac{p_e}{\rho^\gamma} \right) = \frac{\gamma - 1}{\rho^\gamma} \left[ \tvec_e : \nabla \left( \uvec - \frac{\Jvec}{en_e} \right) - \nabla \cdot \qvec_e + Q_e \right] + \left( \frac{n_e}{\rho} \right)^\gamma \frac{\Jvec}{e n_e} \cdot \nabla \left( \frac{p_e}{n_e^\gamma} \right).
+\end{equation*}
+
+In the specific case where there is only one ion species, then quasi-neutrality gives $n_e = n_i = n$. Additionally, \cref{eq:sf_mass_number_densities} gives $\rho = M_i n_i$. Thus, the last term in the electron internal energy equation can be written as
+\begin{equation}
+    \left( \frac{n_e}{\rho} \right)^\gamma \frac{\Jvec}{e n_e} \cdot \nabla \left( \frac{p_e}{n_e^\gamma} \right) = \left( \frac{n_i}{\rho} \right)^\gamma \frac{\Jvec}{e n} \cdot \nabla \left( \frac{p_e}{n_i^\gamma} \right) = \frac{\Jvec}{e n} \cdot \nabla \left( \frac{p_e}{\rho^\gamma} \right)
+\end{equation}
+
+%--------------------------------------------
+\subsection{Equation of state}
+%--------------------------------------------
+We'll assume all ions have the same temperature $T_i$. Thus, the EOS for each ion becomes
+\begin{equation*}
+    p_\alpha = n_\alpha k_B T_i.
+\end{equation*}
+Summing over all ions gives
+\begin{equation*}
+    p_i = n_i k_B T_i.
+\end{equation*}
+
+
+%--------------------------------------------
+\subsection{Maxwell's equations}
+%--------------------------------------------
+
+We assume that the electromagnetic-wave velocity and the ion and electron thermal velocities are much smaller than the speed of light, that is, $w/k \ll c$ and $V_{Ti}, V_{Te} \ll c$. This allows us to neglect Maxwell's correction in Ampere's law, so as to obtain
+\begin{equation}
+    \nabla \times \Bvec = \mu_0 \Jvec.
+\end{equation}
+
+%--------------------------------------------
+\subsection{Summary of single-fluid MHD equations}
+%--------------------------------------------
+
+Combining all of the results above, we now have
+\begin{equation}
+    \frac{\partial \rho}{\partial t} + \nabla \cdot \left( \rho \uvec \right) = 0.
+\end{equation}
+\begin{equation}
+    \nabla \cdot \Jvec = 0.
+\end{equation}
+\begin{equation}
+    \frac{\partial \rho \uvec}{\partial t} + \nabla \cdot \left( \rho \uvec \uvec \right) - \Jvec \times \Bvec = -\nabla p + \nabla \cdot \left(  \tvec_i + \tvec_e \right),
+\end{equation}
+\begin{equation}
+    \Evec + \uvec \times \Bvec = \frac{1}{e n_e} \left( \Jvec \times \Bvec - \nabla p_e + \nabla \cdot \tvec_e + \Rvec_e \right).
+\end{equation}
+\begin{equation}
+    \frac{\partial}{\partial t} \left( \frac{p_i}{\rho^\gamma} \right) + \uvec \cdot \nabla \left(\frac{p_i}{\rho^\gamma} \right) = \frac{\gamma - 1}{\rho^\gamma} \left( \tvec_i : \nabla \uvec - \nabla \cdot \qvec_i + Q_i \right).
+\end{equation}
+\begin{equation}
+    \frac{\partial}{\partial t} \left( \frac{p_e}{\rho^\gamma} \right) + \uvec \cdot \nabla \left(\frac{p_e}{\rho^\gamma} \right) = \frac{\gamma - 1}{\rho^\gamma} \left[ \tvec_e : \nabla \left( \uvec - \frac{\Jvec}{en_e} \right) - \nabla \cdot \qvec_e + Q_e \right] + \left( \frac{n_e}{\rho} \right)^\gamma \frac{\Jvec}{e n_e} \cdot \nabla \left( \frac{p_e}{n_e^\gamma} \right).
+\end{equation}
+\begin{equation}
+    \nabla \cdot \Evec = 0,
+\end{equation}
+\begin{equation}
+    \nabla \cdot \Bvec = 0,
+\end{equation}
+\begin{equation}
+    \nabla \times \Evec = -\frac{ \partial \Bvec}{\partial t},
+\end{equation}
+\begin{equation}
+    \nabla \times \Bvec = \mu_0 \Jvec,
+\end{equation}
+\begin{equation}
+    \Jvec = e n_e \left(\uvec - \uvec_e \right),
+\end{equation}
+\begin{equation}
+    \rho_q = 0,
+\end{equation}
+\begin{equation}
+    p_i = n_i k_B T_i,
+\end{equation}
+\begin{equation}
+    p_e = n_e k_B T_e.
+\end{equation}
 
 %------------------------------------------------------------------------
 \section{Low-frequency, long-wavelength, asymptotic expansions}
