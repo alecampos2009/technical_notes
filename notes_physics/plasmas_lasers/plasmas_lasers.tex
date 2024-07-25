@@ -699,28 +699,38 @@ The total density $\rho$ is defined as
 \begin{equation}
     \rho = m/V.
 \end{equation}
-The volume fraction $\eta_s$ and mass fraction $Y_s$ are defined as
+The volume fractions $\eta_{i,s}$ and $\eta_e$ are 
 \begin{equation}
-    \eta_s = \frac{V_s}{V},
+    \eta_{i,s} = \frac{V_{i,s}}{V} \qquad \eta_e = \frac{V_e}{V}.
 \end{equation}
+The mass fractions $Y_{i,s}$ and $Y_e$ are
 \begin{equation}
-    Y_s = \frac{m_s}{m}.
+    Y_{i,s} = \frac{m_{i,s}}{m} \qquad Y_e = \frac{m_e}{m}.
 \end{equation}
-Note that both $\eta_s$ and $Y_s$ sum up to one over all $s$. A new density is also introduced, namely $\rho_s$ which is defined as
+Note that
 \begin{equation}
-    \rho_s = \frac{m_s}{V_s}.
+    1 = \sum_s^N \eta_{i,s} + \eta_e \approx \sum_s^N \eta_{i,s} = \eta_i,
+\end{equation} 
+and
+\begin{equation}
+    1 = \sum_s^N Y_{i,s} + Y_e \approx \sum_s^N Y_{i,s} = Y_i,
+\end{equation} 
+
+New densities are also introduced, namely $\rho_{i,s}$ and $\rho_e$, which are defined as
+\begin{equation}
+    \rho_{i,s} = \frac{m_{i,s}}{V_{i,s}} \qquad \rho_s = \frac{m_e}{V_e}.
 \end{equation}
-This can be expressed in terms of the other variables defined above by
+These can be expressed in terms of the other variables defined above as follows
 \begin{equation}
-    \rho_s = \rho \frac{Y_s}{\eta_s}.
+    \rho_{i,s} = \rho \frac{Y_{i,s}}{\eta_{i,s}} \qquad \rho_e = \rho \frac{Y_e}{\eta_e}.
 \end{equation}
 
-In terms of the number densities $n_s$, we have
+In terms of the number densities $n_{i,s}$ and $n_e$, we have
 \begin{equation}
     \label{eq:sf_mass_number_densities}
-    \rho Y_s = M_s n_s.
+    \rho Y_{i,s} = M_{i,s} n_{i,s} \qquad \rho Y_e = M_e n_e.
 \end{equation}
-where $M_s$ is the atomic weight of species $s$. The total velocity $\uvec$ is given by
+where $M_{i,s}$ is the atomic weight of ion species $s$ and $M_e$ the weight of an electron. The total velocity $\uvec$ is given by
 \begin{equation}
     \label{eq:sf_common_vel}
     \uvec = \sum_s^N Y_{i,s} \uvec_{i,s} + Y_e \uvec_e = \sum_s^N Y_{i,s} \uvec_{i,s}.
@@ -750,9 +760,9 @@ Summing over all species and using \cref{eq:coll_cons_energy} leads to
 \end{equation}
 
 %--------------------------------------------
-\subsection{$N+1$ species}
+\subsection{The general model}
 %--------------------------------------------
-\label{sec:sf_np1_species}
+\label{sec:sf_np1_species_general}
 
 \subsubsection{Mass}
 
@@ -763,7 +773,7 @@ Multiplying \cref{eq:mf_np1fluid_ni} by $M_{i,s}$ gives
 We introduce the species diffusion vector
 \begin{equation}
     \label{eq:sf_species_diffusion_vector}
-    \jvec_s = \rho Y_s \left( \uvec_s - \uvec \right).
+    \jvec_{i,s} = \rho Y_{i,s} \left( \uvec_{i,s} - \uvec \right).
 \end{equation}
 The mass-conservation equation is then written as
 \begin{equation}
@@ -842,7 +852,7 @@ or
 
 \subsubsection{Internal energy}
 
-Use the definition of the species diffusion $\jvec_s$ to re-write \cref{eq:mf_np1fluid_iei} as follows
+Use the definition of the species diffusion $\jvec_{i,s}$ to re-write \cref{eq:mf_np1fluid_iei} as follows
 \begin{equation*}
     \frac{\partial}{\partial t} \left( \frac{3}{2} p_{i,s} \right) + \nabla \cdot \left( \frac{3}{2} p_{i,s} \uvec \right) = \sigmavec_{i,s} : \nabla \uvec - \nabla \cdot \qvec_{i,s} + Q_{i,s} - \nabla \cdot \left( \frac{3}{2} \frac{p_{i,s}}{\rho Y_{i,s}} \jvec_{i,s} \right) + \sigmavec_{i,s} : \nabla \left( \frac{1}{\rho Y_{i,s}} \jvec_{i,s} \right).
 \end{equation*}
@@ -860,9 +870,50 @@ The analogous for the electron energy equation is
     \frac{\partial}{\partial t} \left( \frac{3}{2} p_e \right) + \nabla \cdot \left( \frac{3}{2} p_e \uvec \right) = \sigmavec_e : \nabla \uvec - \nabla \cdot \qvec_e + Q_e - \nabla \cdot \left[ \left( \frac{3}{2} p_e \Ivec - \sigmavec_e \right) \cdot \frac{\jvec_e}{\rho Y_e}  \right] - \frac{\jvec_e}{\rho Y_e} \cdot \nabla \sigmavec_e.
 \end{equation}
 
-\subsubsection{Single ion velocity}
-If all ions move with a single ion velocity $\uvec_i$, then the definition of the common velocity $\uvec$ in \cref{eq:sf_common_vel} gives $\uvec = \uvec_i$. Additionally, $\jvec_{i,s} = \rho Y_{i,s} \left( \uvec_{i,s} - \uvec \right) = \rho Y_{i,s} \left( \uvec_i - \uvec \right) = 0$. Thus, the governing equations can be summarized as follows
+%--------------------------------------------
+\subsection{$N+1$ species}
+%--------------------------------------------
+\label{sec:sf_np1_species}
 
+We add two extra assumptions
+\begin{enumerate}
+    \item All ions move with a single ion velocity $\uvec_i$. \label{eq:single_ion_vel}
+    \item All ions have the same temperature $T_i$ \label{eq:single_ion_T}
+\end{enumerate}
+
+If all ions move with a single ion velocity $\uvec_i$, then the definition of the common velocity $\uvec$ in \cref{eq:sf_common_vel} gives $\uvec = \uvec_i$. Additionally, $\jvec_{i,s} = \rho Y_{i,s} \left( \uvec_{i,s} - \uvec \right) = \rho Y_{i,s} \left( \uvec_i - \uvec \right) = 0$. Thus, the mass, momentum, Ohm's law, and internal energy equation simplify as follows
+\begin{equation*}
+    \frac{\partial \rho Y_{i,s}}{\partial t} + \nabla \cdot \left( \rho Y_{i,s} \uvec \right) = 0.
+\end{equation*}
+\begin{equation*}
+    \frac{\partial \rho \uvec}{\partial t} + \nabla \cdot \left( \rho \uvec \uvec \right) - \Jvec \times \Bvec = \nabla \cdot \left( \sum_s^N \sigmavec_{i,s} + \sigmavec_e \right).
+\end{equation*}
+\begin{equation*}
+    \Evec + \uvec \times \Bvec = \frac{1}{e n_e} \left( \Jvec \times \Bvec + \nabla \cdot \sigmavec_e + \Rvec_e \right) .
+\end{equation*}
+\begin{equation*}
+    \frac{\partial}{\partial t} \left( \frac{3}{2} p_{i,s} \right) + \nabla \cdot \left( \frac{3}{2} p_{i,s} \uvec \right) = \sigmavec_{i,s} : \nabla \uvec - \nabla \cdot \qvec_{i,s} + Q_{i,s}.
+\end{equation*}
+Additionally, we now define the ion pressure $p_i$, the ion stress tensor $\sigmavec_i$, the ion heat flux $q_i$, and the ion collision term $Q_i$ as
+\begin{equation*}
+    p_i = \sum_s^N p_{i,s},
+\qquad
+    \sigmavec_i = \sum_s^N \sigmavec_{i,s},
+\qquad
+    \qvec_i = \sum_s^N \qvec_{i,s},
+\qquad
+    Q_i = \sum_s^N Q_{i,s}.
+\end{equation*}
+Adding over all ion species, the ion pressure equation becomes
+\begin{equation*}
+    \frac{\partial}{\partial t} \left( \frac{3}{2} p_i \right) + \nabla \cdot \left( \frac{3}{2} p_i \uvec \right) = \sigmavec_i : \nabla \uvec - \nabla \cdot \qvec_i + Q_i.
+\end{equation*}
+Similarly, summing over all ion species, the ion equation of state becomes
+\begin{equation*}
+    p_i = \sum_s^N n_{i,s} k_B T_i.
+\end{equation*}
+
+To summarize, the $N+1$ species model is as follows
 \begin{equation}
     \label{eq:sf_1ionvel_ni}
     \frac{\partial \rho Y_{i,s}}{\partial t} + \nabla \cdot \left( \rho Y_{i,s} \uvec \right) = 0.
@@ -873,7 +924,7 @@ If all ions move with a single ion velocity $\uvec_i$, then the definition of th
 \end{equation}
 \begin{equation}
     \label{eq:sf_1ionvel_ui}
-    \frac{\partial \rho \uvec}{\partial t} + \nabla \cdot \left( \rho \uvec \uvec \right) - \Jvec \times \Bvec = \nabla \cdot \left( \sum_s^N \sigmavec_{i,s} + \sigmavec_e \right).
+    \frac{\partial \rho \uvec}{\partial t} + \nabla \cdot \left( \rho \uvec \uvec \right) - \Jvec \times \Bvec = \nabla \cdot \left( \sigmavec_i + \sigmavec_e \right).
 \end{equation}
 \begin{equation}
     \label{eq:sf_1ionvel_ue}
@@ -881,7 +932,7 @@ If all ions move with a single ion velocity $\uvec_i$, then the definition of th
 \end{equation}
 \begin{equation}
     \label{eq:sf_1ionvel_iei}
-    \frac{\partial}{\partial t} \left( \frac{3}{2} p_{i,s} \right) + \nabla \cdot \left( \frac{3}{2} p_{i,s} \uvec \right) = \sigmavec_{i,s} : \nabla \uvec - \nabla \cdot \qvec_{i,s} + Q_{i,s}.
+    \frac{\partial}{\partial t} \left( \frac{3}{2} p_i \right) + \nabla \cdot \left( \frac{3}{2} p_i \uvec \right) = \sigmavec_i : \nabla \uvec - \nabla \cdot \qvec_i + Q_i.
 \end{equation}
 \begin{equation}
     \label{eq:sf_1ionvel_iee}
@@ -913,7 +964,7 @@ If all ions move with a single ion velocity $\uvec_i$, then the definition of th
 \end{equation}
 \begin{equation}
     \label{eq:sf_1ionvel_eos_ion}
-    p_{i,s} = n_{i,s} k_B T_{i,s},
+    p_i = \sum_s^N n_{i,s} k_B T_i,
 \end{equation}
 \begin{equation}
     \label{eq:sf_1ionvel_eos_elec}
@@ -986,11 +1037,22 @@ If there is only one ion species, along with the electron species, then the gove
 \subsection{Alternate forms of the energy equations}
 %--------------------------------------------
 
-Thus far we've been working with plasmas that behave as ideal gasses with three degrees of freedom (the three translational degrees of freedom). For ideal gasses we also have $p_s = (\gamma - 1) \rho Y_s e_s$, where $e_s$ is the internal energy of a species. Thus, given that $\gamma = 5/3$, the internal energy equation for ions becomes
+Thus far we've been working with plasmas that behave as ideal gasses with three degrees of freedom (the three translational degrees of freedom). For ideal gasses we also have 
 \begin{equation*}
-    \frac{\partial \rho Y_{i,s} e_{i,s}}{\partial t} + \nabla \cdot \left( \rho Y_{i,s} e_{i,s} \uvec \right) = \sigmavec_{i,s} : \nabla \uvec - \nabla \cdot \qvec_{i,s} + Q_{i,s}.
+    p_{i,s} = (\gamma - 1) \rho Y_{i,s} e_{i,s},
 \end{equation*}
-Similarly, the internal energy equation for electrons becomes
+\begin{equation*}
+    p_e = (\gamma - 1) \rho Y_e e_e.
+\end{equation*}
+Summing $p_{i,s}$ over all s gives
+\begin{equation}
+    p_i = (\gamma - 1) \rho Y_i e_i,
+\end{equation}
+where $Y_i e_i = \sum_s^N Y_{i,s} e_{i,s}$. Thus, given that $\gamma = 5/3$, the internal energy equation for ions given by \cref{eq:sf_1ionvel_iei} becomes
+\begin{equation*}
+    \frac{\partial \rho Y_i e_i}{\partial t} + \nabla \cdot \left( \rho Y_i e_i \uvec \right) = \sigmavec_i : \nabla \uvec - \nabla \cdot \qvec_i + Q_i.
+\end{equation*}
+Similarly, the internal energy equation for electrons given by \cref{eq:sf_1ionvel_iee} becomes
 \begin{equation*}
     \frac{\partial \rho Y_e e_e}{\partial t} + \nabla \cdot \left( \rho Y_e e_e \uvec \right) = \sigmavec_e : \nabla \uvec - \nabla \cdot \qvec_e + Q_e - \nabla \cdot \left[ \left( \rho Y_e e_e \Ivec - \sigmavec_e \right) \cdot \frac{\jvec_e}{\rho Y_e}  \right] - \frac{\jvec_e}{\rho Y_e} \cdot \nabla \sigmavec_e.
 \end{equation*}
@@ -1009,23 +1071,151 @@ and $h_e = e_e + \hat{p}_e / \rho_e$ we have
 
 Finally, we define the total internal energy as
 \begin{equation}
-    e = \sum_s^N Y_{i,s} e_{i,s} + Y_e e_e,
+    e = Y_i e_i + Y_e e_e,
 \end{equation}
 so that adding up the internal energy equations gives
 \begin{multline*}
-    \frac{\partial \rho e}{\partial t} + \nabla \cdot \left( \rho e \uvec \right) = \left( \sum_s^N \sigmavec_{i,s} + \sigmavec_e \right): \nabla \uvec - \nabla \cdot \left( \sum_s^N \qvec_{i,s} + \qvec_e \right) + \sum_s^N Q_{i,s} + Q_e \\
+    \frac{\partial \rho e}{\partial t} + \nabla \cdot \left( \rho e \uvec \right) = \left( \sigmavec_i + \sigmavec_e \right): \nabla \uvec - \nabla \cdot \left( \qvec_i + \qvec_e \right) + Q_i + Q_e \\
     - \nabla \cdot \left( h_e \jvec_e \right) + \nabla \cdot \left( \tvec_e \cdot \frac{\jvec_e}{\rho Y_e} \right) - \left( \frac{\jvec_e}{\rho Y_e} \cdot \nabla \sigmavec_e \right).
 \end{multline*}
 Using \cref{eq:sf_sum_energy_collisions} we have
+\begin{multline*}
+    Q_i + Q_e = \sum_s^N Q_{i,s} + Q_e = - \left( \sum_s^N \uvec_{i,s} \cdot \Rvec_{i,s} + \uvec_e \cdot \Rvec_e \right) = \\
+    - \left( \uvec \cdot \sum_s^N \Rvec_{i,s} + \uvec_e \cdot \Rvec_e \right) = - \left( \uvec \cdot \Rvec_i + \uvec_e \cdot \Rvec_e \right),
+\end{multline*}
+where 
 \begin{equation}
-    \sum_s^N Q_{i,s} + Q_e = - \left( \sum_s^N \uvec_{i,s} \cdot \Rvec_{i,s} + \uvec_e \cdot \Rvec_e \right).
+    \Rvec_i = \sum_s^N \Rvec_{i,s}
 \end{equation}
 Thus, the total internal energy equation becomes
 \begin{multline*}
-    \frac{\partial \rho e}{\partial t} + \nabla \cdot \left( \rho e \uvec \right) = \left( \sum_s^N \sigmavec_{i,s} + \sigmavec_e \right): \nabla \uvec - \nabla \cdot \left( \sum_s^N \qvec_{i,s} + \qvec_e \right) - \left( \sum_s^N \uvec_{i,s} \cdot \Rvec_{i,s} + \uvec_e \cdot \Rvec_e \right) \\
+    \frac{\partial \rho e}{\partial t} + \nabla \cdot \left( \rho e \uvec \right) = \left( \sigmavec_i + \sigmavec_e \right): \nabla \uvec - \nabla \cdot \left( \qvec_i + \qvec_e \right) - \left( \uvec \cdot \Rvec_i + \uvec_e \cdot \Rvec_e \right) \\
     - \nabla \cdot \left( h_e \jvec_e \right) + \nabla \cdot \left( \tvec_e \cdot \frac{\jvec_e}{\rho Y_e} \right) - \left( \frac{\jvec_e}{\rho Y_e} \cdot \nabla \sigmavec_e \right).
 \end{multline*}
 
+%--------------------------------------------
+\subsection{Multi-material model}
+%--------------------------------------------
+We extend the definitions for the single-fluid model to account for multiple materials, which are denoted by the subscript $k$.
+The total density $\rho$ is defined as
+\begin{equation}
+    \rho = m/V.
+\end{equation}
+The volume fraction $\eta_k$ and mass fraction $Y_k$ are defined as
+\begin{equation}
+    \eta_k = \frac{V_k}{V},
+\end{equation}
+\begin{equation}
+    Y_k = \frac{m_k}{m}.
+\end{equation}
+Note that both $\eta_k$ and $Y_k$ sum up to one over all $k$. A new density is also introduced, namely $\rho_k$ which is defined as
+\begin{equation}
+    \rho_k= \frac{m_k}{V_k}.
+\end{equation}
+This can be expressed in terms of the other variables defined above by
+\begin{equation}
+    \rho_k = \rho \frac{Y_k}{\eta_k}.
+\end{equation}
+
+The volume fractions $\eta_{k,i,s}$ and $\eta_{k,e}$ are defined as 
+\begin{equation}
+    \eta_{k,i,s} = \frac{V_{k,i,s}}{V_k} \qquad \eta_{k,e} = \frac{V_{k,e}}{V_k}
+\end{equation}
+The mass fractions $Y_{k,i,s}$ and $Y_{k,e}$ are defined as
+\begin{equation}
+    Y_{k,i,s} = \frac{m_{k,i,s}}{m_k} \qquad Y_{k,e} = \frac{m_{k,e}}{m_k}.
+\end{equation}
+Note that
+\begin{equation}
+    1 = \sum_s^N \eta_{k,i,s} + \eta_{k,e} \approx \sum_s^N \eta_{k,i,s} = \eta_{k,i},
+\end{equation}
+and
+\begin{equation}
+    1 = \sum_s^N Y_{k,i,s} + Y_{k,e} \approx \sum_s^N Y_{k,i,s} = Y_{k,i}.
+\end{equation}
+New densities are also introduced, namely $\rho_{k,i,s}$ and $\rho_{k,e}$, which are defined as
+\begin{equation}
+    \rho_{k,i,s}= \frac{m_{k,i,s}}{V_{k,i,s}} \qquad \rho_{k,e}= \frac{m_{k,e}}{V_{k,e}}.
+\end{equation}
+These can be expressed in terms of the other variables defined above as follows
+\begin{equation}
+    \rho_{k,i,s} = \rho_k \frac{Y_{k,i,s}}{\eta_{k,i,s}} \qquad \rho_{k,e} = \rho_k \frac{Y_{k,e}}{\eta_{k,e}}.
+\end{equation}
+
+In terms of the number densities $n_{k,i,s}$ and $n_{k,e}$, we have
+\begin{equation}
+    \label{eq:mm_mass_number_densities}
+    \eta_k \rho_k Y_{k,i,s} = M_{k,i,s} n_{k,i,s} \qquad \eta_k \rho_k Y_{k,e} = M_e n_{k,e}.
+\end{equation}
+where $M_{k,i,s}$ is the atomic weight of species $s$ and $M_e$ is the weight of an electron. All ion species within a material $k$ have the same velocity $\uvec_{k,i}$, which we also label as $\uvec_k$. Thus, the total velocity $\uvec$ can be expressed as
+\begin{equation}
+    \label{eq:mm_common_vel}
+    \uvec = \sum_k^L Y_k Y_{k,i} \uvec_{k,i} + Y_k Y_{k,e} \uvec_{k,e} = \sum_k^L Y_k Y_{k,i} \uvec_{k,i} = \sum_k^L Y_k \uvec_{k,i} = \sum_k^L Y_k \uvec_k.
+\end{equation}
+
+\subsubsection{Mass}
+
+The equation for mass given by \cref{eq:sf_1ionvel_ni} is now written as
+\begin{equation*}
+    \frac{\partial \rho Y_k Y_{k,i,s}}{\partial t} + \nabla \cdot \left( \rho Y_k Y_{k,i,s} \uvec_k \right) = 0.
+\end{equation*}
+We introduce the material diffusion vector for ions 
+\begin{equation}
+    \label{eq:mm_mat_diffusion_species}
+    \jvec_{k,i,s} = \rho Y_k Y_{k,i,s} \left( \uvec_k - \uvec \right). 
+\end{equation}
+The mass conservation is then written as
+\begin{equation*}
+    \frac{\partial \rho Y_k Y_{k,i,s}}{\partial t} + \nabla \cdot \left( \rho Y_k Y_{k,i,s} \uvec \right) = - \nabla \cdot \jvec_{k,i,s}.
+\end{equation*}
+Note that adding the above over all $s$ gives
+\begin{equation*}
+    \frac{\partial \rho Y_k}{\partial t} + \nabla \cdot \left( \rho Y_k \uvec \right) = - \nabla \cdot \jvec_{k,i},
+\end{equation*}
+where
+\begin{equation}
+    \label{eq:mm_mat_diffusion}
+    \jvec_{k,i} = \rho Y_k \left( \uvec_k - \uvec \right).
+\end{equation}
+
+We also introduce an equation for the volume fraction $\eta_k$ as follows
+\begin{equation*}
+    \frac{\partial \eta_k}{\partial t} + \uvec \cdot \nabla \eta_k = \alpha_k,
+\end{equation*}
+where $\alpha_k$ is referred to as the closure model.
+
+\subsubsection{Momentum}
+The equation for momentum given by \cref{eq:sf_1ionvel_ui} is now written as
+\begin{equation*}
+    \frac{\partial \rho Y_k \uvec_k}{\partial t} + \nabla \cdot \left( \rho Y_k \uvec_k \uvec_k \right) - \Jvec \times \Bvec = \nabla \cdot \left( \sigmavec_{k,i} + \sigmavec_{k,e} \right),
+\end{equation*}
+which we re-write as
+\begin{equation*}
+    \frac{\partial \rho Y_k \uvec_k}{\partial t} + \nabla \cdot \left[ \rho Y_k \uvec_k \uvec + \rho Y_k \uvec_k (\uvec_k - \uvec)\right] - \Jvec \times \Bvec = \nabla \cdot \left( \sigmavec_{k,i} + \sigmavec_{k,e} \right),
+\end{equation*}
+Using \cref{eq:mm_mat_diffusion} we re-write the above as
+\begin{equation*}
+    \frac{\partial \rho Y_k \uvec_k}{\partial t} + \nabla \cdot \left( \rho Y_k \uvec_k \uvec \right) - \Jvec \times \Bvec = \nabla \cdot \left( \sigmavec_{k,i} + \sigmavec_{k,e} \right) - \nabla \cdot \left( \uvec_k \jvec_{k,i} \right).
+\end{equation*}
+Summing over all $k$ and using \cref{eq:mm_common_vel} gives
+\begin{equation*}
+    \frac{\partial \rho \uvec}{\partial t} + \nabla \cdot \left( \rho \uvec \uvec \right) - \Jvec \times \Bvec = \nabla \cdot \sum_k^L \left( \sigmavec_{k,i} + \sigmavec_{k,e} \right) - \nabla \cdot \sum_k^L \left( \uvec_k \jvec_{k,i} \right) .
+\end{equation*}
+
+\subsection{Summary}
+\begin{equation}
+    \label{eq:mm_ni}
+    \frac{\partial \rho Y_k Y_{k,i,s}}{\partial t} + \nabla \cdot \left( \rho Y_k Y_{k,i,s} \uvec \right) = - \nabla \cdot \jvec_{k,i,s}.
+\end{equation}
+\begin{equation}
+    \label{eq:mm_ui}
+    \frac{\partial \rho \uvec}{\partial t} + \nabla \cdot \left( \rho \uvec \uvec \right) - \Jvec \times \Bvec = \nabla \cdot \sum_k^L \left( \sigmavec_{k,i} + \sigmavec_{k,e} \right) - \nabla \cdot \sum_k^L \left( \uvec_k \jvec_{k,i} \right) .
+\end{equation}
+\begin{equation}
+    \label{eq:mm_eta}
+    \frac{\partial \eta_k}{\partial t} + \uvec \cdot \nabla \eta_k = \alpha_k,
+\end{equation}
+Note that \cref{eq:mm_ni} gives $\rho Y_k Y_{k,i,s}$. Summing over all $s$ gives $\rho Y_k$. Summing over all $k$ gives $\rho$. Dividing $\rho Y_k Y_{k,i,s}$ by $\rho Y_k$ gives $Y_{k,i,s}$. Dividing $\rho Y_k$ by $\rho$ gives $Y_k$. Additionally, \cref{eq:mm_eta} gives $\eta_k$. Dividing $\rho Y_k$ by $\eta_k$ gives $\rho_k$.
 %########################################################################
 \chapter{Basic waves and parameters}
 %########################################################################
@@ -2624,75 +2814,7 @@ where top sign is for electrons and bottom sign is for ions, and it is assumed t
 %------------------------------------------------------------------------
 \section{Single-fluid equations}
 %------------------------------------------------------------------------
-The starting point are the single-fluid equations of \cref{sec:sf_np1_species}. We'll also make the following assumptions
-\begin{enumerate}
-    \item All ions move with a single velocity $\uvec_i$. \label{eq:mhd_single_vel}
-    \item All ions have the same temperature $T_i$. \label{eq:mhd_single_T}
-\end{enumerate}
-Using the assumption in \cref{eq:mhd_single_vel},
-\begin{equation}
-    \uvec = \sum_s^N Y_s \uvec_s = \uvec_i
-\end{equation}
-where $N$ is the number of ions. As a result, we have
-\begin{equation}
-    \jvec_s = \rho Y_s \left( \uvec_s - \uvec \right) = 0
-\end{equation}
-for all ions (though not for electrons). The governing equations can then be written as
-\begin{equation*}
-    \frac{\partial \rho Y_s}{\partial t} + \nabla \cdot \left( \rho Y_s \uvec \right) = 0.
-\end{equation*}
-\begin{equation*}
-    \nabla \cdot \Jvec = 0.
-\end{equation*}
-\begin{equation*}
-    \frac{\partial \rho \uvec}{\partial t} + \nabla \cdot \left( \rho \uvec \uvec \right) - \Jvec \times \Bvec = \nabla \cdot \left( \sum_s^N \sigmavec_s + \sigmavec_e \right).
-\end{equation*}
-\begin{equation*}
-    \Evec + \uvec \times \Bvec = \frac{1}{e n_e} \left( \Jvec \times \Bvec + \nabla \cdot \sigmavec_e + \Rvec_e \right).
-\end{equation*}
-\begin{equation*}
-    \frac{\partial}{\partial t} \left( \frac{3}{2} p_s \right) + \nabla \cdot \left( \frac{3}{2} p_s \uvec \right) = \sigmavec_s : \nabla \uvec - \nabla \cdot \qvec_s + Q_s.
-\end{equation*}
-\begin{equation*}
-    \frac{\partial}{\partial t} \left( \frac{3}{2} p_e \right) + \nabla \cdot \left( \frac{3}{2} p_e \uvec \right) = \sigmavec_e : \nabla \uvec - \nabla \cdot \qvec_e + Q_e - \nabla \cdot \left[ \left( \frac{3}{2} p_e \Ivec - \sigmavec_e \right) \cdot \frac{\jvec_e}{\rho Y_e}  \right] - \frac{\jvec_e}{\rho Y_e} \cdot \nabla \sigmavec_e.
-\end{equation*}
-\begin{equation*}
-    \nabla \cdot \Evec = 0,
-\end{equation*}
-\begin{equation*}
-    \nabla \cdot \Bvec = 0,
-\end{equation*}
-\begin{equation*}
-    \nabla \times \Evec = -\frac{ \partial \Bvec}{\partial t},
-\end{equation*}
-\begin{equation*}
-    \nabla \times \Bvec = \mu_0 \Jvec + \mu_0 \epsilon_0 \frac{\partial \Evec}{\partial t},
-\end{equation*}
-\begin{equation*}
-    \Jvec = e n_e \left(\uvec - \uvec_e \right),
-\end{equation*}
-\begin{equation*}
-    \rho_q = 0,
-\end{equation*}
-\begin{equation*}
-    p_s = n_s k_B T_s,
-\end{equation*}
-\begin{equation*}
-    p_e = n_e k_B T_e.
-\end{equation*}
-
-In addition, we define the ion pressure $p_i$, the ion stress tensor $\sigmavec_i$, the ion heat flux $q_i$, and the ion collision term $Q_i$ as
-\begin{equation*}
-    p_i = \sum_s^N p_s,
-\qquad
-    n_i = \sum_s^N n_s,
-\qquad
-    \sigmavec_i = \sum_s^N \sigmavec_s,
-\qquad
-    \qvec_i = \sum_s^N \qvec_s,
-\qquad
-    Q_i = \sum_s^N Q_s.
-\end{equation*}
+The starting point are the single-fluid equations shown in the summary of \cref{sec:sf_np1_species}. 
 
 %--------------------------------------------
 \subsection{Mass}
@@ -2716,11 +2838,7 @@ and thus
 \subsection{Momentum}
 %--------------------------------------------
 
-The momentum equation can be written as
-\begin{equation*}
-    \frac{\partial \rho \uvec}{\partial t} + \nabla \cdot \left( \rho \uvec \uvec \right) - \Jvec \times \Bvec = \nabla \cdot \left(  \sigmavec_i + \sigmavec_e \right),
-\end{equation*}
-or, after using the expressions for $\sigmavec_i$ and $\sigmavec_e$,
+Using the expressions for $\sigmavec_i$ and $\sigmavec_e$, the momentum equation becomes
 \begin{equation*}
     \frac{\partial \rho \uvec}{\partial t} + \nabla \cdot \left( \rho \uvec \uvec \right) - \Jvec \times \Bvec = -\nabla \left(  p_i + p_e \right) + \nabla \cdot \left(  \tvec_i + \tvec_e \right),
 \end{equation*}
@@ -2733,11 +2851,7 @@ If we define the total pressure $p$ as $p = p_i + p_e$ we get
 \subsection{Ion internal energy}
 %--------------------------------------------
 
-Summing the ion internal energy equation over all ions gives
-\begin{equation*}
-    \frac{\partial}{\partial t} \left( \frac{3}{2} p_i \right) + \nabla \cdot \left( \frac{3}{2} p_i \uvec \right) = \sigmavec_i : \nabla \uvec - \nabla \cdot \qvec_i + Q_i.
-\end{equation*}
-The second term on the left-hand side of the ion internal energy equation is expanded to obtain
+The second term on the left-hand side of the ion internal energy equation can be expanded to obtain
 \begin{equation*}
     \frac{\partial}{\partial t} \left( \frac{3}{2} p_i \right) + \uvec \cdot \nabla \left( \frac{3}{2} p_i \right) + \frac{3}{2}p_i \nabla \cdot \uvec = \sigmavec_i : \nabla \uvec - \nabla \cdot \qvec_i + Q_i,
 \end{equation*}
@@ -2839,18 +2953,6 @@ In the specific case where there is only one ion species, then quasi-neutrality 
     \left( \frac{n_e}{\rho} \right)^\gamma \frac{\Jvec}{e n_e} \cdot \nabla \left( \frac{p_e}{n_e^\gamma} \right) = \left( \frac{n_i}{\rho} \right)^\gamma \frac{\Jvec}{e n} \cdot \nabla \left( \frac{p_e}{n_i^\gamma} \right) = \frac{\Jvec}{e n} \cdot \nabla \left( \frac{p_e}{\rho^\gamma} \right)
 \end{equation}
 
-%--------------------------------------------
-\subsection{Equation of state}
-%--------------------------------------------
-Using the assumption in \cref{eq:mhd_single_T}, the EOS for each ion becomes
-\begin{equation*}
-    p_s = n_s k_B T_i.
-\end{equation*}
-Summing over all ions gives
-\begin{equation*}
-    p_i = n_i k_B T_i.
-\end{equation*}
-
 
 %--------------------------------------------
 \subsection{Maxwell's equations}
@@ -2864,11 +2966,12 @@ We assume that the electromagnetic-wave velocity and the ion and electron therma
 %--------------------------------------------
 \subsection{Summary}
 %--------------------------------------------
+\label{sec:mhd_sf_summary}
 
 Combining all of the results above, we now have
 \begin{equation}
     \label{eq:generalized_MHD_mass}
-    \frac{\partial \rho}{\partial t} + \nabla \cdot \left( \rho \uvec \right) = 0.
+    \frac{\partial \rho Y_{i,s}}{\partial t} + \nabla \cdot \left( \rho Y_{i,s} \uvec \right) = 0.
 \end{equation}
 \begin{equation}
     \label{eq:generalized_MHD_div_current}
@@ -2916,7 +3019,7 @@ Combining all of the results above, we now have
 \end{equation}
 \begin{equation}
     \label{eq:generalized_MHD_ion_eos}
-    p_i = n_i k_B T_i,
+    p_i = \sum_s^N n_{i,s} k_B T_i,
 \end{equation}
 \begin{equation}
     \label{eq:generalized_MHD_elec_eos}
@@ -2957,7 +3060,7 @@ is the resistivity.
 %------------------------------------------------------------------------
 \section{Ideal MHD}
 %------------------------------------------------------------------------
-The ideal MHD equations are obtained by neglecting the right-hand sides of \cref{eq:generalized_MHD_vel,eq:generalized_MHD_ohms,eq:generalized_MHD_pi,eq:generalized_MHD_pe}. Summing the two pressure equations, the resulting equations would be
+To derive the ideal MHD equations we neglect the right-hand sides of \cref{eq:generalized_MHD_vel,eq:generalized_MHD_ohms,eq:generalized_MHD_pi,eq:generalized_MHD_pe} and assume a single ion species plus a single electron species. Summing the two pressure equations shown in \cref{sec:mhd_sf_summary}, the resulting equations would be
 \begin{equation}
     \frac{\partial \rho}{\partial t} + \nabla \cdot (\rho \uvec) = 0,
 \end{equation}
