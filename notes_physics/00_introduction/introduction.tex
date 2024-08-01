@@ -1040,15 +1040,15 @@ Use the definition of $\wvec_{k,i,s}$ to re-write \cref{eq:mf_mm_iei} and \cref{
 
 We add two extra assumptions
 \begin{enumerate}
-    \item All ions of a material move with a single ion velocity $\uvec_{k,i}$. \label{eq:single_ion_vel}
-    \item All ions of a material have the same temperature $T_{k,i}$ \label{eq:single_ion_T}
+    \item All ions of a material $k$ move with the same ion velocity $\uvec_{k,i}$. \label{eq:single_ion_vel}
+    \item All ions of a material $k$ have the same temperature $T_{k,i}$ \label{eq:single_ion_T}
 \end{enumerate}
 
 If all ions move with a single ion velocity, then the expressions for common velocities given in \cref{eq:mm_common_vel_1,eq:mm_common_vel_2} give 
 \begin{equation}
     \uvec_{k,i,s} = \uvec_{k,i} = \uvec_k.
 \end{equation} 
-Additionally, 
+As a result, we can now write for the specie diffusion vector 
 \begin{equation}
     \label{sec:sf_mm_ms_diffusion}
     \jvec_{k,i,s} = \rho Y_k Y_{k,i,s} \wvec_{k,i,s} = \rho Y_k Y_{k,i,s} \wvec_{k,i} = \rho Y_k Y_{k,i,s} \wvec_k.
@@ -1071,6 +1071,15 @@ Similarly, summing over all ion species, the ion equation of state becomes
 \begin{equation*}
     p_{k,i} = \sum_s^{N_k} n_{k,i,s} k_B T_{k,i}.
 \end{equation*}
+Finally, we define the total stress tensor of a material as
+\begin{equation}
+    \label{eq:sf_mm_ms_sigma_k}
+    \sigmavec_k = \sigmavec_{k,i} + \sigmavec_{k,e}.
+\end{equation}
+Thus, the stress term in the momentum equation can be written as
+\begin{equation*}
+    \sum_k^M \left( \sum_s^{N_k} \sigmavec_{k,i,s} + \sigmavec_{k,e} \right) = \sum_k^M \left( \sigmavec_{k,i} + \sigmavec_{k,e} \right) = \sum_k^M \sigmavec_k.
+\end{equation*}
 
 To summarize, we have
 \begin{equation}
@@ -1083,7 +1092,7 @@ To summarize, we have
 \end{equation}
 \begin{equation}
     \label{eq:sf_mm_ms_ui}
-    \frac{\partial \rho \uvec}{\partial t} + \nabla \cdot \left( \rho \uvec \uvec \right) - \Jvec \times \Bvec = \nabla \cdot \sum_k^M \left( \sigmavec_{k,i} + \sigmavec_{k,e} \right) - \nabla \cdot \sum_k^M \jvec_{k,i} \uvec_{k},
+    \frac{\partial \rho \uvec}{\partial t} + \nabla \cdot \left( \rho \uvec \uvec \right) - \Jvec \times \Bvec = \nabla \cdot \sum_k^M \sigmavec_k - \nabla \cdot \sum_k^M \jvec_{k,i} \uvec_{k},
 \end{equation}
 \begin{equation}
     \label{eq:sf_mm_ms_ue}
@@ -1389,28 +1398,37 @@ Using \cref{eq:sf_species_diffusion_vector_sum} for $\jvec_{k,i}$ and $\jvec_{k,
     \frac{\partial \rho Y_k e_{k,i}}{\partial t} + \nabla \cdot \left( \rho Y_k e_{k,i} \uvec \right) = \\
     \sigmavec_{k,i} : \nabla \uvec - \nabla \cdot \qvec_{k,i} + Q_{k,i} - \nabla \cdot \left( h_{k,i} \jvec_{k,i} \right) + \nabla \cdot \left( \wvec_{k,i} \cdot \tvec_{k,i} \right) - \wvec_{k,i} \cdot \nabla \sigmavec_{k,i}.
 \end{multline*}
-\begin{multline}
+\begin{multline*}
     \frac{\partial \rho Y_k Y_{k,e} e_{e,k}}{\partial t} + \nabla \cdot \left( \rho Y_k Y_{k,e} e_{k,e} \uvec \right) = \\
     \sigmavec_{k,e} : \nabla \uvec - \nabla \cdot \qvec_{k,e} + Q_{k,e} - \nabla \cdot \left( h_{k,e} \jvec_{k,e} \right) + \nabla \cdot \left( \wvec_{k,e} \cdot \tvec_{k,e} \right) - \wvec_{k,e} \cdot \nabla \sigmavec_{k,e}.
-\end{multline}
+\end{multline*}
 
 Finally, adding up the ion and electron internal energy equations and using \cref{eq:sf_alternate_e_k} gives
 \begin{multline*}
     \frac{\partial \rho Y_k e_k}{\partial t} + \nabla \cdot \left( \rho Y_k e_k \uvec \right) = \left( \sigmavec_{k,i} + \sigmavec_{k,e} \right): \nabla \uvec - \nabla \cdot \left( \qvec_{k,i} + \qvec_{k,e} \right) + Q_{k,i} + Q_{k,e} \\
     - \nabla \cdot \left( h_{k,i} \jvec_{k,i} + h_{k,e} \jvec_{k,e} \right) + \nabla \cdot \left( \wvec_{k,i} \cdot \tvec_{k,i} + \wvec_{k,e} \cdot \tvec_{k,e} \right) - \wvec_{k,i} \cdot \nabla \sigmavec_{k,i} - \wvec_{k,e} \cdot \nabla \sigmavec_{k,e} .
 \end{multline*}
-Summing over all material and using \cref{eq:sf_alternate_e} gives
+We define the total heat flux of a material as
+\begin{equation}
+    \qvec_k = \qvec_{k,i} + \qvec_{k,e}.
+\end{equation}
+Using the above along with the definition of the total stress tensor $\sigmavec_k$ given in \cref{eq:sf_mm_ms_sigma_k}, we get
+\begin{multline}
+    \frac{\partial \rho Y_k e_k}{\partial t} + \nabla \cdot \left( \rho Y_k e_k \uvec \right) = \sigmavec_k : \nabla \uvec - \nabla \cdot \qvec + Q_{k,i} + Q_{k,e} \\
+    - \nabla \cdot \left( h_{k,i} \jvec_{k,i} + h_{k,e} \jvec_{k,e} \right) + \nabla \cdot \left( \wvec_{k,i} \cdot \tvec_{k,i} + \wvec_{k,e} \cdot \tvec_{k,e} \right) - \wvec_{k,i} \cdot \nabla \sigmavec_{k,i} - \wvec_{k,e} \cdot \nabla \sigmavec_{k,e} .
+\end{multline}
+Summing over all materials and using \cref{eq:sf_alternate_e} gives
 \begin{multline*}
-    \frac{\partial \rho e}{\partial t} + \nabla \cdot \left( \rho e \uvec \right) = \sum_k^M\left( \sigmavec_{k,i} + \sigmavec_{k,e} \right): \nabla \uvec - \nabla \cdot \sum_k^M \left( \qvec_{k,i} + \qvec_{k,e} \right) + \sum_k^M \left( Q_{k,i} + Q_{k,e} \right) \\
+    \frac{\partial \rho e}{\partial t} + \nabla \cdot \left( \rho e \uvec \right) = \sum_k^M \sigmavec_k: \nabla \uvec - \nabla \cdot \sum_k^M \qvec_k + \sum_k^M \left( Q_{k,i} + Q_{k,e} \right) \\
     - \nabla \cdot \sum_k^M \left( h_{k,i} \jvec_{k,i} + h_{k,e} \jvec_{k,e} \right) + \nabla \cdot \sum_k^M \left( \wvec_{k,i} \cdot \tvec_{k,i} + \wvec_{k,e} \cdot \tvec_{k,e} \right) - \sum_k^M \left( \wvec_{k,i} \cdot \nabla \sigmavec_{k,i} - \wvec_{k,e} \cdot \nabla \sigmavec_{k,e} \right).
 \end{multline*}
 We can now re-write \cref{eq:sf_sum_energy_collisions_mat} as 
 \begin{equation}
     \sum_k^M \left( Q_{k,i} + Q_{k,e} \right) = -\sum_k^M \left( \uvec_{k,i} \cdot \Rvec_{k,i} + \uvec_{k,e} \cdot \Rvec_{k,e} \right).
 \end{equation}
-Thus, the internal energy equation becomes
+Thus, the total internal energy equation becomes
 \begin{multline*}
-    \frac{\partial \rho e}{\partial t} + \nabla \cdot \left( \rho e \uvec \right) = \sum_k^M\left( \sigmavec_{k,i} + \sigmavec_{k,e} \right): \nabla \uvec - \nabla \cdot \sum_k^M \left( \qvec_{k,i} + \qvec_{k,e} \right) -\sum_k^M \left( \uvec_{k,i} \cdot \Rvec_{k,i} + \uvec_{k,e} \cdot \Rvec_{k,e} \right) \\
+    \frac{\partial \rho e}{\partial t} + \nabla \cdot \left( \rho e \uvec \right) = \sum_k^M \sigmavec_k: \nabla \uvec - \nabla \cdot \sum_k^M \qvec -\sum_k^M \left( \uvec_{k,i} \cdot \Rvec_{k,i} + \uvec_{k,e} \cdot \Rvec_{k,e} \right) \\
     - \nabla \cdot \sum_k^M \left( h_{k,i} \jvec_{k,i} + h_{k,e} \jvec_{k,e} \right) + \nabla \cdot \sum_k^M \left( \wvec_{k,i} \cdot \tvec_{k,i} + \wvec_{k,e} \cdot \tvec_{k,e} \right) - \sum_k^M \left( \wvec_{k,i} \cdot \nabla \sigmavec_{k,i} - \wvec_{k,e} \cdot \nabla \sigmavec_{k,e} \right).
 \end{multline*}
 
