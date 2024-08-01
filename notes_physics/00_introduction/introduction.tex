@@ -169,7 +169,7 @@ We denote the distribution function for a species $s$ as $f_s = f_s(\rvec, \vvec
 \end{equation}
 where $N_s$ is the total number of particles corresponding to species $s$. 
 
-The dynamics of a plasma can be characterized by the Boltzmann evolution equation for the distribution function of $M$ species along with Maxwell's equations
+The dynamics of a plasma can be characterized by the Boltzmann evolution equation for the distribution function of $N$ species along with Maxwell's equations
 \begin{equation}
 \label{eq:kinetic_equation}
 \frac{\partial f_s}{\partial t} + \vvec \cdot \nabla f_s + \frac{Z_s e}{m_s} ( \Evec + \vvec \times \Bvec ) \cdot \nabla_v f_s = C_s + S_s
@@ -191,10 +191,10 @@ The dynamics of a plasma can be characterized by the Boltzmann evolution equatio
 \nabla \times \Bvec = \mu_0 \Jvec + \mu_0 \epsilon_0 \frac{\partial \Evec}{\partial t}
 \end{equation}
 \begin{equation}
-\Jvec = \sum_s^M Z_s e \int \vvec f_s \, d\vvec
+\Jvec = \sum_s^N Z_s e \int \vvec f_s \, d\vvec
 \end{equation}
 \begin{equation}
-\rho_q = \sum_s^M Z_s e \int f_s \, d\vvec.
+\rho_q = \sum_s^N Z_s e \int f_s \, d\vvec.
 \end{equation}
 In the above, 
 \begin{itemize}
@@ -208,7 +208,7 @@ In the above,
 \end{itemize}
 The terms $C_s$ and $S_s$ represent collision and source terms.
 
-If we express the collision term in the usual way, that is $C_s = \sum_r^M C_{s r}$, then we can make the following statements:
+If we express the collision term in the usual way, that is $C_s = \sum_r^N C_{s r}$, then we can make the following statements:
 \begin{enumerate}
 \item Conservation of particles:
 \begin{equation}
@@ -220,13 +220,13 @@ If we express the collision term in the usual way, that is $C_s = \sum_r^M C_{s 
 \item Conservation of momentum:
 \begin{equation}
     \label{eq:coll_cons_momentum}
-    \int m_s \vvec C_{ss} \, d\vvec = 0 \quad \forall s \qquad \qquad \sum_s^M \sum_{r, r \ne s}^M \int m_s \vvec C_{sr} d\vvec = 0.
+    \int m_s \vvec C_{ss} \, d\vvec = 0 \quad \forall s \qquad \qquad \sum_s^N \sum_{r, r \ne s}^N \int m_s \vvec C_{sr} d\vvec = 0.
 \end{equation}
 
 \item Conservation of energy:
 \begin{equation}
     \label{eq:coll_cons_energy}
-    \int \frac{1}{2} m_s v^2 C_{ss} \, d\vvec = 0 \quad \forall s \qquad \qquad \sum_s^M \sum_{r, r \ne s}^M \int \frac{1}{2} m_s v^2 C_{sr} \, d\vvec = 0.
+    \int \frac{1}{2} m_s v^2 C_{ss} \, d\vvec = 0 \quad \forall s \qquad \qquad \sum_s^N \sum_{r, r \ne s}^N \int \frac{1}{2} m_s v^2 C_{sr} \, d\vvec = 0.
 \end{equation}
 
 \end{enumerate}
@@ -268,13 +268,13 @@ Multiplying \cref{eq:boltz_mod} by $\vvec$ and then integrating over all $\vvec$
 \begin{multline}
 \label{eq:mom_derv_1}
 \frac{\partial n_s \uvec_s}{\partial t} + \nabla \cdot \left ( \int \vvec \vvec f_s \, d\vvec \right) + \int \nabla_v \cdot \left [ \vvec \frac{Z_s e}{m_s} ( \Evec + \vvec \times \Bvec ) f_s \right ] - \nabla_v \vvec \cdot \left [ \frac{Z_s e}{m_s} ( \Evec + \vvec \times \Bvec ) f_s \right ] \, d\vvec =\\
-\sum_{r, r \ne s}^M \int \vvec C_{s r} \, d\vvec + \int \vvec S_s \, d\vvec.
+\sum_{r, r \ne s}^N \int \vvec C_{s r} \, d\vvec + \int \vvec S_s \, d\vvec.
 \end{multline}
 We note that the third term in \cref{eq:mom_derv_1} is zero since we are integrating over all space, and that $\nabla_v \vvec$ is the identity matrix. We thus have
 \begin{multline}
 \label{eq:mom_derv_2}
 \frac{\partial n_s \uvec_s}{\partial t} + \nabla \cdot \left ( \int \vvec \vvec f_s \, d\vvec \right) - \frac{Z_s e n_s}{m_s} ( \Evec + \uvec_s \times \Bvec ) =\\
-\sum_{r, r \ne s}^M \int \vvec C_{s r} \, d\vvec + \int \vvec S_s \, d\vvec.
+\sum_{r, r \ne s}^N \int \vvec C_{s r} \, d\vvec + \int \vvec S_s \, d\vvec.
 \end{multline}
 
 To proceed, we decompose $\vvec$ into a mean and a fluctuation, that is, $\vvec = \uvec_s + \wvec_s$. Using this decomposition 
@@ -286,20 +286,20 @@ Thus, \cref{eq:mom_derv_2} becomes
 \begin{multline}
 \label{eq:mom_derv_3}
 \frac{\partial n_s \uvec_s}{\partial t} + \nabla \cdot \left ( n_s \uvec_s \uvec_s \right) - \frac{Z_s e n_s}{m_s} ( \Evec + \uvec_s \times \Bvec ) = -\nabla \cdot \int \wvec_s \wvec_s f_s d\vvec + \\
-\sum_{r, r \ne s}^M \int \vvec C_{s r} \, d\vvec + \int \vvec S_s \, d\vvec.
+\sum_{r, r \ne s}^N \int \vvec C_{s r} \, d\vvec + \int \vvec S_s \, d\vvec.
 \end{multline}
 Conservation of particles is used to modify the collisional term as follows
 \begin{align}
     \label{eq:mom_collision_expansion}
-    \sum_{r,r \ne s}^M \int \vvec C_{s r} \, d\vvec 
-    &= \sum_{r,r \ne s}^M \int (\uvec_s + \wvec_s) C_{s r} \, d\vvec \nonumber \\
-    &= \sum_{r,r \ne s}^M \int \wvec_s C_{s r} \, d\vvec 
+    \sum_{r,r \ne s}^N \int \vvec C_{s r} \, d\vvec 
+    &= \sum_{r,r \ne s}^N \int (\uvec_s + \wvec_s) C_{s r} \, d\vvec \nonumber \\
+    &= \sum_{r,r \ne s}^N \int \wvec_s C_{s r} \, d\vvec 
 \end{align}
 Thus, we now have
 \begin{multline}
 \label{eq:mom_derv_4}
 \frac{\partial n_s \uvec_s}{\partial t} + \nabla \cdot \left ( n_s \uvec_s \uvec_s \right) - \frac{Z_s e n_s}{m_s} ( \Evec + \uvec_s \times \Bvec ) = -\nabla \cdot \int \wvec_s \wvec_s f_s d\vvec + \\
-\sum_{r, r \ne s}^M \int \wvec_s C_{s r} \, d\vvec + \int \vvec S_s \, d\vvec.
+\sum_{r, r \ne s}^N \int \wvec_s C_{s r} \, d\vvec + \int \vvec S_s \, d\vvec.
 \end{multline}
 
 Multiplying by mass leads to the following equation
@@ -315,7 +315,7 @@ where the stress tensor is
 \end{equation}
 the momentum transferred between unlike particles due to friction of collisions is
 \begin{equation}
-\Rvec_s = \sum_{r, r \ne s}^M \int m_s \wvec_s C_{s r} \, d\vvec,
+\Rvec_s = \sum_{r, r \ne s}^N \int m_s \wvec_s C_{s r} \, d\vvec,
 \end{equation}
 and the external source of momentum is
 \begin{equation}
@@ -343,13 +343,13 @@ Multiplying \cref{eq:boltz_mod} by $\frac{1}{2} v^2$ and then integrating over a
 \begin{multline}
 \label{eq:energy_derv_1}
 \frac{\partial n_s E_s}{\partial t} + \nabla \cdot \left [ \int \frac{1}{2} (\vvec \cdot \vvec) \vvec f_s \, d\vvec \right ] + \int \nabla_v \cdot \left [ \frac{1}{2} (\vvec \cdot \vvec) \frac{Z_s e}{m_s} ( \Evec + \vvec \times \Bvec ) f_s \right ] \\
-- \nabla_v \left [ \frac{1}{2} (\vvec \cdot \vvec) \right ] \cdot \left [ \frac{Z_s e}{m_s} ( \Evec + \vvec \times \Bvec ) f_s \right ] \, d\vvec = \sum_{r, r \ne s}^M \int \frac{1}{2} (\vvec \cdot \vvec) C_{s r} \, d\vvec + \int \frac{1}{2} (\vvec \cdot \vvec) S_s \, d\vvec.
+- \nabla_v \left [ \frac{1}{2} (\vvec \cdot \vvec) \right ] \cdot \left [ \frac{Z_s e}{m_s} ( \Evec + \vvec \times \Bvec ) f_s \right ] \, d\vvec = \sum_{r, r \ne s}^N \int \frac{1}{2} (\vvec \cdot \vvec) C_{s r} \, d\vvec + \int \frac{1}{2} (\vvec \cdot \vvec) S_s \, d\vvec.
 \end{multline}
 We note that the third term above is zero since we are integrating over all space, and that $\nabla_v [ 1/2 (\vvec \cdot \vvec ) ] = \vvec$. Thus, we have
 \begin{multline}
 \label{eq:energy_derv_2}
 \frac{\partial n_s E_s}{\partial t} + \nabla \cdot \left [ \int \frac{1}{2} (\vvec \cdot \vvec) \vvec f_s \, d\vvec \right ] - \frac{Z_s e n_s}{m_s} \Evec \cdot \uvec_s =\\
-\sum_{r, r \ne s}^M \int \frac{1}{2} (\vvec \cdot \vvec) C_{s r} \, d\vvec + \int \frac{1}{2} (\vvec \cdot \vvec) S_s \, d\vvec.
+\sum_{r, r \ne s}^N \int \frac{1}{2} (\vvec \cdot \vvec) C_{s r} \, d\vvec + \int \frac{1}{2} (\vvec \cdot \vvec) S_s \, d\vvec.
 \end{multline}
 
 To proceed with the derivation we first note that
@@ -365,20 +365,20 @@ Using the expressions above, \cref{eq:energy_derv_2} becomes
 \begin{multline}
 \label{eq:energy_derv_3}
 \frac{\partial n_s E_s}{\partial t} + \nabla \cdot (n_s E_s \uvec_s ) - \frac{Z_s e n_s}{m_s} \Evec \cdot \uvec_s =  - \nabla \cdot \left ( \uvec_s \cdot \int \wvec_s \wvec_s f_s \, d\vvec \right ) - \nabla \cdot \int \frac{1}{2} ( \wvec_s \cdot \wvec_s ) \wvec_s f_s \, d\vvec\\
-+ \sum_{r, r \ne s}^M \int \frac{1}{2} (\vvec \cdot \vvec) C_{s r} \, d\vvec + \int \frac{1}{2} (\vvec \cdot \vvec) S_s \, d\vvec.
++ \sum_{r, r \ne s}^N \int \frac{1}{2} (\vvec \cdot \vvec) C_{s r} \, d\vvec + \int \frac{1}{2} (\vvec \cdot \vvec) S_s \, d\vvec.
 \end{multline}
 Conservation of particles is used to modify the collisional term as follows
 \begin{align}
     \label{eq:energy_collision_expansion}
-    \sum_{r,r \ne s}^M \int \frac{1}{2} (\vvec \cdot \vvec) C_{s r} \, d\vvec 
-    &= \sum_{r,r \ne s}^M \int \frac{1}{2} [ (\uvec_s + \wvec_s) \cdot (\uvec_s + \wvec_s)] C_{s r} \, d\vvec \nonumber \\
-    &= \uvec_s \cdot  \sum_{r,r \ne s}^M \int \wvec_s C_{s r} \, d\vvec + \sum_{r,r \ne s}^M \int \frac{1}{2} (\wvec_s \cdot \wvec_s) C_{s r} \, d\vvec 
+    \sum_{r,r \ne s}^N \int \frac{1}{2} (\vvec \cdot \vvec) C_{s r} \, d\vvec 
+    &= \sum_{r,r \ne s}^N \int \frac{1}{2} [ (\uvec_s + \wvec_s) \cdot (\uvec_s + \wvec_s)] C_{s r} \, d\vvec \nonumber \\
+    &= \uvec_s \cdot  \sum_{r,r \ne s}^N \int \wvec_s C_{s r} \, d\vvec + \sum_{r,r \ne s}^N \int \frac{1}{2} (\wvec_s \cdot \wvec_s) C_{s r} \, d\vvec 
 \end{align}
 Thus, we now have
 \begin{multline}
 \label{eq:energy_derv_4}
 \frac{\partial n_s E_s}{\partial t} + \nabla \cdot (n_s E_s \uvec_s ) - \frac{Z_s e n_s}{m_s} \Evec \cdot \uvec_s = - \nabla \cdot \left ( \uvec_s \cdot \int \wvec_s \wvec_s f_s \, d\vvec  \right ) - \nabla \cdot \int \frac{1}{2} ( \wvec_s \cdot \wvec_s ) \wvec_s f_s \, d\vvec \\
-+ \uvec_s \cdot \sum_{r,r \ne s}^M \int \wvec_s C_{s r} \, d\vvec + \sum_{r, r \ne s}^M \int \frac{1}{2} (\wvec_s \cdot \wvec_s) C_{s r} \, d\vvec + \int \frac{1}{2} (\vvec \cdot \vvec) S_s \, d\vvec.
++ \uvec_s \cdot \sum_{r,r \ne s}^N \int \wvec_s C_{s r} \, d\vvec + \sum_{r, r \ne s}^N \int \frac{1}{2} (\wvec_s \cdot \wvec_s) C_{s r} \, d\vvec + \int \frac{1}{2} (\vvec \cdot \vvec) S_s \, d\vvec.
 \end{multline}
 
 Multiplying by mass leads to the following equation
@@ -395,7 +395,7 @@ where heat flux due to random motion is
 \end{equation}
 the heat generated and transferred between unlike particles due to collisional dissipation is 
 \begin{equation}
-Q_{s} = \sum_{r,r \ne s}^M \int \frac{1}{2} m_s (\wvec_s \cdot \wvec_s) C_{s r} \, d\vvec,
+Q_{s} = \sum_{r,r \ne s}^N \int \frac{1}{2} m_s (\wvec_s \cdot \wvec_s) C_{s r} \, d\vvec,
 \end{equation}
 and the external source of energy is
 \begin{equation}
@@ -493,7 +493,7 @@ The following assumptions are used:
 %--------------------------------------------
 \subsection{Multi-material multi-fluid model}
 %--------------------------------------------
-We define a material $k$ as a collection of species $s$. Rather than labeling species using the single subscript $s$, we'll use the subscript $k,i,s$ and $k,e$, where the former denotes the ion species $s$ that belongs to material $k$, and the latter denotes the electron species that belongs to material $k$. We also note that the number of ion species within a material will be denoted as $N_k$, and the total number of materials as $L$.
+We define a material $k$ as a collection of species $s$. Rather than labeling species using the single subscript $s$, we'll use the subscript $k,i,s$ and $k,e$, where the former denotes the ion species $s$ that belongs to material $k$, and the latter denotes the electron species that belongs to material $k$. We also note that the number of ion species within a material will be denoted as $N_k$, and the total number of materials as $M$.
 
 Thus, the governing equations are
 \begin{equation}
@@ -542,14 +542,14 @@ Thus, the governing equations are
     \Jvec_k = e \left( \sum_s^{N_k} Z_{k,i,s} n_{k,i,s} \uvec_{k,i,s} - n_{k,e} \uvec_{k,e} \right),
 \end{equation}
 \begin{equation}
-    \Jvec = \sum_k^L \Jvec_k
+    \Jvec = \sum_k^M \Jvec_k
 \end{equation}
 \begin{equation}
     \label{eq:mf_mm_mass_density}
-    \rho_{q,k} = e \left( \sum_s^N Z_{k,i,s} n_{k,i,s} - n_{e,k} \right),
+    \rho_{q,k} = e \left( \sum_s^{N_k} Z_{k,i,s} n_{k,i,s} - n_{e,k} \right),
 \end{equation}
 \begin{equation}
-    \rho_q = \sum_k^L \rho_{q,k},
+    \rho_q = \sum_k^M \rho_{q,k},
 \end{equation}
 \begin{equation}
     \label{eq:mf_mm_eos_ion}
@@ -790,11 +790,11 @@ The mass fractions $Y_{k,i,s}$ and $Y_{k,e}$ are defined as
 \end{equation}
 Note that
 \begin{equation}
-    1 = \sum_s^N \eta_{k,i,s} + \eta_{k,e} \approx \sum_s^N \eta_{k,i,s} = \eta_{k,i},
+    1 = \sum_s^{N_k} \eta_{k,i,s} + \eta_{k,e} \approx \sum_s^{N_k} \eta_{k,i,s} = \eta_{k,i},
 \end{equation}
 and
 \begin{equation}
-    1 = \sum_s^N Y_{k,i,s} + Y_{k,e} \approx \sum_s^N Y_{k,i,s} = Y_{k,i}.
+    1 = \sum_s^{N_k} Y_{k,i,s} + Y_{k,e} \approx \sum_s^{N_k} Y_{k,i,s} = Y_{k,i}.
 \end{equation}
 New densities are also introduced, namely $\rho_{k,i,s}$ and $\rho_{k,e}$, which are defined as
 \begin{equation}
@@ -813,7 +813,7 @@ In terms of the number densities $n_{k,i,s}$ and $n_{k,e}$, we have
 where $m_{k,i,s}$ is the atomic weight of species $s$ and $m_e$ is the weight of an electron. The ion velocity of a material is given by $\uvec_{k,i}$ and the velocity of all materials by $\uvec$. These are defined below,
 \begin{equation}
     \label{eq:mm_common_vel_1}
-    \uvec_{k,i} = \sum_s^N Y_{k,i,s} \uvec_{k,i,s} 
+    \uvec_{k,i} = \sum_s^{N_k} Y_{k,i,s} \uvec_{k,i,s} 
 \end{equation}
 \begin{equation}
     \label{eq:mm_common_vel_2}
@@ -821,7 +821,7 @@ where $m_{k,i,s}$ is the atomic weight of species $s$ and $m_e$ is the weight of
 \end{equation}
 \begin{equation}
     \label{eq:mm_common_vel_3}
-    \uvec = \sum_k^L Y_k \uvec_k.
+    \uvec = \sum_k^M Y_k \uvec_k.
 \end{equation}
 
 If there is only one material, the relations above simplify as follows
@@ -860,22 +860,22 @@ If there is only one material, the relations above simplify as follows
 %--------------------------------------------
 In this section we derive the total sum across all species (ions and electrons) of the collisional terms $\Rvec_s$ and $Q_s$. Use \cref{eq:mom_collision_expansion} to re-write $\Rvec_s$ as
 \begin{equation*}
-    \Rvec_s = \sum_{r,r \ne s}^M \int m_s \wvec_s C_{s r} \, d\vvec = \sum^M_{r,r \ne s} \int m_s \vvec C_{s r} \, d\vvec,
+    \Rvec_s = \sum_{r,r \ne s}^N \int m_s \wvec_s C_{s r} \, d\vvec = \sum^N_{r,r \ne s} \int m_s \vvec C_{s r} \, d\vvec,
 \end{equation*}
-where $M$ is the total number of species. Using \cref{eq:coll_cons_momentum} this leads to
+where $N$ is the total number of species. Using \cref{eq:coll_cons_momentum} this leads to
 \begin{equation}
     \label{eq:sf_sum_mom_collisions}
-    \sum_s^M \Rvec_s = 0.
+    \sum_s^N \Rvec_s = 0.
 \end{equation}
 Similarly, we use \cref{eq:energy_collision_expansion} to re-write $Q_s$ as
 \begin{align*}
-    Q_s &= \sum_{r,r \ne s}^M \int \frac{1}{2} m_s (\wvec_s \cdot \wvec_s) C_{s r} \, d\vvec \\
-    &= \sum_{r,r \ne s}^M \int \frac{1}{2} m_s \left( \vvec \cdot \vvec \right) C_{sr} \, d\vvec - \uvec_s \cdot \sum_{r,r \ne s}^M \int m_s \wvec_s C_{s r} \, d\vvec
+    Q_s &= \sum_{r,r \ne s}^N \int \frac{1}{2} m_s (\wvec_s \cdot \wvec_s) C_{s r} \, d\vvec \\
+    &= \sum_{r,r \ne s}^N \int \frac{1}{2} m_s \left( \vvec \cdot \vvec \right) C_{sr} \, d\vvec - \uvec_s \cdot \sum_{r,r \ne s}^N \int m_s \wvec_s C_{s r} \, d\vvec
 \end{align*}
 Summing over all species and using \cref{eq:coll_cons_energy} leads to
 \begin{equation}
     \label{eq:sf_sum_energy_collisions}
-    \sum_s^M Q_s = - \sum_s^M \uvec_s \cdot \Rvec_s.
+    \sum_s^N Q_s = - \sum_s^N \uvec_s \cdot \Rvec_s.
 \end{equation}
 
 However, for the multi-material formulation we'll enforce slightly different requirements. We first note that ion species and electrons of one material do not collided with those of a different material, that is, materials are fully segregated. Additionally, we  introduce the following notation
@@ -990,12 +990,12 @@ Using the definition of $\jvec_{k,i,s}$ the above becomes
 \end{multline*}
 We now sum over all materials to obtain
 \begin{multline*}
-    \frac{\partial}{\partial t} \sum_k^L \sum_s^{N_k} \rho Y_k Y_{k,i,s} \uvec_{k,i,s} + \nabla \cdot \sum_k^L \sum_s^{N_k} \left( \rho Y_k Y_{k,i,s} \uvec_{k,i,s} \uvec  \right) - \Jvec \times \Bvec = \\
-    \nabla \cdot \sum_k^L \left( \sum_s^{N_k} \sigmavec_{k,i,s} + \sigmavec_{k,e} \right) - \nabla \cdot \sum_k^L \sum_s^{N_k} \jvec_{k,i,s} \uvec_{k,i,s}.
+    \frac{\partial}{\partial t} \sum_k^M \sum_s^{N_k} \rho Y_k Y_{k,i,s} \uvec_{k,i,s} + \nabla \cdot \sum_k^M \sum_s^{N_k} \left( \rho Y_k Y_{k,i,s} \uvec_{k,i,s} \uvec  \right) - \Jvec \times \Bvec = \\
+    \nabla \cdot \sum_k^M \left( \sum_s^{N_k} \sigmavec_{k,i,s} + \sigmavec_{k,e} \right) - \nabla \cdot \sum_k^M \sum_s^{N_k} \jvec_{k,i,s} \uvec_{k,i,s}.
 \end{multline*}
 Using the definition of $\uvec$ we get
 \begin{equation*}
-    \frac{\partial \rho \uvec}{\partial t} + \nabla \cdot \left( \rho \uvec \uvec \right) - \Jvec \times \Bvec = \nabla \cdot \sum_k^L \left( \sum_s^{N_k} \sigmavec_{k,i,s} + \sigmavec_{k,e} \right) - \nabla \cdot \sum_k^L \sum_s^{N_k} \jvec_{k,i,s} \uvec_{k,i,s}.
+    \frac{\partial \rho \uvec}{\partial t} + \nabla \cdot \left( \rho \uvec \uvec \right) - \Jvec \times \Bvec = \nabla \cdot \sum_k^M \left( \sum_s^{N_k} \sigmavec_{k,i,s} + \sigmavec_{k,e} \right) - \nabla \cdot \sum_k^M \sum_s^{N_k} \jvec_{k,i,s} \uvec_{k,i,s}.
 \end{equation*}
 
 Given the assumption in \cref{eq:sf_no_e_mass}, \cref{eq:mf_mm_ue} for electron momentum becomes
@@ -1017,7 +1017,7 @@ Using the definition of $\jvec_{k,i,s}$, we can write
 \end{align*}
 Using \cref{eq:mm_mass_number_densities} we get
 \begin{align*}
-    \sum_s^N Z_{k,i,s} n_{k,i,s} \uvec_{k,i,s} \times \Bvec &= \sum_s^{N_k} \left( Z_{k,i,s} n_{k,i,s} \uvec + \frac{Z_{k,i,s} \jvec_{k,i,s}}{m_{k,i,s}} \right) \times \Bvec \\
+    \sum_s^{N_k} Z_{k,i,s} n_{k,i,s} \uvec_{k,i,s} \times \Bvec &= \sum_s^{N_k} \left( Z_{k,i,s} n_{k,i,s} \uvec + \frac{Z_{k,i,s} \jvec_{k,i,s}}{m_{k,i,s}} \right) \times \Bvec \\
     &= \sum_s^{N_k} Z_{k,i,s} n_{k,i,s} \uvec \times \Bvec + \sum_s^{N_k} \frac{Z_{k,i,s} \jvec_{k,i,s}}{m_{k,i,s}} \times \Bvec \\
     &= n_{k,e} \uvec \times \Bvec + \sum_s^{N_k} \frac{Z_{k,i,s} \jvec_{k,i,s}}{m_{k,i,s}} \times \Bvec.
 \end{align*}
@@ -1027,15 +1027,15 @@ Thus, the electron momentum equation becomes
 \end{equation*}
 We define the total electron density as 
 \begin{equation*}
-    n_e = \sum_k^L n_{k,e}.
+    n_e = \sum_k^M n_{k,e}.
 \end{equation*}
 Thus, summing over all $k$ gives
 \begin{equation*}
-    e n_e \left( \Evec + \uvec \times \Bvec \right) = \Jvec \times \Bvec + \nabla \cdot \sum_k^L \sigmavec_{k,e} + \sum_k^L \Rvec_{k,e} - e \sum_k^L \sum_s^{N_k} \frac{Z_{k,i,s} \jvec_{k,i,s}}{m_{k,i,s}} \times \Bvec.
+    e n_e \left( \Evec + \uvec \times \Bvec \right) = \Jvec \times \Bvec + \nabla \cdot \sum_k^M \sigmavec_{k,e} + \sum_k^M \Rvec_{k,e} - e \sum_k^M \sum_s^{N_k} \frac{Z_{k,i,s} \jvec_{k,i,s}}{m_{k,i,s}} \times \Bvec.
 \end{equation*}
 or
 \begin{equation}
-    \Evec + \uvec \times \Bvec = \frac{1}{e n_e} \left( \Jvec \times \Bvec + \nabla \cdot \sum_k^L \sigmavec_{k,e} + \sum_k^L \Rvec_{k,e} \right) - \sum_k^L \sum_s^{N_k} \frac{Z_{k,i,s} \jvec_{k,i,s}}{n_e m_{k,i,s}} \times \Bvec.
+    \Evec + \uvec \times \Bvec = \frac{1}{e n_e} \left( \Jvec \times \Bvec + \nabla \cdot \sum_k^M \sigmavec_{k,e} + \sum_k^M \Rvec_{k,e} \right) - \sum_k^M \sum_s^{N_k} \frac{Z_{k,i,s} \jvec_{k,i,s}}{n_e m_{k,i,s}} \times \Bvec.
 \end{equation}
 
 \subsubsection{Internal energy}
@@ -1060,7 +1060,8 @@ We add two extra assumptions
     \item All ions of a material have the same temperature $T_{k,i}$ \label{eq:single_ion_T}
 \end{enumerate}
 
-If all ions move with a single ion velocity, then the expressions for common velocities given in \cref{eq:mm_common_vel_1,eq:mm_common_vel_2} give \begin{equation}
+If all ions move with a single ion velocity, then the expressions for common velocities given in \cref{eq:mm_common_vel_1,eq:mm_common_vel_2} give 
+\begin{equation}
     \uvec_{k,i,s} = \uvec_{k,i} = \uvec_k.
 \end{equation} 
 Additionally, 
@@ -1070,15 +1071,12 @@ Additionally,
 \end{equation} 
 
 We define a material's ion pressure $p_{k,i}$, ion stress tensor $\sigmavec_{k,i}$, ion heat flux $q_{k,i}$, and ion collision term $Q_{k,i}$ as
-\begin{equation*}
-    p_{k,i} = \sum_s^{N_k} p_{k,i,s},
-\qquad
-    \sigmavec_{k,i} = \sum_s^{N_k} \sigmavec_{k,i,s},
-\qquad
-    \qvec_{k,i} = \sum_s^{N_k} \qvec_{k,i,s},
-\qquad
-    Q_{k,i} = \sum_s^{N_k} Q_{k,i,s}.
-\end{equation*}
+\begin{align}
+    p_{k,i} &= \sum_s^{N_k} p_{k,i,s}, \label{eq:sf_mm_ms_pki} \\
+    \sigmavec_{k,i} &= \sum_s^{N_k} \sigmavec_{k,i,s}, \label{eq:sf_mm_ms_ski} \\
+    \qvec_{k,i} &= \sum_s^{N_k} \qvec_{k,i,s}, \label{eq:sf_mm_ms_qki} \\
+    Q_{k,i} &= \sum_s^{N_k} Q_{k,i,s}. \label{eq:sf_mm_ms_Qki}
+\end{align}
 Adding over all ion species of a material, the ion pressure equation becomes
 \begin{equation*}
     \frac{\partial}{\partial t} \left( \frac{3}{2} p_{k,i} \right) + \nabla \cdot \left( \frac{3}{2} p_{k,i} \uvec \right) = \\ 
@@ -1100,11 +1098,11 @@ To summarize, we have
 \end{equation}
 \begin{equation}
     \label{eq:sf_mm_ms_ui}
-    \frac{\partial \rho \uvec}{\partial t} + \nabla \cdot \left( \rho \uvec \uvec \right) - \Jvec \times \Bvec = \nabla \cdot \sum_k^L \left( \sigmavec_{k,i} + \sigmavec_{k,e} \right) - \nabla \cdot \sum_k^L \jvec_{k,i} \uvec_{k},
+    \frac{\partial \rho \uvec}{\partial t} + \nabla \cdot \left( \rho \uvec \uvec \right) - \Jvec \times \Bvec = \nabla \cdot \sum_k^M \left( \sigmavec_{k,i} + \sigmavec_{k,e} \right) - \nabla \cdot \sum_k^M \jvec_{k,i} \uvec_{k},
 \end{equation}
 \begin{equation}
     \label{eq:sf_mm_ms_ue}
-    \Evec + \uvec \times \Bvec = \frac{1}{e n_e} \left( \Jvec \times \Bvec + \nabla \cdot \sum_k^L \sigmavec_{k,e} + \sum_k^L \Rvec_{k,e} \right) - \sum_s^{N_k} \frac{Z_{k,i,s} \jvec_{k,i,s}}{n_e m_{k,i,s}} \times \Bvec,
+    \Evec + \uvec \times \Bvec = \frac{1}{e n_e} \left( \Jvec \times \Bvec + \nabla \cdot \sum_k^M \sigmavec_{k,e} + \sum_k^M \Rvec_{k,e} \right) - \sum_s^{N_k} \frac{Z_{k,i,s} \jvec_{k,i,s}}{n_e m_{k,i,s}} \times \Bvec,
 \end{equation}
 \begin{equation}
     \label{eq:sf_mm_ms_iei}
@@ -1135,14 +1133,14 @@ To summarize, we have
     \Jvec_k = e n_{k,e} \left( \uvec_k - \uvec_{k,e} \right),
 \end{equation}
 \begin{equation}
-    \Jvec = \sum_k^L \Jvec_k,
+    \Jvec = \sum_k^M \Jvec_k,
 \end{equation}
 \begin{equation}
     \label{eq:sf_mm_ms_mass_density}
     \rho_{q,k} = 0,
 \end{equation}
 \begin{equation}
-    \rho_q = \sum_k^L \rho_{q,k},
+    \rho_q = \sum_k^M \rho_{q,k},
 \end{equation}
 \begin{equation}
     \label{eq:sf_mm_ms_eos_ion}
@@ -1284,35 +1282,113 @@ If there is only one ion species, along with the electron species, then the mode
 \subsection{Alternate forms of the energy equations}
 %--------------------------------------------
 
+The specific energy of a species $s$ is denoted as $e_s$. Using our current notation, this becomes $e_{k,i,s}$ for the specific energy of ion species $s$ of material $k$ and $e_{k,e}$ for the specific energy of electrons of material $k$. The total ion specific energy of a material $k$ is given by
+\begin{equation}
+    e_{k,i} = \sum_s^{N_k} Y_{k,i,s} e_{k,i,s}.
+\end{equation}
+The total specific energy of a material $k$ is given by
+\begin{equation}
+    e_k = e_{k,i} + Y_{k,e} e_{k,e}.
+\end{equation}
+The total specific energy is given by
+\begin{equation}
+    e = \sum_k^M Y_k e_k.
+\end{equation}
+
+The enthalpy of any species $s$ is given by
+\begin{equation}
+    h_s = e_s + \frac{\hat{p}_s}{\rho_s}.
+\end{equation}
+Using our current notation, this becomes
+\begin{equation}
+    h_{k,i,s} = e_{k,i,s} + \frac{\hat{p}_{k,i,s}}{\rho_{k,i,s}} \qquad h_{k,e} = e_{k,e} + \frac{\hat{p}_{k,e}}{\rho_{k,e}}.
+\end{equation}
+The total ion enthalpy of a material $k$ is given by
+\begin{equation}
+    h_{k,i} = \sum_s^{N_k} Y_{k,i,s} h_{k,i,s}.
+\end{equation}
+The total enthalpy of a material $k$ is given by
+\begin{equation}
+    h_k = h_{k,i} + Y_{k,e} h_{k,e}.
+\end{equation}
+The total enthalpy is given by
+\begin{equation}
+    h = \sum_k^M Y_k h_k.
+\end{equation}
+
+We note that $\hat{p}_{k,i,s}$ and $\hat{p}_{k,e}$ satisfy
+\begin{equation}
+    \label{eq:sf_alternate_hatp_kis}
+    p_{k,i,s} = \eta_k \eta_{k,i,s} \hat{p}_{k,i,s},
+\end{equation}
+\begin{equation}   
+    \label{eq:sf_alternate_hatp_ke} 
+    p_{k,e} = \eta_k \eta_{k,e} \hat{p}_{k,e}.
+\end{equation}
+Summing \cref{eq:sf_alternate_hatp_kis} over all species and using \cref{eq:sf_mm_ms_pki} gives
+\begin{equation*}
+    p_{k,i} = \eta_k \sum_s^{N_k} \eta_{k,i,s} \hat{p}_{k,i,s},
+\end{equation*}
+If we define $\hat{p}_{k,i}$ so that it satisfies 
+\begin{equation}
+    \label{eq:sf_alternate_hatp_ki}
+    p_{k,i} = \eta_k \hat{p}_{k,i},
+\end{equation}  
+then we have
+\begin{equation}
+    \hat{p}_{k,i} = \sum_s^{N_k} \eta_{k,i,s} \hat{p}_{k,i,s},
+\end{equation}
+Thus, we can now show that the total ion enthalpy can be written as
+\begin{equation}
+    h_{k,i} = e_{k,i} + \sum_{s}^{N_k} \frac{Y_{k,i,s}}{\rho_{k,i,s}} \hat{p}_{k,i,s} = e_{k,i} + \sum_{s}^{N_k} \frac{\eta_{k,i,s} }{\rho_k} \hat{p}_{k,i,s} = e_{k,i} + \frac{\hat{p}_{k,i}}{\rho_k}.
+\end{equation}
+Using \cref{eq:sf_alternate_hatp_ki} we can show that
+\begin{equation}
+    h_{k,i} = e_{k,i} + \frac{\eta_k \hat{p}_{k,i}}{\eta_k \rho_k} = e_{k,i} + \frac{p_{k,i}}{\eta_k \rho_k} = e_{k,i} + \frac{p_{k,i}}{\rho Y_k}.
+\end{equation}
+Similarly, using \cref{eq:sf_alternate_hatp_ke}, we can show that
+\begin{equation}
+    h_{k,e} = e_{k,e} + \frac{\eta_k \eta_{k,e} \hat{p}_{k,e}}{\eta_k \eta_{k,e} \rho_{k,e}} = e_{k,e} + \frac{p_{k,e}}{\eta_k \eta_{k,e} \rho_{k,e}} = e_{k,e} + \frac{p_{k,e}}{\eta_k \rho_k Y_{k,e}} = e_{k,e} + \frac{p_{k,e}}{\rho Y_k Y_{k,e}}.
+\end{equation}
+
+
+
 Thus far we've been working with plasmas that behave as ideal gasses with three degrees of freedom (the three translational degrees of freedom). For ideal gasses we also have 
 \begin{equation*}
-    p_{i,s} = (\gamma - 1) \rho Y_{i,s} e_{i,s},
+    p_{k,i,s} = (\gamma - 1) \rho Y_k Y_{k,i,s} e_{k,i,s},
 \end{equation*}
 \begin{equation*}
-    p_e = (\gamma - 1) \rho Y_e e_e.
+    p_{k,e} = (\gamma - 1) \rho Y_k Y_{k,e} e_{k,e}.
 \end{equation*}
-Summing $p_{i,s}$ over all s gives
+Summing $p_{k,i,s}$ over all $s$ gives
 \begin{equation}
-    p_i = (\gamma - 1) \rho e_i,
+    p_{k,i} = (\gamma - 1) \rho Y_k e_{k,i}.
 \end{equation}
-where $e_i = \sum_s^N Y_{i,s} e_{i,s}$. Thus, given that $\gamma = 5/3$, the internal energy equation for ions given by \cref{eq:sf_sm_ms_iei} becomes
+
+Since $\gamma = 5/3$ for the plasmas under consideration, the internal energy equation for ions given by \cref{eq:sf_mm_ms_iei} can now be written as
 \begin{equation*}
-    \frac{\partial \rho e_i}{\partial t} + \nabla \cdot \left( \rho e_i \uvec \right) = \sigmavec_i : \nabla \uvec - \nabla \cdot \qvec_i + Q_i.
+    \frac{\partial \rho Y_k e_{k,i}}{\partial t} + \nabla \cdot \left( \rho Y_k e_{k,i} \uvec \right) = \sigmavec_{k,i} : \nabla \uvec - \nabla \cdot \qvec_{k,i} + Q_{k,i} - \nabla \cdot \left( \rho Y_k e_{k,i} \wvec_{k,i} \right) + \sigmavec_{k,i} : \nabla \wvec_{k,i}.
 \end{equation*}
-Similarly, the internal energy equation for electrons given by \cref{eq:sf_sm_ms_iee} becomes
+Similarly, the internal energy equation for electrons given by \cref{eq:sf_mm_ms_iee} becomes
 \begin{equation*}
-    \frac{\partial \rho Y_e e_e}{\partial t} + \nabla \cdot \left( \rho Y_e e_e \uvec \right) = \sigmavec_e : \nabla \uvec - \nabla \cdot \qvec_e + Q_e - \nabla \cdot \left( \rho Y_e e_e \wvec_e \right) + \sigmavec_e : \nabla \wvec_e.
+    \frac{\partial \rho Y_k Y_{k,e} e_{k,e}}{\partial t} + \nabla \cdot \left( \rho Y_k Y_{k,e} e_{k,e} \uvec \right) = \sigmavec_{k,e} : \nabla \uvec - \nabla \cdot \qvec_{k,}e + Q_{k,e} - \nabla \cdot \left( \rho Y_k Y_{k,e} e_{k,e} \wvec_{k,e} \right) + \sigmavec_{k,e} : \nabla \wvec_{k,e}.
 \end{equation*}
-We re-write the last term above as
+We re-write the last term in the two equations above as
 \begin{align*}
-    \sigmavec_e : \nabla \wvec_e &= \nabla \cdot \left( \wvec_e \cdot \sigmavec_e \right) - \wvec \cdot \nabla \sigmavec_e \\
-    &= -\nabla \cdot (p_e \wvec ) + \nabla \cdot \left( \wvec_e \cdot \tvec_e \right) - \wvec_e \cdot \nabla \sigmavec_e. 
+    \sigmavec_{k,s} : \nabla \wvec_{k,s} &= \nabla \cdot \left( \wvec_{k,s} \cdot \sigmavec_{k,s} \right) - \wvec_{k,s} \cdot \nabla \sigmavec_{k,s} \\
+    &= -\nabla \cdot (p_{k,s} \wvec_{k,s} ) + \nabla \cdot \left( \wvec_{k,s} \cdot \tvec_{k,s} \right) - \wvec_{k,s} \cdot \nabla \sigmavec_{k,s},
 \end{align*}
-Thus, the electron internal energy equation becomes
-\begin{equation*}
-    \frac{\partial \rho Y_e e_e}{\partial t} + \nabla \cdot \left( \rho Y_e e_e \uvec \right) = \sigmavec_e : \nabla \uvec - \nabla \cdot \qvec_e + Q_e -\nabla \cdot \left[ \left( e_e + \frac{p_e}{\rho Y_e} \right) \rho Y_e \wvec_e \right] + \nabla \cdot \left( \wvec_e \cdot \tvec_e \right) - \wvec_e \cdot \nabla \sigmavec_e,
-\end{equation*}
-or
+where $s$ is equal to $i$ or $e$. Thus, the ion and electron internal energy equations become
+\begin{multline*}
+    \frac{\partial \rho Y_k e_{k,i}}{\partial t} + \nabla \cdot \left( \rho Y_k e_{k,i} \uvec \right) = \\
+    \sigmavec_{k,i} : \nabla \uvec - \nabla \cdot \qvec_{k,i} + Q_{k,i} - \nabla \cdot \left[ \left( e_{k,i} + \frac{p_{k,i}}{\rho Y_k} \right) \rho Y_k \wvec_{k,i} \right] + \nabla \cdot \left( \wvec_{k,i} \cdot \tvec_{k,i} \right) - \wvec_{k,i} \cdot \nabla \sigmavec_{k,i}.
+\end{multline*}
+\begin{multline*}
+    \frac{\partial \rho Y_k Y_{k,e} e_{e,k}}{\partial t} + \nabla \cdot \left( \rho Y_k Y_{k,e} e_{k,e} \uvec \right) = \\
+    \sigmavec_{k,e} : \nabla \uvec - \nabla \cdot \qvec_{k,e} + Q_{k,e} - \nabla \cdot \left[ \left( e_{k,e} + \frac{p_{k,e}}{\rho Y_k Y_{k,e}} \right) \rho Y_k Y_{k,e} \wvec_{k,e} \right] + \nabla \cdot \left( \wvec_{k,e} \cdot \tvec_{k,e} \right) - \wvec_{k,e} \cdot \nabla \sigmavec_{k,e}.
+\end{multline*}
+
+
 \begin{equation*}
     \frac{\partial \rho Y_e e_e}{\partial t} + \nabla \cdot \left( \rho Y_e e_e \uvec \right) = \sigmavec_e : \nabla \uvec - \nabla \cdot \qvec_e + Q_e -\nabla \cdot \left[ \left( e_e + \frac{p_e}{\rho Y_e} \right) \jvec_e \right] + \nabla \cdot \left( \wvec_e \cdot \tvec_e \right) - \wvec_e \cdot \nabla \sigmavec_e.
 \end{equation*}
