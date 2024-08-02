@@ -867,39 +867,51 @@ To derive the single-fluid equations we first introduce a set of new variables.
 \subsubsection{Hat variables}
 
 \begin{equation}
+    \label{eq:sf_vars_def_hatn_kis}
     n_{k,i,s} = \eta_k \hat{n}_{k,i,s}.
 \end{equation}
 \begin{equation}
+    \label{eq:sf_vars_def_hatn_ki}
     n_{k,i} = \eta_k \hat{n}_{k,i}.
 \end{equation}
 \begin{equation}
+    \label{eq:sf_vars_def_hatn_ke}
     n_{k,e} = \eta_k \hat{n}_{k,e}.
 \end{equation}
 \begin{equation}
+    \label{eq:sf_vars_def_hatp_kis}
     p_{k,i,s} = \eta_k \hat{p}_{k,i,s}.
 \end{equation}
 \begin{equation}
+    \label{eq:sf_vars_def_hatp_ki}
     p_{k,i} = \eta_k \hat{p}_{k,i}.
 \end{equation}
 \begin{equation}
+    \label{eq:sf_vars_def_hatp_ke}
     p_{k,e} = \eta_k \hat{p}_{k,e}.
 \end{equation}
 \begin{equation}
+    \label{eq:sf_vars_def_hatt_kis}
     \tvec_{k,i,s} = \eta_k \hat{\tvec}_{k,i,s}.
 \end{equation}
 \begin{equation}
+    \label{eq:sf_vars_def_hatt_ki}
     \tvec_{k,i} = \eta_k \hat{\tvec}_{k,i}.
 \end{equation}
 \begin{equation}
+    \label{eq:sf_vars_def_hatt_ke}
     \tvec_{k,e} = \eta_k \hat{t}_{k,e}.
 \end{equation}
 \begin{equation}
+    \label{eq:sf_vars_def_hatsigma_kis}
     \sigmavec_{k,i,s} = \eta_k \hat{\sigmavec}_{k,i,s}.
 \end{equation}
 \begin{equation}
+    \label{eq:sf_vars_def_hatsigma_ki}
     \sigmavec_{k,i} = \eta_k \hat{\sigmavec}_{k,i}.
 \end{equation}
 \begin{equation}
+    \label{eq:sf_vars_def_hatsigma_ke}
     \sigmavec_{k,e} = \eta_k \hat{\sigmavec}_{k,e}.
 \end{equation}
 
@@ -1392,14 +1404,17 @@ For electrons, we have
 \end{equation}
 
 Thus far we've been working with plasmas that behave as ideal gasses with three degrees of freedom (the three translational degrees of freedom). For ideal gasses we also have 
-\begin{equation*}
+\begin{equation}
+    \label{eq:sf_alternate_p_kis}
     p_{k,i,s} = (\gamma - 1) \rho Y_k Y_{k,i,s} e_{k,i,s},
-\end{equation*}
-\begin{equation*}
+\end{equation}
+\begin{equation}
+    \label{eq:sf_alternate_p_ke}
     p_{k,e} = (\gamma - 1) \rho Y_k Y_{k,e} e_{k,e}.
-\end{equation*}
+\end{equation}
 Summing $p_{k,i,s}$ over all $s$ gives
 \begin{equation}
+    \label{eq:sf_alternate_p_ki}
     p_{k,i} = (\gamma - 1) \rho Y_k e_{k,i}.
 \end{equation}
 
@@ -1468,7 +1483,7 @@ Thus, the total internal energy equation becomes
 \end{multline*}
 
 %--------------------------------------------
-\subsection{The volume-fraction equation}
+\subsection{Adding the volume fraction}
 %--------------------------------------------
 In this section we do a switch from variables $p_{k,i}$ and $p_{k,e}$ to $\hat{p}_{k,i}$ and $\hat{p}_{k,e}$. Consider the thermal EOS shown in \cref{eq:sf_mm_ms_eos_ion}, which we repeat below for convenience
 \begin{equation}
@@ -1556,14 +1571,57 @@ Expressing the governing equations in terms of hat variables, we have
     \hat{p}_{k,e} = \hat{n}_{k,e} k_B T_{k,e}.
 \end{equation}
 
-We already have an expression for $h_{k,i}$ in terms of $e_{k,i}$, $\hat{p}_{k,i}$, and $\rho_k$, namely \cref{eq:sf_alternate_hki_rhok}, which we repeat below
-\begin{equation*}
-    h_{k,i} = e_{k,i} + \frac{\hat{p}_{k,i}}{\rho_k}.
-\end{equation*}
-Similarly, \cref{eq:sf_alternate_hke_rho}, which we repeat below, gives $Y_{k,e} h_{k,e}$ in terms of $Y_{k,e} e_{k,i}$, $\hat{p}_{k,e}$, and $\rho_k$
-\begin{equation*}
-    Y_{k,e} h_{k,e} = Y_{k,e} e_{k,e} + \frac{\hat{p}_{k,e}}{\rho_k}.
-\end{equation*}
+Some extra notes on this model:
+\begin{enumerate}
+    \item As before the mass transport equation gives $\rho Y_k Y_{k,i,s}$. Summing over all $s$ gives $\rho Y_k$. Dividing $\rho Y_k Y_{k,i,s}$ by $\rho Y_k$ gives $Y_{k,i,s}$. Summing $\rho Y_k$ over all $k$ gives $\rho$. Dividing $\rho Y_k$ by $\rho$ gives $Y_k$.
+
+    \item The ion internal energy equation gives $e_{k,i}$. 
+
+    \item The electron internal energy equation gives $Y_{k,e} e_{k,e}$.
+
+    \item If $\eta_k$ is known, we can compute $\rho_k$ from $\rho_k = \rho Y_k / \eta_k$.
+
+    \item We can re-write \cref{eq:sf_alternate_p_ki} as $\hat{p}_{k,i} = (\gamma - 1) \rho_k e_{k,i}$ to compute $\hat{p}_{k,i}$.
+
+    \item We can re-write \cref{eq:sf_alternate_p_ke} as $\hat{p}_{k,e} = (\gamma - 1) \rho_k Y_{k,e} e_{k,e}$ to compute $\hat{p}_{k,e}$.
+
+    \item We can compute $h_{k,i}$ using \cref{eq:sf_alternate_hki_rhok}, which we repeat below
+    \begin{equation*}
+        h_{k,i} = e_{k,i} + \frac{\hat{p}_{k,i}}{\rho_k}.
+    \end{equation*}
+
+    \item We can compute $h_{k,e}$ using the first equality in \cref{eq:sf_alternate_hke_rho}, which we repeat below
+    \begin{equation*}
+        Y_{k,e} h_{k,e} = Y_{k,e} e_{k,e} + \frac{\hat{p}_{k,e}}{\rho_k}.
+    \end{equation*}
+
+    \item We can compute $\hat{n}_{k,i,s}$ using \cref{eq:mm_mass_number_densities_i_hat}, which we repeat below
+    \begin{equation*}
+        m_{k,i,s} \hat{n}_{k,i,s} = \rho_k Y_{k,i,s}.
+    \end{equation*}
+
+    \item We can compute $\hat{n}_{k,i}$ using \cref{eq:sf_vars_hatn_ki}, that is, $\hat{n}_{k,i,s} = \sum_s^{N_k} \hat{n}_{k,i,s}$.
+    
+    \item The quasi-neutrality assumption in \cref{eq:sf_quasi_neutrality} is repeated below
+    \begin{equation}
+        \sum_s^{N_k} Z_{k,i,s} n_{k,i,s} = n_{k,e}.
+    \end{equation}
+    Using \cref{eq:sf_vars_def_hatn_kis} and \cref{eq:sf_vars_def_hatn_ke} this is re-written as
+    \begin{equation}
+        \sum_s^{N_k} Z_{k,i,s} \hat{n}_{k,i,s} = \hat{n}_{k,e},
+    \end{equation}
+    and can be used to compute $\hat{n}_{ke}$.
+
+    \item Using $\hat{p}_{k,i}$ and $\hat{n}_{k,i}$ in \cref{eq:sf_mm_ms_eos_ion_hat} we get $T_{k,i}$.
+
+    \item Using $\hat{p}_{k,e}$ and $\hat{n}_{k,e}$ in \cref{eq:sf_mm_ms_eos_elec_hat} we get $T_{k,e}$.
+\end{enumerate}
+
+Note that this model requires knowing the value of $\eta_k$. Thus the following equation is also solved
+\begin{equation}
+    \frac{\partial \eta_k}{\partial t} + \uvec \cdot \nabla \left( \eta_k \right) = \alpha_k,
+\end{equation}
+where $\alpha_k$ is a closure model.
 
 %########################################################################
 \chapter{Basic waves and parameters}
