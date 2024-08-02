@@ -1485,25 +1485,32 @@ Thus, the total internal energy equation becomes
 %--------------------------------------------
 \subsection{Adding the volume fraction}
 %--------------------------------------------
-In this section we do a switch from variables $p_{k,i}$ and $p_{k,e}$ to $\hat{p}_{k,i}$ and $\hat{p}_{k,e}$. Consider the thermal EOS shown in \cref{eq:sf_mm_ms_eos_ion}, which we repeat below for convenience
+In this section we do a switch from variables, which includes going from $p_{k,i}$ and $p_{k,e}$ to $\hat{p}_{k,i}$ and $\hat{p}_{k,e}$. Consider the thermal EOS shown in \cref{eq:sf_mm_ms_eos_ion}, which we repeat below for convenience
 \begin{equation}
     \tag{\ref{eq:sf_mm_ms_eos_ion}}
     p_{k,i} = n_{k,i} k_B T_{k,i}.
 \end{equation}
 Using expressions from \cref{sec:sf_vars} this can be written as
-\begin{equation}
+\begin{equation*}
     \hat{p}_{k,i} = \hat{n}_{k,i} k_B T_{k,i}.
-\end{equation}
+\end{equation*}
 Similarly for the electrons, we have
 \begin{equation}
     \tag{\ref{eq:sf_mm_ms_eos_elec}}
     p_{k,e} = n_{k,e} k_B T_{k,e}.
 \end{equation}
 Using expressions from \cref{sec:sf_vars} this can be written as
-\begin{equation}
+\begin{equation*}
     \hat{p}_{k,e} = \hat{n}_{k,e} k_B T_{k,e}.
-\end{equation}
-The above represent the thermal EOS's where the reference volume is $V_k$ rather than $V$, which is the standard for EOS's in a multi-material problem.
+\end{equation*}
+The above represent the thermal EOS's where the reference volume is $V_k$ rather than $V$, which is the standard for EOS's in a multi-material problem. Similarly, we can re-write \cref{eq:sf_alternate_p_ki} as
+\begin{equation*}
+    \hat{p}_{k,i} = (\gamma - 1) \rho_k e_{k,i},
+\end{equation*}
+and \cref{eq:sf_alternate_p_ke} as 
+\begin{equation*}
+    \hat{p}_{k,e} = (\gamma - 1) \rho_k Y_{k,e} e_{k,e}.
+\end{equation*}
 
 Expressing the governing equations in terms of hat variables, we have
 \begin{equation}
@@ -1563,12 +1570,20 @@ Expressing the governing equations in terms of hat variables, we have
     \rho_q = \sum_k^M \hat{\rho}_{q,k},
 \end{equation}
 \begin{equation}
-    \label{eq:sf_mm_ms_eos_ion_hat}
-    \hat{p}_{k,i} = \hat{n}_{k,i} k_B T_{k,i}.
+    \label{eq:sf_mm_ms_therm_eos_ion_hat}
+    \hat{p}_{k,i} = \hat{n}_{k,i} k_B T_{k,i},
 \end{equation}
 \begin{equation}
-    \label{eq:sf_mm_ms_eos_elec_hat}
-    \hat{p}_{k,e} = \hat{n}_{k,e} k_B T_{k,e}.
+    \label{eq:sf_mm_ms_therm_eos_elec_hat}
+    \hat{p}_{k,e} = \hat{n}_{k,e} k_B T_{k,e},
+\end{equation}
+\begin{equation}
+    \label{eq:sf_mm_ms_calo_eos_ion_hat}
+    \hat{p}_{k,i} = (\gamma - 1) \rho_k e_{k,i},
+\end{equation}
+\begin{equation}
+    \label{eq:sf_mm_ms_calo_eos_elec_hat}
+    \hat{p}_{k,e} = (\gamma - 1) \rho_k Y_{k,e} e_{k,e}.
 \end{equation}
 
 Some extra notes on this model:
@@ -1581,9 +1596,9 @@ Some extra notes on this model:
 
     \item If $\eta_k$ is known, we can compute $\rho_k$ from $\rho_k = \rho Y_k / \eta_k$.
 
-    \item We can re-write \cref{eq:sf_alternate_p_ki} as $\hat{p}_{k,i} = (\gamma - 1) \rho_k e_{k,i}$ to compute $\hat{p}_{k,i}$.
+    \item Using $\rho_k$ and $e_{k,i}$ in \cref{eq:sf_mm_ms_calo_eos_ion_hat} we get $\hat{p}_{k,i}$.
 
-    \item We can re-write \cref{eq:sf_alternate_p_ke} as $\hat{p}_{k,e} = (\gamma - 1) \rho_k Y_{k,e} e_{k,e}$ to compute $\hat{p}_{k,e}$.
+    \item Using $\rho_k$ and $Y_{k,e} e_{k,e}$ in \cref{eq:sf_mm_ms_calo_eos_elec_hat} we get $\hat{p}_{k,e}$.
 
     \item We can compute $h_{k,i}$ using \cref{eq:sf_alternate_hki_rhok}, which we repeat below
     \begin{equation*}
@@ -1612,9 +1627,9 @@ Some extra notes on this model:
     \end{equation}
     and can be used to compute $\hat{n}_{ke}$.
 
-    \item Using $\hat{p}_{k,i}$ and $\hat{n}_{k,i}$ in \cref{eq:sf_mm_ms_eos_ion_hat} we get $T_{k,i}$.
+    \item Using $\hat{p}_{k,i}$ and $\hat{n}_{k,i}$ in \cref{eq:sf_mm_ms_therm_eos_ion_hat} we get $T_{k,i}$.
 
-    \item Using $\hat{p}_{k,e}$ and $\hat{n}_{k,e}$ in \cref{eq:sf_mm_ms_eos_elec_hat} we get $T_{k,e}$.
+    \item Using $\hat{p}_{k,e}$ and $\hat{n}_{k,e}$ in \cref{eq:sf_mm_ms_therm_eos_elec_hat} we get $T_{k,e}$.
 \end{enumerate}
 
 Note that this model requires knowing the value of $\eta_k$. Thus the following equation is also solved
