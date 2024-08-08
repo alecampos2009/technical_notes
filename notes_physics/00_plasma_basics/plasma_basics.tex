@@ -15,7 +15,7 @@
 \setlength{\cellspacetoplimit}{3pt}
 \setlength{\cellspacebottomlimit}{3pt}
 
-\title{Introduction}
+\title{Plasma Basics}
 \author{Alejandro Campos}
 
 \begin{document}
@@ -1674,7 +1674,7 @@ Note that this model requires knowing the value of $\eta_k$. Thus the following 
 where $\alpha_k$ is a closure model.
 
 %########################################################################
-\chapter{Basic waves and parameters}
+\chapter{Plasma waves}
 %########################################################################
 
 %------------------------------------------------------------------------
@@ -1874,13 +1874,13 @@ Since $w^2$ is always positive, $\tilde{n}_{i1} = \hat{n}_{i1} \exp (i \kvec_i \
 \end{equation}
 The above is the dispersion relation for ion-acoustic waves.
 
-%------------------------------------------------------------------------
-\section{Plasma parameters}
-%------------------------------------------------------------------------
+%########################################################################
+\chapter{Plasma parameters}
+%########################################################################
 
-%--------------------------------------------
-\subsection{Debye length}
-%--------------------------------------------
+%------------------------------------------------------------------------
+\section{Debye length}
+%------------------------------------------------------------------------
 To describe the Debye length we'll use the governing equations from \cref{sec:mf_2fluid_equations} (without assuming isentropic/homentropic flow) as well as the following assumptions
 \begin{enumerate}
     \item Stationary plasma $\uvec_i = \uvec_e = 0$.
@@ -1983,7 +1983,7 @@ Using this, we can re-write \cref{eq:debye_ode_phi_2} simply as
 The solution to the above that also conforms to the boundary conditions is
 \begin{equation}
     \label{eq:debye_phi_sol}
-    \phi = -\frac{V}{2} \frac{\sinh \left (\frac{x}{\lambda_D} \right )}{\sinh \left ( \frac{L}{2\lambda_D} \right )}.
+    \phi = -\frac{V}{2} \frac{\sinh \left( x / \lambda_D \right)}{\sinh \left( L/2\lambda_D \right)}.
 \end{equation}
 A plot of $\phi$ and the corresponding $E$ is shown in \cref{fig:debye_phi_elec} for various values of $\lambda_D/L$. As the figure shows, the presence of a plasma shields out the electric field, in contrast to the vacuum case where a constant electric field is present across the domain. Given a fixed domain size $L$, varying the parameter $\lambda_D$ determines how well the plasma shields away the electric field. 
 \begin{figure}
@@ -2010,9 +2010,9 @@ We note that $\lambda_{De}$,  $w_{pe}$, and $v_{Te}$ are all related to each oth
     \lambda_{De} w_{pe} = \left ( \frac{\epsilon_0 k_B T_e}{n_{e0} e^2} \right )^{1/2} \left ( \frac{n_{e0} e^2}{m_e \epsilon_0} \right )^{1/2} = \left ( \frac{k_B T_e}{m_e} \right )^{1/2} = v_{Te}.
 \end{equation}
 
-%--------------------------------------------
-\subsection{Plasma frequency}
-%--------------------------------------------
+%------------------------------------------------------------------------
+\section{Plasma frequency}
+%------------------------------------------------------------------------
 We'll use the same setting as that for the derivation of the Debye length. The only difference is that the potential drop across the domain now oscillates with a frequency of $w$, that is $\phi_1(-L/2) - \phi_1(L/2) = V \exp (-iwt)$.
 
 The starting point is \cref{eq:ep_waves_pre_dispersion}, that is, the equation for electron-plasma waves after assuming $n_{e1} = \tilde{n}_{e1} \exp (-i w t)$, where $\tilde{n}_{e1} = \tilde{n}_{e1}(\xvec)$. In one dimension this equation takes the form
@@ -2078,6 +2078,24 @@ Thus, the final solution for $\phi_1$ is
 \begin{equation}
     \phi_1 = - \frac{V}{2} \frac{\sin (x / \alpha)}{\sin (L / 2\alpha)} \exp(-iwt).
 \end{equation}
+We plot the result above along with the corresponding electric field in \cref{fig:pf_phi_elec}. Thus, as the ratio $w/w_{pe}$ increases, $\alpha$ decreases, and we go from green to orange to blue, that is, the frequency of oscillation increases.
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../../images/pf_phi.pdf}
+        \caption{}
+        \label{fig:pf_phi}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../../images/pf_elec.pdf}
+        \caption{}
+        \label{fig:pf_elec}
+    \end{subfigure}
+    \caption{Electric potential and field for various values of $\alpha/L$.}
+    \label{fig:pf_phi_elec}
+\end{figure}
 
 \subsubsection{Case 2 $w_{pe} \ge w$}
 We introduce the variable $\beta$ so that it satisfies
@@ -2108,9 +2126,7 @@ Thus, the final solution for $\phi_1$ is
 \begin{equation}
     \phi_1 = - \frac{V}{2} \frac{\sinh (x / \beta)}{\sinh (L / 2 \beta)} \exp(-iwt).
 \end{equation}
-Note that the spatial functional form of the above is equivalent to \cref{eq:debye_phi_sol} if $\beta$ were to be equal to $\lambda_D$.
-
-Add some plots to visualize cases 1 and 2.
+Note that the spatial functional form of the above is equivalent to \cref{eq:debye_phi_sol} if $\beta$ were to be equal to $\lambda_D$. Thus, as the ratio $w/w_{pe}$ decreases, $\beta$ decreases, and we go from green to orange to blue in \cref{fig:debye_phi_elec}, that is, the shielding improves.
 
 It is often important to know the plasma density at which the electron plasma frequency $w_{pe}$ equals the external frequency $w$. This density is referred to as the critical density $n_{cr}$. Equating the electron plasma frequency with the external frequency we get
 \begin{equation*}
@@ -2127,9 +2143,9 @@ The above can be re-written as
 \end{equation*}
 where $\lambda_{\mu m}$ is in units of microns and $n_{cr}$ in units of \#/m\textsuperscript{3}.
 
-%--------------------------------------------
-\subsection{The coupling parameter}
-%--------------------------------------------
+%------------------------------------------------------------------------
+\section{The coupling parameter}
+%------------------------------------------------------------------------
 
 Coulomb interactions are those which occur when two charge particles head towards each other. We can define two types of Coulomb interactions: strong and weak. Strong Coulomb interactions are those for which the particle's Coulomb potential energy is larger than its kinetic energy, and vice versa for weak Coulomb interactions. Thus, we can also define two types of plasma regimes:
 \begin{itemize}
@@ -2159,9 +2175,9 @@ The ratio of the particle's Coulomb potential energy and its kinetic energy is r
 \end{equation}
 $\Gamma_s > 1$ denotes a strongly coupled plasma, and $\Gamma_s < 1$ denotes a weakly coupled plasma. 
 
-%--------------------------------------------
-\subsection{The plasma parameter}
-%--------------------------------------------
+%------------------------------------------------------------------------
+\section{The plasma parameter}
+%------------------------------------------------------------------------
 The standard plasma parameter $\Lambda_s$ is defined as
 \begin{equation}
     \Lambda_s = \frac{4}{3} \pi \lambda_{Ds}^3 n_s.
@@ -2173,9 +2189,9 @@ There is a one to one relationship between the coupling parameter and the standa
 \end{equation}
 Thus, the coupling and plasma parameters are inversely proportional to each other. $\Lambda_s < 1$ implies strongly-coupled plasmas, and $\Lambda_s > 1$ weakly-coupled plasmas. Since $\Lambda_s$ represents the number of particles per Debye sphere, it is interesting to see that a large number of particles within such a sphere is needed to be in the weakly-coupled-plasma regime. However, this does not correspond to a plasma with large density, in fact, it corresponds to the opposite. The explicit $n_s$ term in the definition $\Lambda_s = (4/3) \pi \lambda^3_{Ds} n_s$ is dominated by the $n_s$ in the denominator of $\lambda_{Ds}$. In other words, low plasma densities lead to large Debye spheres, which in turn leads to many particles per Debye sphere, and hence a weakly-coupled plasma.
 
-%--------------------------------------------
-\subsection{Electron degeneracy}
-%--------------------------------------------
+%------------------------------------------------------------------------
+\section{Electron degeneracy}
+%------------------------------------------------------------------------
 
 \begin{itemize}
     \item DeBroglie wavelength
