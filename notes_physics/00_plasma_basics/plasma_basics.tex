@@ -653,17 +653,21 @@ For multi-material problems there is a large number of new variables that are us
 \end{equation}
 \begin{equation}
     \label{eq:sf_vars_def_hatsigma_ke}
-    \sigmavec_{k,e} = \eta_k \hat{\sigmavec}_{k,e}.
+    \hat{\sigmavec_{k,e}} = \eta_k \sigmavec_{k,e}.
 \end{equation}
 
 \subsubsection{Number densities}
 \begin{equation}
-    \label{eq:mm_mass_number_densities_i_hat}
-    m_{k,i,s} \hat{n}_{k,i,s} = \rho Y_k Y_{k,i,s}.
+    n_{k,i,s} = \frac{\mathsf{N}_{k,i,s}}{\mathsf{V}_k}.
 \end{equation}
 \begin{equation}
-    \label{eq:mm_mass_number_densities_e_hat}
-    m_e \hat{n}_{k,e} = \rho Y_k Y_{k,e}.
+    n_{k,e} = \frac{\mathsf{N}_{k,e}}{\mathsf{V}_k}.
+\end{equation}
+\begin{equation}
+    \hat{n}_{k,i,s} = \frac{\mathsf{N}_{k,i,s}}{\mathsf{V}}.
+\end{equation}
+\begin{equation}
+    \hat{n}_{k,e} = \frac{\mathsf{N}_{k,e}}{\mathsf{V}}.
 \end{equation}
 \begin{equation}
     \label{eq:mm_mass_number_densities_i}
@@ -672,6 +676,14 @@ For multi-material problems there is a large number of new variables that are us
 \begin{equation}
     \label{eq:mm_mass_number_densities_e}
     m_e n_{k,e} = \rho_k Y_{k,e}.
+\end{equation}
+\begin{equation}
+    \label{eq:mm_mass_number_densities_i_hat}
+    m_{k,i,s} \hat{n}_{k,i,s} = \rho Y_k Y_{k,i,s}.
+\end{equation}
+\begin{equation}
+    \label{eq:mm_mass_number_densities_e_hat}
+    m_e \hat{n}_{k,e} = \rho Y_k Y_{k,e}.
 \end{equation}
 
 %------------------------------------------------------------------------
@@ -1251,10 +1263,6 @@ Adding over all ion species of a material and using expressions for total ion qu
     \frac{\partial}{\partial t} \left( \frac{3}{2} \eta_k p_{k,i} \right) + \nabla \cdot \left( \frac{3}{2} \eta_k p_{k,i} \uvec \right) = \\ 
     \eta_k \sigmavec_{k,i} : \nabla \uvec - \nabla \cdot \qvec_{k,i} + Q_{k,i} - \nabla \cdot \left( \frac{3}{2} \eta_k p_{k,i} \wvec_{k,i} \right) + \eta_k \sigmavec_{k,i} : \nabla \wvec_{k,i}.
 \end{equation*}
-Similarly, summing the ion EOS over all species of a material and using expressions for total ion quantities we have
-\begin{equation*}
-    p_{k,i} = n_{k,i} k_B T_{k,i},
-\end{equation*}
 
 To summarize, we have
 \begin{equation}
@@ -1672,6 +1680,11 @@ Note that this model requires knowing the value of $\eta_k$. Thus the following 
     \frac{\partial \eta_k}{\partial t} + \uvec \cdot \nabla \left( \eta_k \right) = \alpha_k,
 \end{equation}
 where $\alpha_k$ is a closure model.
+
+%--------------------------------------------
+\subsection{Generic EOS}
+%--------------------------------------------
+Rather than assuming ideal equations of state for each species, we can instead account for generic equations of state. To show this, we first start with
 
 %########################################################################
 \chapter{Plasma waves}
