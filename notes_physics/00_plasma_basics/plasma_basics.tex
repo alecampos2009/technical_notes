@@ -169,7 +169,7 @@ We denote the distribution function for a species $s$ as $f_s = f_s(\rvec, \vvec
 \end{equation}
 where $N_s$ is the total number of particles corresponding to species $s$. 
 
-The dynamics of a plasma can be characterized by the Boltzmann evolution equation for the distribution function of $N$ species along with Maxwell's equations
+The dynamics of a plasma can be characterized by the Boltzmann evolution equation for the distribution function of $\mathcal{N}$ species along with Maxwell's equations
 \begin{equation}
 \label{eq:kinetic_equation}
 \frac{\partial f_s}{\partial t} + \vvec \cdot \nabla f_s + \frac{Z_s e}{m_s} ( \Evec + \vvec \times \Bvec ) \cdot \nabla_v f_s = C_s + S_s
@@ -191,16 +191,16 @@ The dynamics of a plasma can be characterized by the Boltzmann evolution equatio
 \nabla \times \Bvec = \mu_0 \Jvec + \mu_0 \epsilon_0 \frac{\partial \Evec}{\partial t}
 \end{equation}
 \begin{equation}
-\Jvec = \sum_s^N Z_s e \int \vvec f_s \, d\vvec
+\Jvec = \sum_s^\mathcal{N} Z_s e \int \vvec f_s \, d\vvec
 \end{equation}
 \begin{equation}
-\rho_q = \sum_s^N Z_s e \int f_s \, d\vvec.
+\rho_q = \sum_s^\mathcal{N} Z_s e \int f_s \, d\vvec.
 \end{equation}
 In the above, 
 \begin{itemize}
-\item $m_s$ is the species mass
-\item $e$ is the charge
-\item $Z_s$ the charge number
+\item $m_s$ is the particle's mass
+\item $e$ is the elementary charge
+\item $Z_s$ is the charge number
 \item $\Jvec = \Jvec(\rvec,t)$ the charge current
 \item $\rho_q = \rho_q(\rvec,t)$ the charge density
 \item $\Evec = \Evec(\rvec,t)$ the electric field
@@ -208,7 +208,7 @@ In the above,
 \end{itemize}
 The terms $C_s$ and $S_s$ represent collision and source terms.
 
-If we express the collision term in the usual way, that is $C_s = \sum_r^N C_{s r}$, then we can make the following statements:
+If we express the collision term in the usual way, that is $C_s = \sum_r^\mathcal{N} C_{s r}$, then we can make the following statements:
 \begin{enumerate}
 \item Conservation of particles:
 \begin{equation}
@@ -220,13 +220,13 @@ If we express the collision term in the usual way, that is $C_s = \sum_r^N C_{s 
 \item Conservation of momentum:
 \begin{equation}
     \label{eq:coll_cons_momentum}
-    \int m_s \vvec C_{ss} \, d\vvec = 0 \quad \forall s \qquad \qquad \sum_s^N \sum_{r, r \ne s}^N \int m_s \vvec C_{sr} d\vvec = 0.
+    \int m_s \vvec C_{ss} \, d\vvec = 0 \quad \forall s \qquad \qquad \sum_s^\mathcal{N} \sum_{r, r \ne s}^\mathcal{N} \int m_s \vvec C_{sr} d\vvec = 0.
 \end{equation}
 
 \item Conservation of energy:
 \begin{equation}
     \label{eq:coll_cons_energy}
-    \int \frac{1}{2} m_s v^2 C_{ss} \, d\vvec = 0 \quad \forall s \qquad \qquad \sum_s^N \sum_{r, r \ne s}^N \int \frac{1}{2} m_s v^2 C_{sr} \, d\vvec = 0.
+    \int \frac{1}{2} m_s v^2 C_{ss} \, d\vvec = 0 \quad \forall s \qquad \qquad \sum_s^\mathcal{N} \sum_{r, r \ne s}^\mathcal{N} \int \frac{1}{2} m_s v^2 C_{sr} \, d\vvec = 0.
 \end{equation}
 
 \end{enumerate}
@@ -270,13 +270,13 @@ Multiplying \cref{eq:boltz_mod} by $\vvec$ and then integrating over all $\vvec$
 \begin{multline}
 \label{eq:mom_derv_1}
 \frac{\partial n_s \uvec_s}{\partial t} + \nabla \cdot \left ( \int \vvec \vvec f_s \, d\vvec \right) + \int \nabla_v \cdot \left [ \vvec \frac{Z_s e}{m_s} ( \Evec + \vvec \times \Bvec ) f_s \right ] - \nabla_v \vvec \cdot \left [ \frac{Z_s e}{m_s} ( \Evec + \vvec \times \Bvec ) f_s \right ] \, d\vvec =\\
-\sum_{r, r \ne s}^N \int \vvec C_{s r} \, d\vvec + \int \vvec S_s \, d\vvec.
+\sum_{r, r \ne s}^\mathcal{N} \int \vvec C_{s r} \, d\vvec + \int \vvec S_s \, d\vvec.
 \end{multline}
 We note that the third term in \cref{eq:mom_derv_1} is zero since we are integrating over all space, and that $\nabla_v \vvec$ is the identity matrix. We thus have
 \begin{multline}
 \label{eq:mom_derv_2}
 \frac{\partial n_s \uvec_s}{\partial t} + \nabla \cdot \left ( \int \vvec \vvec f_s \, d\vvec \right) - \frac{Z_s e n_s}{m_s} ( \Evec + \uvec_s \times \Bvec ) =\\
-\sum_{r, r \ne s}^N \int \vvec C_{s r} \, d\vvec + \int \vvec S_s \, d\vvec.
+\sum_{r, r \ne s}^\mathcal{N} \int \vvec C_{s r} \, d\vvec + \int \vvec S_s \, d\vvec.
 \end{multline}
 
 To proceed, we decompose $\vvec$ into a mean and a fluctuation, that is, $\vvec = \uvec_s + \wvec_s$. Using this decomposition 
@@ -288,20 +288,20 @@ Thus, \cref{eq:mom_derv_2} becomes
 \begin{multline}
 \label{eq:mom_derv_3}
 \frac{\partial n_s \uvec_s}{\partial t} + \nabla \cdot \left ( n_s \uvec_s \uvec_s \right) - \frac{Z_s e n_s}{m_s} ( \Evec + \uvec_s \times \Bvec ) = -\nabla \cdot \int \wvec_s \wvec_s f_s d\vvec + \\
-\sum_{r, r \ne s}^N \int \vvec C_{s r} \, d\vvec + \int \vvec S_s \, d\vvec.
+\sum_{r, r \ne s}^\mathcal{N} \int \vvec C_{s r} \, d\vvec + \int \vvec S_s \, d\vvec.
 \end{multline}
 Conservation of particles is used to modify the collisional term as follows
 \begin{align}
     \label{eq:mom_collision_expansion}
-    \sum_{r,r \ne s}^N \int \vvec C_{s r} \, d\vvec 
-    &= \sum_{r,r \ne s}^N \int (\uvec_s + \wvec_s) C_{s r} \, d\vvec \nonumber \\
-    &= \sum_{r,r \ne s}^N \int \wvec_s C_{s r} \, d\vvec 
+    \sum_{r,r \ne s}^\mathcal{N} \int \vvec C_{s r} \, d\vvec 
+    &= \sum_{r,r \ne s}^\mathcal{N} \int (\uvec_s + \wvec_s) C_{s r} \, d\vvec \nonumber \\
+    &= \sum_{r,r \ne s}^\mathcal{N} \int \wvec_s C_{s r} \, d\vvec 
 \end{align}
 Thus, we now have
 \begin{multline}
 \label{eq:mom_derv_4}
 \frac{\partial n_s \uvec_s}{\partial t} + \nabla \cdot \left ( n_s \uvec_s \uvec_s \right) - \frac{Z_s e n_s}{m_s} ( \Evec + \uvec_s \times \Bvec ) = -\nabla \cdot \int \wvec_s \wvec_s f_s d\vvec + \\
-\sum_{r, r \ne s}^N \int \wvec_s C_{s r} \, d\vvec + \int \vvec S_s \, d\vvec.
+\sum_{r, r \ne s}^\mathcal{N} \int \wvec_s C_{s r} \, d\vvec + \int \vvec S_s \, d\vvec.
 \end{multline}
 
 Multiplying by mass leads to the following equation
@@ -317,7 +317,7 @@ where the stress tensor is
 \end{equation}
 the momentum transferred between unlike particles due to friction of collisions is
 \begin{equation}
-\Rvec_s = \sum_{r, r \ne s}^N \int m_s \wvec_s C_{s r} \, d\vvec,
+\Rvec_s = \sum_{r, r \ne s}^\mathcal{N} \int m_s \wvec_s C_{s r} \, d\vvec,
 \end{equation}
 and the external source of momentum is
 \begin{equation}
@@ -345,13 +345,13 @@ Multiplying \cref{eq:boltz_mod} by $\frac{1}{2} v^2$ and then integrating over a
 \begin{multline}
 \label{eq:energy_derv_1}
 \frac{\partial n_s E_s}{\partial t} + \nabla \cdot \left [ \int \frac{1}{2} (\vvec \cdot \vvec) \vvec f_s \, d\vvec \right ] + \int \nabla_v \cdot \left [ \frac{1}{2} (\vvec \cdot \vvec) \frac{Z_s e}{m_s} ( \Evec + \vvec \times \Bvec ) f_s \right ] \\
-- \nabla_v \left [ \frac{1}{2} (\vvec \cdot \vvec) \right ] \cdot \left [ \frac{Z_s e}{m_s} ( \Evec + \vvec \times \Bvec ) f_s \right ] \, d\vvec = \sum_{r, r \ne s}^N \int \frac{1}{2} (\vvec \cdot \vvec) C_{s r} \, d\vvec + \int \frac{1}{2} (\vvec \cdot \vvec) S_s \, d\vvec.
+- \nabla_v \left [ \frac{1}{2} (\vvec \cdot \vvec) \right ] \cdot \left [ \frac{Z_s e}{m_s} ( \Evec + \vvec \times \Bvec ) f_s \right ] \, d\vvec = \sum_{r, r \ne s}^\mathcal{N} \int \frac{1}{2} (\vvec \cdot \vvec) C_{s r} \, d\vvec + \int \frac{1}{2} (\vvec \cdot \vvec) S_s \, d\vvec.
 \end{multline}
 We note that the third term above is zero since we are integrating over all space, and that $\nabla_v [ 1/2 (\vvec \cdot \vvec ) ] = \vvec$. Thus, we have
 \begin{multline}
 \label{eq:energy_derv_2}
 \frac{\partial n_s E_s}{\partial t} + \nabla \cdot \left [ \int \frac{1}{2} (\vvec \cdot \vvec) \vvec f_s \, d\vvec \right ] - \frac{Z_s e n_s}{m_s} \Evec \cdot \uvec_s =\\
-\sum_{r, r \ne s}^N \int \frac{1}{2} (\vvec \cdot \vvec) C_{s r} \, d\vvec + \int \frac{1}{2} (\vvec \cdot \vvec) S_s \, d\vvec.
+\sum_{r, r \ne s}^\mathcal{N} \int \frac{1}{2} (\vvec \cdot \vvec) C_{s r} \, d\vvec + \int \frac{1}{2} (\vvec \cdot \vvec) S_s \, d\vvec.
 \end{multline}
 
 To proceed with the derivation we first note that
@@ -367,20 +367,20 @@ Using the expressions above, \cref{eq:energy_derv_2} becomes
 \begin{multline}
 \label{eq:energy_derv_3}
 \frac{\partial n_s E_s}{\partial t} + \nabla \cdot (n_s E_s \uvec_s ) - \frac{Z_s e n_s}{m_s} \Evec \cdot \uvec_s =  - \nabla \cdot \left ( \uvec_s \cdot \int \wvec_s \wvec_s f_s \, d\vvec \right ) - \nabla \cdot \int \frac{1}{2} ( \wvec_s \cdot \wvec_s ) \wvec_s f_s \, d\vvec\\
-+ \sum_{r, r \ne s}^N \int \frac{1}{2} (\vvec \cdot \vvec) C_{s r} \, d\vvec + \int \frac{1}{2} (\vvec \cdot \vvec) S_s \, d\vvec.
++ \sum_{r, r \ne s}^\mathcal{N} \int \frac{1}{2} (\vvec \cdot \vvec) C_{s r} \, d\vvec + \int \frac{1}{2} (\vvec \cdot \vvec) S_s \, d\vvec.
 \end{multline}
 Conservation of particles is used to modify the collisional term as follows
 \begin{align}
     \label{eq:energy_collision_expansion}
-    \sum_{r,r \ne s}^N \int \frac{1}{2} (\vvec \cdot \vvec) C_{s r} \, d\vvec 
-    &= \sum_{r,r \ne s}^N \int \frac{1}{2} [ (\uvec_s + \wvec_s) \cdot (\uvec_s + \wvec_s)] C_{s r} \, d\vvec \nonumber \\
-    &= \uvec_s \cdot  \sum_{r,r \ne s}^N \int \wvec_s C_{s r} \, d\vvec + \sum_{r,r \ne s}^N \int \frac{1}{2} (\wvec_s \cdot \wvec_s) C_{s r} \, d\vvec 
+    \sum_{r,r \ne s}^\mathcal{N} \int \frac{1}{2} (\vvec \cdot \vvec) C_{s r} \, d\vvec 
+    &= \sum_{r,r \ne s}^\mathcal{N} \int \frac{1}{2} [ (\uvec_s + \wvec_s) \cdot (\uvec_s + \wvec_s)] C_{s r} \, d\vvec \nonumber \\
+    &= \uvec_s \cdot  \sum_{r,r \ne s}^\mathcal{N} \int \wvec_s C_{s r} \, d\vvec + \sum_{r,r \ne s}^\mathcal{N} \int \frac{1}{2} (\wvec_s \cdot \wvec_s) C_{s r} \, d\vvec 
 \end{align}
 Thus, we now have
 \begin{multline}
 \label{eq:energy_derv_4}
 \frac{\partial n_s E_s}{\partial t} + \nabla \cdot (n_s E_s \uvec_s ) - \frac{Z_s e n_s}{m_s} \Evec \cdot \uvec_s = - \nabla \cdot \left ( \uvec_s \cdot \int \wvec_s \wvec_s f_s \, d\vvec  \right ) - \nabla \cdot \int \frac{1}{2} ( \wvec_s \cdot \wvec_s ) \wvec_s f_s \, d\vvec \\
-+ \uvec_s \cdot \sum_{r,r \ne s}^N \int \wvec_s C_{s r} \, d\vvec + \sum_{r, r \ne s}^N \int \frac{1}{2} (\wvec_s \cdot \wvec_s) C_{s r} \, d\vvec + \int \frac{1}{2} (\vvec \cdot \vvec) S_s \, d\vvec.
++ \uvec_s \cdot \sum_{r,r \ne s}^\mathcal{N} \int \wvec_s C_{s r} \, d\vvec + \sum_{r, r \ne s}^\mathcal{N} \int \frac{1}{2} (\wvec_s \cdot \wvec_s) C_{s r} \, d\vvec + \int \frac{1}{2} (\vvec \cdot \vvec) S_s \, d\vvec.
 \end{multline}
 
 Multiplying by mass leads to the following equation
@@ -397,7 +397,7 @@ where heat flux due to random motion is
 \end{equation}
 the heat generated and transferred between unlike particles due to collisional dissipation is 
 \begin{equation}
-Q_{s} = \sum_{r,r \ne s}^N \int \frac{1}{2} m_s (\wvec_s \cdot \wvec_s) C_{s r} \, d\vvec,
+Q_{s} = \sum_{r,r \ne s}^\mathcal{N} \int \frac{1}{2} m_s (\wvec_s \cdot \wvec_s) C_{s r} \, d\vvec,
 \end{equation}
 and the external source of energy is
 \begin{equation}
@@ -427,7 +427,7 @@ The equation for the kinetic energy is obtained by dotting \cref{eq:mom_derv_6} 
     \uvec_s \cdot &\left [ \frac{\partial m_s n_s \uvec_s}{\partial t} + \nabla \cdot \left ( m_s n_s \uvec_s \uvec_s \right) \right ] \\
     & =\uvec_s \cdot \left \{ \left [ \frac{\partial m_s n_s }{\partial t} + \nabla \cdot \left ( m_s n_s \uvec_s \right) \right] \uvec_s  + m_s n_s \left ( \frac{\partial \uvec_s}{\partial t} + \uvec_s \cdot \nabla \uvec_s \right ) \right \}\\
     & =\uvec_s \cdot \left [ m_s \hat{S}_s \uvec_s  + m_s n_s \left ( \frac{\partial \uvec_s}{\partial t} + \uvec_s \cdot \nabla \uvec_s \right ) \right ] \\
-    & =2m_s \hat{S}_s K_s + m_s n_s \left ( \frac{\partial K_s}{\partial t} + \uvec_s \cdot \nabla K_s \right) \\
+    & =2 m_s \hat{S}_s K_s + m_s n_s \left ( \frac{\partial K_s}{\partial t} + \uvec_s \cdot \nabla K_s \right) \\
     & =m_s \hat{S}_s K_s + \left [ \frac{\partial m_s n_s}{\partial t} + \nabla \cdot \left (m_s n_s \uvec_s \right ) \right] K_s + m_s n_s \left ( \frac{\partial K_s}{\partial t} + \uvec_s \cdot \nabla K_s \right) \\
     & =m_s \hat{S}_s K_s + \frac{\partial m_s n_s K_s}{\partial t} + \nabla \cdot ( m_s n_s K \uvec_s ).
 \end{align}
@@ -499,31 +499,31 @@ We note that multi-fluid or multi-material problems are always multi-species. Si
 %------------------------------------------------------------------------
 \section{Multi-material formulation}
 %------------------------------------------------------------------------
-We define a material $k$ as a collection of species $s$. Rather than labeling species using the single subscript $s$, we'll use the subscript $k,i,s$ and $k,e$, where the former denotes the ion species $s$ that belongs to material $k$, and the latter denotes the electron species that belongs to material $k$. We also note that the number of ion species within a material will be denoted as $N_k$, and the total number of materials as $M$.
+We define a material $k$ as a collection of species $s$. Rather than labeling species using the single subscript $s$, we'll use the subscript $k,i,s$ and $k,e$, where the former denotes the ion species $s$ that belongs to material $k$, and the latter denotes the electron species that belongs to material $k$. The number of ion species within a material is denoted as $\mathcal{N}_k$, and the total number of materials as $\mathcal{M}$.
 
 For multi-material problems there is a large number of new variables that are used. These are listed below.
 \subsubsection{Mass densities}
 
 \begin{equation}
-    \rho = \frac{m}{V}.
+    \rho = \frac{\mathsf{M}}{\mathsf{V}}.
 \end{equation}
 \begin{equation}
-    \rho_k= \frac{m_k}{V_k}.
+    \rho_k= \frac{\mathsf{M}_k}{\mathsf{V}_k}.
 \end{equation}
 \begin{equation}
-    \rho_{k,i,s}= \frac{m_{k,i,s}}{V_{k,i,s}}.
+    \rho_{k,i,s}= \frac{\mathsf{M}_{k,i,s}}{\mathsf{V}_{k,i,s}}.
 \end{equation}
 \begin{equation}
-    \rho_{k,e}= \frac{m_{k,e}}{V_{k,e}}.
+    \rho_{k,e}= \frac{\mathsf{M}_{k,e}}{\mathsf{V}_{k,e}}.
 \end{equation}
 
 \subsubsection{Material volume and mass fractions}
 
 \begin{equation}
-    \eta_k = \frac{V_k}{V},
+    \eta_k = \frac{\mathsf{V}_k}{\mathsf{V}},
 \end{equation}
 \begin{equation}
-    Y_k = \frac{m_k}{m}.
+    Y_k = \frac{\mathsf{M}_k}{\mathsf{M}}.
 \end{equation}
 \begin{equation}
     \rho_k = \rho \frac{Y_k}{\eta_k}.
@@ -532,16 +532,16 @@ For multi-material problems there is a large number of new variables that are us
 \subsubsection{Species volume and mass fractions}
 
 \begin{equation}
-    \eta_{k,i,s} = \frac{V_{k,i,s}}{V_k}.
+    \eta_{k,i,s} = \frac{\mathsf{V}_{k,i,s}}{\mathsf{V}_k}.
 \end{equation}
 \begin{equation}
-    \eta_{k,e} = \frac{V_{k,e}}{V_k}.
+    \eta_{k,e} = \frac{\mathsf{V}_{k,e}}{\mathsf{V}_k}.
 \end{equation}
 \begin{equation}
-    Y_{k,i,s} = \frac{m_{k,i,s}}{m_k}.
+    Y_{k,i,s} = \frac{\mathsf{M}_{k,i,s}}{\mathsf{M}_k}.
 \end{equation}
 \begin{equation}
-    Y_{k,e} = \frac{m_{k,e}}{m_k}.
+    Y_{k,e} = \frac{\mathsf{M}_{k,e}}{\mathsf{M}_k}.
 \end{equation}
 \begin{equation}
     \rho_{k,i,s} = \rho_k \frac{Y_{k,i,s}}{\eta_{k,i,s}}.
@@ -554,55 +554,55 @@ For multi-material problems there is a large number of new variables that are us
 
 \begin{equation}
     \label{eq:sf_vars_eta_ki}
-    \eta_{k,i} = \sum_s^{N_k} \eta_{k,i,s}, 
+    \eta_{k,i} = \sum_s^{\mathcal{N}_k} \eta_{k,i,s}, 
 \end{equation}
 \begin{equation}
     \label{eq:sf_vars_Y_ki}
-    Y_{k,i} = \sum_s^{N_k} Y_{k,i,s}, 
+    Y_{k,i} = \sum_s^{\mathcal{N}_k} Y_{k,i,s}, 
 \end{equation}
 \begin{equation}
     \label{eq:sf_vars_n_ki}
-    n_{k,i} = \sum_s^{N_k} n_{k,i,s}. 
+    n_{k,i} = \sum_s^{\mathcal{N}_k} n_{k,i,s}. 
 \end{equation}
 \begin{equation}
     \label{eq:sf_vars_hatn_ki}
-    \hat{n}_{k,i} = \sum_s^{N_k} \hat{n}_{k,i,s}. 
+    \hat{n}_{k,i} = \sum_s^{\mathcal{N}_k} \hat{n}_{k,i,s}. 
 \end{equation}
 \begin{equation}
     \label{eq:sf_vars_p_ki}
-    p_{k,i} = \sum_s^{N_k} p_{k,i,s}.
+    p_{k,i} = \sum_s^{\mathcal{N}_k} p_{k,i,s}.
 \end{equation}
 \begin{equation}
     \label{eq:sf_vars_hatp_ki}
-    \hat{p}_{k,i} = \sum_s^{N_k} \hat{p}_{k,i,s}. 
+    \hat{p}_{k,i} = \sum_s^{\mathcal{N}_k} \hat{p}_{k,i,s}. 
 \end{equation}
 \begin{equation}
     \label{eq:sf_vars_t_ki}
-    \tvec_{k,i} = \sum_s^{N_k} \tvec_{k,i,s}.
+    \tvec_{k,i} = \sum_s^{\mathcal{N}_k} \tvec_{k,i,s}.
 \end{equation}
 \begin{equation}
     \label{eq:sf_vars_hatt_ki}
-    \hat{\tvec}_{k,i} = \sum_s^{N_k} \hat{\tvec}_{k,i,s}. 
+    \hat{\tvec}_{k,i} = \sum_s^{\mathcal{N}_k} \hat{\tvec}_{k,i,s}. 
 \end{equation}
 \begin{equation}
     \label{eq:sf_vars_sig_ki}
-    \sigmavec_{k,i} = \sum_s^{N_k} \sigmavec_{k,i,s}.
+    \sigmavec_{k,i} = \sum_s^{\mathcal{N}_k} \sigmavec_{k,i,s}.
 \end{equation}
 \begin{equation}
     \label{eq:sf_vars_hatsig_ki}
-    \hat{\sigmavec}_{k,i} = \sum_s^{N_k} \hat{\sigmavec}_{k,i,s}.
+    \hat{\sigmavec}_{k,i} = \sum_s^{\mathcal{N}_k} \hat{\sigmavec}_{k,i,s}.
 \end{equation}
 \begin{equation}
     \label{eq:sf_vars_R_ki}
-    \Rvec_{k,i} = \sum_s^{N_k} \Rvec_{k,i,s}.
+    \Rvec_{k,i} = \sum_s^{\mathcal{N}_k} \Rvec_{k,i,s}.
 \end{equation}
 \begin{equation}
     \label{eq:sf_vars_q_ki}
-    \qvec_{k,i} = \sum_s^{N_k} \qvec_{k,i,s}.
+    \qvec_{k,i} = \sum_s^{\mathcal{N}_k} \qvec_{k,i,s}.
 \end{equation}
 \begin{equation}
     \label{eq:sf_vars_Q_ki}
-    Q_{k,i} = \sum_s^{N_k} Q_{k,i,s}.
+    Q_{k,i} = \sum_s^{\mathcal{N}_k} Q_{k,i,s}.
 \end{equation}
 
 \subsubsection{Hat variables}
@@ -710,19 +710,19 @@ Using the multi-material notation for the mass, momentum, and energy equations i
 
 The current of each material can now be written as
 \begin{equation}
-    \Jvec_k = e \left( \sum_s^{N_k} Z_{k,i,s} \hat{n}_{k,i,s} \uvec_{k,i,s} - \hat{n}_{k,e} \uvec_{k,e} \right),
+    \Jvec_k = e \left( \sum_s^{\mathcal{N}_k} Z_{k,i,s} \hat{n}_{k,i,s} \uvec_{k,i,s} - \hat{n}_{k,e} \uvec_{k,e} \right),
 \end{equation}
 where the total current is
 \begin{equation}
-    \Jvec = \sum_k^M \Jvec_k.
+    \Jvec = \sum_k^\mathcal{M} \Jvec_k.
 \end{equation}
 Similarly, the charge of each material is written as
 \begin{equation}
-    \rho_{q,k} = e \left( \sum_s^{N_k} Z_{k,i,s} \hat{n}_{k,i,s} - \hat{n}_{e,k} \right),
+    \rho_{q,k} = e \left( \sum_s^{\mathcal{N}_k} Z_{k,i,s} \hat{n}_{k,i,s} - \hat{n}_{e,k} \right),
 \end{equation}
 where the total charge is
 \begin{equation}
-    \rho_q = \sum_k^M \rho_{q,k}.
+    \rho_q = \sum_k^\mathcal{M} \rho_{q,k}.
 \end{equation}
 The EOSs are written as
 \begin{equation}
@@ -778,17 +778,17 @@ The complete model can now be written as follows
 \end{equation}
 \begin{equation}
     \label{eq:mf_mm_curr_density}
-    \Jvec_k = e \eta_k \left( \sum_s^{N_k} Z_{k,i,s} n_{k,i,s} \uvec_{k,i,s} - n_{k,e} \uvec_{k,e} \right),
+    \Jvec_k = e \eta_k \left( \sum_s^{\mathcal{N}_k} Z_{k,i,s} n_{k,i,s} \uvec_{k,i,s} - n_{k,e} \uvec_{k,e} \right),
 \end{equation}
 \begin{equation}
-    \Jvec = \sum_k^M \Jvec_k
+    \Jvec = \sum_k^\mathcal{M} \Jvec_k
 \end{equation}
 \begin{equation}
     \label{eq:mf_mm_mass_density}
-    \rho_{q,k} = e \eta_k \left( \sum_s^{N_k} Z_{k,i,s} n_{k,i,s} - n_{e,k} \right),
+    \rho_{q,k} = e \eta_k \left( \sum_s^{\mathcal{N}_k} Z_{k,i,s} n_{k,i,s} - n_{e,k} \right),
 \end{equation}
 \begin{equation}
-    \rho_q = \sum_k^M \rho_{q,k},
+    \rho_q = \sum_k^\mathcal{M} \rho_{q,k},
 \end{equation}
 \begin{equation}
     \label{eq:mf_mm_eos_ion}
@@ -846,11 +846,11 @@ The equations are the same as the multi-material formulation, but there is only 
 \end{equation}
 \begin{equation}
     \label{eq:mf_np1fluid_curr_density}
-    \Jvec = e \left(\sum_s^N Z_{i,s} n_{i,s} \uvec_{i,s} - n_e \uvec_e \right),
+    \Jvec = e \left(\sum_s^\mathcal{N} Z_{i,s} n_{i,s} \uvec_{i,s} - n_e \uvec_e \right),
 \end{equation}
 \begin{equation}
     \label{eq:mf_np1fluid_mass_density}
-    \rho_q = e \left( \sum_s^N Z_{i,s} n_{i,s} - n_e \right),
+    \rho_q = e \left( \sum_s^\mathcal{N} Z_{i,s} n_{i,s} - n_e \right),
 \end{equation}
 \begin{equation}
     \label{eq:mf_np1fluid_eos_ion}
@@ -991,7 +991,7 @@ With these, the governing equations become
 A single-fluid formulation is defined as that for which there is a single velocity vector. For the single-fluid formulation, we'll use the following assumptions
 \begin{enumerate}
     \item $m_{k,e} \approx 0$ since $m_{k,e} \ll m_{k,i,s}$. \label{eq:sf_no_e_mass} 
-    \item Quasi-neutrality, i.e.\@ $\sum_s^{N_k} Z_{k,i,s} n_{k,i,s} = n_{k,e}$. \label{eq:sf_quasi_neutrality}
+    \item Quasi-neutrality, i.e.\@ $\sum_s^{\mathcal{N}_k} Z_{k,i,s} n_{k,i,s} = n_{k,e}$. \label{eq:sf_quasi_neutrality}
 \end{enumerate}
 
 %--------------------------------------------
@@ -1001,7 +1001,7 @@ A single-fluid formulation is defined as that for which there is a single veloci
 We now introduce the following single-fluid variables
 \begin{equation}
     \label{eq:sf_vars_u_ki}
-    \uvec_{k,i} = \sum_s^{N_k} Y_{k,i,s} \uvec_{k,i,s} 
+    \uvec_{k,i} = \sum_s^{\mathcal{N}_k} Y_{k,i,s} \uvec_{k,i,s} 
 \end{equation}
 \begin{equation}
     \label{eq:sf_vars_u_k}
@@ -1009,11 +1009,11 @@ We now introduce the following single-fluid variables
 \end{equation}
 \begin{equation}
     \label{eq:sf_vars_u}
-    \uvec = \sum_k^M Y_k \uvec_k.
+    \uvec = \sum_k^\mathcal{M} Y_k \uvec_k.
 \end{equation}
 \begin{equation}
     \label{eq:sf_vars_e_ki}
-    e_{k,i} = \sum_s^{N_k} Y_{k,i,s} e_{k,i,s}.
+    e_{k,i} = \sum_s^{\mathcal{N}_k} Y_{k,i,s} e_{k,i,s}.
 \end{equation}
 \begin{equation}
     \label{eq:sf_vars_e_k}
@@ -1021,16 +1021,16 @@ We now introduce the following single-fluid variables
 \end{equation}
 \begin{equation}
     \label{eq:sf_vars_e}
-    e = \sum_k^M Y_k e_k.
+    e = \sum_k^\mathcal{M} Y_k e_k.
 \end{equation}
 \begin{equation}
-    h_{k,i} = \sum_s^{N_k} Y_{k,i,s} h_{k,i,s}.
+    h_{k,i} = \sum_s^{\mathcal{N}_k} Y_{k,i,s} h_{k,i,s}.
 \end{equation}
 \begin{equation}
     h_k = h_{k,i} + Y_{k,e} h_{k,e}.
 \end{equation}
 \begin{equation}
-    h = \sum_k^M Y_k h_k.
+    h = \sum_k^\mathcal{M} Y_k h_k.
 \end{equation}
 
 %--------------------------------------------
@@ -1038,32 +1038,32 @@ We now introduce the following single-fluid variables
 %--------------------------------------------
 In this section we derive the total sum across all species (ions and electrons) of the collisional terms $\Rvec_s$ and $Q_s$. Use \cref{eq:mom_collision_expansion} to re-write $\Rvec_s$ as
 \begin{equation*}
-    \Rvec_s = \sum_{r,r \ne s}^N \int m_s \wvec_s C_{s r} \, d\vvec = \sum^N_{r,r \ne s} \int m_s \vvec C_{s r} \, d\vvec,
+    \Rvec_s = \sum_{r,r \ne s}^\mathcal{N} \int m_s \wvec_s C_{s r} \, d\vvec = \sum^N_{r,r \ne s} \int m_s \vvec C_{s r} \, d\vvec,
 \end{equation*}
-where $N$ is the total number of species. Using \cref{eq:coll_cons_momentum} this leads to
+where $\mathcal{N}$ is the total number of species. Using \cref{eq:coll_cons_momentum} this leads to
 \begin{equation}
     \label{eq:sf_sum_mom_collisions}
-    \sum_s^N \Rvec_s = 0,
+    \sum_s^\mathcal{N} \Rvec_s = 0,
 \end{equation}
 which, using our current notation, can be expressed as
 \begin{equation}
     \label{eq:sf_sum_mom_collisions_mat}
-    \sum_k^M \left( \sum_s^{N_k} \Rvec_{k,i,s} + \Rvec_{k,e} \right) = 0.
+    \sum_k^\mathcal{M} \left( \sum_s^{\mathcal{N}_k} \Rvec_{k,i,s} + \Rvec_{k,e} \right) = 0.
 \end{equation}
 Similarly, we use \cref{eq:energy_collision_expansion} to re-write $Q_s$ as
 \begin{align*}
-    Q_s &= \sum_{r,r \ne s}^N \int \frac{1}{2} m_s (\wvec_s \cdot \wvec_s) C_{s r} \, d\vvec \\
-    &= \sum_{r,r \ne s}^N \int \frac{1}{2} m_s \left( \vvec \cdot \vvec \right) C_{sr} \, d\vvec - \uvec_s \cdot \sum_{r,r \ne s}^N \int m_s \wvec_s C_{s r} \, d\vvec
+    Q_s &= \sum_{r,r \ne s}^\mathcal{N} \int \frac{1}{2} m_s (\wvec_s \cdot \wvec_s) C_{s r} \, d\vvec \\
+    &= \sum_{r,r \ne s}^\mathcal{N} \int \frac{1}{2} m_s \left( \vvec \cdot \vvec \right) C_{sr} \, d\vvec - \uvec_s \cdot \sum_{r,r \ne s}^\mathcal{N} \int m_s \wvec_s C_{s r} \, d\vvec
 \end{align*}
 Summing over all species and using \cref{eq:coll_cons_energy} leads to
 \begin{equation}
     \label{eq:sf_sum_energy_collisions}
-    \sum_s^N Q_s = - \sum_s^N \uvec_s \cdot \Rvec_s,
+    \sum_s^\mathcal{N} Q_s = - \sum_s^\mathcal{N} \uvec_s \cdot \Rvec_s,
 \end{equation}
 which, using our current notation, can be expressed as
 \begin{equation}
     \label{eq:sf_sum_energy_collisions_mat}
-    \sum_k^M \left( \sum_s^{N_k} Q_{k,i,s} + Q_{k,e} \right) = - \sum_k^M \left( \sum_s^{N_k} \uvec_{k,i,s} \cdot \Rvec_{k,i,s} + \uvec_{k,e} \cdot \Rvec_{k,e} \right).
+    \sum_k^\mathcal{M} \left( \sum_s^{\mathcal{N}_k} Q_{k,i,s} + Q_{k,e} \right) = - \sum_k^\mathcal{M} \left( \sum_s^{\mathcal{N}_k} \uvec_{k,i,s} \cdot \Rvec_{k,i,s} + \uvec_{k,e} \cdot \Rvec_{k,e} \right).
 \end{equation}
 
 %--------------------------------------------
@@ -1108,11 +1108,11 @@ and
 
 Multiplying \cref{eq:mf_mm_ni} by $Z_{k,i,s}$ and summing over all $s$ of a material gives
 \begin{equation*}
-    \frac{\partial}{\partial t} \left( \eta_k \sum_s^{N_k} Z_{k,i,s} n_{i,s} \right) + \nabla \cdot \left( \eta_k \sum_s^{N_k} Z_{k,i,s} n_{k,i,s} \uvec_{k,i,s} \right) = 0.
+    \frac{\partial}{\partial t} \left( \eta_k \sum_s^{\mathcal{N}_k} Z_{k,i,s} n_{i,s} \right) + \nabla \cdot \left( \eta_k \sum_s^{\mathcal{N}_k} Z_{k,i,s} n_{k,i,s} \uvec_{k,i,s} \right) = 0.
 \end{equation*}
 Subtracting \cref{eq:mf_mm_ne} from the above and using the assumption of quasi-neutrality in \cref{eq:sf_quasi_neutrality} gives
 \begin{equation*}
-    \nabla \cdot \left( \eta_k \sum_s^{N_k} Z_{k,i,s} n_{k,i,s} \uvec_{k,i,s} - n_{k,e} \uvec_{k,e} \right) = 0,
+    \nabla \cdot \left( \eta_k \sum_s^{\mathcal{N}_k} Z_{k,i,s} n_{k,i,s} \uvec_{k,i,s} - n_{k,e} \uvec_{k,e} \right) = 0,
 \end{equation*}
 which is equivalent to
 \begin{equation*}
@@ -1137,39 +1137,39 @@ Using \cref{eq:mm_mass_number_densities_i} the above becomes
 \end{multline*}
 Summing over all $s$ of a material, using the assumption of \cref{eq:sf_quasi_neutrality} and the definition of the current in \cref{eq:mf_mm_curr_density} the above simplifies to
 \begin{multline*}
-    \frac{\partial}{\partial t} \sum_s^{N_k} \eta_k \rho_k Y_{k,i,s} \uvec_{k,i,s} + \nabla \cdot \sum_s^{N_k} \eta_k \rho_k Y_{k,i,s} \uvec_{k,i,s} \uvec_{k,i,s} - \Jvec_k \times \Bvec = \\
-    \nabla \cdot \left[ \eta_k \left( \sum_s^{N_k} \sigmavec_{k,i,s} + \sigmavec_{k,e} \right) \right] + \sum_s^{N_k} \Rvec_{k,i,s} + \Rvec_{k,e}.
+    \frac{\partial}{\partial t} \sum_s^{\mathcal{N}_k} \eta_k \rho_k Y_{k,i,s} \uvec_{k,i,s} + \nabla \cdot \sum_s^{\mathcal{N}_k} \eta_k \rho_k Y_{k,i,s} \uvec_{k,i,s} \uvec_{k,i,s} - \Jvec_k \times \Bvec = \\
+    \nabla \cdot \left[ \eta_k \left( \sum_s^{\mathcal{N}_k} \sigmavec_{k,i,s} + \sigmavec_{k,e} \right) \right] + \sum_s^{\mathcal{N}_k} \Rvec_{k,i,s} + \Rvec_{k,e}.
 \end{multline*}
 We now write the momentum equation as
 \begin{multline*}
-    \frac{\partial}{\partial t} \sum_s^{N_k} \eta_k \rho_k Y_{k,i,s} \uvec_{k,i,s} + \nabla \cdot \sum_s^{N_k} \left[ \eta_k \rho_k Y_{k,i,s} \uvec_{k,i,s} \uvec + \eta_k \rho_k Y_{k,i,s} \uvec_{k,i,s} \left( \uvec_{k,i,s} - \uvec \right) \right] - \Jvec_k \times \Bvec = \\
-    \nabla \cdot \left[ \eta_k \left( \sum_s^{N_k} \sigmavec_{k,i,s} + \sigmavec_{k,e} \right) \right] + \sum_s^{N_k} \Rvec_{k,i,s} + \Rvec_{k,e}.
+    \frac{\partial}{\partial t} \sum_s^{\mathcal{N}_k} \eta_k \rho_k Y_{k,i,s} \uvec_{k,i,s} + \nabla \cdot \sum_s^{\mathcal{N}_k} \left[ \eta_k \rho_k Y_{k,i,s} \uvec_{k,i,s} \uvec + \eta_k \rho_k Y_{k,i,s} \uvec_{k,i,s} \left( \uvec_{k,i,s} - \uvec \right) \right] - \Jvec_k \times \Bvec = \\
+    \nabla \cdot \left[ \eta_k \left( \sum_s^{\mathcal{N}_k} \sigmavec_{k,i,s} + \sigmavec_{k,e} \right) \right] + \sum_s^{\mathcal{N}_k} \Rvec_{k,i,s} + \Rvec_{k,e}.
 \end{multline*}
 Using the definition of $\jvec_{k,i,s}$ the above becomes
 \begin{multline*}
-    \frac{\partial}{\partial t} \sum_s^{N_k} \eta_k \rho_k Y_{k,i,s} \uvec_{k,i,s} + \nabla \cdot \sum_s^{N_k} \left( \eta_k \rho_k Y_{k,i,s} \uvec_{k,i,s} \uvec  \right) - \Jvec_k \times \Bvec = \\
-    \nabla \cdot \left[ \eta_k \left( \sum_s^{N_k} \sigmavec_{k,i,s} + \sigmavec_{k,e} \right) \right] - \nabla \cdot \sum_s^{N_k} \jvec_{k,i,s} \uvec_{k,i,s} + \sum_s^{N_k} \Rvec_{k,i,s} + \Rvec_{k,e}.
+    \frac{\partial}{\partial t} \sum_s^{\mathcal{N}_k} \eta_k \rho_k Y_{k,i,s} \uvec_{k,i,s} + \nabla \cdot \sum_s^{\mathcal{N}_k} \left( \eta_k \rho_k Y_{k,i,s} \uvec_{k,i,s} \uvec  \right) - \Jvec_k \times \Bvec = \\
+    \nabla \cdot \left[ \eta_k \left( \sum_s^{\mathcal{N}_k} \sigmavec_{k,i,s} + \sigmavec_{k,e} \right) \right] - \nabla \cdot \sum_s^{\mathcal{N}_k} \jvec_{k,i,s} \uvec_{k,i,s} + \sum_s^{\mathcal{N}_k} \Rvec_{k,i,s} + \Rvec_{k,e}.
 \end{multline*}
 We now sum over all materials to obtain
 \begin{multline*}
-    \frac{\partial}{\partial t} \sum_k^M \sum_s^{N_k} \eta_k \rho_k Y_{k,i,s} \uvec_{k,i,s} + \nabla \cdot \sum_k^M \sum_s^{N_k} \left( \eta_k \rho_k Y_{k,i,s} \uvec_{k,i,s} \uvec  \right) - \Jvec \times \Bvec = \\
-    \nabla \cdot \sum_k^M \left( \sum_s^{N_k} \sigmavec_{k,i,s} + \sigmavec_{k,e} \right) - \nabla \cdot \sum_k^M \sum_s^{N_k} \jvec_{k,i,s} \uvec_{k,i,s} + \sum_k^M \left( \sum_s^{N_k} \Rvec_{k,i,s} + \Rvec_{k,e} \right).
+    \frac{\partial}{\partial t} \sum_k^\mathcal{M} \sum_s^{\mathcal{N}_k} \eta_k \rho_k Y_{k,i,s} \uvec_{k,i,s} + \nabla \cdot \sum_k^\mathcal{M} \sum_s^{\mathcal{N}_k} \left( \eta_k \rho_k Y_{k,i,s} \uvec_{k,i,s} \uvec  \right) - \Jvec \times \Bvec = \\
+    \nabla \cdot \sum_k^\mathcal{M} \left( \sum_s^{\mathcal{N}_k} \sigmavec_{k,i,s} + \sigmavec_{k,e} \right) - \nabla \cdot \sum_k^\mathcal{M} \sum_s^{\mathcal{N}_k} \jvec_{k,i,s} \uvec_{k,i,s} + \sum_k^\mathcal{M} \left( \sum_s^{\mathcal{N}_k} \Rvec_{k,i,s} + \Rvec_{k,e} \right).
 \end{multline*}
 We note that
 \begin{equation}
-    \sum_k^M \sum_s^{N_k} \eta_k \rho_k Y_{k,i,s} \uvec_{k,i,s} =  \sum_k^M \sum_s^{N_k} \rho Y_k Y_{k,i,s} \uvec_{k,i,s} = \rho \uvec.
+    \sum_k^\mathcal{M} \sum_s^{\mathcal{N}_k} \eta_k \rho_k Y_{k,i,s} \uvec_{k,i,s} =  \sum_k^\mathcal{M} \sum_s^{\mathcal{N}_k} \rho Y_k Y_{k,i,s} \uvec_{k,i,s} = \rho \uvec.
 \end{equation}
 Using the above and \cref{eq:sf_sum_mom_collisions_mat} we get
 \begin{equation*}
-    \frac{\partial \rho \uvec}{\partial t} + \nabla \cdot \left( \rho \uvec \uvec \right) - \Jvec \times \Bvec = \nabla \cdot \sum_k^M \left[ \eta_k \left( \sum_s^{N_k} \sigmavec_{k,i,s} + \sigmavec_{k,e} \right) \right] - \nabla \cdot \sum_k^M \sum_s^{N_k} \jvec_{k,i,s} \uvec_{k,i,s}.
+    \frac{\partial \rho \uvec}{\partial t} + \nabla \cdot \left( \rho \uvec \uvec \right) - \Jvec \times \Bvec = \nabla \cdot \sum_k^\mathcal{M} \left[ \eta_k \left( \sum_s^{\mathcal{N}_k} \sigmavec_{k,i,s} + \sigmavec_{k,e} \right) \right] - \nabla \cdot \sum_k^\mathcal{M} \sum_s^{\mathcal{N}_k} \jvec_{k,i,s} \uvec_{k,i,s}.
 \end{equation*}
 Finally, we write the above as
 \begin{equation*}
-    \frac{\partial \rho \uvec}{\partial t} + \nabla \cdot \left( \rho \uvec \uvec \right) - \Jvec \times \Bvec = \nabla \cdot \sum_k^M \left[ \eta_k \left( \sigmavec_{k,i} + \sigmavec_{k,e} \right) \right] - \nabla \cdot \sum_k^M \sum_s^{N_k} \jvec_{k,i,s} \uvec_{k,i,s},
+    \frac{\partial \rho \uvec}{\partial t} + \nabla \cdot \left( \rho \uvec \uvec \right) - \Jvec \times \Bvec = \nabla \cdot \sum_k^\mathcal{M} \left[ \eta_k \left( \sigmavec_{k,i} + \sigmavec_{k,e} \right) \right] - \nabla \cdot \sum_k^\mathcal{M} \sum_s^{\mathcal{N}_k} \jvec_{k,i,s} \uvec_{k,i,s},
 \end{equation*}
 or 
 \begin{equation*}
-    \frac{\partial \rho \uvec}{\partial t} + \nabla \cdot \left( \rho \uvec \uvec \right) - \Jvec \times \Bvec = \nabla \cdot \sum_k^M \eta_k \sigmavec_k - \nabla \cdot \sum_k^M \sum_s^{N_k} \jvec_{k,i,s} \uvec_{k,i,s},
+    \frac{\partial \rho \uvec}{\partial t} + \nabla \cdot \left( \rho \uvec \uvec \right) - \Jvec \times \Bvec = \nabla \cdot \sum_k^\mathcal{M} \eta_k \sigmavec_k - \nabla \cdot \sum_k^\mathcal{M} \sum_s^{\mathcal{N}_k} \jvec_{k,i,s} \uvec_{k,i,s},
 \end{equation*}
 where $\sigmavec_k = \sigmavec_{k,i} + \sigmavec_{k,e}$.
 
@@ -1179,38 +1179,38 @@ Given the assumption in \cref{eq:sf_no_e_mass}, \cref{eq:mf_mm_ue} for electron 
 \end{equation*}
 Using the definition of the current in \cref{eq:mf_mm_curr_density}, the left-hand side can be re-written as
 \begin{equation*}
-    e \eta_k n_{k,e} ( \Evec + \uvec_{k,e} \times \Bvec ) = e \eta_k n_{k,e} \Evec + \left( e \eta_k \sum_s^{N_k} Z_{k,i,s} n_{k,i,s} \uvec_{k,i,s} - \Jvec_k \right) \times \Bvec,
+    e \eta_k n_{k,e} ( \Evec + \uvec_{k,e} \times \Bvec ) = e \eta_k n_{k,e} \Evec + \left( e \eta_k \sum_s^{\mathcal{N}_k} Z_{k,i,s} n_{k,i,s} \uvec_{k,i,s} - \Jvec_k \right) \times \Bvec,
 \end{equation*}
 and thus the electron momentum equation becomes
 \begin{equation*}
-    e \eta_k n_{k,e} \Evec + e \eta_k \sum_s^{N_k} Z_{k,i,s} n_{k,i,s} \uvec_{k,i,s} \times \Bvec = \Jvec_k \times \Bvec + \nabla \cdot \left( \eta_k \sigmavec_{k,e} \right) + \Rvec_{k,e},
+    e \eta_k n_{k,e} \Evec + e \eta_k \sum_s^{\mathcal{N}_k} Z_{k,i,s} n_{k,i,s} \uvec_{k,i,s} \times \Bvec = \Jvec_k \times \Bvec + \nabla \cdot \left( \eta_k \sigmavec_{k,e} \right) + \Rvec_{k,e},
 \end{equation*}
 Using the definition of $\jvec_{k,i,s}$, we can write
 \begin{align*}
-    \sum_s^{N_k} Z_{k,i,s} n_{k,i,s} \uvec_{k,i,s} \times \Bvec &= \sum_s^{N_k} \left[ Z_{k,i,s} n_{k,i,s} \uvec + Z_{k,i,s} n_{k,i,s} \left( \uvec_{k,i,s} - \uvec \right) \right] \times \Bvec \\
-    &= \sum_s^{N_k} \left( Z_{k,i,s} n_{k,i,s} \uvec + Z_{k,i,s} n_{k,i,s} \frac{\jvec_{k,i,s}}{\eta_k \rho_k Y_{k,i,s}} \right) \times \Bvec.
+    \sum_s^{\mathcal{N}_k} Z_{k,i,s} n_{k,i,s} \uvec_{k,i,s} \times \Bvec &= \sum_s^{\mathcal{N}_k} \left[ Z_{k,i,s} n_{k,i,s} \uvec + Z_{k,i,s} n_{k,i,s} \left( \uvec_{k,i,s} - \uvec \right) \right] \times \Bvec \\
+    &= \sum_s^{\mathcal{N}_k} \left( Z_{k,i,s} n_{k,i,s} \uvec + Z_{k,i,s} n_{k,i,s} \frac{\jvec_{k,i,s}}{\eta_k \rho_k Y_{k,i,s}} \right) \times \Bvec.
 \end{align*}
 Using \cref{eq:mm_mass_number_densities_i} we get
 \begin{align*}
-    \sum_s^{N_k} Z_{k,i,s} n_{k,i,s} \uvec_{k,i,s} \times \Bvec &= \sum_s^{N_k} \left( Z_{k,i,s} n_{k,i,s} \uvec + \frac{Z_{k,i,s} \jvec_{k,i,s}}{m_{k,i,s} \eta_k} \right) \times \Bvec \\
-    &= \sum_s^{N_k} Z_{k,i,s} n_{k,i,s} \uvec \times \Bvec + \sum_s^{N_k} \frac{Z_{k,i,s} \jvec_{k,i,s}}{m_{k,i,s} \eta_k} \times \Bvec \\
-    &= n_{k,e} \uvec \times \Bvec + \sum_s^{N_k} \frac{Z_{k,i,s} \jvec_{k,i,s}}{m_{k,i,s} \eta_k} \times \Bvec.
+    \sum_s^{\mathcal{N}_k} Z_{k,i,s} n_{k,i,s} \uvec_{k,i,s} \times \Bvec &= \sum_s^{\mathcal{N}_k} \left( Z_{k,i,s} n_{k,i,s} \uvec + \frac{Z_{k,i,s} \jvec_{k,i,s}}{m_{k,i,s} \eta_k} \right) \times \Bvec \\
+    &= \sum_s^{\mathcal{N}_k} Z_{k,i,s} n_{k,i,s} \uvec \times \Bvec + \sum_s^{\mathcal{N}_k} \frac{Z_{k,i,s} \jvec_{k,i,s}}{m_{k,i,s} \eta_k} \times \Bvec \\
+    &= n_{k,e} \uvec \times \Bvec + \sum_s^{\mathcal{N}_k} \frac{Z_{k,i,s} \jvec_{k,i,s}}{m_{k,i,s} \eta_k} \times \Bvec.
 \end{align*}
 Thus, the electron momentum equation becomes
 \begin{equation*}
-    e \eta_k n_{k,e} \left( \Evec + \uvec \times \Bvec \right) = \Jvec_k \times \Bvec + \nabla \cdot \left( \eta_k \sigmavec_{k,e} \right) + \Rvec_{k,e} - e \sum_s^{N_k} \frac{Z_{k,i,s} \jvec_{k,i,s}}{m_{k,i,s}} \times \Bvec.
+    e \eta_k n_{k,e} \left( \Evec + \uvec \times \Bvec \right) = \Jvec_k \times \Bvec + \nabla \cdot \left( \eta_k \sigmavec_{k,e} \right) + \Rvec_{k,e} - e \sum_s^{\mathcal{N}_k} \frac{Z_{k,i,s} \jvec_{k,i,s}}{m_{k,i,s}} \times \Bvec.
 \end{equation*}
 We define the total electron density as 
 \begin{equation*}
-    n_e = \sum_k^M \eta_k n_{k,e}.
+    n_e = \sum_k^\mathcal{M} \eta_k n_{k,e}.
 \end{equation*}
 Thus, summing over all $k$ gives
 \begin{equation*}
-    e n_e \left( \Evec + \uvec \times \Bvec \right) = \Jvec \times \Bvec + \nabla \cdot \sum_k^M \eta_k \sigmavec_{k,e} + \sum_k^M \Rvec_{k,e} - e \sum_k^M \sum_s^{N_k} \frac{Z_{k,i,s} \jvec_{k,i,s}}{m_{k,i,s}} \times \Bvec.
+    e n_e \left( \Evec + \uvec \times \Bvec \right) = \Jvec \times \Bvec + \nabla \cdot \sum_k^\mathcal{M} \eta_k \sigmavec_{k,e} + \sum_k^\mathcal{M} \Rvec_{k,e} - e \sum_k^\mathcal{M} \sum_s^{\mathcal{N}_k} \frac{Z_{k,i,s} \jvec_{k,i,s}}{m_{k,i,s}} \times \Bvec.
 \end{equation*}
 or
 \begin{equation}
-    \Evec + \uvec \times \Bvec = \frac{1}{e n_e} \left( \Jvec \times \Bvec + \nabla \cdot \sum_k^M \eta_k \sigmavec_{k,e} + \sum_k^M \Rvec_{k,e} \right) - \sum_k^M \sum_s^{N_k} \frac{Z_{k,i,s} \jvec_{k,i,s}}{n_e m_{k,i,s}} \times \Bvec.
+    \Evec + \uvec \times \Bvec = \frac{1}{e n_e} \left( \Jvec \times \Bvec + \nabla \cdot \sum_k^\mathcal{M} \eta_k \sigmavec_{k,e} + \sum_k^\mathcal{M} \Rvec_{k,e} \right) - \sum_k^\mathcal{M} \sum_s^{\mathcal{N}_k} \frac{Z_{k,i,s} \jvec_{k,i,s}}{n_e m_{k,i,s}} \times \Bvec.
 \end{equation}
 
 \subsubsection{Internal energy}
@@ -1267,11 +1267,11 @@ To summarize, we have
 \end{equation}
 \begin{equation}
     \label{eq:sf_mm_ms_ui}
-    \frac{\partial \rho \uvec}{\partial t} + \nabla \cdot \left( \rho \uvec \uvec \right) - \Jvec \times \Bvec = \nabla \cdot \sum_k^M \eta_k \sigmavec_k - \nabla \cdot \sum_k^M \jvec_{k,i} \uvec_{k},
+    \frac{\partial \rho \uvec}{\partial t} + \nabla \cdot \left( \rho \uvec \uvec \right) - \Jvec \times \Bvec = \nabla \cdot \sum_k^\mathcal{M} \eta_k \sigmavec_k - \nabla \cdot \sum_k^\mathcal{M} \jvec_{k,i} \uvec_{k},
 \end{equation}
 \begin{equation}
     \label{eq:sf_mm_ms_ue}
-    \Evec + \uvec \times \Bvec = \frac{1}{e n_e} \left( \Jvec \times \Bvec + \nabla \cdot \sum_k^M \eta_k \sigmavec_{k,e} + \sum_k^M \Rvec_{k,e} \right) - \sum_s^{N_k} \frac{Z_{k,i,s} \jvec_{k,i,s}}{n_e m_{k,i,s}} \times \Bvec,
+    \Evec + \uvec \times \Bvec = \frac{1}{e n_e} \left( \Jvec \times \Bvec + \nabla \cdot \sum_k^\mathcal{M} \eta_k \sigmavec_{k,e} + \sum_k^\mathcal{M} \Rvec_{k,e} \right) - \sum_s^{\mathcal{N}_k} \frac{Z_{k,i,s} \jvec_{k,i,s}}{n_e m_{k,i,s}} \times \Bvec,
 \end{equation}
 \begin{multline}
     \label{eq:sf_mm_ms_iei}
@@ -1304,14 +1304,14 @@ To summarize, we have
     \Jvec_k = e \eta_k n_{k,e} \left( \uvec_k - \uvec_{k,e} \right),
 \end{equation}
 \begin{equation}
-    \Jvec = \sum_k^M \Jvec_k,
+    \Jvec = \sum_k^\mathcal{M} \Jvec_k,
 \end{equation}
 \begin{equation}
     \label{eq:sf_mm_ms_mass_density}
     \rho_{q,k} = 0,
 \end{equation}
 \begin{equation}
-    \rho_q = \sum_k^M \rho_{q,k},
+    \rho_q = \sum_k^\mathcal{M} \rho_{q,k},
 \end{equation}
 \begin{equation}
     \label{eq:sf_mm_ms_eos_ion}
@@ -1463,7 +1463,7 @@ The enthalpies are given by
 Using expressions from \cref{sec:sf_vars}, we can show that
 \begin{equation}
     \label{eq:sf_alternate_hki_rhok}
-    h_{k,i} = \sum_s^{N_k} Y_{k,i,s} h_{k,i,s} = \sum_s^{N_k} Y_{k,i,s} e_{k,i,s} + \sum_{s}^{N_k} \frac{p_{k,i,s}}{\rho_k} = e_{k,i} + \frac{p_{k,i}}{\rho_k}.
+    h_{k,i} = \sum_s^{\mathcal{N}_k} Y_{k,i,s} h_{k,i,s} = \sum_s^{\mathcal{N}_k} Y_{k,i,s} e_{k,i,s} + \sum_{s}^{\mathcal{N}_k} \frac{p_{k,i,s}}{\rho_k} = e_{k,i} + \frac{p_{k,i}}{\rho_k}.
 \end{equation}
 For electrons, we have
 \begin{equation}
@@ -1537,19 +1537,19 @@ Finally, adding up the ion and electron internal energy equations and using \cre
 
 Summing \cref{eq:sf_alternate_e_k} over all materials and using \cref{eq:sf_vars_e} gives
 \begin{multline*}
-    \frac{\partial \rho e}{\partial t} + \nabla \cdot \left( \rho e \uvec \right) = \sum_k^M \eta_k \sigma_k : \nabla \uvec - \nabla \cdot \sum_k^M \left( \qvec_{k,i} + \qvec_{k,e} \right) + \sum_k^M \left( Q_{k,i} + Q_{k,e} \right) \\
-    - \nabla \cdot \sum_k^M \left( h_{k,i} \jvec_{k,i} + Y_{k,e} h_{k,e} \bar{\jvec}_{k,e} \right) + \nabla \cdot \sum_k^M \left( \wvec_{k,i} \cdot \eta_k \tvec_{k,i} + \wvec_{k,e} \cdot \eta_k \tvec_{k,e} \right) \\
-    - \sum_k^M \left[ \wvec_{k,i} \cdot \nabla \left( \eta_k \sigmavec_{k,i} \right) - \wvec_{k,e} \cdot \nabla \left( \eta_k \sigmavec_{k,e} \right) \right].
+    \frac{\partial \rho e}{\partial t} + \nabla \cdot \left( \rho e \uvec \right) = \sum_k^\mathcal{M} \eta_k \sigma_k : \nabla \uvec - \nabla \cdot \sum_k^\mathcal{M} \left( \qvec_{k,i} + \qvec_{k,e} \right) + \sum_k^\mathcal{M} \left( Q_{k,i} + Q_{k,e} \right) \\
+    - \nabla \cdot \sum_k^\mathcal{M} \left( h_{k,i} \jvec_{k,i} + Y_{k,e} h_{k,e} \bar{\jvec}_{k,e} \right) + \nabla \cdot \sum_k^\mathcal{M} \left( \wvec_{k,i} \cdot \eta_k \tvec_{k,i} + \wvec_{k,e} \cdot \eta_k \tvec_{k,e} \right) \\
+    - \sum_k^\mathcal{M} \left[ \wvec_{k,i} \cdot \nabla \left( \eta_k \sigmavec_{k,i} \right) - \wvec_{k,e} \cdot \nabla \left( \eta_k \sigmavec_{k,e} \right) \right].
 \end{multline*}
 We can now re-write \cref{eq:sf_sum_energy_collisions_mat} as 
 \begin{equation}
-    \sum_k^M \left( Q_{k,i} + Q_{k,e} \right) = -\sum_k^M \left( \uvec_{k,i} \cdot \Rvec_{k,i} + \uvec_{k,e} \cdot \Rvec_{k,e} \right).
+    \sum_k^\mathcal{M} \left( Q_{k,i} + Q_{k,e} \right) = -\sum_k^\mathcal{M} \left( \uvec_{k,i} \cdot \Rvec_{k,i} + \uvec_{k,e} \cdot \Rvec_{k,e} \right).
 \end{equation}
 Thus, the total internal energy equation becomes
 \begin{multline*}
-    \frac{\partial \rho e}{\partial t} + \nabla \cdot \left( \rho e \uvec \right) = \sum_k^M \eta_k \sigma_k : \nabla \uvec - \nabla \cdot \sum_k^M \left( \qvec_{k,i} + \qvec_{k,e} \right) -\sum_k^M \left( \uvec_{k,i} \cdot \Rvec_{k,i} + \uvec_{k,e} \cdot \Rvec_{k,e} \right) \\
-    - \nabla \cdot \sum_k^M \left( h_{k,i} \jvec_{k,i} + Y_{k,e} h_{k,e} \bar{\jvec}_{k,e} \right) + \nabla \cdot \sum_k^M \left( \wvec_{k,i} \cdot \eta_k \tvec_{k,i} + \wvec_{k,e} \cdot \eta_k \tvec_{k,e} \right) \\
-    - \sum_k^M \left[ \wvec_{k,i} \cdot \nabla \left( \eta_k \sigmavec_{k,i} \right) - \wvec_{k,e} \cdot \nabla \left( \eta_k \sigmavec_{k,e} \right) \right].
+    \frac{\partial \rho e}{\partial t} + \nabla \cdot \left( \rho e \uvec \right) = \sum_k^\mathcal{M} \eta_k \sigma_k : \nabla \uvec - \nabla \cdot \sum_k^\mathcal{M} \left( \qvec_{k,i} + \qvec_{k,e} \right) -\sum_k^\mathcal{M} \left( \uvec_{k,i} \cdot \Rvec_{k,i} + \uvec_{k,e} \cdot \Rvec_{k,e} \right) \\
+    - \nabla \cdot \sum_k^\mathcal{M} \left( h_{k,i} \jvec_{k,i} + Y_{k,e} h_{k,e} \bar{\jvec}_{k,e} \right) + \nabla \cdot \sum_k^\mathcal{M} \left( \wvec_{k,i} \cdot \eta_k \tvec_{k,i} + \wvec_{k,e} \cdot \eta_k \tvec_{k,e} \right) \\
+    - \sum_k^\mathcal{M} \left[ \wvec_{k,i} \cdot \nabla \left( \eta_k \sigmavec_{k,i} \right) - \wvec_{k,e} \cdot \nabla \left( \eta_k \sigmavec_{k,e} \right) \right].
 \end{multline*}
 
 To summarize we have
@@ -1563,11 +1563,11 @@ To summarize we have
 \end{equation}
 \begin{equation}
     \label{eq:sf_mm_ms_ui_final}
-    \frac{\partial \rho \uvec}{\partial t} + \nabla \cdot \left( \rho \uvec \uvec \right) - \Jvec \times \Bvec = \nabla \cdot \sum_k^M \eta_k \sigmavec_k - \nabla \cdot \sum_k^M \jvec_{k,i} \uvec_{k},
+    \frac{\partial \rho \uvec}{\partial t} + \nabla \cdot \left( \rho \uvec \uvec \right) - \Jvec \times \Bvec = \nabla \cdot \sum_k^\mathcal{M} \eta_k \sigmavec_k - \nabla \cdot \sum_k^\mathcal{M} \jvec_{k,i} \uvec_{k},
 \end{equation}
 \begin{equation}
     \label{eq:sf_mm_ms_ue_final}
-    \Evec + \uvec \times \Bvec = \frac{1}{e n_e} \left( \Jvec \times \Bvec + \nabla \cdot \sum_k^M \eta_k \sigmavec_{k,e} + \sum_k^M \Rvec_{k,e} \right) - \sum_s^{N_k} \frac{Z_{k,i,s} \jvec_{k,i,s}}{n_e m_{k,i,s}} \times \Bvec,
+    \Evec + \uvec \times \Bvec = \frac{1}{e n_e} \left( \Jvec \times \Bvec + \nabla \cdot \sum_k^\mathcal{M} \eta_k \sigmavec_{k,e} + \sum_k^\mathcal{M} \Rvec_{k,e} \right) - \sum_s^{\mathcal{N}_k} \frac{Z_{k,i,s} \jvec_{k,i,s}}{n_e m_{k,i,s}} \times \Bvec,
 \end{equation}
 \begin{multline}
     \label{eq:sf_mm_ms_iei_final}
@@ -1600,14 +1600,14 @@ To summarize we have
     \Jvec_k = e \eta_k n_{k,e} \left( \uvec_k - \uvec_{k,e} \right),
 \end{equation}
 \begin{equation}
-    \Jvec = \sum_k^M \Jvec_k,
+    \Jvec = \sum_k^\mathcal{M} \Jvec_k,
 \end{equation}
 \begin{equation}
     \label{eq:sf_mm_ms_mass_density_final}
     \rho_{q,k} = 0,
 \end{equation}
 \begin{equation}
-    \rho_q = \sum_k^M \rho_{q,k},
+    \rho_q = \sum_k^\mathcal{M} \rho_{q,k},
 \end{equation}
 \begin{equation}
     \label{eq:sf_mm_ms_therm_eos_ion_final}
@@ -1655,11 +1655,11 @@ Some extra notes on this model:
         m_{k,i,s} n_{k,i,s} = \rho_k Y_{k,i,s}.
     \end{equation*}
 
-    \item We can compute $n_{k,i}$ using \cref{eq:sf_vars_n_ki}, that is, $n_{k,i,s} = \sum_s^{N_k} n_{k,i,s}$.
+    \item We can compute $n_{k,i}$ using \cref{eq:sf_vars_n_ki}, that is, $n_{k,i,s} = \sum_s^{\mathcal{N}_k} n_{k,i,s}$.
     
     \item We can compute $n_{k,e}$ from quasi-neutrality, which we repeat below
     \begin{equation}
-        \sum_s^{N_k} Z_{k,i,s} n_{k,i,s} = n_{k,e},
+        \sum_s^{\mathcal{N}_k} Z_{k,i,s} n_{k,i,s} = n_{k,e},
     \end{equation}
 
     \item Using $p_{k,i}$ and $n_{k,i}$ in \cref{eq:sf_mm_ms_therm_eos_ion_final} we get $T_{k,i}$.

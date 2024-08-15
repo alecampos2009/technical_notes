@@ -28,44 +28,43 @@
 \section{Atomistic vs.\@ fluid variables}
 %------------------------------------------------------------------------
 \label{sec:atomistic_and_fluid}
-We'll describe fluids using variables such as $\rho=\rho(t,\xvec)$ for the fluid density, $\uvec = \uvec(t,\xvec)$ for the fluid velocity, and $e=e(t,\xvec)$ for the fluid specific internal energy, where $t$ is time and $\xvec$ is a location in space. Fluid variables are defined at every point $\xvec$ within the domain containing the fluid. Thus, in the fluid approach we do not account for the microscopic distribution of the fluid's atoms and molecules, which are not necessarily present at every point $\xvec$. That being said, we can establish a correlation between the fluid variables and atomistic variables, which define the underlying microscopic structure. Examples of these atomistic variables include $m^{(i)}$, $\uvec^{(i)}$, and $e^{(i)}$, which are the mass, velocity, and internal energy of the $i$\textsuperscript{th} atom or molecule in the system.
+We'll describe fluids using variables such as $\rho=\rho(t,\xvec)$ for the fluid density, $\uvec = \uvec(t,\xvec)$ for the fluid velocity, and $e=e(t,\xvec)$ for the fluid specific internal energy, where $t$ is time and $\xvec$ is a location in space. Fluid variables are defined at every point $\xvec$ within the domain containing the fluid. Thus, in the fluid approach we do not account for the microscopic distribution of the fluid's atoms and molecules, which are not necessarily present at every point $\xvec$. That being said, we can establish a correlation between the fluid variables and atomistic variables, which define the underlying microscopic structure. Examples of these atomistic variables include $m_i$, $\uvec_i$, and $e_i$, which are the mass, velocity, and internal energy of the $i$\textsuperscript{th} atom or molecule in the system.
 
-Consider the total mass $m_\Omega$ in some subdomain $\Omega$. This mass can be computed by summing up the masses $m^{(i)}$ of the atoms or molecules in this subdomain, or by using the Eulerian field variable for density, as shown below
+Consider the total mass $\mathsf{M}_\Omega$ in some subdomain $\Omega$. This mass can be computed by summing up the masses $m_i$ of the atoms or molecules in this subdomain, or by using the Eulerian field variable for density, as shown below
 \begin{equation}
-   m_\Omega = \sum_{i \in \Omega} m^{(i)} = \int_{\Omega} \rho \, d\xvec.
+   \mathsf{M}_\Omega = \sum_{i \in \Omega} m_i = \int_{\Omega} \rho \, d\xvec.
 \end{equation} 
-In the above, $i \in \Omega$ denotes the atoms or molecules within the subdomain $\Omega$. Now consider the total momentum $P_\Omega$ in some subdomain $\Omega$. This momentum can be computed by summing up the momentum $m^{(i)} \uvec^{(i)}$ of the atoms or molecules in this subdomain, or by using the Eulerian field variable for velocity, as shown below
+In the above, $i \in \Omega$ denotes the atoms or molecules within the subdomain $\Omega$. Now consider the total momentum $\mathsf{P}_\Omega$ in some subdomain $\Omega$. This momentum can be computed by summing up the momentum $m_i \uvec_i$ of the atoms or molecules in this subdomain, or by using the Eulerian field variable for velocity, as shown below
 \begin{equation}
-    P_\Omega = \sum_{i \in \Omega} m^{(i)} \uvec^{(i)} = \int_\Omega \rho \uvec \, d\xvec.
+    \mathsf{P}_\Omega = \sum_{i \in \Omega} m_i \uvec_i = \int_\Omega \rho \uvec \, d\xvec.
 \end{equation}
-Finally, consider the internal energy $IE_\Omega$ in some subdomain $\Omega$. This internal energy can be computed by summing up the internal energies $e^{(i)}$ of the atoms or molecules in this subdomain, or by using the Eulerian field variable for the specific internal energy, as shown below
+Finally, consider the internal energy $\mathsf{IE}_\Omega$ in some subdomain $\Omega$. This internal energy can be computed by summing up the internal energies $e_i$ of the atoms or molecules in this subdomain, or by using the Eulerian field variable for the specific internal energy, as shown below
 \begin{equation}
-    IE_\Omega = \sum_{i \in \Omega} e^{(i)} = \int_\Omega \rho e \, d\xvec.
+    \mathsf{IE}_\Omega = \sum_{i \in \Omega} e_i = \int_\Omega \rho e \, d\xvec.
 \end{equation}
 
 %------------------------------------------------------------------------
 \section{Interpretation of fluid variables}
 %------------------------------------------------------------------------
 \label{sec:atomistic_representation}
-Denote the volume of domain $\Omega$ as $V_\Omega$, which is given by
+Denote the volume of domain $\Omega$ as $\mathsf{V}_\Omega$, which is given by
 \begin{equation}
-    V_\Omega = \int_\Omega d\xvec.
+    \mathsf{V}_\Omega = \int_\Omega d\xvec.
 \end{equation}
 We can now write
 \begin{equation}
     \label{eq:atomistic_rho}
-    \rho = \lim_{\Omega \to \epsilon} \frac{1}{V_\Omega} \int_\Omega \rho \, d\xvec = \lim_{\Omega \to \epsilon} \frac{1}{V_\Omega} \sum_{i \in \Omega} m^{(i)} = \lim_{\Omega \to \epsilon} \frac{m_\Omega}{V_\Omega}.
+    \rho = \lim_{\Omega \to \epsilon} \frac{1}{\mathsf{V}_\Omega} \int_\Omega \rho \, d\xvec = \lim_{\Omega \to \epsilon} \frac{1}{\mathsf{V}_\Omega} \sum_{i \in \Omega} m_i = \lim_{\Omega \to \epsilon} \frac{ \mathsf{M}_\Omega }{ \mathsf{V}_\Omega }.
 \end{equation}
 Thus, the density is the mass contained in a small domain divided by the volume of that small domain as the domain becomes sufficiently small. Similarly for velocity, we have
 \begin{equation}
     \label{eq:atomistic_u}
-    \uvec = \frac{\rho\vvec}{\rho} = \lim_{\Omega \to \epsilon} \frac{\frac{1}{V_\Omega} \int_\Omega \rho \uvec \, dx}{\frac{1}{V_\Omega} \int_\Omega \rho \, dx} = \lim_{\Omega \to \epsilon} \frac{ \sum_{i \in \Omega} m^{(i)} v^{(i)} }{ \sum_{i \in \Omega} m^{(i)} } = \lim_{\Omega \to \epsilon} \frac{ P_\Omega }{ m_\Omega }.
+    \uvec = \frac{\rho\vvec}{\rho} = \lim_{\Omega \to \epsilon} \frac{\frac{1}{\mathsf{V}_\Omega} \int_\Omega \rho \uvec \, dx}{\frac{1}{\mathsf{V}_\Omega} \int_\Omega \rho \, dx} = \lim_{\Omega \to \epsilon} \frac{ \sum_{i \in \Omega} m_i v^{(i)} }{ \sum_{i \in \Omega} m_i } = \lim_{\Omega \to \epsilon} \frac{ \mathsf{P}_\Omega }{ \mathsf{M}_\Omega }.
 \end{equation}
 That is, the velocity is the the momentum contained in a small domain divided by the mass contained in that small domain as the domain becomes sufficiently small. Finally, for energy we have
 \begin{equation}
     \label{eq:atomistic_e}
-    e = \frac{\rho e}{\rho} = \lim_{\Omega \to \epsilon} \frac{ \frac{1}{V_\Omega} \int_\Omega \rho e \, d\xvec}{ \frac{1}{V_\Omega} \int_\Omega \rho \, d\xvec} = \lim_{\Omega \to \epsilon} \frac{ \sum_{i \in \Omega} e^{(i)} }{ \sum_{i \in \Omega} m^{(i)} } = \lim_{
-        \Omega \to \epsilon} \frac{ IE_\Omega }{ m_\Omega }.
+    e = \frac{\rho e}{\rho} = \lim_{\Omega \to \epsilon} \frac{ \frac{1}{\mathsf{V}_\Omega} \int_\Omega \rho e \, d\xvec}{ \frac{1}{\mathsf{V}_\Omega} \int_\Omega \rho \, d\xvec} = \lim_{\Omega \to \epsilon} \frac{ \sum_{i \in \Omega} e_i }{ \sum_{i \in \Omega} m_i } = \lim_{\Omega \to \epsilon} \frac{ \mathsf{IE}_\Omega }{ \mathsf{M}_\Omega }.
 \end{equation}
 That is, the specific internal energy is the internal energy contained in a small subdomain divided by the mass contained in that small subdomain as the subdomain becomes sufficiently small.
 
@@ -74,21 +73,25 @@ In the above, a sufficiently small subdomain is one that is small compared to th
 %------------------------------------------------------------------------
 \section{Additional atomistic variables}
 %------------------------------------------------------------------------
-We denote the number of atoms or molecules in some subdomain $\Omega$ as $N_\Omega$. Additionally, we denote the number of moles in some subdomain $\Omega$ as $o_\Omega$. Avogadro's number $N_a$ can thus be used to write 
+We denote the number of atoms or molecules in some subdomain $\Omega$ as $\mathcal{N}_\Omega$. Additionally, we denote the number of moles in some subdomain $\Omega$ as $\mathcal{O}_\Omega$. Avogadro's number $N_a$ can thus be used to write 
 \begin{equation}
     \label{eq:atomistic_particles_moles}
-    N_\Omega = N_a o_\Omega.
+    \mathsf{N}_\Omega = N_a \mathsf{O}_\Omega.
 \end{equation}
 Similarly, with $M$ as the molar mass, we have
 \begin{equation}
     \label{eq:atomistic_mass_moles}
-    m_\Omega = M o_\Omega.
+    \mathsf{M}_\Omega = M \mathsf{O}_\Omega.
+\end{equation}
+We note that the molar mass is related to the mass of an individual particle according to
+\begin{equation}
+    M = N_a m_i.
 \end{equation}
 
 Finally, we denote the number density as $n = n(t,\xvec)$, which is defined as
 \begin{equation}
     \label{eq:atomistic_number_density}
-    n = \lim_{\Omega \to \infty} \frac{N_\Omega}{V_\Omega}.
+    n = \lim_{\Omega \to \infty} \frac{\mathsf{N}_\Omega}{\mathsf{V}_\Omega}.
 \end{equation}
 
 %########################################################################
@@ -689,7 +692,7 @@ Using \cref{eq:thermal_eq_of_state_prelim} in the above we get $U = \frac{1}{\ga
 
 Finally, we mention that the universal gas constant can be written as $R_u = k_B N_a$, where $k_B$ is the Boltzman constant. Using \cref{eq:atomistic_rho,eq:atomistic_number_density,eq:atomistic_particles_moles,eq:atomistic_mass_moles}, we show that
 \begin{equation}
-    \rho R = \lim_{\Omega \to \infty} \frac{m_\Omega}{V_\Omega} \frac{R_u}{M} = \lim_{\Omega \to \infty} \frac{o_\Omega}{V_\Omega} k_B N_a = \lim_{\Omega \to \infty} \frac{N_\Omega}{V_\Omega} k_B = n k_B,
+    \rho R = \lim_{\Omega \to \infty} \frac{\mathsf{M}_\Omega}{\mathsf{V}_\Omega} \frac{R_u}{M} = \lim_{\Omega \to \infty} \frac{\mathsf{O}_\Omega}{\mathsf{V}_\Omega} k_B N_a = \lim_{\Omega \to \infty} \frac{\mathsf{N}_\Omega}{\mathsf{V}_\Omega} k_B = n k_B,
 \end{equation}
 Thus, we can make the following equivalences
 \begin{equation}
@@ -1157,13 +1160,13 @@ Consider the volume $V_{\Omega,\alpha}$ occupied by element $\alpha$ in some sub
 \begin{equation}
     V_{\Omega,\alpha} = \int_\Omega \eta_\alpha \, d\xvec.
 \end{equation}
-Now consider the mass $m_{\Omega,\alpha}$ of element $\alpha$ in some subdomain $\Omega$. This can be computed by summing up the masses $m^{(i)}$ of the atoms or molecules of element $\alpha$ in this subdomain, or by using the mass fraction $Y_\alpha = Y_\alpha(t,\xvec)$, as shown below 
+Now consider the mass $m_{\Omega,\alpha}$ of element $\alpha$ in some subdomain $\Omega$. This can be computed by summing up the masses $m_i$ of the atoms or molecules of element $\alpha$ in this subdomain, or by using the mass fraction $Y_\alpha = Y_\alpha(t,\xvec)$, as shown below 
 \begin{equation}
-    m_{\Omega,\alpha} = \sum_{i \in \Omega, i \in \alpha} m^{(i)} = \int_\Omega \rho Y_\alpha \, d\xvec.
+    m_{\Omega,\alpha} = \sum_{i \in \Omega, i \in \alpha} m_i = \int_\Omega \rho Y_\alpha \, d\xvec.
 \end{equation}
-In the above $i \in \Omega, i \in \alpha$ denotes the atoms or molecules of element $\alpha$ located in the subdomain $\Omega$. Finally, consider the internal energy $IE_{\Omega,\alpha}$ of element $\alpha$ in some subdomain $\Omega$. This internal energy can be computed by summing up the internal energies $e^{(i)}$ of the atoms or molecules of element $\alpha$ in this subdomain, or by using the specific internal energy $e_\alpha=e_\alpha(t,\xvec)$, as shown below
+In the above $i \in \Omega, i \in \alpha$ denotes the atoms or molecules of element $\alpha$ located in the subdomain $\Omega$. Finally, consider the internal energy $IE_{\Omega,\alpha}$ of element $\alpha$ in some subdomain $\Omega$. This internal energy can be computed by summing up the internal energies $e_i$ of the atoms or molecules of element $\alpha$ in this subdomain, or by using the specific internal energy $e_\alpha=e_\alpha(t,\xvec)$, as shown below
 \begin{equation}
-    IE_{\Omega,\alpha} = \sum_{i \in \Omega, i \in \alpha} e^{(i)} = \int_\Omega \rho Y_\alpha e_\alpha \, d\xvec.
+    IE_{\Omega,\alpha} = \sum_{i \in \Omega, i \in \alpha} e_i = \int_\Omega \rho Y_\alpha e_\alpha \, d\xvec.
 \end{equation}
 
 We can now write 
@@ -1175,12 +1178,12 @@ That is, the volume fraction is the volume occupied by element $\alpha$ within a
 For mass fraction, we have
 \begin{equation}
     \label{eq:atomistic_mix_Y}
-    Y_\alpha = \frac{\rho Y_\alpha}{\rho} = \lim_{\Omega \to \epsilon} \frac{ \frac{1}{V_\Omega} \int_\Omega \rho Y_\alpha \, d\xvec }{ \frac{1}{V_\Omega} \int_\Omega \rho \, d\xvec } = \lim_{\Omega \to \epsilon} \frac{ \sum_{i \in \Omega, i \in \alpha} m^{(i)} }{ \sum_{i \in \Omega} m^{(i)} } = \lim_{\Omega \to \epsilon} \frac{ m_{\Omega,\alpha} }{ m_\Omega }.
+    Y_\alpha = \frac{\rho Y_\alpha}{\rho} = \lim_{\Omega \to \epsilon} \frac{ \frac{1}{V_\Omega} \int_\Omega \rho Y_\alpha \, d\xvec }{ \frac{1}{V_\Omega} \int_\Omega \rho \, d\xvec } = \lim_{\Omega \to \epsilon} \frac{ \sum_{i \in \Omega, i \in \alpha} m_i }{ \sum_{i \in \Omega} m_i } = \lim_{\Omega \to \epsilon} \frac{ m_{\Omega,\alpha} }{ m_\Omega }.
 \end{equation}
 That is, the mass fraction is the mass of element $\alpha$ contained in a small domain divided by the mass contained in that small domain as the domain becomes sufficiently small. Similarly for specific internal energy of an element, we have
 \begin{equation}
     \label{eq:atomistic_mix_e}
-    e_\alpha = \frac{\rho Y_\alpha e_\alpha}{\rho Y_\alpha } = \lim_{\Omega \to \epsilon} \frac{ \frac{1}{V_\Omega} \int_\Omega \rho Y_\alpha e_\alpha \, d\xvec }{ \frac{1}{V_\Omega} \int_\Omega \rho Y_\alpha \, d\xvec } = \lim_{\Omega \to \epsilon} \frac{ \sum_{i \in \Omega, i \in \alpha} e^{(i)} }{ \sum_{i \in \Omega, i \in \alpha} m^{(i)} } = \lim_{\Omega \to \epsilon} \frac{ IE_{\Omega,\alpha} }{ m_{\Omega,\alpha} }.
+    e_\alpha = \frac{\rho Y_\alpha e_\alpha}{\rho Y_\alpha } = \lim_{\Omega \to \epsilon} \frac{ \frac{1}{V_\Omega} \int_\Omega \rho Y_\alpha e_\alpha \, d\xvec }{ \frac{1}{V_\Omega} \int_\Omega \rho Y_\alpha \, d\xvec } = \lim_{\Omega \to \epsilon} \frac{ \sum_{i \in \Omega, i \in \alpha} e_i }{ \sum_{i \in \Omega, i \in \alpha} m_i } = \lim_{\Omega \to \epsilon} \frac{ IE_{\Omega,\alpha} }{ m_{\Omega,\alpha} }.
 \end{equation}
 That is, the specific internal energy of an element is the internal energy of element $\alpha$ contained in a small domain divided by the mass of element $\alpha$ in that small domain as the domain becomes sufficiently small.
 
