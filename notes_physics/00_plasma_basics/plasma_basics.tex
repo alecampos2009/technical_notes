@@ -514,7 +514,33 @@ For multi-material problems there is a large number of new variables that are us
     \rho_{k,i,s}= \frac{\mathsf{M}_{k,i,s}}{\mathsf{V}_{k,i,s}}.
 \end{equation}
 \begin{equation}
-    \rho_{k,e}= \frac{\mathsf{M}_{k,e}}{\mathsf{V}_{k,e}}.
+    \rho_{k,e}= \frac{\mathsf{M}_{k,e}}{\mathsf{V}_k}.
+\end{equation}
+
+\subsubsection{Number densities}
+
+\begin{equation}
+    n = \frac{\mathsf{N}}{\mathsf{V}}.
+\end{equation}
+\begin{equation}
+    n_k = \frac{\mathsf{N}_k}{\mathsf{V}_k}.
+\end{equation}
+\begin{equation}
+    n_{k,i,s} = \frac{\mathsf{N}_{k,i,s}}{\mathsf{V}_{k,i,s}}.
+\end{equation}
+\begin{equation}
+    n_{k,e} = \frac{\mathsf{N}_{k,e}}{\mathsf{V}_k}.
+\end{equation}
+
+\subsubsection{Relation between mass and number densities}
+
+\begin{equation}
+    \label{eq:mm_mass_number_densities_i}
+    m_{k,i,s} n_{k,i,s} = \rho_{k,i,s}.
+\end{equation}
+\begin{equation}
+    \label{eq:mm_mass_number_densities_e}
+    m_e n_{k,e} = \rho_{k,e}.
 \end{equation}
 
 \subsubsection{Material volume and mass fractions}
@@ -535,62 +561,52 @@ For multi-material problems there is a large number of new variables that are us
     \eta_{k,i,s} = \frac{\mathsf{V}_{k,i,s}}{\mathsf{V}_k}.
 \end{equation}
 \begin{equation}
-    \eta_{k,e} = \frac{\mathsf{V}_{k,e}}{\mathsf{V}_k}.
-\end{equation}
-\begin{equation}
     Y_{k,i,s} = \frac{\mathsf{M}_{k,i,s}}{\mathsf{M}_k}.
 \end{equation}
 \begin{equation}
-    Y_{k,e} = \frac{\mathsf{M}_{k,e}}{\mathsf{M}_k}.
-\end{equation}
-\begin{equation}
+    \label{eq:mm_tri_relation_kis}
     \rho_{k,i,s} = \rho_k \frac{Y_{k,i,s}}{\eta_{k,i,s}}.
 \end{equation}
+
+\subsubsection{Energies}
 \begin{equation}
-    \rho_{k,e} = \rho_k \frac{Y_{k,e}}{\eta_{k,e}}.
+    e_{k,i,s} = \frac{\mathsf{IE}_{k,i,s}}{\mathsf{M}_{k,i,s}}.
+\end{equation}
+\begin{equation}
+    e_{k,e} = \frac{\mathsf{IE}_{k,e}}{\mathsf{M}_k}.
 \end{equation}
 
 \subsubsection{Total ion variables}
 
 \begin{equation}
     \label{eq:sf_vars_eta_ki}
-    \eta_{k,i} = \sum_s^{\mathcal{N}_k} \eta_{k,i,s}, 
+    \eta_{k,i} = \sum_s^{\mathcal{N}_k} \eta_{k,i,s} \approx 1, 
 \end{equation}
 \begin{equation}
     \label{eq:sf_vars_Y_ki}
-    Y_{k,i} = \sum_s^{\mathcal{N}_k} Y_{k,i,s}, 
+    Y_{k,i} = \sum_s^{\mathcal{N}_k} Y_{k,i,s} \approx 1, 
 \end{equation}
 \begin{equation}
     \label{eq:sf_vars_n_ki}
-    n_{k,i} = \sum_s^{\mathcal{N}_k} n_{k,i,s}. 
+    n_{k,i} = \sum_s^{\mathcal{N}_k} \eta_{k,i,s} n_{k,i,s}. 
 \end{equation}
 \begin{equation}
-    \label{eq:sf_vars_hatn_ki}
-    \hat{n}_{k,i} = \sum_s^{\mathcal{N}_k} \hat{n}_{k,i,s}. 
+    e_{k,i} = \sum_s^{\mathcal{N}_k} Y_{k,i,s} e_{k,i,s}.
+\end{equation}
+\begin{equation}
+    h_{k,i} = \sum_s^{\mathcal{N}_k} Y_{k,i,s} h_{k,i,s}.
 \end{equation}
 \begin{equation}
     \label{eq:sf_vars_p_ki}
-    p_{k,i} = \sum_s^{\mathcal{N}_k} p_{k,i,s}.
-\end{equation}
-\begin{equation}
-    \label{eq:sf_vars_hatp_ki}
-    \hat{p}_{k,i} = \sum_s^{\mathcal{N}_k} \hat{p}_{k,i,s}. 
+    p_{k,i} = \sum_s^{\mathcal{N}_k} \eta_{k,i,s} p_{k,i,s}.
 \end{equation}
 \begin{equation}
     \label{eq:sf_vars_t_ki}
-    \tvec_{k,i} = \sum_s^{\mathcal{N}_k} \tvec_{k,i,s}.
-\end{equation}
-\begin{equation}
-    \label{eq:sf_vars_hatt_ki}
-    \hat{\tvec}_{k,i} = \sum_s^{\mathcal{N}_k} \hat{\tvec}_{k,i,s}. 
+    \tvec_{k,i} = \sum_s^{\mathcal{N}_k} \eta_{k,i,s} \tvec_{k,i,s}.
 \end{equation}
 \begin{equation}
     \label{eq:sf_vars_sig_ki}
-    \sigmavec_{k,i} = \sum_s^{\mathcal{N}_k} \sigmavec_{k,i,s}.
-\end{equation}
-\begin{equation}
-    \label{eq:sf_vars_hatsig_ki}
-    \hat{\sigmavec}_{k,i} = \sum_s^{\mathcal{N}_k} \hat{\sigmavec}_{k,i,s}.
+    \sigmavec_{k,i} = \sum_s^{\mathcal{N}_k} \eta_{k,i,s} \sigmavec_{k,i,s}.
 \end{equation}
 \begin{equation}
     \label{eq:sf_vars_R_ki}
@@ -603,87 +619,6 @@ For multi-material problems there is a large number of new variables that are us
 \begin{equation}
     \label{eq:sf_vars_Q_ki}
     Q_{k,i} = \sum_s^{\mathcal{N}_k} Q_{k,i,s}.
-\end{equation}
-
-\subsubsection{Hat variables}
-
-\begin{equation}
-    \label{eq:sf_vars_def_hatn_kis}
-    \hat{n}_{k,i,s} = \eta_k n_{k,i,s}.
-\end{equation}
-\begin{equation}
-    \label{eq:sf_vars_def_hatn_ki}
-    \hat{n}_{k,i} = \eta_k n_{k,i}.
-\end{equation}
-\begin{equation}
-    \label{eq:sf_vars_def_hatn_ke}
-    \hat{n}_{k,e} = \eta_k n_{k,e}.
-\end{equation}
-\begin{equation}
-    \label{eq:sf_vars_def_hatp_kis}
-    \hat{p}_{k,i,s} = \eta_k p_{k,i,s}.
-\end{equation}
-\begin{equation}
-    \label{eq:sf_vars_def_hatp_ki}
-    \hat{p}_{k,i} = \eta_k p_{k,i}.
-\end{equation}
-\begin{equation}
-    \label{eq:sf_vars_def_hatp_ke}
-    \hat{p}_{k,e} = \eta_k p_{k,e}.
-\end{equation}
-\begin{equation}
-    \label{eq:sf_vars_def_hatt_kis}
-    \hat{\tvec}_{k,i,s} = \eta_k \tvec_{k,i,s}.
-\end{equation}
-\begin{equation}
-    \label{eq:sf_vars_def_hatt_ki}
-    \hat{\tvec}_{k,i} = \eta_k \tvec_{k,i}.
-\end{equation}
-\begin{equation}
-    \label{eq:sf_vars_def_hatt_ke}
-    \hat{\tvec}_{k,e} = \eta_k t_{k,e}.
-\end{equation}
-\begin{equation}
-    \label{eq:sf_vars_def_hatsigma_kis}
-    \hat{\sigmavec}_{k,i,s} = \eta_k \sigmavec_{k,i,s}.
-\end{equation}
-\begin{equation}
-    \label{eq:sf_vars_def_hatsigma_ki}
-    \hat{\sigmavec}_{k,i} = \eta_k \sigmavec_{k,i}.
-\end{equation}
-\begin{equation}
-    \label{eq:sf_vars_def_hatsigma_ke}
-    \hat{\sigmavec_{k,e}} = \eta_k \sigmavec_{k,e}.
-\end{equation}
-
-\subsubsection{Number densities}
-\begin{equation}
-    n_{k,i,s} = \frac{\mathsf{N}_{k,i,s}}{\mathsf{V}_k}.
-\end{equation}
-\begin{equation}
-    n_{k,e} = \frac{\mathsf{N}_{k,e}}{\mathsf{V}_k}.
-\end{equation}
-\begin{equation}
-    \hat{n}_{k,i,s} = \frac{\mathsf{N}_{k,i,s}}{\mathsf{V}}.
-\end{equation}
-\begin{equation}
-    \hat{n}_{k,e} = \frac{\mathsf{N}_{k,e}}{\mathsf{V}}.
-\end{equation}
-\begin{equation}
-    \label{eq:mm_mass_number_densities_i}
-    m_{k,i,s} n_{k,i,s} = \rho_k Y_{k,i,s}.
-\end{equation}
-\begin{equation}
-    \label{eq:mm_mass_number_densities_e}
-    m_e n_{k,e} = \rho_k Y_{k,e}.
-\end{equation}
-\begin{equation}
-    \label{eq:mm_mass_number_densities_i_hat}
-    m_{k,i,s} \hat{n}_{k,i,s} = \rho Y_k Y_{k,i,s}.
-\end{equation}
-\begin{equation}
-    \label{eq:mm_mass_number_densities_e_hat}
-    m_e \hat{n}_{k,e} = \rho Y_k Y_{k,e}.
 \end{equation}
 
 %------------------------------------------------------------------------
@@ -699,55 +634,10 @@ The following assumptions are used:
 %--------------------------------------------
 We note that there are two types of densities now. Total densities have as their denominator the total volume $V$. They use the hat notation, an example is $\hat{n}_{k,i,s}$. On the other hand, there are densities that have as their denominator the material volume $V_k$. An example is $n_{k,i,s}$. The governing equations shown in \cref{sec:gov_eqs_fluid_description} are generic, without any knowledge of material definitions, and hence they include the total densities. Pressures, which are essentially energies per unit volume, also have two definitions, namely those whose denominator is the total volume vs.\@ those whose denominator is the material volume. Since the stress tensor is defined in terms of the pressure, the stress tensor also has these two variants, and for consistency, the shear-stress tensor as well.
 
-Using the multi-material notation for the mass, momentum, and energy equations in \cref{sec:gov_eqs_fluid_description}, we have
-\begin{equation}
-    \frac{\partial \hat{n}_{k,i,s}}{\partial t} + \nabla \cdot \left ( \hat{n}_{k,i,s} \uvec_{k,i,s} \right ) = 0,
-\end{equation}
-\begin{equation}
-    \frac{\partial \hat{n}_{k,e}}{\partial t} + \nabla \cdot \left ( \hat{n}_{k,e} \uvec_{k,e} \right ) = 0,
-\end{equation}
-\begin{equation}
-    \frac{\partial m_{k,i,s} \hat{n}_{k,i,s} \uvec_{k,i,s}}{\partial t} + \nabla \cdot \left( m_{k,i,s} \hat{n}_{k.i,s} \uvec_{k,i,s} \uvec_{k,i,s} \right) 
-    - Z_{k,i,s} e \hat{n}_{k,i,s} ( \Evec + \uvec_{k,i,s} \times \Bvec ) = \nabla \cdot \hat{\sigmavec}_{k,i,s} + \Rvec_{k,i,s},
-\end{equation}
-\begin{equation}
-    \frac{\partial m_{k,e} \hat{n}_{k,e} \uvec_{k,e}}{\partial t} + \nabla \cdot \left( m_{k,e} \hat{n}_{k,e} \uvec_{k,e} \uvec_{k,e} \right) + e \hat{n}_{k,e} ( \Evec + \uvec_{k,e} \times \Bvec ) = \nabla \cdot \hat{\sigmavec}_{k,e} + \Rvec_{k,e},
-\end{equation}
-\begin{equation}
-    \frac{\partial}{\partial t} \left ( \frac{3}{2} \hat{p}_{k,i,s} \right ) + \nabla \cdot \left ( \frac{3}{2} \hat{p}_{k,i,s} \uvec_{k,i,s} \right ) = \hat{\sigmavec}_{k,i,s} : \nabla \uvec_{k,i,s} - \nabla \cdot \qvec_{k,i,s} + Q_{k,i,s},
-\end{equation}
-\begin{equation}
-    \frac{\partial}{\partial t} \left ( \frac{3}{2} \hat{p}_{k,e} \right ) + \nabla \cdot \left ( \frac{3}{2} \hat{p}_{k,e} \uvec_{k,e} \right ) = \hat{\sigmavec_{k,e}} : \nabla \uvec_{k,e} - \nabla \cdot \qvec_{k,e} + Q_{k,e}.
-\end{equation}
-
-The current of each material can now be written as
-\begin{equation}
-    \Jvec_k = e \left( \sum_s^{\mathcal{N}_k} Z_{k,i,s} \hat{n}_{k,i,s} \uvec_{k,i,s} - \hat{n}_{k,e} \uvec_{k,e} \right),
-\end{equation}
-where the total current is
-\begin{equation}
-    \Jvec = \sum_k^\mathcal{M} \Jvec_k.
-\end{equation}
-Similarly, the charge of each material is written as
-\begin{equation}
-    \rho_{q,k} = e \left( \sum_s^{\mathcal{N}_k} Z_{k,i,s} \hat{n}_{k,i,s} - \hat{n}_{e,k} \right),
-\end{equation}
-where the total charge is
-\begin{equation}
-    \rho_q = \sum_k^\mathcal{M} \rho_{q,k}.
-\end{equation}
-The EOSs are written as
-\begin{equation}
-    \hat{p}_{k,i,s} = \hat{n}_{k,i,s} k_B T_{k,i,s},
-\end{equation}
-\begin{equation}
-    \hat{p}_{k,e} = \hat{n}_{k,e} k_B T_{k,e}.
-\end{equation}
-
-The complete model can now be written as follows
+Using the multi-material notation the governing equations in \cref{sec:gov_eqs_fluid_description} are written as
 \begin{equation}
     \label{eq:mf_mm_ni}
-    \frac{\partial \eta_k n_{k,i,s}}{\partial t} + \nabla \cdot \left ( \eta_k n_{k,i,s} \uvec_{k,i,s} \right ) = 0,
+    \frac{\partial \eta_k \eta_{k,i,s} n_{k,i,s}}{\partial t} + \nabla \cdot \left ( \eta_k \eta_{k,i,s} n_{k,i,s} \uvec_{k,i,s} \right ) = 0,
 \end{equation}
 \begin{equation}
     \label{eq:mf_mm_ne}
@@ -755,18 +645,17 @@ The complete model can now be written as follows
 \end{equation}
 \begin{multline}
     \label{eq:mf_mm_ui}
-    \frac{\partial m_{k,i,s} \eta_k n_{k,i,s} \uvec_{k,i,s}}{\partial t} + \nabla \cdot \left( m_{k,i,s} \eta_k n_{k.i,s} \uvec_{k,i,s} \uvec_{k,i,s} \right) 
-    - Z_{k,i,s} e \eta_k n_{k,i,s} ( \Evec + \uvec_{k,i,s} \times \Bvec ) = \\
-     \nabla \cdot \left( \eta_k \sigmavec_{k,i,s} \right) + \Rvec_{k,i,s},
+    \frac{\partial m_{k,i,s} \eta_k \eta_{k,i,s} n_{k,i,s} \uvec_{k,i,s}}{\partial t} + \nabla \cdot \left( m_{k,i,s} \eta_k \eta_{k,i,s} n_{k.i,s} \uvec_{k,i,s} \uvec_{k,i,s} \right) \\
+    - Z_{k,i,s} e \eta_k \eta_{k,i,s} n_{k,i,s} ( \Evec + \uvec_{k,i,s} \times \Bvec ) = \nabla \cdot \left( \eta_k \eta_{k,i,s} \sigmavec_{k,i,s} \right) + \Rvec_{k,i,s},
 \end{multline}
 \begin{multline}
     \label{eq:mf_mm_ue}
-    \frac{\partial m_{k,e} \eta_k n_{k,e} \uvec_{k,e}}{\partial t} + \nabla \cdot \left( m_{k,e} \eta_k n_{k,e} \uvec_{k,e} \uvec_{k,e} \right) + e \eta_k n_{k,e} ( \Evec + \uvec_{k,e} \times \Bvec ) = \\
-    \nabla \cdot \left( \eta_k \sigmavec_{k,e} \right) + \Rvec_{k,e},
+    \frac{\partial m_{k,e} \eta_k n_{k,e} \uvec_{k,e}}{\partial t} + \nabla \cdot \left( m_{k,e} \eta_k n_{k,e} \uvec_{k,e} \uvec_{k,e} \right) \\
+    + e \eta_k n_{k,e} ( \Evec + \uvec_{k,e} \times \Bvec ) = \nabla \cdot \left( \eta_k \sigmavec_{k,e} \right) + \Rvec_{k,e},
 \end{multline}
 \begin{equation}
     \label{eq:mf_mm_iei}
-    \frac{\partial}{\partial t} \left ( \frac{3}{2} \eta_k p_{k,i,s} \right ) + \nabla \cdot \left ( \frac{3}{2} \eta_k p_{k,i,s} \uvec_{k,i,s} \right ) = \eta_k \sigmavec_{k,i,s} : \nabla \uvec_{k,i,s} - \nabla \cdot \qvec_{k,i,s} + Q_{k,i,s},
+    \frac{\partial}{\partial t} \left ( \frac{3}{2} \eta_k \eta_{k,i,s} p_{k,i,s} \right ) + \nabla \cdot \left ( \frac{3}{2} \eta_k \eta_{k,i,s} p_{k,i,s} \uvec_{k,i,s} \right ) = \eta_k \eta_{k,i,s} \sigmavec_{k,i,s} : \nabla \uvec_{k,i,s} - \nabla \cdot \qvec_{k,i,s} + Q_{k,i,s},
 \end{equation}
 \begin{equation}
     \label{eq:mf_mm_iee}
@@ -790,14 +679,14 @@ The complete model can now be written as follows
 \end{equation}
 \begin{equation}
     \label{eq:mf_mm_curr_density}
-    \Jvec_k = e \eta_k \left( \sum_s^{\mathcal{N}_k} Z_{k,i,s} n_{k,i,s} \uvec_{k,i,s} - n_{k,e} \uvec_{k,e} \right),
+    \Jvec_k = e \eta_k \left( \sum_s^{\mathcal{N}_k} Z_{k,i,s} \eta_{k,i,s} n_{k,i,s} \uvec_{k,i,s} - n_{k,e} \uvec_{k,e} \right),
 \end{equation}
 \begin{equation}
     \Jvec = \sum_k^\mathcal{M} \Jvec_k
 \end{equation}
 \begin{equation}
     \label{eq:mf_mm_mass_density}
-    \rho_{q,k} = e \eta_k \left( \sum_s^{\mathcal{N}_k} Z_{k,i,s} n_{k,i,s} - n_{e,k} \right),
+    \rho_{q,k} = e \eta_k \left( \sum_s^{\mathcal{N}_k} Z_{k,i,s} \eta_{k,i,s} n_{k,i,s} - n_{k,e} \right),
 \end{equation}
 \begin{equation}
     \rho_q = \sum_k^\mathcal{M} \rho_{q,k},
@@ -818,7 +707,7 @@ The complete model can now be written as follows
 The equations are the same as the multi-material formulation, but there is only one material now and hence the $k$ subscript can be dropped and all $\eta_k = 1$. Thus we have 
 \begin{equation}
     \label{eq:mf_np1fluid_ni}
-    \frac{\partial n_{i,s}}{\partial t} + \nabla \cdot \left ( n_{i,s} \uvec_{i,s} \right ) = 0,
+    \frac{\partial \eta_{i,s} n_{i,s}}{\partial t} + \nabla \cdot \left ( \eta_{i,s} n_{i,s} \uvec_{i,s} \right ) = 0,
 \end{equation}
 \begin{equation}
     \label{eq:mf_np1fluid_ne}
@@ -826,15 +715,15 @@ The equations are the same as the multi-material formulation, but there is only 
 \end{equation}
 \begin{equation}
     \label{eq:mf_np1fluid_ui}
-    \frac{\partial m_{i,s} n_{i,s} \uvec_{i,s}}{\partial t} + \nabla \cdot \left( m_{i,s} n_{i,s} \uvec_{i,s} \uvec_{i,s} \right) - Z_{i,s} e n_{i,s} ( \Evec + \uvec_{i,s} \times \Bvec ) = \nabla \cdot \sigmavec_{i,s} + \Rvec_{i,s},
+    \frac{\partial m_{i,s} \eta_{i,s} n_{i,s} \uvec_{i,s}}{\partial t} + \nabla \cdot \left( m_{i,s} \eta_{i,s} n_{i,s} \uvec_{i,s} \uvec_{i,s} \right) - Z_{i,s} e \eta_{i,s} n_{i,s} ( \Evec + \uvec_{i,s} \times \Bvec ) = \nabla \cdot \left( \eta_{i,s} \sigmavec_{i,s} \right) + \Rvec_{i,s},
 \end{equation}
 \begin{equation}
     \label{eq:mf_np1fluid_ue}
-    \frac{\partial m_e n_e \uvec_e}{\partial t} + \nabla \cdot \left ( m_e n_e \uvec_e \uvec_e \right) + e n_e ( \Evec + \uvec_e \times \Bvec ) = \nabla \cdot \sigmavec_e + \Rvec_e,
+    \frac{\partial m_e n_e \uvec_e}{\partial t} + \nabla \cdot \left( m_e n_e \uvec_e \uvec_e \right) + e n_e ( \Evec + \uvec_e \times \Bvec ) = \nabla \cdot \sigmavec_e + \Rvec_e,
 \end{equation}
 \begin{equation}
     \label{eq:mf_np1fluid_iei}
-    \frac{\partial}{\partial t} \left ( \frac{3}{2} p_{i,s} \right ) + \nabla \cdot \left ( \frac{3}{2} p_{i,s} \uvec_{i,s} \right ) = \sigmavec_{i,s} : \nabla \uvec_{i,s} - \nabla \cdot \qvec_{i,s} + Q_{i,s},
+    \frac{\partial}{\partial t} \left ( \frac{3}{2} \eta_{i,s} p_{i,s} \right ) + \nabla \cdot \left ( \frac{3}{2} \eta_{i,s} p_{i,s} \uvec_{i,s} \right ) = \eta_{i,s} \sigmavec_{i,s} : \nabla \uvec_{i,s} - \nabla \cdot \qvec_{i,s} + Q_{i,s},
 \end{equation}
 \begin{equation}
     \label{eq:mf_np1fluid_iee}
@@ -858,11 +747,11 @@ The equations are the same as the multi-material formulation, but there is only 
 \end{equation}
 \begin{equation}
     \label{eq:mf_np1fluid_curr_density}
-    \Jvec = e \left(\sum_s^\mathcal{N} Z_{i,s} n_{i,s} \uvec_{i,s} - n_e \uvec_e \right),
+    \Jvec = e \left(\sum_s^\mathcal{N} Z_{i,s} \eta_{i,s} n_{i,s} \uvec_{i,s} - n_e \uvec_e \right),
 \end{equation}
 \begin{equation}
     \label{eq:mf_np1fluid_mass_density}
-    \rho_q = e \left( \sum_s^\mathcal{N} Z_{i,s} n_{i,s} - n_e \right),
+    \rho_q = e \left( \sum_s^\mathcal{N} Z_{i,s} \eta_{i,s} n_{i,s} - n_e \right),
 \end{equation}
 \begin{equation}
     \label{eq:mf_np1fluid_eos_ion}
@@ -876,8 +765,8 @@ The equations are the same as the multi-material formulation, but there is only 
 %--------------------------------------------
 \subsection{Single-material two-fluid model}
 %--------------------------------------------
-If there is only one ion species, then we have the two-fluid model
 \label{sec:mf_2fluid_equations}
+If there is only one ion species, then we have the two-fluid model. For this case $\eta_{i,s} n_{i,s}$, $\eta_{i,s} p_{i,s}$, and $\eta_{i,s} \sigmavec_{i,s}$ simplify to $\eta_i n_i$, $\eta_i p_i$, and $\eta_i \sigmavec_i$, respectively. Since $\eta_i \approx 1$, we have
 \begin{equation}
     \label{eq:mf_2fluid_ni}
     \frac{\partial n_i}{\partial t} + \nabla \cdot \left ( n_i \uvec_i \right ) = 0,
@@ -1003,7 +892,7 @@ With these, the governing equations become
 A single-fluid formulation is defined as that for which there is a single velocity vector. For the single-fluid formulation, we'll use the following assumptions
 \begin{enumerate}
     \item $m_{k,e} \approx 0$ since $m_{k,e} \ll m_{k,i,s}$. \label{eq:sf_no_e_mass} 
-    \item Quasi-neutrality, i.e.\@ $\sum_s^{\mathcal{N}_k} Z_{k,i,s} n_{k,i,s} = n_{k,e}$. \label{eq:sf_quasi_neutrality}
+    \item Quasi-neutrality, i.e.\@ $\sum_s^{\mathcal{N}_k} Z_{k,i,s} \eta_{k,i,s} n_{k,i,s} = n_{k,e}$. \label{eq:sf_quasi_neutrality}
 \end{enumerate}
 
 %--------------------------------------------
@@ -1016,30 +905,19 @@ We now introduce the following single-fluid variables
     \uvec_{k,i} = \sum_s^{\mathcal{N}_k} Y_{k,i,s} \uvec_{k,i,s} 
 \end{equation}
 \begin{equation}
-    \label{eq:sf_vars_u_k}
-    \uvec_k = \uvec_{k,i} + Y_{k,e} \uvec_{k,e} = \uvec_{k,i}
-\end{equation}
-\begin{equation}
     \label{eq:sf_vars_u}
-    \uvec = \sum_k^\mathcal{M} Y_k \uvec_k.
-\end{equation}
-\begin{equation}
-    \label{eq:sf_vars_e_ki}
-    e_{k,i} = \sum_s^{\mathcal{N}_k} Y_{k,i,s} e_{k,i,s}.
+    \uvec = \sum_k^\mathcal{M} Y_k \uvec_{k,i}.
 \end{equation}
 \begin{equation}
     \label{eq:sf_vars_e_k}
-    e_k = e_{k,i} + Y_{k,e} e_{k,e}.
+    e_k = e_{k,i} + e_{k,e}.
 \end{equation}
 \begin{equation}
     \label{eq:sf_vars_e}
     e = \sum_k^\mathcal{M} Y_k e_k.
 \end{equation}
 \begin{equation}
-    h_{k,i} = \sum_s^{\mathcal{N}_k} Y_{k,i,s} h_{k,i,s}.
-\end{equation}
-\begin{equation}
-    h_k = h_{k,i} + Y_{k,e} h_{k,e}.
+    h_k = h_{k,i} + h_{k,e}.
 \end{equation}
 \begin{equation}
     h = \sum_k^\mathcal{M} Y_k h_k.
@@ -1085,7 +963,11 @@ which, using our current notation, can be expressed as
 
 \subsubsection{Mass}
 
-Multiplying \cref{eq:mf_mm_ni} by $m_{i,s}$ and using \cref{eq:mm_mass_number_densities_i} gives
+Multiplying \cref{eq:mf_mm_ni} by $m_{k,i,s}$ and using \cref{eq:mm_mass_number_densities_i} gives
+\begin{equation*}
+    \frac{\partial \eta_k \eta_{k,i,s} \rho_{k,i,s}}{\partial t} + \nabla \cdot \left( \eta_k \eta_{k,i,s} \rho_{k,i,s} \uvec_{k,i,s} \right) = 0.
+\end{equation*}
+Using \cref{eq:mm_tri_relation_kis}, the above becomes
 \begin{equation*}
     \frac{\partial \eta_k \rho_k Y_{k,i,s}}{\partial t} + \nabla \cdot \left( \eta_k \rho_k Y_{k,i,s} \uvec_{k,i,s} \right) = 0.
 \end{equation*}
@@ -1120,11 +1002,11 @@ and
 
 Multiplying \cref{eq:mf_mm_ni} by $Z_{k,i,s}$ and summing over all $s$ of a material gives
 \begin{equation*}
-    \frac{\partial}{\partial t} \left( \eta_k \sum_s^{\mathcal{N}_k} Z_{k,i,s} n_{i,s} \right) + \nabla \cdot \left( \eta_k \sum_s^{\mathcal{N}_k} Z_{k,i,s} n_{k,i,s} \uvec_{k,i,s} \right) = 0.
+    \frac{\partial}{\partial t} \left( \eta_k \sum_s^{\mathcal{N}_k} Z_{k,i,s} \eta_{k,i,s} n_{k,i,s} \right) + \nabla \cdot \left( \eta_k \sum_s^{\mathcal{N}_k} Z_{k,i,s} \eta_{k,i,s} n_{k,i,s} \uvec_{k,i,s} \right) = 0.
 \end{equation*}
 Subtracting \cref{eq:mf_mm_ne} from the above and using the assumption of quasi-neutrality in \cref{eq:sf_quasi_neutrality} gives
 \begin{equation*}
-    \nabla \cdot \left( \eta_k \sum_s^{\mathcal{N}_k} Z_{k,i,s} n_{k,i,s} \uvec_{k,i,s} - n_{k,e} \uvec_{k,e} \right) = 0,
+    \nabla \cdot \left( \eta_k \sum_s^{\mathcal{N}_k} Z_{k,i,s} \eta_{k,i,s} n_{k,i,s} \uvec_{k,i,s} - n_{k,e} \uvec_{k,e} \right) = 0,
 \end{equation*}
 which is equivalent to
 \begin{equation*}
@@ -1139,33 +1021,38 @@ Summing over all $k$ gives
 
 We now add \cref{eq:mf_mm_ui,eq:mf_mm_ue} and use \cref{eq:sf_no_e_mass} to obtain
 \begin{multline*}
-    \frac{\partial m_{k,i,s} \eta_k n_{k,i,s} \uvec_{k,i,s}}{\partial t} + \nabla \cdot \left( m_{k,i,s} \eta_k n_{k,i,s} \uvec_{k,i,s} \uvec_{k,i,s} \right) -e \eta_k \left( Z_{k,i,s} n_{k,i,s} - n_{k,e} \right) \Evec \\
-    - e \eta_k \left( Z_{k,i,s} n_{k,i,s} \uvec_{k,i,s} - n_{k,e} \uvec_{k,e} \right) \times \Bvec = \nabla \cdot \left[ \eta_k \left( \sigmavec_{k,i,s} + \sigmavec_{k,e} \right) \right] + \Rvec_{k,i,s} + \Rvec_{k,e}.
+    \frac{\partial m_{k,i,s} \eta_k \eta_{k,i,s} n_{k,i,s} \uvec_{k,i,s}}{\partial t} + \nabla \cdot \left( m_{k,i,s} \eta_k \eta_{k,i,s} n_{k,i,s} \uvec_{k,i,s} \uvec_{k,i,s} \right) -e \eta_k \left( Z_{k,i,s} \eta_{k,i,s}  n_{k,i,s} - n_{k,e} \right) \Evec \\
+    - e \eta_k \left( Z_{k,i,s} \eta_{k,i,s}  n_{k,i,s} \uvec_{k,i,s} - n_{k,e} \uvec_{k,e} \right) \times \Bvec = \nabla \cdot \left[ \eta_k \left( \eta_{k,i,s}  \sigmavec_{k,i,s} + \sigmavec_{k,e} \right) \right] + \Rvec_{k,i,s} + \Rvec_{k,e}.
 \end{multline*}
 Using \cref{eq:mm_mass_number_densities_i} the above becomes
 \begin{multline*}
-    \frac{\partial \eta_k \rho_k Y_{k,i,s} \uvec_{k,i,s}}{\partial t} + \nabla \cdot \left( \eta_k \rho_k Y_{k,i,s} \uvec_{k,i,s} \uvec_{k,i,s} \right) -e \eta_k \left( Z_{k,i,s} n_{k,i,s} - n_{k,e} \right) \Evec \\
-    - e \eta_k \left( Z_{k,i,s} n_{k,i,s} \uvec_{k,i,s} - n_{k,e} \uvec_{k,e} \right) \times \Bvec = \nabla \cdot \left[ \eta_k \left( \sigmavec_{k,i,s} + \sigmavec_{k,e} \right) \right] + \Rvec_{k,i,s} + \Rvec_{k,e}.
+    \frac{\partial \eta_k \eta_{k,i,s} \rho_{k,i,s} \uvec_{k,i,s}}{\partial t} + \nabla \cdot \left( \eta_k \eta_{k,i,s} \rho_{k,i,s} \uvec_{k,i,s} \uvec_{k,i,s} \right) -e \eta_k \left( Z_{k,i,s} \eta_{k,i,s} n_{k,i,s} - n_{k,e} \right) \Evec \\
+    - e \eta_k \left( Z_{k,i,s} \eta_{k,i,s} n_{k,i,s} \uvec_{k,i,s} - n_{k,e} \uvec_{k,e} \right) \times \Bvec = \nabla \cdot \left[ \eta_k \left( \eta_{k,i,s} \sigmavec_{k,i,s} + \sigmavec_{k,e} \right) \right] + \Rvec_{k,i,s} + \Rvec_{k,e}.
+\end{multline*}
+Using \cref{eq:mm_tri_relation_kis} we get
+\begin{multline*}
+    \frac{\partial \eta_k \rho_k Y_{k,i,s} \uvec_{k,i,s}}{\partial t} + \nabla \cdot \left( \eta_k \rho_k Y_{k,i,s} \uvec_{k,i,s} \uvec_{k,i,s} \right) -e \eta_k \left( Z_{k,i,s} \eta_{k,i,s} n_{k,i,s} - n_{k,e} \right) \Evec \\
+    - e \eta_k \left( Z_{k,i,s} \eta_{k,i,s} n_{k,i,s} \uvec_{k,i,s} - n_{k,e} \uvec_{k,e} \right) \times \Bvec = \nabla \cdot \left[ \eta_k \left( \eta_{k,i,s} \sigmavec_{k,i,s} + \sigmavec_{k,e} \right) \right] + \Rvec_{k,i,s} + \Rvec_{k,e}.
 \end{multline*}
 Summing over all $s$ of a material, using the assumption of \cref{eq:sf_quasi_neutrality} and the definition of the current in \cref{eq:mf_mm_curr_density} the above simplifies to
 \begin{multline*}
     \frac{\partial}{\partial t} \sum_s^{\mathcal{N}_k} \eta_k \rho_k Y_{k,i,s} \uvec_{k,i,s} + \nabla \cdot \sum_s^{\mathcal{N}_k} \eta_k \rho_k Y_{k,i,s} \uvec_{k,i,s} \uvec_{k,i,s} - \Jvec_k \times \Bvec = \\
-    \nabla \cdot \left[ \eta_k \left( \sum_s^{\mathcal{N}_k} \sigmavec_{k,i,s} + \sigmavec_{k,e} \right) \right] + \sum_s^{\mathcal{N}_k} \Rvec_{k,i,s} + \Rvec_{k,e}.
+    \nabla \cdot \left[ \eta_k \left( \sum_s^{\mathcal{N}_k} \eta_{k,i,s} \sigmavec_{k,i,s} + \sigmavec_{k,e} \right) \right] + \sum_s^{\mathcal{N}_k} \Rvec_{k,i,s} + \Rvec_{k,e}.
 \end{multline*}
 We now write the momentum equation as
 \begin{multline*}
     \frac{\partial}{\partial t} \sum_s^{\mathcal{N}_k} \eta_k \rho_k Y_{k,i,s} \uvec_{k,i,s} + \nabla \cdot \sum_s^{\mathcal{N}_k} \left[ \eta_k \rho_k Y_{k,i,s} \uvec_{k,i,s} \uvec + \eta_k \rho_k Y_{k,i,s} \uvec_{k,i,s} \left( \uvec_{k,i,s} - \uvec \right) \right] - \Jvec_k \times \Bvec = \\
-    \nabla \cdot \left[ \eta_k \left( \sum_s^{\mathcal{N}_k} \sigmavec_{k,i,s} + \sigmavec_{k,e} \right) \right] + \sum_s^{\mathcal{N}_k} \Rvec_{k,i,s} + \Rvec_{k,e}.
+    \nabla \cdot \left[ \eta_k \left( \sum_s^{\mathcal{N}_k} \eta_{k,i,s} \sigmavec_{k,i,s} + \sigmavec_{k,e} \right) \right] + \sum_s^{\mathcal{N}_k} \Rvec_{k,i,s} + \Rvec_{k,e}.
 \end{multline*}
 Using the definition of $\jvec_{k,i,s}$ the above becomes
 \begin{multline*}
     \frac{\partial}{\partial t} \sum_s^{\mathcal{N}_k} \eta_k \rho_k Y_{k,i,s} \uvec_{k,i,s} + \nabla \cdot \sum_s^{\mathcal{N}_k} \left( \eta_k \rho_k Y_{k,i,s} \uvec_{k,i,s} \uvec  \right) - \Jvec_k \times \Bvec = \\
-    \nabla \cdot \left[ \eta_k \left( \sum_s^{\mathcal{N}_k} \sigmavec_{k,i,s} + \sigmavec_{k,e} \right) \right] - \nabla \cdot \sum_s^{\mathcal{N}_k} \jvec_{k,i,s} \uvec_{k,i,s} + \sum_s^{\mathcal{N}_k} \Rvec_{k,i,s} + \Rvec_{k,e}.
+    \nabla \cdot \left[ \eta_k \left( \sum_s^{\mathcal{N}_k} \eta_{k,i,s} \sigmavec_{k,i,s} + \sigmavec_{k,e} \right) \right] - \nabla \cdot \sum_s^{\mathcal{N}_k} \jvec_{k,i,s} \uvec_{k,i,s} + \sum_s^{\mathcal{N}_k} \Rvec_{k,i,s} + \Rvec_{k,e}.
 \end{multline*}
 We now sum over all materials to obtain
 \begin{multline*}
     \frac{\partial}{\partial t} \sum_k^\mathcal{M} \sum_s^{\mathcal{N}_k} \eta_k \rho_k Y_{k,i,s} \uvec_{k,i,s} + \nabla \cdot \sum_k^\mathcal{M} \sum_s^{\mathcal{N}_k} \left( \eta_k \rho_k Y_{k,i,s} \uvec_{k,i,s} \uvec  \right) - \Jvec \times \Bvec = \\
-    \nabla \cdot \sum_k^\mathcal{M} \left( \sum_s^{\mathcal{N}_k} \sigmavec_{k,i,s} + \sigmavec_{k,e} \right) - \nabla \cdot \sum_k^\mathcal{M} \sum_s^{\mathcal{N}_k} \jvec_{k,i,s} \uvec_{k,i,s} + \sum_k^\mathcal{M} \left( \sum_s^{\mathcal{N}_k} \Rvec_{k,i,s} + \Rvec_{k,e} \right).
+    \nabla \cdot \sum_k^\mathcal{M} \left( \sum_s^{\mathcal{N}_k} \eta_{k,i,s} \sigmavec_{k,i,s} + \sigmavec_{k,e} \right) - \nabla \cdot \sum_k^\mathcal{M} \sum_s^{\mathcal{N}_k} \jvec_{k,i,s} \uvec_{k,i,s} + \sum_k^\mathcal{M} \left( \sum_s^{\mathcal{N}_k} \Rvec_{k,i,s} + \Rvec_{k,e} \right).
 \end{multline*}
 We note that
 \begin{equation}
@@ -1173,7 +1060,7 @@ We note that
 \end{equation}
 Using the above and \cref{eq:sf_sum_mom_collisions_mat} we get
 \begin{equation*}
-    \frac{\partial \rho \uvec}{\partial t} + \nabla \cdot \left( \rho \uvec \uvec \right) - \Jvec \times \Bvec = \nabla \cdot \sum_k^\mathcal{M} \left[ \eta_k \left( \sum_s^{\mathcal{N}_k} \sigmavec_{k,i,s} + \sigmavec_{k,e} \right) \right] - \nabla \cdot \sum_k^\mathcal{M} \sum_s^{\mathcal{N}_k} \jvec_{k,i,s} \uvec_{k,i,s}.
+    \frac{\partial \rho \uvec}{\partial t} + \nabla \cdot \left( \rho \uvec \uvec \right) - \Jvec \times \Bvec = \nabla \cdot \sum_k^\mathcal{M} \left[ \eta_k \left( \sum_s^{\mathcal{N}_k} \eta_{k,i,s} \sigmavec_{k,i,s} + \sigmavec_{k,e} \right) \right] - \nabla \cdot \sum_k^\mathcal{M} \sum_s^{\mathcal{N}_k} \jvec_{k,i,s} \uvec_{k,i,s}.
 \end{equation*}
 Finally, we write the above as
 \begin{equation*}
@@ -1191,21 +1078,22 @@ Given the assumption in \cref{eq:sf_no_e_mass}, \cref{eq:mf_mm_ue} for electron 
 \end{equation*}
 Using the definition of the current in \cref{eq:mf_mm_curr_density}, the left-hand side can be re-written as
 \begin{equation*}
-    e \eta_k n_{k,e} ( \Evec + \uvec_{k,e} \times \Bvec ) = e \eta_k n_{k,e} \Evec + \left( e \eta_k \sum_s^{\mathcal{N}_k} Z_{k,i,s} n_{k,i,s} \uvec_{k,i,s} - \Jvec_k \right) \times \Bvec,
+    e \eta_k n_{k,e} ( \Evec + \uvec_{k,e} \times \Bvec ) = e \eta_k n_{k,e} \Evec + \left( e \eta_k \sum_s^{\mathcal{N}_k} Z_{k,i,s} \eta_{k,i,s} n_{k,i,s} \uvec_{k,i,s} - \Jvec_k \right) \times \Bvec,
 \end{equation*}
 and thus the electron momentum equation becomes
 \begin{equation*}
-    e \eta_k n_{k,e} \Evec + e \eta_k \sum_s^{\mathcal{N}_k} Z_{k,i,s} n_{k,i,s} \uvec_{k,i,s} \times \Bvec = \Jvec_k \times \Bvec + \nabla \cdot \left( \eta_k \sigmavec_{k,e} \right) + \Rvec_{k,e},
+    e \eta_k n_{k,e} \Evec + e \eta_k \sum_s^{\mathcal{N}_k} Z_{k,i,s} \eta_{k,i,s} n_{k,i,s} \uvec_{k,i,s} \times \Bvec = \Jvec_k \times \Bvec + \nabla \cdot \left( \eta_k \sigmavec_{k,e} \right) + \Rvec_{k,e},
 \end{equation*}
 Using the definition of $\jvec_{k,i,s}$, we can write
 \begin{align*}
-    \sum_s^{\mathcal{N}_k} Z_{k,i,s} n_{k,i,s} \uvec_{k,i,s} \times \Bvec &= \sum_s^{\mathcal{N}_k} \left[ Z_{k,i,s} n_{k,i,s} \uvec + Z_{k,i,s} n_{k,i,s} \left( \uvec_{k,i,s} - \uvec \right) \right] \times \Bvec \\
-    &= \sum_s^{\mathcal{N}_k} \left( Z_{k,i,s} n_{k,i,s} \uvec + Z_{k,i,s} n_{k,i,s} \frac{\jvec_{k,i,s}}{\eta_k \rho_k Y_{k,i,s}} \right) \times \Bvec.
+    \sum_s^{\mathcal{N}_k} Z_{k,i,s} \eta_{k,i,s} n_{k,i,s} \uvec_{k,i,s} \times \Bvec &= \sum_s^{\mathcal{N}_k} \left[ Z_{k,i,s} \eta_{k,i,} n_{k,i,s} \uvec + Z_{k,i,s} \eta_{k,i,s} n_{k,i,s} \left( \uvec_{k,i,s} - \uvec \right) \right] \times \Bvec \\
+    &= \sum_s^{\mathcal{N}_k} \left( Z_{k,i,s} \eta_{k,i,s} n_{k,i,s} \uvec + Z_{k,i,s} \eta_{k,i,s} n_{k,i,s} \frac{\jvec_{k,i,s}}{\eta_k \rho_k Y_{k,i,s}} \right) \times \Bvec.
 \end{align*}
 Using \cref{eq:mm_mass_number_densities_i} we get
 \begin{align*}
-    \sum_s^{\mathcal{N}_k} Z_{k,i,s} n_{k,i,s} \uvec_{k,i,s} \times \Bvec &= \sum_s^{\mathcal{N}_k} \left( Z_{k,i,s} n_{k,i,s} \uvec + \frac{Z_{k,i,s} \jvec_{k,i,s}}{m_{k,i,s} \eta_k} \right) \times \Bvec \\
-    &= \sum_s^{\mathcal{N}_k} Z_{k,i,s} n_{k,i,s} \uvec \times \Bvec + \sum_s^{\mathcal{N}_k} \frac{Z_{k,i,s} \jvec_{k,i,s}}{m_{k,i,s} \eta_k} \times \Bvec \\
+    \sum_s^{\mathcal{N}_k} Z_{k,i,s} \eta_{k,i,s} n_{k,i,s} \uvec_{k,i,s} \times \Bvec &= \sum_s^{\mathcal{N}_k} \left( Z_{k,i,s} \eta_{k,i,s} n_{k,i,s} \uvec +  Z_{k,i,s} \eta_{k,i,s} \frac{\rho_{k,i,s}}{m_{k,i,s}} \frac{\jvec_{k,i,s}}{\eta_k \rho_k Y_{k,i,s}} \right) \times \Bvec \\
+    &= \sum_s^{\mathcal{N}_k} \left( Z_{k,i,s} \eta_{k,i,s} n_{k,i,s} \uvec + \frac{Z_{k,i,s} \jvec_{k,i,s}}{m_{k,i,s} \eta_k} \right) \times \Bvec \\
+    &= \sum_s^{\mathcal{N}_k} Z_{k,i,s} \eta_{k,i,s} n_{k,i,s} \uvec \times \Bvec + \sum_s^{\mathcal{N}_k} \frac{Z_{k,i,s} \jvec_{k,i,s}}{m_{k,i,s} \eta_k} \times \Bvec \\
     &= n_{k,e} \uvec \times \Bvec + \sum_s^{\mathcal{N}_k} \frac{Z_{k,i,s} \jvec_{k,i,s}}{m_{k,i,s} \eta_k} \times \Bvec.
 \end{align*}
 Thus, the electron momentum equation becomes
@@ -1229,8 +1117,8 @@ or
 
 Use the definition of $\wvec_{k,i,s}$ to re-write \cref{eq:mf_mm_iei} and \cref{eq:mf_mm_iee} as follows
 \begin{multline*}
-    \frac{\partial}{\partial t} \left( \frac{3}{2} \eta_k p_{k,i,s} \right) + \nabla \cdot \left( \frac{3}{2} \eta_k p_{k,i,s} \uvec \right) = \\
-    \eta_k \sigmavec_{k,i,s} : \nabla \uvec - \nabla \cdot \qvec_{k,i,s} + Q_{k,i,s} - \nabla \cdot \left( \frac{3}{2} \eta_k p_{k,i,s} \wvec_{k,i,s} \right) + \eta_k \sigmavec_{k,i,s} : \nabla \wvec_{k,i,s} .
+    \frac{\partial}{\partial t} \left( \frac{3}{2} \eta_k \eta_{k,i,s} p_{k,i,s} \right) + \nabla \cdot \left( \frac{3}{2} \eta_k \eta_{k,i,s} p_{k,i,s} \uvec \right) = \\
+    \eta_k \eta_{k,i,s} \sigmavec_{k,i,s} : \nabla \uvec - \nabla \cdot \qvec_{k,i,s} + Q_{k,i,s} - \nabla \cdot \left( \frac{3}{2} \eta_k \eta_{k,i,s} p_{k,i,s} \wvec_{k,i,s} \right) + \eta_k \eta_{k,i,s} \sigmavec_{k,i,s} : \nabla \wvec_{k,i,s} .
 \end{multline*}
 \begin{multline*}
     \frac{\partial}{\partial t} \left( \frac{3}{2} \eta_k p_{k,e} \right) + \nabla \cdot \left( \frac{3}{2} \eta_k p_{k,e} \uvec \right) = \\
@@ -1248,14 +1136,14 @@ We add two extra assumptions
     \item All ions of a material $k$ have the same temperature $T_{k,i}$ \label{eq:single_ion_T}
 \end{enumerate}
 
-If all ions of a material move with a single ion velocity, then the expressions for common velocities in \cref{eq:sf_vars_u_ki,eq:sf_vars_u_k} give 
+If all ions of a material move with a single ion velocity, then the definition of $\uvec_k$ in \cref{eq:sf_vars_u_ki} gives 
 \begin{equation}
-    \uvec_{k,i,s} = \uvec_{k,i} = \uvec_k,
+    \uvec_{k,i,s} = \uvec_{k,i},
 \end{equation} 
 which gives for the species diffusion vector
 \begin{equation}
     \label{sec:sf_mm_ms_diffusion}
-    \jvec_{k,i,s} = \rho Y_k Y_{k,i,s} \wvec_{k,i,s} = \rho Y_k Y_{k,i,s} \wvec_{k,i} = \rho Y_k Y_{k,i,s} \wvec_k.
+    \jvec_{k,i,s} = \rho Y_k Y_{k,i,s} \wvec_{k,i,s} = \rho Y_k Y_{k,i,s} \wvec_{k,i}.
 \end{equation} 
 
 Adding over all ion species of a material and using expressions for total ion quantities, the ion pressure equation becomes
@@ -1263,6 +1151,10 @@ Adding over all ion species of a material and using expressions for total ion qu
     \frac{\partial}{\partial t} \left( \frac{3}{2} \eta_k p_{k,i} \right) + \nabla \cdot \left( \frac{3}{2} \eta_k p_{k,i} \uvec \right) = \\ 
     \eta_k \sigmavec_{k,i} : \nabla \uvec - \nabla \cdot \qvec_{k,i} + Q_{k,i} - \nabla \cdot \left( \frac{3}{2} \eta_k p_{k,i} \wvec_{k,i} \right) + \eta_k \sigmavec_{k,i} : \nabla \wvec_{k,i}.
 \end{equation*}
+Similarly, the ion EOS is multiplied by $\eta_{k,i,s}$ on both sides and then added over all materials, to obtain
+\begin{equation}
+    p_{k,i} = n_{k,i} k_B T_{k,i}.
+\end{equation}
 
 To summarize, we have
 \begin{equation}
@@ -1275,11 +1167,11 @@ To summarize, we have
 \end{equation}
 \begin{equation}
     \label{eq:sf_mm_ms_ui}
-    \frac{\partial \rho \uvec}{\partial t} + \nabla \cdot \left( \rho \uvec \uvec \right) - \Jvec \times \Bvec = \nabla \cdot \sum_k^\mathcal{M} \eta_k \sigmavec_k - \nabla \cdot \sum_k^\mathcal{M} \jvec_{k,i} \uvec_{k},
+    \frac{\partial \rho \uvec}{\partial t} + \nabla \cdot \left( \rho \uvec \uvec \right) - \Jvec \times \Bvec = \nabla \cdot \sum_k^\mathcal{M} \eta_k \sigmavec_k - \nabla \cdot \sum_k^\mathcal{M} \jvec_{k,i} \uvec_{k,i},
 \end{equation}
 \begin{equation}
     \label{eq:sf_mm_ms_ue}
-    \Evec + \uvec \times \Bvec = \frac{1}{e n_e} \left( \Jvec \times \Bvec + \nabla \cdot \sum_k^\mathcal{M} \eta_k \sigmavec_{k,e} + \sum_k^\mathcal{M} \Rvec_{k,e} \right) - \sum_s^{\mathcal{N}_k} \frac{Z_{k,i,s} \jvec_{k,i,s}}{n_e m_{k,i,s}} \times \Bvec,
+    \Evec + \uvec \times \Bvec = \frac{1}{e n_e} \left( \Jvec \times \Bvec + \nabla \cdot \sum_k^\mathcal{M} \eta_k \sigmavec_{k,e} + \sum_k^\mathcal{M} \Rvec_{k,e} \right) - \sum_k^\mathcal{M} \sum_s^{\mathcal{N}_k} \frac{Z_{k,i,s} \jvec_{k,i,s}}{n_e m_{k,i,s}} \times \Bvec,
 \end{equation}
 \begin{multline}
     \label{eq:sf_mm_ms_iei}
@@ -1309,7 +1201,7 @@ To summarize, we have
 \end{equation}
 \begin{equation}
     \label{eq:sf_mm_ms_curr_density}
-    \Jvec_k = e \eta_k n_{k,e} \left( \uvec_k - \uvec_{k,e} \right),
+    \Jvec_k = e \eta_k n_{k,e} \left( \uvec_{k,i} - \uvec_{k,e} \right),
 \end{equation}
 \begin{equation}
     \Jvec = \sum_k^\mathcal{M} \Jvec_k,
@@ -1463,32 +1355,28 @@ If there is only one ion species, along with the electron species, then the mode
 
 The enthalpies are given by
 \begin{equation}
-    h_{k,i,s} = e_{k,i,s} + \frac{p_{k,i,s}}{\rho_k Y_{k,i,s}},
+    h_{k,i,s} = e_{k,i,s} + \frac{p_{k,i,s}}{\rho_{k,i,s}},
 \end{equation}
- \begin{equation}   
-    h_{k,e} = e_{k,e} + \frac{p_{k,e}}{\rho_k Y_{k,e}}.
+ \begin{equation}
+    \label{eq:sf_alternate_hke_rho}
+    h_{k,e} = e_{k,e} + \frac{p_{k,e}}{\rho_k}.
 \end{equation}
 Using expressions from \cref{sec:sf_vars}, we can show that
 \begin{equation}
     \label{eq:sf_alternate_hki_rhok}
-    h_{k,i} = \sum_s^{\mathcal{N}_k} Y_{k,i,s} h_{k,i,s} = \sum_s^{\mathcal{N}_k} Y_{k,i,s} e_{k,i,s} + \sum_{s}^{\mathcal{N}_k} \frac{p_{k,i,s}}{\rho_k} = e_{k,i} + \frac{p_{k,i}}{\rho_k}.
-\end{equation}
-For electrons, we have
-\begin{equation}
-    \label{eq:sf_alternate_hke_rho}
-    Y_{k,e} h_{k,e} = Y_{k,e} e_{k,e} + \frac{p_{k,e}}{\rho_k}.
+    h_{k,i} = \sum_s^{\mathcal{N}_k} Y_{k,i,s} h_{k,i,s} = \sum_s^{\mathcal{N}_k} Y_{k,i,s} e_{k,i,s} + \sum_{s}^{\mathcal{N}_k} \frac{ \eta_{k,i,s} p_{k,i,s}}{\rho_k} = e_{k,i} + \frac{p_{k,i}}{\rho_k}.
 \end{equation}
 
 Thus far we've been working with plasmas that behave as ideal gasses with three degrees of freedom (the three translational degrees of freedom). For ideal gasses we also have 
 \begin{equation}
     \label{eq:sf_alternate_p_kis}
-    p_{k,i,s} = (\gamma - 1) \rho_k Y_{k,i,s} e_{k,i,s},
+    p_{k,i,s} = (\gamma - 1) \rho_{k,i,s} e_{k,i,s},
 \end{equation}
 \begin{equation}
     \label{eq:sf_alternate_p_ke}
-    p_{k,e} = (\gamma - 1) \rho_k Y_{k,e} e_{k,e}.
+    p_{k,e} = (\gamma - 1) \rho_k e_{k,e}.
 \end{equation}
-Summing $p_{k,i,s}$ over all $s$ gives
+Multiplying both sides of \cref{eq:sf_alternate_p_kis} and summing over all $s$ gives
 \begin{equation}
     \label{eq:sf_alternate_p_ki}
     p_{k,i} = (\gamma - 1) \rho_k e_{k,i}.
@@ -1501,8 +1389,8 @@ Since $\gamma = 5/3$ for the plasmas under consideration, the internal energy eq
 \end{multline*}
 Similarly, the internal energy equation for electrons given by \cref{eq:sf_mm_ms_iee} becomes
 \begin{multline*}
-    \frac{\partial \eta_k \rho_k Y_{k,e} e_{k,e}}{\partial t} + \nabla \cdot \left( \eta_k \rho_k Y_{k,e} e_{k,e} \uvec \right) = \eta_k \sigmavec_{k,e} : \nabla \uvec - \nabla \cdot \qvec_{k,}e + Q_{k,e} \\
-    - \nabla \cdot \left( \eta_k \rho_k Y_{k,e} e_{k,e} \wvec_{k,e} \right) + \eta_k \sigmavec_{k,e} : \nabla \wvec_{k,e}.
+    \frac{\partial \eta_k \rho_k e_{k,e}}{\partial t} + \nabla \cdot \left( \eta_k \rho_k e_{k,e} \uvec \right) = \eta_k \sigmavec_{k,e} : \nabla \uvec - \nabla \cdot \qvec_{k,}e + Q_{k,e} \\
+    - \nabla \cdot \left( \eta_k \rho_k e_{k,e} \wvec_{k,e} \right) + \eta_k \sigmavec_{k,e} : \nabla \wvec_{k,e}.
 \end{multline*}
 We re-write the last term in the two equations above as
 \begin{align*}
@@ -1515,8 +1403,8 @@ where $s$ is equal to $i$ or $e$. Thus, the ion and electron internal energy equ
     - \nabla \cdot \left[ \left( e_{k,i} + \frac{p_{k,i}}{\rho_k} \right) \eta_k \rho_k \wvec_{k,i} \right] + \nabla \cdot \left( \wvec_{k,i} \cdot \eta_k \tvec_{k,i} \right) - \wvec_{k,i} \cdot \nabla \left( \eta_k \sigmavec_{k,i} \right).
 \end{multline*}
 \begin{multline*}
-    \frac{\partial \eta_k \rho_k Y_{k,e} e_{e,k}}{\partial t} + \nabla \cdot \left( \eta_k \rho_k Y_{k,e} e_{k,e} \uvec \right) = \eta_k \sigmavec_{k,e} : \nabla \uvec - \nabla \cdot \qvec_{k,e} + Q_{k,e} \\
-    - \nabla \cdot \left[ \left( Y_{k,e} e_{k,e} + \frac{p_{k,e}}{\rho_k} \right) \eta_k \rho_k \wvec_{k,e} \right] + \nabla \cdot \left( \wvec_{k,e} \cdot \eta_k \tvec_{k,e} \right) - \wvec_{k,e} \cdot \nabla \left( \eta_k \sigmavec_{k,e} \right).
+    \frac{\partial \eta_k \rho_k e_{e,k}}{\partial t} + \nabla \cdot \left( \eta_k \rho_k e_{k,e} \uvec \right) = \eta_k \sigmavec_{k,e} : \nabla \uvec - \nabla \cdot \qvec_{k,e} + Q_{k,e} \\
+    - \nabla \cdot \left[ \left( e_{k,e} + \frac{p_{k,e}}{\rho_k} \right) \eta_k \rho_k \wvec_{k,e} \right] + \nabla \cdot \left( \wvec_{k,e} \cdot \eta_k \tvec_{k,e} \right) - \wvec_{k,e} \cdot \nabla \left( \eta_k \sigmavec_{k,e} \right).
 \end{multline*}
 Using \cref{eq:sf_alternate_hki_rhok,eq:sf_alternate_hke_rho} for $h_{k,i}$ and $h_{k,e}$ the above two become
 \begin{multline*}
@@ -1524,29 +1412,29 @@ Using \cref{eq:sf_alternate_hki_rhok,eq:sf_alternate_hke_rho} for $h_{k,i}$ and 
     - \nabla \cdot \left( h_{k,i} \eta_k \rho_k \wvec_{k,i} \right) + \nabla \cdot \left( \wvec_{k,i} \cdot \eta_k \tvec_{k,i} \right) - \wvec_{k,i} \cdot \nabla \left( \eta_k \sigmavec_{k,i} \right).
 \end{multline*}
 \begin{multline*}
-    \frac{\partial \eta_k \rho_k Y_{k,e} e_{e,k}}{\partial t} + \nabla \cdot \left( \eta_k \rho_k Y_{k,e} e_{k,e} \uvec \right) = \eta_k \sigmavec_{k,e} : \nabla \uvec - \nabla \cdot \qvec_{k,e} + Q_{k,e} \\
-    - \nabla \cdot \left( Y_{k,e} h_{k,e} \eta_k \rho_k \wvec_{k,e} \right) + \nabla \cdot \left( \wvec_{k,e} \cdot \eta_k \tvec_{k,e} \right) - \wvec_{k,e} \cdot \nabla \left( \eta_k \sigmavec_{k,e} \right).
+    \frac{\partial \eta_k \rho_k e_{e,k}}{\partial t} + \nabla \cdot \left( \eta_k \rho_k e_{k,e} \uvec \right) = \eta_k \sigmavec_{k,e} : \nabla \uvec - \nabla \cdot \qvec_{k,e} + Q_{k,e} \\
+    - \nabla \cdot \left( h_{k,e} \eta_k \rho_k \wvec_{k,e} \right) + \nabla \cdot \left( \wvec_{k,e} \cdot \eta_k \tvec_{k,e} \right) - \wvec_{k,e} \cdot \nabla \left( \eta_k \sigmavec_{k,e} \right).
 \end{multline*}
-Using \cref{eq:sf_species_diffusion_vector_sum} for $\jvec_{k,i}$ and $\bar{\jvec}_{k,e} = \eta_k \rho_k \wvec_{k,e}$ the internal energy equations become
+Using \cref{eq:sf_species_diffusion_vector_sum} for $\jvec_{k,i}$ and $\jvec_{k,e} = \eta_k \rho_k \wvec_{k,e}$ the internal energy equations become
 \begin{multline*}
     \frac{\partial \eta_k \rho_k e_{k,i}}{\partial t} + \nabla \cdot \left( \eta_k \rho_k e_{k,i} \uvec \right) = \eta_k \sigmavec_{k,i} : \nabla \uvec - \nabla \cdot \qvec_{k,i} + Q_{k,i} \\
     - \nabla \cdot \left( h_{k,i} \jvec_{k,i} \right) + \nabla \cdot \left( \wvec_{k,i} \cdot \eta_k \tvec_{k,i} \right) - \wvec_{k,i} \cdot \nabla \left( \eta_k \sigmavec_{k,i} \right).
 \end{multline*}
 \begin{multline*}
-    \frac{\partial \eta_k \rho_k Y_{k,e} e_{e,k}}{\partial t} + \nabla \cdot \left( \eta_k \rho_k Y_{k,e} e_{k,e} \uvec \right) = \eta_k \sigmavec_{k,e} : \nabla \uvec - \nabla \cdot \qvec_{k,e} + Q_{k,e} \\
-    - \nabla \cdot \left( Y_{k,e} h_{k,e} \bar{\jvec}_{k,e} \right) + \nabla \cdot \left( \wvec_{k,e} \cdot \eta_k \tvec_{k,e} \right) - \wvec_{k,e} \cdot \nabla \left( \eta_k \sigmavec_{k,e} \right).
+    \frac{\partial \eta_k \rho_k e_{e,k}}{\partial t} + \nabla \cdot \left( \eta_k \rho_k e_{k,e} \uvec \right) = \eta_k \sigmavec_{k,e} : \nabla \uvec - \nabla \cdot \qvec_{k,e} + Q_{k,e} \\
+    - \nabla \cdot \left( h_{k,e} \jvec_{k,e} \right) + \nabla \cdot \left( \wvec_{k,e} \cdot \eta_k \tvec_{k,e} \right) - \wvec_{k,e} \cdot \nabla \left( \eta_k \sigmavec_{k,e} \right).
 \end{multline*}
 Finally, adding up the ion and electron internal energy equations and using \cref{eq:sf_vars_e_k} gives
 \begin{multline}
     \label{eq:sf_alternate_e_k}
     \frac{\partial \eta_k \rho_k e_k}{\partial t} + \nabla \cdot \left( \eta_k \rho_k e_k \uvec \right) = \eta_k \sigmavec_k: \nabla \uvec - \nabla \cdot \left( \qvec_{k,i} + \qvec_{k,e} \right) + Q_{k,i} + Q_{k,e} \\
-    - \nabla \cdot \left( h_{k,i} \jvec_{k,i} + Y_{k,e} h_{k,e} \bar{\jvec}_{k,e} \right) + \nabla \cdot \left( \wvec_{k,i} \cdot \eta_k \tvec_{k,i} + \wvec_{k,e} \cdot \eta_k \tvec_{k,e} \right) - \wvec_{k,i} \cdot \nabla \left( \eta_k \sigmavec_{k,i} \right) - \wvec_{k,e} \cdot \nabla \left( \eta_k \sigmavec_{k,e} \right) .
+    - \nabla \cdot \left( h_{k,i} \jvec_{k,i} + h_{k,e} \jvec_{k,e} \right) + \nabla \cdot \left( \wvec_{k,i} \cdot \eta_k \tvec_{k,i} + \wvec_{k,e} \cdot \eta_k \tvec_{k,e} \right) - \wvec_{k,i} \cdot \nabla \left( \eta_k \sigmavec_{k,i} \right) - \wvec_{k,e} \cdot \nabla \left( \eta_k \sigmavec_{k,e} \right) .
 \end{multline}
 
 Summing \cref{eq:sf_alternate_e_k} over all materials and using \cref{eq:sf_vars_e} gives
 \begin{multline*}
     \frac{\partial \rho e}{\partial t} + \nabla \cdot \left( \rho e \uvec \right) = \sum_k^\mathcal{M} \eta_k \sigma_k : \nabla \uvec - \nabla \cdot \sum_k^\mathcal{M} \left( \qvec_{k,i} + \qvec_{k,e} \right) + \sum_k^\mathcal{M} \left( Q_{k,i} + Q_{k,e} \right) \\
-    - \nabla \cdot \sum_k^\mathcal{M} \left( h_{k,i} \jvec_{k,i} + Y_{k,e} h_{k,e} \bar{\jvec}_{k,e} \right) + \nabla \cdot \sum_k^\mathcal{M} \left( \wvec_{k,i} \cdot \eta_k \tvec_{k,i} + \wvec_{k,e} \cdot \eta_k \tvec_{k,e} \right) \\
+    - \nabla \cdot \sum_k^\mathcal{M} \left( h_{k,i} \jvec_{k,i} + h_{k,e} \jvec_{k,e} \right) + \nabla \cdot \sum_k^\mathcal{M} \left( \wvec_{k,i} \cdot \eta_k \tvec_{k,i} + \wvec_{k,e} \cdot \eta_k \tvec_{k,e} \right) \\
     - \sum_k^\mathcal{M} \left[ \wvec_{k,i} \cdot \nabla \left( \eta_k \sigmavec_{k,i} \right) - \wvec_{k,e} \cdot \nabla \left( \eta_k \sigmavec_{k,e} \right) \right].
 \end{multline*}
 We can now re-write \cref{eq:sf_sum_energy_collisions_mat} as 
@@ -1571,11 +1459,11 @@ To summarize we have
 \end{equation}
 \begin{equation}
     \label{eq:sf_mm_ms_ui_final}
-    \frac{\partial \rho \uvec}{\partial t} + \nabla \cdot \left( \rho \uvec \uvec \right) - \Jvec \times \Bvec = \nabla \cdot \sum_k^\mathcal{M} \eta_k \sigmavec_k - \nabla \cdot \sum_k^\mathcal{M} \jvec_{k,i} \uvec_{k},
+    \frac{\partial \rho \uvec}{\partial t} + \nabla \cdot \left( \rho \uvec \uvec \right) - \Jvec \times \Bvec = \nabla \cdot \sum_k^\mathcal{M} \eta_k \sigmavec_k - \nabla \cdot \sum_k^\mathcal{M} \jvec_{k,i} \uvec_{k,i},
 \end{equation}
 \begin{equation}
     \label{eq:sf_mm_ms_ue_final}
-    \Evec + \uvec \times \Bvec = \frac{1}{e n_e} \left( \Jvec \times \Bvec + \nabla \cdot \sum_k^\mathcal{M} \eta_k \sigmavec_{k,e} + \sum_k^\mathcal{M} \Rvec_{k,e} \right) - \sum_s^{\mathcal{N}_k} \frac{Z_{k,i,s} \jvec_{k,i,s}}{n_e m_{k,i,s}} \times \Bvec,
+    \Evec + \uvec \times \Bvec = \frac{1}{e n_e} \left( \Jvec \times \Bvec + \nabla \cdot \sum_k^\mathcal{M} \eta_k \sigmavec_{k,e} + \sum_k^\mathcal{M} \Rvec_{k,e} \right) - \sum_k^\mathcal{M} \sum_s^{\mathcal{N}_k} \frac{Z_{k,i,s} \jvec_{k,i,s}}{n_e m_{k,i,s}} \times \Bvec,
 \end{equation}
 \begin{multline}
     \label{eq:sf_mm_ms_iei_final}
@@ -1584,8 +1472,8 @@ To summarize we have
 \end{multline}
 \begin{multline}
     \label{eq:sf_mm_ms_iee_final}
-    \frac{\partial \eta_k \rho_k Y_{k,e} e_{e,k}}{\partial t} + \nabla \cdot \left( \eta_k \rho_k Y_{k,e} e_{k,e} \uvec \right) = \eta_k \sigmavec_{k,e} : \nabla \uvec - \nabla \cdot \qvec_{k,e} + Q_{k,e} \\
-    - \nabla \cdot \left( Y_{k,e} h_{k,e} \bar{\jvec}_{k,e} \right) + \nabla \cdot \left( \wvec_{k,e} \cdot \eta_k \tvec_{k,e} \right) - \wvec_{k,e} \cdot \nabla \left( \eta_k \sigmavec_{k,e} \right).
+    \frac{\partial \eta_k \rho_k e_{e,k}}{\partial t} + \nabla \cdot \left( \eta_k \rho_k e_{k,e} \uvec \right) = \eta_k \sigmavec_{k,e} : \nabla \uvec - \nabla \cdot \qvec_{k,e} + Q_{k,e} \\
+    - \nabla \cdot \left( h_{k,e} \jvec_{k,e} \right) + \nabla \cdot \left( \wvec_{k,e} \cdot \eta_k \tvec_{k,e} \right) - \wvec_{k,e} \cdot \nabla \left( \eta_k \sigmavec_{k,e} \right).
 \end{multline}
 \begin{equation}
     \label{eq:sf_mm_ms_maxwell_3_final}
@@ -1605,7 +1493,7 @@ To summarize we have
 \end{equation}
 \begin{equation}
     \label{eq:sf_mm_ms_curr_density_final}
-    \Jvec_k = e \eta_k n_{k,e} \left( \uvec_k - \uvec_{k,e} \right),
+    \Jvec_k = e \eta_k n_{k,e} \left( \uvec_{k,i} - \uvec_{k,e} \right),
 \end{equation}
 \begin{equation}
     \Jvec = \sum_k^\mathcal{M} \Jvec_k,
@@ -1631,7 +1519,7 @@ To summarize we have
 \end{equation}
 \begin{equation}
     \label{eq:sf_mm_ms_calo_eos_elec_final}
-    p_{k,e} = (\gamma - 1) \rho_k Y_{k,e} e_{k,e}.
+    p_{k,e} = (\gamma - 1) \rho_k e_{k,e}.
 \end{equation}
 
 Some extra notes on this model:
@@ -1640,13 +1528,13 @@ Some extra notes on this model:
 
     \item The ion internal energy equation gives $e_{k,i}$. 
 
-    \item The electron internal energy equation gives $Y_{k,e} e_{k,e}$.
+    \item The electron internal energy equation gives $e_{k,e}$.
 
     \item If $\eta_k$ is known, we can compute $\rho_k$ from $\rho_k = \rho Y_k / \eta_k$.
 
     \item Using $\rho_k$ and $e_{k,i}$ in \cref{eq:sf_mm_ms_calo_eos_ion_final} we get $p_{k,i}$.
 
-    \item Using $\rho_k$ and $Y_{k,e} e_{k,e}$ in \cref{eq:sf_mm_ms_calo_eos_elec_final} we get $p_{k,e}$.
+    \item Using $\rho_k$ and $e_{k,e}$ in \cref{eq:sf_mm_ms_calo_eos_elec_final} we get $p_{k,e}$.
 
     \item We can compute $h_{k,i}$ using \cref{eq:sf_alternate_hki_rhok}, which we repeat below
     \begin{equation*}
@@ -1655,7 +1543,7 @@ Some extra notes on this model:
 
     \item We can compute $h_{k,e}$ using \cref{eq:sf_alternate_hke_rho}, which we repeat below
     \begin{equation*}
-        Y_{k,e} h_{k,e} = Y_{k,e} e_{k,e} + \frac{p_{k,e}}{\rho_k}.
+        h_{k,e} = e_{k,e} + \frac{p_{k,e}}{\rho_k}.
     \end{equation*}
 
     \item We can compute $n_{k,i,s}$ using \cref{eq:mm_mass_number_densities_i}, which we repeat below
@@ -1663,11 +1551,14 @@ Some extra notes on this model:
         m_{k,i,s} n_{k,i,s} = \rho_k Y_{k,i,s}.
     \end{equation*}
 
-    \item We can compute $n_{k,i}$ using \cref{eq:sf_vars_n_ki}, that is, $n_{k,i,s} = \sum_s^{\mathcal{N}_k} n_{k,i,s}$.
+    \item We can compute $n_{k,i}$ using \cref{eq:sf_vars_n_ki,eq:mm_mass_number_densities_i}, as shown below
+    \begin{equation}
+        n_{k,i} = \sum_s^{\mathcal{N}_k} \eta_{k,i,s} n_{k,i,s} = \sum_s^{\mathcal{N}_k} \eta_{k,i,s} \frac{\rho_{k,i,s}}{m_{k,i,s}} = \sum_s^{\mathcal{N}_k} \frac{\rho_k Y_{k,i,s}}{m_{k,i,s}}.
+    \end{equation}
     
     \item We can compute $n_{k,e}$ from quasi-neutrality, which we repeat below
     \begin{equation}
-        \sum_s^{\mathcal{N}_k} Z_{k,i,s} n_{k,i,s} = n_{k,e},
+        \sum_s^{\mathcal{N}_k} Z_{k,i,s} \eta_{k,i,s} n_{k,i,s} = n_{k,e},
     \end{equation}
 
     \item Using $p_{k,i}$ and $n_{k,i}$ in \cref{eq:sf_mm_ms_therm_eos_ion_final} we get $T_{k,i}$.
