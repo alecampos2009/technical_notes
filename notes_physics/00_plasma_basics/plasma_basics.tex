@@ -501,6 +501,9 @@ We note that multi-fluid or multi-material problems are always multi-species. Si
 %------------------------------------------------------------------------
 We define a material $k$ as a collection of species $s$. Rather than labeling species using the single subscript $s$, we'll use the subscript $k,i,s$ and $k,e$, where the former denotes the ion species $s$ that belongs to material $k$, and the latter denotes the electron species that belongs to material $k$. The number of ion species within a material is denoted as $\mathcal{N}_k$, and the total number of materials as $\mathcal{M}$.
 
+%--------------------------------------------
+\subsection{Definition of multi-material variables}
+%--------------------------------------------
 For multi-material problems there is a large number of new variables that are used. These are listed below.
 \subsubsection{Mass densities}
 
@@ -511,9 +514,11 @@ For multi-material problems there is a large number of new variables that are us
     \rho_k= \frac{\mathsf{M}_k}{\mathsf{V}_k}.
 \end{equation}
 \begin{equation}
+    \label{eq:mm_mass_den_kis}
     \rho_{k,i,s}= \frac{\mathsf{M}_{k,i,s}}{\mathsf{V}_{k,i,s}}.
 \end{equation}
 \begin{equation}
+    \label{eq:mm_mass_den_ke}
     \rho_{k,e}= \frac{\mathsf{M}_{k,e}}{\mathsf{V}_k}.
 \end{equation}
 
@@ -526,9 +531,11 @@ For multi-material problems there is a large number of new variables that are us
     n_k = \frac{\mathsf{N}_k}{\mathsf{V}_k}.
 \end{equation}
 \begin{equation}
+    \label{eq:mm_num_den_kis}
     n_{k,i,s} = \frac{\mathsf{N}_{k,i,s}}{\mathsf{V}_{k,i,s}}.
 \end{equation}
 \begin{equation}
+    \label{eq:mm_num_den_ke}
     n_{k,e} = \frac{\mathsf{N}_{k,e}}{\mathsf{V}_k}.
 \end{equation}
 
@@ -569,6 +576,13 @@ For multi-material problems there is a large number of new variables that are us
 \end{equation}
 
 \subsubsection{Energies}
+
+\begin{equation}
+    e = \frac{\mathsf{IE}}{\mathsf{M}}.
+\end{equation}
+\begin{equation}
+    e_k = \frac{\mathsf{IE}_k}{\mathsf{M}_k}.
+\end{equation}
 \begin{equation}
     e_{k,i,s} = \frac{\mathsf{IE}_{k,i,s}}{\mathsf{M}_{k,i,s}}.
 \end{equation}
@@ -621,6 +635,78 @@ For multi-material problems there is a large number of new variables that are us
     Q_{k,i} = \sum_s^{\mathcal{N}_k} Q_{k,i,s}.
 \end{equation}
 
+%--------------------------------------------
+\subsection{Interpretation of multi-material variables}
+%--------------------------------------------
+Fluid variables are defined at every point $\xvec$ within the domain containing the fluid. Thus, in the fluid approach we do not account for the microscopic distribution of the fluid's atoms and molecules, which are not necessarily present at every point $\xvec$. That being said, we can establish a correlation between the fluid variables and atomistic variables, which define the underlying microscopic structure. Examples of these atomistic variables include $m_i$, $\vvec_i$, and $\epsilon_i$, which are the mass, velocity, and internal energy of the $i$\textsuperscript{th} atom or molecule in the system.
+
+Consider the total mass $\mathsf{M}_\Omega$ in some subdomain $\Omega$. This mass can be computed by summing up the masses $m_i$ of the atoms or molecules in this subdomain, or by using the Eulerian field variable for density, as shown below
+\begin{equation}
+   \mathsf{M}_\Omega = \sum_{i \in \Omega} m_i = \int_{\Omega} \rho \, d\xvec.
+\end{equation} 
+In the above, $i \in \Omega$ denotes the atoms or molecules within the subdomain $\Omega$. Now consider the total momentum $\mathsf{P}_\Omega$ in some subdomain $\Omega$. This momentum can be computed by summing up the momentum $m_i \uvec_i$ of the atoms or molecules in this subdomain, or by using the Eulerian field variable for velocity, as shown below
+\begin{equation}
+    \mathsf{P}_\Omega = \sum_{i \in \Omega} m_i \vvec_i = \int_\Omega \rho \uvec \, d\xvec.
+\end{equation}
+Finally, consider the internal energy $\mathsf{IE}_\Omega$ in some subdomain $\Omega$. This internal energy can be computed by summing up the internal energies $e_i$ of the atoms or molecules in this subdomain, or by using the Eulerian field variable for the specific internal energy, as shown below
+\begin{equation}
+    \mathsf{IE}_\Omega = \sum_{i \in \Omega} \epsilon_i = \int_\Omega \rho e \, d\xvec.
+\end{equation}
+
+Denote the volume of domain $\Omega$ as $\mathsf{V}_\Omega$, which is given by
+\begin{equation}
+    \mathsf{V}_\Omega = \int_\Omega d\xvec.
+\end{equation}
+We can now write
+\begin{equation}
+    \label{eq:atomistic_rho}
+    \rho = \lim_{\Omega \to \epsilon} \frac{1}{\mathsf{V}_\Omega} \int_\Omega \rho \, d\xvec = \lim_{\Omega \to \epsilon} \frac{1}{\mathsf{V}_\Omega} \sum_{i \in \Omega} m_i = \lim_{\Omega \to \epsilon} \frac{ \mathsf{M}_\Omega }{ \mathsf{V}_\Omega }.
+\end{equation}
+Thus, the density is the mass contained in a small domain divided by the volume of that small domain as the domain becomes sufficiently small. Similarly for velocity, we have
+\begin{equation}
+    \label{eq:atomistic_u}
+    \uvec = \frac{\rho\vvec}{\rho} = \lim_{\Omega \to \epsilon} \frac{\frac{1}{\mathsf{V}_\Omega} \int_\Omega \rho \uvec \, dx}{\frac{1}{\mathsf{V}_\Omega} \int_\Omega \rho \, dx} = \lim_{\Omega \to \epsilon} \frac{ \sum_{i \in \Omega} m_i v^{(i)} }{ \sum_{i \in \Omega} m_i } = \lim_{\Omega \to \epsilon} \frac{ \mathsf{P}_\Omega }{ \mathsf{M}_\Omega }.
+\end{equation}
+That is, the velocity is the the momentum contained in a small domain divided by the mass contained in that small domain as the domain becomes sufficiently small. Finally, for energy we have
+\begin{equation}
+    \label{eq:atomistic_e}
+    e = \frac{\rho e}{\rho} = \lim_{\Omega \to \epsilon} \frac{ \frac{1}{\mathsf{V}_\Omega} \int_\Omega \rho e \, d\xvec}{ \frac{1}{\mathsf{V}_\Omega} \int_\Omega \rho \, d\xvec} = \lim_{\Omega \to \epsilon} \frac{ \sum_{i \in \Omega} e_i }{ \sum_{i \in \Omega} m_i } = \lim_{\Omega \to \epsilon} \frac{ \mathsf{IE}_\Omega }{ \mathsf{M}_\Omega }.
+\end{equation}
+That is, the specific internal energy is the internal energy contained in a small subdomain divided by the mass contained in that small subdomain as the subdomain becomes sufficiently small.
+
+In the above, a sufficiently small subdomain is one that is small compared to the smallest length scale in the flow field but large enough that it contains a sufficiently large number of atoms or molecules.
+
+Now consider the volume $\mathsf{V}_{\Omega,k}$ occupied by material $k$ in some subdomain $\Omega$. This can be computed by using the volume fraction $\eta_k = \eta_k(t,\xvec)$ as shown below
+\begin{equation}
+    \mathsf{V}_{\Omega,k} = \int_\Omega \eta_k \, d\xvec.
+\end{equation}
+Now consider the mass $\mathsf{M}_{\Omega,k}$ of material $k$ in some subdomain $\Omega$. This can be computed by summing up the masses $m_i$ of the atoms or molecules of material $k$ in this subdomain, or by using the mass fraction $Y_k = Y_k(t,\xvec)$, as shown below 
+\begin{equation}
+    \mathsf{M}_{\Omega,k} = \sum_{i \in \Omega, i \in k} m_i = \int_\Omega \rho Y_k \, d\xvec.
+\end{equation}
+In the above $i \in \Omega, i \in k$ denotes the atoms or molecules of material $k$ located in the subdomain $\Omega$. Finally, consider the internal energy $\mathsf{IE}_{\Omega,k}$ of material $k$ in some subdomain $\Omega$. This internal energy can be computed by summing up the internal energies $\epsilon_i$ of the atoms or molecules of material $k$ in this subdomain, or by using the specific internal energy $e_k = e_k(t,\xvec)$, as shown below
+\begin{equation}
+    \mathsf{IE}_{\Omega,k} = \sum_{i \in \Omega, i \in k} \epsilon_i = \int_\Omega \rho Y_k e_k \, d\xvec.
+\end{equation}
+
+We can now write 
+\begin{equation}
+    \label{eq:atomistic_mix_eta}
+    \eta_k = \lim_{\Omega \to \epsilon} \frac{1}{V_\Omega} \int_\Omega \eta_k \, d\xvec = \lim_{\Omega \to \epsilon} \frac{ \mathsf{V}_{\Omega,k} }{ \mathsf{V}_\Omega }.
+\end{equation}
+That is, the volume fraction is the volume occupied by material $k$ within a small domain divided by the volume of that small domain as the domain becomes sufficiently small.
+For mass fraction, we have
+\begin{equation}
+    \label{eq:atomistic_mix_Y}
+    Y_k = \frac{\rho Y_k}{\rho} = \lim_{\Omega \to \epsilon} \frac{ \frac{1}{\mathsf{V}_\Omega} \int_\Omega \rho Y_k \, d\xvec }{ \frac{1}{\mathsf{V}_\Omega} \int_\Omega \rho \, d\xvec } = \lim_{\Omega \to \epsilon} \frac{ \sum_{i \in \Omega, i \in k} m_i }{ \sum_{i \in \Omega} m_i } = \lim_{\Omega \to \epsilon} \frac{ \mathsf{M}_{\Omega,k} }{ \mathsf{M}_\Omega }.
+\end{equation}
+That is, the mass fraction is the mass of material $k$ contained in a small domain divided by the mass contained in that small domain as the domain becomes sufficiently small. Similarly for specific internal energy of an material, we have
+\begin{equation}
+    \label{eq:atomistic_mix_e}
+    e_k = \frac{\rho Y_k e_k}{\rho Y_k } = \lim_{\Omega \to \epsilon} \frac{ \frac{1}{\mathsf{V}_\Omega} \int_\Omega \rho Y_k e_k \, d\xvec }{ \frac{1}{\mathsf{V}_\Omega} \int_\Omega \rho Y_k \, d\xvec } = \lim_{\Omega \to \epsilon} \frac{ \sum_{i \in \Omega, i \in k} e_i }{ \sum_{i \in \Omega, i \in k} m_i } = \lim_{\Omega \to \epsilon} \frac{ \mathsf{IE}_{\Omega,k} }{ \mathsf{M}_{\Omega,k} }.
+\end{equation}
+That is, the specific internal energy of an material is the internal energy of material $k$ contained in a small domain divided by the mass of material $k$ in that small domain as the domain becomes sufficiently small.
+
 %------------------------------------------------------------------------
 \section{Multi-fluid formulation}
 %------------------------------------------------------------------------
@@ -632,9 +718,11 @@ The following assumptions are used:
 %--------------------------------------------
 \subsection{Multi-material multi-fluid model}
 %--------------------------------------------
-We note that there are two types of densities now. Total densities have as their denominator the total volume $V$. They use the hat notation, an example is $\hat{n}_{k,i,s}$. On the other hand, there are densities that have as their denominator the material volume $V_k$. An example is $n_{k,i,s}$. The governing equations shown in \cref{sec:gov_eqs_fluid_description} are generic, without any knowledge of material definitions, and hence they include the total densities. Pressures, which are essentially energies per unit volume, also have two definitions, namely those whose denominator is the total volume vs.\@ those whose denominator is the material volume. Since the stress tensor is defined in terms of the pressure, the stress tensor also has these two variants, and for consistency, the shear-stress tensor as well.
-
-Using the multi-material notation the governing equations in \cref{sec:gov_eqs_fluid_description} are written as
+We note that the number densities in \cref{sec:gov_eqs_fluid_description} use as their denominator the total volume. We would instead like to express densities using variables such as that defined in \cref{eq:mm_num_den_kis}, where the denominator is only the volume of the species under consideration. The correspondence between these two densities is $n_s \to \eta_k \eta_{k,i,s} n_{k,i,s}$. Using an ideal equation of state, we have
+\begin{equation}
+    p_i = n_i k_B T_i \to \eta_k \eta_{k,i,s} n_{k,i,s} k_B T_{k,i,s} = \eta_k \eta_{k,i,s} p_{k,i,s},
+\end{equation}
+where $p_{k,i,s} = n_{k,i,s} k_B T_{k,i,s}$. The same argument above applies to the stress tensor since it is defined in terms of the pressure. Finally, the analogous is used for electron quantities as well. Thus, the governing equations in \cref{sec:gov_eqs_fluid_description} are now written as
 \begin{equation}
     \label{eq:mf_mm_ni}
     \frac{\partial \eta_k \eta_{k,i,s} n_{k,i,s}}{\partial t} + \nabla \cdot \left ( \eta_k \eta_{k,i,s} n_{k,i,s} \uvec_{k,i,s} \right ) = 0,
@@ -660,22 +748,6 @@ Using the multi-material notation the governing equations in \cref{sec:gov_eqs_f
 \begin{equation}
     \label{eq:mf_mm_iee}
     \frac{\partial}{\partial t} \left ( \frac{3}{2} \eta_k p_{k,e} \right ) + \nabla \cdot \left ( \frac{3}{2} \eta_k p_{k,e} \uvec_{k,e} \right ) = \eta_k \sigmavec_{k,e} : \nabla \uvec_{k,e} - \nabla \cdot \qvec_{k,e} + Q_{k,e},
-\end{equation}
-\begin{equation}
-    \label{eq:mf_mm_maxwell_3}
-    \nabla \cdot \Evec = \frac{\rho_q}{\epsilon_0},
-\end{equation}
-\begin{equation}
-    \label{eq:mf_mm_maxwell_4}
-    \nabla \cdot \Bvec = 0,
-\end{equation}
-\begin{equation}
-    \label{eq:mf_mm_maxwell_1}
-    \nabla \times \Evec = -\frac{ \partial \Bvec}{\partial t},
-\end{equation}
-\begin{equation}
-    \label{eq:mf_mm_maxwell_2}
-    \nabla \times \Bvec = \mu_0 \Jvec + \mu_0 \epsilon_0 \frac{\partial \Evec}{\partial t},
 \end{equation}
 \begin{equation}
     \label{eq:mf_mm_curr_density}
@@ -730,22 +802,6 @@ The equations are the same as the multi-material formulation, but there is only 
     \frac{\partial}{\partial t} \left ( \frac{3}{2} p_e \right ) + \nabla \cdot \left ( \frac{3}{2} p_e \uvec_e \right ) = \sigmavec_e : \nabla \uvec_e - \nabla \cdot \qvec_e + Q_e,
 \end{equation}
 \begin{equation}
-    \label{eq:mf_np1fluid_maxwell_3}
-    \nabla \cdot \Evec = \frac{\rho_q}{\epsilon_0},
-\end{equation}
-\begin{equation}
-    \label{eq:mf_np1fluid_maxwell_4}
-    \nabla \cdot \Bvec = 0,
-\end{equation}
-\begin{equation}
-    \label{eq:mf_np1fluid_maxwell_1}
-    \nabla \times \Evec = -\frac{ \partial \Bvec}{\partial t},
-\end{equation}
-\begin{equation}
-    \label{eq:mf_np1fluid_maxwell_2}
-    \nabla \times \Bvec = \mu_0 \Jvec + \mu_0 \epsilon_0 \frac{\partial \Evec}{\partial t},
-\end{equation}
-\begin{equation}
     \label{eq:mf_np1fluid_curr_density}
     \Jvec = e \left(\sum_s^\mathcal{N} Z_{i,s} \eta_{i,s} n_{i,s} \uvec_{i,s} - n_e \uvec_e \right),
 \end{equation}
@@ -790,22 +846,6 @@ If there is only one ion species, then we have the two-fluid model. For this cas
 \begin{equation}
     \label{eq:mf_2fluid_iee}
     \frac{\partial}{\partial t} \left ( \frac{3}{2} p_e \right ) + \nabla \cdot \left ( \frac{3}{2} p_e \uvec_e \right ) = \sigmavec_e : \nabla \uvec_e - \nabla \cdot \qvec_e + Q_e,
-\end{equation}
-\begin{equation}
-    \label{eq:mf_2fluid_maxwell_3}
-    \nabla \cdot \Evec = \frac{\rho_q}{\epsilon_0},
-\end{equation}
-\begin{equation}
-    \label{eq:mf_2fluid_maxwell_4}
-    \nabla \cdot \Bvec = 0,
-\end{equation}
-\begin{equation}
-    \label{eq:mf_2fluid_maxwell_1}
-    \nabla \times \Evec = -\frac{ \partial \Bvec}{\partial t},
-\end{equation}
-\begin{equation}
-    \label{eq:mf_2fluid_maxwell_2}
-    \nabla \times \Bvec = \mu_0 \Jvec + \mu_0 \epsilon_0 \frac{\partial \Evec}{\partial t},
 \end{equation}
 \begin{equation}
     \label{eq:mf_2fluid_curr_density}
@@ -854,22 +894,6 @@ With these, the governing equations become
 \begin{equation}
     \label{eq:pwaves_electron_pressure}
     p_e = C_e n_e^{\gamma_e},
-\end{equation}
-\begin{equation}
-    \label{eq:pwaves_maxwell_3}
-    \nabla \cdot \Evec = \frac{\rho_q}{\epsilon_0},
-\end{equation}
-\begin{equation}
-    \label{eq:p_waves_maxwell_4}
-    \nabla \cdot \Bvec = 0,
-\end{equation}
-\begin{equation}
-    \label{eq:p_waves_maxwell_1}
-    \nabla \times \Evec = -\frac{ \partial \Bvec}{\partial t},
-\end{equation}
-\begin{equation}
-    \label{eq:p_waves_maxwell_2}
-    \nabla \times \Bvec = \mu_0 \Jvec + \mu_0 \epsilon_0 \frac{\partial \Evec}{\partial t},
 \end{equation}
 \begin{equation}
     \label{eq:p_waves_curr_density}
@@ -1184,22 +1208,6 @@ To summarize, we have
     \eta_k \sigmavec_{k,e} : \nabla \uvec - \nabla \cdot \qvec_{k,e} + Q_{k,e} - \nabla \cdot \left( \frac{3}{2} \eta_k p_{k,e} \wvec_{k,e} \right) + \eta_k \sigmavec_{k,e} : \nabla \wvec_{k,e},
 \end{multline}
 \begin{equation}
-    \label{eq:sf_mm_ms_maxwell_3}
-    \nabla \cdot \Evec = \frac{\rho_q}{\epsilon_0},
-\end{equation}
-\begin{equation}
-    \label{eq:sf_mm_ms_maxwell_4}
-    \nabla \cdot \Bvec = 0,
-\end{equation}
-\begin{equation}
-    \label{eq:sf_mm_ms_maxwell_1}
-    \nabla \times \Evec = -\frac{ \partial \Bvec}{\partial t},
-\end{equation}
-\begin{equation}
-    \label{eq:sf_mm_ms_maxwell_2}
-    \nabla \times \Bvec = \mu_0 \Jvec + \mu_0 \epsilon_0 \frac{\partial \Evec}{\partial t},
-\end{equation}
-\begin{equation}
     \label{eq:sf_mm_ms_curr_density}
     \Jvec_k = e \eta_k n_{k,e} \left( \uvec_{k,i} - \uvec_{k,e} \right),
 \end{equation}
@@ -1215,7 +1223,7 @@ To summarize, we have
 \end{equation}
 \begin{equation}
     \label{eq:sf_mm_ms_eos_ion}
-    p_{k,i} = n_{k,i} k_B T_{k,i}.
+    p_{k,i} = n_{k,i} k_B T_{k,i},
 \end{equation}
 \begin{equation}
     \label{eq:sf_mm_ms_eos_elec}
@@ -1253,22 +1261,6 @@ Assuming there is only one material, then $\wvec_{k,i} = \uvec_{k,i} - \uvec = 0
 \begin{equation}
     \label{eq:sf_sm_ms_iee}
     \frac{\partial}{\partial t} \left( \frac{3}{2} p_e \right) + \nabla \cdot \left( \frac{3}{2} p_e \uvec \right) = \sigmavec_e : \nabla \uvec - \nabla \cdot \qvec_e + Q_e - \nabla \cdot \left( \frac{3}{2} p_e \wvec_e \right) + \sigmavec_e : \nabla \wvec_e,
-\end{equation}
-\begin{equation}
-    \label{eq:sf_sm_ms_maxwell_3}
-    \nabla \cdot \Evec = \frac{\rho_q}{\epsilon_0},
-\end{equation}
-\begin{equation}
-    \label{eq:sf_sm_ms_maxwell_4}
-    \nabla \cdot \Bvec = 0,
-\end{equation}
-\begin{equation}
-    \label{eq:sf_sm_ms_maxwell_1}
-    \nabla \times \Evec = -\frac{ \partial \Bvec}{\partial t},
-\end{equation}
-\begin{equation}
-    \label{eq:sf_sm_ms_maxwell_2}
-    \nabla \times \Bvec = \mu_0 \Jvec + \mu_0 \epsilon_0 \frac{\partial \Evec}{\partial t},
 \end{equation}
 \begin{equation}
     \label{eq:sf_sm_ms_curr_density}
@@ -1315,22 +1307,6 @@ If there is only one ion species, along with the electron species, then the mode
 \begin{equation}
     \label{eq:sf_1ion_iee}
     \frac{\partial}{\partial t} \left( \frac{3}{2} p_e \right) + \nabla \cdot \left( \frac{3}{2} p_e \uvec \right) = \sigmavec_e : \nabla \uvec - \nabla \cdot \qvec_e + Q_e - \nabla \cdot \left( \frac{3}{2} p_e \wvec_e \right) + \sigmavec_e : \nabla \wvec_e,
-\end{equation}
-\begin{equation}
-    \label{eq:sf_1ion_maxwell_3}
-    \nabla \cdot \Evec = \frac{\rho}{\epsilon_0},
-\end{equation}
-\begin{equation}
-    \label{eq:sf_1ion_maxwell_4}
-    \nabla \cdot \Bvec = 0,
-\end{equation}
-\begin{equation}
-    \label{eq:sf_1ion_maxwell_1}
-    \nabla \times \Evec = -\frac{ \partial \Bvec}{\partial t},
-\end{equation}
-\begin{equation}
-    \label{eq:sf_1ion_maxwell_2}
-    \nabla \times \Bvec = \mu_0 \Jvec + \mu_0 \epsilon_0 \frac{\partial \Evec}{\partial t},
 \end{equation}
 \begin{equation}
     \label{eq:sf_1ion_curr_density}
@@ -1475,22 +1451,6 @@ To summarize we have
     \frac{\partial \eta_k \rho_k e_{e,k}}{\partial t} + \nabla \cdot \left( \eta_k \rho_k e_{k,e} \uvec \right) = \eta_k \sigmavec_{k,e} : \nabla \uvec - \nabla \cdot \qvec_{k,e} + Q_{k,e} \\
     - \nabla \cdot \left( h_{k,e} \jvec_{k,e} \right) + \nabla \cdot \left( \wvec_{k,e} \cdot \eta_k \tvec_{k,e} \right) - \wvec_{k,e} \cdot \nabla \left( \eta_k \sigmavec_{k,e} \right).
 \end{multline}
-\begin{equation}
-    \label{eq:sf_mm_ms_maxwell_3_final}
-    \nabla \cdot \Evec = \frac{\rho_q}{\epsilon_0},
-\end{equation}
-\begin{equation}
-    \label{eq:sf_mm_ms_maxwell_4_final}
-    \nabla \cdot \Bvec = 0,
-\end{equation}
-\begin{equation}
-    \label{eq:sf_mm_ms_maxwell_1_final}
-    \nabla \times \Evec = -\frac{ \partial \Bvec}{\partial t},
-\end{equation}
-\begin{equation}
-    \label{eq:sf_mm_ms_maxwell_2_final}
-    \nabla \times \Bvec = \mu_0 \Jvec + \mu_0 \epsilon_0 \frac{\partial \Evec}{\partial t},
-\end{equation}
 \begin{equation}
     \label{eq:sf_mm_ms_curr_density_final}
     \Jvec_k = e \eta_k n_{k,e} \left( \uvec_{k,i} - \uvec_{k,e} \right),

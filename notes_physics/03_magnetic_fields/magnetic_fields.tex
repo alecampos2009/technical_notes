@@ -680,7 +680,7 @@ where top sign is for electrons and bottom sign is for ions, and it is assumed t
 %------------------------------------------------------------------------
 \section{Single-fluid equations}
 %------------------------------------------------------------------------
-The starting point are the single-fluid single-material multi-species equations, which are as follows 
+The starting point are the single-fluid single-material multi-species equations along with Maxwell's equations, which are as follows 
 \begin{equation}
     \label{eq:sf_sm_ms_ni}
     \frac{\partial \rho Y_{i,s}}{\partial t} + \nabla \cdot \left( \rho Y_{i,s} \uvec \right) = 0,
@@ -731,7 +731,7 @@ The starting point are the single-fluid single-material multi-species equations,
 \end{equation}
 \begin{equation}
     \label{eq:sf_sm_ms_eos_ion}
-    p_i = \sum_s^N n_{i,s} k_B T_i,
+    p_i = n_i k_B T_i,
 \end{equation}
 \begin{equation}
     \label{eq:sf_sm_ms_eos_elec}
@@ -928,7 +928,7 @@ Combining all of the results above, we now have
 \end{equation}
 \begin{equation}
     \label{eq:generalized_MHD_ion_eos}
-    p_i = \sum_s^N n_{i,s} k_B T_i,
+    p_i = n_i k_B T_i,
 \end{equation}
 \begin{equation}
     \label{eq:generalized_MHD_elec_eos}
