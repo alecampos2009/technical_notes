@@ -1225,7 +1225,7 @@ Thus, the coupling and plasma parameters are inversely proportional to each othe
 %--------------------------------------------
 \subsection{General definition}
 %--------------------------------------------
-Two particles traveling towards each other can undergo an interaction. Types of interactions include Coulomb collisions between two charged particles, fusion reactions between ions, and photon-matter phenomena such as Compton scattering, the photoelectric effect, and pair production.
+Two particles traveling towards each other can undergo an interaction. Types of interactions include fission and fusion reactions, as well as photon-matter phenomena such as the photoelectric effect, Coulomb collisions, Compton scattering, and pair production.
 
 \begin{figure}[ht]
     \centering
@@ -1239,6 +1239,29 @@ To define the cross section, we'll consider $I$ incident particles heading towar
     N = \sigma I n_A.
 \end{equation}
 In the above, $n_A$ is the areal number density, that is, $n_A = J / A = n \Delta x$, where $n$ is the volume number density.
+
+%--------------------------------------------
+\subsection{Mean free path \& collision frequency}
+%--------------------------------------------
+Collisions alter a beam of particles passing through a material. The cross sections of each process, which depend on properties of the incoming particles (such as frequency when the incoming particles are photons), can be added up to obtain a total cross section. From the definition of a cross section, we can determine how many particles keep their course and how many do not as they traverse through a material. Consider the material under consideration to have the shape of a thick slab, which starts at $x=0$ and continues on for a definite length along $x>0$. We want to know how $I(x)$, the number of particles at any location $x$ moving along the $x$ direction, decreases as $x$ increases. Let's focus on an infinitesimal thin lamina within the slab, of width $dx$ and located at some arbitrary location $x$. The number of target particles per unit area in that lamina will be $n dx$, where $n$ is the number volume density of particles in the target material. Then, the number of incident particles after crossing the lamina would be
+\begin{equation}
+    I(x+dx) = I(x) -\sigma I(x) n dx.
+\end{equation}
+This leads to the ODE $dI(x)/dx = -\sigma I(x) n$, which has as solution
+\begin{equation}
+    I(x) = I(0) \exp(-\sigma n x).
+\end{equation}
+
+$\Lambda = 1 / \sigma n$ is referred to as the mean free path. If the incident particle is traveling with a velocity $v$, then the collision time is defined as follows
+\begin{equation}
+    \tau = \frac{\lambda}{v} = \frac{1}{\sigma n v}.
+\end{equation}
+The collision frequency is simply the inverse of the collision time, that is
+\begin{equation}
+    \nu = \frac{1}{\tau} = \sigma n v.
+\end{equation}
+
+When the incident particles are photons that get absorbed when a collision occurs, the mean free path is referred to as the attenuation length. It's inverse, that is $\sigma n$ [1/cm], is referred to as the attenuation coefficient. The mass attenuation coefficient, also referred to as opacity, is given by $\kappa = \sigma n / \rho$ [cm\textsuperscript{2}/g], where $\rho$ is the mass density.
 
 %--------------------------------------------
 \subsection{Differential cross section}
@@ -1329,22 +1352,6 @@ or
 \begin{equation}
     \label{eq:cross_diff_impact_axi}
     \frac{d\sigma_\theta}{d\Omega} = \frac{b}{\sin \theta_s} \left | \frac{db}{d\theta_s} \right |.
-\end{equation}
-
-%--------------------------------------------
-\subsection{Mean free path \& collision frequency}
-%--------------------------------------------
-The mean free path can be expressed in terms of the cross section as
-\begin{equation}
-    \lambda_m = \frac{1}{n_1 \sigma}.
-\end{equation}
-Given the particle's speed $v$, on can also define the collision time as follows
-\begin{equation}
-    \tau_m = \frac{\lambda_m}{v} = \frac{1}{n_1 \sigma v}.
-\end{equation}
-Finally, the collision frequency is simply the inverse of the collision time, that is
-\begin{equation}
-    \nu_{m} = \frac{1}{\tau_m} = n_1 \sigma v.
 \end{equation}
 
 %------------------------------------------------------------------------
