@@ -123,13 +123,13 @@ Note that $\Omega^+(0,\Omega_0) = \Omega_0$. The boundary of this volume is deno
 \end{equation}
 The derivation of the Reynolds transport theorem is not so simple and hence it is not reproduced in here. The result is
 \begin{equation}
-  \frac{d I^+}{dt} = \int_{\Omega^+} \frac{\partial f(t,\xvec)}{\partial t} \, dV + \int_{\partial \Omega^+} f(t,\xvec) \vvec \cdot \nvec \, dS,
+  \frac{\partial I^+}{\partial t} = \int_{\Omega^+} \frac{\partial f(t,\xvec)}{\partial t} \, dV + \int_{\partial \Omega^+} f(t,\xvec) \vvec \cdot \nvec \, dS,
 \end{equation}
 Using Gauss's theorem, we get
 \begin{equation}
 \label{eq:reynolds_transport_theorem_generic}
 \boxed{
-  \frac{d I^+}{dt} = \int_{\Omega^+} \frac{\partial f}{\partial t} + \nabla \cdot (f \vvec ) \, dV .
+  \frac{\partial I^+}{\partial t} = \int_{\Omega^+} \frac{\partial f}{\partial t} + \nabla \cdot (f \vvec ) \, dV .
 }
 \end{equation}
 The above is the analogue of \cref{eq:material_derivative_generic}. 
@@ -137,7 +137,7 @@ The above is the analogue of \cref{eq:material_derivative_generic}.
 If the moving volume is attached to the fluid, then we use the notation $\Omega^+ = \Omega^+_u$ and $\vvec = \uvec$. Thus, given $I^+_u = I(t,\Omega^+_u)$, we have
 \begin{align}
 \label{eq:reynolds_transport_theorem_fluid}
-  \frac{d I^+_u}{dt} &=  \int_{\Omega^+_u} \frac{\partial f}{\partial t} + \nabla \cdot ( f \uvec ) \, dV  \nonumber \\
+  \frac{\partial I^+_u}{\partial t} &=  \int_{\Omega^+_u} \frac{\partial f}{\partial t} + \nabla \cdot ( f \uvec ) \, dV  \nonumber \\
   &=\left ( \int_{\Omega} \frac{\partial f}{\partial t} + \nabla \cdot ( f \uvec ) \, dV \right )_{\Omega = \Omega^+_u}.
 \end{align}
 This is the analogue of \cref{eq:kinematic_material_derivative_fluid}. The term in parenthesis above is typically labeled as follows
