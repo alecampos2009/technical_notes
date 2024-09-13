@@ -84,69 +84,6 @@ We now introduce a fluid particle with Lagrangian temperature $T^+_u = T^+_u(t,y
 Thus, we can interpret the PDE as describing the rate of change of a particle's property as the particle moves through space. This rate of change is given by the RHS term of \cref{eq:sample_pde} evaluated at the particle's position. 
 
 %------------------------------------------------------------------------
-\section{Reynolds transport theorem}
-%------------------------------------------------------------------------
-Define the one-dimensional domain $[a_0,b_0]$. Also define the one-dimensional domain $L^+ = L^+(t,a_0,b_0)$, which is given by 
-\begin{equation}
-    L^+ = \{ x^+ : y \in [a_0,b_0] \}.
-\end{equation}
-Note that $L^+(0,a_0,b_0) = [a_0,b_0]$. The left boundary of this volume is given by $a^+ = a^+(t,a_0,b_0)$ and the right boundary by $b^+=b^+(t,a_0,b_0)$. These satisfy $a^+(0,a_0,b_0) = a_0$ and $b^+(0,a_0,b_0) = b_0$. 
-
-We introduce the Lagrangian function $I^+ = I^+(t,a_0,b_0)$ and its Eulerian counterpart $I = I(t,a,b)$. These two are given by 
-\begin{equation}
-    I(t,a,b) = \int_a^b f(t,x) \, dx,
-\end{equation}
-\begin{equation}
-    I^+ = I(t,a^+,b^+).
-\end{equation}
-We can then write
-\begin{align}
-    \frac{dI^+}{dt} &= \left [ \frac{\partial I(t,a,b)}{\partial t} \right ]_{\scaleto{\begin{matrix} a=a^+ \\b=b^+ \end{matrix}}{15pt}} + \left [ \frac{\partial I(t,a,b)}{\partial a} \right ]_{\scaleto{\begin{matrix} a=a^+ \\b=b^+ \end{matrix}}{15pt}} \frac{d a^+}{dt} + \left [ \frac{\partial I(t,a,b)}{\partial b} \right ]_{\scaleto{\begin{matrix} a=a^+ \\b=b^+ \end{matrix}}{15pt}} \frac{db^+}{dt} \\
-    &= \left [ \frac{\partial I(t,a,b)}{\partial t} \right ]_{\scaleto{\begin{matrix} a=a^+ \\b=b^+ \end{matrix}}{15pt}} + \left [ \frac{\partial I(t,a,b)}{\partial a} \right ]_{\scaleto{\begin{matrix} a=a^+ \\b=b^+ \end{matrix}}{15pt}} v(t,a^+) + \left [ \frac{\partial I(t,a,b)}{\partial b}\right ]_{\scaleto{\begin{matrix} a=a^+ \\b=b^+ \end{matrix}}{15pt}} v(t,b^+).
-\end{align}
-Due to the fundamental theorem of calculus (see appendix in my PDEs notes), we can re-write the above as
-\begin{align}
-    \frac{dI^+}{dt} &= \left [ \frac{\partial I(t,a,b)}{\partial t} \right ]_{\scaleto{\begin{matrix} a=a^+ \\b=b^+ \end{matrix}}{15pt}} -\left [ f(t,a) \right ]_{\scaleto{\begin{matrix} a=a^+ \\b=b^+ \end{matrix}}{15pt}} v(t,a^+) + \left [ f(t,b) \right ]_{\scaleto{\begin{matrix} a=a^+ \\b=b^+ \end{matrix}}{15pt}} v(t,b^+) \nonumber \\
-    &= \int_{a^+}^{b^+} \frac{\partial f(t,x)}{\partial t} \, dx - f(t,a^+) v(t,a^+) + f(t,b^+) v(t,b^+).
-\end{align}
-
-The analogue in 3D for the above is typically referred to as the Reynolds transport theorem. Consider the volume $\Omega_0$ as a predefined set of $\yvec$ vectors. The control volume $\Omega^+ = \Omega^+(t, \Omega_0)$ is then given by
-\begin{equation}
-    \Omega^+ = \{ \xvec^+:\yvec \in \Omega_0 \}.
-\end{equation}
-Note that $\Omega^+(0,\Omega_0) = \Omega_0$. The boundary of this volume is denoted by $\partial \Omega^+$. The velocity of the boundary at any point $\xvec \in \partial \Omega^+$ is given by the Eulerian field $\vvec = \vvec(t,\xvec)$ at such $\xvec$ value. Similarly, the unit normal to the boundary at any $\xvec \in \partial \Omega^+$ is given by the Eulerian field $\nvec = \nvec(t,\xvec)$ at such an $\xvec$. For this case $I^+ = I^+(t,\Omega_0)$ and its Eulerian counterpart is $I = I(t,\Omega)$. These two are then given by
-\begin{equation}
-    I = \int_\Omega f(t,\xvec) \,dV,
-\end{equation}
-\begin{equation}
-    I^+ = I(t,\Omega^+).
-\end{equation}
-The derivation of the Reynolds transport theorem is not so simple and hence it is not reproduced in here. The result is
-\begin{equation}
-  \frac{\partial I^+}{\partial t} = \int_{\Omega^+} \frac{\partial f(t,\xvec)}{\partial t} \, dV + \int_{\partial \Omega^+} f(t,\xvec) \vvec \cdot \nvec \, dS,
-\end{equation}
-Using Gauss's theorem, we get
-\begin{equation}
-\label{eq:reynolds_transport_theorem_generic}
-\boxed{
-  \frac{\partial I^+}{\partial t} = \int_{\Omega^+} \frac{\partial f}{\partial t} + \nabla \cdot (f \vvec ) \, dV .
-}
-\end{equation}
-The above is the analogue of \cref{eq:material_derivative_generic}. 
-
-If the moving volume is attached to the fluid, then we use the notation $\Omega^+ = \Omega^+_u$ and $\vvec = \uvec$. Thus, given $I^+_u = I(t,\Omega^+_u)$, we have
-\begin{align}
-\label{eq:reynolds_transport_theorem_fluid}
-  \frac{\partial I^+_u}{\partial t} &=  \int_{\Omega^+_u} \frac{\partial f}{\partial t} + \nabla \cdot ( f \uvec ) \, dV  \nonumber \\
-  &=\left ( \int_{\Omega} \frac{\partial f}{\partial t} + \nabla \cdot ( f \uvec ) \, dV \right )_{\Omega = \Omega^+_u}.
-\end{align}
-This is the analogue of \cref{eq:kinematic_material_derivative_fluid}. The term in parenthesis above is typically labeled as follows
-\begin{equation}
-    \frac{DI}{Dt} = \int_{\Omega} \frac{\partial f}{\partial t} + \nabla \cdot ( f \uvec ) \, dV.
-\end{equation}
-This is the analogue of \cref{eq:material_derivative_definition}.
-
-%------------------------------------------------------------------------
 \section{The Jacobian matrix}
 %------------------------------------------------------------------------
 We introduce the Jacobian matrix $\Jvec^+$ with components $J^+_{ij} = J^+_{ij}(t,\yvec)$ defined by
@@ -160,13 +97,14 @@ dx^+_i = \frac{ \partial x^+_i}{\partial t} dt + \frac{\partial x^+_i}{\partial 
 \end{equation}
 The evolution equation for the Jacobian matrix is derived as follows
 \begin{align}
-\label{eq:pde_of_Jacobian_matrix}
+    \label{eq:pde_of_Jacobian_matrix}
 \frac{\partial J^+_{ij}}{\partial t} & = \frac{\partial}{\partial y_j} \left ( \frac{\partial x^+_i}{\partial t} \right ) = \frac{\partial v^+_i}{\partial y_j} = \frac{\partial v_i(t,\xvec^+)}{\partial y_j} = \frac{\partial x^+_{k}}{\partial y_j} \left ( \frac{ \partial v_i}{\partial x_k} \right )_{\xvec = \xvec^+} = J^+_{kj} \left ( \frac{ \partial v_i}{\partial x_k} \right )_{\xvec = \xvec^+} 
 \end{align}
 
 We now introduce $J^+ = J^+(t,\yvec)$ as
 \begin{equation}
-    J^+ = \det (\Jvec^+).
+    \label{eq:kinematic_det_Jacobian}
+    J^+ = |\det (\Jvec^+)|.
 \end{equation}
 Jacobi's formula for some matrix $\avec = \avec(t)$ is as follows
 \begin{equation}
@@ -189,7 +127,7 @@ Consider now a fluid particle, so that
 \end{equation}
 and
 \begin{equation}
-    J_u^+ = \det(\Jvec_u^+).
+    J_u^+ = |\det(\Jvec_u^+)|.
 \end{equation}
 Given \cref{eq:kinematic_evolution_J}, its evolution equation is
 \begin{equation}
@@ -259,6 +197,84 @@ Plugging the proposed solution for $l_i^+$ into its ODE, and using equation (\re
 = f_j J^+_{kj} \left ( \frac{\partial u_i}{\partial x_k} \right )_{\xvec=\xvec^+_u} 
 = l_k^+ \left ( \frac{\partial u_i}{\partial x_k} \right )_{\xvec = \xvec^+_u}.
 \end{equation}
+
+%------------------------------------------------------------------------
+\section{Reynolds transport theorem}
+%------------------------------------------------------------------------
+Define the one-dimensional domain $[a_0,b_0]$. Also define the one-dimensional domain $L^+ = L^+(t,a_0,b_0)$, which is given by 
+\begin{equation}
+    L^+ = \{ x^+ : y \in [a_0,b_0] \}.
+\end{equation}
+Note that $L^+(0,a_0,b_0) = [a_0,b_0]$. The left boundary of this volume is given by $a^+ = a^+(t,a_0,b_0)$ and the right boundary by $b^+=b^+(t,a_0,b_0)$. These satisfy $a^+(0,a_0,b_0) = a_0$ and $b^+(0,a_0,b_0) = b_0$. 
+
+We introduce the Lagrangian function $I^+ = I^+(t,a_0,b_0)$ and its Eulerian counterpart $I = I(t,a,b)$. These two are given by 
+\begin{equation}
+    I(t,a,b) = \int_a^b f(t,x) \, dx,
+\end{equation}
+\begin{equation}
+    I^+(t,a_0,b_0) = I(t,a^+(t,a_0,b_0), b^+(t,a_0,b_0)).
+\end{equation}
+We can then write
+\begin{align*}
+    \frac{\partial}{\partial t} I^+(t,a_0,b_0) &= \frac{\partial}{\partial t} I(t,a^+(t,a_0,b_0), b^+(t,a_0,b_0)) \\
+    &= \left [ \frac{\partial I(t,a,b)}{\partial t} \right ]_{\scaleto{\begin{matrix} a=a^+ \\b=b^+ \end{matrix}}{15pt}} + \left [ \frac{\partial I(t,a,b)}{\partial a} \right ]_{\scaleto{\begin{matrix} a=a^+ \\b=b^+ \end{matrix}}{15pt}} \frac{d a^+}{dt} + \left [ \frac{\partial I(t,a,b)}{\partial b} \right ]_{\scaleto{\begin{matrix} a=a^+ \\b=b^+ \end{matrix}}{15pt}} \frac{db^+}{dt} \\
+    &= \left [ \frac{\partial I(t,a,b)}{\partial t} \right ]_{\scaleto{\begin{matrix} a=a^+ \\b=b^+ \end{matrix}}{15pt}} + \left [ \frac{\partial I(t,a,b)}{\partial a} \right ]_{\scaleto{\begin{matrix} a=a^+ \\b=b^+ \end{matrix}}{15pt}} v(t,a^+) + \left [ \frac{\partial I(t,a,b)}{\partial b}\right ]_{\scaleto{\begin{matrix} a=a^+ \\b=b^+ \end{matrix}}{15pt}} v(t,b^+).
+\end{align*}
+Due to the fundamental theorem of calculus (see appendix in my PDEs notes), we can re-write the above as
+\begin{align}
+    \frac{\partial}{\partial t} I^+(t,a_0,b_0) &= \left [ \frac{\partial I(t,a,b)}{\partial t} \right ]_{\scaleto{\begin{matrix} a=a^+ \\b=b^+ \end{matrix}}{15pt}} -\left [ f(t,a) \right ]_{\scaleto{\begin{matrix} a=a^+ \\b=b^+ \end{matrix}}{15pt}} v(t,a^+) + \left [ f(t,b) \right ]_{\scaleto{\begin{matrix} a=a^+ \\b=b^+ \end{matrix}}{15pt}} v(t,b^+) \nonumber \\
+    &= \int_{a^+}^{b^+} \frac{\partial f(t,x)}{\partial t} \, dx - f(t,a^+) v(t,a^+) + f(t,b^+) v(t,b^+).
+\end{align}
+
+The analogue in 3D for the above is typically referred to as the Reynolds transport theorem. Consider the volume $\Omega_0$ as a predefined set of $\yvec$ vectors. The control volume $\Omega^+ = \Omega^+(t, \Omega_0)$ is then given by
+\begin{equation}
+    \Omega^+ = \{ \xvec^+:\yvec \in \Omega_0 \}.
+\end{equation}
+Note that $\Omega^+(0,\Omega_0) = \Omega_0$. The boundary of this volume is denoted by $\partial \Omega^+$. The velocity of the boundary at any point $\xvec \in \partial \Omega^+$ is given by the Eulerian field $\vvec = \vvec(t,\xvec)$ at such $\xvec$ value. Similarly, the unit normal to the boundary at any $\xvec \in \partial \Omega^+$ is given by the Eulerian field $\nvec = \nvec(t,\xvec)$ at such an $\xvec$. For this case $I^+ = I^+(t,\Omega_0)$ and its Eulerian counterpart is $I = I(t,\Omega)$. These two are then given by
+\begin{equation}
+    I(t,\Omega) = \int_\Omega f(t,\xvec) \,dV_x,
+\end{equation}
+\begin{equation}
+    I^+(t,\Omega_0) = I(t,\Omega^+(t,\Omega_0)).
+\end{equation}
+We can then write
+\begin{equation*}
+    \frac{\partial I^+}{\partial t} = \frac{\partial I(t,\Omega^+)}{\partial t} = \frac{\partial}{\partial t} \int_{\Omega^+} f(t,\xvec) \, dV_x
+\end{equation*}
+Using integration by substitution, we have
+\begin{equation*}
+    \frac{\partial I^+}{\partial t} = \frac{\partial}{\partial t} \int_{\Omega_0} f(t,\xvec^+(t,\yvec)) J^+ \, dV_y,
+\end{equation*}
+where $J^+$ is given by \cref{eq:kinematic_det_Jacobian}. Since the domain of integration no longer depends on time, we can bring in the partial derivative inside the integral to obtain
+\begin{align*}
+    \frac{\partial I^+}{\partial t} &= \int_{\Omega_0} \frac{\partial}{\partial t} \left[ f(t,\xvec^+(t,\yvec)) J^+ \right] \, dV_y \\
+    &= \int_{\Omega_0} \left[ \frac{\partial f}{\partial t} + \vvec \cdot \nabla f \right]_{\xvec = \xvec^+} J^+ + f_{\xvec = \xvec^+} \frac{\partial J^+}{\partial t} \,dV_y
+\end{align*}
+Using \cref{eq:kinematic_evolution_J} we get
+\begin{align*}
+    \frac{\partial I^+}{\partial t} &= \int_{\Omega_0} \left[ \frac{\partial f}{\partial t} + \vvec \cdot \nabla f \right]_{\xvec = \xvec^+} J^+ + \left( f \nabla \cdot \vvec \right)_{\xvec = \xvec^+} J^+ \,dV_y \\
+    & = \int_{\Omega_0} \left[ \frac{\partial f}{\partial t} + \nabla \cdot \left(f \vvec \right) \right]_{\xvec = \xvec^+} J^+ \,dV_y.
+\end{align*}
+Using integration by substitution again, the above becomes
+\begin{equation}
+\label{eq:reynolds_transport_theorem_generic}
+\boxed{
+  \frac{\partial I^+}{\partial t} = \int_{\Omega^+} \frac{\partial f}{\partial t} + \nabla \cdot (f \vvec ) \, dV_x .
+}
+\end{equation}
+This is the analogue of \cref{eq:material_derivative_generic}. 
+
+If the moving volume is attached to the fluid, then we use the notation $\Omega^+ = \Omega^+_u$ and $\vvec = \uvec$. Thus, given $I^+_u(t,\Omega_0) = I(t,\Omega^+_u(t,\Omega_0))$, we have
+\begin{align}
+\label{eq:reynolds_transport_theorem_fluid}
+  \frac{\partial I^+_u}{\partial t} &=  \int_{\Omega^+_u} \frac{\partial f}{\partial t} + \nabla \cdot ( f \uvec ) \, dV_x  \nonumber \\
+  &=\left ( \int_{\Omega} \frac{\partial f}{\partial t} + \nabla \cdot ( f \uvec ) \, dV_x \right )_{\Omega = \Omega^+_u}.
+\end{align}
+This is the analogue of \cref{eq:kinematic_material_derivative_fluid}. The term in parenthesis above is typically labeled as follows
+\begin{equation}
+    \frac{DI}{Dt} = \int_{\Omega} \frac{\partial f}{\partial t} + \nabla \cdot ( f \uvec ) \, dV.
+\end{equation}
+This is the analogue of \cref{eq:material_derivative_definition}.
 
 %########################################################################
 \chapter{Conservation laws}
