@@ -160,62 +160,6 @@ The Leapfrog method is a staggered scheme defined as follows
 \item Adams-Bashforth
 \end{itemize}
 
-%----------------------------------------------------------------------------------------------------------------------------
-\section{Multi-Rate}
-%----------------------------------------------------------------------------------------------------------------------------
-Split the right-hand side of \cref{eq:ode_generic} as follows
-\begin{equation}
-    \label{eq:ode_generic_split}
-    \frac{du}{dt} = f_f(t,u) + f_s(t,u) \qquad \text{in } (0,\infty),
-\end{equation}
-where $f_f(t,u)$ is the fast source and $f_s(t,u)$ the slow source. Also introduce fast and slow functions $u_f=u_f(t)$ and $u_s=u_s(t)$ that satisfy 
-\begin{align}
-    \frac{du_f}{dt} = f_f(t, u), \nonumber \\
-    \frac{du_s}{dt}= f_s(t, u).
-\end{align}
-Plugging the above two in \cref{eq:ode_generic_split} leads to $u = u_f + u_s$. For the sake of clarity, we'll explicitly denote the fast and slow functional arguments in the sources. Thus, the equations are written as
-\begin{align}
-    \frac{du_f}{dt} = f_f(t,u_f, u_s), \nonumber \\
-    \frac{du_s}{dt}= f_s(t,u_f,u_s).
-\end{align}
-Below, we describe how to solve this system of equations using an implicit-trapezoidal multi-rate Runge-Kutta scheme.
-
-Introduce the auxiliary variable $v=v(\theta)$ which is also split into fast and slow parts, that is $v=v_f+v_s$, where $v_f=v_f(\theta)$ and $v_s=v_s(\theta)$. The algorithm is then defined as follows
-\begin{itemize}
-    \item Set $v_f(0) = u^n_f$, $v_s(0) = u^n_s$.
-    \item Iterate $v_f$ and $v_s$ forward in time from $\theta=0$ up to $\theta=\Delta t$ by solving the following equations
-    \begin{align}
-        \frac{dv_f}{d\theta} &= f_f(t_n + \theta, v_f, v_s), \label{eq:ode_mr_v_fast} \\
-        \frac{dv_s}{d\theta} &= f_s(t_n, v_f(0), v_s(0)) \label{eq:ode_mr_v_slow}.
-    \end{align}
-    Note that the right-hand side of \cref{eq:ode_mr_v_slow} is constant so integrating analytically we get
-    \begin{equation}
-        \label{eq:ode_mr_v_slow_sol}
-        v_s = v_s(0) + \theta f_s(t_n, v_f(0), v_s(0)) .
-    \end{equation}
-    \Cref{eq:ode_mr_v_fast} is solved using an explicit Runge-Kutta scheme.
-    \item Set $u^{n+1}_f = v_f(\Delta t)$.
-    \item Obtain $u^{n+1}_s$ by solving the implicit trapezoidal equation below
-    \begin{equation}
-        u^{n+1}_s = u^n_s + \frac{\Delta t}{2} \left[ f_s(t_n, u^n_f, u^n_s) + f_s(t_{n+1}, u^{n+1}_f, u^{n+1}_s) \right].
-    \end{equation}
-    Note that we can re-write \cref{eq:ode_mr_v_slow_sol} as $v_s = u^n_s + \theta f_s(t_n, u^n_f, u^n_s)$. Using this to replace the first term in the right-hand side above we get
-    \begin{equation}
-        u^{n+1}_s = v_s - \theta f_s(t_n, u^n_f, u^n_s) + \frac{\Delta t}{2} \left[ f_s(t_n, u^n_f, u^n_s) + f_s(t_{n+1}, u^{n+1}_f, u^{n+1}_s) \right].
-    \end{equation}
-    Evaluating this at $\theta=\Delta t$ we get
-    \begin{equation}
-        u^{n+1}_s = v_s(\Delta t) - \frac{\Delta t}{2} f_s(t_n, u^n_f, u^n_s) + \frac{\Delta t}{2} f_s(t_{n+1}, u^{n+1}_f, u^{n+1}_s).
-    \end{equation}
-    Adding $u^{n+1}_f$ to both sides we get
-    \begin{equation}
-        u^{n+1} = v(\Delta t) - \frac{\Delta t}{2} f_s(t_n, u^n_f, u^n_s) + \frac{\Delta t}{2} f_s(t_{n+1}, u^{n+1}_f, u^{n+1}_s).
-    \end{equation}
-
-    
-\end{itemize} 
-
-
 %########################################################################
 \chapter{Solving non-linear equations}
 %########################################################################
