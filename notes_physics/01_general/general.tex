@@ -1167,17 +1167,41 @@ where $\lambda_{\mu m}$ is in units of microns and $n_{cr}$ in units of \#/m\tex
 \section{The coupling parameter}
 %------------------------------------------------------------------------
 
-Coulomb interactions are those which occur when two charge particles head towards each other. We can define two types of Coulomb interactions: strong and weak. Strong Coulomb interactions are those for which the particle's Coulomb potential energy is larger than its kinetic energy, and vice versa for weak Coulomb interactions. Thus, we can also define two types of plasma regimes:
+Roughly speaking, Coulomb interactions are those which occur when the electric fields of two charge particles that are heading towards each other affect the behavior of those particles. We can define two types of Coulomb interactions:
 \begin{itemize}
-    \item Strongly-coupled plasmas: plasmas where the Coulomb interactions are mostly strong and thus drive the dynamics of its evolution. Coulomb interactions tend to be strong when the inter-particle distances are small, and thus this regime would be dominated by \textit{short-range} interactions. These plasmas are also described as exhibiting \textit{collisional} behavior, since a strong Coulomb interaction essentially means a collision has occurred.
-    \item Weakly-coupled plasmas: plasmas where the Coulomb interactions are mostly weak, and as a result do not drive the dynamics of its evolution. The plasma dynamics are instead driven by \textit{long-range} effects caused by smooth electromagnetic fields that result from integrating a large number of particles. These plasmas are also described as exhibiting \textit{collective} behavior, since the long-range electromagnetic fields follow from the collective integration of many particles.
+    \item Weak Coulomb interactions
+    \begin{itemize}
+        \item Particle kinetic energy is larger than Coulomb potential energy.
+        \item Occur when the inter-particle distances are large, i.e. \textit{long-range} interactions.
+    \end{itemize}
+
+    \item Strong Coulomb interactions
+    \begin{itemize}
+        \item Particle kinetic energy is smaller than Coulomb potential energy.
+        \item Occur when the inter-particle distances are small, i.e. \textit{short-range} interactions.
+    \end{itemize}
 \end{itemize}
+We can also define two types of plasma regimes:
+\begin{itemize}
+    \item Weakly-coupled plasmas
+    \begin{itemize}
+        \item Weak interactions play a larger role than strong interactions.
+        \item Exhibit collective behavior: caused by the electromagnetic fields that result from the integrated effect of a large number of distant particles. 
+    \end{itemize}  
+
+    \item Strongly-coupled plasmas
+    \begin{itemize}
+        \item Weak interactions play a smaller role than strong interactions.
+        \item Do not exhibit collective behavior.
+    \end{itemize} 
+\end{itemize}
+Collisionless plasmas are the extreme limit of weakly-coupled plasmas where only weak interactions play a role.
 
 We describe an approximate Coulomb potential energy for particles in a plasma as
 \begin{equation}
     U =  \frac{q_s^2}{4 \pi \epsilon_0 a_s}.
 \end{equation}
-The impact parameter that has been used above is $a_s$, the sphere radius. This provides a decent measure on the average spacing between particles in a plasma. Since the volume of a single particle is $1/n_s$, and if we assume that this volume is given by $4/3 \pi a_s^3$, then equating these two gives the expression for the sphere radius
+The impact parameter that has been used above is $a_s$, the sphere radius. This radius provides a decent measure on the average spacing between particles in a plasma. Since the volume of a single particle is $1/n_s$, and if we assume that this volume is given by $4/3 \pi a_s^3$, then equating these two gives the expression for the sphere radius
 \begin{equation}
     a_s = \left ( \frac{3}{4 \pi n_s} \right )^{1/3}.
 \end{equation}
