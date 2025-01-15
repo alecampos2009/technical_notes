@@ -1,6 +1,6 @@
 \documentclass[oneside,a4paper,11pt]{report}
 \usepackage{fullpage}
-\usepackage{hhline}
+\usepackage{hyperref}
 
 \usepackage{../../info/packages}
 \usepackage{../../info/nomenclature}
@@ -25,7 +25,7 @@
 %########################################################################
 
 %------------------------------------------------------------------------
-\section{Eulerian vs.\@ Lagrangian}
+\section{Eulerian vs Lagrangian}
 %------------------------------------------------------------------------
 The Eulerian description of a fluid is that for which fluid properties are of the form $\fvec = \fvec(t,\xvec)$, where $t$ and $\xvec$ denote time and position. Examples of these include density $\rho = \rho(t,\xvec)$, fluid velocity $\uvec = \uvec(t,\xvec)$, and specific internal energy $e = e(t, \xvec)$.
 
@@ -40,7 +40,7 @@ There are two Lagrangian properties that deserve further attention. The position
 \end{equation}
 
 %------------------------------------------------------------------------
-\section{Atomistic vs.\@ continuum}
+\section{Atomistic vs continuum}
 %------------------------------------------------------------------------
 Eulerian and Lagrangian variables are respectively defined at every point $\xvec$ or $\yvec$ within the domain containing the fluid. Thus, in the fluid approach we do not account for the microscopic distribution of the fluid's atoms and molecules, which are not necessarily present at every point $\xvec$. That being said, we can establish a correlation between the fluid variables and atomistic variables, which define the underlying microscopic structure. Examples of these atomistic variables include $m_i$, $\vvec_i$, and $\epsilon_i$, which are the mass, velocity, and internal energy of the $i$\textsuperscript{th} atom or molecule in the system.
 
@@ -1946,20 +1946,6 @@ If there is only one ion species, along with the electron species, then the mode
 \subsection{Alternate forms of the energy equations}
 %--------------------------------------------
 
-The enthalpies are given by
-\begin{equation}
-    h_{k,i,s} = e_{k,i,s} + \frac{p_{k,i,s}}{\rho_{k,i,s}},
-\end{equation}
- \begin{equation}
-    \label{eq:sf_alternate_hke_rho}
-    h_{k,e} = e_{k,e} + \frac{p_{k,e}}{\rho_k}.
-\end{equation}
-Using expressions from \cref{sec:sf_vars}, we can show that
-\begin{equation}
-    \label{eq:sf_alternate_hki_rhok}
-    h_{k,i} = \sum_s^{\mathcal{N}_k} Y_{k,i,s} h_{k,i,s} = \sum_s^{\mathcal{N}_k} Y_{k,i,s} e_{k,i,s} + \sum_{s}^{\mathcal{N}_k} \frac{ \eta_{k,i,s} p_{k,i,s}}{\rho_k} = e_{k,i} + \frac{p_{k,i}}{\rho_k}.
-\end{equation}
-
 Thus far we've been working with plasmas that behave as ideal gasses with three degrees of freedom (the three translational degrees of freedom). For ideal gasses we also have 
 \begin{equation}
     \label{eq:sf_alternate_p_kis}
@@ -1969,12 +1955,11 @@ Thus far we've been working with plasmas that behave as ideal gasses with three 
     \label{eq:sf_alternate_p_ke}
     p_{k,e} = (\gamma - 1) \rho_k e_{k,e}.
 \end{equation}
-Multiplying both sides of \cref{eq:sf_alternate_p_kis} and summing over all $s$ gives
+Multiplying both sides of \cref{eq:sf_alternate_p_kis} by $\eta_{k,i,s}$ and summing over all $s$ gives
 \begin{equation}
     \label{eq:sf_alternate_p_ki}
     p_{k,i} = (\gamma - 1) \rho_k e_{k,i}.
 \end{equation}
-
 Since $\gamma = 5/3$ for the plasmas under consideration, the internal energy equation for ions given by \cref{eq:sf_mm_ms_iei} can now be written as
 \begin{multline*}
     \frac{\partial \eta_k \rho_k e_{k,i}}{\partial t} + \nabla \cdot \left( \eta_k \rho_k e_{k,i} \uvec \right) = \eta_k \sigmavec_{k,i} : \nabla \uvec - \nabla \cdot \qvec_{k,i} + Q_{k,i} \\
@@ -1985,6 +1970,7 @@ Similarly, the internal energy equation for electrons given by \cref{eq:sf_mm_ms
     \frac{\partial \eta_k \rho_k e_{k,e}}{\partial t} + \nabla \cdot \left( \eta_k \rho_k e_{k,e} \uvec \right) = \eta_k \sigmavec_{k,e} : \nabla \uvec - \nabla \cdot \qvec_{k,}e + Q_{k,e} \\
     - \nabla \cdot \left( \eta_k \rho_k e_{k,e} \wvec_{k,e} \right) + \eta_k \sigmavec_{k,e} : \nabla \wvec_{k,e}.
 \end{multline*}
+
 We re-write the last term in the two equations above as
 \begin{align*}
     \eta_k \sigmavec_{k,s} : \nabla \wvec_{k,s} &= \nabla \cdot \left( \wvec_{k,s} \cdot \eta_k \sigmavec_{k,s} \right) - \wvec_{k,s} \cdot \nabla \left( \eta_k \sigmavec_{k,s} \right) \\
@@ -1999,7 +1985,20 @@ where $s$ is equal to $i$ or $e$. Thus, the ion and electron internal energy equ
     \frac{\partial \eta_k \rho_k e_{e,k}}{\partial t} + \nabla \cdot \left( \eta_k \rho_k e_{k,e} \uvec \right) = \eta_k \sigmavec_{k,e} : \nabla \uvec - \nabla \cdot \qvec_{k,e} + Q_{k,e} \\
     - \nabla \cdot \left[ \left( e_{k,e} + \frac{p_{k,e}}{\rho_k} \right) \eta_k \rho_k \wvec_{k,e} \right] + \nabla \cdot \left( \wvec_{k,e} \cdot \eta_k \tvec_{k,e} \right) - \wvec_{k,e} \cdot \nabla \left( \eta_k \sigmavec_{k,e} \right).
 \end{multline*}
-Using \cref{eq:sf_alternate_hki_rhok,eq:sf_alternate_hke_rho} for $h_{k,i}$ and $h_{k,e}$ the above two become
+The enthalpies are given by
+\begin{equation}
+    h_{k,i,s} = e_{k,i,s} + \frac{p_{k,i,s}}{\rho_{k,i,s}},
+\end{equation}
+ \begin{equation}
+    \label{eq:sf_alternate_hke_rho}
+    h_{k,e} = e_{k,e} + \frac{p_{k,e}}{\rho_k}.
+\end{equation}
+Using expressions from \cref{sec:sf_vars}, we can show that
+\begin{equation}
+    \label{eq:sf_alternate_hki_rhok}
+    h_{k,i} = \sum_s^{\mathcal{N}_k} Y_{k,i,s} h_{k,i,s} = \sum_s^{\mathcal{N}_k} Y_{k,i,s} e_{k,i,s} + \sum_{s}^{\mathcal{N}_k} \frac{ \eta_{k,i,s} p_{k,i,s}}{\rho_k} = e_{k,i} + \frac{p_{k,i}}{\rho_k}.
+\end{equation}
+Using \cref{eq:sf_alternate_hki_rhok,eq:sf_alternate_hke_rho} for $h_{k,i}$ and $h_{k,e}$ the energy equations are written as
 \begin{multline*}
     \frac{\partial \eta_k \rho_k e_{k,i}}{\partial t} + \nabla \cdot \left( \eta_k \rho_k e_{k,i} \uvec \right) = \eta_k \sigmavec_{k,i} : \nabla \uvec - \nabla \cdot \qvec_{k,i} + Q_{k,i} \\
     - \nabla \cdot \left( h_{k,i} \eta_k \rho_k \wvec_{k,i} \right) + \nabla \cdot \left( \wvec_{k,i} \cdot \eta_k \tvec_{k,i} \right) - \wvec_{k,i} \cdot \nabla \left( \eta_k \sigmavec_{k,i} \right).
