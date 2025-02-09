@@ -56,18 +56,18 @@ This can be performed using MFEM's memory manager. Below are three ways we can t
     mfem::Vector rho(...);
     // you can now use the vector on the CPU, e.g. you can initialize its entries, etc.
 
-    double* d_rho = rho.Read();
+    const double *d_rho = rho.Read();
     // the pointer d_rho can now be used on the GPU, only to read the entries of the rho vector
     // E.g.
     // double val = d_rho[nth_entry];
 
-    double* d_rho = rho.Write();
+    double *d_rho = rho.Write();
     // the pointer d_rho can now be used on the GPU, only to write to the entries of the rho vector
     // E.g.
     // d_rho[nth_entry] = 1.234;
     // note: if you try to read one of the entries on the GPU, you might get an unexpected value
 
-    double* d_rho = rho.ReadWrite();
+    double *d_rho = rho.ReadWrite();
     // the pointer d_rho can now be used on the GPU, to either read or write to the entries of the rho vector
 \end{lstlisting}
 
@@ -81,11 +81,11 @@ If the data is currently residing on device memory, one can bring it back to hos
 \end{lstlisting}
  The \texttt{rho} object can then be used on the CPU again as one would normally do. On the other hand, one can also generate explicit pointers to access data on the host, in a similar manner to the pointers for device data:
 \begin{lstlisting}
-    double* h_rho = rho.HostRead();
+    double *h_rho = rho.HostRead();
 
-    double* h_rho = rho.HostWrite();
+    double *h_rho = rho.HostWrite();
 
-    double* h_rho = rho.HostReadWrite();
+    double *h_rho = rho.HostReadWrite();
 \end{lstlisting}
 
 MFEM objects (array, vector, dense matrix, dense tensor) have two member variables used to determine its state, these are \texttt{VALID\_HOST} and \texttt{VALID\_DEVICE}. When one first creates an object, MFEM will set \texttt{VALID\_HOST} to true and \texttt{VALID\_DEVICE} to false. After that, if you call any of the memory-movement functions (e.g. \texttt{Read()}, \texttt{HostWrite()}), then \texttt{VALID\_HOST} and \texttt{VALID\_DEVICE} would be updates as shown on the table below.
@@ -112,7 +112,7 @@ Let's now consider a few specific cases:
 \begin{itemize}
     \item You create an object, then call \texttt{Write()} or \texttt{ReadWrite()} to modify its value on the device. At this point \texttt{VALID\_HOST} would be false and \texttt{VALID\_DEVICE} would be true. You now read this data on the host but forget beforehand to do \texttt{HostRead()} or a \texttt{HostReadWrite()}. To catch this mistake, you can compile MFEM in debug mode and then run the code. This will lead to a runtime error and a stack trace since the host is now possibly out-of-sync with the device. 
     
-    \item As an example, consider the object \texttt{mfem::Vector<double> rho}. After a call to \texttt{Read()} \texttt{VALID\_DEVICE} would be true and \texttt{VALID\_HOST} would still also be true. Let's say that on the host you now want to only read the entries of \texttt{rho} using the \texttt{()} operator, e.g\@ \texttt{double new\_var = 2 + rho[i]}. This is perfectly reasonable since the device has not modified the entries of the object. However, when using the parenthesis operator MFEM doesn't automatically know that you are going to only read this entry, as opposed to modifying it as well, e.g.\@ \texttt{rho(i)=new\_value}. If you were to modify it, its value on the device would no longer be valid and hence the status of the flag \texttt{VALID\_DEVICE}, which was left as true by the \texttt{()} operator, is no longer correct. MFEM thus provides two versions of the \texttt{()} operator, one that is used for reading entries only and another that is used for reading and modifying entries. The one used for reading entries can be used when \texttt{VALID\_HOST} and \texttt{VALID\_DEVICE} are both true, whereas the one for modifying entries requires the object to previously have \texttt{VALID\_HOST} set to true and \texttt{VALID\_DEVICE} to false. To use the former, you use the \texttt{mfem::AsConst()} function, as in \texttt{mfem::AsConst(rho)(i)}. To use the latter, you just use the \texttt{()} operator as usual.
+    \item As an example, consider the object \texttt{mfem::Vector<double> rho}. After a call to \texttt{Read()} \texttt{VALID\_DEVICE} would be true and \texttt{VALID\_HOST} would still also be true. Let's say that on the host you now want to only read the entries of \texttt{rho} using the \texttt{()} operator, e.g\@ \texttt{double new\_var = 2 + rho(i)}. This is perfectly reasonable since the device has not modified the entries of the object. However, when using the parenthesis operator MFEM doesn't automatically know that you are going to only read this entry, as opposed to modifying it as well, e.g.\@ \texttt{rho(i)=new\_value}. If you were to modify it, its value on the device would no longer be valid and hence the status of the flag \texttt{VALID\_DEVICE}, which was left as true by the \texttt{()} operator, is no longer correct. MFEM thus provides two versions of the \texttt{()} operator, one that is used for reading entries only and another that is used for reading and modifying entries. The one used for reading entries can be used when \texttt{VALID\_HOST} and \texttt{VALID\_DEVICE} are both true, whereas the one for modifying entries requires the object to previously have \texttt{VALID\_HOST} set to true and \texttt{VALID\_DEVICE} to false. To use the former, you use the \texttt{mfem::AsConst()} function, as in \texttt{mfem::AsConst(rho)(i)}. To use the latter, you just use the \texttt{()} operator as usual.
 \end{itemize}    
 
 %------------------------------------------------------------------------
@@ -121,7 +121,7 @@ Let's now consider a few specific cases:
 \label{sec:for_loops}
 A kernel is a basic unit of code to be executed on the GPU (e.g. a loop, function, or program). In this section we'll focus on kernels that consist of for-loops. To execute a for-loop on the GPU, one invokes one of the various macros available in MFEM. The standard for-loop macro is shown below:
 \begin{lstlisting}
-    mfem::forall(N, [=] MFEM_HOST_DEVICE (int i) \{\dots \} )
+    mfem::forall(N, [=] MFEM_HOST_DEVICE (int i) \{ ... \} )
 \end{lstlisting}
 The second argument above, i.e. \texttt{[=] MFEM\_HOST\_DEVICE (int i) \{ \dots \}}, is a lambda expression, which is essentially a small function without a name. The body of the lambda expression, i.e. the code to be executed, is depicted by the dots \dots. The first argument of the lambda expression, i.e. \texttt{[=]}, is the capture clause. It is used to indicate how variables in the enclosing scope should be used, or ``captured'', within the for loop. For example
 \begin{itemize}
@@ -257,7 +257,7 @@ For this case, the GPU will launch \texttt{size\_4} threads, and each will execu
                  d_rho(i,j,k,l) = ...;
     });
 \end{lstlisting}
-In the first example above the GPU launches \texttt{size\_4} / \texttt{MFEM\_CUDA\_BLOCKS} thread blocks, each with \texttt{MFEM\_CUDA\_BLOCKS} threads, for a total of \texttt{size\_4} threads. On the second example, the GPU launches \texttt{size\_4} thread blocks, each with \texttt{size\_1 x size\_2 x size\_ 3} threads, for a total of \texttt{size\_1 x size\_2 x size\_ 3 x size\_4}. 
+In the first example above the GPU launches \texttt{size\_4} threads, which are grouped into blocks, each containing \texttt{MFEM\_CUDA\_BLOCKS} threads. On the second example, the GPU launches \texttt{size\_1 x size\_2 x size\_ 3 x size\_4} threads, which are grouped into blocks, each containing \texttt{size\_1 x size\_2 x size\_ 3} threads. 
 
 %------------------------------------------------------------------------
 \section{Software vs hardware}
