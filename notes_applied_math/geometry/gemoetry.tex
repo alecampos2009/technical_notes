@@ -1,0 +1,99 @@
+\documentclass[11pt]{article}
+
+\usepackage{"../../info/packages"}
+\usepackage{"../../info/nomenclature"}
+\usepackage{fullpage}
+
+
+\title{Geometry}
+
+
+\begin{document}
+
+\maketitle
+\maketitle
+\tableofcontents
+
+%--------------------------------------------------------------------------
+\section{Linear forms}
+%--------------------------------------------------------------------------
+\begin{itemize}
+
+    \item A linear form (or linear functional) is a mapping $w:V \to \mathbb{R}$ such that
+    \begin{equation}
+        w(\vvec_1 + \vvec_2) = w(\vvec_1) + w(\vvec_2) \qquad \forall \vvec_1, \vvec_2 \in V,
+    \end{equation}
+    \begin{equation}
+        w(\alpha \vvec) = \alpha w(\vvec) \qquad \forall \alpha \in \mathbb{R}, \vvec \in V.
+    \end{equation}
+
+    \item A bilinear form (or bilinear functional) is a mapping $w: V \times U \to \mathbb{R}$ such that
+    \begin{equation}
+        w(\vvec_1 + \vvec_2, \uvec) = w(\vvec_1, \uvec) + w(\vvec_2, \uvec) \qquad \forall \vvec_1, \vvec_2 \in V, \uvec \in U, 
+    \end{equation}
+    \begin{equation}
+        w(\vvec, \uvec_1 + \uvec_2) = w(\vvec, \uvec_1) + w(\vvec, \uvec_2) \qquad \forall \vvec \in V, \uvec_1, \uvec_2 \in U, 
+    \end{equation}
+    \begin{equation}
+        w(\alpha \vvec, \uvec) = \alpha w(\vvec, \uvec) \qquad \forall \alpha \in \mathbb{R}, \vvec \in V, \uvec \in U,
+    \end{equation}
+    \begin{equation}
+        w(\vvec, \alpha \uvec) = \alpha w(\vvec, \uvec) \qquad \forall \alpha \in \mathbb{R}, \vvec \in V, \uvec \in U,
+    \end{equation}
+
+    \item A multi-linear form (or multi-linear functional) is a mapping $w: V^{(1)} \times ... V^{(n)} \to \mathbb{R}$ such that
+    \begin{equation}
+        w(\vvec^{(1)}, ..., \vvec^{(i)}_1 + \vvec^{(i)}_2, ... , \vvec^{(n)}) = w(\vvec^{(1)}, ..., \vvec^{(i)}_1, ... , \vvec^{(n)}) + w(\vvec^{(1)}, ..., \vvec^{(i)}_2, ... , \vvec^{(n)}),
+    \end{equation}
+    \begin{equation}
+        w(\vvec^{(1)}, ..., \alpha \vvec^{(i)}, ... , \vvec^{(n)}) = \alpha w(\vvec^{(1)}, ..., \vvec^{(i)}, ... , \vvec^{(n)}),
+    \end{equation}
+    $\forall i$, $\forall \alpha \in \mathbb{R}$, $\forall \vvec^{(1)} \in V^{(1)}$, ... , $\forall \vvec^{(n)} \in V^{(n)}$, and $\forall \vvec^{(i)}_1, \vvec^{(i)}_2 \in V^{(i)}$.
+
+\end{itemize}
+
+%--------------------------------------------------------------------------
+\section{k-forms}
+%--------------------------------------------------------------------------
+\begin{itemize}
+
+    \item $T_p \mathbb{R}^n$: the set of all $n$-dimensional vectors whose origin is at point $p$.
+
+    \item A 1-form is a linear form $w:T_p \mathbb{R}^n \to \mathbb{R}$.
+
+    \item A 1-form belongs to the dual space of $T_p \mathbb{R}^n$.
+
+    \item $dx(\vvec)$ is a 1-form that grabs the first component of a vector $\vvec$. $dy(\vvec)$ is a 1-form that grabs the second component of a vector $\vvec$, and so on.
+
+    \item An example of a 1-form $w:T_p \mathbb{R}^2 \to \mathbb{R}$ would be $w(\vvec) = a dx(\vvec) + b dy(\vvec)$, or simply $w = a dx + b dy$.
+
+    \item A general 1-form $w:T_p \mathbb{R}^n \to \mathbb{R}$ is expressed as follows: $w = a_1 dx_1 + ... + a_n dx_n$.
+
+    \item The exterior product $w_1 \wedge w_2$ of two 1-forms $w_1$ and $w_2$ is defined as
+    \begin{equation}
+        w_1 \wedge w_2(\vvec_1, \vvec_2) =  
+        \begin{vmatrix}
+            w_1(\vvec_1) & w_2(\vvec_1) \\
+            w_1(\vvec_2) & w_2(\vvec_2)
+        \end{vmatrix}
+    \end{equation}
+
+    \item A 2-form is an anti-symmetric bilinear form $T_p \mathbb{R}^n \times T_p \mathbb{R}^n \to \mathbb{R}$ that is defined as the exterior product $w_1 \wedge w_2$.
+
+    \item $w_1 \wedge w_2 = -w_2 \wedge w_1$, and thus $w_1 \wedge w_1 = 0$.
+    
+    \item The exterior product $w_1 \wedge ...\wedge w_m$ of $n$ 1-forms $w_i$ is defined as
+    \begin{equation}
+        w_1 \wedge ... \wedge w_m(\vvec_1, ..., \vvec_m) = 
+        \begin{vmatrix}
+            w_1(\vvec_1) & \cdots & w_2(\vvec_1) \\
+            \vdots & \ddots & \vdots \\
+            w_1(\vvec_2) & \cdots & w_2(\vvec_2)
+        \end{vmatrix}
+    \end{equation}
+
+    \item An m-form is an anti-symmetric multi-linear form $w:(T_p \mathbb{R}^n)^m \to \mathbb{R}$ that is defined as the exterior product $w_1 \wedge ...\wedge w_m$.
+
+\end{itemize}
+
+\end{document}
