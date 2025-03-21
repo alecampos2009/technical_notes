@@ -1,0 +1,92 @@
+\documentclass[11pt]{article}
+
+\usepackage{"../../info/packages"}
+\usepackage{"../../info/nomenclature"}
+\usepackage{fullpage}
+
+\title{Exterior calculus}
+\author{Alejandro Campos}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+%--------------------------------------------------------------------------
+\section{m-forms}
+%--------------------------------------------------------------------------
+\begin{itemize}
+
+    \item $T_p \mathbb{R}^n$: the set of all $n$-dimensional vectors whose origin is at point $p$.
+
+    \item A 1-form is a linear form\footnote{See my notes on functional analysis for a definition of a linear, bilinear, and multilinear form. \label{fn:linear_forms}} $w:T_p \mathbb{R}^n \to \mathbb{R}$.
+
+    \item A 1-form belongs to the dual space of $T_p \mathbb{R}^n$.
+
+    \item $dx(\vvec)$ is a 1-form that grabs the first component of a vector $\vvec$. $dy(\vvec)$ is a 1-form that grabs the second component of a vector $\vvec$, and so on.
+
+    \item An example of a 1-form $w:T_p \mathbb{R}^2 \to \mathbb{R}$ would be $w(\vvec) = a dx(\vvec) + b dy(\vvec)$, or simply $w = a dx + b dy$.
+
+    \item A general 1-form $w:T_p \mathbb{R}^n \to \mathbb{R}$ is expressed as follows: $w = a_1 dx_1 + ... + a_n dx_n$.
+
+    \item The exterior product $w_1 \wedge w_2$ of two 1-forms $w_1$ and $w_2$ is defined as
+    \begin{equation}
+        w_1 \wedge w_2(\vvec_1, \vvec_2) =  
+        \begin{vmatrix}
+            w_1(\vvec_1) & w_2(\vvec_1) \\
+            w_1(\vvec_2) & w_2(\vvec_2)
+        \end{vmatrix}
+    \end{equation}
+
+    \item A 2-form is an anti-symmetric bilinear form\footref{fn:linear_forms} $T_p \mathbb{R}^n \times T_p \mathbb{R}^n \to \mathbb{R}$ that is defined as the exterior product $w_1 \wedge w_2$.
+
+    \item $w_1 \wedge w_2 = -w_2 \wedge w_1$, and thus $w_1 \wedge w_1 = 0$.
+    
+    \item The exterior product $w_1 \wedge ...\wedge w_m$ of $n$ 1-forms $w_i$ is defined as
+    \begin{equation}
+        w_1 \wedge ... \wedge w_m(\vvec_1, ..., \vvec_m) = 
+        \begin{vmatrix}
+            w_1(\vvec_1) & \cdots & w_2(\vvec_1) \\
+            \vdots & \ddots & \vdots \\
+            w_1(\vvec_2) & \cdots & w_2(\vvec_2)
+        \end{vmatrix}
+    \end{equation}
+
+    \item An m-form is an anti-symmetric multi-linear form\footref{fn:linear_forms} $w:(T_p \mathbb{R}^n)^m \to \mathbb{R}$ that is defined as the exterior product $w_1 \wedge ...\wedge w_m$.
+
+    \item Examples of m-forms for $n=4$ are the following:
+    \begin{itemize}
+        \item 1-form: $dx_1 \qquad dx_2 \qquad dx_3 \qquad dx_4$
+        \item 2-form: $dx_1 \wedge dx_2 \qquad dx_1 \wedge dx_3 \qquad dx_1 \wedge dx_4 \qquad dx_2 \wedge dx_3 \qquad dx_2 \wedge dx_4 \qquad dx_3 \wedge dx_4$
+        \item 3-form: $dx_1 \wedge dx_2 \wedge dx_3 \qquad dx_1 \wedge dx_2 \wedge dx_4 \qquad dx_1 \wedge dx_3 \wedge dx_4 \qquad dx_2 \wedge dx_3 \wedge dx_4$
+        \item 4-form: $dx_1 \wedge dx_2 \wedge dx_3 \wedge dx_4$
+    \end{itemize}
+
+    \item With the examples above as reference, it is clear to see that every m-form on $T_p \mathcal{R}^n$ can be written as
+    \begin{equation}
+        w = \sum_{1 \le i_1 < i_2 < ... < i_m \le n} a_{i_1, i_2, ..., i_m} dx_{i_1} \wedge dx_{i_2} \wedge ... dx_{i_m}
+    \end{equation}
+
+    \item If $\alpha$ is a k-form and $\beta$ and l-form, then $\beta \wedge \alpha = (-1)^{kl} \alpha \wedge \beta$.
+    
+    \item $\alpha \wedge (\beta + \gamma) = \alpha \wedge \beta + \alpha \wedge \gamma$.
+    
+    \item The dimensions of the space of m-forms on $T_p \mathbb{R}^n$ is 
+    \begin{equation}
+        \begin{pmatrix} n \\ m \end{pmatrix} = \frac{n!}{m!(n-m)!}
+    \end{equation}
+    For the m-form examples above with $n=4$, we get
+    \begin{itemize}
+        \item 1-form: $4! / 1!(3)! = 4$
+        \item 2-form: $4! / 2!(2)! = 6$
+        \item 3-form: $4! / 3!(1)! = 4$
+        \item 4-form: $4! / 4!(0)! = 1$
+    \end{itemize}
+
+\end{itemize}
+
+%--------------------------------------------------------------------------
+\section{Differential m-forms}
+%--------------------------------------------------------------------------
+
+\end{document}
