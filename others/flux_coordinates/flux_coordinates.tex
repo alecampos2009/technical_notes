@@ -1,0 +1,83 @@
+\documentclass[11pt]{article}
+
+\usepackage{"../../info/packages"}
+\usepackage{"../../info/nomenclature"}
+\usepackage{fullpage}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{cellspace}
+\newcommand{\uhat}{\hat{u}}
+\newcommand{\xhat}{\hat{x}}
+
+\title{Flux coordinates}
+
+
+\begin{document}
+
+\maketitle
+
+\section{Flux coordinates}
+Imagine that Euclidean space is permeated by a set of surfaces, which we call flux surfaces. Each of those surfaces is labeled with a different value of the variable $\psi$. We also note that the flux surfaces are not stationary, they can move around as time progresses.
+
+We now introduce the function $\hat{\psi} = \hat{\psi}(t,x^1,x^2,x^3)$. This function is defined in such a way that for all values $x^1,x^2,x^3$ that are part of a given flux surface at a specific time $t$, then $\hat{\psi}$ will evaluate to the value of $\psi$ corresponding to that flux surface. The velocity of the flux surfaces is given by $\Vvec_\psi = \Vvec_\psi(t,x^1,x^2,x^3)$. Thus, by definition
+\begin{equation}
+\label{eq:cons_flux_surf}
+    \frac{\partial \hat{\psi}}{\partial t} + \Vvec_\psi \cdot \nabla \hat{\psi} = 0.
+\end{equation}
+
+A flux coordinate is defined as one in which $\hat{u}^1 = \hat{\psi}$.
+
+
+\subsection{Flux-surface averaging}
+To begin, we define the following. $D(\psi,t)$ is the volume enclosed at time t by the flux surface labelled by $\psi$. The surface of $D(\psi,t)$ is labelled as $\partial D(\psi,t)$. Additionally, $\Delta(\psi,t) = D(\psi + \Delta \psi,t) - D(\psi,t)$.
+
+The flux surface average of a function is given by
+\begin{equation}
+\label{eq:flux_surf_avg_1}
+    \langle f \rangle_\psi = \lim_{\Delta \psi \to 0} \frac{ \int_{\Delta(\psi,t)} f \, d V}{\int_{\Delta(\psi,t)} d V}.
+\end{equation}
+This can be re-written as shown below
+\begin{equation}
+    \langle f \rangle_\psi = \lim_{\Delta \psi \to 0} \frac{ \frac{1}{\Delta \psi} \int_{\Delta(\psi,t)} f \, d V}{ \frac{1}{\Delta(\psi)} \int_{\Delta(\psi,t)} d V} = \lim_{\Delta \psi \to 0} \frac{ \frac{1}{\Delta \psi} \left ( \int_{D(\psi + \Delta \psi,t)} f\, d V - \int_{D(\psi,t)} f\, d V \right)}{ \frac{1}{\Delta \psi} \left (\int_{D(\psi + \Delta \psi,t)} d V - \int_{D(\psi,t)} d V \right )} = \frac{ \frac{\partial}{\partial \psi} \int_{D(\psi,t)} f \, d V}{ \frac{\partial}{\partial \psi} \int_{D(\psi,t)} d V} .
+\end{equation}
+Defining $V' = V'(\psi,t)$ as 
+\begin{equation}
+    V' = \frac{\partial}{\partial \psi} \int_{D(\psi,t)} \, dV.
+\end{equation}
+the second expression for the flux surface average is written as
+\begin{equation}
+\label{eq:flux_surf_avg_2}
+    \langle f \rangle_\psi = \frac{1}{V'} \frac{\partial}{\partial \psi} \int_{D(\psi,t)} f \, d V .
+\end{equation}
+A third expression for $\langle g \rangle_\psi$ follows from using \cref{eq:int_from_vol_surf} for the above. Thus,
+\begin{equation}
+\label{eq:flux_surf_avg_3}
+    \langle f \rangle_\psi = \frac{1}{V'} \frac{\partial}{\partial \psi} \int_0^\psi \int_{\partial D(\psi',t)} f \, \frac{d S}{| \nabla \hat{\psi} |} d\psi' = \frac{1}{V'}  \int_{\partial D(\psi,t)} f \, \frac{d S}{| \nabla \hat{\psi} |} .
+\end{equation}
+
+\subsubsection{Average of spatial derivatives}
+We use the second definition of the flux-surface average, given by \cref{eq:flux_surf_avg_2}, and then the divergence theorem to obtain
+\begin{equation}
+    \langle \nabla \cdot \Avec \rangle_\psi = \frac{1}{V'} \frac{\partial}{\partial \psi} \int_{D(\psi,t)} \nabla \cdot \Avec \,dV = \frac{1}{V'} \frac{\partial}{\partial \psi} \int_{\partial D(\psi,t)} \Avec \cdot  \frac{\nabla \hat{\psi}}{|\nabla \hat{\psi}|} \, dS.
+\end{equation}
+We now use the third definition \cref{eq:flux_surf_avg_3} to obtain
+\begin{equation}
+    \langle \nabla \cdot \Avec \rangle_\psi = \frac{1}{V'} \frac{\partial}{\partial \psi} V' \langle \Avec \cdot \nabla \hat{\psi} \rangle_\psi.
+\end{equation}
+
+\subsubsection{Average of time derivatives}
+Using the Reynolds transport theorem we show
+\begin{align}
+    \frac{\partial}{\partial t} \int_{D(\psi,t)} f \,dV &= \int_{D(\psi,t)} \frac{\partial f}{\partial t} \, dV + \int_{\partial D(\psi,t)} f \Vvec_\psi \cdot \frac{\nabla \hat{\psi}}{|\nabla \hat{\psi}|} \,dS \nonumber \\
+    &= \int_{D(\psi,t)} \frac{\partial f}{\partial t} \, dV + V' \langle f \Vvec_\psi \cdot \nabla \hat{\psi} \rangle_\psi.
+\end{align}
+We now take the derivative of both sides by $\psi$ and then divide by $V'$.
+\begin{equation}
+    \frac{1}{V'} \frac{\partial}{\partial t} V' \langle f \rangle_\psi = \left < \frac{\partial f}{\partial t} \right>_\psi + \frac{1}{V'} \frac{\partial}{\partial \psi} V' \langle f \Vvec_\psi \cdot \nabla \hat{\psi} \rangle_\psi.
+\end{equation}
+Re-arranging and using \cref{eq:cons_flux_surf}
+\begin{equation}
+    \left < \frac{\partial f}{\partial t} \right >_\psi = \frac{1}{V'} \frac{\partial}{\partial t} V' \langle f \rangle_\psi + \frac{1}{V'} \frac{\partial}{\partial \psi} V' \left < f \frac{\partial \hat{\psi}}{\partial t} \right >_\psi.
+\end{equation}
+
+\end{document}
