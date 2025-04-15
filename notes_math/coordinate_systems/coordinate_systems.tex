@@ -17,7 +17,7 @@
 \newcommand{\boldrhohat}{\hat{\boldsymbol{\rho}}}
 \newcommand{\boldthetahat}{\hat{\boldsymbol{\theta}}}
 
-\title{Curvilinear coordinates}
+\title{Coordinate systems}
 \author{Alejandro Campos}
 
 \begin{document}
@@ -40,6 +40,10 @@ Notice that the components of the vector field were denoted with upper scripts a
 %------------------------------------------------------------------------
 \section{Curvilinear Coordinates}
 %------------------------------------------------------------------------
+
+%---------------------------------
+\subsection{Definitions}
+%---------------------------------
 We will now define a new coordinate system, a curvilinear coordinate system, in relation to the standard cartesian coordinates. The coordinates of this curvilinear system are denoted as $(y^1, y^2, y^3)$. We introduce the following two sets of functions
 \begin{align}
 \ytilde^i &= \ytilde^i(x^1, x^2, x^3), \label{eq:generic_xtoy} \\
@@ -78,9 +82,9 @@ The two coordinate bases are not necessarily constant, orthogonal, of unit lengt
 
 \textbf{At the end, one way to think about it is that for every point $[x^1,x^2,x^3]$ in the cartesian coordinate system, there is a corresponding coordinate given by $[\ytilde^1,\ytilde^2,\ytilde^3]$, and that at every point of these new coordinates, there are two coordinate bases, given by \cref{eq:basis_sub} and \cref{eq:basis_sup}.} The latter basis is typically expresses as $\nabla \ytilde^1$,$\nabla \ytilde^2$, and $\nabla \ytilde^3$.
 
-%------------------------------------------------------------------------
-\section{Vector fields}
-%------------------------------------------------------------------------
+%---------------------------------
+\subsection{Vector fields}
+%---------------------------------
 As mentioned earlier, a vector field in cartesian space is given by \cref{eq:vector_cartesian}. We now introduce the vector field $\uvec = \uvec(y^1, y^1, y^2)$, which is written in terms of the basis vectors of the curvilinear coordinates. Since there are two sets of basis vectors for the curvilinear coordinates, there are two ways to express $\uvec$. One is in terms of the contravariant components $u^i = u^i(y^1, y^2, y^3)$
 \begin{equation}
     \uvec = u^1 \evec_1 + u^2 \evec_2 + u^3 \evec_3,
@@ -110,10 +114,10 @@ The cross product can be computed as
 \end{align}
 where $g = \text{det}(g_{ij})$. One can also define $g^{-1} = \text{det}(g^{ij})$.
 
-%------------------------------------------------------------------------
-\section{Differentiation}
-%------------------------------------------------------------------------
-\subsection{The grad operator}
+%---------------------------------
+\subsection{Differentiation}
+%---------------------------------
+\subsubsection{The grad operator}
 Consider the function $v = v(x^1, x^2, x^3)$ and the grad operator, which is  
 \begin{equation}
     \nabla v = \frac{\partial v}{\partial x^1} \xvec_1 + \frac{\partial v}{\partial x^2} \xvec_2 + \frac{\partial v}{\partial x^3} \xvec_3.
@@ -148,19 +152,19 @@ Using the definition of $\evec^i$, the grad operator can be written as
 \end{equation}
 This shows the equivalence between the grad operator in cartesian coordinates and curvilinear coordinates.
 
-\subsection{The divergence operator}
+\subsubsection{The divergence operator}
 
-\subsection{The curl operator}
+\subsubsection{The curl operator}
 The curl is given by
 \begin{equation}
     \nabla \times A = \epsilon^{ijk} \frac{1}{\sqrt{g}} \frac{\partial A_j}{\partial y^i} \evec_k
 \end{equation}
 
-%------------------------------------------------------------------------
-\section{Integration}
-%------------------------------------------------------------------------
+%---------------------------------
+\subsection{Integration}
+%---------------------------------
 
-\subsection{Volume integrals}
+\subsubsection{Volume integrals}
 Consider the function $v = v(x^1, x^2, x^3)$ and it's volume integral, which is
 \begin{equation}
     \int_{\Omega_x} v \, dx^1 dx^2 dx^3.
@@ -184,7 +188,7 @@ Using \cref{eq:integration_vol_integrand} in the above, gives
     \int_{\Omega_x} v \, dx^1 dx^2 dx^3 = \int_{\Omega_y} u J \, dy^1 dy^2 dy^2.
 \end{equation}
 
-\subsection{Surface integrals}
+\subsubsection{Surface integrals}
 Define $d S_y$ as an infinitesimal surface in curvilinear coordinates, $\Gamma_y$ as a finite surface of integration in curvilinear coordinates that belongs to the $y^1 = \text{constant}$ surfaces, and $u$ as a function whose input is defined using curvilinear coordinates. Then, a surface integral can be computed using 
 \begin{equation}
     \int_{\Gamma_y} u \, d S_y = \int_{\Gamma_y} u \, J | \nabla \hat{y}^1| dy^2 dy^3.
@@ -200,7 +204,7 @@ Note that now we can write
 %------------------------------------------------------------------------
 \section{Cylindrical coordinates}
 %------------------------------------------------------------------------
-For cylindrical coordinates, the equivalent of \cref{eq:generic_xtoy} is
+Cylindrical coordinates are orthogonal curvilinear coordinates. The equivalent of \cref{eq:generic_xtoy} is
 \begin{align}
     \rhotilde &= \sqrt{x^2 + y^2} \\
     \thetatilde &= {\begin{cases}{\text{indeterminate}}&{\text{if }}x=0{\text{ and }}y=0\\\arcsin \left({\frac {y}{\rhotilde }}\right)&{\text{if }}x\geq 0\\-\arcsin \left({\frac {y}{\rhotilde }}\right)+\pi &{\mbox{if }}x<0{\text{ and }}y\geq 0\\-\arcsin \left({\frac {y}{\rhotilde }}\right)-\pi &{\mbox{if }}x<0{\text{ and }}y<0\end{cases}} \\
@@ -281,5 +285,14 @@ so that
 \end{equation}
 The Eulerian counterparts for the velocity components are 
 
+%------------------------------------------------------------------------
+\section{Time-varying coordinates}
+%------------------------------------------------------------------------
+For time varying coordinates, the transformations with respect to the cartesian coordinates can be expressed as
+\begin{align}
+    \ytilde^i &= \ytilde^i(x^1, x^2, x^3, t), \label{eq:generic_xtoy_time} \\
+    \xtilde^i &= \xtilde^i(y^1,y^2,y^3, t). \label{eq:generic_ytox_time}
+\end{align}
+This is a generalization of \cref{eq:generic_xtoy,eq:generic_ytox}.
 
 \end{document}
