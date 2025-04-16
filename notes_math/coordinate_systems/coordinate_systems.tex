@@ -10,11 +10,9 @@
 \newcommand{\xtilde}{\tilde{x}}
 \newcommand{\ytilde}{\tilde{y}}
 \newcommand{\ztilde}{\tilde{z}}
-\newcommand{\rhotilde}{\tilde{\rho}}
+\newcommand{\rtilde}{\tilde{r}}
 \newcommand{\thetatilde}{\tilde{\theta}}
-\newcommand{\boldrhotilde}{\tilde{\boldsymbol{\rho}}}
-\newcommand{\boldthetatilde}{\tilde{\boldsymbol{\theta}}}
-\newcommand{\boldrhohat}{\hat{\boldsymbol{\rho}}}
+\newcommand{\boldrhat}{\hat{\mathbf{r}}}
 \newcommand{\boldthetahat}{\hat{\boldsymbol{\theta}}}
 
 \title{Coordinate systems}
@@ -37,6 +35,22 @@ where $v^1 = v^1(x^1, x^2, x^3)$, $v^2 = v^2(x^1, x^2, x^3)$, $v^3 = v^3(x^1, x^
 
 Notice that the components of the vector field were denoted with upper scripts and the unit vectors with lower scripts. For cartesian coordinates it doesn't matter if we use upper or lower scripts, that is, $v^i = v_i$ and $\xvec_i=\xvec^i$. For other coordinate systems, as we'll see in the sections below, upper scripts and lower scripts have different meanings.
 
+For dynamics, we'll use cartesian coordinates $x$, $y$, and $z$ that denote the position of a particle, and thus are time dependent. We denote these as $x^+ = x^+(t)$, $y^+ = y^+(t)$, $z^+ = z^+(t)$. For the sake of simplicity, let's drop the $^+$ notation for the time being. The position vector $\xvec = \xvec(t)$ is then given by 
+\begin{equation}
+    \label{eq:cart_pos}
+    \xvec = x \hat{\xvec} + y \hat{\yvec} + z \hat{\zvec}.
+\end{equation}
+The velocity vector $\vvec=\vvec(t)$, which is defined by $\vvec = \dot{\rvec}$ is given by
+\begin{equation}
+    \label{eq:cart_vel}
+    \vvec = \dot{x} \hat{\xvec} + \dot{y} \hat{\yvec} + \dot{z} \hat{\zvec}.
+\end{equation}
+Finally, the acceleration vector $\avec = \avec(t)$, which is defined by $\avec = \dot{\vvec}$ is given by
+\begin{equation}
+    \label{eq:cart_accl}
+    \avec = \ddot{x} \hat{\xvec} + \ddot{y} \hat{\yvec} + \ddot{z} \hat{\zvec}.
+\end{equation}
+
 %------------------------------------------------------------------------
 \section{Curvilinear Coordinates}
 %------------------------------------------------------------------------
@@ -58,22 +72,27 @@ for $i=1,2,3$. In other words, $\xtilde^i$ and $\ytilde^i$ are functions that ma
 
 We can now take the derivative of either \cref{eq:trans1} or \cref{eq:trans2}. For example, the derivative $d/dy^j$ of \cref{eq:trans2} gives
 \begin{equation}
-    \left( \frac{\partial \ytilde^i}{\partial x^k} \right)_{x^i = \xtilde^i} \frac{\partial \xtilde^k}{\partial y^j} = \delta^i_j.
+    \left( \frac{\partial \ytilde^i}{\partial x^k} \right)_{\xvec = \tilde{\xvec}} \frac{\partial \xtilde^k}{\partial y^j} = \delta^i_j.
 \end{equation}
-We can evaluate the above at $y^i = \ytilde^i$, so that
+We can evaluate the above at $\yvec = \tilde{\yvec}$, so that
 \begin{equation}
-     \frac{\partial \ytilde^i}{\partial x^k} \left( \frac{\partial \xtilde^k}{\partial y^j} \right)_{y^i = \ytilde^i} = \delta^i_j.
+     \frac{\partial \ytilde^i}{\partial x^k} \left( \frac{\partial \xtilde^k}{\partial y^j} \right)_{\yvec = \tilde{\yvec}} = \delta^i_j.
 \end{equation}
-We now define two basis vectors as follows
+We now define the basis vectors $\tilde{\evec}_i = \tilde{\evec}_i(x^1, x^2, x^3)$ and $\tilde{\evec}^i = \tilde{\evec}^i(x^1, x^2, x^e)$ as follows
 \begin{equation}
 \label{eq:basis_sub}
-    \evec_i = \left( \frac{ \partial \xtilde^1}{\partial y^i} \right)_{y^i = \ytilde^i} \xvec_1 + \left( \frac{ \partial \xtilde^2}{\partial y^i} \right)_{y^i = \ytilde^i} \xvec_2 + \left( \frac{ \partial \xtilde^3}{\partial y^i} \right)_{y^i = \ytilde^i} \xvec_3
+    \tilde{\evec}_i = \left( \frac{ \partial \xtilde^1}{\partial y^i} \right)_{\yvec = \tilde{\yvec}} \xvec_1 + \left( \frac{ \partial \xtilde^2}{\partial y^i} \right)_{\yvec = \tilde{\yvec}} \xvec_2 + \left( \frac{ \partial \xtilde^3}{\partial y^i} \right)_{\yvec = \tilde{\yvec}} \xvec_3
 \end{equation}
 \begin{equation}
 \label{eq:basis_sup}
-    \evec^i = \frac{ \partial \ytilde^i}{\partial x^1} \xvec^1 + \frac{ \partial \ytilde^i}{\partial x^2} \xvec^2 + \frac{ \partial \ytilde^i}{\partial x^3} \xvec^3
+    \tilde{\evec}^i = \frac{ \partial \ytilde^i}{\partial x^1} \xvec^1 + \frac{ \partial \ytilde^i}{\partial x^2} \xvec^2 + \frac{ \partial \ytilde^i}{\partial x^3} \xvec^3
 \end{equation}
-The dot product of these two vectors is given by
+We can also introduce the basis vectors $\evec_i = \evec_i(y^1, y^2, y^3)$ and $\evec^i = \evec^i(y^1, y^2, y^3)$ such that
+\begin{align}
+    \tilde{\evec}_i &= \left( \evec_i \right)_{\yvec = \tilde{\yvec}}, \\
+    \tilde{\evec}^i &= \left( \evec^i \right)_{\yvec = \tilde{\yvec}}.
+\end{align}
+The dot product of the basis vectors is given by
 \begin{equation}
 \label{eq:basis_orthogonality}
     \evec^i \cdot \evec_j = \delta^i_j.
@@ -95,7 +114,7 @@ and the other is in terms of the covariant components $u_i = u_i(y^1, y^2, y^3)$
 \end{equation}
 If we want to write the same vector in terms of cartesian or curvilinear coordinates, then we require
 \begin{equation}
-    \vvec(x^1, x^2, x^3) = \uvec(\ytilde^1, \ytilde^2, \ytilde^3).
+    \vvec = \left( \uvec \right)_{\yvec = \tilde{\yvec}}.
 \end{equation}
 
 Note that, due to \cref{eq:basis_orthogonality}, we have $u^i = \uvec \cdot \evec^i$ and $u_i = \uvec \cdot \evec_i$. We define the metric coefficients $g_{ij}$ and $g^{ij}$ as
@@ -114,11 +133,19 @@ The cross product can be computed as
 \end{align}
 where $g = \text{det}(g_{ij})$. One can also define $g^{-1} = \text{det}(g^{ij})$.
 
+We note that due to \cref{eq:basis_orthogonality}, we have $h_i = |\evec_i| = 1 / | \evec^i |$. We can then define $\hat{\evec}_i = \evec_i / h_i$ and $\hat{\evec}^i = h_i \evec^i$. The vector field $\uvec$ will often be written in terms of the unit basis vectors, that is, as
+\begin{equation}
+    \uvec = u^1 \hat{\evec}_1 + u^2 \hat{\evec}_2 + u^3 \hat{\evec}_3,
+\end{equation}
+\begin{equation}
+    \uvec = u_1 \hat{\evec}^1 + u_2 \hat{\evec}^2 + u_3 \hat{\evec}^3.
+\end{equation}
+
 %---------------------------------
 \subsection{Differentiation}
 %---------------------------------
 \subsubsection{The grad operator}
-Consider the function $v = v(x^1, x^2, x^3)$ and the grad operator, which is  
+Consider the function $v = v(x^1, x^2, x^3)$ and the gradient of this function, which is  
 \begin{equation}
     \nabla v = \frac{\partial v}{\partial x^1} \xvec_1 + \frac{\partial v}{\partial x^2} \xvec_2 + \frac{\partial v}{\partial x^3} \xvec_3.
 \end{equation}
@@ -146,11 +173,40 @@ Thus
     + \left( \frac{ \partial u}{\partial y^3} \right)_{\yvec = \tilde{\yvec}} \frac{\partial \ytilde^3}{\partial x^3} .
 \end{equation}
 Using the definition of $\evec^i$, the grad operator can be written as
+\begin{align}
+    \nabla v &= \left ( \frac{\partial u }{\partial y^1} \right )_{\yvec = \tilde{\yvec}} \tilde{\evec}^1 + \left ( \frac{\partial u }{\partial y^2} \right )_{\yvec = \tilde{\yvec}} \tilde{\evec}^2 + \left ( \frac{\partial u }{\partial y^3} \right )_{\yvec = \tilde{\yvec}} \tilde{\evec}^3 \\
+    &= \left( \frac{\partial u }{\partial y^1} \evec^1 + \frac{\partial u }{\partial y^2} \evec^2 + \frac{\partial u }{\partial y^3} \evec^3 \right)_{\yvec = \tilde{\yvec}} \\
+    &= \left( \frac{1}{h_1} \frac{\partial u }{\partial y^1} \hat{\evec}^1 + \frac{1}{h_2} \frac{\partial u }{\partial y^2} \hat{\evec}^2 + \frac{1}{h_3} \frac{\partial u }{\partial y^3} \hat{\evec}^3 \right)_{\yvec = \tilde{\yvec}}.
+\end{align}
+or
 \begin{equation}
     \label{eq:generic_gradient}
-    \nabla v = \left ( \frac{\partial u }{\partial y^1} \right )_{\yvec = \tilde{\yvec}} \evec^1 + \left ( \frac{\partial u }{\partial y^2} \right )_{\yvec = \tilde{\yvec}} \evec^2 + \left ( \frac{\partial u }{\partial y^3} \right )_{\yvec = \tilde{\yvec}} \evec^3 .
+    \nabla v = \left( \nabla u \right)_{\yvec = \tilde{\yvec}},
 \end{equation}
-This shows the equivalence between the grad operator in cartesian coordinates and curvilinear coordinates.
+where 
+\begin{equation}
+    \label{eq:generic_gradient_def}
+    \nabla u = \frac{1}{h_1} \frac{\partial u }{\partial y^1} \hat{\evec}^1 + \frac{1}{h_2} \frac{\partial u }{\partial y^2} \hat{\evec}^2 + \frac{1}{h_3} \frac{\partial u }{\partial y^3} \hat{\evec}^3.
+\end{equation}
+
+Consider the vector function $\vvec = \vvec(x^1, x^2, x^3)$ and the gradient of this function, which is
+\begin{equation}
+    \nabla \vvec = \frac{\partial \vvec}{\partial x^1} \xvec_1 + \frac{\partial \vvec}{\partial x^2} \xvec_2 + \frac{\partial \vvec}{\partial x^3} \xvec_3.
+\end{equation}
+We now introduce the function $\uvec = \uvec(y^1,y^2,y^3)$ such that 
+\begin{equation}
+    \vvec(x^1, x^2, x^3) = \uvec(\ytilde^1, \ytilde^2, \ytilde^3).
+\end{equation}
+Applying the gradient operator to the entire vector, we have
+\begin{equation}
+    \label{eq:generic_gradient_vector}
+    \nabla \vvec = \left( \nabla \uvec \right)_{\yvec = \tilde{\yvec}},
+\end{equation}
+where 
+\begin{equation}
+    \label{eq:generic_gradient_vector_def}
+    \nabla \uvec = \frac{1}{h_1} \frac{\partial \uvec }{\partial y^1} \hat{\evec}^1 + \frac{1}{h_2} \frac{\partial \uvec }{\partial y^2} \hat{\evec}^2 + \frac{1}{h_3} \frac{\partial \uvec }{\partial y^3} \hat{\evec}^3.
+\end{equation}
 
 \subsubsection{The divergence operator}
 
@@ -204,87 +260,138 @@ Note that now we can write
 %------------------------------------------------------------------------
 \section{Cylindrical coordinates}
 %------------------------------------------------------------------------
-Cylindrical coordinates are orthogonal curvilinear coordinates. The equivalent of \cref{eq:generic_xtoy} is
+Cylindrical coordinates are orthogonal curvilinear coordinates. \Cref{eq:generic_xtoy} for cylindrical coordinates is
 \begin{align}
-    \rhotilde &= \sqrt{x^2 + y^2} \\
-    \thetatilde &= {\begin{cases}{\text{indeterminate}}&{\text{if }}x=0{\text{ and }}y=0\\\arcsin \left({\frac {y}{\rhotilde }}\right)&{\text{if }}x\geq 0\\-\arcsin \left({\frac {y}{\rhotilde }}\right)+\pi &{\mbox{if }}x<0{\text{ and }}y\geq 0\\-\arcsin \left({\frac {y}{\rhotilde }}\right)-\pi &{\mbox{if }}x<0{\text{ and }}y<0\end{cases}} \\
+    \rtilde &= \sqrt{x^2 + y^2} \\
+    \thetatilde &= {\begin{cases}{\text{indeterminate}}&{\text{if }}x=0{\text{ and }}y=0\\\arcsin \left({\frac {y}{\rtilde }}\right)&{\text{if }}x\geq 0\\-\arcsin \left({\frac {y}{\rtilde }}\right)+\pi &{\mbox{if }}x<0{\text{ and }}y\geq 0\\-\arcsin \left({\frac {y}{\rtilde }}\right)-\pi &{\mbox{if }}x<0{\text{ and }}y<0\end{cases}} \\
     \hat{z} & = z,
 \end{align}
-and the equivalent of \cref{eq:generic_ytox} is 
+and \cref{eq:generic_ytox} is 
 \begin{align}
-    \xtilde &= \rho \cos \theta, \\
-    \ytilde &= \rho \sin \theta, \\
+    \xtilde &= r \cos \theta, \\
+    \ytilde &= r \sin \theta, \\
     \ztilde &= z.
 \end{align}
 Thus, 
 \begin{align}
-    \frac{\partial \ytilde^1}{\partial x^1} &= \frac{\partial \rhotilde}{\partial x} = \cos \thetatilde \\
-    \frac{\partial \ytilde^1}{\partial x^2} &= \frac{\partial \rhotilde}{\partial y} = \sin \thetatilde \\
-    \frac{\partial \ytilde^2}{\partial x^1} &= \frac{\partial \thetatilde}{\partial x} = -\sin \thetatilde / \rhotilde \\
-    \frac{\partial \ytilde^2}{\partial x^2} &= \frac{\partial \thetatilde}{\partial y} = \cos \thetatilde / \rhotilde.
+    \frac{\partial \ytilde^1}{\partial x^1} &= \frac{\partial \rtilde}{\partial x} = \cos \thetatilde \\
+    \frac{\partial \ytilde^1}{\partial x^2} &= \frac{\partial \rtilde}{\partial y} = \sin \thetatilde \\
+    \frac{\partial \ytilde^2}{\partial x^1} &= \frac{\partial \thetatilde}{\partial x} = -\sin \thetatilde / \rtilde \\
+    \frac{\partial \ytilde^2}{\partial x^2} &= \frac{\partial \thetatilde}{\partial y} = \cos \thetatilde / \rtilde.
 \end{align}
 The basis vectors as defined in \cref{eq:basis_sup} are then 
 \begin{align}
-    \evec^{1} &= \cos \thetatilde \hat{\xvec} + \sin \thetatilde \hat{\yvec}, \label{eq:cyl_e1}\\
-    \evec^{2} &= -\frac{\sin \thetatilde}{\rhotilde} \hat{\xvec} + \frac{\cos \thetatilde}{\rhotilde} \hat{\yvec}, \label{eq:cyl_e2} \\
-    \evec^{3} &= \hat{\zvec}. \label{eq:cyl_3}.
+    \tilde{\evec^{1}} &= \cos \thetatilde \hat{\xvec} + \sin \thetatilde \hat{\yvec}, \\
+    \tilde{\evec^{2}} &= -\frac{\sin \thetatilde}{\rtilde} \hat{\xvec} + \frac{\cos \thetatilde}{\rtilde} \hat{\yvec},  \\
+    \tilde{\evec^{3}} &= \hat{\zvec}. 
 \end{align}
-We now introduce the \textit{unit} basis vectors $\boldrhohat = \boldrhohat(\rho, \theta, z)$ and $\boldthetahat = \boldthetahat(\rho, \theta, z)$, which are defined as
+and thus
 \begin{align}
-    \boldrhohat &= \cos \theta \hat{\xvec} + \sin \theta \hat{\yvec}, \label{eq:cyl_rhohat} \\
-    \boldthetahat &= - \sin \theta \hat{\xvec } + \cos \theta \hat{\yvec}. \label{eq:cyl_thetahat}
+    \evec^{1} &= \cos \theta \hat{\xvec} + \sin \theta \hat{\yvec}, \\
+    \evec^{2} &= -\frac{\sin \theta}{\rtilde} \hat{\xvec} + \frac{\cos \theta}{\rtilde} \hat{\yvec},  \\
+    \evec^{3} &= \hat{\zvec}. 
 \end{align}
-Using the above in \cref{eq:cyl_e1,eq:cyl_e2} we get
+The weights $h_i$ and the unit basis vectors are
 \begin{align}
-    \evec^1 &= \boldrhohat(\rhotilde, \thetatilde, \ztilde) \\
-    \evec^2 &= \frac{\boldthetahat(\rhotilde, \thetatilde, \ztilde)}{\rhotilde}.
+    h_1 &= 1, \\
+    h_2 &= \rtilde, \\
+    h_3 &= 1,
 \end{align}
-The gradient operator as defined in \cref{eq:generic_gradient} is then
 \begin{align}
-    \nabla v &= \left ( \frac{\partial u }{\partial \rho} \right )_{\yvec = \tilde{\yvec}} \boldrhohat(\rhotilde, \thetatilde, \ztilde) + \left ( \frac{\partial u }{\partial \theta} \right )_{\yvec = \tilde{\yvec}} \frac{\boldthetahat(\rhotilde, \thetatilde, \ztilde)}{\rhotilde} + \left ( \frac{\partial u }{\partial z} \right )_{\yvec = \tilde{\yvec}} \hat{\zvec} \\
-    &= \left( \frac{\partial u }{\partial \rho} \boldrhohat + \frac{1}{\rho} \frac{\partial u }{\partial \theta} \boldthetahat + \frac{\partial u }{\partial z} \hat{\zvec} \right)_{\yvec = \tilde{\yvec}}.
+    \hat{\evec}^{1} &= \cos \theta \hat{\xvec} + \sin \theta \hat{\yvec} = \boldrhat, \label{eq:cyl_e1} \\
+    \hat{\evec}^{2} &= -\sin \theta \hat{\xvec} + \cos \theta \hat{\yvec} = \boldthetahat, \label{eq:cyl_e2} \\
+    \hat{\evec}^{3} &= \hat{\zvec}. 
 \end{align}
+where $\boldrhat = \boldrhat(r, \theta, z)$ and $\boldthetahat = \boldthetahat(r, \theta, z)$. We note that 
+\begin{equation}
+    \frac{ \partial \boldrhat }{ \partial \theta } = \boldthetahat,
+\end{equation}
+and 
+\begin{equation}
+    \frac{\partial \boldthetahat }{ \partial \theta} = -\boldrhat.
+\end{equation}
+Using the gradient operator as defined in \cref{eq:generic_gradient_def,eq:generic_gradient_vector_def} we get 
+\begin{equation}
+    \nabla u = \frac{\partial u }{\partial r} \boldrhat + \frac{1}{r} \frac{\partial u }{\partial \theta} \boldthetahat + \frac{\partial u }{\partial z} \hat{\zvec}
+\end{equation}
+\begin{equation}
+    \nabla \uvec = \frac{\partial \uvec }{\partial r} \boldrhat + \frac{1}{r} \frac{\partial \uvec }{\partial \theta} \boldthetahat + \frac{\partial \uvec }{\partial z} \hat{\zvec}
+\end{equation}
 
-We now introduce cartesian coordinates $x$, $y$, $z$ that are time dependent, that is $x^+ = x^+(t)$, $y^+ = y^+(t)$, and $z^+ = z^+(t)$. Similarly, we have $\rho^+ = \rho^+(t)$ and $\theta^+=\theta^+(t)$, which satisfy
+Consider the vector $\uvec = \uvec(r, \theta, z, t)$. We introduce $u_r = u_r(r, \theta, z, t)$, $u_\theta = u_\theta(r, \theta, z, t)$, $u_z = u_z(r, \theta, z, t)$ such that 
+\begin{equation}
+    \uvec = u_r \boldrhat + u_\theta \boldthetahat + u_z \hat{\zvec}.
+\end{equation}
+The dot product $\uvec \cdot \nabla \uvec$ is given by
+\begin{equation}
+    \uvec \cdot \nabla \uvec = u_r \frac{\partial \uvec}{\partial r} + \frac{u_\theta}{r} \frac{\partial \uvec}{\partial \theta} + u_z \frac{\partial \uvec}{\partial z}.
+\end{equation}
+We now expand some of the derivatives above,
+\begin{equation}
+    \frac{\partial \uvec}{\partial r} = \frac{\partial u_r}{\partial r} \boldrhat + \frac{\partial u_\theta}{\partial r} \boldthetahat + \frac{\partial u_z}{\partial r} \hat{\zvec},
+\end{equation}
+\begin{equation}
+    \frac{\partial \uvec}{\partial \theta} = \frac{\partial u_r}{\partial \theta} \boldrhat + u_r\frac{\partial \boldrhat}{\partial \theta} + \frac{\partial u_\theta}{\partial \theta} \boldthetahat + u_\theta \frac{\partial \boldthetahat}{\partial \theta} + \frac{\partial u_z}{\partial \theta} \hat{\zvec},
+\end{equation}
+\begin{equation}
+    \frac{\partial \uvec}{\partial z} = \frac{\partial u_r}{\partial z} \boldrhat + \frac{\partial u_\theta}{\partial z} \boldthetahat + \frac{\partial u_z}{\partial z} \hat{\zvec}.
+\end{equation}
+Since $\partial \boldrhat / \partial \theta = \boldthetahat$ and $\partial \boldthetahat / \partial \theta = -\boldrhat$, we can collect terms with the same unit vectors to finally write
 \begin{align}
-    \rho^+ &= \rhotilde(x^+, y^+, z^+), \\
+    \uvec \cdot \nabla \uvec &= \left( u_r \frac{\partial u_r}{\partial r} + \frac{u_\theta}{r} \frac{\partial u_r}{\partial \theta} + u_z \frac{\partial u_r}{\partial z} - \frac{u_\theta^2}{r} \right) \boldrhat \\
+    &+ \left( u_r \frac{\partial u_\theta}{\partial r} + \frac{u_\theta}{r} \frac{\partial u_\theta}{\partial \theta} + u_z \frac{\partial u_\theta}{\partial z} + \frac{u_r u_\theta}{r} \right) \boldthetahat \\
+    &+ \left( u_r \frac{\partial u_z}{\partial r} + \frac{u_\theta}{r} \frac{\partial u_z}{\partial \theta} + u_z \frac{\partial u_z}{\partial z} \right) \hat{\zvec}.
+\end{align}
+The time derivative of $\uvec$ is given by
+\begin{equation}
+    \frac{\partial \uvec}{\partial t} = \frac{\partial u_r}{\partial t} \boldrhat + \frac{\partial u_\theta}{\partial t} \boldthetahat + \frac{\partial u_z}{\partial t} \hat{\zvec},
+\end{equation}
+and thus we have
+\begin{align}
+    \frac{D \uvec}{Dt} = \frac{\partial \uvec}{\partial t} + \uvec \cdot \nabla \uvec &= \left( \frac{\partial u_r}{\partial t} + u_r \frac{\partial u_r}{\partial r} + \frac{u_\theta}{r} \frac{\partial u_r}{\partial \theta} + u_z \frac{\partial u_r}{\partial z} - \frac{u_\theta^2}{r} \right) \boldrhat \\
+    &+ \left( \frac{\partial u_\theta}{\partial t} + u_r \frac{\partial u_\theta}{\partial r} + \frac{u_\theta}{r} \frac{\partial u_\theta}{\partial \theta} + u_z \frac{\partial u_\theta}{\partial z} + \frac{u_r u_\theta}{r} \right) \boldthetahat \\
+    &+ \left( \frac{\partial u_z}{\partial t} + u_r \frac{\partial u_z}{\partial r} + \frac{u_\theta}{r} \frac{\partial u_z}{\partial \theta} + u_z \frac{\partial u_z}{\partial z} \right) \hat{\zvec}.
+\end{align}
+If we evaluate the above at $\yvec = \tilde{\yvec}$, and $\uvec$ is such that it satisfies
+\begin{equation}
+    \vvec = \left( \uvec \right)_{\yvec = \tilde{\yvec}},
+\end{equation}
+then after using \cref{eq:generic_gradient_vector} we get
+\begin{equation}
+    \left( \frac{D\uvec}{Dt} \right)_{\yvec = \tilde{\yvec}} = \left( \frac{\partial \uvec}{\partial t} + \uvec \cdot \nabla \uvec \right)_{\yvec = \tilde{\yvec}} = \frac{\partial \vvec}{\partial t} + \vvec \cdot \nabla \vvec = \frac{D \vvec}{Dt}.
+\end{equation}
+
+We introduce cartesian coordinates $x$, $y$, $z$ that are time dependent, that is $x^+ = x^+(t)$, $y^+ = y^+(t)$, and $z^+ = z^+(t)$. Similarly, we have $r^+ = r^+(t)$ and $\theta^+=\theta^+(t)$, which satisfy
+\begin{align}
+    r^+ &= \rtilde(x^+, y^+, z^+), \\
     \theta^+ &= \thetatilde(x^+, y^+, z^+).
 \end{align}
-Similarly, we have $\boldrhohat^+ = \boldrhohat^+(t)$ and $\boldthetahat^+=\boldthetahat^+(t)$, which satisfy
+Finally, we have $\boldrhat^+ = \boldrhat^+(t)$ and $\boldthetahat^+=\boldthetahat^+(t)$, which satisfy
 \begin{align}
-    \boldrhohat^+ &= \boldrhohat(\rho^+, \theta^+, z^+), \\
-    \boldthetahat^+ &= \boldthetahat(\rho^+, \theta^+, z^+).
+    \boldrhat^+ &= \boldrhat(r^+, \theta^+, z^+), \label{eq:cyl_e1_time} \\
+    \boldthetahat^+ &= \boldthetahat(r^+, \theta^+, z^+) \label{eq:cyl_e2_time}.
 \end{align}
-We will temporarily drop the $^+$ notation below for the sake of simplicity. Taking the time derivative of the above and using \cref{eq:cyl_rhohat,eq:cyl_thetahat} leads to
+We will temporarily drop the $^+$ notation below for the sake of simplicity. Taking the time derivative of the above and using \cref{eq:cyl_e1,eq:cyl_e2} leads to
 \begin{align}
-    \dot{\boldrhohat} &= \dot{\theta} \boldthetahat, \\
-    \dot{\boldthetahat} &= -\dot{\theta} \boldrhohat.
+    \dot{\boldrhat} &= \dot{\theta} \boldthetahat, \\
+    \dot{\boldthetahat} &= -\dot{\theta} \boldrhat.
 \end{align}
-The position vector $\rvec = \rvec(t)$ is given by
+The position vector $\xvec = \xvec(t)$ is given by
 \begin{equation}
-    \rvec = \rho \boldrhohat + z^+ \hat{\zvec}.
+    \label{eq:cyl_pos}
+    \xvec = r \boldrhat + z^+ \hat{\zvec}.
 \end{equation}
-The velocity vector $\vvec = \vvec(t)$ is then given by
+The velocity vector $\vvec = \vvec(t)$, which is defined by $\vvec = \dot{\rvec}$ is given by
 \begin{equation}
-    \vvec = \dot{\rvec} = \dot{\rho} \boldrhohat + \rho \dot{\boldrhohat} + \dot{z} \hat{\zvec} = \dot{\rho} \boldrhohat + \rho \dot{\theta} \boldthetahat + \dot{z} \hat{\zvec}.
+    \label{eq:cyl_vel}
+    \vvec = \dot{r} \boldrhat + r \dot{\boldrhat} + \dot{z} \hat{\zvec} = \dot{r} \boldrhat + r \dot{\theta} \boldthetahat + \dot{z} \hat{\zvec}.
 \end{equation}
-The derivative of the velocity is given by
+Finally, the acceleration vector $\avec = \avec(t)$, which is defined by $\avec = \dot{\vvec}$ is given by
 \begin{equation}
-    \dot{\vvec} = \ddot{\rho} \boldrhohat + \dot{\rho} \dot{\theta} \boldthetahat + \dot{\rho} \dot{\theta} \boldthetahat + \rho \ddot{\theta} \boldthetahat - \rho \dot{\theta}^2 \boldrhohat + \ddot{z} \hat{\zvec} = \left( \ddot{\rho} - \rho \dot{\theta}^2 \right) \boldrhohat + \left( 2 \dot{\rho} \dot{\theta} + \rho \ddot{\theta} \right) \boldthetahat + \ddot{z} \hat{\zvec}.
+    \label{eq:cyl_accl}
+    \avec = \ddot{r} \boldrhat + \dot{r} \dot{\theta} \boldthetahat + \dot{r} \dot{\theta} \boldthetahat + r \ddot{\theta} \boldthetahat - r \dot{\theta}^2 \boldrhat + \ddot{z} \hat{\zvec} = \left( \ddot{r} - r \dot{\theta}^2 \right) \boldrhat + \left( 2 \dot{r} \dot{\theta} + r \ddot{\theta} \right) \boldthetahat + \ddot{z} \hat{\zvec}.
 \end{equation}
-
-We now go back to using the $^+$ notation. Define the Lagrangian variables $v^+_r = v^+_r(t)$, $v^+_\theta = v^+_\theta(t)$ and $v^+_z = v^+_z(t)$ as 
-\begin{align}
-    v^+_r &= \dot{\rho}^+ \\
-    v^+_\theta & = \rho^+ \dot{\theta}^+ \\
-    v^+_z & = \dot{z}^+,
-\end{align}
-so that
-\begin{equation}
-    \vvec = v^+_r \boldrhohat^+ + v^+_\theta \boldthetahat^+ + v^+_z \hat{\zvec}.
-\end{equation}
-The Eulerian counterparts for the velocity components are 
-
+\Cref{eq:cyl_pos,eq:cyl_vel,eq:cyl_accl} are the counterparts to \cref{eq:cart_pos,eq:cart_vel,eq:cart_accl}.
 %------------------------------------------------------------------------
 \section{Time-varying coordinates}
 %------------------------------------------------------------------------
